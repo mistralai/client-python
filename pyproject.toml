@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "mistral_client"
+version = "0.1.0"
+description = ""
+authors = ["Bam4d <bam4d@mistral.ai>"]
+readme = "README.md"
+
+[tool.ruff]
+select = ["E", "F", "W", "Q", "I"]
+ignore = ["E203"]
+fixable = ["ALL"]
+unfixable = []
+line-length = 120
+
+
+[tool.mypy]
+disallow_untyped_defs = true
+show_error_codes = true
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+exclude = ["docs", "tests", "examples", "tools", "build"]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiohttp = "^3.9.1"
+backoff = "^2.2.1"
+orjson = "^3.9.10"
+requests = "^2.31.0"
+pydantic = "^2.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.6"
+mypy = "^1.7.1"
+types-requests = "^2.31.0.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
