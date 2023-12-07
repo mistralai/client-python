@@ -61,6 +61,13 @@ jobs:
           with:
             python-version: 3.11
 
+        # Install Build stuff
+        - name: Install Dependencies
+          run: |
+            pip install poetry \
+            && poetry config virtualenvs.create false \
+            && poetry install
+
         # build package using poetry
         - name: Build Package
           run: |
