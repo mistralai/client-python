@@ -1,0 +1,46 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: ["main"]
+    
+    # We only deploy on tags and main branch
+    tags:
+      # Only run on tags that match the following regex
+      # This will match tags like v1.0.0, v1.0.1, etc.
+      - v[0-9]+.[0-9]+.[0-9]+
+
+  # Build on pull requests
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Set python version to 3.11
+      - name: set python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      # Install Build stuff
+      - name: Install Dependencies
+        run: |
+          pip install poetry \
+          && poetry config virtualenvs.create false \
+          && poetry install
+
+       # Ruff
+      - name: Ruff check
+        run: |
+          poetry run ruff .
+      
+      # Mypy
+      - name: Mypy Check
+        run: |
+          poetry run mypy .

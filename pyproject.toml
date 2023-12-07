@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mistral_client"
+name = "mistralai"
 version = "0.1.0"
 description = ""
 authors = ["Bam4d <bam4d@mistral.ai>"]
