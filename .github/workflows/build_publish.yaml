@@ -7,8 +7,8 @@ on:
     # We only deploy on tags and main branch
     tags:
       # Only run on tags that match the following regex
-      # This will match tags like v1.0.0, v1.0.1, etc.
-      - v[0-9]+.[0-9]+.[0-9]+
+      # This will match tags like 1.0.0, 1.0.1, etc.
+      - "[0-9]+.[0-9]+.[0-9]+"
 
   # Build on pull requests
   pull_request:
@@ -44,3 +44,31 @@ jobs:
       - name: Mypy Check
         run: |
           poetry run mypy .
+
+  publish:
+      if: startsWith(github.ref, 'refs/tags')
+      runs-on: ubuntu-latest
+      needs: lint
+      steps:
+  
+          # Checkout the repository
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        # Set python version to 3.11
+        - name: set python version
+          uses: actions/setup-python@v4
+          with:
+            python-version: 3.11
+
+        # build package using poetry
+        - name: Build Package
+          run: |
+            poetry version ${{ github.ref }}
+            poetry build
+
+        # Publish to PyPi
+        - name: Pypi publish (prod)
+          run: |
+            poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+            poetry publish
