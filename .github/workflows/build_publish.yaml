@@ -64,7 +64,7 @@ jobs:
         # build package using poetry
         - name: Build Package
           run: |
-            poetry version ${{ github.ref }}
+            poetry version ${{ github.ref_name }}
             poetry build
 
         # Publish to PyPi
