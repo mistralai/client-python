@@ -1,8 +1,8 @@
 # Mistral Python Client
 
-This client uses poetry as a depedency and virtual environment manager.
+This client uses `poetry` as a dependency and virtual environment manager.
 
-you can install poetry with@
+You can install poetry with
 
 ```bash
 pip install poetry
@@ -10,7 +10,7 @@ pip install poetry
 
 ## Installing
 
-poetry will set up a virtual environment and install dependencies with the following command:
+`poetry` will set up a virtual environment and install dependencies with the following command:
 
 ```bash
 poetry install
@@ -24,7 +24,7 @@ You can run the examples using `poetry run` or by entering the virtual environme
 
 ```bash
 cd examples
-poetry run python async_chat.py
+poetry run python chat_no_streaming.py
 ```
 
 ### Using poetry shell
@@ -33,5 +33,5 @@ poetry run python async_chat.py
 cd examples
 poetry shell
 
->> python async_chat.py
+>> python chat_no_streaming.py
 ```
