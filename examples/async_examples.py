@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from mistral_client.async_client import MistralAsyncClient
-from mistral_client.models.chat_completion import ChatMessage
+from mistralai.async_client import MistralAsyncClient
+from mistralai.models.chat_completion import ChatMessage
 
 
 async def main():

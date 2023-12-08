@@ -10,20 +10,20 @@ import aiohttp
 import backoff
 import orjson
 
-from mistral_client.client_base import ClientBase
-from mistral_client.constants import ENDPOINT, RETRY_STATUS_CODES
-from mistral_client.exceptions import (
+from mistralai.client_base import ClientBase
+from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
+from mistralai.exceptions import (
     MistralAPIException,
     MistralConnectionException,
     MistralException,
 )
-from mistral_client.models.chat_completion import (
+from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
     ChatMessage,
 )
-from mistral_client.models.embeddings import EmbeddingResponse
-from mistral_client.models.models import ModelList
+from mistralai.models.embeddings import EmbeddingResponse
+from mistralai.models.models import ModelList
 
 
 class AIOHTTPBackend:
