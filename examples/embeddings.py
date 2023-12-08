@@ -1,6 +1,6 @@
 import os
 
-from mimstralai.client import MistralClient
+from mistralai.client import MistralClient
 
 
 def main():

@@ -8,20 +8,20 @@ from requests import Response
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from mimstralai.client_base import ClientBase
-from mimstralai.constants import ENDPOINT, RETRY_STATUS_CODES
-from mimstralai.exceptions import (
+from mistralai.client_base import ClientBase
+from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
+from mistralai.exceptions import (
     MistralAPIException,
     MistralConnectionException,
     MistralException,
 )
-from mimstralai.models.chat_completion import (
+from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
     ChatMessage,
 )
-from mimstralai.models.embeddings import EmbeddingResponse
-from mimstralai.models.models import ModelList
+from mistralai.models.embeddings import EmbeddingResponse
+from mistralai.models.models import ModelList
 
 
 class MistralClient(ClientBase):

@@ -1,7 +1,7 @@
 import os
 
-from mimstralai.client import MistralClient
-from mimstralai.models.chat_completion import ChatMessage
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
 
 
 def main():

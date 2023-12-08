@@ -2,7 +2,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from mimstralai.models.common import UsageInfo
+from mistralai.models.common import UsageInfo
 
 
 class EmbeddingObject(BaseModel):

@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from mimstralai.models.common import UsageInfo
+from mistralai.models.common import UsageInfo
 
 
 class ChatMessage(BaseModel):

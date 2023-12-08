@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from mimstralai.async_client import MistralAsyncClient
+from mistralai.async_client import MistralAsyncClient
 
 
 async def main():

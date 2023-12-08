@@ -2,8 +2,8 @@ import logging
 from abc import ABC
 from typing import Any, Dict, List, Optional
 
-from mimstralai.exceptions import MistralAPIException, MistralException
-from mimstralai.models.chat_completion import ChatMessage
+from mistralai.exceptions import MistralAPIException, MistralException
+from mistralai.models.chat_completion import ChatMessage
 
 
 class ClientBase(ABC):
