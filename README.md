@@ -1,5 +1,7 @@
 # Mistral Python Client
 
+You can use the Mistral Python client to interact with the Mistral AI API.
+
 This client uses `poetry` as a dependency and virtual environment manager.
 
 You can install poetry with
@@ -18,7 +20,7 @@ poetry install
 
 ## Run examples
 
-You can run the examples using `poetry run` or by entering the virtual environment using `poetry shell`.
+You can run the examples in the `examples/` directory using `poetry run` or by entering the virtual environment using `poetry shell`.
 
 ### Using poetry run
 
