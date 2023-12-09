@@ -14,7 +14,8 @@ def main():
         model=model,
         messages=[ChatMessage(role="user", content="What is the best French cheese?")],
     ):
-        print(chunk)
+        if chunk.choices[0].delta.content is not None:
+            print(chunk.choices[0].delta.content, end="")
 
 
 if __name__ == "__main__":

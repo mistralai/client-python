@@ -1,7 +1,8 @@
+import os
 import posixpath
 from json import JSONDecodeError
 from typing import Any, Dict, Iterable, List, Optional, Union
-import os
+
 import orjson
 import requests
 from requests import Response

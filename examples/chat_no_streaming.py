@@ -14,7 +14,7 @@ def main():
         model=model,
         messages=[ChatMessage(role="user", content="What is the best French cheese?")],
     )
-    print(chat_response)
+    print(chat_response.choices[0].message.content)
 
 
 if __name__ == "__main__":

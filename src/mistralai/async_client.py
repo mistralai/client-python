@@ -174,6 +174,9 @@ class MistralAsyncClient(ClientBase):
             timeout=timeout,
         )
 
+    async def close(self) -> None:
+        await self._backend.close()
+
     async def _request(
         self,
         method: str,
@@ -266,7 +269,6 @@ class MistralAsyncClient(ClientBase):
 
         async with async_response as response:
             async for line in response.content:
-                self._logger.debug(f"Received line: {line.decode()}")
                 if line == b"\n":
                     continue
 

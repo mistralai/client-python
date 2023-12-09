@@ -11,11 +11,17 @@ async def main():
 
     client = MistralAsyncClient(api_key=api_key)
 
+    print("Chat response:")
     async for chunk in client.chat_stream(
         model=model,
         messages=[ChatMessage(role="user", content="What is the best French cheese?")],
     ):
-        print(chunk)
+        if chunk.choices[0].delta.content is not None:
+            print(chunk.choices[0].delta.content, end="")
+
+    print("\n")
+
+    await client.close()
 
 
 if __name__ == "__main__":

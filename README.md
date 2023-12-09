@@ -32,8 +32,8 @@ poetry run python chat_no_streaming.py
 ### Using poetry shell
 
 ```bash
-cd examples
 poetry shell
+cd examples
 
 >> python chat_no_streaming.py
 ```
