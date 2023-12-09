@@ -185,6 +185,7 @@ class MistralAsyncClient(ClientBase):
         stream: bool = False,
         params: Optional[Dict[str, Any]] = None,
     ) -> Union[Dict[str, Any], aiohttp.ClientResponse]:
+
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
@@ -224,6 +225,22 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = True,
     ) -> ChatCompletionResponse:
+        """ A asynchronous chat endpoint that returns a single response.
+
+        Args:
+            model (str): model the name of the model to chat with, e.g. mistral-tiny
+            messages (List[ChatMessage]): messages an array of messages to chat with, e.g.
+                [{role: 'user', content: 'What is the best French cheese?'}]
+            temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
+            max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
+            Defaults to None.
+            random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
+            safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
+
+        Returns:
+            ChatCompletionResponse: a response object containing the generated text.
+        """
         request = self._make_chat_request(
             model,
             messages,
@@ -247,8 +264,26 @@ class MistralAsyncClient(ClientBase):
         max_tokens: Optional[int] = None,
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
-        safe_mode: bool = True,
+        safe_mode: bool = False,
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
+        """ An Asynchronous chat endpoint that streams responses.
+
+        Args:
+            model (str): model the name of the model to chat with, e.g. mistral-tiny
+            messages (List[ChatMessage]): messages an array of messages to chat with, e.g.
+                [{role: 'user', content: 'What is the best French cheese?'}]
+            temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
+            max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9. 
+            Defaults to None.
+            random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
+            safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
+
+        Returns:
+            AsyncGenerator[ChatCompletionStreamResponse, None]:
+                An async generator that yields ChatCompletionStreamResponse objects.
+        """
+
         request = self._make_chat_request(
             model,
             messages,
@@ -281,12 +316,27 @@ class MistralAsyncClient(ClientBase):
     async def embeddings(
         self, model: str, input: Union[str, List[str]]
     ) -> EmbeddingResponse:
+        """An asynchronous embeddings endpoint that returns embeddings for a single, or batch of inputs
+
+        Args:
+            model (str): The embedding model to use, e.g. mistral-embed
+            input (Union[str, List[str]]): The input to embed,
+                 e.g. ['What is the best French cheese?']
+
+        Returns:
+            EmbeddingResponse: A response object containing the embeddings.
+        """
         request = {"model": model, "input": input}
         response = await self._request("post", request, "v1/embeddings")
         assert isinstance(response, dict), "Bad response from _request"
         return EmbeddingResponse(**response)
 
     async def list_models(self) -> ModelList:
+        """Returns a list of the available models
+
+        Returns:
+            ModelList: A response object containing the list of models.
+        """
         response = await self._request("get", {}, "v1/models")
         assert isinstance(response, dict), "Bad response from _request"
         return ModelList(**response)
