@@ -116,7 +116,7 @@ class MistralClient(ClientBase):
                 [{role: 'user', content: 'What is the best French cheese?'}]
             temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
             max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
-            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9. 
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
             Defaults to None.
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
@@ -159,7 +159,7 @@ class MistralClient(ClientBase):
                 [{role: 'user', content: 'What is the best French cheese?'}]
             temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
             max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
-            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9. 
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
             Defaults to None.
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
