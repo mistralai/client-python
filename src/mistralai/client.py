@@ -106,7 +106,7 @@ class MistralClient(ClientBase):
         max_tokens: Optional[int] = None,
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
-        safe_mode: bool = True,
+        safe_mode: bool = False,
     ) -> ChatCompletionResponse:
         """ A chat endpoint that returns a single response.
 
@@ -149,7 +149,7 @@ class MistralClient(ClientBase):
         max_tokens: Optional[int] = None,
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
-        safe_mode: bool = True,
+        safe_mode: bool = False,
     ) -> Iterable[ChatCompletionStreamResponse]:
         """ A chat endpoint that streams responses.
 

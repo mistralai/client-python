@@ -223,7 +223,7 @@ class MistralAsyncClient(ClientBase):
         max_tokens: Optional[int] = None,
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
-        safe_mode: bool = True,
+        safe_mode: bool = False,
     ) -> ChatCompletionResponse:
         """ A asynchronous chat endpoint that returns a single response.
 

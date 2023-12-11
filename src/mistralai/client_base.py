@@ -30,7 +30,7 @@ class ClientBase(ABC):
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
-        safe_mode: Optional[bool] = True,
+        safe_mode: Optional[bool] = False,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
