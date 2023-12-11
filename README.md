@@ -1,3 +1,5 @@
+This client is inspired from [cohere-python](https://github.com/cohere-ai/cohere-python)
+
 # Mistral Python Client
 
 You can use the Mistral Python client to interact with the Mistral AI API.
