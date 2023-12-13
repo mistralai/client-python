@@ -4,6 +4,14 @@ This client is inspired from [cohere-python](https://github.com/cohere-ai/cohere
 
 You can use the Mistral Python client to interact with the Mistral AI API.
 
+## Installing
+
+```bash
+pip install mistralai
+```
+
+### From Source
+
 This client uses `poetry` as a dependency and virtual environment manager.
 
 You can install poetry with
@@ -11,8 +19,6 @@ You can install poetry with
 ```bash
 pip install poetry
 ```
-
-## Installing
 
 `poetry` will set up a virtual environment and install dependencies with the following command:
 
