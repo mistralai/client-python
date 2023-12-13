@@ -2,10 +2,10 @@
 
 # Simple chatbot example -- run with -h argument to see options.
 
-import os
-import sys
 import argparse
 import logging
+import os
+import sys
 
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
@@ -17,9 +17,9 @@ MODEL_LIST = [
 ]
 DEFAULT_MODEL = "mistral-small"
 
-LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 
-logger = logging.getLogger('chatbot')
+logger = logging.getLogger("chatbot")
 
 
 class ChatBot:
