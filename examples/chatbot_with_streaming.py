@@ -28,40 +28,64 @@ class ChatBot:
         self.model = model
         self.system_message = system_message
 
-    def start(self):
-        messages = []
-        if self.system_message:
-            messages.append(ChatMessage(role="system", content=self.system_message))
+    def opening_instructions(self):
+        print("""
+To chat: type your message and hit enter.
+To start a new chat: type 'new'.
+To exit: type 'exit', 'quit', or hit CTRL+C.
+""")
 
-        print("")
-        print("To chat, type your message and hit enter. To exit, type 'exit', 'quit', or hit CTRL+C.")
+    def new_chat(self):
+        self.messages = []
+        if self.system_message:
+            self.messages.append(ChatMessage(role="system", content=self.system_message))
+
+    def check_exit(self, content):
+        if content.lower().strip() in ["exit", "quit"]:
+            self.exit()
+
+    def check_new_chat(self, content):
+        if content.lower().strip() in ["new"]:
+            print("")
+            print("Starting new chat...")
+            print("")
+            self.new_chat()
+            return True
+        return False
+
+    def run_inference(self, content):
+        self.messages.append(ChatMessage(role="user", content=content))
+
+        assistant_response = ""
+        logger.debug(f"Sending messages: {self.messages}")
+        for chunk in self.client.chat_stream(model=self.model, messages=self.messages):
+            response = chunk.choices[0].delta.content
+            if response is not None:
+                print(response, end="", flush=True)
+                assistant_response += response
+
+        print("", flush=True)
+
+        if assistant_response:
+            self.messages.append(ChatMessage(role="assistant", content=assistant_response))
+        logger.debug(f"Current messages: {self.messages}")
+
+    def start(self):
+
+        self.opening_instructions()
+        self.new_chat()
 
         while True:
             try:
                 print("")
                 content = input("YOU: ")
-                if content.lower().strip() in ["exit", "quit"]:
-                    self.exit()
+                self.check_exit(content)
+                if not self.check_new_chat(content):
+                    print("")
+                    print("MISTRAL:")
+                    print("")
+                    self.run_inference(content)
 
-                print("")
-                print("MISTRAL:")
-                print("")
-
-                messages.append(ChatMessage(role="user", content=content))
-
-                assistant_response = ""
-                logger.debug(f"Sending messages: {messages}")
-                for chunk in self.client.chat_stream(model=self.model, messages=messages):
-                    response = chunk.choices[0].delta.content
-                    if response is not None:
-                        print(response, end="", flush=True)
-                        assistant_response += response
-
-                print("", flush=True)
-
-                if assistant_response:
-                    messages.append(ChatMessage(role="assistant", content=assistant_response))
-                logger.debug(f"Current messages: {messages}")
             except KeyboardInterrupt:
                 self.exit()
 
