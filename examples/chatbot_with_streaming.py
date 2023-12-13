@@ -4,8 +4,8 @@
 
 import argparse
 import logging
-import readline
 import os
+import readline
 import sys
 
 from mistralai.client import MistralClient
@@ -248,7 +248,9 @@ if __name__ == "__main__":
     logger.addHandler(ch)
 
     logger.debug(
-        f"Starting chatbot with model: {args.model}, temperature: {args.temperature}, system message: {args.system_message}"
+        f"Starting chatbot with model: {args.model}, "
+        f"temperature: {args.temperature}, "
+        f"system message: {args.system_message}"
     )
 
     bot = ChatBot(args.api_key, args.model, args.system_message, args.temperature)
