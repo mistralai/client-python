@@ -30,9 +30,9 @@ class ChatBot:
 
     def opening_instructions(self):
         print("""
-To chat: type your message and hit enter.
-To start a new chat: type 'new'.
-To exit: type 'exit', 'quit', or hit CTRL+C.
+To chat: type your message and hit enter
+To start a new chat: type /new
+To exit: type /exit, /quit, or hit CTRL+C
 """)
 
     def new_chat(self):
@@ -41,11 +41,11 @@ To exit: type 'exit', 'quit', or hit CTRL+C.
             self.messages.append(ChatMessage(role="system", content=self.system_message))
 
     def check_exit(self, content):
-        if content.lower().strip() in ["exit", "quit"]:
+        if content.lower().strip() in ["/exit", "/quit"]:
             self.exit()
 
     def check_new_chat(self, content):
-        if content.lower().strip() in ["new"]:
+        if content.lower().strip() in ["/new"]:
             print("")
             print("Starting new chat...")
             print("")
