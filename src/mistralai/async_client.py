@@ -201,15 +201,15 @@ class MistralAsyncClient(ClientBase):
 
         try:
             json_response: Dict[str, Any] = await response.json()
-        except JSONDecodeError:
+        except JSONDecodeError as e:
             raise MistralAPIException.from_aio_response(
                 response, message=f"Failed to decode json body: {await response.text()}"
-            )
+            ) from e
         except aiohttp.ClientPayloadError as e:
             raise MistralAPIException.from_aio_response(
                 response,
                 message=f"An unexpected error occurred while receiving the response: {e}",
-            )
+            ) from e
 
         self._logger.debug(f"JSON response: {json_response}")
         self._check_response(json_response, dict(response.headers), response.status)
