@@ -34,7 +34,7 @@ class ClientBase(ABC):
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
-            "messages": [msg.model_dump() for msg in messages],
+            "messages": [msg.dict() for msg in messages],
             "safe_prompt": safe_mode,
         }
         if temperature is not None:
