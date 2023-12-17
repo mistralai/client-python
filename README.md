@@ -27,6 +27,7 @@ poetry install
 ```
 
 ## Run examples
+
 You can run the examples in the `examples/` directory using `poetry run` or by entering the virtual environment using `poetry shell`.
 
 ### API Key Setup
