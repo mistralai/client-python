@@ -28,7 +28,7 @@ poetry install
 
 ## Run examples
 
-You can run the examples in the `examples/` directory using `poetry run` or by entering the virtual environment using `poetry shell`.
+You can run the examples in the `examples/` directory using `poetry run` or by entering the virtual environment using `poetry shell`. You should have a `MISTRAL_API_KEY` environment variable defined containing your API key to run those examples.
 
 ### Using poetry run
 
