@@ -88,10 +88,10 @@ class MistralClient(ClientBase):
 
             try:
                 json_response: Dict[str, Any] = response.json()
-            except JSONDecodeError:
+            except JSONDecodeError as e:
                 raise MistralAPIException.from_response(
                     response, message=f"Failed to decode json body: {response.text}"
-                )
+                ) from e
 
             self._check_response(
                 json_response, dict(response.headers), response.status_code
