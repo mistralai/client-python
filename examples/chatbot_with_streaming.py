@@ -47,7 +47,7 @@ def find_completions(command_dict, parts):
 
 def completer(text, state):
     buffer = readline.get_line_buffer()
-    line_parts = buffer.lstrip().split(' ')
+    line_parts = buffer.lstrip().split(" ")
     options = find_completions(COMMAND_LIST, line_parts[:-1])
 
     try:
@@ -66,6 +66,8 @@ class ChatBot:
     def __init__(
         self, api_key, model, system_message=None, temperature=DEFAULT_TEMPERATURE
     ):
+        if not api_key:
+            raise ValueError("An API key must be provided to use the Mistral API.")
         self.client = MistralClient(api_key=api_key)
         self.model = model
         self.temperature = temperature
@@ -261,5 +263,9 @@ if __name__ == "__main__":
         f"system message: {args.system_message}"
     )
 
-    bot = ChatBot(args.api_key, args.model, args.system_message, args.temperature)
-    bot.start()
+    try:
+        bot = ChatBot(args.api_key, args.model, args.system_message, args.temperature)
+        bot.start()
+    except Exception as e:
+        logger.error(e)
+        sys.exit(1)
