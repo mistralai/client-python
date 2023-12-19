@@ -4,9 +4,8 @@ import time
 from json import JSONDecodeError
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 
-import httpx
 import orjson
-from httpx import Client, Response
+from httpx import Response, Client, HTTPTransport, RequestError, ConnectError
 
 from mistralai.client_base import ClientBase
 from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
@@ -39,7 +38,10 @@ class MistralClient(ClientBase):
     ):
         super().__init__(endpoint, api_key, max_retries, timeout)
 
-        self._client = Client(transport=httpx.HTTPTransport(retries=self._max_retries))
+        self._client = Client(
+            follow_redirects=True,
+            timeout=self._timeout,
+            transport=HTTPTransport(retries=self._max_retries))
 
     def __del__(self) -> None:
         self._client.close()
@@ -71,8 +73,6 @@ class MistralClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
-                    timeout=self._timeout,
-                    follow_redirects=True,
                 ) as response:
                     if response.status_code in RETRY_STATUS_CODES:
                         raise MistralAPIStatusException.from_response(
@@ -108,8 +108,6 @@ class MistralClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
-                    timeout=self._timeout,
-                    follow_redirects=True,
                 )
 
                 self._logger.debug(f"Received response: {response}")
@@ -130,9 +128,9 @@ class MistralClient(ClientBase):
                 )
                 yield json_response
 
-        except httpx.ConnectError as e:
+        except ConnectError as e:
             raise MistralConnectionException(str(e)) from e
-        except httpx.RequestError as e:
+        except RequestError as e:
             raise MistralException(
                 f"Unexpected exception ({e.__class__.__name__}): {e}"
             ) from e
@@ -188,7 +186,6 @@ class MistralClient(ClientBase):
 
         single_response = self._request("post", request, "v1/chat/completions")
 
-        self._logger.debug(f"Received response: {single_response}")
         for response in single_response:
             return ChatCompletionResponse(**response)
 
@@ -249,9 +246,12 @@ class MistralClient(ClientBase):
             EmbeddingResponse: A response object containing the embeddings.
         """
         request = {"model": model, "input": input}
-        response = self._request("post", request, "v1/embeddings")
-        assert isinstance(response, dict), "Bad response from _request"
-        return EmbeddingResponse(**response)
+        singleton_response = self._request("post", request, "v1/embeddings")
+
+        for response in singleton_response:
+            return EmbeddingResponse(**response)
+        
+        raise MistralException("No response received")
 
     def list_models(self) -> ModelList:
         """Returns a list of the available models
@@ -259,6 +259,9 @@ class MistralClient(ClientBase):
         Returns:
             ModelList: A response object containing the list of models.
         """
-        response = self._request("get", {}, "v1/models")
-        assert isinstance(response, dict), "Bad response from _request"
-        return ModelList(**response)
+        singleton_response = self._request("get", {}, "v1/models")
+
+        for response in singleton_response:
+            return ModelList(**response)
+        
+        raise MistralException("No response received")

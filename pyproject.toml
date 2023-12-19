@@ -24,11 +24,9 @@ exclude = ["docs", "tests", "examples", "tools", "build"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-backoff = "^2.2.1"
 orjson = "^3.9.10"
 pydantic = "^2.5.2"
 httpx = "^0.25.2"
-tenacity = "^8.2.3"
 
 
 [tool.poetry.group.dev.dependencies]
