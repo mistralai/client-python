@@ -1,10 +1,12 @@
 import logging
 from abc import ABC
 from typing import Any, Dict, List, Optional
+import os
 
 from mistralai.exceptions import MistralAPIException, MistralException
 from mistralai.models.chat_completion import ChatMessage
 
+logging.basicConfig(format="%(asctime)s %(levelname)s %(name)s: %(message)s", level=os.getenv("LOG_LEVEL", "ERROR"))
 
 class ClientBase(ABC):
     def __init__(
@@ -21,8 +23,8 @@ class ClientBase(ABC):
         self._api_key = api_key
         self._logger = logging.getLogger(__name__)
 
-    @staticmethod
     def _make_chat_request(
+        self,
         model: str,
         messages: List[ChatMessage],
         temperature: Optional[float] = None,
@@ -48,19 +50,22 @@ class ClientBase(ABC):
         if stream is not None:
             request_data["stream"] = stream
 
+        self._logger.debug(f"Chat request: {request_data}")
+
         return request_data
 
     def _check_response(
-        self, json_response: Dict[str, Any], headers: Dict[str, Any], status: int
+        self, headers: Dict[str, Any], status: int, json_response: Optional[Dict[str, Any]] = None
     ) -> None:
-        if "object" not in json_response:
-            raise MistralException(message=f"Unexpected response: {json_response}")
-        if "error" == json_response["object"]:  # has errors
-            raise MistralAPIException(
-                message=json_response["message"],
-                http_status=status,
-                headers=headers,
-            )
+        if json_response is not None:
+            if "object" not in json_response:
+                raise MistralException(message=f"Unexpected response: {json_response}")
+            if "error" == json_response["object"]:  # has errors
+                raise MistralAPIException(
+                    message=json_response["message"],
+                    http_status=status,
+                    headers=headers,
+                )
         if 400 <= status < 500:
             raise MistralAPIException(
                 message=f"Unexpected client error (status {status}): {json_response}",

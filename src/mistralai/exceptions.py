@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-import aiohttp
-from requests import Response
+from httpx import Response
 
 
 class MistralException(Exception):
@@ -45,19 +44,11 @@ class MistralAPIException(MistralException):
             headers=dict(response.headers),
         )
 
-    @classmethod
-    def from_aio_response(
-        cls, response: aiohttp.ClientResponse, message: Optional[str] = None
-    ) -> MistralAPIException:
-        return cls(
-            message=message,
-            http_status=response.status,
-            headers=dict(response.headers),
-        )
-
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(message={str(self)}, http_status={self.http_status})"
 
+class MistralAPIStatusException(MistralAPIException):
+    """Returned when we receive a non-200 response from the API that we should retry"""
 
 class MistralConnectionException(MistralException):
     """Returned when the SDK can not reach the API server for any reason"""
