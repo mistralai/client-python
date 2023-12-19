@@ -19,37 +19,45 @@ MODEL_LIST = [
 DEFAULT_MODEL = "mistral-small"
 DEFAULT_TEMPERATURE = 0.7
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-COMMAND_LIST = [
-    "/new",
-    "/help",
-    "/model",
-    "/system",
-    "/temperature",
-    "/config",
-    "/quit",
-    "/exit",
-]
+# A dictionary of all commands and their arguments, used for tab completion.
+COMMAND_LIST = {
+    "/new": {},
+    "/help": {},
+    "/model": {model: {} for model in MODEL_LIST},  # Nested completions for models
+    "/system": {},
+    "/temperature": {},
+    "/config": {},
+    "/quit": {},
+    "/exit": {},
+}
 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 
 logger = logging.getLogger("chatbot")
 
 
+def find_completions(command_dict, parts):
+    if not parts:
+        return command_dict.keys()
+    if parts[0] in command_dict:
+        return find_completions(command_dict[parts[0]], parts[1:])
+    else:
+        return [cmd for cmd in command_dict if cmd.startswith(parts[0])]
+
+
 def completer(text, state):
     buffer = readline.get_line_buffer()
-    if not buffer.startswith(text):
-        return None
+    line_parts = buffer.lstrip().split(' ')
+    options = find_completions(COMMAND_LIST, line_parts[:-1])
 
-    options = [command for command in COMMAND_LIST if command.startswith(text)]
-    if state < len(options):
-        return options[state]
-    else:
+    try:
+        return [option for option in options if option.startswith(line_parts[-1])][state]
+    except IndexError:
         return None
 
 
 readline.set_completer(completer)
-# Remove all delimiters to ensure completion only at the beginning of the line
-readline.set_completer_delims("")
+readline.set_completer_delims(" ")
 # Enable tab completion
 readline.parse_and_bind("tab: complete")
 
