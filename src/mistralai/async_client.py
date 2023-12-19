@@ -3,15 +3,16 @@ import posixpath
 import time
 from json import JSONDecodeError
 from typing import Any, AsyncGenerator, Dict, List, Optional, Union
-from httpx import (
-    Response,
-    AsyncClient,
-    Limits,
-    AsyncHTTPTransport,
-    RequestError,
-    ConnectError,
-)
+
 import orjson
+from httpx import (
+    AsyncClient,
+    AsyncHTTPTransport,
+    ConnectError,
+    Limits,
+    RequestError,
+    Response,
+)
 
 from mistralai.client_base import ClientBase
 from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES

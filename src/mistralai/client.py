@@ -5,7 +5,7 @@ from json import JSONDecodeError
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 
 import orjson
-from httpx import Response, Client, HTTPTransport, RequestError, ConnectError
+from httpx import Client, ConnectError, HTTPTransport, RequestError, Response
 
 from mistralai.client_base import ClientBase
 from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
@@ -250,7 +250,7 @@ class MistralClient(ClientBase):
 
         for response in singleton_response:
             return EmbeddingResponse(**response)
-        
+
         raise MistralException("No response received")
 
     def list_models(self) -> ModelList:
@@ -263,5 +263,5 @@ class MistralClient(ClientBase):
 
         for response in singleton_response:
             return ModelList(**response)
-        
+
         raise MistralException("No response received")

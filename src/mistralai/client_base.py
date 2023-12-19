@@ -1,7 +1,7 @@
 import logging
+import os
 from abc import ABC
 from typing import Any, Dict, List, Optional
-import os
 
 from mistralai.exceptions import MistralAPIException, MistralException
 from mistralai.models.chat_completion import ChatMessage

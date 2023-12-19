@@ -1,5 +1,5 @@
-import os
 import asyncio
+import os
 
 from mistralai.async_client import MistralAsyncClient
 
