@@ -1,20 +1,23 @@
-import asyncio
-import logging
 import os
 import posixpath
 import time
-from collections import defaultdict
 from json import JSONDecodeError
-from typing import Any, AsyncGenerator, Awaitable, Callable, Dict, List, Optional, Union
+from typing import Any, AsyncGenerator, Dict, List, Optional, Union
 
-import aiohttp
-import backoff
-import orjson
+from httpx import (
+    AsyncClient,
+    AsyncHTTPTransport,
+    ConnectError,
+    Limits,
+    RequestError,
+    Response,
+)
 
 from mistralai.client_base import ClientBase
-from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
+from mistralai.constants import ENDPOINT
 from mistralai.exceptions import (
     MistralAPIException,
+    MistralAPIStatusException,
     MistralConnectionException,
     MistralException,
 )
@@ -25,136 +28,6 @@ from mistralai.models.chat_completion import (
 )
 from mistralai.models.embeddings import EmbeddingResponse
 from mistralai.models.models import ModelList
-
-
-class AIOHTTPBackend:
-    """HTTP backend which handles retries, concurrency limiting and logging"""
-
-    SLEEP_AFTER_FAILURE = defaultdict(lambda: 0.25, {429: 5.0})
-
-    _requester: Callable[..., Awaitable[aiohttp.ClientResponse]]
-    _semaphore: asyncio.Semaphore
-    _session: Optional[aiohttp.ClientSession]
-
-    def __init__(
-        self,
-        max_concurrent_requests: int = 64,
-        max_retries: int = 5,
-        timeout: int = 120,
-    ):
-        self._logger = logging.getLogger(__name__)
-        self._timeout = timeout
-        self._max_retries = max_retries
-        self._session = None
-        self._max_concurrent_requests = max_concurrent_requests
-
-    def build_aio_requester(
-        self,
-    ) -> Callable:  # returns a function for retryable requests
-        @backoff.on_exception(
-            backoff.expo,
-            (aiohttp.ClientError, aiohttp.ClientResponseError),
-            max_tries=self._max_retries + 1,
-            max_time=self._timeout,
-        )
-        async def make_request_fn(
-            session: aiohttp.ClientSession, *args: Any, **kwargs: Any
-        ) -> aiohttp.ClientResponse:
-            async with self._semaphore:  # this limits total concurrency by the client
-                response = await session.request(*args, **kwargs)
-            if (
-                response.status in RETRY_STATUS_CODES
-            ):  # likely temporary, raise to retry
-                self._logger.info(f"Received status {response.status}, retrying...")
-                await asyncio.sleep(self.SLEEP_AFTER_FAILURE[response.status])
-                response.raise_for_status()
-
-            return response
-
-        return make_request_fn
-
-    async def request(
-        self,
-        url: str,
-        json: Optional[Dict[str, Any]] = None,
-        method: str = "post",
-        headers: Optional[Dict[str, Any]] = None,
-        session: Optional[aiohttp.ClientSession] = None,
-        params: Optional[Dict[str, Any]] = None,
-        **kwargs: Any,
-    ) -> aiohttp.ClientResponse:
-        session = session or await self.session()
-        self._logger.debug(f"Making request to {url} with content {json}")
-
-        request_start = time.time()
-        try:
-            response = await self._requester(
-                session,
-                method,
-                url,
-                headers=headers,
-                json=json,
-                params=params,
-                **kwargs,
-            )
-        except (
-            aiohttp.ClientConnectionError
-        ) as e:  # ensure the SDK user does not have to deal with knowing aiohttp
-            self._logger.debug(
-                f"Fatal connection error after {time.time()-request_start:.1f}s: {e}"
-            )
-            raise MistralConnectionException(str(e)) from e
-        except (
-            aiohttp.ClientResponseError
-        ) as e:  # status 500 or something remains after retries
-            self._logger.debug(
-                f"Fatal ClientResponseError error after {time.time()-request_start:.1f}s: {e}"
-            )
-            raise MistralConnectionException(str(e)) from e
-        except asyncio.TimeoutError as e:
-            self._logger.debug(
-                f"Fatal timeout error after {time.time()-request_start:.1f}s: {e}"
-            )
-            raise MistralConnectionException("The request timed out") from e
-        except Exception as e:  # Anything caught here should be added above
-            self._logger.debug(
-                f"Unexpected fatal error after {time.time()-request_start:.1f}s: {e}"
-            )
-            raise MistralException(
-                f"Unexpected exception ({e.__class__.__name__}): {e}"
-            ) from e
-
-        self._logger.debug(
-            f"Received response with status {response.status} after {time.time()-request_start:.1f}s"
-        )
-        return response
-
-    async def session(self) -> aiohttp.ClientSession:
-        if self._session is None:
-            self._session = aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(self._timeout),
-                connector=aiohttp.TCPConnector(limit=0),
-            )
-            self._semaphore = asyncio.Semaphore(self._max_concurrent_requests)
-            self._requester = self.build_aio_requester()
-        return self._session
-
-    async def close(self) -> None:
-        if self._session is not None:
-            await self._session.close()
-            self._session = None
-
-    def __del__(self) -> None:
-        # https://stackoverflow.com/questions/54770360/how-can-i-wait-for-an-objects-del-to-finish-before-the-async-loop-closes
-        if self._session:
-            try:
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(self.close())
-                else:
-                    loop.run_until_complete(self.close())
-            except Exception:
-                pass
 
 
 class MistralAsyncClient(ClientBase):
@@ -168,14 +41,15 @@ class MistralAsyncClient(ClientBase):
     ):
         super().__init__(endpoint, api_key, max_retries, timeout)
 
-        self._backend = AIOHTTPBackend(
-            max_concurrent_requests=max_concurrent_requests,
-            max_retries=max_retries,
+        self._client = AsyncClient(
+            follow_redirects=True,
             timeout=timeout,
+            limits=Limits(max_connections=max_concurrent_requests),
+            transport=AsyncHTTPTransport(retries=max_retries),
         )
 
     async def close(self) -> None:
-        await self._backend.close()
+        await self._client.aclose()
 
     async def _request(
         self,
@@ -183,9 +57,8 @@ class MistralAsyncClient(ClientBase):
         json: Dict[str, Any],
         path: str,
         stream: bool = False,
-        params: Optional[Dict[str, Any]] = None,
-    ) -> Union[Dict[str, Any], aiohttp.ClientResponse]:
-
+        attempt: int = 1,
+    ) -> AsyncGenerator[Dict[str, Any], None]:
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
@@ -193,27 +66,60 @@ class MistralAsyncClient(ClientBase):
 
         url = posixpath.join(self._endpoint, path)
 
-        response = await self._backend.request(
-            url, json, method, headers, params=params
-        )
-        if stream:
-            return response
+        self._logger.debug(f"Sending request: {method} {url} {json}")
+
+        response: Response
 
         try:
-            json_response: Dict[str, Any] = await response.json()
-        except JSONDecodeError as e:
-            raise MistralAPIException.from_aio_response(
-                response, message=f"Failed to decode json body: {await response.text()}"
-            ) from e
-        except aiohttp.ClientPayloadError as e:
-            raise MistralAPIException.from_aio_response(
-                response,
-                message=f"An unexpected error occurred while receiving the response: {e}",
-            ) from e
+            if stream:
+                async with self._client.stream(
+                    method,
+                    url,
+                    headers=headers,
+                    json=json,
+                ) as response:
+                    self._check_streaming_response(response)
 
-        self._logger.debug(f"JSON response: {json_response}")
-        self._check_response(json_response, dict(response.headers), response.status)
-        return json_response
+                    async for line in response.aiter_lines():
+                        json_streamed_response = self._process_line(line)
+                        if json_streamed_response:
+                            yield json_streamed_response
+
+            else:
+                response = await self._client.request(
+                    method,
+                    url,
+                    headers=headers,
+                    json=json,
+                )
+
+                yield self._check_response(response)
+
+        except ConnectError as e:
+            raise MistralConnectionException(str(e)) from e
+        except RequestError as e:
+            raise MistralException(
+                f"Unexpected exception ({e.__class__.__name__}): {e}"
+            ) from e
+        except JSONDecodeError as e:
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Failed to decode json body: {response.text}",
+            ) from e
+        except MistralAPIStatusException as e:
+            attempt += 1
+            if attempt > self._max_retries:
+                raise MistralAPIStatusException.from_response(
+                    response, message=str(e)
+                ) from e
+            backoff = 2.0**attempt  # exponential backoff
+            time.sleep(backoff)
+
+            # Retry as a generator
+            async for r in self._request(
+                method, json, path, stream=stream, attempt=attempt
+            ):
+                yield r
 
     async def chat(
         self,
@@ -225,7 +131,7 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
     ) -> ChatCompletionResponse:
-        """ A asynchronous chat endpoint that returns a single response.
+        """A asynchronous chat endpoint that returns a single response.
 
         Args:
             model (str): model the name of the model to chat with, e.g. mistral-tiny
@@ -252,9 +158,12 @@ class MistralAsyncClient(ClientBase):
             safe_mode=safe_mode,
         )
 
-        response = await self._request("post", request, "v1/chat/completions")
-        assert isinstance(response, dict), "Bad response from _request"
-        return ChatCompletionResponse(**response)
+        single_response = self._request("post", request, "v1/chat/completions")
+
+        async for response in single_response:
+            return ChatCompletionResponse(**response)
+
+        raise MistralException("No response received")
 
     async def chat_stream(
         self,
@@ -266,7 +175,7 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
-        """ An Asynchronous chat endpoint that streams responses.
+        """An Asynchronous chat endpoint that streams responses.
 
         Args:
             model (str): model the name of the model to chat with, e.g. mistral-tiny
@@ -294,24 +203,12 @@ class MistralAsyncClient(ClientBase):
             stream=True,
             safe_mode=safe_mode,
         )
-        async_response = await self._request(
+        async_response = self._request(
             "post", request, "v1/chat/completions", stream=True
         )
 
-        assert isinstance(
-            async_response, aiohttp.ClientResponse
-        ), "Bad response from _request"
-
-        async with async_response as response:
-            async for line in response.content:
-                if line == b"\n":
-                    continue
-
-                if line.startswith(b"data: "):
-                    line = line[6:].strip()
-                    if line != b"[DONE]":
-                        json_response = orjson.loads(line)
-                        yield ChatCompletionStreamResponse(**json_response)
+        async for json_response in async_response:
+            yield ChatCompletionStreamResponse(**json_response)
 
     async def embeddings(
         self, model: str, input: Union[str, List[str]]
@@ -327,9 +224,12 @@ class MistralAsyncClient(ClientBase):
             EmbeddingResponse: A response object containing the embeddings.
         """
         request = {"model": model, "input": input}
-        response = await self._request("post", request, "v1/embeddings")
-        assert isinstance(response, dict), "Bad response from _request"
-        return EmbeddingResponse(**response)
+        single_response = self._request("post", request, "v1/embeddings")
+
+        async for response in single_response:
+            return EmbeddingResponse(**response)
+
+        raise MistralException("No response received")
 
     async def list_models(self) -> ModelList:
         """Returns a list of the available models
@@ -337,6 +237,9 @@ class MistralAsyncClient(ClientBase):
         Returns:
             ModelList: A response object containing the list of models.
         """
-        response = await self._request("get", {}, "v1/models")
-        assert isinstance(response, dict), "Bad response from _request"
-        return ModelList(**response)
+        single_response = self._request("get", {}, "v1/models")
+
+        async for response in single_response:
+            return ModelList(**response)
+
+        raise MistralException("No response received")
