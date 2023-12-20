@@ -1,12 +1,23 @@
 import logging
 import os
+import orjson
+from httpx import Response
 from abc import ABC
 from typing import Any, Dict, List, Optional
 
-from mistralai.exceptions import MistralAPIException, MistralException
+from mistralai.constants import RETRY_STATUS_CODES
+from mistralai.exceptions import (
+    MistralAPIException,
+    MistralException,
+    MistralAPIStatusException,
+)
 from mistralai.models.chat_completion import ChatMessage
 
-logging.basicConfig(format="%(asctime)s %(levelname)s %(name)s: %(message)s", level=os.getenv("LOG_LEVEL", "ERROR"))
+logging.basicConfig(
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    level=os.getenv("LOG_LEVEL", "ERROR"),
+)
+
 
 class ClientBase(ABC):
     def __init__(
@@ -54,25 +65,44 @@ class ClientBase(ABC):
 
         return request_data
 
-    def _check_response(
-        self, headers: Dict[str, Any], status: int, json_response: Optional[Dict[str, Any]] = None
-    ) -> None:
-        if json_response is not None:
-            if "object" not in json_response:
-                raise MistralException(message=f"Unexpected response: {json_response}")
-            if "error" == json_response["object"]:  # has errors
-                raise MistralAPIException(
-                    message=json_response["message"],
-                    http_status=status,
-                    headers=headers,
-                )
-        if 400 <= status < 500:
-            raise MistralAPIException(
-                message=f"Unexpected client error (status {status}): {json_response}",
-                http_status=status,
-                headers=headers,
+    def _check_response_status_codes(self, response: Response) -> None:
+        if response.status_code in RETRY_STATUS_CODES:
+            raise MistralAPIStatusException.from_response(
+                response,
+                message=f"Cannot stream response. Status: {response.status_code}",
             )
-        if status >= 500:
+        elif 400 <= response.status_code < 500:
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Cannot stream response. Status: {response.status_code}",
+            )
+        elif response.status_code >= 500:
             raise MistralException(
-                message=f"Unexpected server error (status {status}): {json_response}"
+                message=f"Unexpected server error (status {response.status_code})"
             )
+
+    def _check_streaming_response(self, response: Response) -> None:
+        self._check_response_status_codes(response)
+
+    def _check_response(self, response: Response) -> Dict[str, Any]:
+        self._check_response_status_codes(response)
+
+        json_response: Dict[str, Any] = response.json()
+
+        if "object" not in json_response:
+            raise MistralException(message=f"Unexpected response: {json_response}")
+        if "error" == json_response["object"]:  # has errors
+            raise MistralAPIException.from_response(
+                response,
+                message=json_response["message"],
+            )
+
+        return json_response
+
+    def _process_line(self, line: str) -> Optional[Dict[str, Any]]:
+        if line.startswith("data: "):
+            line = line[6:].strip()
+            if line != "[DONE]":
+                json_streamed_response: Dict[str, Any] = orjson.loads(line)
+                return json_streamed_response
+        return None

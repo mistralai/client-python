@@ -4,7 +4,6 @@ import time
 from json import JSONDecodeError
 from typing import Any, AsyncGenerator, Dict, List, Optional, Union
 
-import orjson
 from httpx import (
     AsyncClient,
     AsyncHTTPTransport,
@@ -15,7 +14,7 @@ from httpx import (
 )
 
 from mistralai.client_base import ClientBase
-from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
+from mistralai.constants import ENDPOINT
 from mistralai.exceptions import (
     MistralAPIException,
     MistralAPIStatusException,
@@ -73,42 +72,20 @@ class MistralAsyncClient(ClientBase):
 
         try:
             if stream:
-                self._logger.debug("Streaming Response")
                 async with self._client.stream(
                     method,
                     url,
                     headers=headers,
                     json=json,
                 ) as response:
-                    if response.status_code in RETRY_STATUS_CODES:
-                        raise MistralAPIStatusException.from_response(
-                            response,
-                            message=f"Cannot stream response. Status: {response.status_code}",
-                        )
-
-                    self._check_response(
-                        dict(response.headers),
-                        response.status_code,
-                    )
+                    self._check_streaming_response(response)
 
                     async for line in response.aiter_lines():
-                        self._logger.debug(f"Received line: {line}")
-
-                        if line.startswith("data: "):
-                            line = line[6:].strip()
-                            if line != "[DONE]":
-                                try:
-                                    json_streamed_response = orjson.loads(line)
-                                except JSONDecodeError:
-                                    raise MistralAPIException.from_response(
-                                        response,
-                                        message=f"Failed to decode json body: {json_streamed_response}",
-                                    )
-
-                                yield json_streamed_response
+                        json_streamed_response = self._process_line(line)
+                        if json_streamed_response:
+                            yield json_streamed_response
 
             else:
-                self._logger.debug("Non-Streaming Response")
                 response = await self._client.request(
                     method,
                     url,
@@ -116,29 +93,18 @@ class MistralAsyncClient(ClientBase):
                     json=json,
                 )
 
-                self._logger.debug(f"Received response: {response}")
-
-                if response.status_code in RETRY_STATUS_CODES:
-                    raise MistralAPIStatusException.from_response(response)
-
-                try:
-                    json_response: Dict[str, Any] = response.json()
-                except JSONDecodeError:
-                    raise MistralAPIException.from_response(
-                        response,
-                        message=f"Failed to decode json body: {response.text}",
-                    )
-
-                self._check_response(
-                    dict(response.headers), response.status_code, json_response
-                )
-                yield json_response
+                yield self._check_response(response)
 
         except ConnectError as e:
             raise MistralConnectionException(str(e)) from e
         except RequestError as e:
             raise MistralException(
                 f"Unexpected exception ({e.__class__.__name__}): {e}"
+            ) from e
+        except JSONDecodeError as e:
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Failed to decode json body: {response.text}",
             ) from e
         except MistralAPIStatusException as e:
             attempt += 1
