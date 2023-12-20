@@ -1,15 +1,16 @@
 import logging
 import os
-import orjson
-from httpx import Response
 from abc import ABC
 from typing import Any, Dict, List, Optional
+
+import orjson
+from httpx import Response
 
 from mistralai.constants import RETRY_STATUS_CODES
 from mistralai.exceptions import (
     MistralAPIException,
-    MistralException,
     MistralAPIStatusException,
+    MistralException,
 )
 from mistralai.models.chat_completion import ChatMessage
 
