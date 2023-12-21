@@ -193,7 +193,13 @@ def mock_chat_response_streaming_payload():
             {
                 "id": "cmpl-8cd9019d21ba490aa6b9740f5d0a883e",
                 "model": "mistral-small",
-                "choices": [{"index": 0, "delta": {"role": "assistant"}}],
+                "choices": [
+                    {
+                        "index": 0,
+                        "delta": {"role": "assistant"},
+                        "finish_reason": None,
+                    }
+                ],
             }
         ).decode()
         + "\n\n",
