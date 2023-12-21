@@ -14,7 +14,7 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  lint_and_test:
     runs-on: ubuntu-latest
 
     steps:
