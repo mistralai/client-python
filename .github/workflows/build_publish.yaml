@@ -45,6 +45,11 @@ jobs:
         run: |
           poetry run mypy .
 
+      # Tests
+      - name: Run Tests
+        run: |
+          poetry run pytest .
+
   publish:
       if: startsWith(github.ref, 'refs/tags')
       runs-on: ubuntu-latest
