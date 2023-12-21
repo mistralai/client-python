@@ -1,8 +1,8 @@
-import orjson
 import contextlib
-from contextlib import _AsyncGeneratorContextManager
 import unittest.mock as mock
 from typing import List
+
+import orjson
 from httpx import Response
 
 
@@ -188,7 +188,15 @@ def mock_chat_response_payload():
 
 def mock_chat_response_streaming_payload():
     return [
-        'data: {"id": "cmpl-8cd9019d21ba490aa6b9740f5d0a883e", "model": "mistral-small", "choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": null}]}\n\n',
+        "data: "
+        + orjson.dumps(
+            {
+                "id": "cmpl-8cd9019d21ba490aa6b9740f5d0a883e",
+                "model": "mistral-small",
+                "choices": [{"index": 0, "delta": {"role": "assistant"}}],
+            }
+        ).decode()
+        + "\n\n",
         *[
             "data: "
             + orjson.dumps(

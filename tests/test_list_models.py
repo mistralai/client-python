@@ -1,7 +1,6 @@
 import unittest.mock as mock
 
 import pytest
-
 from mistralai.client import MistralClient
 from mistralai.models.models import ModelList
 
@@ -32,7 +31,7 @@ class TestListModels:
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },
-            json={}
+            json={},
         )
 
         assert isinstance(result, ModelList), "Should return an ModelList"

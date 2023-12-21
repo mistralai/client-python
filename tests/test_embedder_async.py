@@ -1,8 +1,10 @@
-import pytest
 import unittest.mock as mock
+
+import pytest
 from mistralai.async_client import MistralAsyncClient
 from mistralai.models.embeddings import EmbeddingResponse
-from .utils import mock_response, mock_embedding_response_payload
+
+from .utils import mock_embedding_response_payload, mock_response
 
 
 @pytest.fixture()

@@ -1,8 +1,11 @@
-import pytest
 import unittest.mock as mock
+
+import pytest
 from mistralai.client import MistralClient
 from mistralai.models.embeddings import EmbeddingResponse
-from .utils import mock_response, mock_embedding_response_payload
+
+from .utils import mock_embedding_response_payload, mock_response
+
 
 @pytest.fixture()
 def client():
@@ -60,7 +63,10 @@ class TestEmbeddings:
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },
-            json={"model": "mistral-embed", "input": ["What is the best French cheese?"] * 10},
+            json={
+                "model": "mistral-embed",
+                "input": ["What is the best French cheese?"] * 10,
+            },
         )
 
         assert isinstance(
@@ -69,4 +75,3 @@ class TestEmbeddings:
         assert len(result.data) == 10
         assert result.data[0].index == 0
         assert result.object == "list"
-            

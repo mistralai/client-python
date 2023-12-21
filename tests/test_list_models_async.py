@@ -1,7 +1,6 @@
 import unittest.mock as mock
 
 import pytest
-
 from mistralai.async_client import MistralAsyncClient
 from mistralai.models.models import ModelList
 
@@ -33,7 +32,7 @@ class TestAsyncListModels:
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },
-            json={}
+            json={},
         )
 
         assert isinstance(result, ModelList), "Should return an ModelList"

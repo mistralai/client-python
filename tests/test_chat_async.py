@@ -1,8 +1,20 @@
-import pytest
 import unittest.mock as mock
+
+import pytest
 from mistralai.async_client import MistralAsyncClient
-from mistralai.models.chat_completion import ChatCompletionResponse, ChatMessage, ChatCompletionStreamResponse
-from .utils import mock_response, mock_async_stream_response, mock_chat_response_payload, mock_chat_response_streaming_payload
+from mistralai.models.chat_completion import (
+    ChatCompletionResponse,
+    ChatCompletionStreamResponse,
+    ChatMessage,
+)
+
+from .utils import (
+    mock_async_stream_response,
+    mock_chat_response_payload,
+    mock_chat_response_streaming_payload,
+    mock_response,
+)
+
 
 @pytest.fixture()
 def client():
@@ -22,7 +34,9 @@ class TestAsyncChat:
 
         result = await client.chat(
             model="mistral-small",
-            messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+            messages=[
+                ChatMessage(role="user", content="What is the best French cheese?")
+            ],
         )
 
         client._client.request.assert_awaited_once_with(
@@ -33,10 +47,16 @@ class TestAsyncChat:
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },
-            json={'model': 'mistral-small', 'messages': [{'role': 'user', 'content': 'What is the best French cheese?'}], 'safe_prompt': False, 'stream': False},
+            json={
+                "model": "mistral-small",
+                "messages": [
+                    {"role": "user", "content": "What is the best French cheese?"}
+                ],
+                "safe_prompt": False,
+                "stream": False,
+            },
         )
 
-        
         assert isinstance(
             result, ChatCompletionResponse
         ), "Should return an ChatCompletionResponse"
@@ -53,7 +73,9 @@ class TestAsyncChat:
 
         result = client.chat_stream(
             model="mistral-small",
-            messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+            messages=[
+                ChatMessage(role="user", content="What is the best French cheese?")
+            ],
         )
 
         results = [r async for r in result]
@@ -66,7 +88,14 @@ class TestAsyncChat:
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },
-            json={'model': 'mistral-small', 'messages': [{'role': 'user', 'content': 'What is the best French cheese?'}], 'safe_prompt': False, 'stream': True},
+            json={
+                "model": "mistral-small",
+                "messages": [
+                    {"role": "user", "content": "What is the best French cheese?"}
+                ],
+                "safe_prompt": False,
+                "stream": True,
+            },
         )
 
         for i, result in enumerate(results):
@@ -82,6 +111,6 @@ class TestAsyncChat:
                     result, ChatCompletionStreamResponse
                 ), "Should return an ChatCompletionStreamResponse"
                 assert len(result.choices) == 1
-                assert result.choices[0].index == i-1
+                assert result.choices[0].index == i - 1
                 assert result.choices[0].delta.content == f"stream response {i-1}"
                 assert result.object == "chat.completion.chunk"
