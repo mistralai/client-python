@@ -60,6 +60,7 @@ class MistralAsyncClient(ClientBase):
         attempt: int = 1,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         headers = {
+            "Accept": "application/json",
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }

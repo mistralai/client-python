@@ -54,6 +54,7 @@ class MistralClient(ClientBase):
         attempt: int = 1,
     ) -> Iterator[Dict[str, Any]]:
         headers = {
+            "Accept": "application/json",
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }
