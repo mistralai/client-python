@@ -77,7 +77,7 @@ jobs:
         - name: Build Package
           run: |
             poetry version ${{ github.ref_name }}
-            sed -i 's/self._version = '\''0.0.1'\''/self._version = '\''${{ github.ref_name }}'\''/g' src/mistralai/client_base.py
+            sed -i 's/self._version = "0.0.1"/self._version = "${{ github.ref_name }}"/g' src/mistralai/client_base.py
             poetry build
 
         # Publish to PyPi
