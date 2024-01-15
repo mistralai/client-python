@@ -35,6 +35,9 @@ class ClientBase(ABC):
         self._api_key = api_key
         self._logger = logging.getLogger(__name__)
 
+        # This should be automatically updated by the deploy script
+        self._version = "0.0.1"
+
     def _make_chat_request(
         self,
         model: str,
