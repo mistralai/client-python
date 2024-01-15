@@ -27,6 +27,7 @@ class TestListModels:
             "get",
             "https://api.mistral.ai/v1/models",
             headers={
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
