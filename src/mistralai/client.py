@@ -53,8 +53,10 @@ class MistralClient(ClientBase):
         stream: bool = False,
         attempt: int = 1,
     ) -> Iterator[Dict[str, Any]]:
+        accept_header = "text/event-stream" if stream else "application/json"
         headers = {
-            "Accept": "application/json",
+            "Accept": accept_header,
+            "User-Agent": f"mistral-client-python/{self._version}",
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }

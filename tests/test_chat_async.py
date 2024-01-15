@@ -43,6 +43,7 @@ class TestAsyncChat:
             "post",
             "https://api.mistral.ai/v1/chat/completions",
             headers={
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
@@ -84,7 +85,8 @@ class TestAsyncChat:
             "post",
             "https://api.mistral.ai/v1/chat/completions",
             headers={
-                "Accept": "application/json",
+                "Accept": "text/event-stream",
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
             },

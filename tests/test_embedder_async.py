@@ -31,6 +31,7 @@ class TestAsyncEmbeddings:
             "post",
             "https://api.mistral.ai/v1/embeddings",
             headers={
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
@@ -61,6 +62,7 @@ class TestAsyncEmbeddings:
             "post",
             "https://api.mistral.ai/v1/embeddings",
             headers={
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
                 "Authorization": "Bearer None",
                 "Content-Type": "application/json",
