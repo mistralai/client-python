@@ -47,12 +47,12 @@ class ClientBase(ABC):
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
-        safe_mode: Optional[bool] = False,
+        safe_prompt: Optional[bool] = False,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
             "messages": [msg.model_dump() for msg in messages],
-            "safe_prompt": safe_mode,
+            "safe_prompt": safe_prompt,
         }
         if temperature is not None:
             request_data["temperature"] = temperature

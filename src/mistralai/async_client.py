@@ -133,6 +133,7 @@ class MistralAsyncClient(ClientBase):
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
+        safe_prompt: bool = False,
     ) -> ChatCompletionResponse:
         """A asynchronous chat endpoint that returns a single response.
 
@@ -145,7 +146,8 @@ class MistralAsyncClient(ClientBase):
             top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
             Defaults to None.
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
-            safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
+            safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
+            safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
 
         Returns:
             ChatCompletionResponse: a response object containing the generated text.
@@ -158,7 +160,7 @@ class MistralAsyncClient(ClientBase):
             top_p=top_p,
             random_seed=random_seed,
             stream=False,
-            safe_mode=safe_mode,
+            safe_prompt=safe_mode or safe_prompt,
         )
 
         single_response = self._request("post", request, "v1/chat/completions")
@@ -177,6 +179,7 @@ class MistralAsyncClient(ClientBase):
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
+        safe_prompt: bool = False,
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
         """An Asynchronous chat endpoint that streams responses.
 
@@ -189,7 +192,8 @@ class MistralAsyncClient(ClientBase):
             top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
             Defaults to None.
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
-            safe_mode (bool, optional): whether to use safe mode, e.g. true. Defaults to False.
+            safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
+            safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
 
         Returns:
             AsyncGenerator[ChatCompletionStreamResponse, None]:
@@ -204,7 +208,7 @@ class MistralAsyncClient(ClientBase):
             top_p=top_p,
             random_seed=random_seed,
             stream=True,
-            safe_mode=safe_mode,
+            safe_prompt=safe_mode or safe_prompt,
         )
         async_response = self._request(
             "post", request, "v1/chat/completions", stream=True
