@@ -132,7 +132,7 @@ To see this help: /help
         print("")
 
     def collect_user_input(self):
-        content = input(f"\033[38;2;50;168;82mUser: \033[0m")
+        content = input("\033[38;2;50;168;82mUser: \033[0m")
         return content
 
     def run_inference(self, content):
