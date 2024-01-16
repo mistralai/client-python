@@ -1,9 +1,23 @@
 import logging
+import os
 from abc import ABC
 from typing import Any, Dict, List, Optional
 
-from mistralai.exceptions import MistralAPIException, MistralException
+import orjson
+from httpx import Response
+
+from mistralai.constants import RETRY_STATUS_CODES
+from mistralai.exceptions import (
+    MistralAPIException,
+    MistralAPIStatusException,
+    MistralException,
+)
 from mistralai.models.chat_completion import ChatMessage
+
+logging.basicConfig(
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    level=os.getenv("LOG_LEVEL", "ERROR"),
+)
 
 
 class ClientBase(ABC):
@@ -21,8 +35,11 @@ class ClientBase(ABC):
         self._api_key = api_key
         self._logger = logging.getLogger(__name__)
 
-    @staticmethod
+        # This should be automatically updated by the deploy script
+        self._version = "0.0.1"
+
     def _make_chat_request(
+        self,
         model: str,
         messages: List[ChatMessage],
         temperature: Optional[float] = None,
@@ -30,12 +47,12 @@ class ClientBase(ABC):
         top_p: Optional[float] = None,
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
-        safe_mode: Optional[bool] = False,
+        safe_prompt: Optional[bool] = False,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
             "messages": [msg.model_dump() for msg in messages],
-            "safe_prompt": safe_mode,
+            "safe_prompt": safe_prompt,
         }
         if temperature is not None:
             request_data["temperature"] = temperature
@@ -48,26 +65,48 @@ class ClientBase(ABC):
         if stream is not None:
             request_data["stream"] = stream
 
+        self._logger.debug(f"Chat request: {request_data}")
+
         return request_data
 
-    def _check_response(
-        self, json_response: Dict[str, Any], headers: Dict[str, Any], status: int
-    ) -> None:
+    def _check_response_status_codes(self, response: Response) -> None:
+        if response.status_code in RETRY_STATUS_CODES:
+            raise MistralAPIStatusException.from_response(
+                response,
+                message=f"Cannot stream response. Status: {response.status_code}",
+            )
+        elif 400 <= response.status_code < 500:
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Cannot stream response. Status: {response.status_code}",
+            )
+        elif response.status_code >= 500:
+            raise MistralException(
+                message=f"Unexpected server error (status {response.status_code})"
+            )
+
+    def _check_streaming_response(self, response: Response) -> None:
+        self._check_response_status_codes(response)
+
+    def _check_response(self, response: Response) -> Dict[str, Any]:
+        self._check_response_status_codes(response)
+
+        json_response: Dict[str, Any] = response.json()
+
         if "object" not in json_response:
             raise MistralException(message=f"Unexpected response: {json_response}")
         if "error" == json_response["object"]:  # has errors
-            raise MistralAPIException(
+            raise MistralAPIException.from_response(
+                response,
                 message=json_response["message"],
-                http_status=status,
-                headers=headers,
             )
-        if 400 <= status < 500:
-            raise MistralAPIException(
-                message=f"Unexpected client error (status {status}): {json_response}",
-                http_status=status,
-                headers=headers,
-            )
-        if status >= 500:
-            raise MistralException(
-                message=f"Unexpected server error (status {status}): {json_response}"
-            )
+
+        return json_response
+
+    def _process_line(self, line: str) -> Optional[Dict[str, Any]]:
+        if line.startswith("data: "):
+            line = line[6:].strip()
+            if line != "[DONE]":
+                json_streamed_response: Dict[str, Any] = orjson.loads(line)
+                return json_streamed_response
+        return None

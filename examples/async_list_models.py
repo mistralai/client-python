@@ -11,11 +11,8 @@ async def main():
 
     client = MistralAsyncClient(api_key=api_key)
 
-    embeddings_batch_response = await client.embeddings(
-        model="mistral-embed",
-        input=["What is the best French cheese?"] * 10,
-    )
-    print(embeddings_batch_response)
+    list_models_response = await client.list_models()
+    print(list_models_response)
 
 
 if __name__ == "__main__":

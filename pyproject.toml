@@ -24,17 +24,17 @@ exclude = ["docs", "tests", "examples", "tools", "build"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-aiohttp = "^3.9.1"
-backoff = "^2.2.1"
 orjson = "^3.9.10"
-requests = "^2.31.0"
 pydantic = "^2.5.2"
+httpx = "^0.25.2"
 
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.6"
 mypy = "^1.7.1"
 types-requests = "^2.31.0.10"
+pytest = "^7.4.3"
+pytest-asyncio = "^0.23.2"
 
 [build-system]
 requires = ["poetry-core"]
