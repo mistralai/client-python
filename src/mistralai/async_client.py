@@ -134,6 +134,7 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        stop: Optional[List[str]] = None
     ) -> ChatCompletionResponse:
         """A asynchronous chat endpoint that returns a single response.
 
@@ -148,6 +149,8 @@ class MistralAsyncClient(ClientBase):
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
             safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
+            stop (Optional[List[str]], optional): string upon which the API will stop generating further tokens. The
+            returned text will not contain the stop sequence. e.g. ['Observations'] Defaults to None.
 
         Returns:
             ChatCompletionResponse: a response object containing the generated text.
@@ -180,6 +183,7 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        stop: Optional[List[str]] = None
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
         """An Asynchronous chat endpoint that streams responses.
 
@@ -194,6 +198,8 @@ class MistralAsyncClient(ClientBase):
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
             safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
+            stop (Optional[List[str]], optional): string upon which the API will stop generating further tokens. The
+            returned text will not contain the stop sequence. e.g. ['Observations'] Defaults to None.
 
         Returns:
             AsyncGenerator[ChatCompletionStreamResponse, None]:
@@ -209,6 +215,7 @@ class MistralAsyncClient(ClientBase):
             random_seed=random_seed,
             stream=True,
             safe_prompt=safe_mode or safe_prompt,
+            stop=stop
         )
         async_response = self._request(
             "post", request, "v1/chat/completions", stream=True
