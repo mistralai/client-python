@@ -126,6 +126,7 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        stop: Optional[List[str]] = None
     ) -> ChatCompletionResponse:
         """A chat endpoint that returns a single response.
 
@@ -140,6 +141,8 @@ class MistralClient(ClientBase):
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
             safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
+            stop (Optional[List[str]], optional): string upon which the API will stop generating further tokens. The
+            returned text will not contain the stop sequence. e.g. ['Observations'] Defaults to None.
 
         Returns:
             ChatCompletionResponse: a response object containing the generated text.
@@ -153,6 +156,7 @@ class MistralClient(ClientBase):
             random_seed=random_seed,
             stream=False,
             safe_prompt=safe_mode or safe_prompt,
+            stop=stop
         )
 
         single_response = self._request("post", request, "v1/chat/completions")
@@ -172,6 +176,7 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        stop: Optional[List[str]] = None
     ) -> Iterable[ChatCompletionStreamResponse]:
         """A chat endpoint that streams responses.
 
@@ -186,6 +191,8 @@ class MistralClient(ClientBase):
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
             safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
+            stop (Optional[List[str]], optional): string upon which the API will stop generating further tokens. The
+            returned text will not contain the stop sequence. e.g. ['Observations'] Defaults to None.
 
         Returns:
              Iterable[ChatCompletionStreamResponse]:
@@ -200,6 +207,7 @@ class MistralClient(ClientBase):
             random_seed=random_seed,
             stream=True,
             safe_prompt=safe_mode or safe_prompt,
+            stop=stop
         )
 
         response = self._request("post", request, "v1/chat/completions", stream=True)

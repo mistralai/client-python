@@ -48,6 +48,7 @@ class ClientBase(ABC):
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
         safe_prompt: Optional[bool] = False,
+        stop: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
@@ -64,12 +65,14 @@ class ClientBase(ABC):
             request_data["random_seed"] = random_seed
         if stream is not None:
             request_data["stream"] = stream
-
+        if stop is not None:
+            request_data["stop"] = stop
         self._logger.debug(f"Chat request: {request_data}")
 
         return request_data
 
-    def _check_response_status_codes(self, response: Response) -> None:
+    @staticmethod
+    def _check_response_status_codes(response: Response) -> None:
         if response.status_code in RETRY_STATUS_CODES:
             raise MistralAPIStatusException.from_response(
                 response,
