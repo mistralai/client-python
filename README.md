@@ -65,7 +65,7 @@ cd examples
 
 You can also use a user-friendly graphic interface in the `gui/` directory to interact with Mistral AI models (mistral-tiny, mistral-small, mistral-medium).
 
-![mistral ui](mistralgui.png)
+![mistral gui](mistralgui.png)
 
 ### Requirements
 
