@@ -60,3 +60,26 @@ cd examples
 
 >> python chat_no_streaming.py
 ```
+
+## Mistral GUI
+
+You can also use a user-friendly graphic interface in the `gui/` directory to interact with Mistral AI models (mistral-tiny, mistral-small, mistral-medium).
+
+![mistral ui](mistralgui.png)
+
+### Requirements
+
+1. Get your own Mistral API Key: <https://docs.mistral.ai/#api-access>
+2. Install these Python modules:
+```bash
+pip install requests
+pip install tk
+pip install ttkthemes
+```
+
+### Run
+
+```bash
+cd gui
+python mistral_gui.py
+```
