@@ -19,6 +19,7 @@ class DeltaMessage(BaseModel):
 class FinishReason(Enum):
     stop = "stop"
     length = "length"
+    error = "error"
 
 
 class ChatCompletionResponseStreamChoice(BaseModel):

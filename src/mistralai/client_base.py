@@ -73,16 +73,16 @@ class ClientBase(ABC):
         if response.status_code in RETRY_STATUS_CODES:
             raise MistralAPIStatusException.from_response(
                 response,
-                message=f"Cannot stream response. Status: {response.status_code}",
+                message=f"Status: {response.status_code}. Message: {response.text}",
             )
         elif 400 <= response.status_code < 500:
             raise MistralAPIException.from_response(
                 response,
-                message=f"Cannot stream response. Status: {response.status_code}",
+                message=f"Status: {response.status_code}. Message: {response.text}",
             )
         elif response.status_code >= 500:
             raise MistralException(
-                message=f"Unexpected server error (status {response.status_code})"
+                message=f"Status: {response.status_code}. Message: {response.text}",
             )
 
     def _check_streaming_response(self, response: Response) -> None:
