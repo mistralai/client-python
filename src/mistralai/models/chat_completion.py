@@ -16,10 +16,10 @@ class DeltaMessage(BaseModel):
     content: Optional[str] = None
 
 
-class FinishReason(Enum):
-    stop = "stop"
-    length = "length"
-    error = "error"
+class FinishReason(str, Enum):
+    stop: str = "stop"
+    length: str = "length"
+    error: str = "error"
 
 
 class ChatCompletionResponseStreamChoice(BaseModel):
