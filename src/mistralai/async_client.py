@@ -180,7 +180,7 @@ class MistralAsyncClient(ClientBase):
             model (str): model the name of the model to chat with, e.g. mistral-tiny
             messages (List[Any]): messages an array of messages to chat with, e.g.
                 [{role: 'user', content: 'What is the best French cheese?'}]
-            tool (Optional[List[Function]], optional): a list of tools to use.
+            tools (Optional[List[Function]], optional): a list of tools to use.
             temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
             max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
             top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
