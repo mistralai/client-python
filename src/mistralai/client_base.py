@@ -12,7 +12,7 @@ from mistralai.exceptions import (
     MistralAPIStatusException,
     MistralException,
 )
-from mistralai.models.chat_completion import ChatMessage
+from mistralai.models.chat_completion import ChatMessage, Function
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
@@ -38,10 +38,36 @@ class ClientBase(ABC):
         # This should be automatically updated by the deploy script
         self._version = "0.0.1"
 
+    def _parse_tools(self, tools: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        parsed_tools: List[Dict[str, Any]] = []
+        for tool in tools:
+            if tool["type"] == "function":
+                parsed_function = {}
+                parsed_function["type"] = tool["type"]
+                if isinstance(tool["function"], Function):
+                    parsed_function["function"] = tool["function"].model_dump(exclude_none=True)
+                else:
+                    parsed_function["function"] = tool["function"]
+
+                parsed_tools.append(parsed_function)
+
+        return parsed_tools
+
+    def _parse_messages(self, messages: List[Any]) -> List[Dict[str, Any]]:
+        parsed_messages: List[Dict[str, Any]] = []
+        for message in messages:
+            if isinstance(message, ChatMessage):
+                parsed_messages.append(message.model_dump(exclude_none=True))
+            else:
+                parsed_messages.append(message)
+
+        return parsed_messages
+
     def _make_chat_request(
         self,
         model: str,
-        messages: List[ChatMessage],
+        messages: List[Any],
+        tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
         top_p: Optional[float] = None,
@@ -51,9 +77,11 @@ class ClientBase(ABC):
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "model": model,
-            "messages": [msg.model_dump() for msg in messages],
+            "messages": self._parse_messages(messages),
             "safe_prompt": safe_prompt,
         }
+        if tools is not None:
+            request_data["tools"] = self._parse_tools(tools)
         if temperature is not None:
             request_data["temperature"] = temperature
         if max_tokens is not None:

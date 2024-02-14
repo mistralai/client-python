@@ -1,19 +1,43 @@
 from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
 from mistralai.models.common import UsageInfo
 
 
+class Function(BaseModel):
+    name: str
+    description: str
+    parameters: dict
+
+
+class ToolType(str, Enum):
+    function = "function"
+
+
+class FunctionCall(BaseModel):
+    name: str
+    arguments: str
+
+
+class ToolCall(BaseModel):
+    id: str = "null"
+    type: ToolType = ToolType.function
+    function: FunctionCall
+
+
 class ChatMessage(BaseModel):
     role: str
-    content: str
+    content: Union[str, List[str]]
+    name: Optional[str] = None
+    tool_calls: Optional[List[ToolCall]] = None
 
 
 class DeltaMessage(BaseModel):
     role: Optional[str] = None
     content: Optional[str] = None
+    tool_calls: Optional[List[ToolCall]] = None
 
 
 class FinishReason(Enum):
