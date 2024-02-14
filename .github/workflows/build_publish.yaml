@@ -85,3 +85,64 @@ jobs:
           run: |
             poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
             poetry publish
+
+  create_pr_on_public:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PUBLIC_CLIENT_WRITE_TOKEN }}
+
+
+      - name: Pull public updates
+        env: # We cannot use the github bot token to push to the public repo, we have to use one with more permissions
+          GITHUB_TOKEN: ${{ secrets.PUBLIC_CLIENT_WRITE_TOKEN }}
+        run: |
+
+          set -x
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "mayo@mistral.ai"
+
+          git remote add public https://github.com/mistralai/client-python.git
+          git remote update
+
+          # Create a diff of the changes, ignoring the ci workflow
+          git merge public/main --no-commit --no-ff --no-edit --allow-unrelated-histories --strategy-option ours
+
+          # If there are changes, commit them
+          if ! git diff --quiet; then
+            git commit -m "Update from public repo"
+            git push origin ${{github.ref}}
+          else
+            echo "No changes to apply"
+          fi
+
+      - name: Push to public repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLIC_CLIENT_WRITE_TOKEN }}
+        run: |
+          git checkout public/main
+          git checkout -b update/${{github.ref_name}}
+          
+          # write version number to version file
+          echo ${{github.ref_name}} > version.txt
+
+          git add .
+          git commit -m "Bump version file"
+
+          # create a diff of this ref and the public repo
+          git diff update/${{github.ref_name}} ${{github.ref_name}} --binary -- . ':!.github' > changes.diff
+
+          # apply the diff to the current branch
+          git apply changes.diff
+
+          # commit the changes
+          git add .
+          git commit -m "Update version to ${{github.ref_name}}"
+
+          # push the changes
+          git push public update/${{github.ref_name}}
+
+          # Create a PR from this branch to the public repo
+          gh pr create --title "Update client to ${{github.ref_name}}" --body "This PR was automatically created by a GitHub Action" --base main --head doc/${{github.ref_name}} --repo mistralai/client-python

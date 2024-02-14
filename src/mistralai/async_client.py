@@ -21,7 +21,7 @@ from mistralai.exceptions import (
     MistralConnectionException,
     MistralException,
 )
-from mistralai.models.chat_completion import ChatCompletionResponse, ChatCompletionStreamResponse, ChatMessage
+from mistralai.models.chat_completion import ChatCompletionResponse, ChatCompletionStreamResponse
 from mistralai.models.embeddings import EmbeddingResponse
 from mistralai.models.models import ModelList
 
