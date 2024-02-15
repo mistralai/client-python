@@ -14,10 +14,16 @@ from mistralai.exceptions import (
 )
 from mistralai.models.chat_completion import ChatMessage
 
-logging.basicConfig(
-    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
-    level=os.getenv("LOG_LEVEL", "ERROR"),
-)
+logger = logging.getLogger("mistralai")
+
+log_formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(log_formatter)
+
+logger.addHandler(stream_handler)
+
+logger.setLevel(os.getenv("LOG_LEVEL", "ERROR"))
 
 
 class ClientBase(ABC):
