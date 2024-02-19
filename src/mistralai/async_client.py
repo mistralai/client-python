@@ -39,6 +39,26 @@ class MistralAsyncClient(ClientBase):
         timeout: int = 120,
         max_concurrent_requests: int = 64,
     ):
+        """
+        Initializes the Mistral asynchronous client.
+
+        Parameters
+        ----------
+        api_key : str, optional
+            The API key for accessing the Mistral API. Defaults to None.
+
+        endpoint : str, optional
+            The endpoint URL for the Mistral API. Defaults to ENDPOINT.
+
+        max_retries : int, optional
+            The maximum number of retries for HTTP requests. Defaults to 5.
+
+        timeout : int, optional
+            The timeout duration for HTTP requests in seconds. Defaults to 120.
+
+        max_concurrent_requests : int, optional
+            The maximum number of concurrent requests allowed. Defaults to 64.
+        """
         super().__init__(endpoint, api_key, max_retries, timeout)
 
         self._client = AsyncClient(
@@ -49,6 +69,17 @@ class MistralAsyncClient(ClientBase):
         )
 
     async def close(self) -> None:
+        """
+        Closes the underlying HTTP client session.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
         await self._client.aclose()
 
     async def _request(
@@ -59,6 +90,39 @@ class MistralAsyncClient(ClientBase):
         stream: bool = False,
         attempt: int = 1,
     ) -> AsyncGenerator[Dict[str, Any], None]:
+        """
+        Sends an HTTP request to the Mistral API.
+
+        Parameters
+        ----------
+        method : str
+            The HTTP method (GET, POST, etc.).
+
+        json : Dict[str, Any]
+            The JSON payload of the request.
+
+        path : str
+            The API endpoint path.
+
+        stream : bool, optional
+            Flag indicating whether to stream the response. Defaults to False.
+
+        attempt : int, optional
+            The attempt number for retrying failed requests. Defaults to 1.
+
+        Yields
+        ------
+        Dict[str, Any]
+            The response data from the Mistral API.
+
+        Raises
+        ------
+        MistralConnectionException
+            If a connection error occurs.
+
+        MistralException
+            If an unexpected exception occurs during the request.
+        """
         accept_header = "text/event-stream" if stream else "application/json"
         headers = {
             "Accept": accept_header,
@@ -239,10 +303,18 @@ class MistralAsyncClient(ClientBase):
         raise MistralException("No response received")
 
     async def list_models(self) -> ModelList:
-        """Returns a list of the available models
+        """
+        Retrieves a list of available models from the Mistral API.
 
-        Returns:
-            ModelList: A response object containing the list of models.
+        Returns
+        -------
+        ModelList
+            A response object containing the list of available models.
+
+        Raises
+        ------
+        MistralException
+            If no response is received from the Mistral API.
         """
         single_response = self._request("get", {}, "v1/models")
 
