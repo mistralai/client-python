@@ -4,7 +4,7 @@ import time
 from json import JSONDecodeError
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 
-from httpx import Client, ConnectError, HTTPTransport, RequestError, Response
+from httpx import Client, ConnectError, HTTPTransport, RequestError, Response, Proxy, URL
 
 from mistralai.client_base import ClientBase
 from mistralai.constants import ENDPOINT
@@ -36,8 +36,17 @@ class MistralClient(ClientBase):
         timeout: int = 120,
     ):
         super().__init__(endpoint, api_key, max_retries, timeout)
+        http_proxies = [proxy for varname, proxy in os.environ.items() if varname.lower() == "http_proxy"]
+        https_proxies = [proxy for varname, proxy in os.environ.items() if varname.lower() == "https_proxy"]
+        all_proxies = [proxy for varname, proxy in os.environ.items() if varname.lower() == "all_proxy"]
+        proxies = {
+                "http://": http_proxies[0] if len(http_proxies) > 0 else None,
+                "https://": https_proxies[0] if len(https_proxies) > 0 else None,
+                "all://": all_proxies[0] if len(all_proxies) > 0 else None,
+                }
 
         self._client = Client(
+            proxies=proxies,
             follow_redirects=True,
             timeout=self._timeout,
             transport=HTTPTransport(retries=self._max_retries))
