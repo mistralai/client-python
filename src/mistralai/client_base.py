@@ -31,8 +31,14 @@ class ClientBase(ABC):
         self._max_retries = max_retries
         self._timeout = timeout
 
-        self._endpoint = endpoint
+        if api_key is None:
+            api_key = os.environ.get("MISTRAL_API_KEY")
+        if api_key is None:
+            raise MistralException(
+                message="API key not provided. Please set MISTRAL_API_KEY environment variable."
+            )
         self._api_key = api_key
+        self._endpoint = endpoint
         self._logger = logging.getLogger(__name__)
 
         # This should be automatically updated by the deploy script
