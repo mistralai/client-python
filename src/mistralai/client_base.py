@@ -12,7 +12,7 @@ from mistralai.exceptions import (
     MistralAPIStatusException,
     MistralException,
 )
-from mistralai.models.chat_completion import ChatMessage, Function
+from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
@@ -35,6 +35,10 @@ class ClientBase(ABC):
         self._api_key = api_key
         self._logger = logging.getLogger(__name__)
 
+        # For azure endpoints, we default to the mistral model
+        if "inference.azure.com" in self._endpoint:
+            self._default_model = "mistral"
+
         # This should be automatically updated by the deploy script
         self._version = "0.0.1"
 
@@ -53,6 +57,16 @@ class ClientBase(ABC):
 
         return parsed_tools
 
+    def _parse_tool_choice(self, tool_choice: Any) -> Any:
+        if isinstance(tool_choice, ToolChoice):
+            return tool_choice.value
+        return tool_choice
+
+    def _parse_response_format(self, response_format: Any) -> Any:
+        if isinstance(response_format, ResponseFormat):
+            return response_format.model_dump(exclude_none=True)
+        return response_format
+
     def _parse_messages(self, messages: List[Any]) -> List[Dict[str, Any]]:
         parsed_messages: List[Dict[str, Any]] = []
         for message in messages:
@@ -65,8 +79,8 @@ class ClientBase(ABC):
 
     def _make_chat_request(
         self,
-        model: str,
         messages: List[Any],
+        model: Optional[str] = None,
         tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
@@ -74,12 +88,21 @@ class ClientBase(ABC):
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
         safe_prompt: Optional[bool] = False,
+        tool_choice: Optional[Any] = None,
+        response_format: Optional[Any] = None,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
-            "model": model,
             "messages": self._parse_messages(messages),
             "safe_prompt": safe_prompt,
         }
+
+        if model is not None:
+            request_data["model"] = model
+        else:
+            if self._default_model is None:
+                raise MistralException(message="model must be provided")
+            request_data["model"] = self._default_model
+
         if tools is not None:
             request_data["tools"] = self._parse_tools(tools)
         if temperature is not None:
@@ -92,6 +115,11 @@ class ClientBase(ABC):
             request_data["random_seed"] = random_seed
         if stream is not None:
             request_data["stream"] = stream
+
+        if tool_choice is not None:
+            request_data["tool_choice"] = self._parse_tool_choice(tool_choice)
+        if response_format is not None:
+            request_data["response_format"] = self._parse_response_format(response_format)
 
         self._logger.debug(f"Chat request: {request_data}")
 

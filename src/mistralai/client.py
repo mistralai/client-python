@@ -109,8 +109,8 @@ class MistralClient(ClientBase):
 
     def chat(
         self,
-        model: str,
         messages: List[Any],
+        model: Optional[str] = None,
         tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
@@ -118,6 +118,8 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        tool_choice: Optional[Any] = None,
+        response_format: Optional[Any] = None,
     ) -> ChatCompletionResponse:
         """A chat endpoint that returns a single response.
 
@@ -138,8 +140,8 @@ class MistralClient(ClientBase):
             ChatCompletionResponse: a response object containing the generated text.
         """
         request = self._make_chat_request(
-            model,
             messages,
+            model,
             tools=tools,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -147,6 +149,8 @@ class MistralClient(ClientBase):
             random_seed=random_seed,
             stream=False,
             safe_prompt=safe_mode or safe_prompt,
+            tool_choice=tool_choice,
+            response_format=response_format,
         )
 
         single_response = self._request("post", request, "v1/chat/completions")
@@ -158,8 +162,8 @@ class MistralClient(ClientBase):
 
     def chat_stream(
         self,
-        model: str,
         messages: List[Any],
+        model: Optional[str] = None,
         tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
@@ -167,6 +171,8 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        tool_choice: Optional[Any] = None,
+        response_format: Optional[Any] = None,
     ) -> Iterable[ChatCompletionStreamResponse]:
         """A chat endpoint that streams responses.
 
@@ -188,8 +194,8 @@ class MistralClient(ClientBase):
                 A generator that yields ChatCompletionStreamResponse objects.
         """
         request = self._make_chat_request(
-            model,
             messages,
+            model,
             tools=tools,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -197,6 +203,8 @@ class MistralClient(ClientBase):
             random_seed=random_seed,
             stream=True,
             safe_prompt=safe_mode or safe_prompt,
+            tool_choice=tool_choice,
+            response_format=response_format,
         )
 
         response = self._request("post", request, "v1/chat/completions", stream=True)

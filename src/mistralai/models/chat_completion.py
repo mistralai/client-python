@@ -27,6 +27,21 @@ class ToolCall(BaseModel):
     function: FunctionCall
 
 
+class ResponseFormats(str, Enum):
+    text: str = "text"
+    json_object: str = "json_object"
+
+
+class ToolChoice(str, Enum):
+    auto: str = "auto"
+    any: str = "any"
+    none: str = "none"
+
+
+class ResponseFormat(BaseModel):
+    type: ResponseFormats = ResponseFormats.text
+
+
 class ChatMessage(BaseModel):
     role: str
     content: Union[str, List[str]]
@@ -40,7 +55,7 @@ class DeltaMessage(BaseModel):
     tool_calls: Optional[List[ToolCall]] = None
 
 
-class FinishReason(Enum):
+class FinishReason(str, Enum):
     stop = "stop"
     length = "length"
     error = "error"
