@@ -14,7 +14,12 @@ from mistralai.exceptions import (
     MistralConnectionException,
     MistralException,
 )
-from mistralai.models.chat_completion import ChatCompletionResponse, ChatCompletionStreamResponse
+from mistralai.models.chat_completion import (
+    ChatCompletionResponse,
+    ChatCompletionStreamResponse,
+    ResponseFormat,
+    ToolChoice,
+)
 from mistralai.models.embeddings import EmbeddingResponse
 from mistralai.models.models import ModelList
 
@@ -118,8 +123,8 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
-        tool_choice: Optional[Any] = None,
-        response_format: Optional[Any] = None,
+        tool_choice: Optional[Union[str, ToolChoice]] = None,
+        response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
     ) -> ChatCompletionResponse:
         """A chat endpoint that returns a single response.
 
@@ -171,8 +176,8 @@ class MistralClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
-        tool_choice: Optional[Any] = None,
-        response_format: Optional[Any] = None,
+        tool_choice: Optional[Union[str, ToolChoice]] = None,
+        response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
     ) -> Iterable[ChatCompletionStreamResponse]:
         """A chat endpoint that streams responses.
 

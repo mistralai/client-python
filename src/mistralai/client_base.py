@@ -1,7 +1,7 @@
 import logging
 import os
 from abc import ABC
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import orjson
 from httpx import Response
@@ -57,12 +57,12 @@ class ClientBase(ABC):
 
         return parsed_tools
 
-    def _parse_tool_choice(self, tool_choice: Any) -> Any:
+    def _parse_tool_choice(self, tool_choice: Union[str, ToolChoice]) -> str:
         if isinstance(tool_choice, ToolChoice):
             return tool_choice.value
         return tool_choice
 
-    def _parse_response_format(self, response_format: Any) -> Any:
+    def _parse_response_format(self, response_format: Union[Dict[str, Any], ResponseFormat]) -> Dict[str, Any]:
         if isinstance(response_format, ResponseFormat):
             return response_format.model_dump(exclude_none=True)
         return response_format
@@ -88,8 +88,8 @@ class ClientBase(ABC):
         random_seed: Optional[int] = None,
         stream: Optional[bool] = None,
         safe_prompt: Optional[bool] = False,
-        tool_choice: Optional[Any] = None,
-        response_format: Optional[Any] = None,
+        tool_choice: Optional[Union[str, ToolChoice]] = None,
+        response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "messages": self._parse_messages(messages),
