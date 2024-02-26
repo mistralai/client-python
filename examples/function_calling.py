@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ResponseFormats
+from mistralai.models.chat_completion import ChatMessage, Function
 
 # Assuming we have the following data
 data = {
