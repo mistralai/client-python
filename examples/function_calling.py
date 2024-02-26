@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage, Function
+from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ResponseFormats
 
 # Assuming we have the following data
 data = {
@@ -68,7 +68,7 @@ tools = [
 
 
 api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large"
+model = "mistral-large-latest"
 
 client = MistralClient(api_key=api_key)
 
@@ -81,7 +81,9 @@ print(response.choices[0].message.content)
 messages.append(ChatMessage(role="assistant", content=response.choices[0].message.content))
 messages.append(ChatMessage(role="user", content="My transaction ID is T1001."))
 
-response = client.chat(model=model, messages=messages, tools=tools)
+response = client.chat(
+    model=model, messages=messages, tools=tools
+)
 
 tool_call = response.choices[0].message.tool_calls[0]
 function_name = tool_call.function.name
