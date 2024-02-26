@@ -21,7 +21,12 @@ from mistralai.exceptions import (
     MistralConnectionException,
     MistralException,
 )
-from mistralai.models.chat_completion import ChatCompletionResponse, ChatCompletionStreamResponse
+from mistralai.models.chat_completion import (
+    ChatCompletionResponse,
+    ChatCompletionStreamResponse,
+    ResponseFormat,
+    ToolChoice,
+)
 from mistralai.models.embeddings import EmbeddingResponse
 from mistralai.models.models import ModelList
 
@@ -116,8 +121,8 @@ class MistralAsyncClient(ClientBase):
 
     async def chat(
         self,
-        model: str,
         messages: List[Any],
+        model: Optional[str] = None,
         tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
@@ -125,6 +130,8 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        tool_choice: Optional[Union[str, ToolChoice]] = None,
+        response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
     ) -> ChatCompletionResponse:
         """A asynchronous chat endpoint that returns a single response.
 
@@ -144,8 +151,8 @@ class MistralAsyncClient(ClientBase):
             ChatCompletionResponse: a response object containing the generated text.
         """
         request = self._make_chat_request(
-            model,
             messages,
+            model,
             tools=tools,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -153,6 +160,8 @@ class MistralAsyncClient(ClientBase):
             random_seed=random_seed,
             stream=False,
             safe_prompt=safe_mode or safe_prompt,
+            tool_choice=tool_choice,
+            response_format=response_format,
         )
 
         single_response = self._request("post", request, "v1/chat/completions")
@@ -164,8 +173,8 @@ class MistralAsyncClient(ClientBase):
 
     async def chat_stream(
         self,
-        model: str,
         messages: List[Any],
+        model: Optional[str] = None,
         tools: Optional[List[Dict[str, Any]]] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
@@ -173,6 +182,8 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         safe_mode: bool = False,
         safe_prompt: bool = False,
+        tool_choice: Optional[Union[str, ToolChoice]] = None,
+        response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
         """An Asynchronous chat endpoint that streams responses.
 
@@ -195,8 +206,8 @@ class MistralAsyncClient(ClientBase):
         """
 
         request = self._make_chat_request(
-            model,
             messages,
+            model,
             tools=tools,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -204,6 +215,8 @@ class MistralAsyncClient(ClientBase):
             random_seed=random_seed,
             stream=True,
             safe_prompt=safe_mode or safe_prompt,
+            tool_choice=tool_choice,
+            response_format=response_format,
         )
         async_response = self._request("post", request, "v1/chat/completions", stream=True)
 
