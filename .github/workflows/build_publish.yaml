@@ -76,7 +76,7 @@ jobs:
           git merge public/main --no-commit --no-ff --no-edit --allow-unrelated-histories --strategy-option ours
 
           # If there are changes, commit them
-          if ! git diff --quiet; then
+          if ! git diff-index --cached --quiet HEAD; then
             git commit -m "Update from public repo"
             git push origin ${{github.ref}}
           else
