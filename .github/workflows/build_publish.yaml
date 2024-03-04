@@ -73,7 +73,7 @@ jobs:
           git remote update
 
           # Create a diff of the changes, ignoring the ci workflow
-          git merge public/main --no-commit --no-ff --no-edit --allow-unrelated-histories --strategy-option ours
+          git merge public/main --no-commit --no-ff --no-edit --allow-unrelated-histories
 
           # If there are changes, commit them
           if ! git diff-index --cached --quiet HEAD; then
