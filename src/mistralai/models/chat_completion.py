@@ -59,6 +59,7 @@ class FinishReason(str, Enum):
     stop = "stop"
     length = "length"
     error = "error"
+    tool_calls = "tool_calls"
 
 
 class ChatCompletionResponseStreamChoice(BaseModel):
