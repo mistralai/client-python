@@ -27,8 +27,6 @@ python = "^3.9"
 orjson = "^3.9.10"
 pydantic = "^2.5.2"
 httpx = "^0.25.2"
-pandas = "^2.2.0"
-pyarrow = "^15.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -37,6 +35,9 @@ mypy = "^1.7.1"
 types-requests = "^2.31.0.10"
 pytest = "^7.4.3"
 pytest-asyncio = "^0.23.2"
+pyarrow = "15.0.0"
+pandas = "2.2.0"
+
 
 [build-system]
 requires = ["poetry-core"]
