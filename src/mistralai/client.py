@@ -7,7 +7,7 @@ from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 from httpx import Client, ConnectError, HTTPTransport, RequestError, Response
 
 from mistralai.client_base import ClientBase
-from mistralai.constants import ENDPOINT
+from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
 from mistralai.exceptions import (
     MistralAPIException,
     MistralAPIStatusException,
@@ -44,6 +44,44 @@ class MistralClient(ClientBase):
 
     def __del__(self) -> None:
         self._client.close()
+
+    def _check_response_status_codes(self, response: Response) -> None:
+        if response.status_code in RETRY_STATUS_CODES:
+            raise MistralAPIStatusException.from_response(
+                response,
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+        elif 400 <= response.status_code < 500:
+            if response.stream:
+                response.read()
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+        elif response.status_code >= 500:
+            if response.stream:
+                response.read()
+            raise MistralException(
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+
+    def _check_streaming_response(self, response: Response) -> None:
+        self._check_response_status_codes(response)
+
+    def _check_response(self, response: Response) -> Dict[str, Any]:
+        self._check_response_status_codes(response)
+
+        json_response: Dict[str, Any] = response.json()
+
+        if "object" not in json_response:
+            raise MistralException(message=f"Unexpected response: {json_response}")
+        if "error" == json_response["object"]:  # has errors
+            raise MistralAPIException.from_response(
+                response,
+                message=json_response["message"],
+            )
+
+        return json_response
 
     def _request(
         self,

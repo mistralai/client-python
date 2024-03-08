@@ -4,12 +4,8 @@ from abc import ABC
 from typing import Any, Dict, List, Optional, Union
 
 import orjson
-from httpx import Response
 
-from mistralai.constants import RETRY_STATUS_CODES
 from mistralai.exceptions import (
-    MistralAPIException,
-    MistralAPIStatusException,
     MistralException,
 )
 from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
@@ -124,40 +120,6 @@ class ClientBase(ABC):
         self._logger.debug(f"Chat request: {request_data}")
 
         return request_data
-
-    def _check_response_status_codes(self, response: Response) -> None:
-        if response.status_code in RETRY_STATUS_CODES:
-            raise MistralAPIStatusException.from_response(
-                response,
-                message=f"Status: {response.status_code}. Message: {response.text}",
-            )
-        elif 400 <= response.status_code < 500:
-            raise MistralAPIException.from_response(
-                response,
-                message=f"Status: {response.status_code}. Message: {response.text}",
-            )
-        elif response.status_code >= 500:
-            raise MistralException(
-                message=f"Status: {response.status_code}. Message: {response.text}",
-            )
-
-    def _check_streaming_response(self, response: Response) -> None:
-        self._check_response_status_codes(response)
-
-    def _check_response(self, response: Response) -> Dict[str, Any]:
-        self._check_response_status_codes(response)
-
-        json_response: Dict[str, Any] = response.json()
-
-        if "object" not in json_response:
-            raise MistralException(message=f"Unexpected response: {json_response}")
-        if "error" == json_response["object"]:  # has errors
-            raise MistralAPIException.from_response(
-                response,
-                message=json_response["message"],
-            )
-
-        return json_response
 
     def _process_line(self, line: str) -> Optional[Dict[str, Any]]:
         if line.startswith("data: "):
