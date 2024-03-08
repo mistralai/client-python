@@ -21,6 +21,8 @@ jobs:
       # Checkout the repository
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Set python version to 3.11
       - name: set python version
