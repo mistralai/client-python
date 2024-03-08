@@ -14,7 +14,7 @@ from httpx import (
 )
 
 from mistralai.client_base import ClientBase
-from mistralai.constants import ENDPOINT
+from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
 from mistralai.exceptions import (
     MistralAPIException,
     MistralAPIStatusException,
@@ -52,6 +52,44 @@ class MistralAsyncClient(ClientBase):
     async def close(self) -> None:
         await self._client.aclose()
 
+    async def _check_response_status_codes(self, response: Response) -> None:
+        if response.status_code in RETRY_STATUS_CODES:
+            raise MistralAPIStatusException.from_response(
+                response,
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+        elif 400 <= response.status_code < 500:
+            if response.stream:
+                await response.aread()
+            raise MistralAPIException.from_response(
+                response,
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+        elif response.status_code >= 500:
+            if response.stream:
+                await response.aread()
+            raise MistralException(
+                message=f"Status: {response.status_code}. Message: {response.text}",
+            )
+
+    async def _check_streaming_response(self, response: Response) -> None:
+        await self._check_response_status_codes(response)
+
+    async def _check_response(self, response: Response) -> Dict[str, Any]:
+        await self._check_response_status_codes(response)
+
+        json_response: Dict[str, Any] = response.json()
+
+        if "object" not in json_response:
+            raise MistralException(message=f"Unexpected response: {json_response}")
+        if "error" == json_response["object"]:  # has errors
+            raise MistralAPIException.from_response(
+                response,
+                message=json_response["message"],
+            )
+
+        return json_response
+
     async def _request(
         self,
         method: str,
@@ -82,7 +120,7 @@ class MistralAsyncClient(ClientBase):
                     headers=headers,
                     json=json,
                 ) as response:
-                    self._check_streaming_response(response)
+                    await self._check_streaming_response(response)
 
                     async for line in response.aiter_lines():
                         json_streamed_response = self._process_line(line)
@@ -97,7 +135,7 @@ class MistralAsyncClient(ClientBase):
                     json=json,
                 )
 
-                yield self._check_response(response)
+                yield await self._check_response(response)
 
         except ConnectError as e:
             raise MistralConnectionException(str(e)) from e
