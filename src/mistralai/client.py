@@ -31,7 +31,7 @@ class MistralClient(ClientBase):
 
     def __init__(
         self,
-        api_key: Optional[str] = os.environ.get("MISTRAL_API_KEY", None),
+        api_key: Optional[str] = None,
         endpoint: str = ENDPOINT,
         max_retries: int = 5,
         timeout: int = 120,
