@@ -31,8 +31,6 @@ COMMAND_LIST = {
     "/exit": {},
 }
 
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-
 logger = logging.getLogger("chatbot")
 
 
@@ -88,11 +86,10 @@ To see this help: /help
         )
 
     def new_chat(self):
-        print("")
-        print(
-            f"Starting new chat with model: {self.model}, temperature: {self.temperature}"
+        logger.info(
+            f"Starting new chat with model: \033[38;2;253;112;0m{self.model}\033[0m, "
+            f"temperature: {self.temperature}"
         )
-        print("")
         self.messages = []
         if self.system_message:
             self.messages.append(
@@ -103,7 +100,7 @@ To see this help: /help
         model = self.get_arguments(input)
         if model in MODEL_LIST:
             self.model = model
-            logger.info(f"Switching model: {model}")
+            logger.info(f"Switching model: \033[38;2;253;112;0m{model}\033[0m")
         else:
             logger.error(f"Invalid model name: {model}")
 
@@ -129,20 +126,16 @@ To see this help: /help
 
     def show_config(self):
         print("")
-        print(f"Current model: {self.model}")
-        print(f"Current temperature: {self.temperature}")
+        print(f"Current model:          \033[38;2;253;112;0m{self.model}\033[0m")
+        print(f"Current temperature:    {self.temperature}")
         print(f"Current system message: {self.system_message}")
         print("")
 
     def collect_user_input(self):
-        print("")
-        return input("YOU: ")
+        content = input("\033[38;2;50;168;82mUser: \033[0m")
+        return content
 
     def run_inference(self, content):
-        print("")
-        print("MISTRAL:")
-        print("")
-
         self.messages.append(ChatMessage(role="user", content=content))
 
         assistant_response = ""
@@ -150,6 +143,7 @@ To see this help: /help
             f"Running inference with model: {self.model}, temperature: {self.temperature}"
         )
         logger.debug(f"Sending messages: {self.messages}")
+        print(f"\033[38;2;253;112;0m{self.model}: \033[0m", end="")
         for chunk in self.client.chat_stream(
             model=self.model, temperature=self.temperature, messages=self.messages
         ):
