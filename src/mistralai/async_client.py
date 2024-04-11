@@ -1,6 +1,6 @@
+import asyncio
 import os
 import posixpath
-import time
 from json import JSONDecodeError
 from typing import Any, AsyncGenerator, Dict, List, Optional, Union
 
@@ -151,7 +151,7 @@ class MistralAsyncClient(ClientBase):
             if attempt > self._max_retries:
                 raise MistralAPIStatusException.from_response(response, message=str(e)) from e
             backoff = 2.0**attempt  # exponential backoff
-            time.sleep(backoff)
+            await asyncio.sleep(backoff)
 
             # Retry as a generator
             async for r in self._request(method, json, path, stream=stream, attempt=attempt):
