@@ -10,11 +10,6 @@ from mistralai.exceptions import (
 )
 from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
 
-logging.basicConfig(
-    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
-    level=os.getenv("LOG_LEVEL", "ERROR"),
-)
-
 
 class ClientBase(ABC):
     def __init__(
