@@ -64,7 +64,7 @@ tools = [
 ]
 
 api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
+model = "mistral-small-latest"
 
 client = MistralClient(api_key=api_key)
 
@@ -90,7 +90,7 @@ print(f"calling function_name: {function_name}, with function_params: {function_
 function_result = names_to_functions[function_name](**function_params)
 
 messages.append(response.choices[0].message)
-messages.append(ChatMessage(role="tool", name=function_name, content=function_result))
+messages.append(ChatMessage(role="tool", name=function_name, content=function_result, tool_call_id=tool_call.id))
 
 response = client.chat(model=model, messages=messages, tools=tools)
 
