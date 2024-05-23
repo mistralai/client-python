@@ -1,7 +1,3 @@
-import unittest.mock as mock
-
-import pytest
-from mistralai.client import MistralClient
 from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
@@ -14,13 +10,6 @@ from .utils import (
     mock_response,
     mock_stream_response,
 )
-
-
-@pytest.fixture()
-def client():
-    client = MistralClient()
-    client._client = mock.MagicMock()
-    return client
 
 
 class TestChat:
@@ -41,7 +30,7 @@ class TestChat:
             headers={
                 "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={
@@ -76,7 +65,7 @@ class TestChat:
             headers={
                 "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "text/event-stream",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={

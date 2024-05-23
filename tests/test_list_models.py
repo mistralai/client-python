@@ -1,17 +1,6 @@
-import unittest.mock as mock
-
-import pytest
-from mistralai.client import MistralClient
 from mistralai.models.models import ModelList
 
 from .utils import mock_list_models_response_payload, mock_response
-
-
-@pytest.fixture()
-def client():
-    client = MistralClient()
-    client._client = mock.MagicMock()
-    return client
 
 
 class TestListModels:
@@ -29,7 +18,7 @@ class TestListModels:
             headers={
                 "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={},

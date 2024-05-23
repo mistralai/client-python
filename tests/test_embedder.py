@@ -1,17 +1,6 @@
-import unittest.mock as mock
-
-import pytest
-from mistralai.client import MistralClient
 from mistralai.models.embeddings import EmbeddingResponse
 
 from .utils import mock_embedding_response_payload, mock_response
-
-
-@pytest.fixture()
-def client():
-    client = MistralClient()
-    client._client = mock.MagicMock()
-    return client
 
 
 class TestEmbeddings:
@@ -32,7 +21,7 @@ class TestEmbeddings:
             headers={
                 "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={"model": "mistral-embed", "input": "What is the best French cheese?"},
@@ -60,7 +49,7 @@ class TestEmbeddings:
             headers={
                 "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={

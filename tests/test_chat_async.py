@@ -1,7 +1,6 @@
 import unittest.mock as mock
 
 import pytest
-from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
@@ -16,34 +15,26 @@ from .utils import (
 )
 
 
-@pytest.fixture()
-def client():
-    client = MistralAsyncClient()
-    client._client = mock.AsyncMock()
-    client._client.stream = mock.Mock()
-    return client
-
-
 class TestAsyncChat:
     @pytest.mark.asyncio
-    async def test_chat(self, client):
-        client._client.request.return_value = mock_response(
+    async def test_chat(self, async_client):
+        async_client._client.request.return_value = mock_response(
             200,
             mock_chat_response_payload(),
         )
 
-        result = await client.chat(
+        result = await async_client.chat(
             model="mistral-small",
             messages=[ChatMessage(role="user", content="What is the best French cheese?")],
         )
 
-        client._client.request.assert_awaited_once_with(
+        async_client._client.request.assert_awaited_once_with(
             "post",
             "https://api.mistral.ai/v1/chat/completions",
             headers={
-                "User-Agent": f"mistral-client-python/{client._version}",
+                "User-Agent": f"mistral-client-python/{async_client._version}",
                 "Accept": "application/json",
-                "Authorization": "Bearer None",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={
@@ -60,26 +51,27 @@ class TestAsyncChat:
         assert result.object == "chat.completion"
 
     @pytest.mark.asyncio
-    async def test_chat_streaming(self, client):
-        client._client.stream.return_value = mock_async_stream_response(
+    async def test_chat_streaming(self, async_client):
+        async_client._client.stream = mock.Mock()
+        async_client._client.stream.return_value = mock_async_stream_response(
             200,
             mock_chat_response_streaming_payload(),
         )
 
-        result = client.chat_stream(
+        result = async_client.chat_stream(
             model="mistral-small",
             messages=[ChatMessage(role="user", content="What is the best French cheese?")],
         )
 
         results = [r async for r in result]
 
-        client._client.stream.assert_called_once_with(
+        async_client._client.stream.assert_called_once_with(
             "post",
             "https://api.mistral.ai/v1/chat/completions",
             headers={
                 "Accept": "text/event-stream",
-                "User-Agent": f"mistral-client-python/{client._version}",
-                "Authorization": "Bearer None",
+                "User-Agent": f"mistral-client-python/{async_client._version}",
+                "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={
