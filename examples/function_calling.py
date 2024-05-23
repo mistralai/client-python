@@ -15,8 +15,6 @@ data = {
     "payment_status": ["Paid", "Unpaid", "Paid", "Paid", "Pending"],
 }
 
-n_rows = len(data["transaction_id"])
-
 def retrieve_payment_status(data: Dict[str,List], transaction_id: str) -> str:
     for i, r in enumerate(data["transaction_id"]):
         if r == transaction_id:
