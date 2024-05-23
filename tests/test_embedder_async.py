@@ -39,9 +39,7 @@ class TestAsyncEmbeddings:
             json={"model": "mistral-embed", "input": "What is the best French cheese?"},
         )
 
-        assert isinstance(
-            result, EmbeddingResponse
-        ), "Should return an EmbeddingResponse"
+        assert isinstance(result, EmbeddingResponse), "Should return an EmbeddingResponse"
         assert len(result.data) == 1
         assert result.data[0].index == 0
         assert result.object == "list"
@@ -73,9 +71,7 @@ class TestAsyncEmbeddings:
             },
         )
 
-        assert isinstance(
-            result, EmbeddingResponse
-        ), "Should return an EmbeddingResponse"
+        assert isinstance(result, EmbeddingResponse), "Should return an EmbeddingResponse"
         assert len(result.data) == 10
         assert result.data[0].index == 0
         assert result.object == "list"

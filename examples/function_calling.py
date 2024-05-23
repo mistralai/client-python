@@ -15,12 +15,14 @@ data = {
     "payment_status": ["Paid", "Unpaid", "Paid", "Paid", "Pending"],
 }
 
-def retrieve_payment_status(data: Dict[str,List], transaction_id: str) -> str:
+
+def retrieve_payment_status(data: Dict[str, List], transaction_id: str) -> str:
     for i, r in enumerate(data["transaction_id"]):
         if r == transaction_id:
             return json.dumps({"status": data["payment_status"][i]})
         else:
             return json.dumps({"status": "Error - transaction id not found"})
+
 
 def retrieve_payment_date(data: Dict[str, List], transaction_id: str) -> str:
     for i, r in enumerate(data["transaction_id"]):
@@ -29,9 +31,10 @@ def retrieve_payment_date(data: Dict[str, List], transaction_id: str) -> str:
         else:
             return json.dumps({"status": "Error - transaction id not found"})
 
+
 names_to_functions = {
-        "retrieve_payment_status": functools.partial(retrieve_payment_status, data=data),
-        "retrieve_payment_date": functools.partial(retrieve_payment_date, data=data)
+    "retrieve_payment_status": functools.partial(retrieve_payment_status, data=data),
+    "retrieve_payment_date": functools.partial(retrieve_payment_date, data=data),
 }
 
 tools = [
@@ -75,9 +78,7 @@ print(response.choices[0].message.content)
 messages.append(ChatMessage(role="assistant", content=response.choices[0].message.content))
 messages.append(ChatMessage(role="user", content="My transaction ID is T1001."))
 
-response = client.chat(
-    model=model, messages=messages, tools=tools
-)
+response = client.chat(model=model, messages=messages, tools=tools)
 
 tool_call = response.choices[0].message.tool_calls[0]
 function_name = tool_call.function.name

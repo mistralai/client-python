@@ -17,6 +17,7 @@ class ModelPermission(BaseModel):
     group: Optional[str] = None
     is_blocking: bool = False
 
+
 class ModelCard(BaseModel):
     id: str
     object: str

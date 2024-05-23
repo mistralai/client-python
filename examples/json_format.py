@@ -16,7 +16,6 @@ def main():
         model=model,
         response_format={"type": "json_object"},
         messages=[ChatMessage(role="user", content="What is the best French cheese? Answer shortly in JSON.")],
-
     )
     print(chat_response.choices[0].message.content)
 

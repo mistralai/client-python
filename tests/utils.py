@@ -27,9 +27,7 @@ async def mock_async_stream_response(status_code: int, content: List[str]):
     yield response
 
 
-def mock_response(
-    status_code: int, content: str, is_json: bool = True
-) -> mock.MagicMock:
+def mock_response(status_code: int, content: str, is_json: bool = True) -> mock.MagicMock:
     response = mock.Mock(Response)
     response.status_code = status_code
     if is_json:
