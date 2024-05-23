@@ -10,6 +10,8 @@ from mistralai.exceptions import (
 )
 from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
 
+CLIENT_VERSION = "0.2.0"
+
 
 class ClientBase(ABC):
     def __init__(
@@ -25,9 +27,7 @@ class ClientBase(ABC):
         if api_key is None:
             api_key = os.environ.get("MISTRAL_API_KEY")
         if api_key is None:
-            raise MistralException(
-                message="API key not provided. Please set MISTRAL_API_KEY environment variable."
-            )
+            raise MistralException(message="API key not provided. Please set MISTRAL_API_KEY environment variable.")
         self._api_key = api_key
         self._endpoint = endpoint
         self._logger = logging.getLogger(__name__)
@@ -36,8 +36,7 @@ class ClientBase(ABC):
         if "inference.azure.com" in self._endpoint:
             self._default_model = "mistral"
 
-        # This should be automatically updated by the deploy script
-        self._version = "0.0.1"
+        self._version = CLIENT_VERSION
 
     def _parse_tools(self, tools: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         parsed_tools: List[Dict[str, Any]] = []
