@@ -12,11 +12,12 @@ from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 
 MODEL_LIST = [
-    "mistral-tiny",
-    "mistral-small",
-    "mistral-medium",
+    "mistral-small-latest",
+    "mistral-medium-latest",
+    "mistral-large-latest",
+    "codestral-latest",
 ]
-DEFAULT_MODEL = "mistral-small"
+DEFAULT_MODEL = "mistral-small-latest"
 DEFAULT_TEMPERATURE = 0.7
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 # A dictionary of all commands and their arguments, used for tab completion.

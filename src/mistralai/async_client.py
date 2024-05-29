@@ -92,7 +92,7 @@ class MistralAsyncClient(ClientBase):
     async def _request(
         self,
         method: str,
-        json: Dict[str, Any],
+        json: Optional[Dict[str, Any]],
         path: str,
         stream: bool = False,
         attempt: int = 1,
@@ -291,3 +291,74 @@ class MistralAsyncClient(ClientBase):
             return ModelList(**response)
 
         raise MistralException("No response received")
+
+    async def completion(
+        self,
+        model: str,
+        prompt: str,
+        suffix: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        top_p: Optional[float] = None,
+        random_seed: Optional[int] = None,
+        stop: Optional[List[str]] = None,
+    ) -> ChatCompletionResponse:
+        """An asynchronous completion endpoint that returns a single response.
+
+        Args:
+            model (str): model the name of the model to get completions with, e.g. codestral-latest
+            prompt (str): the prompt to complete
+            suffix (Optional[str]): the suffix to append to the prompt for fill-in-the-middle completion
+            temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
+            max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
+            Defaults to None.
+            random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
+            stop (Optional[List[str]], optional): a list of tokens to stop generation at, e.g. ['/n/n']
+        Returns:
+            Dict[str, Any]: a response object containing the generated text.
+        """
+        request = self._make_completion_request(
+            prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop
+        )
+        single_response = self._request("post", request, "v1/fim/completions")
+
+        async for response in single_response:
+            return ChatCompletionResponse(**response)
+
+        raise MistralException("No response received")
+
+    async def completion_stream(
+        self,
+        model: str,
+        prompt: str,
+        suffix: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        top_p: Optional[float] = None,
+        random_seed: Optional[int] = None,
+        stop: Optional[List[str]] = None,
+    ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
+        """An asynchronous completion endpoint that returns a streaming response.
+
+        Args:
+            model (str): model the name of the model to get completions with, e.g. codestral-latest
+            prompt (str): the prompt to complete
+            suffix (Optional[str]): the suffix to append to the prompt for fill-in-the-middle completion
+            temperature (Optional[float], optional): temperature the temperature to use for sampling, e.g. 0.5.
+            max_tokens (Optional[int], optional): the maximum number of tokens to generate, e.g. 100. Defaults to None.
+            top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
+            Defaults to None.
+            random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
+            stop (Optional[List[str]], optional): a list of tokens to stop generation at, e.g. ['/n/n']
+
+        Returns:
+            Dict[str, Any]: a response object containing the generated text.
+        """
+        request = self._make_completion_request(
+            prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop, stream=True
+        )
+        async_response = self._request("post", request, "v1/fim/completions", stream=True)
+
+        async for json_response in async_response:
+            yield ChatCompletionStreamResponse(**json_response)

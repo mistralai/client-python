@@ -67,7 +67,7 @@ def mock_list_models_response_payload() -> str:
                     ],
                 },
                 {
-                    "id": "mistral-small",
+                    "id": "mistral-small-latest",
                     "object": "model",
                     "created": 1703186988,
                     "owned_by": "mistralai",
@@ -178,7 +178,7 @@ def mock_chat_response_payload():
                     "index": 0,
                 }
             ],
-            "model": "mistral-small",
+            "model": "mistral-small-latest",
             "usage": {"prompt_tokens": 90, "total_tokens": 90, "completion_tokens": 0},
         }
     ).decode()
@@ -190,7 +190,7 @@ def mock_chat_response_streaming_payload():
         + orjson.dumps(
             {
                 "id": "cmpl-8cd9019d21ba490aa6b9740f5d0a883e",
-                "model": "mistral-small",
+                "model": "mistral-small-latest",
                 "choices": [
                     {
                         "index": 0,
@@ -208,7 +208,7 @@ def mock_chat_response_streaming_payload():
                     "id": "cmpl-8cd9019d21ba490aa6b9740f5d0a883e",
                     "object": "chat.completion.chunk",
                     "created": 1703168544,
-                    "model": "mistral-small",
+                    "model": "mistral-small-latest",
                     "choices": [
                         {
                             "index": i,
@@ -223,3 +223,25 @@ def mock_chat_response_streaming_payload():
         ],
         "data: [DONE]\n\n",
     ]
+
+
+def mock_completion_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "chat-98c8c60e3fbf4fc49658eddaf447357c",
+            "object": "chat.completion",
+            "created": 1703165682,
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {
+                        "role": "assistant",
+                        "content": "  a + b",
+                    },
+                    "index": 0,
+                }
+            ],
+            "model": "mistral-small-latest",
+            "usage": {"prompt_tokens": 90, "total_tokens": 90, "completion_tokens": 0},
+        }
+    ).decode()

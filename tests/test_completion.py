@@ -1,47 +1,50 @@
-import unittest.mock as mock
-
-import pytest
 from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
-    ChatMessage,
 )
 
 from .utils import (
-    mock_async_stream_response,
-    mock_chat_response_payload,
-    mock_chat_response_streaming_payload,
+    mock_completion_response_payload,
     mock_response,
+    mock_stream_response,
 )
 
 
-class TestAsyncChat:
-    @pytest.mark.asyncio
-    async def test_chat(self, async_client):
-        async_client._client.request.return_value = mock_response(
+class TestCompletion:
+    def test_completion(self, client):
+        client._client.request.return_value = mock_response(
             200,
-            mock_chat_response_payload(),
+            mock_completion_response_payload(),
         )
 
-        result = await async_client.chat(
+        result = client.completion(
             model="mistral-small-latest",
-            messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+            prompt="def add(a, b):",
+            suffix="return a + b",
+            temperature=0.5,
+            max_tokens=50,
+            top_p=0.9,
+            random_seed=42,
         )
 
-        async_client._client.request.assert_awaited_once_with(
+        client._client.request.assert_called_once_with(
             "post",
-            "https://api.mistral.ai/v1/chat/completions",
+            "https://api.mistral.ai/v1/fim/completions",
             headers={
-                "User-Agent": f"mistral-client-python/{async_client._version}",
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "application/json",
                 "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={
                 "model": "mistral-small-latest",
-                "messages": [{"role": "user", "content": "What is the best French cheese?"}],
-                "safe_prompt": False,
+                "prompt": "def add(a, b):",
+                "suffix": "return a + b",
                 "stream": False,
+                "temperature": 0.5,
+                "max_tokens": 50,
+                "top_p": 0.9,
+                "random_seed": 42,
             },
         )
 
@@ -50,35 +53,33 @@ class TestAsyncChat:
         assert result.choices[0].index == 0
         assert result.object == "chat.completion"
 
-    @pytest.mark.asyncio
-    async def test_chat_streaming(self, async_client):
-        async_client._client.stream = mock.Mock()
-        async_client._client.stream.return_value = mock_async_stream_response(
+    def test_completion_streaming(self, client):
+        client._client.stream.return_value = mock_stream_response(
             200,
-            mock_chat_response_streaming_payload(),
+            mock_completion_response_payload(),
         )
 
-        result = async_client.chat_stream(
-            model="mistral-small-latest",
-            messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+        result = client.completion_stream(
+            model="mistral-small-latest", prompt="def add(a, b):", suffix="return a + b", stop=["#"]
         )
 
-        results = [r async for r in result]
+        results = list(result)
 
-        async_client._client.stream.assert_called_once_with(
+        client._client.stream.assert_called_once_with(
             "post",
-            "https://api.mistral.ai/v1/chat/completions",
+            "https://api.mistral.ai/v1/fim/completions",
             headers={
+                "User-Agent": f"mistral-client-python/{client._version}",
                 "Accept": "text/event-stream",
-                "User-Agent": f"mistral-client-python/{async_client._version}",
                 "Authorization": "Bearer test_api_key",
                 "Content-Type": "application/json",
             },
             json={
                 "model": "mistral-small-latest",
-                "messages": [{"role": "user", "content": "What is the best French cheese?"}],
-                "safe_prompt": False,
+                "prompt": "def add(a, b):",
+                "suffix": "return a + b",
                 "stream": True,
+                "stop": ["#"],
             },
         )
 
@@ -92,5 +93,5 @@ class TestAsyncChat:
                 assert isinstance(result, ChatCompletionStreamResponse), "Should return an ChatCompletionStreamResponse"
                 assert len(result.choices) == 1
                 assert result.choices[0].index == i - 1
-                assert result.choices[0].delta.content == f"stream response {i-1}"
+                assert result.choices[0].delta.content == f"stream response {i - 1}"
                 assert result.object == "chat.completion.chunk"
