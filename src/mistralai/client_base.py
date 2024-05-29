@@ -73,6 +73,63 @@ class ClientBase(ABC):
 
         return parsed_messages
 
+    def _make_completion_request(
+        self,
+        prompt: str,
+        model: Optional[str] = None,
+        suffix: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        top_p: Optional[float] = None,
+        random_seed: Optional[int] = None,
+        stop: Optional[List[str]] = None,
+        stream: Optional[bool] = False,
+    ) -> Dict[str, Any]:
+        request_data: Dict[str, Any] = {
+            "prompt": prompt,
+            "suffix": suffix,
+            "model": model,
+            "stream": stream,
+        }
+
+        if stop is not None:
+            request_data["stop"] = stop
+
+        if model is not None:
+            request_data["model"] = model
+        else:
+            if self._default_model is None:
+                raise MistralException(message="model must be provided")
+            request_data["model"] = self._default_model
+
+        request_data.update(
+            self._build_sampling_params(
+                temperature=temperature, max_tokens=max_tokens, top_p=top_p, random_seed=random_seed
+            )
+        )
+
+        self._logger.debug(f"Completion request: {request_data}")
+
+        return request_data
+
+    def _build_sampling_params(
+        self,
+        max_tokens: Optional[int],
+        random_seed: Optional[int],
+        temperature: Optional[float],
+        top_p: Optional[float],
+    ) -> Dict[str, Any]:
+        params = {}
+        if temperature is not None:
+            params["temperature"] = temperature
+        if max_tokens is not None:
+            params["max_tokens"] = max_tokens
+        if top_p is not None:
+            params["top_p"] = top_p
+        if random_seed is not None:
+            params["random_seed"] = random_seed
+        return params
+
     def _make_chat_request(
         self,
         messages: List[Any],
@@ -99,16 +156,14 @@ class ClientBase(ABC):
                 raise MistralException(message="model must be provided")
             request_data["model"] = self._default_model
 
+        request_data.update(
+            self._build_sampling_params(
+                temperature=temperature, max_tokens=max_tokens, top_p=top_p, random_seed=random_seed
+            )
+        )
+
         if tools is not None:
             request_data["tools"] = self._parse_tools(tools)
-        if temperature is not None:
-            request_data["temperature"] = temperature
-        if max_tokens is not None:
-            request_data["max_tokens"] = max_tokens
-        if top_p is not None:
-            request_data["top_p"] = top_p
-        if random_seed is not None:
-            request_data["random_seed"] = random_seed
         if stream is not None:
             request_data["stream"] = stream
 

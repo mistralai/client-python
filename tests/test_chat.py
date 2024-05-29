@@ -20,7 +20,7 @@ class TestChat:
         )
 
         result = client.chat(
-            model="mistral-small",
+            model="mistral-small-latest",
             messages=[ChatMessage(role="user", content="What is the best French cheese?")],
         )
 
@@ -34,7 +34,7 @@ class TestChat:
                 "Content-Type": "application/json",
             },
             json={
-                "model": "mistral-small",
+                "model": "mistral-small-latest",
                 "messages": [{"role": "user", "content": "What is the best French cheese?"}],
                 "safe_prompt": False,
                 "stream": False,
@@ -53,7 +53,7 @@ class TestChat:
         )
 
         result = client.chat_stream(
-            model="mistral-small",
+            model="mistral-small-latest",
             messages=[ChatMessage(role="user", content="What is the best French cheese?")],
         )
 
@@ -69,7 +69,7 @@ class TestChat:
                 "Content-Type": "application/json",
             },
             json={
-                "model": "mistral-small",
+                "model": "mistral-small-latest",
                 "messages": [{"role": "user", "content": "What is the best French cheese?"}],
                 "safe_prompt": False,
                 "stream": True,
