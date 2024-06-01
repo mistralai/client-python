@@ -308,7 +308,7 @@ class MistralClient(ClientBase):
             top_p (Optional[float], optional): the cumulative probability of tokens to generate, e.g. 0.9.
             Defaults to None.
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
-            stop (Optional[List[str]], optional): a list of tokens to stop generation at, e.g. ['/n/n']
+            stop (Optional[List[str]], optional): a list of tokens to stop generation at, e.g. ['\n\n']
 
         Returns:
             Dict[str, Any]: a response object containing the generated text.
