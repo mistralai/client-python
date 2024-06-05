@@ -22,6 +22,7 @@ class TestListModels:
                 "Content-Type": "application/json",
             },
             json={},
+            data=None,
         )
 
         assert isinstance(result, ModelList), "Should return an ModelList"

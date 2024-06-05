@@ -146,7 +146,6 @@ class ClientBase(ABC):
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "messages": self._parse_messages(messages),
-            "safe_prompt": safe_prompt,
         }
 
         if model is not None:
@@ -162,6 +161,8 @@ class ClientBase(ABC):
             )
         )
 
+        if safe_prompt:
+            request_data["safe_prompt"] = safe_prompt
         if tools is not None:
             request_data["tools"] = self._parse_tools(tools)
         if stream is not None:

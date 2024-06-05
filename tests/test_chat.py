@@ -36,9 +36,9 @@ class TestChat:
             json={
                 "model": "mistral-small-latest",
                 "messages": [{"role": "user", "content": "What is the best French cheese?"}],
-                "safe_prompt": False,
                 "stream": False,
             },
+            data=None,
         )
 
         assert isinstance(result, ChatCompletionResponse), "Should return an ChatCompletionResponse"
@@ -71,9 +71,9 @@ class TestChat:
             json={
                 "model": "mistral-small-latest",
                 "messages": [{"role": "user", "content": "What is the best French cheese?"}],
-                "safe_prompt": False,
                 "stream": True,
             },
+            data=None,
         )
 
         for i, result in enumerate(results):

@@ -7,15 +7,15 @@ class ModelPermission(BaseModel):
     id: str
     object: str
     created: int
-    allow_create_engine: bool = False
+    allow_create_engine: Optional[bool] = False
     allow_sampling: bool = True
     allow_logprobs: bool = True
-    allow_search_indices: bool = False
+    allow_search_indices: Optional[bool] = False
     allow_view: bool = True
     allow_fine_tuning: bool = False
     organization: str = "*"
     group: Optional[str] = None
-    is_blocking: bool = False
+    is_blocking: Optional[bool] = False
 
 
 class ModelCard(BaseModel):

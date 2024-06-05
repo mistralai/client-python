@@ -245,3 +245,76 @@ def mock_completion_response_payload() -> str:
             "usage": {"prompt_tokens": 90, "total_tokens": 90, "completion_tokens": 0},
         }
     ).decode()
+
+
+def mock_job_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "job_id",
+            "hyperparameters": {
+                "training_steps": 1800,
+                "learning_rate": 1.0e-4,
+            },
+            "fine_tuned_model": "fine_tuned_model",
+            "model": "model",
+            "status": "QUEUED",
+            "job_type": "job_type",
+            "created_at": 1633046400000,
+            "modified_at": 1633046400000,
+            "training_files": ["training_file_id"],
+            "validation_files": ["validation_file_id"],
+            "object": "job",
+            "integrations": [],
+        }
+    )
+
+
+def mock_detailed_job_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "job_id",
+            "hyperparameters": {
+                "training_steps": 1800,
+                "learning_rate": 1.0e-4,
+            },
+            "fine_tuned_model": "fine_tuned_model",
+            "model": "model",
+            "status": "QUEUED",
+            "job_type": "job_type",
+            "created_at": 1633046400000,
+            "modified_at": 1633046400000,
+            "training_files": ["training_file_id"],
+            "validation_files": ["validation_file_id"],
+            "object": "job",
+            "integrations": [],
+            "events": [
+                {
+                    "name": "event_name",
+                    "created_at": 1633046400000,
+                }
+            ],
+        }
+    )
+
+
+def mock_file_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "file_id",
+            "object": "file",
+            "bytes": 0,
+            "created_at": 1633046400000,
+            "filename": "file.jsonl",
+            "purpose": "fine-tune",
+        }
+    )
+
+
+def mock_file_deleted_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "file_id",
+            "object": "file",
+            "deleted": True,
+        }
+    )

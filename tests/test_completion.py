@@ -46,6 +46,7 @@ class TestCompletion:
                 "top_p": 0.9,
                 "random_seed": 42,
             },
+            data=None,
         )
 
         assert isinstance(result, ChatCompletionResponse), "Should return an ChatCompletionResponse"
@@ -81,6 +82,7 @@ class TestCompletion:
                 "stream": True,
                 "stop": ["#"],
             },
+            data=None,
         )
 
         for i, result in enumerate(results):
