@@ -20,6 +20,8 @@ from mistralai.exceptions import (
     MistralConnectionException,
     MistralException,
 )
+from mistralai.files import FilesAsyncClient
+from mistralai.jobs import JobsAsyncClient
 from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
@@ -47,6 +49,8 @@ class MistralAsyncClient(ClientBase):
             limits=Limits(max_connections=max_concurrent_requests),
             transport=AsyncHTTPTransport(retries=max_retries),
         )
+        self.files = FilesAsyncClient(self)
+        self.jobs = JobsAsyncClient(self)
 
     async def close(self) -> None:
         await self._client.aclose()
@@ -96,14 +100,18 @@ class MistralAsyncClient(ClientBase):
         path: str,
         stream: bool = False,
         attempt: int = 1,
+        data: Optional[Dict[str, Any]] = None,
+        **kwargs: Any,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         accept_header = "text/event-stream" if stream else "application/json"
         headers = {
             "Accept": accept_header,
             "User-Agent": f"mistral-client-python/{self._version}",
             "Authorization": f"Bearer {self._api_key}",
-            "Content-Type": "application/json",
         }
+
+        if json is not None:
+            headers["Content-Type"] = "application/json"
 
         url = posixpath.join(self._endpoint, path)
 
@@ -118,6 +126,8 @@ class MistralAsyncClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
+                    data=data,
+                    **kwargs,
                 ) as response:
                     await self._check_streaming_response(response)
 
@@ -132,6 +142,8 @@ class MistralAsyncClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
+                    data=data,
+                    **kwargs,
                 )
 
                 yield await self._check_response(response)

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -44,7 +44,7 @@ class ResponseFormat(BaseModel):
 
 class ChatMessage(BaseModel):
     role: str
-    content: Union[str, List[str]]
+    content: str
     name: Optional[str] = None
     tool_calls: Optional[List[ToolCall]] = None
     tool_call_id: Optional[str] = None

@@ -25,6 +25,7 @@ class TestEmbeddings:
                 "Content-Type": "application/json",
             },
             json={"model": "mistral-embed", "input": "What is the best French cheese?"},
+            data=None,
         )
 
         assert isinstance(result, EmbeddingResponse), "Should return an EmbeddingResponse"
@@ -56,6 +57,7 @@ class TestEmbeddings:
                 "model": "mistral-embed",
                 "input": ["What is the best French cheese?"] * 10,
             },
+            data=None,
         )
 
         assert isinstance(result, EmbeddingResponse), "Should return an EmbeddingResponse"

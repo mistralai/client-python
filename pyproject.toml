@@ -23,10 +23,10 @@ exclude = ["docs", "tests", "examples", "tools", "build"]
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
-orjson = "^3.9.10"
-pydantic = "^2.5.2"
-httpx = ">= 0.25.2, < 1"
+python = "^3.9,<4.0"
+orjson = "^3.9.10,<3.11"
+pydantic = "^2.5.2,<3"
+httpx = "^0.25,<1"
 
 
 [tool.poetry.group.dev.dependencies]

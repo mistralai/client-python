@@ -13,6 +13,8 @@ from mistralai.exceptions import (
     MistralConnectionException,
     MistralException,
 )
+from mistralai.files import FilesClient
+from mistralai.jobs import JobsClient
 from mistralai.models.chat_completion import (
     ChatCompletionResponse,
     ChatCompletionStreamResponse,
@@ -40,6 +42,8 @@ class MistralClient(ClientBase):
         self._client = Client(
             follow_redirects=True, timeout=self._timeout, transport=HTTPTransport(retries=self._max_retries)
         )
+        self.files = FilesClient(self)
+        self.jobs = JobsClient(self)
 
     def __del__(self) -> None:
         self._client.close()
@@ -89,14 +93,18 @@ class MistralClient(ClientBase):
         path: str,
         stream: bool = False,
         attempt: int = 1,
+        data: Optional[Dict[str, Any]] = None,
+        **kwargs: Any,
     ) -> Iterator[Dict[str, Any]]:
         accept_header = "text/event-stream" if stream else "application/json"
         headers = {
             "Accept": accept_header,
             "User-Agent": f"mistral-client-python/{self._version}",
             "Authorization": f"Bearer {self._api_key}",
-            "Content-Type": "application/json",
         }
+
+        if json is not None:
+            headers["Content-Type"] = "application/json"
 
         url = posixpath.join(self._endpoint, path)
 
@@ -111,6 +119,8 @@ class MistralClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
+                    data=data,
+                    **kwargs,
                 ) as response:
                     self._check_streaming_response(response)
 
@@ -125,6 +135,8 @@ class MistralClient(ClientBase):
                     url,
                     headers=headers,
                     json=json,
+                    data=data,
+                    **kwargs,
                 )
 
                 yield self._check_response(response)
