@@ -1,0 +1,58 @@
+name: Bug report related to our models
+description: Submit a bug report that's related to our models behavior
+title: '[BUG MODEL]: '
+labels: ['bug model', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report !
+  - type: dropdown
+    id: model
+    attributes:
+      label: Model
+      description: What's the model?
+      options:
+        - open-mistral-7b
+        - open-mixtral-8x7b
+        - open-mixtral-8x22b
+        - mistral-small-latest
+        - mistral-medium-latest
+        - mistral-large-latest
+        - mistral-embed
+        - codestral-latest
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: model-payload
+    attributes:
+      label: Request Payload
+      description: Please provide the full request payload.
+      placeholder: If possible, if not provide as much information as you can such as "messages", "max_tokens", "temperature", "prefix", "tool_calls" and all kinds of information.
+    validations:
+      required: true
+  - type: textarea
+    id: model-output
+    attributes:
+      label: Output
+      description: Provide the output of the model.
+    validations:
+      required: true
+  - type: textarea
+    id: model-expected-output
+    attributes:
+      label: Expected Behavior
+      description: Explain briefly what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: model-additional-context
+    attributes:
+      label: Additional Context
+      description: Add any context about your problem that you deem relevant.
+  - type: textarea
+    id: model-suggested-solutions
+    attributes:
+      label: Suggested Solutions
+      description: Please list any solutions you recommend we consider.
