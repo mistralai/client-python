@@ -18,13 +18,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: [
+          "3.9",
+          "3.10",
+          "3.11",
+          "3.12"
+        ]
+        pydantic-version:
+          [
+            "^1.10,<2",
+            "^2,<3"
+          ]
     steps:
       # Checkout the repository
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Set python version to 3.11
       - name: set python version
         uses: actions/setup-python@v4
         with:
@@ -35,7 +44,8 @@ jobs:
         run: |
           pip install poetry \
           && poetry config virtualenvs.create false \
-          && poetry install
+          && poetry install \
+          && poetry add "pydantic==${{ matrix.pydantic-version }}"
 
         # Ruff
       - name: Ruff check

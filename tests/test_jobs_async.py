@@ -15,7 +15,7 @@ class TestJobsClient:
         expected_response_job = Job.model_validate_json(mock_job_response_payload())
         async_client._client.request.return_value = mock_response(
             200,
-            expected_response_job.json(),
+            expected_response_job.model_dump_json(),
         )
 
         response_job = await async_client.jobs.create(
@@ -58,7 +58,7 @@ class TestJobsClient:
         expected_response_job = DetailedJob.model_validate_json(mock_detailed_job_response_payload())
         async_client._client.request.return_value = mock_response(
             200,
-            expected_response_job.json(),
+            expected_response_job.model_dump_json(),
         )
 
         response_job = await async_client.jobs.retrieve("job_id")
@@ -113,7 +113,7 @@ class TestJobsClient:
         expected_response_job = DetailedJob.model_validate_json(mock_detailed_job_response_payload())
         async_client._client.request.return_value = mock_response(
             200,
-            expected_response_job.json(),
+            expected_response_job.model_dump_json(),
         )
 
         response_job = await async_client.jobs.cancel("job_id")

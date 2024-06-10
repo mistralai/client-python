@@ -1,12 +1,11 @@
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel
-
+from mistralai.models.base_model import BackwardCompatibleBaseModel
 from mistralai.models.common import UsageInfo
 
 
-class Function(BaseModel):
+class Function(BackwardCompatibleBaseModel):
     name: str
     description: str
     parameters: dict
@@ -16,12 +15,12 @@ class ToolType(str, Enum):
     function = "function"
 
 
-class FunctionCall(BaseModel):
+class FunctionCall(BackwardCompatibleBaseModel):
     name: str
     arguments: str
 
 
-class ToolCall(BaseModel):
+class ToolCall(BackwardCompatibleBaseModel):
     id: str = "null"
     type: ToolType = ToolType.function
     function: FunctionCall
@@ -38,11 +37,11 @@ class ToolChoice(str, Enum):
     none: str = "none"
 
 
-class ResponseFormat(BaseModel):
+class ResponseFormat(BackwardCompatibleBaseModel):
     type: ResponseFormats = ResponseFormats.text
 
 
-class ChatMessage(BaseModel):
+class ChatMessage(BackwardCompatibleBaseModel):
     role: str
     content: str
     name: Optional[str] = None
@@ -50,7 +49,7 @@ class ChatMessage(BaseModel):
     tool_call_id: Optional[str] = None
 
 
-class DeltaMessage(BaseModel):
+class DeltaMessage(BackwardCompatibleBaseModel):
     role: Optional[str] = None
     content: Optional[str] = None
     tool_calls: Optional[List[ToolCall]] = None
@@ -63,13 +62,13 @@ class FinishReason(str, Enum):
     tool_calls = "tool_calls"
 
 
-class ChatCompletionResponseStreamChoice(BaseModel):
+class ChatCompletionResponseStreamChoice(BackwardCompatibleBaseModel):
     index: int
     delta: DeltaMessage
     finish_reason: Optional[FinishReason]
 
 
-class ChatCompletionStreamResponse(BaseModel):
+class ChatCompletionStreamResponse(BackwardCompatibleBaseModel):
     id: str
     model: str
     choices: List[ChatCompletionResponseStreamChoice]
@@ -78,13 +77,13 @@ class ChatCompletionStreamResponse(BaseModel):
     usage: Optional[UsageInfo] = None
 
 
-class ChatCompletionResponseChoice(BaseModel):
+class ChatCompletionResponseChoice(BackwardCompatibleBaseModel):
     index: int
     message: ChatMessage
     finish_reason: Optional[FinishReason]
 
 
-class ChatCompletionResponse(BaseModel):
+class ChatCompletionResponse(BackwardCompatibleBaseModel):
     id: str
     object: str
     created: int

@@ -1,17 +1,16 @@
 from typing import List
 
-from pydantic import BaseModel
-
+from mistralai.models.base_model import BackwardCompatibleBaseModel
 from mistralai.models.common import UsageInfo
 
 
-class EmbeddingObject(BaseModel):
+class EmbeddingObject(BackwardCompatibleBaseModel):
     object: str
     embedding: List[float]
     index: int
 
 
-class EmbeddingResponse(BaseModel):
+class EmbeddingResponse(BackwardCompatibleBaseModel):
     id: str
     object: str
     data: List[EmbeddingObject]

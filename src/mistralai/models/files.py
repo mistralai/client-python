@@ -1,9 +1,9 @@
 from typing import Literal, Optional
 
-from pydantic import BaseModel
+from mistralai.models.base_model import BackwardCompatibleBaseModel
 
 
-class FileObject(BaseModel):
+class FileObject(BackwardCompatibleBaseModel):
     id: str
     object: str
     bytes: int
@@ -12,12 +12,12 @@ class FileObject(BaseModel):
     purpose: Optional[Literal["fine-tune"]] = "fine-tune"
 
 
-class FileDeleted(BaseModel):
+class FileDeleted(BackwardCompatibleBaseModel):
     id: str
     object: str
     deleted: bool
 
 
-class Files(BaseModel):
+class Files(BackwardCompatibleBaseModel):
     data: list[FileObject]
     object: Literal["list"]

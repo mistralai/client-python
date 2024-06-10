@@ -1,9 +1,9 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from mistralai.models.base_model import BackwardCompatibleBaseModel
 
 
-class ModelPermission(BaseModel):
+class ModelPermission(BackwardCompatibleBaseModel):
     id: str
     object: str
     created: int
@@ -18,7 +18,7 @@ class ModelPermission(BaseModel):
     is_blocking: Optional[bool] = False
 
 
-class ModelCard(BaseModel):
+class ModelCard(BackwardCompatibleBaseModel):
     id: str
     object: str
     created: int
@@ -28,6 +28,6 @@ class ModelCard(BaseModel):
     permission: List[ModelPermission] = []
 
 
-class ModelList(BaseModel):
+class ModelList(BackwardCompatibleBaseModel):
     object: str
     data: List[ModelCard]

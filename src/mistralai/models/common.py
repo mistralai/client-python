@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from mistralai.models.base_model import BackwardCompatibleBaseModel
 
 
-class UsageInfo(BaseModel):
+class UsageInfo(BackwardCompatibleBaseModel):
     prompt_tokens: int
     total_tokens: int
     completion_tokens: Optional[int]

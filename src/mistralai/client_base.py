@@ -58,7 +58,7 @@ class ClientBase(ABC):
             return tool_choice.value
         return tool_choice
 
-    def _parse_response_format(self, response_format: Union[Dict[str, Any], ResponseFormat]) -> Dict[str, Any]:
+    def _parse_response_format(self, response_format: Union[Dict[str, Any], ResponseFormat]) -> Any:
         if isinstance(response_format, ResponseFormat):
             return response_format.model_dump(exclude_none=True)
         return response_format

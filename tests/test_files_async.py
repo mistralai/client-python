@@ -15,7 +15,7 @@ class TestFilesAyncClient:
         expected_response_file = FileObject.model_validate_json(mock_file_response_payload())
         async_client._client.request.return_value = mock_response(
             200,
-            expected_response_file.json(),
+            expected_response_file.model_dump_json(),
         )
 
         response_file = await async_client.files.create(b"file_content")
@@ -39,7 +39,7 @@ class TestFilesAyncClient:
         expected_response_file = FileObject.model_validate_json(mock_file_response_payload())
         async_client._client.request.return_value = mock_response(
             200,
-            expected_response_file.json(),
+            expected_response_file.model_dump_json(),
         )
 
         response_file = await async_client.files.retrieve("file_id")
@@ -91,7 +91,7 @@ class TestFilesAyncClient:
     @pytest.mark.asyncio
     async def test_delete_file(self, async_client):
         expected_response_file = FileDeleted.model_validate_json(mock_file_deleted_response_payload())
-        async_client._client.request.return_value = mock_response(200, expected_response_file.json())
+        async_client._client.request.return_value = mock_response(200, expected_response_file.model_dump_json())
 
         response_file = await async_client.files.delete("file_id")
 

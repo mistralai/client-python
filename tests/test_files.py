@@ -13,7 +13,7 @@ class TestFilesClient:
         expected_response_file = FileObject.model_validate_json(mock_file_response_payload())
         client._client.request.return_value = mock_response(
             200,
-            expected_response_file.json(),
+            expected_response_file.model_dump_json(),
         )
 
         response_file = client.files.create(b"file_content")
@@ -36,7 +36,7 @@ class TestFilesClient:
         expected_response_file = FileObject.model_validate_json(mock_file_response_payload())
         client._client.request.return_value = mock_response(
             200,
-            expected_response_file.json(),
+            expected_response_file.model_dump_json(),
         )
 
         response_file = client.files.retrieve("file_id")
@@ -86,7 +86,7 @@ class TestFilesClient:
 
     def test_delete_file(self, client):
         expected_response_file = FileDeleted.model_validate_json(mock_file_deleted_response_payload())
-        client._client.request.return_value = mock_response(200, expected_response_file.json())
+        client._client.request.return_value = mock_response(200, expected_response_file.model_dump_json())
 
         response_file = client.files.delete("file_id")
 
