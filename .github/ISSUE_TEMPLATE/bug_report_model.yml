@@ -29,7 +29,9 @@ body:
     attributes:
       label: Request Payload
       description: Please provide the full request payload.
-      placeholder: If possible, if not provide as much information as you can such as "messages", "max_tokens", "temperature", "prefix", "tool_calls" and all kinds of information.
+      placeholder: | 
+        Please provide a complete example of the request payload, including, if possible, parameters such as 'messages', 'max_tokens', 'temperature', 'prefix', and 'tool_calls'.
+        If you can, please set the 'temperature' parameter to 0 in your example. This will greatly help us.
     validations:
       required: true
   - type: textarea
