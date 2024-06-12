@@ -29,7 +29,7 @@ from mistralai.models.chat_completion import (
     ToolChoice,
 )
 from mistralai.models.embeddings import EmbeddingResponse
-from mistralai.models.models import ModelList
+from mistralai.models.models import ModelList, ModelDeleted
 
 
 class MistralAsyncClient(ClientBase):
@@ -301,6 +301,14 @@ class MistralAsyncClient(ClientBase):
 
         async for response in single_response:
             return ModelList(**response)
+
+        raise MistralException("No response received")
+
+    async def delete_model(self, model_id: str) -> ModelDeleted:
+        single_response = self._request("delete", {}, f"v1/models/{model_id}")
+
+        async for response in single_response:
+            return ModelDeleted(**response)
 
         raise MistralException("No response received")
 

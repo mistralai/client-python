@@ -149,13 +149,13 @@ def mock_embedding_response_payload(batch_size: int = 1) -> str:
             "id": "embd-98c8c60e3fbf4fc49658eddaf447357c",
             "object": "list",
             "data": [
-                {
-                    "object": "embedding",
-                    "embedding": [-0.018585205078125, 0.027099609375, 0.02587890625],
-                    "index": 0,
-                }
-            ]
-            * batch_size,
+                        {
+                            "object": "embedding",
+                            "embedding": [-0.018585205078125, 0.027099609375, 0.02587890625],
+                            "index": 0,
+                        }
+                    ]
+                    * batch_size,
             "model": "mistral-embed",
             "usage": {"prompt_tokens": 90, "total_tokens": 90, "completion_tokens": 0},
         }
@@ -315,6 +315,16 @@ def mock_file_deleted_response_payload() -> str:
         {
             "id": "file_id",
             "object": "file",
+            "deleted": True,
+        }
+    )
+
+
+def mock_model_deleted_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "model_id",
+            "object": "model",
             "deleted": True,
         }
     )
