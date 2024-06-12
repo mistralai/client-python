@@ -54,6 +54,9 @@ async def main():
     await client.files.delete(training_file.id)
     await client.files.delete(validation_file.id)
 
+    # Delete fine-tuned model
+    await client.delete_model(created_job.fine_tuned_model)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

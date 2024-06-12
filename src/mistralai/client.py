@@ -22,7 +22,7 @@ from mistralai.models.chat_completion import (
     ToolChoice,
 )
 from mistralai.models.embeddings import EmbeddingResponse
-from mistralai.models.models import ModelList, ModelDeleted
+from mistralai.models.models import ModelDeleted, ModelList
 
 
 class MistralClient(ClientBase):

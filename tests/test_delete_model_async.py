@@ -1,8 +1,7 @@
 import pytest
-
 from mistralai.models.models import ModelDeleted
 
-from .utils import mock_response, mock_model_deleted_response_payload
+from .utils import mock_model_deleted_response_payload, mock_response
 
 
 class TestAsyncDeleteModel:
