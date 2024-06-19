@@ -31,3 +31,9 @@ class ModelCard(BaseModel):
 class ModelList(BaseModel):
     object: str
     data: List[ModelCard]
+
+
+class ModelDeleted(BaseModel):
+    id: str
+    object: str
+    deleted: bool

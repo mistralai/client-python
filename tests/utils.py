@@ -318,3 +318,13 @@ def mock_file_deleted_response_payload() -> str:
             "deleted": True,
         }
     )
+
+
+def mock_model_deleted_response_payload() -> str:
+    return orjson.dumps(
+        {
+            "id": "model_id",
+            "object": "model",
+            "deleted": True,
+        }
+    )
