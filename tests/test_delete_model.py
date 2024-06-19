@@ -24,4 +24,3 @@ class TestDeleteModel:
         )
 
         assert response_model == expected_response_model
-
