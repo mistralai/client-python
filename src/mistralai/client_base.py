@@ -10,7 +10,7 @@ from mistralai.exceptions import (
 )
 from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
 
-CLIENT_VERSION = "0.4.0"
+CLIENT_VERSION = "0.4.1"
 
 
 class ClientBase(ABC):
