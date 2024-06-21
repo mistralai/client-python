@@ -3,7 +3,7 @@ import time
 from json import JSONDecodeError
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
 
-from httpx import Client, ConnectError, HTTPTransport, RequestError, Response
+from httpx import Client, ConnectError, RequestError, Response
 
 from mistralai.client_base import ClientBase
 from mistralai.constants import ENDPOINT, RETRY_STATUS_CODES
@@ -40,7 +40,7 @@ class MistralClient(ClientBase):
         super().__init__(endpoint, api_key, max_retries, timeout)
 
         self._client = Client(
-            follow_redirects=True, timeout=self._timeout, transport=HTTPTransport(retries=self._max_retries)
+            follow_redirects=True, timeout=self._timeout
         )
         self.files = FilesClient(self)
         self.jobs = JobsClient(self)
