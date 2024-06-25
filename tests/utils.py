@@ -1,23 +1,25 @@
 import contextlib
 import unittest.mock as mock
-from typing import List
+from typing import Any, Dict, List
 
 import orjson
 from httpx import Response
 
 
 @contextlib.contextmanager
-def mock_stream_response(status_code: int, content: List[str]):
+def mock_stream_response(status_code: int, content: List[str], headers: Dict[str, Any] = None):
     response = mock.Mock(Response)
     response.status_code = status_code
+    response.headers = headers if headers else {}
     response.iter_lines.return_value = iter(content)
     yield response
 
 
 @contextlib.asynccontextmanager
-async def mock_async_stream_response(status_code: int, content: List[str]):
+async def mock_async_stream_response(status_code: int, content: List[str], headers: Dict[str, Any] = None):
     response = mock.Mock(Response)
     response.status_code = status_code
+    response.headers = headers if headers else {}
 
     async def async_iter(content: List[str]):
         for line in content:
@@ -27,9 +29,12 @@ async def mock_async_stream_response(status_code: int, content: List[str]):
     yield response
 
 
-def mock_response(status_code: int, content: str, is_json: bool = True) -> mock.MagicMock:
+def mock_response(
+    status_code: int, content: str, headers: Dict[str, Any] = None, is_json: bool = True
+) -> mock.MagicMock:
     response = mock.Mock(Response)
     response.status_code = status_code
+    response.headers = headers if headers else {}
     if is_json:
         response.json = mock.MagicMock()
         response.json.return_value = orjson.loads(content)

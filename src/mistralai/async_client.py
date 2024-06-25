@@ -1,7 +1,7 @@
 import asyncio
 import posixpath
 from json import JSONDecodeError
-from typing import Any, AsyncGenerator, Dict, List, Optional, Union
+from typing import Any, AsyncGenerator, Callable, Dict, List, Optional, Union
 
 from httpx import (
     AsyncClient,
@@ -101,6 +101,7 @@ class MistralAsyncClient(ClientBase):
         stream: bool = False,
         attempt: int = 1,
         data: Optional[Dict[str, Any]] = None,
+        check_model_deprecation_headers_callback: Optional[Callable] = None,
         **kwargs: Any,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         accept_header = "text/event-stream" if stream else "application/json"
@@ -129,6 +130,8 @@ class MistralAsyncClient(ClientBase):
                     data=data,
                     **kwargs,
                 ) as response:
+                    if check_model_deprecation_headers_callback:
+                        check_model_deprecation_headers_callback(response.headers)
                     await self._check_streaming_response(response)
 
                     async for line in response.aiter_lines():
@@ -145,7 +148,8 @@ class MistralAsyncClient(ClientBase):
                     data=data,
                     **kwargs,
                 )
-
+                if check_model_deprecation_headers_callback:
+                    check_model_deprecation_headers_callback(response.headers)
                 yield await self._check_response(response)
 
         except ConnectError as e:
@@ -213,7 +217,12 @@ class MistralAsyncClient(ClientBase):
             response_format=response_format,
         )
 
-        single_response = self._request("post", request, "v1/chat/completions")
+        single_response = self._request(
+            "post",
+            request,
+            "v1/chat/completions",
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         async for response in single_response:
             return ChatCompletionResponse(**response)
@@ -267,7 +276,13 @@ class MistralAsyncClient(ClientBase):
             tool_choice=tool_choice,
             response_format=response_format,
         )
-        async_response = self._request("post", request, "v1/chat/completions", stream=True)
+        async_response = self._request(
+            "post",
+            request,
+            "v1/chat/completions",
+            stream=True,
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         async for json_response in async_response:
             yield ChatCompletionStreamResponse(**json_response)
@@ -284,7 +299,12 @@ class MistralAsyncClient(ClientBase):
             EmbeddingResponse: A response object containing the embeddings.
         """
         request = {"model": model, "input": input}
-        single_response = self._request("post", request, "v1/embeddings")
+        single_response = self._request(
+            "post",
+            request,
+            "v1/embeddings",
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         async for response in single_response:
             return EmbeddingResponse(**response)
@@ -341,7 +361,12 @@ class MistralAsyncClient(ClientBase):
         request = self._make_completion_request(
             prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop
         )
-        single_response = self._request("post", request, "v1/fim/completions")
+        single_response = self._request(
+            "post",
+            request,
+            "v1/fim/completions",
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         async for response in single_response:
             return ChatCompletionResponse(**response)
@@ -376,9 +401,23 @@ class MistralAsyncClient(ClientBase):
             Dict[str, Any]: a response object containing the generated text.
         """
         request = self._make_completion_request(
-            prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop, stream=True
+            prompt,
+            model,
+            suffix,
+            temperature,
+            max_tokens,
+            top_p,
+            random_seed,
+            stop,
+            stream=True,
         )
-        async_response = self._request("post", request, "v1/fim/completions", stream=True)
+        async_response = self._request(
+            "post",
+            request,
+            "v1/fim/completions",
+            stream=True,
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         async for json_response in async_response:
             yield ChatCompletionStreamResponse(**json_response)

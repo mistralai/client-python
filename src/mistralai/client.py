@@ -1,7 +1,7 @@
 import posixpath
 import time
 from json import JSONDecodeError
-from typing import Any, Dict, Iterable, Iterator, List, Optional, Union
+from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Union
 
 from httpx import Client, ConnectError, HTTPTransport, RequestError, Response
 
@@ -40,7 +40,9 @@ class MistralClient(ClientBase):
         super().__init__(endpoint, api_key, max_retries, timeout)
 
         self._client = Client(
-            follow_redirects=True, timeout=self._timeout, transport=HTTPTransport(retries=self._max_retries)
+            follow_redirects=True,
+            timeout=self._timeout,
+            transport=HTTPTransport(retries=self._max_retries),
         )
         self.files = FilesClient(self)
         self.jobs = JobsClient(self)
@@ -94,6 +96,7 @@ class MistralClient(ClientBase):
         stream: bool = False,
         attempt: int = 1,
         data: Optional[Dict[str, Any]] = None,
+        check_model_deprecation_headers_callback: Optional[Callable] = None,
         **kwargs: Any,
     ) -> Iterator[Dict[str, Any]]:
         accept_header = "text/event-stream" if stream else "application/json"
@@ -122,6 +125,8 @@ class MistralClient(ClientBase):
                     data=data,
                     **kwargs,
                 ) as response:
+                    if check_model_deprecation_headers_callback:
+                        check_model_deprecation_headers_callback(response.headers)
                     self._check_streaming_response(response)
 
                     for line in response.iter_lines():
@@ -138,7 +143,8 @@ class MistralClient(ClientBase):
                     data=data,
                     **kwargs,
                 )
-
+                if check_model_deprecation_headers_callback:
+                    check_model_deprecation_headers_callback(response.headers)
                 yield self._check_response(response)
 
         except ConnectError as e:
@@ -207,7 +213,12 @@ class MistralClient(ClientBase):
             response_format=response_format,
         )
 
-        single_response = self._request("post", request, "v1/chat/completions")
+        single_response = self._request(
+            "post",
+            request,
+            "v1/chat/completions",
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         for response in single_response:
             return ChatCompletionResponse(**response)
@@ -261,7 +272,13 @@ class MistralClient(ClientBase):
             response_format=response_format,
         )
 
-        response = self._request("post", request, "v1/chat/completions", stream=True)
+        response = self._request(
+            "post",
+            request,
+            "v1/chat/completions",
+            stream=True,
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         for json_streamed_response in response:
             yield ChatCompletionStreamResponse(**json_streamed_response)
@@ -278,7 +295,12 @@ class MistralClient(ClientBase):
             EmbeddingResponse: A response object containing the embeddings.
         """
         request = {"model": model, "input": input}
-        singleton_response = self._request("post", request, "v1/embeddings")
+        singleton_response = self._request(
+            "post",
+            request,
+            "v1/embeddings",
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         for response in singleton_response:
             return EmbeddingResponse(**response)
@@ -337,7 +359,13 @@ class MistralClient(ClientBase):
             prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop
         )
 
-        single_response = self._request("post", request, "v1/fim/completions", stream=False)
+        single_response = self._request(
+            "post",
+            request,
+            "v1/fim/completions",
+            stream=False,
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         for response in single_response:
             return ChatCompletionResponse(**response)
@@ -372,10 +400,24 @@ class MistralClient(ClientBase):
             Iterable[Dict[str, Any]]: a generator that yields response objects containing the generated text.
         """
         request = self._make_completion_request(
-            prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop, stream=True
+            prompt,
+            model,
+            suffix,
+            temperature,
+            max_tokens,
+            top_p,
+            random_seed,
+            stop,
+            stream=True,
         )
 
-        response = self._request("post", request, "v1/fim/completions", stream=True)
+        response = self._request(
+            "post",
+            request,
+            "v1/fim/completions",
+            stream=True,
+            check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
+        )
 
         for json_streamed_response in response:
             yield ChatCompletionStreamResponse(**json_streamed_response)
