@@ -43,7 +43,7 @@ class ClientBase(ABC):
 
         self._version = CLIENT_VERSION
 
-    def _get_model(self, model: str | None = None) -> str:
+    def _get_model(self, model: Optional[str] = None) -> str:
         if model is not None:
             return model
         else:
@@ -86,7 +86,7 @@ class ClientBase(ABC):
 
         return parsed_messages
 
-    def _check_model_deprecation_header_callback_factory(self, model: str | None) -> Callable:
+    def _check_model_deprecation_header_callback_factory(self, model: Optional[str] = None) -> Callable:
         model = self._get_model(model)
 
         def _check_model_deprecation_header_callback(
