@@ -1,14 +1,19 @@
 import logging
 import os
 from abc import ABC
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 import orjson
+from httpx import Headers
 
-from mistralai.exceptions import (
-    MistralException,
+from mistralai.constants import HEADER_MODEL_DEPRECATION_TIMESTAMP
+from mistralai.exceptions import MistralException
+from mistralai.models.chat_completion import (
+    ChatMessage,
+    Function,
+    ResponseFormat,
+    ToolChoice,
 )
-from mistralai.models.chat_completion import ChatMessage, Function, ResponseFormat, ToolChoice
 
 CLIENT_VERSION = "0.4.1"
 
@@ -37,6 +42,14 @@ class ClientBase(ABC):
             self._default_model = "mistral"
 
         self._version = CLIENT_VERSION
+
+    def _get_model(self, model: Optional[str] = None) -> str:
+        if model is not None:
+            return model
+        else:
+            if self._default_model is None:
+                raise MistralException(message="model must be provided")
+            return self._default_model
 
     def _parse_tools(self, tools: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         parsed_tools: List[Dict[str, Any]] = []
@@ -73,6 +86,22 @@ class ClientBase(ABC):
 
         return parsed_messages
 
+    def _check_model_deprecation_header_callback_factory(self, model: Optional[str] = None) -> Callable:
+        model = self._get_model(model)
+
+        def _check_model_deprecation_header_callback(
+            headers: Headers,
+        ) -> None:
+            if HEADER_MODEL_DEPRECATION_TIMESTAMP in headers:
+                self._logger.warning(
+                    f"WARNING: The model {model} is deprecated "
+                    f"and will be removed on {headers[HEADER_MODEL_DEPRECATION_TIMESTAMP]}. "
+                    "Please refer to https://docs.mistral.ai/getting-started/models/#api-versioning "
+                    "for more information."
+                )
+
+        return _check_model_deprecation_header_callback
+
     def _make_completion_request(
         self,
         prompt: str,
@@ -95,16 +124,14 @@ class ClientBase(ABC):
         if stop is not None:
             request_data["stop"] = stop
 
-        if model is not None:
-            request_data["model"] = model
-        else:
-            if self._default_model is None:
-                raise MistralException(message="model must be provided")
-            request_data["model"] = self._default_model
+        request_data["model"] = self._get_model(model)
 
         request_data.update(
             self._build_sampling_params(
-                temperature=temperature, max_tokens=max_tokens, top_p=top_p, random_seed=random_seed
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=top_p,
+                random_seed=random_seed,
             )
         )
 
@@ -148,16 +175,14 @@ class ClientBase(ABC):
             "messages": self._parse_messages(messages),
         }
 
-        if model is not None:
-            request_data["model"] = model
-        else:
-            if self._default_model is None:
-                raise MistralException(message="model must be provided")
-            request_data["model"] = self._default_model
+        request_data["model"] = self._get_model(model)
 
         request_data.update(
             self._build_sampling_params(
-                temperature=temperature, max_tokens=max_tokens, top_p=top_p, random_seed=random_seed
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=top_p,
+                random_seed=random_seed,
             )
         )
 
