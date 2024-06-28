@@ -32,6 +32,8 @@ class JobMetadata(BaseModel):
     train_tokens: int
     epochs: float
     expected_duration_seconds: Optional[int]
+    cost: Optional[float] = None
+    cost_currency: Optional[str] = None
 
 
 class Job(BaseModel):
