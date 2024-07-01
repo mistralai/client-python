@@ -32,6 +32,7 @@ async def main():
     print(f"Dataset tokens: {dry_run_job.data_tokens}")
     print(f"Epochs number: {dry_run_job.epochs}")
     print(f"Expected duration: {dry_run_job.expected_duration_seconds}")
+    print(f"Cost: {dry_run_job.cost} {dry_run_job.cost_currency}")
 
 
 if __name__ == "__main__":
