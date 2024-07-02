@@ -4,6 +4,7 @@ version = "0.4.1"
 description = ""
 authors = ["Bam4d <bam4d@mistral.ai>"]
 readme = "README.md"
+license = "Apache 2.0 License"
 
 [tool.ruff]
 select = ["E", "F", "W", "Q", "I"]
@@ -39,5 +40,3 @@ pytest-asyncio = "^0.23.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-
