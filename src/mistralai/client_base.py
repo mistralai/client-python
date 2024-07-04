@@ -15,7 +15,7 @@ from mistralai.models.chat_completion import (
     ToolChoice,
 )
 
-CLIENT_VERSION = "0.4.1"
+CLIENT_VERSION = "0.4.2"
 
 
 class ClientBase(ABC):
