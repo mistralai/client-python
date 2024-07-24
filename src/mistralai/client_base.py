@@ -170,6 +170,7 @@ class ClientBase(ABC):
         safe_prompt: Optional[bool] = False,
         tool_choice: Optional[Union[str, ToolChoice]] = None,
         response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
+        stop: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "messages": self._parse_messages(messages),
@@ -197,6 +198,9 @@ class ClientBase(ABC):
             request_data["tool_choice"] = self._parse_tool_choice(tool_choice)
         if response_format is not None:
             request_data["response_format"] = self._parse_response_format(response_format)
+
+        if stop is not None:
+            request_data["stop"] = stop
 
         self._logger.debug(f"Chat request: {request_data}")
 
