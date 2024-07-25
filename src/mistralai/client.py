@@ -216,6 +216,9 @@ class MistralClient(ClientBase):
             stop=stop
         )
 
+        print(request)
+        breakpoint()
+
         single_response = self._request(
             "post",
             request,
@@ -275,6 +278,7 @@ class MistralClient(ClientBase):
             response_format=response_format,
         )
 
+        print(request)
         breakpoint()
 
         response = self._request(
@@ -363,6 +367,9 @@ class MistralClient(ClientBase):
         request = self._make_completion_request(
             prompt, model, suffix, temperature, max_tokens, top_p, random_seed, stop
         )
+
+        print(request)
+        breakpoint()
 
         single_response = self._request(
             "post",
