@@ -275,6 +275,8 @@ class MistralClient(ClientBase):
             response_format=response_format,
         )
 
+        breakpoint()
+
         response = self._request(
             "post",
             request,
