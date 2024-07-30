@@ -170,7 +170,7 @@ class ClientBase(ABC):
         safe_prompt: Optional[bool] = False,
         tool_choice: Optional[Union[str, ToolChoice]] = None,
         response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
-        stop: Optional[List[str]] = None
+        stop: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         request_data: Dict[str, Any] = {
             "messages": self._parse_messages(messages),
