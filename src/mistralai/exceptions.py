@@ -6,7 +6,7 @@ from httpx import Response
 
 
 class MistralException(Exception):
-    """Base Exception class, returned when nothing more specific applies"""
+    """Base Exception class, returned when nothing more specific applies."""
 
     def __init__(self, message: Optional[str] = None) -> None:
         super(MistralException, self).__init__(message)
@@ -22,7 +22,7 @@ class MistralException(Exception):
 
 
 class MistralAPIException(MistralException):
-    """Returned when the API responds with an error message"""
+    """Returned when the API responds with an error message."""
 
     def __init__(
         self,
@@ -47,8 +47,9 @@ class MistralAPIException(MistralException):
 
 
 class MistralAPIStatusException(MistralAPIException):
-    """Returned when we receive a non-200 response from the API that we should retry"""
+    """Returned when we receive a non-200 response from the API that we should
+    retry."""
 
 
 class MistralConnectionException(MistralException):
-    """Returned when the SDK can not reach the API server for any reason"""
+    """Returned when the SDK can not reach the API server for any reason."""

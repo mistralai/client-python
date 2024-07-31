@@ -44,7 +44,7 @@ jobs:
     - name: Upload pants log
       uses: actions/upload-artifact@v3
       with:
-        name: pants-log
+        name: pants-log-${{ matrix.python-version }}
         path: .pants.d/workdir/pants.log
       if: always()
 

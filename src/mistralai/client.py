@@ -26,9 +26,7 @@ from mistralai.models.models import ModelDeleted, ModelList
 
 
 class MistralClient(ClientBase):
-    """
-    Synchronous wrapper around the async client
-    """
+    """Synchronous wrapper around the async client."""
 
     def __init__(
         self,
@@ -284,7 +282,8 @@ class MistralClient(ClientBase):
             yield ChatCompletionStreamResponse(**json_streamed_response)
 
     def embeddings(self, model: str, input: Union[str, List[str]]) -> EmbeddingResponse:
-        """An embeddings endpoint that returns embeddings for a single, or batch of inputs
+        """An embeddings endpoint that returns embeddings for a single, or
+        batch of inputs.
 
         Args:
             model (str): The embedding model to use, e.g. mistral-embed
@@ -308,7 +307,7 @@ class MistralClient(ClientBase):
         raise MistralException("No response received")
 
     def list_models(self) -> ModelList:
-        """Returns a list of the available models
+        """Returns a list of the available models.
 
         Returns:
             ModelList: A response object containing the list of models.

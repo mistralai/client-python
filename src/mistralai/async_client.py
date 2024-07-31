@@ -288,7 +288,8 @@ class MistralAsyncClient(ClientBase):
             yield ChatCompletionStreamResponse(**json_response)
 
     async def embeddings(self, model: str, input: Union[str, List[str]]) -> EmbeddingResponse:
-        """An asynchronous embeddings endpoint that returns embeddings for a single, or batch of inputs
+        """An asynchronous embeddings endpoint that returns embeddings for a
+        single, or batch of inputs.
 
         Args:
             model (str): The embedding model to use, e.g. mistral-embed
@@ -312,7 +313,7 @@ class MistralAsyncClient(ClientBase):
         raise MistralException("No response received")
 
     async def list_models(self) -> ModelList:
-        """Returns a list of the available models
+        """Returns a list of the available models.
 
         Returns:
             ModelList: A response object containing the list of models.
@@ -384,7 +385,8 @@ class MistralAsyncClient(ClientBase):
         random_seed: Optional[int] = None,
         stop: Optional[List[str]] = None,
     ) -> AsyncGenerator[ChatCompletionStreamResponse, None]:
-        """An asynchronous completion endpoint that returns a streaming response.
+        """An asynchronous completion endpoint that returns a streaming
+        response.
 
         Args:
             model (str): model the name of the model to get completions with, e.g. codestral-latest
