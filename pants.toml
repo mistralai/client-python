@@ -1,0 +1,27 @@
+[GLOBAL]
+backend_packages = [
+    "pants.backend.python",
+    "pants.backend.experimental.python.lint.ruff.check",
+    "pants.backend.experimental.python.lint.ruff.format",
+    "pants.backend.python.typecheck.mypy",
+    "pants.backend.python.lint.docformatter",
+]
+pants_version = "2.21.0"
+
+[source]
+root_patterns = ["/src", "/tests", "/examples"]
+
+[python]
+interpreter_constraints = ["==3.9.*"]
+
+[python-bootstrap]
+search_path = ["<PATH>", "<PYENV>"]
+
+[python-infer]
+use_rust_parser = true
+
+[test]
+use_coverage = true
+
+[python.resolves]
+poetry = "poetry.lock"

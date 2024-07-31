@@ -6,12 +6,16 @@ authors = ["Bam4d <bam4d@mistral.ai>"]
 readme = "README.md"
 license = "Apache 2.0 License"
 
+
 [tool.ruff]
+line-length = 120
+
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "Q", "I"]
 ignore = ["E203"]
 fixable = ["ALL"]
 unfixable = []
-line-length = 120
 
 
 [tool.mypy]
