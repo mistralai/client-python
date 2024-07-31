@@ -26,9 +26,25 @@ pip install poetry
 poetry install
 ```
 
+### Build System
+
+Pants is setup in this repository to ease the developer experience. Follow instruction here to install Pants: [Pants build system](https://www.pantsbuild.org/docs)
+
+Run tests:
+
+```bash
+pants test ::
+```
+
+Run lint + check + fmt:
+
+```bash
+make lint
+```
+
 ## Run examples
 
-You can run the examples in the `examples/` directory using `poetry run` or by entering the virtual environment using `poetry shell`.
+You can run the examples in the `examples/` directory using `poetry run` or `pants run`
 
 ### API Key Setup
 
@@ -52,11 +68,9 @@ cd examples
 poetry run python chat_no_streaming.py
 ```
 
-### Using poetry shell
+### Using pants run
 
 ```bash
-poetry shell
 cd examples
-
->> python chat_no_streaming.py
+pants run chat_no_streaming.py
 ```

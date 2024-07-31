@@ -1,6 +1,6 @@
 .PHONY: lint
 
 lint:
-	poetry run ruff check --fix .
-	poetry run ruff format .
-	poetry run mypy .
+	pants lint ::
+	pants fmt ::
+	pants check src/mistralai src/mistralai/models
