@@ -12,7 +12,7 @@ pants_version = "2.21.0"
 root_patterns = ["/src", "/tests", "/examples"]
 
 [python]
-interpreter_constraints = ["==3.9.*"]
+interpreter_constraints = [">=3.9,<4.0"]
 
 [python-bootstrap]
 search_path = ["<PATH>", "<PYENV>"]
