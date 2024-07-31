@@ -27,7 +27,7 @@ jobs:
     - uses: pantsbuild/actions/init-pants@v8
       with:
         gha-cache-key: v0
-        named-caches-hash: ${{ hashFiles('poetry.lock') }}
+        named-caches-hash: ${{ hashFiles('poetry.lock') }}-${{ matrix.python-version }}
         cache-lmdb-store: 'true'
     - name: Check BUILD files
       run: |
