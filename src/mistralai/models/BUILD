@@ -1,3 +1,1 @@
-python_sources(
-    name="models"
-)
+python_sources(name="models")

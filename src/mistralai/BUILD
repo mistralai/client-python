@@ -1,6 +1,4 @@
-python_sources(
-    name="lib"
-)
+python_sources(name="lib")
 
 resource(
     name="py_typed",
