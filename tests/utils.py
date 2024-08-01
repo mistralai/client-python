@@ -188,6 +188,31 @@ def mock_chat_response_payload():
         }
     ).decode()
 
+def mock_chat_response_payload_with_stop_token():
+    return orjson.dumps(
+        {
+            "id": '5927f2f09c9e46f5bc0837c63dfc871c',
+            "object": 'chat.completion',
+            "created": 1722532978,
+            "model": 'mistral-small-latest',
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": 'assistant', 
+                        "content": 'The capital of ', 
+                        "name": None, 
+                        "tool_calls": None, 
+                        "tool_call_id": None, 
+                        "prefix": None
+                    }, 
+                    "finish_reason": 'stop',
+                }
+            ],
+            "usage": {"prompt_tokens": 12, "total_tokens": 16, "completion_tokens": 4},
+            }
+        ).decode()
+
 
 def mock_chat_response_streaming_payload():
     return [

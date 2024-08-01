@@ -366,7 +366,7 @@ class MistralClient(ClientBase):
         single_response = self._request(
             "post",
             request,
-            "v1/chat/completions",
+            "v1/fim/completions",
             stream=False,
             check_model_deprecation_headers_callback=self._check_model_deprecation_header_callback_factory(model),
         )

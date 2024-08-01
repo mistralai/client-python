@@ -48,7 +48,7 @@ class ChatMessage(BaseModel):
     name: Optional[str] = None
     tool_calls: Optional[List[ToolCall]] = None
     tool_call_id: Optional[str] = None
-    prefix: Optional[str] = None
+    prefix: Optional[bool] = None
 
 
 class DeltaMessage(BaseModel):
