@@ -180,6 +180,7 @@ class MistralClient(ClientBase):
         safe_prompt: bool = False,
         tool_choice: Optional[Union[str, ToolChoice]] = None,
         response_format: Optional[Union[Dict[str, str], ResponseFormat]] = None,
+        stop: Optional[List[str]] = None,
     ) -> ChatCompletionResponse:
         """A chat endpoint that returns a single response.
 
@@ -195,6 +196,8 @@ class MistralClient(ClientBase):
             random_seed (Optional[int], optional): the random seed to use for sampling, e.g. 42. Defaults to None.
             safe_mode (bool, optional): deprecated, use safe_prompt instead. Defaults to False.
             safe_prompt (bool, optional): whether to use safe prompt, e.g. true. Defaults to False.
+            stop (Optional[str], optional): list of stop tokens; generation halts when encountering a stop token.
+            Defaults to None.
 
         Returns:
             ChatCompletionResponse: a response object containing the generated text.
@@ -211,6 +214,7 @@ class MistralClient(ClientBase):
             safe_prompt=safe_mode or safe_prompt,
             tool_choice=tool_choice,
             response_format=response_format,
+            stop=stop,
         )
 
         single_response = self._request(
