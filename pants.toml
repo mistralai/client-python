@@ -1,4 +1,5 @@
 [GLOBAL]
+# That's where we define tools we want to use for our repo, here Python, and some linter/checker for the demo
 backend_packages = [
     "pants.backend.python",
     "pants.backend.experimental.python.lint.ruff.check",
@@ -9,6 +10,7 @@ backend_packages = [
 pants_version = "2.21.0"
 
 [source]
+# Where Pants need to look at for our code
 root_patterns = ["/src", "/tests", "/examples"]
 
 [python]
@@ -24,4 +26,5 @@ use_rust_parser = true
 use_coverage = true
 
 [python.resolves]
+# Pants can create it's own .lock, here we use the existing one
 poetry = "poetry.lock"
