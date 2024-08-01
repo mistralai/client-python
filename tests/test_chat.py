@@ -197,10 +197,6 @@ class TestChat:
             data=None,
         )
 
-        print("***")
-        print(chat_messages)
-        print(result)
-        
         assert isinstance(result, ChatCompletionResponse), "Should return an ChatCompletionResponse"
         assert len(result.choices) == 1
         assert result.choices[0].index == 0
