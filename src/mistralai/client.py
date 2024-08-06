@@ -34,12 +34,14 @@ class MistralClient(ClientBase):
         self,
         api_key: Optional[str] = None,
         endpoint: str = ENDPOINT,
+        default_headers: Optional[Dict[str, str]] = None,
         max_retries: int = 5,
         timeout: int = 120,
     ):
         super().__init__(endpoint, api_key, max_retries, timeout)
 
         self._client = Client(
+            headers=default_headers,
             follow_redirects=True,
             timeout=self._timeout,
             transport=HTTPTransport(retries=self._max_retries),
