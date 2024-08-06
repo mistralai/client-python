@@ -61,6 +61,7 @@ class FinishReason(str, Enum):
     length = "length"
     error = "error"
     tool_calls = "tool_calls"
+    eos_token = "eos_token"
 
 
 class ChatCompletionResponseStreamChoice(BaseModel):
