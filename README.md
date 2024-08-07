@@ -1,4 +1,4 @@
-# mistralai
+# Mistral Python Client
 
 <div align="left">
     <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
@@ -439,10 +439,10 @@ if res is not None:
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
-| Error Object               | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4xx-5xx                    | */*                        |
+| Error Object               | Status Code | Content Type     |
+| -------------------------- | ----------- | ---------------- |
+| models.HTTPValidationError | 422         | application/json |
+| models.SDKError            | 4xx-5xx     | */*              |
 
 ### Example
 
@@ -479,9 +479,9 @@ if res is not None:
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name | Server | Variables |
-| ----- | ------ | --------- |
-| `prod` | `https://api.mistral.ai` | None |
+| Name   | Server                   | Variables |
+| ------ | ------------------------ | --------- |
+| `prod` | `https://api.mistral.ai` | None      |
 
 #### Example
 
@@ -614,9 +614,9 @@ s = Mistral(async_client=CustomClient(httpx.AsyncClient()))
 
 This SDK supports the following security scheme globally:
 
-| Name                 | Type                 | Scheme               | Environment Variable |
-| -------------------- | -------------------- | -------------------- | -------------------- |
-| `api_key`            | http                 | HTTP Bearer          | `MISTRAL_API_KEY`    |
+| Name      | Type | Scheme      | Environment Variable |
+| --------- | ---- | ----------- | -------------------- |
+| `api_key` | http | HTTP Bearer | `MISTRAL_API_KEY`    |
 
 To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
 ```python
