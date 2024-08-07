@@ -3,25 +3,24 @@
 import asyncio
 import os
 
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
     prompt = "def fibonacci(n: int):"
     suffix = "n = int(input('Enter a number: '))\nprint(fibonacci(n))"
 
     print(prompt)
-    for chunk in client.completion_stream(
+    for chunk in client.fim.stream(
         model="codestral-latest",
         prompt=prompt,
         suffix=suffix,
     ):
-        if chunk.choices[0].delta.content is not None:
-            print(chunk.choices[0].delta.content, end="")
+        print(chunk.data.choices[0].delta.content, end="")
     print(suffix)
 
 

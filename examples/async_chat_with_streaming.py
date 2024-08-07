@@ -3,29 +3,28 @@
 import asyncio
 import os
 
-from mistralai.async_client import MistralAsyncClient
-from mistralai.models.chat_completion import ChatMessage
+from mistralai import Mistral
+from mistralai.models import UserMessage
 
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
     model = "mistral-tiny"
 
-    client = MistralAsyncClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
     print("Chat response:")
-    response = client.chat_stream(
+    response = await client.chat.stream_async(
         model=model,
-        messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+        messages=[
+            UserMessage(content="What is the best French cheese?give the best 50")
+        ],
     )
-
     async for chunk in response:
-        if chunk.choices[0].delta.content is not None:
-            print(chunk.choices[0].delta.content, end="")
+        if chunk.data.choices[0].delta.content is not None:
+            print(chunk.data.choices[0].delta.content, end="")
 
     print("\n")
-
-    await client.close()
 
 
 if __name__ == "__main__":

@@ -2,15 +2,15 @@
 
 import os
 
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
-    list_models_response = client.list_models()
+    list_models_response = client.models.list()
     print(list_models_response)
 
 
