@@ -7,12 +7,12 @@ Agents API.
 
 ### Available Operations
 
-* [complete](#complete) - Chat Completion
+* [complete](#complete) - Agents Completion
 * [stream](#stream) - Stream Agents completion
 
 ## complete
 
-Chat Completion
+Agents Completion
 
 ### Example Usage
 
