@@ -1,6 +1,6 @@
 from typing import Optional
 
-MIGRATION_MESSAGE = "This client is deprecated starting v1.0.0, pin your version to 0.4.2. Or migrate by following this documentation: TODO add link"
+MIGRATION_MESSAGE = "This client is deprecated. To migrate to the new client, please refer to this guide: https://github.com/mistralai/client-python/blob/main/MIGRATION.md. If you need to use this client anyway, pin your version to 0.4.2."
 
 
 class MistralClient:
