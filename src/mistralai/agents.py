@@ -27,7 +27,7 @@ class Agents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
     ) -> Optional[models.ChatCompletionResponse]:
-        r"""Chat Completion
+        r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
@@ -131,7 +131,7 @@ class Agents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
     ) -> Optional[models.ChatCompletionResponse]:
-        r"""Chat Completion
+        r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
