@@ -3,15 +3,15 @@
 import asyncio
 import os
 
-from mistralai.async_client import MistralAsyncClient
+from mistralai import Mistral
 
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = MistralAsyncClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
-    list_models_response = await client.list_models()
+    list_models_response = await client.models.list_async()
     print(list_models_response)
 
 

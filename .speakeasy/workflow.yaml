@@ -1,0 +1,39 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    mistral-azure-source:
+        inputs:
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure
+        registry:
+            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure
+    mistral-google-cloud-source:
+        inputs:
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud
+        registry:
+            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud
+    mistral-openapi:
+        inputs:
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
+        registry:
+            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
+targets:
+    mistralai-azure-sdk:
+        target: python
+        source: mistral-azure-source
+        output: ./packages/mistralai_azure
+        publish:
+            pypi:
+                token: $pypi_token
+    mistralai-gcp-sdk:
+        target: python
+        source: mistral-google-cloud-source
+        output: ./packages/mistralai_gcp
+        publish:
+            pypi:
+                token: $pypi_token
+    mistralai-sdk:
+        target: python
+        source: mistral-openapi
+        publish:
+            pypi:
+                token: $pypi_token

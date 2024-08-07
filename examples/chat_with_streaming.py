@@ -2,22 +2,22 @@
 
 import os
 
-from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
+from mistralai import Mistral
+from mistralai.models import UserMessage
 
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
     model = "mistral-tiny"
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
-    for chunk in client.chat_stream(
+    for chunk in client.chat.stream(
         model=model,
-        messages=[ChatMessage(role="user", content="What is the best French cheese?")],
+        messages=[UserMessage(content="What is the best French cheese?")],
     ):
-        if chunk.choices[0].delta.content is not None:
-            print(chunk.choices[0].delta.content, end="")
+
+        print(chunk.data.choices[0].delta.content)
 
 
 if __name__ == "__main__":

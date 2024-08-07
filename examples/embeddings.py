@@ -2,17 +2,17 @@
 
 import os
 
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
-    embeddings_response = client.embeddings(
+    embeddings_response = client.embeddings.create(
         model="mistral-embed",
-        input=["What is the best French cheese?"] * 10,
+        inputs=["What is the best French cheese?"] * 10,
     )
 
     print(embeddings_response)

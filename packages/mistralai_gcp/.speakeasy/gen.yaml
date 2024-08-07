@@ -1,0 +1,44 @@
+configVersion: 2.0.0
+generation:
+  sdkClassName: MistralGCP
+  maintainOpenAPIOrder: true
+  usageSnippets:
+    optionalPropertyRendering: withExample
+  useClassNamesForArrayFields: true
+  fixes:
+    nameResolutionDec2023: true
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: true
+  auth:
+    oAuth2ClientCredentialsEnabled: true
+python:
+  version: 1.0.0-rc.2
+  additionalDependencies:
+    dev:
+      pytest: ^8.2.2
+      pytest-asyncio: ^0.23.7
+    main:
+      google-auth: ^2.31.0
+      requests: ^2.32.3
+  authors:
+    - Mistral
+  clientServerStatusCodesAsErrors: true
+  description: Python Client SDK for the Mistral AI API in GCP.
+  enumFormat: union
+  flattenGlobalSecurity: true
+  flattenRequests: true
+  imports:
+    option: openapi
+    paths:
+      callbacks: ""
+      errors: ""
+      operations: ""
+      shared: ""
+      webhooks: ""
+  inputModelSuffix: input
+  maxMethodParams: 4
+  methodArguments: infer-optional-args
+  outputModelSuffix: output
+  packageName: mistralai-gcp
+  responseFormat: flat
+  templateVersion: v2

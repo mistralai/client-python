@@ -1,48 +1,52 @@
 #!/usr/bin/env python
 import os
 
-from mistralai.client import MistralClient
-from mistralai.models.jobs import TrainingParameters
+from mistralai import Mistral
+from mistralai.models import File, TrainingParametersIn
 
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
     # Create new files
     with open("examples/file.jsonl", "rb") as f:
-        training_file = client.files.create(file=f)
+        training_file = client.files.upload(
+            file=File(file_name="file.jsonl", content=f)
+        )
     with open("examples/validation_file.jsonl", "rb") as f:
-        validation_file = client.files.create(file=f)
+        validation_file = client.files.upload(
+            file=File(file_name="validation_file.jsonl", content=f)
+        )
 
     # Create a new job
-    created_job = client.jobs.create(
+    created_job = client.fine_tuning.jobs.create(
         model="open-mistral-7b",
-        training_files=[training_file.id],
+        training_files=[{"file_id": training_file.id, "weight": 1}],
         validation_files=[validation_file.id],
-        hyperparameters=TrainingParameters(
+        hyperparameters=TrainingParametersIn(
             training_steps=1,
             learning_rate=0.0001,
         ),
     )
     print(created_job)
 
-    jobs = client.jobs.list(created_after=created_job.created_at - 10)
-    for job in jobs.data:
-        print(f"Retrieved job: {job.id}")
+    # List jobs
+    jobs = client.fine_tuning.jobs.list(page=0, page_size=5)
+    print(jobs)
 
     # Retrieve a job
-    retrieved_job = client.jobs.retrieve(created_job.id)
+    retrieved_job = client.fine_tuning.jobs.get(job_id=created_job.id)
     print(retrieved_job)
 
     # Cancel a job
-    canceled_job = client.jobs.cancel(created_job.id)
+    canceled_job = client.fine_tuning.jobs.cancel(job_id=created_job.id)
     print(canceled_job)
 
     # Delete files
-    client.files.delete(training_file.id)
-    client.files.delete(validation_file.id)
+    client.files.delete(file_id=training_file.id)
+    client.files.delete(file_id=validation_file.id)
 
 
 if __name__ == "__main__":

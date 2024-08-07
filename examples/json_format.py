@@ -2,20 +2,24 @@
 
 import os
 
-from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
+from mistralai import Mistral
+from mistralai.models import UserMessage
 
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
     model = "mistral-large-latest"
 
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
-    chat_response = client.chat(
+    chat_response = client.chat.complete(
         model=model,
         response_format={"type": "json_object"},
-        messages=[ChatMessage(role="user", content="What is the best French cheese? Answer shortly in JSON.")],
+        messages=[
+            UserMessage(
+                content="What is the best French cheese? Answer shortly in JSON.",
+            )
+        ],
     )
     print(chat_response.choices[0].message.content)
 
