@@ -13,6 +13,20 @@ from typing import List, Literal, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
+AgentsCompletionRequestStopTypedDict = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+AgentsCompletionRequestStop = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+AgentsCompletionRequestMessagesTypedDict = Union[UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
+
+
+AgentsCompletionRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
+
+
 AgentsCompletionRequestToolChoice = Literal["auto", "none", "any"]
 
 class AgentsCompletionRequestTypedDict(TypedDict):
@@ -80,17 +94,3 @@ class AgentsCompletionRequest(BaseModel):
 
         return m
         
-
-AgentsCompletionRequestStopTypedDict = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-AgentsCompletionRequestStop = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-AgentsCompletionRequestMessagesTypedDict = Union[UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
-
-
-AgentsCompletionRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
-

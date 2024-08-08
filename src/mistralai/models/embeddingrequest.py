@@ -8,6 +8,14 @@ from typing import List, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
+InputsTypedDict = Union[str, List[str]]
+r"""Text to embed."""
+
+
+Inputs = Union[str, List[str]]
+r"""Text to embed."""
+
+
 class EmbeddingRequestTypedDict(TypedDict):
     inputs: InputsTypedDict
     r"""Text to embed."""
@@ -51,11 +59,3 @@ class EmbeddingRequest(BaseModel):
 
         return m
         
-
-InputsTypedDict = Union[str, List[str]]
-r"""Text to embed."""
-
-
-Inputs = Union[str, List[str]]
-r"""Text to embed."""
-

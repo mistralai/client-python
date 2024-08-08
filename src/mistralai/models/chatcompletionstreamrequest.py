@@ -14,6 +14,20 @@ from typing import List, Literal, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
+ChatCompletionStreamRequestStopTypedDict = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+ChatCompletionStreamRequestStop = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+ChatCompletionStreamRequestMessagesTypedDict = Union[SystemMessageTypedDict, UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
+
+
+ChatCompletionStreamRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[SystemMessage, Tag("system")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
+
+
 ChatCompletionStreamRequestToolChoice = Literal["auto", "none", "any"]
 
 class ChatCompletionStreamRequestTypedDict(TypedDict):
@@ -91,17 +105,3 @@ class ChatCompletionStreamRequest(BaseModel):
 
         return m
         
-
-ChatCompletionStreamRequestStopTypedDict = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-ChatCompletionStreamRequestStop = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-ChatCompletionStreamRequestMessagesTypedDict = Union[SystemMessageTypedDict, UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
-
-
-ChatCompletionStreamRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[SystemMessage, Tag("system")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
-

@@ -4,20 +4,20 @@ from __future__ import annotations
 from .toolcall import ToolCall, ToolCallTypedDict
 from mistralai_gcp.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import List, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
 class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[str]
     content: NotRequired[str]
-    tool_calls: NotRequired[Nullable[ToolCallTypedDict]]
+    tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
     
 
 class DeltaMessage(BaseModel):
     role: Optional[str] = None
     content: Optional[str] = None
-    tool_calls: OptionalNullable[ToolCall] = UNSET
+    tool_calls: OptionalNullable[List[ToolCall]] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -629,7 +629,7 @@ This SDK supports the following security scheme globally:
 | -------------------- | -------------------- | -------------------- | -------------------- |
 | `api_key`            | http                 | HTTP Bearer          | `MISTRAL_API_KEY`    |
 
-To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from mistralai import Mistral
 import os
@@ -661,6 +661,16 @@ logging.basicConfig(level=logging.DEBUG)
 s = Mistral(debug_logger=logging.getLogger("mistralai"))
 ```
 <!-- End Debugging [debug] -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

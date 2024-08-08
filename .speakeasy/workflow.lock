@@ -1,4 +1,4 @@
-speakeasyVersion: 1.356.0
+speakeasyVersion: 1.357.4
 sources: {}
 targets:
     mistralai-azure-sdk:
@@ -9,7 +9,7 @@ targets:
         outLocation: ./packages/mistralai_gcp
     mistralai-sdk:
         source: mistral-openapi
-        outLocation: /github/workspace/repo
+        outLocation: /Users/gaspard/public-mistral/client-python
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
