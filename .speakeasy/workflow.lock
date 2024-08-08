@@ -9,7 +9,7 @@ targets:
         outLocation: ./packages/mistralai_gcp
     mistralai-sdk:
         source: mistral-openapi
-        outLocation: /Users/gaspard/public-mistral/client-python
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
