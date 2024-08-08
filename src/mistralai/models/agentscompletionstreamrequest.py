@@ -7,6 +7,14 @@ from typing import List, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
 
+AgentsCompletionStreamRequestStopTypedDict = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+AgentsCompletionStreamRequestStop = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
 class AgentsCompletionStreamRequestTypedDict(TypedDict):
     model: Nullable[str]
     r"""ID of the model to use. Only compatible for now with:
@@ -82,11 +90,3 @@ class AgentsCompletionStreamRequest(BaseModel):
 
         return m
         
-
-AgentsCompletionStreamRequestStopTypedDict = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-AgentsCompletionStreamRequestStop = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-

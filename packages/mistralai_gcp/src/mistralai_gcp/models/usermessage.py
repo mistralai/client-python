@@ -7,6 +7,12 @@ from typing import List, Literal, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
 
+UserMessageContentTypedDict = Union[str, List[TextChunkTypedDict]]
+
+
+UserMessageContent = Union[str, List[TextChunk]]
+
+
 UserMessageRole = Literal["user"]
 
 class UserMessageTypedDict(TypedDict):
@@ -18,9 +24,3 @@ class UserMessage(BaseModel):
     content: UserMessageContent
     role: Optional[UserMessageRole] = "user"
     
-
-UserMessageContentTypedDict = Union[str, List[TextChunkTypedDict]]
-
-
-UserMessageContent = Union[str, List[TextChunk]]
-

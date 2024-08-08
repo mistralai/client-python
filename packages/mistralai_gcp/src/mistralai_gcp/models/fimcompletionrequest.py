@@ -7,6 +7,14 @@ from typing import List, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
 
+FIMCompletionRequestStopTypedDict = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+FIMCompletionRequestStop = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
 class FIMCompletionRequestTypedDict(TypedDict):
     model: Nullable[str]
     r"""ID of the model to use. Only compatible for now with:
@@ -84,11 +92,3 @@ class FIMCompletionRequest(BaseModel):
 
         return m
         
-
-FIMCompletionRequestStopTypedDict = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-FIMCompletionRequestStop = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-

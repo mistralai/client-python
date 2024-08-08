@@ -7,6 +7,12 @@ from typing import List, Literal, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
 
+ContentTypedDict = Union[str, List[ContentChunkTypedDict]]
+
+
+Content = Union[str, List[ContentChunk]]
+
+
 Role = Literal["system"]
 
 class SystemMessageTypedDict(TypedDict):
@@ -18,9 +24,3 @@ class SystemMessage(BaseModel):
     content: Content
     role: Optional[Role] = "system"
     
-
-ContentTypedDict = Union[str, List[ContentChunkTypedDict]]
-
-
-Content = Union[str, List[ContentChunk]]
-

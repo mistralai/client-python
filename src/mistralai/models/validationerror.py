@@ -5,6 +5,12 @@ from mistralai.types import BaseModel
 from typing import List, TypedDict, Union
 
 
+LocTypedDict = Union[str, int]
+
+
+Loc = Union[str, int]
+
+
 class ValidationErrorTypedDict(TypedDict):
     loc: List[LocTypedDict]
     msg: str
@@ -16,9 +22,3 @@ class ValidationError(BaseModel):
     msg: str
     type: str
     
-
-LocTypedDict = Union[str, int]
-
-
-Loc = Union[str, int]
-

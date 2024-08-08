@@ -14,6 +14,20 @@ from typing import List, Literal, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
+StopTypedDict = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+Stop = Union[str, List[str]]
+r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
+
+MessagesTypedDict = Union[SystemMessageTypedDict, UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
+
+
+Messages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[SystemMessage, Tag("system")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
+
+
 ToolChoice = Literal["auto", "none", "any"]
 
 class ChatCompletionRequestTypedDict(TypedDict):
@@ -93,17 +107,3 @@ class ChatCompletionRequest(BaseModel):
 
         return m
         
-
-StopTypedDict = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-Stop = Union[str, List[str]]
-r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
-
-
-MessagesTypedDict = Union[SystemMessageTypedDict, UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
-
-
-Messages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[SystemMessage, Tag("system")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
-

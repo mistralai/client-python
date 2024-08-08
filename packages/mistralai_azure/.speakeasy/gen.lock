@@ -1,23 +1,23 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: f04749e097bb06d5fb8850400b089250
+  docChecksum: ec02d5407fd9354b416518c4b8fa8b95
   docVersion: 0.0.2
-  speakeasyVersion: 1.356.0
-  generationVersion: 2.388.1
-  releaseVersion: 1.0.0-rc.2
-  configChecksum: 98e9cf39c9535097961a0ca73dbac10b
+  speakeasyVersion: 1.357.4
+  generationVersion: 2.390.6
+  releaseVersion: 1.0.0-rc.4
+  configChecksum: ad8d0273f78dacd83fbba33510acd0a5
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.4
+    core: 5.3.7
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
     flatRequests: 1.0.1
-    globalSecurity: 3.0.1
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
@@ -39,6 +39,7 @@ generatedFiles:
   - pylintrc
   - pyproject.toml
   - scripts/compile.sh
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/mistralai_azure/__init__.py
   - src/mistralai_azure/basesdk.py

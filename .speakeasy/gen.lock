@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 9e7a46648104410da4d94d5c2b373d20
+  docChecksum: a7c4268dd1228c969aecfd7cfdb6ca3c
   docVersion: 0.0.2
-  speakeasyVersion: 1.356.0
-  generationVersion: 2.388.1
-  releaseVersion: 1.0.0
-  configChecksum: ab3daea0e59b8225d1742719ddfb86f4
+  speakeasyVersion: 1.357.4
+  generationVersion: 2.390.6
+  releaseVersion: 1.0.2
+  configChecksum: ed07f7fc253047a5a4dd2c0f813b8ea4
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -14,13 +14,13 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.4
+    core: 5.3.7
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
     flatRequests: 1.0.1
     flattening: 3.0.0
-    globalSecurity: 3.0.1
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
@@ -51,6 +51,7 @@ generatedFiles:
   - py.typed
   - pylintrc
   - scripts/compile.sh
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/mistralai/__init__.py
   - src/mistralai/basesdk.py

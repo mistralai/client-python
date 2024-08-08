@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "mistralai_azure"
-version = "1.0.0-rc.2"
+version = "1.0.0-rc.4"
 description = "Python Client SDK for the Mistral AI API in Azure."
 authors = ["Mistral",]
-readme = "README.md"
+readme = "README-PYPI.md"
 packages = [
     { include = "mistralai_azure", from = "src" }
 ]
@@ -17,6 +17,7 @@ in-project = true
 
 [tool.poetry.dependencies]
 python = "^3.8"
+eval-type-backport = "^0.2.0"
 httpx = "^0.27.0"
 jsonpath-python = "^1.0.6"
 pydantic = "~2.8.2"
