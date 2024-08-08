@@ -160,7 +160,7 @@ messages = [
     },
 ]
 
-stream_response = client.chat.stream_async(
+stream_response = client.chat.stream(
     model = model,
     messages = messages,
 )
