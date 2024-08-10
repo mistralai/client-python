@@ -107,10 +107,7 @@ model = "mistral-large-latest"
 client = Mistral(api_key=api_key)
 
  messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
+    UserMessage(role="user", content="What is the best French cheese?")
  ]
 
 chat_response = client.chat.complete(
@@ -154,10 +151,7 @@ model = "mistral-large-latest"
 client = Mistral(api_key=api_key)
 
 messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
+    UserMessage(role="user", content="What is the best French cheese?")
 ]
 
 stream_response = client.chat.stream(
@@ -202,10 +196,7 @@ model = "mistral-large-latest"
 client = Mistral(api_key=api_key)
 
 messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
+    UserMessage(role="user", content="What is the best French cheese?")
 ]
 
 # With async
