@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: e2bc44269918d569bbc51b1521c4c29b
+  docChecksum: 92df54490ab91f38782a1495d03835bf
   docVersion: 0.0.2
-  speakeasyVersion: 1.357.4
-  generationVersion: 2.390.6
-  releaseVersion: 1.0.0-rc.4
-  configChecksum: a8248e0ef5bdbc73910c2aae86c3c3b5
+  speakeasyVersion: 1.372.0
+  generationVersion: 2.399.0
+  releaseVersion: 1.0.0-rc.6
+  configChecksum: 5ccd66b07e3be4c6091ff440faf1e65a
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.7
+    core: 5.3.8
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
@@ -23,13 +23,14 @@ features:
     globalServerURLs: 3.0.0
     nameOverrides: 3.0.0
     nullables: 1.0.0
+    openEnums: 1.0.0
     responseFormat: 1.0.0
     retries: 3.0.0
     sdkHooks: 1.0.0
     serverEvents: 1.0.2
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
-    unions: 3.0.1
+    unions: 3.0.2
 generatedFiles:
   - src/mistralai_gcp/sdkconfiguration.py
   - src/mistralai_gcp/chat.py
@@ -96,6 +97,7 @@ generatedFiles:
   - docs/models/finishreason.md
   - docs/models/completionresponsestreamchoice.md
   - docs/models/deltamessage.md
+  - docs/models/tooltypes.md
   - docs/models/toolcall.md
   - docs/models/arguments.md
   - docs/models/functioncall.md
@@ -107,6 +109,7 @@ generatedFiles:
   - docs/models/messages.md
   - docs/models/toolchoice.md
   - docs/models/chatcompletionstreamrequest.md
+  - docs/models/tooltooltypes.md
   - docs/models/tool.md
   - docs/models/function.md
   - docs/models/responseformats.md

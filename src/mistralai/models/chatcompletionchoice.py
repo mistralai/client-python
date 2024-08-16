@@ -3,20 +3,19 @@
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from mistralai.types import BaseModel
-from typing import Literal, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Literal, TypedDict
 
 
 FinishReason = Literal["stop", "length", "model_length", "error", "tool_calls"]
 
 class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
+    message: AssistantMessageTypedDict
     finish_reason: FinishReason
-    message: NotRequired[AssistantMessageTypedDict]
     
 
 class ChatCompletionChoice(BaseModel):
     index: int
+    message: AssistantMessage
     finish_reason: FinishReason
-    message: Optional[AssistantMessage] = None
     

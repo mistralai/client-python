@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import Nullable, OptionalNullable, UNSET
+from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from typing import Any, AsyncGenerator, Generator, List, Optional, Union
 
@@ -221,16 +221,16 @@ class Agents(BaseSDK):
     
     def stream(
         self, *,
-        model: Nullable[str],
-        prompt: str,
-        temperature: Optional[float] = 0.7,
-        top_p: Optional[float] = 1,
+        messages: Union[List[models.AgentsCompletionStreamRequestMessages], List[models.AgentsCompletionStreamRequestMessagesTypedDict]],
+        agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[Union[models.AgentsCompletionStreamRequestStop, models.AgentsCompletionStreamRequestStopTypedDict]] = None,
         random_seed: OptionalNullable[int] = UNSET,
-        suffix: OptionalNullable[str] = UNSET,
+        response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
+        tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
+        tool_choice: Optional[models.AgentsCompletionStreamRequestToolChoice] = "auto",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -239,16 +239,16 @@ class Agents(BaseSDK):
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
 
-        :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
-        :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
-        :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
+        :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+        :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: 
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param response_format: 
+        :param tools: 
+        :param tool_choice: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -262,16 +262,16 @@ class Agents(BaseSDK):
             base_url = server_url
         
         request = models.AgentsCompletionStreamRequest(
-            model=model,
-            temperature=temperature,
-            top_p=top_p,
             max_tokens=max_tokens,
             min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
-            prompt=prompt,
-            suffix=suffix,
+            messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionStreamRequestMessages]),
+            response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
+            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tool_choice=tool_choice,
+            agent_id=agent_id,
         )
         
         req = self.build_request(
@@ -328,16 +328,16 @@ class Agents(BaseSDK):
     
     async def stream_async(
         self, *,
-        model: Nullable[str],
-        prompt: str,
-        temperature: Optional[float] = 0.7,
-        top_p: Optional[float] = 1,
+        messages: Union[List[models.AgentsCompletionStreamRequestMessages], List[models.AgentsCompletionStreamRequestMessagesTypedDict]],
+        agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[Union[models.AgentsCompletionStreamRequestStop, models.AgentsCompletionStreamRequestStopTypedDict]] = None,
         random_seed: OptionalNullable[int] = UNSET,
-        suffix: OptionalNullable[str] = UNSET,
+        response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
+        tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
+        tool_choice: Optional[models.AgentsCompletionStreamRequestToolChoice] = "auto",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -346,16 +346,16 @@ class Agents(BaseSDK):
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
 
-        :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
-        :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
-        :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
+        :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+        :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: 
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param response_format: 
+        :param tools: 
+        :param tool_choice: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -369,16 +369,16 @@ class Agents(BaseSDK):
             base_url = server_url
         
         request = models.AgentsCompletionStreamRequest(
-            model=model,
-            temperature=temperature,
-            top_p=top_p,
             max_tokens=max_tokens,
             min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
-            prompt=prompt,
-            suffix=suffix,
+            messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionStreamRequestMessages]),
+            response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
+            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tool_choice=tool_choice,
+            agent_id=agent_id,
         )
         
         req = self.build_request(
