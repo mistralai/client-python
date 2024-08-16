@@ -1,5 +1,12 @@
-speakeasyVersion: 1.357.4
-sources: {}
+speakeasyVersion: 1.372.1
+sources:
+    mistral-openapi:
+        sourceNamespace: mistral-openapi
+        sourceRevisionDigest: sha256:e4d5f5fe40e7f1141006ba40c1d85b743ce5dc2407635ca2e776ba0dfb00a398
+        sourceBlobDigest: sha256:56f1bbe3a050c9505e003bb9790e443084922bff74b072805757076cdb8a136e
+        tags:
+            - latest
+            - main
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -9,6 +16,9 @@ targets:
         outLocation: ./packages/mistralai_gcp
     mistralai-sdk:
         source: mistral-openapi
+        sourceNamespace: mistral-openapi
+        sourceRevisionDigest: sha256:e4d5f5fe40e7f1141006ba40c1d85b743ce5dc2407635ca2e776ba0dfb00a398
+        sourceBlobDigest: sha256:56f1bbe3a050c9505e003bb9790e443084922bff74b072805757076cdb8a136e
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
