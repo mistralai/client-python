@@ -10,7 +10,9 @@ from mistralai.models import File, TrainingParametersIn
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
 
-    client = Mistral(api_key=api_key)
+    client = Mistral(
+        api_key="gpN4hC0YOSdZoBbzRcWNyALyMnNOT9jj", server_url="http://0.0.0.0:8882/"
+    )
 
     # Create new files
     with open("examples/file.jsonl", "rb") as f:
