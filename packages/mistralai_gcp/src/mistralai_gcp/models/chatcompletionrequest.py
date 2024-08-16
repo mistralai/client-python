@@ -32,7 +32,7 @@ ChatCompletionRequestToolChoice = Literal["auto", "none", "any"]
 
 class ChatCompletionRequestTypedDict(TypedDict):
     model: Nullable[str]
-    r"""ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
+    r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
     messages: List[ChatCompletionRequestMessagesTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     temperature: NotRequired[float]
@@ -56,7 +56,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
 
 class ChatCompletionRequest(BaseModel):
     model: Nullable[str]
-    r"""ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
+    r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
     messages: List[ChatCompletionRequestMessages]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     temperature: Optional[float] = 0.7
