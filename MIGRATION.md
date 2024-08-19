@@ -99,6 +99,7 @@ print(chat_response.choices[0].message.content)
 
 ```python
 import os
+
 from mistralai import Mistral, UserMessage
 
 api_key = os.environ["MISTRAL_API_KEY"]
@@ -106,16 +107,20 @@ model = "mistral-large-latest"
 
 client = Mistral(api_key=api_key)
 
- messages = [
+messages = [
     {
         "role": "user",
         "content": "What is the best French cheese?",
     },
- ]
+]
+# Or using the new message classes
+# messages = [
+#     UserMessage(content="What is the best French cheese?"),
+# ]
 
 chat_response = client.chat.complete(
-    model = model,
-    messages = messages,
+    model=model,
+    messages=messages,
 )
 
 print(chat_response.choices[0].message.content)
@@ -146,6 +151,8 @@ for chunk in stream_response:
 ```
 **New:**
 ```python
+import os
+
 from mistralai import Mistral, UserMessage
 
 api_key = os.environ["MISTRAL_API_KEY"]
@@ -159,14 +166,19 @@ messages = [
         "content": "What is the best French cheese?",
     },
 ]
+# Or using the new message classes
+# messages = [
+#     UserMessage(content="What is the best French cheese?"),
+# ]
 
 stream_response = client.chat.stream(
-    model = model,
-    messages = messages,
+    model=model,
+    messages=messages,
 )
 
 for chunk in stream_response:
     print(chunk.data.choices[0].delta.content)
+
 ```
 
 ### Example 3: Async
@@ -194,23 +206,37 @@ async for chunk in async_response:
 
 **New:**
 ```python
+import asyncio
+import os
+
 from mistralai import Mistral, UserMessage
 
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
 
-client = Mistral(api_key=api_key)
+async def main():
+    client = Mistral(
+        api_key=os.getenv("MISTRAL_API_KEY", ""),
+    )
 
-messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
-]
+    messages = [
+        {
+            "role": "user",
+            "content": "What is the best French cheese?",
+        },
+    ]
+    # Or using the new message classes
+    # messages = [
+    #     UserMessage(
+    #         content="What is the best French cheese?",
+    #     ),
+    # ]
+    async_response = await client.chat.completstream_asynce_async(
+        messages=messages,
+        model="mistral-large-latest",
+    )
 
-# With async
-async_response = await client.chat.stream_async(model=model, messages=messages)
+    async for chunk in async_response:
+        print(chunk.data.choices[0].delta.content)
 
-async for chunk in async_response:
-    print(chunk.data.choices[0].delta.content)
+
+asyncio.run(main())
 ```
