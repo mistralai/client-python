@@ -3,10 +3,10 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: 87135817a5a746d7466c41070e5f581e
   docVersion: 0.0.2
-  speakeasyVersion: 1.373.1
-  generationVersion: 2.399.0
-  releaseVersion: 1.0.1
-  configChecksum: 374a669373f10730cda1eb9a91d59b8b
+  speakeasyVersion: 1.374.2
+  generationVersion: 2.401.2
+  releaseVersion: 1.0.2
+  configChecksum: ed07f7fc253047a5a4dd2c0f813b8ea4
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
