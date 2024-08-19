@@ -10,19 +10,19 @@ from typing_extensions import NotRequired
 
 class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[str]
-    content: NotRequired[str]
+    content: NotRequired[Nullable[str]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
     
 
 class DeltaMessage(BaseModel):
     role: Optional[str] = None
-    content: Optional[str] = None
+    content: OptionalNullable[str] = UNSET
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["role", "content", "tool_calls"]
-        nullable_fields = ["tool_calls"]
+        nullable_fields = ["content", "tool_calls"]
         null_default_fields = []
 
         serialized = handler(self)
