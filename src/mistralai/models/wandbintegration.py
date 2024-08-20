@@ -4,9 +4,11 @@ from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import Final, Optional, TypedDict
+from typing import Final, Literal, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
+
+WandbIntegrationType = Literal["wandb"]
 
 class WandbIntegrationTypedDict(TypedDict):
     project: str
@@ -23,7 +25,7 @@ class WandbIntegration(BaseModel):
     r"""The name of the project that the new run will be created under."""
     api_key: str
     r"""The WandB API key to use for authentication."""
-    TYPE: Annotated[Final[Optional[str]], pydantic.Field(alias="type")] = "wandb" # type: ignore
+    TYPE: Annotated[Final[Optional[WandbIntegrationType]], pydantic.Field(alias="type")] = "wandb" # type: ignore
     name: OptionalNullable[str] = UNSET
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
     run_name: OptionalNullable[str] = UNSET

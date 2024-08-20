@@ -17,6 +17,20 @@ from typing_extensions import Annotated, NotRequired
 
 DetailedJobOutStatus = Literal["QUEUED", "STARTED", "VALIDATING", "VALIDATED", "RUNNING", "FAILED_VALIDATION", "FAILED", "SUCCESS", "CANCELLED", "CANCELLATION_REQUESTED"]
 
+DetailedJobOutObject = Literal["job"]
+
+DetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
+
+
+DetailedJobOutIntegrations = WandbIntegrationOut
+
+
+DetailedJobOutRepositoriesTypedDict = GithubRepositoryOutTypedDict
+
+
+DetailedJobOutRepositories = GithubRepositoryOut
+
+
 class DetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
@@ -31,9 +45,9 @@ class DetailedJobOutTypedDict(TypedDict):
     validation_files: NotRequired[Nullable[List[str]]]
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
-    integrations: NotRequired[Nullable[List[WandbIntegrationOutTypedDict]]]
+    integrations: NotRequired[Nullable[List[DetailedJobOutIntegrationsTypedDict]]]
     trained_tokens: NotRequired[Nullable[int]]
-    repositories: NotRequired[List[GithubRepositoryOutTypedDict]]
+    repositories: NotRequired[List[DetailedJobOutRepositoriesTypedDict]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
     events: NotRequired[List[EventOutTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
@@ -52,12 +66,12 @@ class DetailedJobOut(BaseModel):
     modified_at: int
     training_files: List[str]
     validation_files: OptionalNullable[List[str]] = UNSET
-    OBJECT: Annotated[Final[Optional[str]], pydantic.Field(alias="object")] = "job" # type: ignore
+    OBJECT: Annotated[Final[Optional[DetailedJobOutObject]], pydantic.Field(alias="object")] = "job" # type: ignore
     fine_tuned_model: OptionalNullable[str] = UNSET
     suffix: OptionalNullable[str] = UNSET
-    integrations: OptionalNullable[List[WandbIntegrationOut]] = UNSET
+    integrations: OptionalNullable[List[DetailedJobOutIntegrations]] = UNSET
     trained_tokens: OptionalNullable[int] = UNSET
-    repositories: Optional[List[GithubRepositoryOut]] = None
+    repositories: Optional[List[DetailedJobOutRepositories]] = None
     metadata: OptionalNullable[JobMetadataOut] = UNSET
     events: Optional[List[EventOut]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""

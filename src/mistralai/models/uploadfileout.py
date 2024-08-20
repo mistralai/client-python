@@ -3,12 +3,17 @@
 from __future__ import annotations
 from .sampletype import SampleType
 from .source import Source
-from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL, UnrecognizedStr
+from mistralai.utils import validate_open_enum
 import pydantic
 from pydantic import model_serializer
-from typing import Final, TypedDict
+from pydantic.functional_validators import PlainValidator
+from typing import Final, Literal, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
+
+Purpose = Union[Literal["fine-tune"], UnrecognizedStr]
+r"""The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now."""
 
 class UploadFileOutTypedDict(TypedDict):
     id: str
@@ -39,7 +44,7 @@ class UploadFileOut(BaseModel):
     r"""The name of the uploaded file."""
     sample_type: SampleType
     source: Source
-    PURPOSE: Annotated[Final[str], pydantic.Field(alias="purpose")] = "fine-tune" # type: ignore
+    PURPOSE: Annotated[Final[Annotated[Purpose, PlainValidator(validate_open_enum(False))]], pydantic.Field(alias="purpose")] = "fine-tune" # type: ignore
     r"""The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now."""
     num_lines: OptionalNullable[int] = UNSET
     

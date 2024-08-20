@@ -16,6 +16,21 @@ from typing_extensions import Annotated, NotRequired
 Status = Literal["QUEUED", "STARTED", "VALIDATING", "VALIDATED", "RUNNING", "FAILED_VALIDATION", "FAILED", "SUCCESS", "CANCELLED", "CANCELLATION_REQUESTED"]
 r"""The current status of the fine-tuning job."""
 
+Object = Literal["job"]
+r"""The object type of the fine-tuning job."""
+
+IntegrationsTypedDict = WandbIntegrationOutTypedDict
+
+
+Integrations = WandbIntegrationOut
+
+
+RepositoriesTypedDict = GithubRepositoryOutTypedDict
+
+
+Repositories = GithubRepositoryOut
+
+
 class JobOutTypedDict(TypedDict):
     id: str
     r"""The ID of the job."""
@@ -39,11 +54,11 @@ class JobOutTypedDict(TypedDict):
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
-    integrations: NotRequired[Nullable[List[WandbIntegrationOutTypedDict]]]
+    integrations: NotRequired[Nullable[List[IntegrationsTypedDict]]]
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
-    repositories: NotRequired[List[GithubRepositoryOutTypedDict]]
+    repositories: NotRequired[List[RepositoriesTypedDict]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
     
 
@@ -66,17 +81,17 @@ class JobOut(BaseModel):
     r"""A list containing the IDs of uploaded files that contain training data."""
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
-    OBJECT: Annotated[Final[Optional[str]], pydantic.Field(alias="object")] = "job" # type: ignore
+    OBJECT: Annotated[Final[Optional[Object]], pydantic.Field(alias="object")] = "job" # type: ignore
     r"""The object type of the fine-tuning job."""
     fine_tuned_model: OptionalNullable[str] = UNSET
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: OptionalNullable[str] = UNSET
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
-    integrations: OptionalNullable[List[WandbIntegrationOut]] = UNSET
+    integrations: OptionalNullable[List[Integrations]] = UNSET
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: OptionalNullable[int] = UNSET
     r"""Total number of tokens trained."""
-    repositories: Optional[List[GithubRepositoryOut]] = None
+    repositories: Optional[List[Repositories]] = None
     metadata: OptionalNullable[JobMetadataOut] = UNSET
     
     @model_serializer(mode="wrap")

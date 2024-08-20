@@ -5,9 +5,11 @@ from .ftmodelcapabilitiesout import FTModelCapabilitiesOut, FTModelCapabilitiesO
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import Final, List, Optional, TypedDict
+from typing import Final, List, Literal, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
+
+FTModelOutObject = Literal["model"]
 
 class FTModelOutTypedDict(TypedDict):
     id: str
@@ -31,7 +33,7 @@ class FTModelOut(BaseModel):
     archived: bool
     capabilities: FTModelCapabilitiesOut
     job: str
-    OBJECT: Annotated[Final[Optional[str]], pydantic.Field(alias="object")] = "model" # type: ignore
+    OBJECT: Annotated[Final[Optional[FTModelOutObject]], pydantic.Field(alias="object")] = "model" # type: ignore
     name: OptionalNullable[str] = UNSET
     description: OptionalNullable[str] = UNSET
     max_context_length: Optional[int] = 32768

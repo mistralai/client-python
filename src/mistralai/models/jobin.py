@@ -12,6 +12,18 @@ from typing import List, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
+JobInIntegrationsTypedDict = WandbIntegrationTypedDict
+
+
+JobInIntegrations = WandbIntegration
+
+
+JobInRepositoriesTypedDict = GithubRepositoryInTypedDict
+
+
+JobInRepositories = GithubRepositoryIn
+
+
 class JobInTypedDict(TypedDict):
     model: FineTuneableModel
     r"""The name of the model to fine-tune."""
@@ -22,9 +34,9 @@ class JobInTypedDict(TypedDict):
     r"""A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files."""
     suffix: NotRequired[Nullable[str]]
     r"""A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`"""
-    integrations: NotRequired[Nullable[List[WandbIntegrationTypedDict]]]
+    integrations: NotRequired[Nullable[List[JobInIntegrationsTypedDict]]]
     r"""A list of integrations to enable for your fine-tuning job."""
-    repositories: NotRequired[List[GithubRepositoryInTypedDict]]
+    repositories: NotRequired[List[JobInRepositoriesTypedDict]]
     auto_start: NotRequired[bool]
     r"""This field will be required in a future release."""
     
@@ -39,9 +51,9 @@ class JobIn(BaseModel):
     r"""A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files."""
     suffix: OptionalNullable[str] = UNSET
     r"""A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`"""
-    integrations: OptionalNullable[List[WandbIntegration]] = UNSET
+    integrations: OptionalNullable[List[JobInIntegrations]] = UNSET
     r"""A list of integrations to enable for your fine-tuning job."""
-    repositories: Optional[List[GithubRepositoryIn]] = None
+    repositories: Optional[List[JobInRepositories]] = None
     auto_start: Optional[bool] = None
     r"""This field will be required in a future release."""
     
