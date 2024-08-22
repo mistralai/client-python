@@ -10,6 +10,8 @@ from typing_extensions import NotRequired
 class TrainingParametersTypedDict(TypedDict):
     training_steps: NotRequired[Nullable[int]]
     learning_rate: NotRequired[float]
+    weight_decay: NotRequired[Nullable[float]]
+    warmup_fraction: NotRequired[Nullable[float]]
     epochs: NotRequired[Nullable[float]]
     fim_ratio: NotRequired[Nullable[float]]
     
@@ -17,13 +19,15 @@ class TrainingParametersTypedDict(TypedDict):
 class TrainingParameters(BaseModel):
     training_steps: OptionalNullable[int] = UNSET
     learning_rate: Optional[float] = 0.0001
+    weight_decay: OptionalNullable[float] = UNSET
+    warmup_fraction: OptionalNullable[float] = UNSET
     epochs: OptionalNullable[float] = UNSET
     fim_ratio: OptionalNullable[float] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["training_steps", "learning_rate", "epochs", "fim_ratio"]
-        nullable_fields = ["training_steps", "epochs", "fim_ratio"]
+        optional_fields = ["training_steps", "learning_rate", "weight_decay", "warmup_fraction", "epochs", "fim_ratio"]
+        nullable_fields = ["training_steps", "weight_decay", "warmup_fraction", "epochs", "fim_ratio"]
         null_default_fields = []
 
         serialized = handler(self)

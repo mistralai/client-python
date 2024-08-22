@@ -651,8 +651,9 @@ if res is not None:
 <!-- Start Debugging [debug] -->
 ## Debugging
 
-To emit debug logs for SDK requests and responses you can pass a logger object directly into your SDK object.
+You can setup your SDK to emit debug logs for SDK requests and responses.
 
+You can pass your own logger class directly into your SDK.
 ```python
 from mistralai import Mistral
 import logging
@@ -660,6 +661,8 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 s = Mistral(debug_logger=logging.getLogger("mistralai"))
 ```
+
+You can also enable a default debug logger by setting an environment variable `MISTRAL_DEBUG` to true.
 <!-- End Debugging [debug] -->
 
 <!-- Start IDE Support [idesupport] -->

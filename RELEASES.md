@@ -19,3 +19,13 @@ Based on:
 - [python v1.0.1] .
 ### Releases
 - [PyPI v1.0.1] https://pypi.org/project/mistralai/1.0.1 - .
+
+## 2024-08-20 08:36:28
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.376.0 (2.402.5) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v1.0.2] .
+### Releases
+- [PyPI v1.0.2] https://pypi.org/project/mistralai/1.0.2 - .

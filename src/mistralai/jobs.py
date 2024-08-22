@@ -214,8 +214,8 @@ class Jobs(BaseSDK):
         training_files: Optional[Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
-        integrations: OptionalNullable[Union[List[models.WandbIntegration], List[models.WandbIntegrationTypedDict]]] = UNSET,
-        repositories: Optional[Union[List[models.GithubRepositoryIn], List[models.GithubRepositoryInTypedDict]]] = None,
+        integrations: OptionalNullable[Union[List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]]] = UNSET,
+        repositories: Optional[Union[List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]]] = None,
         auto_start: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -251,8 +251,8 @@ class Jobs(BaseSDK):
             validation_files=validation_files,
             hyperparameters=utils.get_pydantic_model(hyperparameters, models.TrainingParametersIn),
             suffix=suffix,
-            integrations=utils.get_pydantic_model(integrations, OptionalNullable[List[models.WandbIntegration]]),
-            repositories=utils.get_pydantic_model(repositories, Optional[List[models.GithubRepositoryIn]]),
+            integrations=utils.get_pydantic_model(integrations, OptionalNullable[List[models.JobInIntegrations]]),
+            repositories=utils.get_pydantic_model(repositories, Optional[List[models.JobInRepositories]]),
             auto_start=auto_start,
         )
         
@@ -310,8 +310,8 @@ class Jobs(BaseSDK):
         training_files: Optional[Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
-        integrations: OptionalNullable[Union[List[models.WandbIntegration], List[models.WandbIntegrationTypedDict]]] = UNSET,
-        repositories: Optional[Union[List[models.GithubRepositoryIn], List[models.GithubRepositoryInTypedDict]]] = None,
+        integrations: OptionalNullable[Union[List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]]] = UNSET,
+        repositories: Optional[Union[List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]]] = None,
         auto_start: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -347,8 +347,8 @@ class Jobs(BaseSDK):
             validation_files=validation_files,
             hyperparameters=utils.get_pydantic_model(hyperparameters, models.TrainingParametersIn),
             suffix=suffix,
-            integrations=utils.get_pydantic_model(integrations, OptionalNullable[List[models.WandbIntegration]]),
-            repositories=utils.get_pydantic_model(repositories, Optional[List[models.GithubRepositoryIn]]),
+            integrations=utils.get_pydantic_model(integrations, OptionalNullable[List[models.JobInIntegrations]]),
+            repositories=utils.get_pydantic_model(repositories, Optional[List[models.JobInRepositories]]),
             auto_start=auto_start,
         )
         

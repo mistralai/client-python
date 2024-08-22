@@ -4,9 +4,11 @@ from __future__ import annotations
 from .jobout import JobOut, JobOutTypedDict
 from mistralai.types import BaseModel
 import pydantic
-from typing import Final, List, Optional, TypedDict
+from typing import Final, List, Literal, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
+
+JobsOutObject = Literal["list"]
 
 class JobsOutTypedDict(TypedDict):
     total: int
@@ -16,5 +18,5 @@ class JobsOutTypedDict(TypedDict):
 class JobsOut(BaseModel):
     total: int
     data: Optional[List[JobOut]] = None
-    OBJECT: Annotated[Final[Optional[str]], pydantic.Field(alias="object")] = "list" # type: ignore
+    OBJECT: Annotated[Final[Optional[JobsOutObject]], pydantic.Field(alias="object")] = "list" # type: ignore
     

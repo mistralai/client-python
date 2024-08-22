@@ -25,16 +25,18 @@ async def main():
         hyperparameters=TrainingParametersIn(
             training_steps=1,
             learning_rate=0.0001,
+            warmup_fraction=0.01,
         ),
-        dry_run=True,
+        auto_start=False,
     )
 
     print("Dry run job created")
-    print(f"Train tokens: {dry_run_job.train_tokens}")
-    print(f"Dataset tokens: {dry_run_job.data_tokens}")
-    print(f"Epochs number: {dry_run_job.epochs}")
-    print(f"Expected duration: {dry_run_job.expected_duration_seconds}")
-    print(f"Cost: {dry_run_job.cost} {dry_run_job.cost_currency}")
+    print(f"Job ID: {dry_run_job}")
+    print(f"Train tokens: {dry_run_job.trained_tokens}")
+    print(f"Dataset tokens: {dry_run_job.metadata.data_tokens}")
+    print(f"Epochs number: {dry_run_job.hyperparameters.epochs}")
+    print(f"Expected duration: {dry_run_job.metadata.expected_duration_seconds}")
+    print(f"Cost: {dry_run_job.metadata.cost} {dry_run_job.metadata.cost_currency}")
 
 
 if __name__ == "__main__":

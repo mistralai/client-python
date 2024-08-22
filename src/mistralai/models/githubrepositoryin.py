@@ -4,9 +4,11 @@ from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import Final, Optional, TypedDict
+from typing import Final, Literal, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
+
+GithubRepositoryInType = Literal["github"]
 
 class GithubRepositoryInTypedDict(TypedDict):
     name: str
@@ -20,7 +22,7 @@ class GithubRepositoryIn(BaseModel):
     name: str
     owner: str
     token: str
-    TYPE: Annotated[Final[Optional[str]], pydantic.Field(alias="type")] = "github" # type: ignore
+    TYPE: Annotated[Final[Optional[GithubRepositoryInType]], pydantic.Field(alias="type")] = "github" # type: ignore
     ref: OptionalNullable[str] = UNSET
     weight: Optional[float] = 1
     

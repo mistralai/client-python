@@ -3,9 +3,11 @@
 from __future__ import annotations
 from mistralai.types import BaseModel
 import pydantic
-from typing import Final, Optional, TypedDict
+from typing import Final, Literal, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
+
+UnarchiveFTModelOutObject = Literal["model"]
 
 class UnarchiveFTModelOutTypedDict(TypedDict):
     id: str
@@ -14,6 +16,6 @@ class UnarchiveFTModelOutTypedDict(TypedDict):
 
 class UnarchiveFTModelOut(BaseModel):
     id: str
-    OBJECT: Annotated[Final[Optional[str]], pydantic.Field(alias="object")] = "model" # type: ignore
+    OBJECT: Annotated[Final[Optional[UnarchiveFTModelOutObject]], pydantic.Field(alias="object")] = "model" # type: ignore
     archived: Optional[bool] = False
     

@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 import io
-from mistralai.types import BaseModel
-from mistralai.utils import FieldMetadata, MultipartFormMetadata
+from mistralai.types import BaseModel, UnrecognizedStr
+from mistralai.utils import FieldMetadata, MultipartFormMetadata, validate_open_enum
 import pydantic
-from typing import Final, IO, Optional, TypedDict, Union
+from pydantic.functional_validators import PlainValidator
+from typing import Final, IO, Literal, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
+
+FilesAPIRoutesUploadFilePurpose = Union[Literal["fine-tune"], UnrecognizedStr]
 
 class FileTypedDict(TypedDict):
     file_name: str
@@ -47,5 +50,5 @@ class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
     file=@path/to/your/file.jsonl
     ```
     """
-    PURPOSE: Annotated[Final[Optional[str]], pydantic.Field(alias="purpose"), FieldMetadata(multipart=True)] = "fine-tune" # type: ignore
+    PURPOSE: Annotated[Final[Annotated[Optional[FilesAPIRoutesUploadFilePurpose], PlainValidator(validate_open_enum(False))]], pydantic.Field(alias="purpose"), FieldMetadata(multipart=True)] = "fine-tune" # type: ignore
     
