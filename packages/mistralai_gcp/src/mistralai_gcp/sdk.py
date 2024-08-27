@@ -46,16 +46,17 @@ class MistralGoogleCloud(BaseSDK):
         :param async_client: The Async HTTP client to use for all asynchronous methods
         :param retry_config: The retry configuration to use for all supported methods
         """
-        
-        credentials, loaded_project_id = google.auth.default(
-            scopes=["https://www.googleapis.com/auth/cloud-platform"],
-        )
-        credentials.refresh(google.auth.transport.requests.Request())
 
-        if not isinstance(credentials, google.auth.credentials.Credentials):
-            raise models.SDKError(
-                "credentials must be an instance of google.auth.credentials.Credentials"
+        if not access_token:
+            credentials, loaded_project_id = google.auth.default(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"],
             )
+            credentials.refresh(google.auth.transport.requests.Request())
+
+            if not isinstance(credentials, google.auth.credentials.Credentials):
+                raise models.SDKError(
+                    "credentials must be an instance of google.auth.credentials.Credentials"
+                )
 
         project_id = project_id or loaded_project_id
         if project_id is None:
