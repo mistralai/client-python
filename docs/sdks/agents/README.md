@@ -38,8 +38,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                                                                                                                                                                                                                                                          | Type                                                                                                                                                                                                                                                                                                                               | Required                                                                                                                                                                                                                                                                                                                           | Description                                                                                                                                                                                                                                                                                                                        | Example                                                                                                                                                                                                                                                                                                                            |
@@ -56,16 +54,17 @@ if res is not None:
 | `tool_choice`                                                                                                                                                                                                                                                                                                                      | [Optional[models.AgentsCompletionRequestToolChoice]](../../models/agentscompletionrequesttoolchoice.md)                                                                                                                                                                                                                            | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                 | N/A                                                                                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                    |
 | `retries`                                                                                                                                                                                                                                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                 | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                    |
 
-
 ### Response
 
 **[models.ChatCompletionResponse](../../models/chatcompletionresponse.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4xx-5xx                    | */*                        |
+
 
 ## stream
 
@@ -96,8 +95,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                                                                              | Type                                                                                                                                                   | Required                                                                                                                                               | Description                                                                                                                                            | Example                                                                                                                                                |
@@ -114,10 +111,10 @@ if res is not None:
 | `tool_choice`                                                                                                                                          | [Optional[models.AgentsCompletionStreamRequestToolChoice]](../../models/agentscompletionstreamrequesttoolchoice.md)                                    | :heavy_minus_sign:                                                                                                                                     | N/A                                                                                                                                                    |                                                                                                                                                        |
 | `retries`                                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                       | :heavy_minus_sign:                                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                                    |                                                                                                                                                        |
 
-
 ### Response
 
 **[Union[Generator[models.CompletionEvent, None, None], AsyncGenerator[models.CompletionEvent, None]]](../../models/.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |

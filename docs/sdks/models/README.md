@@ -37,24 +37,23 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[models.ModelList](../../models/modellist.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4xx-5xx                    | */*                        |
+
 
 ## retrieve
 
@@ -79,8 +78,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
@@ -88,16 +85,17 @@ if res is not None:
 | `model_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | The ID of the model to retrieve.                                    | ft:open-mistral-7b:587a6b29:20240514:7e773925                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.ModelCard](../../models/modelcard.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4xx-5xx                    | */*                        |
+
 
 ## delete
 
@@ -122,8 +120,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
@@ -131,16 +127,17 @@ if res is not None:
 | `model_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | The ID of the model to delete.                                      | ft:open-mistral-7b:587a6b29:20240514:7e773925                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.DeleteModelOut](../../models/deletemodelout.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4xx-5xx                    | */*                        |
+
 
 ## update
 
@@ -165,8 +162,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
@@ -176,15 +171,16 @@ if res is not None:
 | `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.FTModelOut](../../models/ftmodelout.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | models.SDKError | 4xx-5xx         | */*             |
+
 
 ## archive
 
@@ -209,8 +205,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
@@ -218,15 +212,16 @@ if res is not None:
 | `model_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | The ID of the model to archive.                                     | ft:open-mistral-7b:587a6b29:20240514:7e773925                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.ArchiveFTModelOut](../../models/archiveftmodelout.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | models.SDKError | 4xx-5xx         | */*             |
+
 
 ## unarchive
 
@@ -251,8 +246,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
@@ -260,10 +253,10 @@ if res is not None:
 | `model_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | The ID of the model to unarchive.                                   | ft:open-mistral-7b:587a6b29:20240514:7e773925                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.UnarchiveFTModelOut](../../models/unarchiveftmodelout.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

@@ -32,8 +32,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
@@ -43,10 +41,10 @@ if res is not None:
 | `encoding_format`                                                   | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | The format to return the embeddings in.                             |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[models.EmbeddingResponse](../../models/embeddingresponse.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
