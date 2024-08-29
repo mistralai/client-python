@@ -3,16 +3,16 @@ id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
   docChecksum: b276b71cb6764f11b10461fe70962781
   docVersion: 0.0.2
-  speakeasyVersion: 1.373.1
-  generationVersion: 2.399.0
-  releaseVersion: 1.0.1
-  configChecksum: 698bd633a47a664d6f3515c1b9ecdbaa
+  speakeasyVersion: 1.382.0
+  generationVersion: 2.404.11
+  releaseVersion: 1.1.0
+  configChecksum: 2b3c02dabaf06d11cf75261c1719ad53
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.8
+    core: 5.4.1
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0

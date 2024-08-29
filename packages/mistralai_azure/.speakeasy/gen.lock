@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 9128fabc3ae45ecc9ed7fae8991b3d3e
+  docChecksum: 44c745ab7eaff38f65aa1ad5f2406a6e
   docVersion: 0.0.2
-  speakeasyVersion: 1.373.1
-  generationVersion: 2.399.0
-  releaseVersion: 1.0.1
-  configChecksum: dc28e30e8f503aee23a53bb77a46c902
+  speakeasyVersion: 1.382.0
+  generationVersion: 2.404.11
+  releaseVersion: 1.1.0
+  configChecksum: 6d3ce794616a1628550a8f220ed36400
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.8
+    core: 5.4.1
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
@@ -34,6 +34,7 @@ features:
 generatedFiles:
   - src/mistralai_azure/sdkconfiguration.py
   - src/mistralai_azure/chat.py
+  - src/mistralai_azure/fim.py
   - .vscode/settings.json
   - poetry.toml
   - py.typed
@@ -86,6 +87,9 @@ generatedFiles:
   - src/mistralai_azure/models/chatcompletionresponse.py
   - src/mistralai_azure/models/chatcompletionchoice.py
   - src/mistralai_azure/models/chatcompletionrequest.py
+  - src/mistralai_azure/models/fimcompletionstreamrequest.py
+  - src/mistralai_azure/models/fimcompletionresponse.py
+  - src/mistralai_azure/models/fimcompletionrequest.py
   - src/mistralai_azure/models/security.py
   - src/mistralai_azure/models/__init__.py
   - docs/models/completionevent.md
@@ -129,6 +133,11 @@ generatedFiles:
   - docs/models/chatcompletionrequestmessages.md
   - docs/models/chatcompletionrequesttoolchoice.md
   - docs/models/chatcompletionrequest.md
+  - docs/models/fimcompletionstreamrequeststop.md
+  - docs/models/fimcompletionstreamrequest.md
+  - docs/models/fimcompletionresponse.md
+  - docs/models/fimcompletionrequeststop.md
+  - docs/models/fimcompletionrequest.md
   - docs/models/security.md
   - docs/models/utils/retryconfig.md
   - .gitattributes

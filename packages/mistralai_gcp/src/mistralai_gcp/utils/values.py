@@ -10,6 +10,8 @@ from httpx import Response
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
+from ..types.basemodel import Unset
+
 from .serializers import marshal_json
 
 from .metadata import ParamMetadata, find_field_metadata
@@ -126,3 +128,7 @@ def _get_serialized_params(
         params[field_name] = marshal_json(obj, typ)
 
     return params
+
+
+def _is_set(value: Any) -> bool:
+    return value is not None and not isinstance(value, Unset)

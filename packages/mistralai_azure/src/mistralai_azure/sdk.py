@@ -6,6 +6,7 @@ import httpx
 from mistralai_azure import models, utils
 from mistralai_azure._hooks import SDKHooks
 from mistralai_azure.chat import Chat
+from mistralai_azure.fim import Fim
 from mistralai_azure.types import Nullable
 
 from .basesdk import BaseSDK
@@ -20,6 +21,8 @@ class MistralAzure(BaseSDK):
 
     chat: Chat
     r"""Chat Completion API"""
+    fim: Fim
+    r"""Fill-in-the-middle API."""
 
     def __init__(
         self,
@@ -105,3 +108,4 @@ class MistralAzure(BaseSDK):
 
     def _init_sdks(self):
         self.chat = Chat(self.sdk_configuration)
+        self.fim = Fim(self.sdk_configuration)

@@ -14,3 +14,6 @@ class NoOpLogger:
 def get_body_content(req: httpx.Request) -> str:
     return "<streaming body>" if not hasattr(req, "_content") else str(req.content)
 
+def get_default_logger() -> Logger:
+    return NoOpLogger()
+
