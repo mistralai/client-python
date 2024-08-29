@@ -32,6 +32,7 @@ class MistralGoogleCloud(BaseSDK):
         self,
         region: str = "europe-west4",
         project_id: Optional[str] = None,
+        access_token: Optional[str] = None,
         client: Optional[HttpClient] = None,
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: Optional[Nullable[RetryConfig]] = None,
@@ -46,26 +47,30 @@ class MistralGoogleCloud(BaseSDK):
         :param retry_config: The retry configuration to use for all supported methods
         """
 
-        credentials, loaded_project_id = google.auth.default(
-            scopes=["https://www.googleapis.com/auth/cloud-platform"],
-        )
-
-        if not isinstance(credentials, google.auth.credentials.Credentials):
-            raise models.SDKError(
-                "credentials must be an instance of google.auth.credentials.Credentials"
+        if not access_token:
+            credentials, loaded_project_id = google.auth.default(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"],
             )
+            credentials.refresh(google.auth.transport.requests.Request())
+
+            if not isinstance(credentials, google.auth.credentials.Credentials):
+                raise models.SDKError(
+                    "credentials must be an instance of google.auth.credentials.Credentials"
+                )
 
         project_id = project_id or loaded_project_id
         if project_id is None:
             raise models.SDKError("project_id must be provided")
 
         def auth_token() -> str:
-            if credentials.expired:
+            if access_token:
+                return access_token
+            else:
                 credentials.refresh(google.auth.transport.requests.Request())
-            token = credentials.token
-            if not token:
-                raise models.SDKError("Failed to get token from credentials")
-            return token
+                token = credentials.token
+                if not token:
+                    raise models.SDKError("Failed to get token from credentials")
+                return token
 
         if client is None:
             client = httpx.Client()

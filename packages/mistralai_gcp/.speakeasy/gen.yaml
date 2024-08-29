@@ -18,7 +18,7 @@ python:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
     main:
-      google-auth: ^2.31.0
+      google-auth: 2.27.0
       requests: ^2.32.3
   authors:
     - Mistral
