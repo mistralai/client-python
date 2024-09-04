@@ -38,8 +38,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                                                                                                                                                                                                                                                          | Type                                                                                                                                                                                                                                                                                                                               | Required                                                                                                                                                                                                                                                                                                                           | Description                                                                                                                                                                                                                                                                                                                        | Example                                                                                                                                                                                                                                                                                                                            |
@@ -59,16 +57,17 @@ if res is not None:
 | `safe_prompt`                                                                                                                                                                                                                                                                                                                      | *Optional[bool]*                                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                 | Whether to inject a safety prompt before all conversations.                                                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                    |
 | `retries`                                                                                                                                                                                                                                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                 | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                    |
 
-
 ### Response
 
 **[models.ChatCompletionResponse](../../models/chatcompletionresponse.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4xx-5xx                    | */*                        |
+
 
 ## stream
 
@@ -99,8 +98,6 @@ if res is not None:
 
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                                                                                                                                                                                     | Type                                                                                                                                                                                                                                                          | Required                                                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                   | Example                                                                                                                                                                                                                                                       |
@@ -120,10 +117,10 @@ if res is not None:
 | `safe_prompt`                                                                                                                                                                                                                                                 | *Optional[bool]*                                                                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                            | Whether to inject a safety prompt before all conversations.                                                                                                                                                                                                   |                                                                                                                                                                                                                                                               |
 | `retries`                                                                                                                                                                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                            | Configuration to override the default retry behavior of the client.                                                                                                                                                                                           |                                                                                                                                                                                                                                                               |
 
-
 ### Response
 
 **[Union[Generator[models.CompletionEvent, None, None], AsyncGenerator[models.CompletionEvent, None]]](../../models/.md)**
+
 ### Errors
 
 | Error Object               | Status Code                | Content Type               |

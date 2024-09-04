@@ -1,4 +1,4 @@
-speakeasyVersion: 1.376.0
+speakeasyVersion: 1.382.0
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
