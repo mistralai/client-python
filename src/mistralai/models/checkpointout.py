@@ -13,13 +13,14 @@ class CheckpointOutTypedDict(TypedDict):
     r"""The step number that the checkpoint was created at."""
     created_at: int
     r"""The UNIX timestamp (in seconds) for when the checkpoint was created."""
-    
+
 
 class CheckpointOut(BaseModel):
     metrics: MetricOut
     r"""Metrics at the step number during the fine-tuning job. Use these metrics to assess if the training is going smoothly (loss should decrease, token accuracy should increase)."""
+
     step_number: int
     r"""The step number that the checkpoint was created at."""
+
     created_at: int
     r"""The UNIX timestamp (in seconds) for when the checkpoint was created."""
-    

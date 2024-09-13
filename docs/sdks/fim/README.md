@@ -24,7 +24,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.fim.complete(model="codestral-2405", prompt="def", suffix="return a+b")
 
 if res is not None:
@@ -74,7 +73,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.fim.stream(model="codestral-2405", prompt="def", suffix="return a+b")
 

@@ -3,17 +3,20 @@
 import httpx
 from typing import Any, Protocol
 
+
 class Logger(Protocol):
     def debug(self, msg: str, *args: Any, **kwargs: Any) -> None:
         pass
+
 
 class NoOpLogger:
     def debug(self, msg: str, *args: Any, **kwargs: Any) -> None:
         pass
 
+
 def get_body_content(req: httpx.Request) -> str:
     return "<streaming body>" if not hasattr(req, "_content") else str(req.content)
 
+
 def get_default_logger() -> Logger:
     return NoOpLogger()
-

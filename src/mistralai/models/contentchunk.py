@@ -12,5 +12,9 @@ from typing_extensions import Annotated
 ContentChunkTypedDict = Union[TextChunkTypedDict, ImageURLChunkTypedDict]
 
 
-ContentChunk = Annotated[Union[Annotated[ImageURLChunk, Tag("image_url")], Annotated[TextChunk, Tag("text")]], Discriminator(lambda m: get_discriminator(m, "type", "type"))]
-
+ContentChunk = Annotated[
+    Union[
+        Annotated[ImageURLChunk, Tag("image_url")], Annotated[TextChunk, Tag("text")]
+    ],
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+]

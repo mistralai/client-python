@@ -10,9 +10,10 @@ from typing_extensions import Annotated
 class JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict(TypedDict):
     model_id: str
     r"""The ID of the model to unarchive."""
-    
+
 
 class JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(BaseModel):
-    model_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    model_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the model to unarchive."""
-    

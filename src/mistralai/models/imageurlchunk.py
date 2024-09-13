@@ -18,13 +18,15 @@ ImageURLChunkImageURL = Union[ImageURL, str]
 
 class ImageURLChunkTypedDict(TypedDict):
     r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
-    
+
     image_url: ImageURLChunkImageURLTypedDict
-    
+
 
 class ImageURLChunk(BaseModel):
     r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
-    
+
     image_url: ImageURLChunkImageURL
+
+    # fmt: off
     TYPE: Annotated[Final[Optional[ImageURLChunkType]], pydantic.Field(alias="type")] = "image_url" # type: ignore
-    
+    # fmt: on

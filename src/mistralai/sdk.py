@@ -18,8 +18,10 @@ from mistralai.models_ import Models
 from mistralai.types import OptionalNullable, UNSET
 from typing import Any, Callable, Dict, Optional, Union
 
+
 class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
+
     models: Models
     r"""Model Management API"""
     files: Files
@@ -33,6 +35,7 @@ class Mistral(BaseSDK):
     r"""Agents API."""
     embeddings: Embeddings
     r"""Embeddings API."""
+
     def __init__(
         self,
         api_key: Optional[Union[Optional[str], Callable[[], Optional[str]]]] = None,
@@ -43,7 +46,7 @@ class Mistral(BaseSDK):
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
         timeout_ms: Optional[int] = None,
-        debug_logger: Optional[Logger] = None
+        debug_logger: Optional[Logger] = None,
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -72,33 +75,37 @@ class Mistral(BaseSDK):
         assert issubclass(
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
-        
+
         security: Any = None
         if callable(api_key):
-            security = lambda: models.Security(api_key = api_key()) # pylint: disable=unnecessary-lambda-assignment
+            security = lambda: models.Security(api_key=api_key())  # pylint: disable=unnecessary-lambda-assignment
         else:
-            security = models.Security(api_key = api_key)
+            security = models.Security(api_key=api_key)
 
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
-    
 
-        BaseSDK.__init__(self, SDKConfiguration(
-            client=client,
-            async_client=async_client,
-            security=security,
-            server_url=server_url,
-            server=server,
-            retry_config=retry_config,
-            timeout_ms=timeout_ms,
-            debug_logger=debug_logger
-        ))
+        BaseSDK.__init__(
+            self,
+            SDKConfiguration(
+                client=client,
+                async_client=async_client,
+                security=security,
+                server_url=server_url,
+                server=server,
+                retry_config=retry_config,
+                timeout_ms=timeout_ms,
+                debug_logger=debug_logger,
+            ),
+        )
 
         hooks = SDKHooks()
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
-        server_url, self.sdk_configuration.client = hooks.sdk_init(current_server_url, self.sdk_configuration.client)
+        server_url, self.sdk_configuration.client = hooks.sdk_init(
+            current_server_url, self.sdk_configuration.client
+        )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
 
@@ -106,7 +113,6 @@ class Mistral(BaseSDK):
         self.sdk_configuration.__dict__["_hooks"] = hooks
 
         self._init_sdks()
-
 
     def _init_sdks(self):
         self.models = Models(self.sdk_configuration)
@@ -116,4 +122,3 @@ class Mistral(BaseSDK):
         self.fim = Fim(self.sdk_configuration)
         self.agents = Agents(self.sdk_configuration)
         self.embeddings = Embeddings(self.sdk_configuration)
-    

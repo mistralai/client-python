@@ -8,8 +8,7 @@ from typing import TypedDict
 
 class CompletionEventTypedDict(TypedDict):
     data: CompletionChunkTypedDict
-    
+
 
 class CompletionEvent(BaseModel):
     data: CompletionChunk
-    

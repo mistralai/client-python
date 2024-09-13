@@ -14,10 +14,13 @@ class ToolCallTypedDict(TypedDict):
     function: FunctionCallTypedDict
     id: NotRequired[str]
     type: NotRequired[ToolTypes]
-    
+
 
 class ToolCall(BaseModel):
     function: FunctionCall
+
     id: Optional[str] = "null"
-    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = None
-    
+
+    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
+        None
+    )

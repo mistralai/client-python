@@ -18,9 +18,11 @@ UserMessageContent = Union[str, List[ContentChunk]]
 
 class UserMessageTypedDict(TypedDict):
     content: UserMessageContentTypedDict
-    
+
 
 class UserMessage(BaseModel):
     content: UserMessageContent
+
+    # fmt: off
     ROLE: Annotated[Final[Optional[UserMessageRole]], pydantic.Field(alias="role")] = "user" # type: ignore
-    
+    # fmt: on

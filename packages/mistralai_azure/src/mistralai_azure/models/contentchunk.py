@@ -8,4 +8,3 @@ ContentChunkTypedDict = TextChunkTypedDict
 
 
 ContentChunk = TextChunk
-

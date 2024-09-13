@@ -13,12 +13,15 @@ class EmbeddingResponseTypedDict(TypedDict):
     model: str
     usage: UsageInfoTypedDict
     data: List[EmbeddingResponseDataTypedDict]
-    
+
 
 class EmbeddingResponse(BaseModel):
     id: str
+
     object: str
+
     model: str
+
     usage: UsageInfo
+
     data: List[EmbeddingResponseData]
-    

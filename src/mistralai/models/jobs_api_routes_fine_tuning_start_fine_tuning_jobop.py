@@ -9,8 +9,9 @@ from typing_extensions import Annotated
 
 class JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict(TypedDict):
     job_id: str
-    
+
 
 class JobsAPIRoutesFineTuningStartFineTuningJobRequest(BaseModel):
-    job_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
-    
+    job_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]

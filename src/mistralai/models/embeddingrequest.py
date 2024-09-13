@@ -23,16 +23,18 @@ class EmbeddingRequestTypedDict(TypedDict):
     r"""ID of the model to use."""
     encoding_format: NotRequired[Nullable[str]]
     r"""The format to return the embeddings in."""
-    
+
 
 class EmbeddingRequest(BaseModel):
     inputs: Annotated[Inputs, pydantic.Field(alias="input")]
     r"""Text to embed."""
+
     model: str
     r"""ID of the model to use."""
+
     encoding_format: OptionalNullable[str] = UNSET
     r"""The format to return the embeddings in."""
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["encoding_format"]
@@ -46,9 +48,13 @@ class EmbeddingRequest(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -58,4 +64,3 @@ class EmbeddingRequest(BaseModel):
                 m[k] = val
 
         return m
-        

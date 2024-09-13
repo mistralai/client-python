@@ -8,14 +8,16 @@ from typing import Literal, TypedDict
 
 FinishReason = Literal["stop", "length", "model_length", "error", "tool_calls"]
 
+
 class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
     message: AssistantMessageTypedDict
     finish_reason: FinishReason
-    
+
 
 class ChatCompletionChoice(BaseModel):
     index: int
+
     message: AssistantMessage
+
     finish_reason: FinishReason
-    

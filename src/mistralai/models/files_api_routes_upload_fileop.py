@@ -12,17 +12,30 @@ from typing_extensions import Annotated, NotRequired
 
 FilesAPIRoutesUploadFilePurpose = Union[Literal["fine-tune"], UnrecognizedStr]
 
+
 class FileTypedDict(TypedDict):
     file_name: str
     content: Union[bytes, IO[bytes], io.BufferedReader]
     content_type: NotRequired[str]
-    
+
 
 class File(BaseModel):
-    file_name: Annotated[str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)]
-    content: Annotated[Union[bytes, IO[bytes], io.BufferedReader], pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(content=True))]
-    content_type: Annotated[Optional[str], pydantic.Field(alias="Content-Type"), FieldMetadata(multipart=True)] = None
-    
+    file_name: Annotated[
+        str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)
+    ]
+
+    content: Annotated[
+        Union[bytes, IO[bytes], io.BufferedReader],
+        pydantic.Field(alias=""),
+        FieldMetadata(multipart=MultipartFormMetadata(content=True)),
+    ]
+
+    content_type: Annotated[
+        Optional[str],
+        pydantic.Field(alias="Content-Type"),
+        FieldMetadata(multipart=True),
+    ] = None
+
 
 class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
     file: FileTypedDict
@@ -36,10 +49,14 @@ class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
     file=@path/to/your/file.jsonl
     ```
     """
-    
+
 
 class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
-    file: Annotated[File, pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(file=True))]
+    file: Annotated[
+        File,
+        pydantic.Field(alias=""),
+        FieldMetadata(multipart=MultipartFormMetadata(file=True)),
+    ]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
     ```bash
@@ -50,5 +67,7 @@ class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
     file=@path/to/your/file.jsonl
     ```
     """
+
+    # fmt: off
     PURPOSE: Annotated[Final[Annotated[Optional[FilesAPIRoutesUploadFilePurpose], PlainValidator(validate_open_enum(False))]], pydantic.Field(alias="purpose"), FieldMetadata(multipart=True)] = "fine-tune" # type: ignore
-    
+    # fmt: on

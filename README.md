@@ -19,15 +19,46 @@ $ echo 'export MISTRAL_API_KEY=[your_key_here]' >> ~/.zshenv
 $ source ~/.zshenv
 ```
 
+<!-- Start Summary [summary] -->
+## Summary
+
+Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [IDE Support](#ide-support)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Server-sent event streaming](#server-sent-event-streaming)
+* [File uploads](#file-uploads)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Debugging](#debugging)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-PIP
+The SDK can be installed with either *pip* or *poetry* package managers.
+
+### PIP
+
+*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
+
 ```bash
 pip install mistralai
 ```
 
-Poetry
+### Poetry
+
+*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
+
 ```bash
 poetry add mistralai
 ```
@@ -48,7 +79,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.chat.complete(model="mistral-small-latest", messages=[
     {
@@ -101,10 +131,9 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.files.upload(file={
-    "file_name": "your_file_here",
-    "content": open("<file_path>", "rb"),
+    "file_name": "example.file",
+    "content": open("example.file", "rb"),
 })
 
 if res is not None:
@@ -126,8 +155,8 @@ async def main():
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     )
     res = await s.files.upload_async(file={
-        "file_name": "your_file_here",
-        "content": open("<file_path>", "rb"),
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
     })
     if res is not None:
         # handle response
@@ -149,11 +178,9 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.agents.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
+        "content": "<value>",
     },
 ], agent_id="<value>")
 
@@ -287,6 +314,47 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
+<details open>
+<summary>Available methods</summary>
+
+### [agents](docs/sdks/agents/README.md)
+
+* [complete](docs/sdks/agents/README.md#complete) - Agents Completion
+* [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
+
+### [chat](docs/sdks/chat/README.md)
+
+* [complete](docs/sdks/chat/README.md#complete) - Chat Completion
+* [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
+
+### [embeddings](docs/sdks/embeddings/README.md)
+
+* [create](docs/sdks/embeddings/README.md#create) - Embeddings
+
+### [files](docs/sdks/files/README.md)
+
+* [upload](docs/sdks/files/README.md#upload) - Upload File
+* [list](docs/sdks/files/README.md#list) - List Files
+* [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
+* [delete](docs/sdks/files/README.md#delete) - Delete File
+
+### [fim](docs/sdks/fim/README.md)
+
+* [complete](docs/sdks/fim/README.md#complete) - Fim Completion
+* [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
+
+### [fine_tuning](docs/sdks/finetuning/README.md)
+
+
+#### [fine_tuning.jobs](docs/sdks/jobs/README.md)
+
+* [list](docs/sdks/jobs/README.md#list) - Get Fine Tuning Jobs
+* [create](docs/sdks/jobs/README.md#create) - Create Fine Tuning Job
+* [get](docs/sdks/jobs/README.md#get) - Get Fine Tuning Job
+* [cancel](docs/sdks/jobs/README.md#cancel) - Cancel Fine Tuning Job
+* [start](docs/sdks/jobs/README.md#start) - Start Fine Tuning Job
+
+
 ### [models](docs/sdks/models/README.md)
 
 * [list](docs/sdks/models/README.md#list) - List Models
@@ -296,40 +364,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [archive](docs/sdks/models/README.md#archive) - Archive Fine Tuned Model
 * [unarchive](docs/sdks/models/README.md#unarchive) - Unarchive Fine Tuned Model
 
-### [files](docs/sdks/files/README.md)
-
-* [upload](docs/sdks/files/README.md#upload) - Upload File
-* [list](docs/sdks/files/README.md#list) - List Files
-* [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
-* [delete](docs/sdks/files/README.md#delete) - Delete File
-
-
-### [fine_tuning.jobs](docs/sdks/jobs/README.md)
-
-* [list](docs/sdks/jobs/README.md#list) - Get Fine Tuning Jobs
-* [create](docs/sdks/jobs/README.md#create) - Create Fine Tuning Job
-* [get](docs/sdks/jobs/README.md#get) - Get Fine Tuning Job
-* [cancel](docs/sdks/jobs/README.md#cancel) - Cancel Fine Tuning Job
-* [start](docs/sdks/jobs/README.md#start) - Start Fine Tuning Job
-
-### [chat](docs/sdks/chat/README.md)
-
-* [complete](docs/sdks/chat/README.md#complete) - Chat Completion
-* [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
-
-### [fim](docs/sdks/fim/README.md)
-
-* [complete](docs/sdks/fim/README.md#complete) - Fim Completion
-* [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
-
-### [agents](docs/sdks/agents/README.md)
-
-* [complete](docs/sdks/agents/README.md#complete) - Agents Completion
-* [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
-
-### [embeddings](docs/sdks/embeddings/README.md)
-
-* [create](docs/sdks/embeddings/README.md#create) - Embeddings
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Server-sent event streaming [eventstream] -->
@@ -348,7 +383,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.chat.stream(model="mistral-small-latest", messages=[
     {
@@ -386,10 +420,9 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.files.upload(file={
-    "file_name": "your_file_here",
-    "content": open("<file_path>", "rb"),
+    "file_name": "example.file",
+    "content": open("example.file", "rb"),
 })
 
 if res is not None:
@@ -414,7 +447,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.models.list(,
     RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
@@ -435,7 +467,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.models.list()
 
 if res is not None:
@@ -450,10 +481,10 @@ if res is not None:
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
-| Error Object               | Status Code | Content Type     |
-| -------------------------- | ----------- | ---------------- |
-| models.HTTPValidationError | 422         | application/json |
-| models.SDKError            | 4xx-5xx     | */*              |
+| Error Object               | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4xx-5xx                    | */*                        |
 
 ### Example
 
@@ -469,17 +500,16 @@ res = None
 try:
     res = s.models.list()
 
+    if res is not None:
+        # handle response
+        pass
+
 except models.HTTPValidationError as e:
-    # handle exception
+    # handle e.data: models.HTTPValidationErrorData
     raise(e)
 except models.SDKError as e:
     # handle exception
     raise(e)
-
-if res is not None:
-    # handle response
-    pass
-
 ```
 <!-- End Error Handling [errors] -->
 
@@ -490,9 +520,9 @@ if res is not None:
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name   | Server                   | Variables |
-| ------ | ------------------------ | --------- |
-| `prod` | `https://api.mistral.ai` | None      |
+| Name | Server | Variables |
+| ----- | ------ | --------- |
+| `prod` | `https://api.mistral.ai` | None |
 
 #### Example
 
@@ -504,7 +534,6 @@ s = Mistral(
     server="prod",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.list()
 
@@ -526,7 +555,6 @@ s = Mistral(
     server_url="https://api.mistral.ai",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.list()
 
@@ -625,9 +653,9 @@ s = Mistral(async_client=CustomClient(httpx.AsyncClient()))
 
 This SDK supports the following security scheme globally:
 
-| Name      | Type | Scheme      | Environment Variable |
-| --------- | ---- | ----------- | -------------------- |
-| `api_key` | http | HTTP Bearer | `MISTRAL_API_KEY`    |
+| Name                 | Type                 | Scheme               | Environment Variable |
+| -------------------- | -------------------- | -------------------- | -------------------- |
+| `api_key`            | http                 | HTTP Bearer          | `MISTRAL_API_KEY`    |
 
 To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
 ```python
@@ -637,7 +665,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.list()
 

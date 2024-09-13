@@ -33,7 +33,12 @@ from .serializers import (
     validate_open_enum,
 )
 from .url import generate_url, template_url, remove_suffix
-from .values import get_global_from_env, match_content_type, match_status_codes, match_response
+from .values import (
+    get_global_from_env,
+    match_content_type,
+    match_status_codes,
+    match_response,
+)
 from .logger import Logger, get_body_content, get_default_logger
 
 __all__ = [

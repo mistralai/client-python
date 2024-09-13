@@ -28,7 +28,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.models.list()
 
 if res is not None:
@@ -68,7 +67,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
@@ -111,7 +109,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
 if res is not None:
@@ -152,7 +149,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
@@ -196,7 +192,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
 if res is not None:
@@ -236,7 +231,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 

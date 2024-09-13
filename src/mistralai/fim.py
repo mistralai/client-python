@@ -7,12 +7,13 @@ from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from typing import Any, AsyncGenerator, Generator, Optional, Union
 
+
 class Fim(BaseSDK):
     r"""Fill-in-the-middle API."""
-    
-    
+
     def complete(
-        self, *,
+        self,
+        *,
         model: Nullable[str],
         prompt: str,
         temperature: Optional[float] = 0.7,
@@ -20,7 +21,12 @@ class Fim(BaseSDK):
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[Union[models.FIMCompletionRequestStop, models.FIMCompletionRequestStopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models.FIMCompletionRequestStop,
+                models.FIMCompletionRequestStopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -49,10 +55,10 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.FIMCompletionRequest(
             model=model,
             temperature=temperature,
@@ -65,7 +71,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/v1/fim/completions",
@@ -78,47 +84,57 @@ class Fim(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.FIMCompletionRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.FIMCompletionRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="fim_completion_v1_fim_completions_post", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="fim_completion_v1_fim_completions_post",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FIMCompletionResponse])
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.FIMCompletionResponse]
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def complete_async(
-        self, *,
+        self,
+        *,
         model: Nullable[str],
         prompt: str,
         temperature: Optional[float] = 0.7,
@@ -126,7 +142,12 @@ class Fim(BaseSDK):
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[Union[models.FIMCompletionRequestStop, models.FIMCompletionRequestStopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models.FIMCompletionRequestStop,
+                models.FIMCompletionRequestStopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -155,10 +176,10 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.FIMCompletionRequest(
             model=model,
             temperature=temperature,
@@ -171,8 +192,8 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/v1/fim/completions",
             base_url=base_url,
@@ -184,47 +205,57 @@ class Fim(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.FIMCompletionRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.FIMCompletionRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="fim_completion_v1_fim_completions_post", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="fim_completion_v1_fim_completions_post",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FIMCompletionResponse])
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.FIMCompletionResponse]
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def stream(
-        self, *,
+        self,
+        *,
         model: Nullable[str],
         prompt: str,
         temperature: Optional[float] = 0.7,
@@ -232,7 +263,12 @@ class Fim(BaseSDK):
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[Union[models.FIMCompletionStreamRequestStop, models.FIMCompletionStreamRequestStopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models.FIMCompletionStreamRequestStop,
+                models.FIMCompletionStreamRequestStopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -249,7 +285,7 @@ class Fim(BaseSDK):
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
         :param min_tokens: The minimum number of tokens to generate in the completion.
-        :param stream: 
+        :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
@@ -261,10 +297,10 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.FIMCompletionStreamRequest(
             model=model,
             temperature=temperature,
@@ -277,7 +313,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/v1/fim/completions#stream",
@@ -290,48 +326,60 @@ class Fim(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.FIMCompletionStreamRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.FIMCompletionStreamRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="stream_fim", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="stream_fim",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
-            retry_config=retry_config
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.stream_events(http_res, lambda raw: utils.unmarshal_json(raw, models.CompletionEvent), sentinel="[DONE]")
+            return eventstreaming.stream_events(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                sentinel="[DONE]",
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def stream_async(
-        self, *,
+        self,
+        *,
         model: Nullable[str],
         prompt: str,
         temperature: Optional[float] = 0.7,
@@ -339,7 +387,12 @@ class Fim(BaseSDK):
         max_tokens: OptionalNullable[int] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[Union[models.FIMCompletionStreamRequestStop, models.FIMCompletionStreamRequestStopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models.FIMCompletionStreamRequestStop,
+                models.FIMCompletionStreamRequestStopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -356,7 +409,7 @@ class Fim(BaseSDK):
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
         :param min_tokens: The minimum number of tokens to generate in the completion.
-        :param stream: 
+        :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
@@ -368,10 +421,10 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.FIMCompletionStreamRequest(
             model=model,
             temperature=temperature,
@@ -384,8 +437,8 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/v1/fim/completions#stream",
             base_url=base_url,
@@ -397,42 +450,53 @@ class Fim(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.FIMCompletionStreamRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.FIMCompletionStreamRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="stream_fim", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="stream_fim",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
-            retry_config=retry_config
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.stream_events_async(http_res, lambda raw: utils.unmarshal_json(raw, models.CompletionEvent), sentinel="[DONE]")
+            return eventstreaming.stream_events_async(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                sentinel="[DONE]",
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

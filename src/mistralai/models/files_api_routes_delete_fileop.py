@@ -9,8 +9,9 @@ from typing_extensions import Annotated
 
 class FilesAPIRoutesDeleteFileRequestTypedDict(TypedDict):
     file_id: str
-    
+
 
 class FilesAPIRoutesDeleteFileRequest(BaseModel):
-    file_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
-    
+    file_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]

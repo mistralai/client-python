@@ -24,7 +24,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.chat.complete(model="mistral-small-latest", messages=[
 
 ])
@@ -79,7 +78,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.chat.stream(model="mistral-small-latest", messages=[
 

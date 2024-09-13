@@ -30,10 +30,9 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.files.upload(file={
-    "file_name": "your_file_here",
-    "content": open("<file_path>", "rb"),
+    "file_name": "example.file",
+    "content": open("example.file", "rb"),
 })
 
 if res is not None:
@@ -74,7 +73,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.files.list()
 
 if res is not None:
@@ -113,7 +111,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.files.retrieve(file_id="<value>")
 
@@ -154,7 +151,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.files.delete(file_id="<value>")
 

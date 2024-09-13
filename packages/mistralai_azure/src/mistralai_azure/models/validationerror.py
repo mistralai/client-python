@@ -15,10 +15,11 @@ class ValidationErrorTypedDict(TypedDict):
     loc: List[LocTypedDict]
     msg: str
     type: str
-    
+
 
 class ValidationError(BaseModel):
     loc: List[Loc]
+
     msg: str
+
     type: str
-    

@@ -10,13 +10,17 @@ from typing_extensions import Annotated, NotRequired
 
 JobsOutObject = Literal["list"]
 
+
 class JobsOutTypedDict(TypedDict):
     total: int
     data: NotRequired[List[JobOutTypedDict]]
-    
+
 
 class JobsOut(BaseModel):
     total: int
+
     data: Optional[List[JobOut]] = None
+
+    # fmt: off
     OBJECT: Annotated[Final[Optional[JobsOutObject]], pydantic.Field(alias="object")] = "list" # type: ignore
-    
+    # fmt: on

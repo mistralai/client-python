@@ -16,7 +16,6 @@ from .metadata import (
 )
 
 
-
 def get_security(security: Any) -> Tuple[Dict[str, str], Dict[str, List[str]]]:
     headers: Dict[str, str] = {}
     query_params: Dict[str, List[str]] = {}
@@ -42,8 +41,10 @@ def get_security(security: Any) -> Tuple[Dict[str, str], Dict[str, List[str]]]:
             _parse_security_option(headers, query_params, value)
             return headers, query_params
         if metadata.scheme:
-            # Special case for basic auth which could be a flattened model
-            if metadata.sub_type == "basic" and not isinstance(value, BaseModel):
+            # Special case for basic auth or custom auth which could be a flattened model
+            if metadata.sub_type in ["basic", "custom"] and not isinstance(
+                value, BaseModel
+            ):
                 _parse_security_scheme(headers, query_params, metadata, name, security)
             else:
                 _parse_security_scheme(headers, query_params, metadata, name, value)
@@ -80,9 +81,12 @@ def _parse_security_scheme(
     sub_type = scheme_metadata.sub_type
 
     if isinstance(scheme, BaseModel):
-        if scheme_type == "http" and sub_type == "basic":
-            _parse_basic_auth_scheme(headers, scheme)
-            return
+        if scheme_type == "http":
+            if sub_type == "basic":
+                _parse_basic_auth_scheme(headers, scheme)
+                return
+            if sub_type == "custom":
+                return
 
         scheme_fields: Dict[str, FieldInfo] = scheme.__class__.model_fields
         for name in scheme_fields:
@@ -131,6 +135,8 @@ def _parse_security_scheme_value(
     elif scheme_type == "http":
         if sub_type == "bearer":
             headers[header_name] = _apply_bearer(value)
+        elif sub_type == "custom":
+            return
         else:
             raise ValueError("sub type {sub_type} not supported")
     else:

@@ -7,12 +7,11 @@ from typing import TypedDict
 
 class FunctionNameTypedDict(TypedDict):
     r"""this restriction of `Function` is used to select a specific function to call"""
-    
+
     name: str
-    
+
 
 class FunctionName(BaseModel):
     r"""this restriction of `Function` is used to select a specific function to call"""
-    
+
     name: str
-    

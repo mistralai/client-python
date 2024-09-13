@@ -25,7 +25,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.fine_tuning.jobs.list()
 
 if res is not None:
@@ -74,7 +73,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.fine_tuning.jobs.create(model="codestral-latest", hyperparameters={})
 
 if res is not None:
@@ -122,7 +120,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.fine_tuning.jobs.get(job_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
 
 if res is not None:
@@ -163,7 +160,6 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.fine_tuning.jobs.cancel(job_id="03fa7112-315a-4072-a9f2-43f3f1ec962e")
 
 if res is not None:
@@ -203,7 +199,6 @@ import os
 s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
-
 
 res = s.fine_tuning.jobs.start(job_id="0eb0f807-fb9f-4e46-9c13-4e257df6e1ba")
 

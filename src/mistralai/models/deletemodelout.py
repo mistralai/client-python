@@ -13,13 +13,14 @@ class DeleteModelOutTypedDict(TypedDict):
     r"""The object type that was deleted"""
     deleted: NotRequired[bool]
     r"""The deletion status"""
-    
+
 
 class DeleteModelOut(BaseModel):
     id: str
     r"""The ID of the deleted model."""
+
     object: Optional[str] = "model"
     r"""The object type that was deleted"""
+
     deleted: Optional[bool] = True
     r"""The deletion status"""
-    

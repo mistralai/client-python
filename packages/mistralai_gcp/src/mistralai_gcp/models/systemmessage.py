@@ -18,9 +18,11 @@ Content = Union[str, List[TextChunk]]
 
 class SystemMessageTypedDict(TypedDict):
     content: ContentTypedDict
-    
+
 
 class SystemMessage(BaseModel):
     content: Content
+
+    # fmt: off
     ROLE: Annotated[Final[Optional[Role]], pydantic.Field(alias="role")] = "system" # type: ignore
-    
+    # fmt: on

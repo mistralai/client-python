@@ -15,13 +15,17 @@ class ChatCompletionResponseTypedDict(TypedDict):
     usage: UsageInfoTypedDict
     created: NotRequired[int]
     choices: NotRequired[List[ChatCompletionChoiceTypedDict]]
-    
+
 
 class ChatCompletionResponse(BaseModel):
     id: str
+
     object: str
+
     model: str
+
     usage: UsageInfo
+
     created: Optional[int] = None
+
     choices: Optional[List[ChatCompletionChoice]] = None
-    

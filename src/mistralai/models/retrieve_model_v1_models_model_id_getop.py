@@ -13,17 +13,25 @@ from typing_extensions import Annotated
 class RetrieveModelV1ModelsModelIDGetRequestTypedDict(TypedDict):
     model_id: str
     r"""The ID of the model to retrieve."""
-    
+
 
 class RetrieveModelV1ModelsModelIDGetRequest(BaseModel):
-    model_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    model_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the model to retrieve."""
-    
 
-RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict = Union[BaseModelCardTypedDict, FTModelCardTypedDict]
+
+RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict = Union[
+    BaseModelCardTypedDict, FTModelCardTypedDict
+]
 r"""Successful Response"""
 
 
-RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet = Annotated[Union[Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]], Discriminator(lambda m: get_discriminator(m, "type", "type"))]
+RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet = Annotated[
+    Union[
+        Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]
+    ],
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+]
 r"""Successful Response"""
-

@@ -13,15 +13,20 @@ from typing_extensions import Annotated, NotRequired
 DataTypedDict = Union[BaseModelCardTypedDict, FTModelCardTypedDict]
 
 
-Data = Annotated[Union[Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]], Discriminator(lambda m: get_discriminator(m, "type", "type"))]
+Data = Annotated[
+    Union[
+        Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]
+    ],
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+]
 
 
 class ModelListTypedDict(TypedDict):
     object: NotRequired[str]
     data: NotRequired[List[DataTypedDict]]
-    
+
 
 class ModelList(BaseModel):
     object: Optional[str] = "list"
+
     data: Optional[List[Data]] = None
-    

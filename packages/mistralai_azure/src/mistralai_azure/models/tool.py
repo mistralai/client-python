@@ -13,9 +13,11 @@ from typing_extensions import Annotated, NotRequired
 class ToolTypedDict(TypedDict):
     function: FunctionTypedDict
     type: NotRequired[ToolTypes]
-    
+
 
 class Tool(BaseModel):
     function: Function
-    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = None
-    
+
+    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
+        None
+    )

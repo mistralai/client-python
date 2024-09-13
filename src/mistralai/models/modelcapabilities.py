@@ -12,12 +12,15 @@ class ModelCapabilitiesTypedDict(TypedDict):
     function_calling: NotRequired[bool]
     fine_tuning: NotRequired[bool]
     vision: NotRequired[bool]
-    
+
 
 class ModelCapabilities(BaseModel):
     completion_chat: Optional[bool] = True
+
     completion_fim: Optional[bool] = False
+
     function_calling: Optional[bool] = True
+
     fine_tuning: Optional[bool] = False
+
     vision: Optional[bool] = False
-    
