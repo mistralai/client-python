@@ -18,6 +18,7 @@ sources:
         sourceBlobDigest: sha256:9fbff48fe087e3b2f950b1cfa52b6a25143982741dc7e6750dd14d9c5bed4041
         tags:
             - latest
+            - main
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
