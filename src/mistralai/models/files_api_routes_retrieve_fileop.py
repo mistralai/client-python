@@ -9,8 +9,9 @@ from typing_extensions import Annotated
 
 class FilesAPIRoutesRetrieveFileRequestTypedDict(TypedDict):
     file_id: str
-    
+
 
 class FilesAPIRoutesRetrieveFileRequest(BaseModel):
-    file_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
-    
+    file_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]

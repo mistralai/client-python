@@ -10,9 +10,10 @@ from typing_extensions import Annotated
 class JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict(TypedDict):
     job_id: str
     r"""The ID of the job to analyse."""
-    
+
 
 class JobsAPIRoutesFineTuningGetFineTuningJobRequest(BaseModel):
-    job_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    job_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the job to analyse."""
-    

@@ -10,6 +10,7 @@ from typing_extensions import Annotated, NotRequired
 
 LegacyJobMetadataOutObject = Literal["job.metadata"]
 
+
 class LegacyJobMetadataOutTypedDict(TypedDict):
     details: str
     expected_duration_seconds: NotRequired[Nullable[int]]
@@ -30,34 +31,69 @@ class LegacyJobMetadataOutTypedDict(TypedDict):
     r"""The number of complete passes through the entire training dataset."""
     training_steps: NotRequired[Nullable[int]]
     r"""The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."""
-    
+
 
 class LegacyJobMetadataOut(BaseModel):
     details: str
+
     expected_duration_seconds: OptionalNullable[int] = UNSET
     r"""The approximated time (in seconds) for the fine-tuning process to complete."""
+
     cost: OptionalNullable[float] = UNSET
     r"""The cost of the fine-tuning job."""
+
     cost_currency: OptionalNullable[str] = UNSET
     r"""The currency used for the fine-tuning job cost."""
+
     train_tokens_per_step: OptionalNullable[int] = UNSET
     r"""The number of tokens consumed by one training step."""
+
     train_tokens: OptionalNullable[int] = UNSET
     r"""The total number of tokens used during the fine-tuning process."""
+
     data_tokens: OptionalNullable[int] = UNSET
     r"""The total number of tokens in the training dataset."""
+
     estimated_start_time: OptionalNullable[int] = UNSET
+
     deprecated: Optional[bool] = True
+
     epochs: OptionalNullable[float] = UNSET
     r"""The number of complete passes through the entire training dataset."""
+
     training_steps: OptionalNullable[int] = UNSET
     r"""The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."""
+
+    # fmt: off
     OBJECT: Annotated[Final[Optional[LegacyJobMetadataOutObject]], pydantic.Field(alias="object")] = "job.metadata" # type: ignore
-    
+    # fmt: on
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["expected_duration_seconds", "cost", "cost_currency", "train_tokens_per_step", "train_tokens", "data_tokens", "estimated_start_time", "deprecated", "epochs", "training_steps", "object"]
-        nullable_fields = ["expected_duration_seconds", "cost", "cost_currency", "train_tokens_per_step", "train_tokens", "data_tokens", "estimated_start_time", "epochs", "training_steps"]
+        optional_fields = [
+            "expected_duration_seconds",
+            "cost",
+            "cost_currency",
+            "train_tokens_per_step",
+            "train_tokens",
+            "data_tokens",
+            "estimated_start_time",
+            "deprecated",
+            "epochs",
+            "training_steps",
+            "object",
+        ]
+        nullable_fields = [
+            "expected_duration_seconds",
+            "cost",
+            "cost_currency",
+            "train_tokens_per_step",
+            "train_tokens",
+            "data_tokens",
+            "estimated_start_time",
+            "epochs",
+            "training_steps",
+        ]
         null_default_fields = []
 
         serialized = handler(self)
@@ -67,9 +103,13 @@ class LegacyJobMetadataOut(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -79,4 +119,3 @@ class LegacyJobMetadataOut(BaseModel):
                 m[k] = val
 
         return m
-        

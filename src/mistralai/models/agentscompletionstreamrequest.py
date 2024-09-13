@@ -4,12 +4,14 @@ from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .tool import Tool, ToolTypedDict
+from .toolchoice import ToolChoice, ToolChoiceTypedDict
+from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, TypedDict, Union
+from typing import List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
@@ -21,13 +23,28 @@ AgentsCompletionStreamRequestStop = Union[str, List[str]]
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionStreamRequestMessagesTypedDict = Union[UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict]
+AgentsCompletionStreamRequestMessagesTypedDict = Union[
+    UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict
+]
 
 
-AgentsCompletionStreamRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
+AgentsCompletionStreamRequestMessages = Annotated[
+    Union[
+        Annotated[AssistantMessage, Tag("assistant")],
+        Annotated[ToolMessage, Tag("tool")],
+        Annotated[UserMessage, Tag("user")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "role", "role")),
+]
 
 
-AgentsCompletionStreamRequestToolChoice = Literal["auto", "none", "any"]
+AgentsCompletionStreamRequestToolChoiceTypedDict = Union[
+    ToolChoiceTypedDict, ToolChoiceEnum
+]
+
+
+AgentsCompletionStreamRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+
 
 class AgentsCompletionStreamRequestTypedDict(TypedDict):
     messages: List[AgentsCompletionStreamRequestMessagesTypedDict]
@@ -45,30 +62,48 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: NotRequired[ResponseFormatTypedDict]
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
-    tool_choice: NotRequired[AgentsCompletionStreamRequestToolChoice]
-    
+    tool_choice: NotRequired[AgentsCompletionStreamRequestToolChoiceTypedDict]
+
 
 class AgentsCompletionStreamRequest(BaseModel):
     messages: List[AgentsCompletionStreamRequestMessages]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
+
     agent_id: str
     r"""The ID of the agent to use for this completion."""
+
     max_tokens: OptionalNullable[int] = UNSET
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
+
     min_tokens: OptionalNullable[int] = UNSET
     r"""The minimum number of tokens to generate in the completion."""
+
     stream: Optional[bool] = True
+
     stop: Optional[AgentsCompletionStreamRequestStop] = None
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
+
     random_seed: OptionalNullable[int] = UNSET
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
+
     response_format: Optional[ResponseFormat] = None
+
     tools: OptionalNullable[List[Tool]] = UNSET
-    tool_choice: Optional[AgentsCompletionStreamRequestToolChoice] = "auto"
-    
+
+    tool_choice: Optional[AgentsCompletionStreamRequestToolChoice] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["max_tokens", "min_tokens", "stream", "stop", "random_seed", "response_format", "tools", "tool_choice"]
+        optional_fields = [
+            "max_tokens",
+            "min_tokens",
+            "stream",
+            "stop",
+            "random_seed",
+            "response_format",
+            "tools",
+            "tool_choice",
+        ]
         nullable_fields = ["max_tokens", "min_tokens", "random_seed", "tools"]
         null_default_fields = []
 
@@ -79,9 +114,13 @@ class AgentsCompletionStreamRequest(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -91,4 +130,3 @@ class AgentsCompletionStreamRequest(BaseModel):
                 m[k] = val
 
         return m
-        

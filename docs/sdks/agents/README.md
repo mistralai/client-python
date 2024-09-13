@@ -24,11 +24,9 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.agents.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
+        "content": "<value>",
     },
 ], agent_id="<value>")
 
@@ -80,11 +78,15 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
 res = s.agents.stream(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
+        "content": [
+            {
+                "image_url": {
+                    "url": "http://possible-veal.org",
+                },
+            },
+        ],
     },
 ], agent_id="<value>")
 

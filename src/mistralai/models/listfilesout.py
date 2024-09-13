@@ -9,9 +9,9 @@ from typing import List, TypedDict
 class ListFilesOutTypedDict(TypedDict):
     data: List[FileSchemaTypedDict]
     object: str
-    
+
 
 class ListFilesOut(BaseModel):
     data: List[FileSchema]
+
     object: str
-    

@@ -9,13 +9,17 @@ from typing_extensions import Annotated, NotRequired
 
 ArchiveFTModelOutObject = Literal["model"]
 
+
 class ArchiveFTModelOutTypedDict(TypedDict):
     id: str
     archived: NotRequired[bool]
-    
+
 
 class ArchiveFTModelOut(BaseModel):
     id: str
+
+    # fmt: off
     OBJECT: Annotated[Final[Optional[ArchiveFTModelOutObject]], pydantic.Field(alias="object")] = "model" # type: ignore
+    # fmt: on
+
     archived: Optional[bool] = True
-    

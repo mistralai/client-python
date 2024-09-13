@@ -6,16 +6,20 @@ from mistralai_gcp.types import BaseModel
 from typing import Literal, TypedDict
 
 
-ChatCompletionChoiceFinishReason = Literal["stop", "length", "model_length", "error", "tool_calls"]
+ChatCompletionChoiceFinishReason = Literal[
+    "stop", "length", "model_length", "error", "tool_calls"
+]
+
 
 class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
     message: AssistantMessageTypedDict
     finish_reason: ChatCompletionChoiceFinishReason
-    
+
 
 class ChatCompletionChoice(BaseModel):
     index: int
+
     message: AssistantMessage
+
     finish_reason: ChatCompletionChoiceFinishReason
-    

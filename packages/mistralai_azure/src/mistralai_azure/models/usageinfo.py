@@ -9,10 +9,11 @@ class UsageInfoTypedDict(TypedDict):
     prompt_tokens: int
     completion_tokens: int
     total_tokens: int
-    
+
 
 class UsageInfo(BaseModel):
     prompt_tokens: int
+
     completion_tokens: int
+
     total_tokens: int
-    

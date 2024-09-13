@@ -2,21 +2,22 @@
 
 from __future__ import annotations
 from .function import Function, FunctionTypedDict
-from mistralai.types import BaseModel, UnrecognizedStr
+from .tooltypes import ToolTypes
+from mistralai.types import BaseModel
 from mistralai.utils import validate_open_enum
 from pydantic.functional_validators import PlainValidator
-from typing import Literal, Optional, TypedDict, Union
+from typing import Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
-ToolToolTypes = Union[Literal["function"], UnrecognizedStr]
-
 class ToolTypedDict(TypedDict):
     function: FunctionTypedDict
-    type: NotRequired[ToolToolTypes]
-    
+    type: NotRequired[ToolTypes]
+
 
 class Tool(BaseModel):
     function: Function
-    type: Annotated[Optional[ToolToolTypes], PlainValidator(validate_open_enum(False))] = "function"
-    
+
+    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
+        None
+    )

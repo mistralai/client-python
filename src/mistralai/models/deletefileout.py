@@ -12,13 +12,14 @@ class DeleteFileOutTypedDict(TypedDict):
     r"""The object type that was deleted"""
     deleted: bool
     r"""The deletion status."""
-    
+
 
 class DeleteFileOut(BaseModel):
     id: str
     r"""The ID of the deleted file."""
+
     object: str
     r"""The object type that was deleted"""
+
     deleted: bool
     r"""The deletion status."""
-    

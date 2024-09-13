@@ -14,9 +14,9 @@ Arguments = Union[Dict[str, Any], str]
 class FunctionCallTypedDict(TypedDict):
     name: str
     arguments: ArgumentsTypedDict
-    
+
 
 class FunctionCall(BaseModel):
     name: str
+
     arguments: Arguments
-    

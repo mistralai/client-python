@@ -58,19 +58,18 @@ class MistralGoogleCloud(BaseSDK):
                     "credentials must be an instance of google.auth.credentials.Credentials"
                 )
 
-        project_id = project_id or loaded_project_id
+            project_id = project_id or loaded_project_id
         if project_id is None:
             raise models.SDKError("project_id must be provided")
 
         def auth_token() -> str:
             if access_token:
                 return access_token
-            else:
-                credentials.refresh(google.auth.transport.requests.Request())
-                token = credentials.token
-                if not token:
-                    raise models.SDKError("Failed to get token from credentials")
-                return token
+            credentials.refresh(google.auth.transport.requests.Request())
+            token = credentials.token
+            if not token:
+                raise models.SDKError("Failed to get token from credentials")
+            return token
 
         if client is None:
             client = httpx.Client()

@@ -23,8 +23,7 @@ s = Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
-
-res = s.embeddings.create(inputs="<value>", model="<value>")
+res = s.embeddings.create(inputs="<value>", model="Wrangler")
 
 if res is not None:
     # handle response

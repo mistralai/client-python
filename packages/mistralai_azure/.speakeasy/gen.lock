@@ -1,19 +1,20 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 9128fabc3ae45ecc9ed7fae8991b3d3e
+  docChecksum: e99cb4d498ede912c81ab20b7828c0e3
   docVersion: 0.0.2
-  speakeasyVersion: 1.373.1
-  generationVersion: 2.399.0
-  releaseVersion: 1.0.1
-  configChecksum: dc28e30e8f503aee23a53bb77a46c902
+  speakeasyVersion: 1.396.7
+  generationVersion: 2.415.6
+  releaseVersion: 1.2.2
+  configChecksum: 36e70d966ca186be6efc57911c094dec
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.8
+    core: 5.5.3
     defaultEnabledRetries: 0.2.0
+    enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
     flatRequests: 1.0.1
@@ -25,16 +26,61 @@ features:
     nullables: 1.0.0
     openEnums: 1.0.0
     responseFormat: 1.0.0
-    retries: 3.0.0
+    retries: 3.0.2
     sdkHooks: 1.0.0
     serverEvents: 1.0.2
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
     unions: 3.0.2
 generatedFiles:
-  - src/mistralai_azure/sdkconfiguration.py
-  - src/mistralai_azure/chat.py
+  - .gitattributes
   - .vscode/settings.json
+  - docs/models/arguments.md
+  - docs/models/assistantmessage.md
+  - docs/models/assistantmessagerole.md
+  - docs/models/chatcompletionchoice.md
+  - docs/models/chatcompletionchoicefinishreason.md
+  - docs/models/chatcompletionrequest.md
+  - docs/models/chatcompletionrequestmessages.md
+  - docs/models/chatcompletionrequeststop.md
+  - docs/models/chatcompletionrequesttoolchoice.md
+  - docs/models/chatcompletionresponse.md
+  - docs/models/chatcompletionstreamrequest.md
+  - docs/models/chatcompletionstreamrequesttoolchoice.md
+  - docs/models/completionchunk.md
+  - docs/models/completionevent.md
+  - docs/models/completionresponsestreamchoice.md
+  - docs/models/content.md
+  - docs/models/contentchunk.md
+  - docs/models/deltamessage.md
+  - docs/models/finishreason.md
+  - docs/models/function.md
+  - docs/models/functioncall.md
+  - docs/models/functionname.md
+  - docs/models/httpvalidationerror.md
+  - docs/models/loc.md
+  - docs/models/messages.md
+  - docs/models/responseformat.md
+  - docs/models/responseformats.md
+  - docs/models/role.md
+  - docs/models/security.md
+  - docs/models/stop.md
+  - docs/models/systemmessage.md
+  - docs/models/textchunk.md
+  - docs/models/tool.md
+  - docs/models/toolcall.md
+  - docs/models/toolchoice.md
+  - docs/models/toolchoiceenum.md
+  - docs/models/toolmessage.md
+  - docs/models/toolmessagerole.md
+  - docs/models/tooltypes.md
+  - docs/models/type.md
+  - docs/models/usageinfo.md
+  - docs/models/usermessage.md
+  - docs/models/usermessagecontent.md
+  - docs/models/usermessagerole.md
+  - docs/models/utils/retryconfig.md
+  - docs/models/validationerror.md
   - poetry.toml
   - py.typed
   - pylintrc
@@ -43,9 +89,44 @@ generatedFiles:
   - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/mistralai_azure/__init__.py
+  - src/mistralai_azure/_hooks/__init__.py
+  - src/mistralai_azure/_hooks/sdkhooks.py
+  - src/mistralai_azure/_hooks/types.py
   - src/mistralai_azure/basesdk.py
+  - src/mistralai_azure/chat.py
   - src/mistralai_azure/httpclient.py
+  - src/mistralai_azure/models/__init__.py
+  - src/mistralai_azure/models/assistantmessage.py
+  - src/mistralai_azure/models/chatcompletionchoice.py
+  - src/mistralai_azure/models/chatcompletionrequest.py
+  - src/mistralai_azure/models/chatcompletionresponse.py
+  - src/mistralai_azure/models/chatcompletionstreamrequest.py
+  - src/mistralai_azure/models/completionchunk.py
+  - src/mistralai_azure/models/completionevent.py
+  - src/mistralai_azure/models/completionresponsestreamchoice.py
+  - src/mistralai_azure/models/contentchunk.py
+  - src/mistralai_azure/models/deltamessage.py
+  - src/mistralai_azure/models/function.py
+  - src/mistralai_azure/models/functioncall.py
+  - src/mistralai_azure/models/functionname.py
+  - src/mistralai_azure/models/httpvalidationerror.py
+  - src/mistralai_azure/models/responseformat.py
+  - src/mistralai_azure/models/responseformats.py
+  - src/mistralai_azure/models/sdkerror.py
+  - src/mistralai_azure/models/security.py
+  - src/mistralai_azure/models/systemmessage.py
+  - src/mistralai_azure/models/textchunk.py
+  - src/mistralai_azure/models/tool.py
+  - src/mistralai_azure/models/toolcall.py
+  - src/mistralai_azure/models/toolchoice.py
+  - src/mistralai_azure/models/toolchoiceenum.py
+  - src/mistralai_azure/models/toolmessage.py
+  - src/mistralai_azure/models/tooltypes.py
+  - src/mistralai_azure/models/usageinfo.py
+  - src/mistralai_azure/models/usermessage.py
+  - src/mistralai_azure/models/validationerror.py
   - src/mistralai_azure/py.typed
+  - src/mistralai_azure/sdkconfiguration.py
   - src/mistralai_azure/types/__init__.py
   - src/mistralai_azure/types/basemodel.py
   - src/mistralai_azure/utils/__init__.py
@@ -63,75 +144,16 @@ generatedFiles:
   - src/mistralai_azure/utils/serializers.py
   - src/mistralai_azure/utils/url.py
   - src/mistralai_azure/utils/values.py
-  - src/mistralai_azure/models/sdkerror.py
-  - src/mistralai_azure/models/completionevent.py
-  - src/mistralai_azure/models/completionchunk.py
-  - src/mistralai_azure/models/completionresponsestreamchoice.py
-  - src/mistralai_azure/models/deltamessage.py
-  - src/mistralai_azure/models/toolcall.py
-  - src/mistralai_azure/models/functioncall.py
-  - src/mistralai_azure/models/usageinfo.py
-  - src/mistralai_azure/models/httpvalidationerror.py
-  - src/mistralai_azure/models/validationerror.py
-  - src/mistralai_azure/models/chatcompletionstreamrequest.py
-  - src/mistralai_azure/models/tool.py
-  - src/mistralai_azure/models/function.py
-  - src/mistralai_azure/models/responseformat.py
-  - src/mistralai_azure/models/systemmessage.py
-  - src/mistralai_azure/models/contentchunk.py
-  - src/mistralai_azure/models/usermessage.py
-  - src/mistralai_azure/models/textchunk.py
-  - src/mistralai_azure/models/assistantmessage.py
-  - src/mistralai_azure/models/toolmessage.py
-  - src/mistralai_azure/models/chatcompletionresponse.py
-  - src/mistralai_azure/models/chatcompletionchoice.py
-  - src/mistralai_azure/models/chatcompletionrequest.py
-  - src/mistralai_azure/models/security.py
-  - src/mistralai_azure/models/__init__.py
-  - docs/models/completionevent.md
-  - docs/models/completionchunk.md
-  - docs/models/finishreason.md
-  - docs/models/completionresponsestreamchoice.md
-  - docs/models/deltamessage.md
-  - docs/models/tooltypes.md
-  - docs/models/toolcall.md
-  - docs/models/arguments.md
-  - docs/models/functioncall.md
-  - docs/models/usageinfo.md
-  - docs/models/httpvalidationerror.md
-  - docs/models/loc.md
-  - docs/models/validationerror.md
-  - docs/models/stop.md
-  - docs/models/messages.md
-  - docs/models/toolchoice.md
-  - docs/models/chatcompletionstreamrequest.md
-  - docs/models/tooltooltypes.md
-  - docs/models/tool.md
-  - docs/models/function.md
-  - docs/models/responseformats.md
-  - docs/models/responseformat.md
-  - docs/models/content.md
-  - docs/models/role.md
-  - docs/models/systemmessage.md
-  - docs/models/contentchunk.md
-  - docs/models/usermessagecontent.md
-  - docs/models/usermessagerole.md
-  - docs/models/usermessage.md
-  - docs/models/textchunk.md
-  - docs/models/assistantmessagerole.md
-  - docs/models/assistantmessage.md
-  - docs/models/toolmessagerole.md
-  - docs/models/toolmessage.md
-  - docs/models/chatcompletionresponse.md
-  - docs/models/chatcompletionchoicefinishreason.md
-  - docs/models/chatcompletionchoice.md
-  - docs/models/chatcompletionrequeststop.md
-  - docs/models/chatcompletionrequestmessages.md
-  - docs/models/chatcompletionrequesttoolchoice.md
-  - docs/models/chatcompletionrequest.md
-  - docs/models/security.md
-  - docs/models/utils/retryconfig.md
-  - .gitattributes
-  - src/mistralai_azure/_hooks/sdkhooks.py
-  - src/mistralai_azure/_hooks/types.py
-  - src/mistralai_azure/_hooks/__init__.py
+examples:
+  stream_chat:
+    speakeasy-default-stream-chat:
+      requestBody:
+        application/json: {"model": "azureai", "messages": [{"content": []}]}
+  chat_completion_v1_chat_completions_post:
+    speakeasy-default-chat-completion-v1-chat-completions-post:
+      requestBody:
+        application/json: {"model": "azureai", "messages": [{"content": "<value>"}]}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
+        "422": {}

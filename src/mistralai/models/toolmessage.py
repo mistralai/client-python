@@ -9,19 +9,23 @@ from typing_extensions import NotRequired
 
 ToolMessageRole = Literal["tool"]
 
+
 class ToolMessageTypedDict(TypedDict):
     content: str
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
     role: NotRequired[ToolMessageRole]
-    
+
 
 class ToolMessage(BaseModel):
     content: str
+
     tool_call_id: OptionalNullable[str] = UNSET
+
     name: OptionalNullable[str] = UNSET
+
     role: Optional[ToolMessageRole] = "tool"
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["tool_call_id", "name", "role"]
@@ -35,9 +39,13 @@ class ToolMessage(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -47,4 +55,3 @@ class ToolMessage(BaseModel):
                 m[k] = val
 
         return m
-        

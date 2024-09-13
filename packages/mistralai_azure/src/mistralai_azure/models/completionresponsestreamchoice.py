@@ -9,17 +9,20 @@ from typing import Literal, TypedDict
 
 FinishReason = Literal["stop", "length", "error", "tool_calls"]
 
+
 class CompletionResponseStreamChoiceTypedDict(TypedDict):
     index: int
     delta: DeltaMessageTypedDict
     finish_reason: Nullable[FinishReason]
-    
+
 
 class CompletionResponseStreamChoice(BaseModel):
     index: int
+
     delta: DeltaMessage
+
     finish_reason: Nullable[FinishReason]
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = []
@@ -33,9 +36,13 @@ class CompletionResponseStreamChoice(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -45,4 +52,3 @@ class CompletionResponseStreamChoice(BaseModel):
                 m[k] = val
 
         return m
-        

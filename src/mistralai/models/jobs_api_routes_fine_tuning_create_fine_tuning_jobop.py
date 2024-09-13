@@ -6,10 +6,11 @@ from .legacyjobmetadataout import LegacyJobMetadataOut, LegacyJobMetadataOutType
 from typing import Union
 
 
-JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = Union[LegacyJobMetadataOutTypedDict, JobOutTypedDict]
+JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = Union[
+    LegacyJobMetadataOutTypedDict, JobOutTypedDict
+]
 r"""OK"""
 
 
 JobsAPIRoutesFineTuningCreateFineTuningJobResponse = Union[LegacyJobMetadataOut, JobOut]
 r"""OK"""
-

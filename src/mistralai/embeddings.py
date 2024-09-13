@@ -7,12 +7,13 @@ from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from typing import Any, Optional, Union
 
+
 class Embeddings(BaseSDK):
     r"""Embeddings API."""
-    
-    
+
     def create(
-        self, *,
+        self,
+        *,
         inputs: Union[models.Inputs, models.InputsTypedDict],
         model: str,
         encoding_format: OptionalNullable[str] = UNSET,
@@ -35,16 +36,16 @@ class Embeddings(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.EmbeddingRequest(
             inputs=inputs,
             model=model,
             encoding_format=encoding_format,
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/v1/embeddings",
@@ -57,47 +58,57 @@ class Embeddings(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.EmbeddingRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.EmbeddingRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="embeddings_v1_embeddings_post", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="embeddings_v1_embeddings_post",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.EmbeddingResponse])
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.EmbeddingResponse]
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def create_async(
-        self, *,
+        self,
+        *,
         inputs: Union[models.Inputs, models.InputsTypedDict],
         model: str,
         encoding_format: OptionalNullable[str] = UNSET,
@@ -120,17 +131,17 @@ class Embeddings(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.EmbeddingRequest(
             inputs=inputs,
             model=model,
             encoding_format=encoding_format,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/v1/embeddings",
             base_url=base_url,
@@ -142,41 +153,50 @@ class Embeddings(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.EmbeddingRequest),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.EmbeddingRequest
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="embeddings_v1_embeddings_post", oauth2_scopes=[], security_source=get_security_from_env(self.sdk_configuration.security, models.Security)),
+            hook_ctx=HookContext(
+                operation_id="embeddings_v1_embeddings_post",
+                oauth2_scopes=[],
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.EmbeddingResponse])
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.EmbeddingResponse]
+            )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 from .toolcall import ToolCall, ToolCallTypedDict
-from mistralai_azure.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai_azure.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
 from typing import List, Optional, TypedDict
 from typing_extensions import NotRequired
@@ -12,13 +18,15 @@ class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[str]
     content: NotRequired[Nullable[str]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
-    
+
 
 class DeltaMessage(BaseModel):
     role: Optional[str] = None
+
     content: OptionalNullable[str] = UNSET
+
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["role", "content", "tool_calls"]
@@ -32,9 +40,13 @@ class DeltaMessage(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -44,4 +56,3 @@ class DeltaMessage(BaseModel):
                 m[k] = val
 
         return m
-        

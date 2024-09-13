@@ -3,7 +3,14 @@
 from __future__ import annotations
 from .sampletype import SampleType
 from .source import Source
-from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL, UnrecognizedStr
+from mistralai.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    UnrecognizedStr,
+)
 from mistralai.utils import validate_open_enum
 import pydantic
 from pydantic import model_serializer
@@ -14,6 +21,7 @@ from typing_extensions import Annotated, NotRequired
 
 RetrieveFileOutPurpose = Union[Literal["fine-tune"], UnrecognizedStr]
 r"""The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now."""
+
 
 class RetrieveFileOutTypedDict(TypedDict):
     id: str
@@ -29,25 +37,35 @@ class RetrieveFileOutTypedDict(TypedDict):
     sample_type: SampleType
     source: Source
     num_lines: NotRequired[Nullable[int]]
-    
+
 
 class RetrieveFileOut(BaseModel):
     id: str
     r"""The unique identifier of the file."""
+
     object: str
     r"""The object type, which is always \"file\"."""
+
     bytes: int
     r"""The size of the file, in bytes."""
+
     created_at: int
     r"""The UNIX timestamp (in seconds) of the event."""
+
     filename: str
     r"""The name of the uploaded file."""
+
     sample_type: SampleType
+
     source: Source
+
+    # fmt: off
     PURPOSE: Annotated[Final[Annotated[RetrieveFileOutPurpose, PlainValidator(validate_open_enum(False))]], pydantic.Field(alias="purpose")] = "fine-tune" # type: ignore
+    # fmt: on
     r"""The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now."""
+
     num_lines: OptionalNullable[int] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["num_lines"]
@@ -61,9 +79,13 @@ class RetrieveFileOut(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -73,4 +95,3 @@ class RetrieveFileOut(BaseModel):
                 m[k] = val
 
         return m
-        

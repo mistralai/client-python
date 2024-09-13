@@ -13,15 +13,17 @@ class EventOutTypedDict(TypedDict):
     created_at: int
     r"""The UNIX timestamp (in seconds) of the event."""
     data: NotRequired[Nullable[Dict[str, Any]]]
-    
+
 
 class EventOut(BaseModel):
     name: str
     r"""The name of the event."""
+
     created_at: int
     r"""The UNIX timestamp (in seconds) of the event."""
+
     data: OptionalNullable[Dict[str, Any]] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["data"]
@@ -35,9 +37,13 @@ class EventOut(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -47,4 +53,3 @@ class EventOut(BaseModel):
                 m[k] = val
 
         return m
-        

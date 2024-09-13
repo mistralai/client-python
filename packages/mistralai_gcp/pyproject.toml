@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mistralai-gcp"
-version = "1.0.1"
+version = "1.2.2"
 description = "Python Client SDK for the Mistral AI API in GCP."
 authors = ["Mistral",]
 readme = "README-PYPI.md"
@@ -18,10 +18,10 @@ in-project = true
 [tool.poetry.dependencies]
 python = "^3.8"
 eval-type-backport = "^0.2.0"
-google-auth = "^2.31.0"
+google-auth = "2.27.0"
 httpx = "^0.27.0"
 jsonpath-python = "^1.0.6"
-pydantic = "~2.8.2"
+pydantic = "~2.9.0"
 python-dateutil = "2.8.2"
 requests = "^2.32.3"
 typing-inspect = "^0.9.0"
@@ -29,7 +29,6 @@ typing-inspect = "^0.9.0"
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.10.1"
 pylint = "==3.2.3"
-pyright = "==1.1.374"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
 types-python-dateutil = "^2.9.0.20240316"

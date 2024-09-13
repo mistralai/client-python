@@ -10,10 +10,11 @@ class EmbeddingResponseDataTypedDict(TypedDict):
     object: NotRequired[str]
     embedding: NotRequired[List[float]]
     index: NotRequired[int]
-    
+
 
 class EmbeddingResponseData(BaseModel):
     object: Optional[str] = None
+
     embedding: Optional[List[float]] = None
+
     index: Optional[int] = None
-    

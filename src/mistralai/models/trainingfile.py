@@ -9,9 +9,9 @@ from typing_extensions import NotRequired
 class TrainingFileTypedDict(TypedDict):
     file_id: str
     weight: NotRequired[float]
-    
+
 
 class TrainingFile(BaseModel):
     file_id: str
+
     weight: Optional[float] = 1
-    

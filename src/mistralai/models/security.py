@@ -9,8 +9,17 @@ from typing_extensions import Annotated, NotRequired
 
 class SecurityTypedDict(TypedDict):
     api_key: NotRequired[str]
-    
+
 
 class Security(BaseModel):
-    api_key: Annotated[Optional[str], FieldMetadata(security=SecurityMetadata(scheme=True, scheme_type="http", sub_type="bearer", field_name="Authorization"))] = None
-    
+    api_key: Annotated[
+        Optional[str],
+        FieldMetadata(
+            security=SecurityMetadata(
+                scheme=True,
+                scheme_type="http",
+                sub_type="bearer",
+                field_name="Authorization",
+            )
+        ),
+    ] = None

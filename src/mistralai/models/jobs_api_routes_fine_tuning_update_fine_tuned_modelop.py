@@ -12,10 +12,15 @@ class JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict(TypedDict):
     model_id: str
     r"""The ID of the model to update."""
     update_ft_model_in: UpdateFTModelInTypedDict
-    
+
 
 class JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(BaseModel):
-    model_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    model_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the model to update."""
-    update_ft_model_in: Annotated[UpdateFTModelIn, FieldMetadata(request=RequestMetadata(media_type="application/json"))]
-    
+
+    update_ft_model_in: Annotated[
+        UpdateFTModelIn,
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
+    ]
