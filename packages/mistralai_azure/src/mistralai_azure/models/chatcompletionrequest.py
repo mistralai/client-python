@@ -5,12 +5,14 @@ from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
+from .toolchoice import ToolChoice, ToolChoiceTypedDict
+from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai_azure.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai_azure.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, TypedDict, Union
+from typing import List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
@@ -28,7 +30,11 @@ ChatCompletionRequestMessagesTypedDict = Union[SystemMessageTypedDict, UserMessa
 ChatCompletionRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[SystemMessage, Tag("system")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
 
 
-ChatCompletionRequestToolChoice = Literal["auto", "none", "any"]
+ChatCompletionRequestToolChoiceTypedDict = Union[ToolChoiceTypedDict, ToolChoiceEnum]
+
+
+ChatCompletionRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+
 
 class ChatCompletionRequestTypedDict(TypedDict):
     messages: List[ChatCompletionRequestMessagesTypedDict]
@@ -51,7 +57,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: NotRequired[ResponseFormatTypedDict]
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
-    tool_choice: NotRequired[ChatCompletionRequestToolChoice]
+    tool_choice: NotRequired[ChatCompletionRequestToolChoiceTypedDict]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
     
@@ -77,7 +83,7 @@ class ChatCompletionRequest(BaseModel):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: Optional[ResponseFormat] = None
     tools: OptionalNullable[List[Tool]] = UNSET
-    tool_choice: Optional[ChatCompletionRequestToolChoice] = "auto"
+    tool_choice: Optional[ChatCompletionRequestToolChoice] = None
     safe_prompt: Optional[bool] = False
     r"""Whether to inject a safety prompt before all conversations."""
     

@@ -3,9 +3,10 @@
 from __future__ import annotations
 from .toolcall import ToolCall, ToolCallTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Final, List, Literal, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 AssistantMessageRole = Literal["assistant"]
@@ -15,19 +16,18 @@ class AssistantMessageTypedDict(TypedDict):
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
     prefix: NotRequired[bool]
     r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
-    role: NotRequired[AssistantMessageRole]
     
 
 class AssistantMessage(BaseModel):
+    ROLE: Annotated[Final[Optional[AssistantMessageRole]], pydantic.Field(alias="role")] = "assistant" # type: ignore
     content: OptionalNullable[str] = UNSET
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
     prefix: Optional[bool] = False
     r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
-    role: Optional[AssistantMessageRole] = "assistant"
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["content", "tool_calls", "prefix", "role"]
+        optional_fields = ["role", "content", "tool_calls", "prefix"]
         nullable_fields = ["content", "tool_calls"]
         null_default_fields = []
 

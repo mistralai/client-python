@@ -87,7 +87,7 @@ if res is not None:
 
 ### Response
 
-**[models.ModelCard](../../models/modelcard.md)**
+**[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet](../../models/retrievemodelv1modelsmodelidgetresponseretrievemodelv1modelsmodelidget.md)**
 
 ### Errors
 

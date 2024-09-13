@@ -4,12 +4,14 @@ from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .tool import Tool, ToolTypedDict
+from .toolchoice import ToolChoice, ToolChoiceTypedDict
+from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, TypedDict, Union
+from typing import List, Optional, TypedDict, Union
 from typing_extensions import Annotated, NotRequired
 
 
@@ -27,7 +29,11 @@ AgentsCompletionRequestMessagesTypedDict = Union[UserMessageTypedDict, Assistant
 AgentsCompletionRequestMessages = Annotated[Union[Annotated[AssistantMessage, Tag("assistant")], Annotated[ToolMessage, Tag("tool")], Annotated[UserMessage, Tag("user")]], Discriminator(lambda m: get_discriminator(m, "role", "role"))]
 
 
-AgentsCompletionRequestToolChoice = Literal["auto", "none", "any"]
+AgentsCompletionRequestToolChoiceTypedDict = Union[ToolChoiceTypedDict, ToolChoiceEnum]
+
+
+AgentsCompletionRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+
 
 class AgentsCompletionRequestTypedDict(TypedDict):
     messages: List[AgentsCompletionRequestMessagesTypedDict]
@@ -46,7 +52,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: NotRequired[ResponseFormatTypedDict]
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
-    tool_choice: NotRequired[AgentsCompletionRequestToolChoice]
+    tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
     
 
 class AgentsCompletionRequest(BaseModel):
@@ -66,7 +72,7 @@ class AgentsCompletionRequest(BaseModel):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: Optional[ResponseFormat] = None
     tools: OptionalNullable[List[Tool]] = UNSET
-    tool_choice: Optional[AgentsCompletionRequestToolChoice] = "auto"
+    tool_choice: Optional[AgentsCompletionRequestToolChoice] = None
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

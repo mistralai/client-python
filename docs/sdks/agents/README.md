@@ -28,7 +28,6 @@ s = Mistral(
 res = s.agents.complete(messages=[
     {
         "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
     },
 ], agent_id="<value>")
 
@@ -84,7 +83,6 @@ s = Mistral(
 res = s.agents.stream(messages=[
     {
         "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
     },
 ], agent_id="<value>")
 

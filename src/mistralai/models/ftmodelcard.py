@@ -4,44 +4,52 @@ from __future__ import annotations
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+import pydantic
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Final, List, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
-class ModelCardTypedDict(TypedDict):
+class FTModelCardTypedDict(TypedDict):
+    r"""Extra fields for fine-tuned models."""
+    
     id: str
     capabilities: ModelCapabilitiesTypedDict
+    job: str
+    root: str
     object: NotRequired[str]
     created: NotRequired[int]
     owned_by: NotRequired[str]
-    root: NotRequired[Nullable[str]]
-    archived: NotRequired[bool]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
     deprecation: NotRequired[Nullable[datetime]]
+    archived: NotRequired[bool]
     
 
-class ModelCard(BaseModel):
+class FTModelCard(BaseModel):
+    r"""Extra fields for fine-tuned models."""
+    
     id: str
     capabilities: ModelCapabilities
+    job: str
+    root: str
     object: Optional[str] = "model"
     created: Optional[int] = None
     owned_by: Optional[str] = "mistralai"
-    root: OptionalNullable[str] = UNSET
-    archived: Optional[bool] = False
     name: OptionalNullable[str] = UNSET
     description: OptionalNullable[str] = UNSET
     max_context_length: Optional[int] = 32768
     aliases: Optional[List[str]] = None
     deprecation: OptionalNullable[datetime] = UNSET
+    TYPE: Annotated[Final[Optional[str]], pydantic.Field(alias="type")] = "fine-tuned" # type: ignore
+    archived: Optional[bool] = False
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "created", "owned_by", "root", "archived", "name", "description", "max_context_length", "aliases", "deprecation"]
-        nullable_fields = ["root", "name", "description", "deprecation"]
+        optional_fields = ["object", "created", "owned_by", "name", "description", "max_context_length", "aliases", "deprecation", "type", "archived"]
+        nullable_fields = ["name", "description", "deprecation"]
         null_default_fields = []
 
         serialized = handler(self)

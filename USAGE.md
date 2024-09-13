@@ -14,10 +14,7 @@ s = Mistral(
 
 
 res = s.chat.complete(model="mistral-small-latest", messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
+
 ])
 
 if res is not None:
@@ -39,10 +36,7 @@ async def main():
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     )
     res = await s.chat.complete_async(model="mistral-small-latest", messages=[
-        {
-            "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
-        },
+    
     ])
     if res is not None:
         # handle response
@@ -116,7 +110,6 @@ s = Mistral(
 res = s.agents.complete(messages=[
     {
         "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
     },
 ], agent_id="<value>")
 
@@ -141,7 +134,6 @@ async def main():
     res = await s.agents.complete_async(messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
         },
     ], agent_id="<value>")
     if res is not None:

@@ -24,7 +24,7 @@ class Chat(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.ToolChoice] = "auto",
+        tool_choice: Optional[Union[models.ChatCompletionStreamRequestToolChoice, models.ChatCompletionStreamRequestToolChoiceTypedDict]] = None,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -71,7 +71,7 @@ class Chat(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.Messages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]),
             safe_prompt=safe_prompt,
         )
         
@@ -140,7 +140,7 @@ class Chat(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.ToolChoice] = "auto",
+        tool_choice: Optional[Union[models.ChatCompletionStreamRequestToolChoice, models.ChatCompletionStreamRequestToolChoiceTypedDict]] = None,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -187,7 +187,7 @@ class Chat(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.Messages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]),
             safe_prompt=safe_prompt,
         )
         
@@ -256,7 +256,7 @@ class Chat(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.ChatCompletionRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.ChatCompletionRequestToolChoice, models.ChatCompletionRequestToolChoiceTypedDict]] = None,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -301,7 +301,7 @@ class Chat(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.ChatCompletionRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.ChatCompletionRequestToolChoice]),
             safe_prompt=safe_prompt,
         )
         
@@ -369,7 +369,7 @@ class Chat(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.ChatCompletionRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.ChatCompletionRequestToolChoice, models.ChatCompletionRequestToolChoiceTypedDict]] = None,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -414,7 +414,7 @@ class Chat(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.ChatCompletionRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.ChatCompletionRequestToolChoice]),
             safe_prompt=safe_prompt,
         )
         

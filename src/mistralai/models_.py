@@ -159,7 +159,7 @@ class Models(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.ModelCard]:
+    ) -> Optional[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet]:
         r"""Retrieve Model
 
         Retrieve a model information.
@@ -219,7 +219,7 @@ class Models(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ModelCard])
+            return utils.unmarshal_json(http_res.text, Optional[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet])
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -237,7 +237,7 @@ class Models(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.ModelCard]:
+    ) -> Optional[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet]:
         r"""Retrieve Model
 
         Retrieve a model information.
@@ -297,7 +297,7 @@ class Models(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ModelCard])
+            return utils.unmarshal_json(http_res.text, Optional[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet])
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)

@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 python:
-  version: 1.0.3
+  version: 1.0.4
   additionalDependencies:
     dev:
       pytest: ^8.2.2

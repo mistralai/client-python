@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: ad1a7d6946828a089ca3831e257d307d
+  docChecksum: b504694f524d70325c81c4bd7542c5cf
   docVersion: 0.0.2
   speakeasyVersion: 1.382.0
   generationVersion: 2.404.11
-  releaseVersion: 1.0.3
-  configChecksum: 818970b881ec69b05f6660ca354f26f5
+  releaseVersion: 1.0.4
+  configChecksum: 713a7028fbef398b9a9d8e2d529f1e9a
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -77,8 +77,9 @@ generatedFiles:
   - src/mistralai/utils/values.py
   - src/mistralai/models/sdkerror.py
   - src/mistralai/models/modellist.py
-  - src/mistralai/models/modelcard.py
+  - src/mistralai/models/basemodelcard.py
   - src/mistralai/models/modelcapabilities.py
+  - src/mistralai/models/ftmodelcard.py
   - src/mistralai/models/httpvalidationerror.py
   - src/mistralai/models/validationerror.py
   - src/mistralai/models/retrieve_model_v1_models_model_id_getop.py
@@ -129,15 +130,22 @@ generatedFiles:
   - src/mistralai/models/assistantmessage.py
   - src/mistralai/models/toolcall.py
   - src/mistralai/models/functioncall.py
+  - src/mistralai/models/tooltypes.py
   - src/mistralai/models/usageinfo.py
   - src/mistralai/models/chatcompletionrequest.py
+  - src/mistralai/models/toolchoice.py
+  - src/mistralai/models/functionname.py
+  - src/mistralai/models/toolchoiceenum.py
   - src/mistralai/models/tool.py
   - src/mistralai/models/function.py
   - src/mistralai/models/responseformat.py
+  - src/mistralai/models/responseformats.py
   - src/mistralai/models/systemmessage.py
-  - src/mistralai/models/contentchunk.py
-  - src/mistralai/models/usermessage.py
   - src/mistralai/models/textchunk.py
+  - src/mistralai/models/usermessage.py
+  - src/mistralai/models/contentchunk.py
+  - src/mistralai/models/imageurlchunk.py
+  - src/mistralai/models/imageurl.py
   - src/mistralai/models/toolmessage.py
   - src/mistralai/models/completionevent.py
   - src/mistralai/models/completionchunk.py
@@ -154,13 +162,16 @@ generatedFiles:
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/security.py
   - src/mistralai/models/__init__.py
+  - docs/models/data.md
   - docs/models/modellist.md
-  - docs/models/modelcard.md
+  - docs/models/basemodelcard.md
   - docs/models/modelcapabilities.md
+  - docs/models/ftmodelcard.md
   - docs/models/httpvalidationerror.md
   - docs/models/loc.md
   - docs/models/validationerror.md
   - docs/models/retrievemodelv1modelsmodelidgetrequest.md
+  - docs/models/retrievemodelv1modelsmodelidgetresponseretrievemodelv1modelsmodelidget.md
   - docs/models/deletemodelout.md
   - docs/models/deletemodelv1modelsmodeliddeleterequest.md
   - docs/models/ftmodeloutobject.md
@@ -233,28 +244,35 @@ generatedFiles:
   - docs/models/chatcompletionchoice.md
   - docs/models/assistantmessagerole.md
   - docs/models/assistantmessage.md
-  - docs/models/tooltypes.md
   - docs/models/toolcall.md
   - docs/models/arguments.md
   - docs/models/functioncall.md
+  - docs/models/tooltypes.md
   - docs/models/usageinfo.md
   - docs/models/stop.md
   - docs/models/messages.md
-  - docs/models/toolchoice.md
+  - docs/models/chatcompletionrequesttoolchoice.md
   - docs/models/chatcompletionrequest.md
-  - docs/models/tooltooltypes.md
+  - docs/models/toolchoice.md
+  - docs/models/functionname.md
+  - docs/models/toolchoiceenum.md
   - docs/models/tool.md
   - docs/models/function.md
-  - docs/models/responseformats.md
   - docs/models/responseformat.md
-  - docs/models/content.md
+  - docs/models/responseformats.md
   - docs/models/role.md
+  - docs/models/content.md
   - docs/models/systemmessage.md
-  - docs/models/contentchunk.md
-  - docs/models/usermessagecontent.md
-  - docs/models/usermessagerole.md
-  - docs/models/usermessage.md
+  - docs/models/textchunktype.md
   - docs/models/textchunk.md
+  - docs/models/usermessagerole.md
+  - docs/models/usermessagecontent.md
+  - docs/models/usermessage.md
+  - docs/models/contentchunk.md
+  - docs/models/imageurlchunktype.md
+  - docs/models/imageurlchunkimageurl.md
+  - docs/models/imageurlchunk.md
+  - docs/models/imageurl.md
   - docs/models/toolmessagerole.md
   - docs/models/toolmessage.md
   - docs/models/completionevent.md

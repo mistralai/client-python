@@ -9,9 +9,9 @@
 value: str = /* values here */
 ```
 
-### `List[models.ContentChunk]`
+### `List[models.TextChunk]`
 
 ```python
-value: List[models.ContentChunk] = /* values here */
+value: List[models.TextChunk] = /* values here */
 ```
 

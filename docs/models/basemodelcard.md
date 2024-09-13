@@ -1,4 +1,4 @@
-# ModelCard
+# BaseModelCard
 
 
 ## Fields
@@ -10,10 +10,9 @@
 | `object`                                                             | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `created`                                                            | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `owned_by`                                                           | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
-| `root`                                                               | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
-| `archived`                                                           | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `name`                                                               | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `description`                                                        | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `max_context_length`                                                 | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `aliases`                                                            | List[*str*]                                                          | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `deprecation`                                                        | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `type`                                                               | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |

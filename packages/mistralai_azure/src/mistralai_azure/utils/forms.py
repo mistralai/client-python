@@ -17,7 +17,7 @@ from .metadata import (
     MultipartFormMetadata,
     find_field_metadata,
 )
-from .values import _val_to_string
+from .values import _is_set, _val_to_string
 
 
 def _populate_form(
@@ -27,7 +27,7 @@ def _populate_form(
     delimiter: str,
     form: Dict[str, List[str]],
 ):
-    if obj is None:
+    if not _is_set(obj):
         return form
 
     if isinstance(obj, BaseModel):
@@ -41,7 +41,7 @@ def _populate_form(
                 continue
 
             val = getattr(obj, name)
-            if val is None:
+            if not _is_set(val):
                 continue
 
             if explode:
@@ -54,7 +54,7 @@ def _populate_form(
     elif isinstance(obj, Dict):
         items = []
         for key, value in obj.items():
-            if value is None:
+            if not _is_set(value):
                 continue
 
             if explode:
@@ -68,7 +68,7 @@ def _populate_form(
         items = []
 
         for value in obj:
-            if value is None:
+            if not _is_set(value):
                 continue
 
             if explode:
@@ -102,7 +102,7 @@ def serialize_multipart_form(
         field = request_fields[name]
 
         val = getattr(request, name)
-        if val is None:
+        if not _is_set(val):
             continue
 
         field_metadata = find_field_metadata(field, MultipartFormMetadata)
@@ -156,7 +156,7 @@ def serialize_multipart_form(
                 values = []
 
                 for value in val:
-                    if value is None:
+                    if not _is_set(value):
                         continue
                     values.append(_val_to_string(value))
 
@@ -176,7 +176,7 @@ def serialize_form_data(data: Any) -> Dict[str, Any]:
             field = data_fields[name]
 
             val = getattr(data, name)
-            if val is None:
+            if not _is_set(val):
                 continue
 
             metadata = find_field_metadata(field, FormMetadata)
@@ -200,7 +200,8 @@ def serialize_form_data(data: Any) -> Dict[str, Any]:
                     raise ValueError(f"Invalid form style for field {name}")
     elif isinstance(data, Dict):
         for key, value in data.items():
-            form[key] = [_val_to_string(value)]
+            if _is_set(value):
+                form[key] = [_val_to_string(value)]
     else:
         raise TypeError(f"Invalid request body type {type(data)} for form data")
 

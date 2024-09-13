@@ -22,7 +22,7 @@ class Agents(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.AgentsCompletionRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.AgentsCompletionRequestToolChoice, models.AgentsCompletionRequestToolChoiceTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -60,7 +60,7 @@ class Agents(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.AgentsCompletionRequestToolChoice]),
             agent_id=agent_id,
         )
         
@@ -126,7 +126,7 @@ class Agents(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.AgentsCompletionRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.AgentsCompletionRequestToolChoice, models.AgentsCompletionRequestToolChoiceTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -164,7 +164,7 @@ class Agents(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.AgentsCompletionRequestToolChoice]),
             agent_id=agent_id,
         )
         
@@ -230,7 +230,7 @@ class Agents(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.AgentsCompletionStreamRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.AgentsCompletionStreamRequestToolChoice, models.AgentsCompletionStreamRequestToolChoiceTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -270,7 +270,7 @@ class Agents(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionStreamRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]),
             agent_id=agent_id,
         )
         
@@ -337,7 +337,7 @@ class Agents(BaseSDK):
         random_seed: OptionalNullable[int] = UNSET,
         response_format: Optional[Union[models.ResponseFormat, models.ResponseFormatTypedDict]] = None,
         tools: OptionalNullable[Union[List[models.Tool], List[models.ToolTypedDict]]] = UNSET,
-        tool_choice: Optional[models.AgentsCompletionStreamRequestToolChoice] = "auto",
+        tool_choice: Optional[Union[models.AgentsCompletionStreamRequestToolChoice, models.AgentsCompletionStreamRequestToolChoiceTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -377,7 +377,7 @@ class Agents(BaseSDK):
             messages=utils.get_pydantic_model(messages, List[models.AgentsCompletionStreamRequestMessages]),
             response_format=utils.get_pydantic_model(response_format, Optional[models.ResponseFormat]),
             tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=tool_choice,
+            tool_choice=utils.get_pydantic_model(tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]),
             agent_id=agent_id,
         )
         

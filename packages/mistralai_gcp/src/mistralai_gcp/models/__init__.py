@@ -2,9 +2,9 @@
 
 from .assistantmessage import AssistantMessage, AssistantMessageRole, AssistantMessageTypedDict
 from .chatcompletionchoice import ChatCompletionChoice, ChatCompletionChoiceFinishReason, ChatCompletionChoiceTypedDict
-from .chatcompletionrequest import ChatCompletionRequest, ChatCompletionRequestMessages, ChatCompletionRequestMessagesTypedDict, ChatCompletionRequestStop, ChatCompletionRequestStopTypedDict, ChatCompletionRequestToolChoice, ChatCompletionRequestTypedDict
+from .chatcompletionrequest import ChatCompletionRequest, ChatCompletionRequestMessages, ChatCompletionRequestMessagesTypedDict, ChatCompletionRequestStop, ChatCompletionRequestStopTypedDict, ChatCompletionRequestToolChoice, ChatCompletionRequestToolChoiceTypedDict, ChatCompletionRequestTypedDict
 from .chatcompletionresponse import ChatCompletionResponse, ChatCompletionResponseTypedDict
-from .chatcompletionstreamrequest import ChatCompletionStreamRequest, ChatCompletionStreamRequestTypedDict, Messages, MessagesTypedDict, Stop, StopTypedDict, ToolChoice
+from .chatcompletionstreamrequest import ChatCompletionStreamRequest, ChatCompletionStreamRequestToolChoice, ChatCompletionStreamRequestToolChoiceTypedDict, ChatCompletionStreamRequestTypedDict, Messages, MessagesTypedDict, Stop, StopTypedDict
 from .completionchunk import CompletionChunk, CompletionChunkTypedDict
 from .completionevent import CompletionEvent, CompletionEventTypedDict
 from .completionresponsestreamchoice import CompletionResponseStreamChoice, CompletionResponseStreamChoiceTypedDict, FinishReason
@@ -15,17 +15,22 @@ from .fimcompletionresponse import FIMCompletionResponse, FIMCompletionResponseT
 from .fimcompletionstreamrequest import FIMCompletionStreamRequest, FIMCompletionStreamRequestStop, FIMCompletionStreamRequestStopTypedDict, FIMCompletionStreamRequestTypedDict
 from .function import Function, FunctionTypedDict
 from .functioncall import Arguments, ArgumentsTypedDict, FunctionCall, FunctionCallTypedDict
+from .functionname import FunctionName, FunctionNameTypedDict
 from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
-from .responseformat import ResponseFormat, ResponseFormatTypedDict, ResponseFormats
+from .responseformat import ResponseFormat, ResponseFormatTypedDict
+from .responseformats import ResponseFormats
 from .sdkerror import SDKError
 from .security import Security, SecurityTypedDict
 from .systemmessage import Content, ContentTypedDict, Role, SystemMessage, SystemMessageTypedDict
-from .textchunk import TextChunk, TextChunkTypedDict
-from .tool import Tool, ToolToolTypes, ToolTypedDict
-from .toolcall import ToolCall, ToolCallTypedDict, ToolTypes
+from .textchunk import TextChunk, TextChunkTypedDict, Type
+from .tool import Tool, ToolTypedDict
+from .toolcall import ToolCall, ToolCallTypedDict
+from .toolchoice import ToolChoice, ToolChoiceTypedDict
+from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageRole, ToolMessageTypedDict
+from .tooltypes import ToolTypes
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from .usermessage import UserMessage, UserMessageContent, UserMessageContentTypedDict, UserMessageRole, UserMessageTypedDict
 from .validationerror import Loc, LocTypedDict, ValidationError, ValidationErrorTypedDict
 
-__all__ = ["Arguments", "ArgumentsTypedDict", "AssistantMessage", "AssistantMessageRole", "AssistantMessageTypedDict", "ChatCompletionChoice", "ChatCompletionChoiceFinishReason", "ChatCompletionChoiceTypedDict", "ChatCompletionRequest", "ChatCompletionRequestMessages", "ChatCompletionRequestMessagesTypedDict", "ChatCompletionRequestStop", "ChatCompletionRequestStopTypedDict", "ChatCompletionRequestToolChoice", "ChatCompletionRequestTypedDict", "ChatCompletionResponse", "ChatCompletionResponseTypedDict", "ChatCompletionStreamRequest", "ChatCompletionStreamRequestTypedDict", "CompletionChunk", "CompletionChunkTypedDict", "CompletionEvent", "CompletionEventTypedDict", "CompletionResponseStreamChoice", "CompletionResponseStreamChoiceTypedDict", "Content", "ContentChunk", "ContentChunkTypedDict", "ContentTypedDict", "DeltaMessage", "DeltaMessageTypedDict", "FIMCompletionRequest", "FIMCompletionRequestStop", "FIMCompletionRequestStopTypedDict", "FIMCompletionRequestTypedDict", "FIMCompletionResponse", "FIMCompletionResponseTypedDict", "FIMCompletionStreamRequest", "FIMCompletionStreamRequestStop", "FIMCompletionStreamRequestStopTypedDict", "FIMCompletionStreamRequestTypedDict", "FinishReason", "Function", "FunctionCall", "FunctionCallTypedDict", "FunctionTypedDict", "HTTPValidationError", "HTTPValidationErrorData", "Loc", "LocTypedDict", "Messages", "MessagesTypedDict", "ResponseFormat", "ResponseFormatTypedDict", "ResponseFormats", "Role", "SDKError", "Security", "SecurityTypedDict", "Stop", "StopTypedDict", "SystemMessage", "SystemMessageTypedDict", "TextChunk", "TextChunkTypedDict", "Tool", "ToolCall", "ToolCallTypedDict", "ToolChoice", "ToolMessage", "ToolMessageRole", "ToolMessageTypedDict", "ToolToolTypes", "ToolTypedDict", "ToolTypes", "UsageInfo", "UsageInfoTypedDict", "UserMessage", "UserMessageContent", "UserMessageContentTypedDict", "UserMessageRole", "UserMessageTypedDict", "ValidationError", "ValidationErrorTypedDict"]
+__all__ = ["Arguments", "ArgumentsTypedDict", "AssistantMessage", "AssistantMessageRole", "AssistantMessageTypedDict", "ChatCompletionChoice", "ChatCompletionChoiceFinishReason", "ChatCompletionChoiceTypedDict", "ChatCompletionRequest", "ChatCompletionRequestMessages", "ChatCompletionRequestMessagesTypedDict", "ChatCompletionRequestStop", "ChatCompletionRequestStopTypedDict", "ChatCompletionRequestToolChoice", "ChatCompletionRequestToolChoiceTypedDict", "ChatCompletionRequestTypedDict", "ChatCompletionResponse", "ChatCompletionResponseTypedDict", "ChatCompletionStreamRequest", "ChatCompletionStreamRequestToolChoice", "ChatCompletionStreamRequestToolChoiceTypedDict", "ChatCompletionStreamRequestTypedDict", "CompletionChunk", "CompletionChunkTypedDict", "CompletionEvent", "CompletionEventTypedDict", "CompletionResponseStreamChoice", "CompletionResponseStreamChoiceTypedDict", "Content", "ContentChunk", "ContentChunkTypedDict", "ContentTypedDict", "DeltaMessage", "DeltaMessageTypedDict", "FIMCompletionRequest", "FIMCompletionRequestStop", "FIMCompletionRequestStopTypedDict", "FIMCompletionRequestTypedDict", "FIMCompletionResponse", "FIMCompletionResponseTypedDict", "FIMCompletionStreamRequest", "FIMCompletionStreamRequestStop", "FIMCompletionStreamRequestStopTypedDict", "FIMCompletionStreamRequestTypedDict", "FinishReason", "Function", "FunctionCall", "FunctionCallTypedDict", "FunctionName", "FunctionNameTypedDict", "FunctionTypedDict", "HTTPValidationError", "HTTPValidationErrorData", "Loc", "LocTypedDict", "Messages", "MessagesTypedDict", "ResponseFormat", "ResponseFormatTypedDict", "ResponseFormats", "Role", "SDKError", "Security", "SecurityTypedDict", "Stop", "StopTypedDict", "SystemMessage", "SystemMessageTypedDict", "TextChunk", "TextChunkTypedDict", "Tool", "ToolCall", "ToolCallTypedDict", "ToolChoice", "ToolChoiceEnum", "ToolChoiceTypedDict", "ToolMessage", "ToolMessageRole", "ToolMessageTypedDict", "ToolTypedDict", "ToolTypes", "Type", "UsageInfo", "UsageInfoTypedDict", "UserMessage", "UserMessageContent", "UserMessageContentTypedDict", "UserMessageRole", "UserMessageTypedDict", "ValidationError", "ValidationErrorTypedDict"]

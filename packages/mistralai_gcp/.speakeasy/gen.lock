@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: b276b71cb6764f11b10461fe70962781
+  docChecksum: 4a618945cf92a8df093d014f459ac2e3
   docVersion: 0.0.2
-  speakeasyVersion: 1.373.1
-  generationVersion: 2.399.0
-  releaseVersion: 1.0.1
-  configChecksum: 698bd633a47a664d6f3515c1b9ecdbaa
+  speakeasyVersion: 1.382.0
+  generationVersion: 2.404.11
+  releaseVersion: 1.1.1
+  configChecksum: 3eeb8fe3e93b38f0d1fbdc2d5ca848d7
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.8
+    core: 5.4.1
     defaultEnabledRetries: 0.2.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
@@ -71,17 +71,22 @@ generatedFiles:
   - src/mistralai_gcp/models/deltamessage.py
   - src/mistralai_gcp/models/toolcall.py
   - src/mistralai_gcp/models/functioncall.py
+  - src/mistralai_gcp/models/tooltypes.py
   - src/mistralai_gcp/models/usageinfo.py
   - src/mistralai_gcp/models/httpvalidationerror.py
   - src/mistralai_gcp/models/validationerror.py
   - src/mistralai_gcp/models/chatcompletionstreamrequest.py
+  - src/mistralai_gcp/models/toolchoice.py
+  - src/mistralai_gcp/models/functionname.py
+  - src/mistralai_gcp/models/toolchoiceenum.py
   - src/mistralai_gcp/models/tool.py
   - src/mistralai_gcp/models/function.py
   - src/mistralai_gcp/models/responseformat.py
+  - src/mistralai_gcp/models/responseformats.py
   - src/mistralai_gcp/models/systemmessage.py
-  - src/mistralai_gcp/models/contentchunk.py
-  - src/mistralai_gcp/models/usermessage.py
   - src/mistralai_gcp/models/textchunk.py
+  - src/mistralai_gcp/models/usermessage.py
+  - src/mistralai_gcp/models/contentchunk.py
   - src/mistralai_gcp/models/assistantmessage.py
   - src/mistralai_gcp/models/toolmessage.py
   - src/mistralai_gcp/models/chatcompletionresponse.py
@@ -97,31 +102,34 @@ generatedFiles:
   - docs/models/finishreason.md
   - docs/models/completionresponsestreamchoice.md
   - docs/models/deltamessage.md
-  - docs/models/tooltypes.md
   - docs/models/toolcall.md
   - docs/models/arguments.md
   - docs/models/functioncall.md
+  - docs/models/tooltypes.md
   - docs/models/usageinfo.md
   - docs/models/httpvalidationerror.md
   - docs/models/loc.md
   - docs/models/validationerror.md
   - docs/models/stop.md
   - docs/models/messages.md
-  - docs/models/toolchoice.md
+  - docs/models/chatcompletionstreamrequesttoolchoice.md
   - docs/models/chatcompletionstreamrequest.md
-  - docs/models/tooltooltypes.md
+  - docs/models/toolchoice.md
+  - docs/models/functionname.md
+  - docs/models/toolchoiceenum.md
   - docs/models/tool.md
   - docs/models/function.md
-  - docs/models/responseformats.md
   - docs/models/responseformat.md
-  - docs/models/content.md
+  - docs/models/responseformats.md
   - docs/models/role.md
+  - docs/models/content.md
   - docs/models/systemmessage.md
-  - docs/models/contentchunk.md
-  - docs/models/usermessagecontent.md
-  - docs/models/usermessagerole.md
-  - docs/models/usermessage.md
+  - docs/models/type.md
   - docs/models/textchunk.md
+  - docs/models/usermessagerole.md
+  - docs/models/usermessagecontent.md
+  - docs/models/usermessage.md
+  - docs/models/contentchunk.md
   - docs/models/assistantmessagerole.md
   - docs/models/assistantmessage.md
   - docs/models/toolmessagerole.md
