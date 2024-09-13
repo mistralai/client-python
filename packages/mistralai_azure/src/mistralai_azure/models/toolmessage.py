@@ -8,10 +8,9 @@ from mistralai_azure.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-import pydantic
 from pydantic import model_serializer
-from typing import Final, Literal, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Literal, Optional, TypedDict
+from typing_extensions import NotRequired
 
 
 ToolMessageRole = Literal["tool"]
@@ -21,22 +20,21 @@ class ToolMessageTypedDict(TypedDict):
     content: str
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
+    role: NotRequired[ToolMessageRole]
 
 
 class ToolMessage(BaseModel):
     content: str
 
-    # fmt: off
-    ROLE: Annotated[Final[Optional[ToolMessageRole]], pydantic.Field(alias="role")] = "tool" # type: ignore
-    # fmt: on
-
     tool_call_id: OptionalNullable[str] = UNSET
 
     name: OptionalNullable[str] = UNSET
 
+    role: Optional[ToolMessageRole] = "tool"
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["role", "tool_call_id", "name"]
+        optional_fields = ["tool_call_id", "name", "role"]
         nullable_fields = ["tool_call_id", "name"]
         null_default_fields = []
 

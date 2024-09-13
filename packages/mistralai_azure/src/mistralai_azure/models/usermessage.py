@@ -3,12 +3,9 @@
 from __future__ import annotations
 from .contentchunk import ContentChunk, ContentChunkTypedDict
 from mistralai_azure.types import BaseModel
-import pydantic
-from typing import Final, List, Literal, Optional, TypedDict, Union
-from typing_extensions import Annotated
+from typing import List, Literal, Optional, TypedDict, Union
+from typing_extensions import NotRequired
 
-
-UserMessageRole = Literal["user"]
 
 UserMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
 
@@ -16,13 +13,15 @@ UserMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
 UserMessageContent = Union[str, List[ContentChunk]]
 
 
+UserMessageRole = Literal["user"]
+
+
 class UserMessageTypedDict(TypedDict):
     content: UserMessageContentTypedDict
+    role: NotRequired[UserMessageRole]
 
 
 class UserMessage(BaseModel):
     content: UserMessageContent
 
-    # fmt: off
-    ROLE: Annotated[Final[Optional[UserMessageRole]], pydantic.Field(alias="role")] = "user" # type: ignore
-    # fmt: on
+    role: Optional[UserMessageRole] = "user"

@@ -3,12 +3,9 @@
 from __future__ import annotations
 from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai_azure.types import BaseModel
-import pydantic
-from typing import Final, List, Literal, Optional, TypedDict, Union
-from typing_extensions import Annotated
+from typing import List, Literal, Optional, TypedDict, Union
+from typing_extensions import NotRequired
 
-
-Role = Literal["system"]
 
 ContentTypedDict = Union[str, List[TextChunkTypedDict]]
 
@@ -16,13 +13,15 @@ ContentTypedDict = Union[str, List[TextChunkTypedDict]]
 Content = Union[str, List[TextChunk]]
 
 
+Role = Literal["system"]
+
+
 class SystemMessageTypedDict(TypedDict):
     content: ContentTypedDict
+    role: NotRequired[Role]
 
 
 class SystemMessage(BaseModel):
     content: Content
 
-    # fmt: off
-    ROLE: Annotated[Final[Optional[Role]], pydantic.Field(alias="role")] = "system" # type: ignore
-    # fmt: on
+    role: Optional[Role] = "system"

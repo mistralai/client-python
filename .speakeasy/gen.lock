@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: b504694f524d70325c81c4bd7542c5cf
+  docChecksum: e75ca54601920b2770d9a559b299d272
   docVersion: 0.0.2
-  speakeasyVersion: 1.396.6
+  speakeasyVersion: 1.396.7
   generationVersion: 2.415.6
-  releaseVersion: 1.1.0
-  configChecksum: 49094e0f156d020bd164f8b4bd41e97b
+  releaseVersion: 1.1.1
+  configChecksum: 450e609764e2b24aa8ece63616b81348
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -402,7 +402,7 @@ examples:
         application/json: {"model": "codestral-latest"}
       responses:
         "200":
-          application/json: {"id": "ad642c1f-c6fe-4072-81bc-dd89dc7fa504", "auto_start": false, "model": "open-mistral-7b", "status": "FAILED_VALIDATION", "job_type": "<value>", "created_at": 230313, "modified_at": 207565, "training_files": []}
+          application/json: {"id": "7ad642c1-fc6f-4e07-a41b-cdd89dc7fa50", "auto_start": true, "model": "open-mistral-nemo", "status": "QUEUED", "job_type": "<value>", "created_at": 519028, "modified_at": 230313, "training_files": []}
   jobs_api_routes_fine_tuning_get_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
@@ -430,7 +430,7 @@ examples:
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence."}]}
+        application/json: {"model": "mistral-small-latest", "messages": [{"content": "<value>"}]}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
@@ -438,7 +438,7 @@ examples:
   stream_chat:
     speakeasy-default-stream-chat:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence."}]}
+        application/json: {"model": "mistral-small-latest", "messages": [{"content": []}]}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
@@ -454,7 +454,7 @@ examples:
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
-        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence."}], "agent_id": "<value>"}
+        application/json: {"messages": [{"content": "<value>"}], "agent_id": "<value>"}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
@@ -462,7 +462,7 @@ examples:
   stream_agents:
     speakeasy-default-stream-agents:
       requestBody:
-        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence."}], "agent_id": "<value>"}
+        application/json: {"messages": [{"content": []}], "agent_id": "<value>"}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:

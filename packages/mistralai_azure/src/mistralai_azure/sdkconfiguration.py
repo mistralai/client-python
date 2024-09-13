@@ -28,9 +28,9 @@ class SDKConfiguration:
     server: Optional[str] = ""
     language: str = "python"
     openapi_doc_version: str = "0.0.2"
-    sdk_version: str = "1.2.1"
+    sdk_version: str = "1.2.2"
     gen_version: str = "2.415.6"
-    user_agent: str = "speakeasy-sdk/python 1.2.1 2.415.6 0.0.2 mistralai_azure"
+    user_agent: str = "speakeasy-sdk/python 1.2.2 2.415.6 0.0.2 mistralai_azure"
     retry_config: OptionalNullable[RetryConfig] = Field(default_factory=lambda: UNSET)
     timeout_ms: Optional[int] = None
 
