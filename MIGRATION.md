@@ -229,7 +229,7 @@ async def main():
     #         content="What is the best French cheese?",
     #     ),
     # ]
-    async_response = await client.chat.completstream_asynce_async(
+    async_response = await client.chat.complete(
         messages=messages,
         model="mistral-large-latest",
     )
