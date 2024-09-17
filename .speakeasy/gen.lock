@@ -3,10 +3,10 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: e75ca54601920b2770d9a559b299d272
   docVersion: 0.0.2
-  speakeasyVersion: 1.396.7
-  generationVersion: 2.415.6
-  releaseVersion: 1.1.1
-  configChecksum: 450e609764e2b24aa8ece63616b81348
+  speakeasyVersion: 1.398.0
+  generationVersion: 2.415.8
+  releaseVersion: 1.1.0
+  configChecksum: 49094e0f156d020bd164f8b4bd41e97b
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -194,6 +194,7 @@ generatedFiles:
   - poetry.toml
   - py.typed
   - pylintrc
+  - pyproject.toml
   - scripts/compile.sh
   - scripts/prepare-readme.py
   - scripts/publish.sh
