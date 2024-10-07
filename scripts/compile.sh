@@ -2,6 +2,13 @@
 
 set -o pipefail  # Ensure pipeline failures are propagated
 
+# Define color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 # Use temporary files to store outputs and exit statuses
 declare -A output_files
 declare -A status_files
@@ -20,6 +27,7 @@ run_command() {
     } &> "$output_file" &
 }
 
+echo -e "${BLUE}Running prepare-readme.py${NC}"
 poetry run python scripts/prepare-readme.py
 
 # Create temporary files for outputs and statuses
@@ -32,24 +40,24 @@ done
 declare -a pids
 
 # Run commands in parallel using temporary files
-echo "Running python -m compileall"
+echo -e "${YELLOW}Running python -m compileall${NC}"
 run_command 'poetry run python -m compileall -q . && echo "Success"' 'compileall' "${output_files[compileall]}" "${status_files[compileall]}"
 pids+=($!)
 
-echo "Running pylint"
+echo -e "${YELLOW}Running pylint${NC}"
 run_command 'poetry run pylint src' 'pylint' "${output_files[pylint]}" "${status_files[pylint]}"
 pids+=($!)
 
-echo "Running mypy"
+echo -e "${YELLOW}Running mypy${NC}"
 run_command 'poetry run mypy src' 'mypy' "${output_files[mypy]}" "${status_files[mypy]}"
 pids+=($!)
 
-echo "Running pyright (optional)"
+echo -e "${YELLOW}Running pyright (optional)${NC}"
 run_command 'if command -v pyright > /dev/null 2>&1; then pyright src; else echo "pyright not found, skipping"; fi' 'pyright' "${output_files[pyright]}" "${status_files[pyright]}"
 pids+=($!)
 
 # Wait for all processes to complete
-echo "Waiting for processes to complete"
+echo -e "${BLUE}Waiting for processes to complete${NC}"
 for pid in "${pids[@]}"; do
     wait "$pid"
 done
@@ -57,16 +65,16 @@ done
 # Print output sequentially and check for failures
 failed=false
 for key in "${!output_files[@]}"; do
-    echo "--- Output from Command: $key ---"
+    echo -e "${BLUE}--- Output from Command: $key ---${NC}"
     echo
     cat "${output_files[$key]}"
     echo  # Empty line for separation
-    echo "--- End of Output from Command: $key ---"
+    echo -e "${BLUE}--- End of Output from Command: $key ---${NC}"
     echo
 
     exit_status=$(cat "${status_files[$key]}")
     if [ "$exit_status" -ne 0 ]; then
-        echo "Command $key failed with exit status $exit_status" >&2
+        echo -e "${RED}Command $key failed with exit status $exit_status${NC}" >&2
         failed=true
     fi
 done
@@ -77,9 +85,9 @@ for tmp_file in "${output_files[@]}" "${status_files[@]}"; do
 done
 
 if $failed; then
-    echo "One or more commands failed." >&2
+    echo -e "${RED}One or more commands failed.${NC}" >&2
     exit 1
 else
-    echo "All commands completed successfully."
+    echo -e "${GREEN}All commands completed successfully.${NC}"
     exit 0
 fi
