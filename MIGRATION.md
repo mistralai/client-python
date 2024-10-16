@@ -28,7 +28,7 @@ We have made significant changes to the `mistralai` library to improve its usabi
 | `client.chat`              | `client.chat.complete`           |
 | `client.chat_stream`       | `client.chat.stream`             |
 | `client.completions`       | `client.fim.complete`            |
-| `client.completions_strem` | `client.fim.stream`              |
+| `client.completions_stream`| `client.fim.stream`              |
 | `client.embeddings`        | `client.embeddings.create`       |
 | `client.list_models`       | `client.models.list`             |
 | `client.delete_model`      | `client.models.delete`           |
@@ -49,7 +49,7 @@ We have made significant changes to the `mistralai` library to improve its usabi
 | `async_client.chat`              | `client.chat.complete_async`           |
 | `async_client.chat_stream`       | `client.chat.stream_async`             |
 | `async_client.completions`       | `client.fim.complete_async`            |
-| `async_client.completions_strem` | `client.fim.stream_async`              |
+| `async_client.completions_stream`| `client.fim.stream_async`              |
 | `async_client.embeddings`        | `client.embeddings.create_async`       |
 | `async_client.list_models`       | `client.models.list_async`             |
 | `async_client.delete_model`      | `client.models.delete_async`           |
