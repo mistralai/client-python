@@ -98,26 +98,25 @@ messages.append(AssistantMessage(content=response.choices[0].message.content))
 messages.append(UserMessage(content="My transaction ID is T1001."))
 
 response = client.chat.complete(model=model, messages=messages, tools=tools)
-
-tool_call = response.choices[0].message.tool_calls[0]
-function_name = tool_call.function.name
-function_params = json.loads(tool_call.function.arguments)
-
-print(
-    f"calling function_name: {function_name}, with function_params: {function_params}"
-)
-
-function_result = names_to_functions[function_name](**function_params)
-
 messages.append(response.choices[0].message)
-messages.append(
-    ToolMessage(
-        name=function_name,
-        content=function_result,
-        tool_call_id=tool_call.id,
-    )
-)
 
+for tool_call in response.choices[0].message.tool_calls:
+
+    function_name = tool_call.function.name
+    function_params = json.loads(tool_call.function.arguments)
+
+    print(
+        f"calling function_name: {function_name}, with function_params: {function_params}"
+    )
+
+    function_result =names_to_functions[function_name](**function_params)
+    messages.append(
+        ToolMessage(
+            name=function_name,
+            content=function_result,
+            tool_call_id=tool_call.id,
+        )
+    )
 response = client.chat.complete(model=model, messages=messages, tools=tools)
 
 print(f"{response.choices[0].message.content}")
