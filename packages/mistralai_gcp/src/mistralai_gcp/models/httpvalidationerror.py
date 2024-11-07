@@ -12,8 +12,6 @@ class HTTPValidationErrorData(BaseModel):
 
 
 class HTTPValidationError(Exception):
-    r"""Validation Error"""
-
     data: HTTPValidationErrorData
 
     def __init__(self, data: HTTPValidationErrorData):

@@ -38,7 +38,7 @@ python:
       shared: ""
       webhooks: ""
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 15
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: mistralai

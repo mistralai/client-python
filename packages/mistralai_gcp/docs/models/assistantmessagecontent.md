@@ -1,4 +1,4 @@
-# Content
+# AssistantMessageContent
 
 
 ## Supported Types

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from mistralai_azure.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class UsageInfoTypedDict(TypedDict):

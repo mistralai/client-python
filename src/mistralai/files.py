@@ -4,9 +4,9 @@ from .basesdk import BaseSDK
 import httpx
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import BaseModel, OptionalNullable, UNSET
+from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
-from typing import Optional, Union, cast
+from typing import List, Optional, Union
 
 
 class Files(BaseSDK):
@@ -207,10 +207,12 @@ class Files(BaseSDK):
     def list(
         self,
         *,
-        request: Union[
-            models.FilesAPIRoutesListFilesRequest,
-            models.FilesAPIRoutesListFilesRequestTypedDict,
-        ] = models.FilesAPIRoutesListFilesRequest(),
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -219,7 +221,12 @@ class Files(BaseSDK):
 
         Returns a list of files that belong to the user's organization.
 
-        :param request: The request object to send.
+        :param page:
+        :param page_size:
+        :param sample_type:
+        :param source:
+        :param search:
+        :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -232,9 +239,14 @@ class Files(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.FilesAPIRoutesListFilesRequest)
-        request = cast(models.FilesAPIRoutesListFilesRequest, request)
+        request = models.FilesAPIRoutesListFilesRequest(
+            page=page,
+            page_size=page_size,
+            sample_type=sample_type,
+            source=source,
+            search=search,
+            purpose=purpose,
+        )
 
         req = self.build_request(
             method="GET",
@@ -292,10 +304,12 @@ class Files(BaseSDK):
     async def list_async(
         self,
         *,
-        request: Union[
-            models.FilesAPIRoutesListFilesRequest,
-            models.FilesAPIRoutesListFilesRequestTypedDict,
-        ] = models.FilesAPIRoutesListFilesRequest(),
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -304,7 +318,12 @@ class Files(BaseSDK):
 
         Returns a list of files that belong to the user's organization.
 
-        :param request: The request object to send.
+        :param page:
+        :param page_size:
+        :param sample_type:
+        :param source:
+        :param search:
+        :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -317,9 +336,14 @@ class Files(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.FilesAPIRoutesListFilesRequest)
-        request = cast(models.FilesAPIRoutesListFilesRequest, request)
+        request = models.FilesAPIRoutesListFilesRequest(
+            page=page,
+            page_size=page_size,
+            sample_type=sample_type,
+            source=source,
+            search=search,
+            purpose=purpose,
+        )
 
         req = self.build_request_async(
             method="GET",

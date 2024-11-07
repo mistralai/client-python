@@ -18,8 +18,8 @@ from mistralai_azure.types import (
 )
 from mistralai_azure.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Optional, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 ChatCompletionRequestStopTypedDict = Union[str, List[str]]
@@ -60,14 +60,12 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     model: NotRequired[Nullable[str]]
     r"""The ID of the model to use for this request."""
-    temperature: NotRequired[float]
-    r"""What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."""
+    temperature: NotRequired[Nullable[float]]
+    r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
     top_p: NotRequired[float]
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-    min_tokens: NotRequired[Nullable[int]]
-    r"""The minimum number of tokens to generate in the completion."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
     stop: NotRequired[ChatCompletionRequestStopTypedDict]
@@ -77,6 +75,12 @@ class ChatCompletionRequestTypedDict(TypedDict):
     response_format: NotRequired[ResponseFormatTypedDict]
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
     tool_choice: NotRequired[ChatCompletionRequestToolChoiceTypedDict]
+    presence_penalty: NotRequired[float]
+    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+    frequency_penalty: NotRequired[float]
+    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+    n: NotRequired[Nullable[int]]
+    r"""Number of completions to return for each request, input tokens are only billed once."""
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -88,17 +92,14 @@ class ChatCompletionRequest(BaseModel):
     model: OptionalNullable[str] = "azureai"
     r"""The ID of the model to use for this request."""
 
-    temperature: Optional[float] = 0.7
-    r"""What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."""
+    temperature: OptionalNullable[float] = UNSET
+    r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
 
     top_p: Optional[float] = 1
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
 
     max_tokens: OptionalNullable[int] = UNSET
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-
-    min_tokens: OptionalNullable[int] = UNSET
-    r"""The minimum number of tokens to generate in the completion."""
 
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
@@ -115,6 +116,15 @@ class ChatCompletionRequest(BaseModel):
 
     tool_choice: Optional[ChatCompletionRequestToolChoice] = None
 
+    presence_penalty: Optional[float] = 0
+    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+
+    frequency_penalty: Optional[float] = 0
+    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+
+    n: OptionalNullable[int] = UNSET
+    r"""Number of completions to return for each request, input tokens are only billed once."""
+
     safe_prompt: Optional[bool] = False
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -125,16 +135,25 @@ class ChatCompletionRequest(BaseModel):
             "temperature",
             "top_p",
             "max_tokens",
-            "min_tokens",
             "stream",
             "stop",
             "random_seed",
             "response_format",
             "tools",
             "tool_choice",
+            "presence_penalty",
+            "frequency_penalty",
+            "n",
             "safe_prompt",
         ]
-        nullable_fields = ["model", "max_tokens", "min_tokens", "random_seed", "tools"]
+        nullable_fields = [
+            "model",
+            "temperature",
+            "max_tokens",
+            "random_seed",
+            "tools",
+            "n",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

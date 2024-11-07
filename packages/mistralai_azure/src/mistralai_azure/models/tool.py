@@ -6,8 +6,8 @@ from .tooltypes import ToolTypes
 from mistralai_azure.types import BaseModel
 from mistralai_azure.utils import validate_open_enum
 from pydantic.functional_validators import PlainValidator
-from typing import Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ToolTypedDict(TypedDict):
