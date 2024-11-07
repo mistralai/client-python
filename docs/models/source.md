@@ -7,3 +7,4 @@
 | ------------ | ------------ |
 | `UPLOAD`     | upload       |
 | `REPOSITORY` | repository   |
+| `MISTRAL`    | mistral      |

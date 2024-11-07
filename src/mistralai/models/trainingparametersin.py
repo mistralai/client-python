@@ -3,8 +3,8 @@
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class TrainingParametersInTypedDict(TypedDict):
@@ -20,6 +20,7 @@ class TrainingParametersInTypedDict(TypedDict):
     r"""(Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)"""
     epochs: NotRequired[Nullable[float]]
     fim_ratio: NotRequired[Nullable[float]]
+    seq_len: NotRequired[Nullable[int]]
 
 
 class TrainingParametersIn(BaseModel):
@@ -41,6 +42,8 @@ class TrainingParametersIn(BaseModel):
 
     fim_ratio: OptionalNullable[float] = UNSET
 
+    seq_len: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -50,6 +53,7 @@ class TrainingParametersIn(BaseModel):
             "warmup_fraction",
             "epochs",
             "fim_ratio",
+            "seq_len",
         ]
         nullable_fields = [
             "training_steps",
@@ -57,6 +61,7 @@ class TrainingParametersIn(BaseModel):
             "warmup_fraction",
             "epochs",
             "fim_ratio",
+            "seq_len",
         ]
         null_default_fields = []
 

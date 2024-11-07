@@ -8,8 +8,8 @@ from .trainingparametersin import TrainingParametersIn, TrainingParametersInType
 from .wandbintegration import WandbIntegration, WandbIntegrationTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 JobInIntegrationsTypedDict = WandbIntegrationTypedDict

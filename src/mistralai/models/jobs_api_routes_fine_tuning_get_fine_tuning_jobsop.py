@@ -5,8 +5,8 @@ from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Literal, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 QueryParamStatus = Literal[

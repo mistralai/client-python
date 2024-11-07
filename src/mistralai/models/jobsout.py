@@ -3,9 +3,11 @@
 from __future__ import annotations
 from .jobout import JobOut, JobOutTypedDict
 from mistralai.types import BaseModel
+from mistralai.utils import validate_const
 import pydantic
-from typing import Final, List, Literal, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 JobsOutObject = Literal["list"]
@@ -14,6 +16,7 @@ JobsOutObject = Literal["list"]
 class JobsOutTypedDict(TypedDict):
     total: int
     data: NotRequired[List[JobOutTypedDict]]
+    object: JobsOutObject
 
 
 class JobsOut(BaseModel):
@@ -21,6 +24,7 @@ class JobsOut(BaseModel):
 
     data: Optional[List[JobOut]] = None
 
-    # fmt: off
-    OBJECT: Annotated[Final[Optional[JobsOutObject]], pydantic.Field(alias="object")] = "list" # type: ignore
-    # fmt: on
+    OBJECT: Annotated[
+        Annotated[Optional[JobsOutObject], AfterValidator(validate_const("list"))],
+        pydantic.Field(alias="object"),
+    ] = "list"

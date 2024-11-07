@@ -116,6 +116,19 @@ def validate_open_enum(is_int: bool):
     return validate
 
 
+def validate_const(v):
+    def validate(c):
+        if is_optional_type(type(c)) and c is None:
+            return None
+
+        if v != c:
+            raise ValueError(f"Expected {v}")
+
+        return c
+
+    return validate
+
+
 def unmarshal_json(raw, typ: Any) -> Any:
     return unmarshal(from_json(raw), typ)
 
@@ -170,6 +183,18 @@ def is_nullable(field):
 
 def stream_to_text(stream: httpx.Response) -> str:
     return "".join(stream.iter_text())
+
+
+async def stream_to_text_async(stream: httpx.Response) -> str:
+    return "".join([chunk async for chunk in stream.aiter_text()])
+
+
+def stream_to_bytes(stream: httpx.Response) -> bytes:
+    return stream.content
+
+
+async def stream_to_bytes_async(stream: httpx.Response) -> bytes:
+    return await stream.aread()
 
 
 def get_pydantic_model(data: Any, typ: Any) -> Any:

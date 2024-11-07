@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 from .contentchunk import ContentChunk, ContentChunkTypedDict
-from mistralai.types import BaseModel
-from typing import List, Literal, Optional, TypedDict, Union
-from typing_extensions import NotRequired
+from mistralai.types import BaseModel, Nullable, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import List, Literal, Optional, Union
+from typing_extensions import NotRequired, TypedDict
 
 
 UserMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
@@ -17,11 +18,41 @@ UserMessageRole = Literal["user"]
 
 
 class UserMessageTypedDict(TypedDict):
-    content: UserMessageContentTypedDict
+    content: Nullable[UserMessageContentTypedDict]
     role: NotRequired[UserMessageRole]
 
 
 class UserMessage(BaseModel):
-    content: UserMessageContent
+    content: Nullable[UserMessageContent]
 
     role: Optional[UserMessageRole] = "user"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = ["role"]
+        nullable_fields = ["content"]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in self.model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m

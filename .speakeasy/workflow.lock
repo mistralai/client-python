@@ -1,4 +1,4 @@
-speakeasyVersion: 1.398.0
+speakeasyVersion: 1.434.3
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
@@ -14,10 +14,11 @@ sources:
             - latest
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:8e2d62b2242960d958406ba266eda41a013c1459dbac67195f8e2662c04cd05f
-        sourceBlobDigest: sha256:9fbff48fe087e3b2f950b1cfa52b6a25143982741dc7e6750dd14d9c5bed4041
+        sourceRevisionDigest: sha256:d80c7237d30e8db0462dd137bec3f7be0aed74ae6e0dafbb243a6b2bb44f9dab
+        sourceBlobDigest: sha256:5670770603d244e51ecfb1a98ed575cf4bab9f0733f57a430d4de11215959724
         tags:
             - latest
+            - main
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -32,27 +33,29 @@ targets:
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:8e2d62b2242960d958406ba266eda41a013c1459dbac67195f8e2662c04cd05f
-        sourceBlobDigest: sha256:9fbff48fe087e3b2f950b1cfa52b6a25143982741dc7e6750dd14d9c5bed4041
+        sourceRevisionDigest: sha256:d80c7237d30e8db0462dd137bec3f7be0aed74ae6e0dafbb243a6b2bb44f9dab
+        sourceBlobDigest: sha256:5670770603d244e51ecfb1a98ed575cf4bab9f0733f57a430d4de11215959724
+        codeSamplesNamespace: mistral-openapi-code-samples
+        codeSamplesRevisionDigest: sha256:62833ed74f3aeb36ac3cb97b6ac7f13b608161f44e45cf93e72446c566d7f20a
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         mistral-azure-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
             registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
         mistral-google-cloud-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
             registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
         mistral-openapi:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
             registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
     targets:
         mistralai-azure-sdk:
             target: python
@@ -61,6 +64,10 @@ workflow:
             publish:
                 pypi:
                     token: $pypi_token
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure-code-samples
+                blocking: false
         mistralai-gcp-sdk:
             target: python
             source: mistral-google-cloud-source
@@ -68,9 +75,17 @@ workflow:
             publish:
                 pypi:
                     token: $pypi_token
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud-code-samples
+                blocking: false
         mistralai-sdk:
             target: python
             source: mistral-openapi
             publish:
                 pypi:
                     token: $pypi_token
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-code-samples
+                blocking: false

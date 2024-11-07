@@ -3,6 +3,6 @@
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `WANDB` | wandb   |
+| Name   | Value  |
+| ------ | ------ |
+| `BASE` | base   |

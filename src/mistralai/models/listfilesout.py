@@ -3,15 +3,19 @@
 from __future__ import annotations
 from .fileschema import FileSchema, FileSchemaTypedDict
 from mistralai.types import BaseModel
-from typing import List, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class ListFilesOutTypedDict(TypedDict):
     data: List[FileSchemaTypedDict]
     object: str
+    total: int
 
 
 class ListFilesOut(BaseModel):
     data: List[FileSchema]
 
     object: str
+
+    total: int

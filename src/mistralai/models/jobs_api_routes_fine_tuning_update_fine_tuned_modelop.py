@@ -4,8 +4,7 @@ from __future__ import annotations
 from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
 from mistralai.types import BaseModel
 from mistralai.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict(TypedDict):

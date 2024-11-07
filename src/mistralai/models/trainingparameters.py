@@ -3,8 +3,8 @@
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class TrainingParametersTypedDict(TypedDict):
@@ -14,6 +14,7 @@ class TrainingParametersTypedDict(TypedDict):
     warmup_fraction: NotRequired[Nullable[float]]
     epochs: NotRequired[Nullable[float]]
     fim_ratio: NotRequired[Nullable[float]]
+    seq_len: NotRequired[Nullable[int]]
 
 
 class TrainingParameters(BaseModel):
@@ -29,6 +30,8 @@ class TrainingParameters(BaseModel):
 
     fim_ratio: OptionalNullable[float] = UNSET
 
+    seq_len: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -38,6 +41,7 @@ class TrainingParameters(BaseModel):
             "warmup_fraction",
             "epochs",
             "fim_ratio",
+            "seq_len",
         ]
         nullable_fields = [
             "training_steps",
@@ -45,6 +49,7 @@ class TrainingParameters(BaseModel):
             "warmup_fraction",
             "epochs",
             "fim_ratio",
+            "seq_len",
         ]
         null_default_fields = []
 

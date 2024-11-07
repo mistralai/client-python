@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
+from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
 from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
@@ -11,8 +12,8 @@ from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Optional, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 AgentsCompletionRequestStopTypedDict = Union[str, List[str]]
@@ -24,13 +25,17 @@ r"""Stop generation if this token is detected. Or if one of these tokens is dete
 
 
 AgentsCompletionRequestMessagesTypedDict = Union[
-    UserMessageTypedDict, AssistantMessageTypedDict, ToolMessageTypedDict
+    SystemMessageTypedDict,
+    UserMessageTypedDict,
+    AssistantMessageTypedDict,
+    ToolMessageTypedDict,
 ]
 
 
 AgentsCompletionRequestMessages = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
+        Annotated[SystemMessage, Tag("system")],
         Annotated[ToolMessage, Tag("tool")],
         Annotated[UserMessage, Tag("user")],
     ],
@@ -51,8 +56,6 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     r"""The ID of the agent to use for this completion."""
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-    min_tokens: NotRequired[Nullable[int]]
-    r"""The minimum number of tokens to generate in the completion."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
     stop: NotRequired[AgentsCompletionRequestStopTypedDict]
@@ -62,6 +65,12 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     response_format: NotRequired[ResponseFormatTypedDict]
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
+    presence_penalty: NotRequired[float]
+    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+    frequency_penalty: NotRequired[float]
+    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+    n: NotRequired[Nullable[int]]
+    r"""Number of completions to return for each request, input tokens are only billed once."""
 
 
 class AgentsCompletionRequest(BaseModel):
@@ -73,9 +82,6 @@ class AgentsCompletionRequest(BaseModel):
 
     max_tokens: OptionalNullable[int] = UNSET
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-
-    min_tokens: OptionalNullable[int] = UNSET
-    r"""The minimum number of tokens to generate in the completion."""
 
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
@@ -92,19 +98,30 @@ class AgentsCompletionRequest(BaseModel):
 
     tool_choice: Optional[AgentsCompletionRequestToolChoice] = None
 
+    presence_penalty: Optional[float] = 0
+    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+
+    frequency_penalty: Optional[float] = 0
+    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+
+    n: OptionalNullable[int] = UNSET
+    r"""Number of completions to return for each request, input tokens are only billed once."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
             "max_tokens",
-            "min_tokens",
             "stream",
             "stop",
             "random_seed",
             "response_format",
             "tools",
             "tool_choice",
+            "presence_penalty",
+            "frequency_penalty",
+            "n",
         ]
-        nullable_fields = ["max_tokens", "min_tokens", "random_seed", "tools"]
+        nullable_fields = ["max_tokens", "random_seed", "tools", "n"]
         null_default_fields = []
 
         serialized = handler(self)

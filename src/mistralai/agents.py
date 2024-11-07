@@ -20,7 +20,6 @@ class Agents(BaseSDK):
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
@@ -41,6 +40,9 @@ class Agents(BaseSDK):
                 models.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
+        presence_penalty: Optional[float] = 0,
+        frequency_penalty: Optional[float] = 0,
+        n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -50,13 +52,15 @@ class Agents(BaseSDK):
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param response_format:
         :param tools:
         :param tool_choice:
+        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param n: Number of completions to return for each request, input tokens are only billed once.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -71,7 +75,6 @@ class Agents(BaseSDK):
 
         request = models.AgentsCompletionRequest(
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
@@ -85,6 +88,9 @@ class Agents(BaseSDK):
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
+            presence_penalty=presence_penalty,
+            frequency_penalty=frequency_penalty,
+            n=n,
             agent_id=agent_id,
         )
 
@@ -136,15 +142,17 @@ class Agents(BaseSDK):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -157,7 +165,6 @@ class Agents(BaseSDK):
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
@@ -178,6 +185,9 @@ class Agents(BaseSDK):
                 models.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
+        presence_penalty: Optional[float] = 0,
+        frequency_penalty: Optional[float] = 0,
+        n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -187,13 +197,15 @@ class Agents(BaseSDK):
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param response_format:
         :param tools:
         :param tool_choice:
+        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param n: Number of completions to return for each request, input tokens are only billed once.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -208,7 +220,6 @@ class Agents(BaseSDK):
 
         request = models.AgentsCompletionRequest(
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
@@ -222,6 +233,9 @@ class Agents(BaseSDK):
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
+            presence_penalty=presence_penalty,
+            frequency_penalty=frequency_penalty,
+            n=n,
             agent_id=agent_id,
         )
 
@@ -273,15 +287,17 @@ class Agents(BaseSDK):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -294,7 +310,6 @@ class Agents(BaseSDK):
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
@@ -315,6 +330,9 @@ class Agents(BaseSDK):
                 models.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
+        presence_penalty: Optional[float] = 0,
+        frequency_penalty: Optional[float] = 0,
+        n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -326,13 +344,15 @@ class Agents(BaseSDK):
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param response_format:
         :param tools:
         :param tool_choice:
+        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param n: Number of completions to return for each request, input tokens are only billed once.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -347,7 +367,6 @@ class Agents(BaseSDK):
 
         request = models.AgentsCompletionStreamRequest(
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
@@ -361,6 +380,9 @@ class Agents(BaseSDK):
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),
+            presence_penalty=presence_penalty,
+            frequency_penalty=frequency_penalty,
+            n=n,
             agent_id=agent_id,
         )
 
@@ -412,18 +434,21 @@ class Agents(BaseSDK):
                 sentinel="[DONE]",
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            http_res_text = utils.stream_to_text(http_res)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -436,7 +461,6 @@ class Agents(BaseSDK):
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
@@ -457,6 +481,9 @@ class Agents(BaseSDK):
                 models.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
+        presence_penalty: Optional[float] = 0,
+        frequency_penalty: Optional[float] = 0,
+        n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -468,13 +495,15 @@ class Agents(BaseSDK):
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
         :param agent_id: The ID of the agent to use for this completion.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param response_format:
         :param tools:
         :param tool_choice:
+        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param n: Number of completions to return for each request, input tokens are only billed once.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -489,7 +518,6 @@ class Agents(BaseSDK):
 
         request = models.AgentsCompletionStreamRequest(
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
@@ -503,6 +531,9 @@ class Agents(BaseSDK):
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),
+            presence_penalty=presence_penalty,
+            frequency_penalty=frequency_penalty,
+            n=n,
             agent_id=agent_id,
         )
 
@@ -554,17 +585,20 @@ class Agents(BaseSDK):
                 sentinel="[DONE]",
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            http_res_text = await utils.stream_to_text_async(http_res)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )

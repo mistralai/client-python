@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel
+from mistralai.utils import validate_const
 import pydantic
-from typing import Final, Literal, Optional, TypedDict
-from typing_extensions import Annotated
+from pydantic.functional_validators import AfterValidator
+from typing import Literal, Optional
+from typing_extensions import Annotated, TypedDict
 
 
 TextChunkType = Literal["text"]
@@ -12,11 +14,13 @@ TextChunkType = Literal["text"]
 
 class TextChunkTypedDict(TypedDict):
     text: str
+    type: TextChunkType
 
 
 class TextChunk(BaseModel):
     text: str
 
-    # fmt: off
-    TYPE: Annotated[Final[Optional[TextChunkType]], pydantic.Field(alias="type")] = "text" # type: ignore
-    # fmt: on
+    TYPE: Annotated[
+        Annotated[Optional[TextChunkType], AfterValidator(validate_const("text"))],
+        pydantic.Field(alias="type"),
+    ] = "text"

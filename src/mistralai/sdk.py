@@ -9,7 +9,9 @@ import httpx
 from mistralai import models, utils
 from mistralai._hooks import SDKHooks
 from mistralai.agents import Agents
+from mistralai.batch import Batch
 from mistralai.chat import Chat
+from mistralai.classifiers import Classifiers
 from mistralai.embeddings import Embeddings
 from mistralai.files import Files
 from mistralai.fim import Fim
@@ -27,6 +29,7 @@ class Mistral(BaseSDK):
     files: Files
     r"""Files API"""
     fine_tuning: FineTuning
+    batch: Batch
     chat: Chat
     r"""Chat Completion API."""
     fim: Fim
@@ -35,6 +38,8 @@ class Mistral(BaseSDK):
     r"""Agents API."""
     embeddings: Embeddings
     r"""Embeddings API."""
+    classifiers: Classifiers
+    r"""Classifiers API."""
 
     def __init__(
         self,
@@ -118,7 +123,9 @@ class Mistral(BaseSDK):
         self.models = Models(self.sdk_configuration)
         self.files = Files(self.sdk_configuration)
         self.fine_tuning = FineTuning(self.sdk_configuration)
+        self.batch = Batch(self.sdk_configuration)
         self.chat = Chat(self.sdk_configuration)
         self.fim = Fim(self.sdk_configuration)
         self.agents = Agents(self.sdk_configuration)
         self.embeddings = Embeddings(self.sdk_configuration)
+        self.classifiers = Classifiers(self.sdk_configuration)

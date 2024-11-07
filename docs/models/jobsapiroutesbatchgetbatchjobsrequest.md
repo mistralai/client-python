@@ -1,0 +1,14 @@
+# JobsAPIRoutesBatchGetBatchJobsRequest
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `page`                                                                 | *Optional[int]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `page_size`                                                            | *Optional[int]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `model`                                                                | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `metadata`                                                             | Dict[str, *Any*]                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `created_after`                                                        | [date](https://docs.python.org/3/library/datetime.html#date-objects)   | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `created_by_me`                                                        | *Optional[bool]*                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `status`                                                               | [OptionalNullable[models.BatchJobStatus]](../models/batchjobstatus.md) | :heavy_minus_sign:                                                     | N/A                                                                    |
