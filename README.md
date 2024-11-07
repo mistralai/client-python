@@ -180,7 +180,8 @@ s = Mistral(
 
 res = s.agents.complete(messages=[
     {
-        "content": "<value>",
+        "content": "Who is the best French painter? Answer in one short sentence.",
+        "role": "user",
     },
 ], agent_id="<value>")
 
@@ -208,6 +209,53 @@ async def main():
             "role": "user",
         },
     ], agent_id="<value>")
+    if res is not None:
+        # handle response
+        pass
+
+asyncio.run(main())
+```
+
+### Create Embedding Request
+
+This example shows how to create embedding request.
+
+```python
+# Synchronous Example
+from mistralai import Mistral
+import os
+
+s = Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+)
+
+res = s.embeddings.create(inputs=[
+    "Embed this sentence.",
+    "As well as this one.",
+], model="Wrangler")
+
+if res is not None:
+    # handle response
+    pass
+```
+
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from mistralai import Mistral
+import os
+
+async def main():
+    s = Mistral(
+        api_key=os.getenv("MISTRAL_API_KEY", ""),
+    )
+    res = await s.embeddings.create_async(inputs=[
+        "Embed this sentence.",
+        "As well as this one.",
+    ], model="Wrangler")
     if res is not None:
         # handle response
         pass
@@ -322,10 +370,25 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [complete](docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
 
+### [batch](docs/sdks/batch/README.md)
+
+
+#### [batch.jobs](docs/sdks/mistraljobs/README.md)
+
+* [list](docs/sdks/mistraljobs/README.md#list) - Get Batch Jobs
+* [create](docs/sdks/mistraljobs/README.md#create) - Create Batch Job
+* [get](docs/sdks/mistraljobs/README.md#get) - Get Batch Job
+* [cancel](docs/sdks/mistraljobs/README.md#cancel) - Cancel Batch Job
+
 ### [chat](docs/sdks/chat/README.md)
 
 * [complete](docs/sdks/chat/README.md#complete) - Chat Completion
 * [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
+
+### [classifiers](docs/sdks/classifiers/README.md)
+
+* [moderate](docs/sdks/classifiers/README.md#moderate) - Moderations
+* [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Moderations Chat
 
 ### [embeddings](docs/sdks/embeddings/README.md)
 
@@ -337,6 +400,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [list](docs/sdks/files/README.md#list) - List Files
 * [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
 * [delete](docs/sdks/files/README.md#delete) - Delete File
+* [download](docs/sdks/files/README.md#download) - Download File
 
 ### [fim](docs/sdks/fim/README.md)
 
@@ -479,12 +543,23 @@ if res is not None:
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
 
-| Error Object               | Status Code | Content Type     |
-| -------------------------- | ----------- | ---------------- |
-| models.HTTPValidationError | 422         | application/json |
-| models.SDKError            | 4xx-5xx     | */*              |
+By default, an API error will raise a models.SDKError exception, which has the following properties:
+
+| Property        | Type             | Description           |
+|-----------------|------------------|-----------------------|
+| `.status_code`  | *int*            | The HTTP status code  |
+| `.message`      | *str*            | The error message     |
+| `.raw_response` | *httpx.Response* | The raw HTTP response |
+| `.body`         | *str*            | The response content  |
+
+When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `list_async` method may raise the following exceptions:
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ### Example
 
@@ -520,9 +595,9 @@ except models.SDKError as e:
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name   | Server                   | Variables |
-| ------ | ------------------------ | --------- |
-| `prod` | `https://api.mistral.ai` | None      |
+| Name | Server | Variables |
+| ----- | ------ | --------- |
+| `eu` | `https://api.mistral.ai` | None |
 
 #### Example
 
@@ -531,7 +606,7 @@ from mistralai import Mistral
 import os
 
 s = Mistral(
-    server="prod",
+    server="eu",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 )
 
@@ -653,9 +728,9 @@ s = Mistral(async_client=CustomClient(httpx.AsyncClient()))
 
 This SDK supports the following security scheme globally:
 
-| Name      | Type | Scheme      | Environment Variable |
-| --------- | ---- | ----------- | -------------------- |
-| `api_key` | http | HTTP Bearer | `MISTRAL_API_KEY`    |
+| Name                 | Type                 | Scheme               | Environment Variable |
+| -------------------- | -------------------- | -------------------- | -------------------- |
+| `api_key`            | http                 | HTTP Bearer          | `MISTRAL_API_KEY`    |
 
 To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
 ```python

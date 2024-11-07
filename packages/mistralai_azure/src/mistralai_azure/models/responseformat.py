@@ -3,8 +3,8 @@
 from __future__ import annotations
 from .responseformats import ResponseFormats
 from mistralai_azure.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class ResponseFormatTypedDict(TypedDict):

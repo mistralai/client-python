@@ -7,10 +7,12 @@ from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .trainingparameters import TrainingParameters, TrainingParametersTypedDict
 from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
 import pydantic
 from pydantic import model_serializer
-from typing import Final, List, Literal, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 Status = Literal[
@@ -61,6 +63,8 @@ class JobOutTypedDict(TypedDict):
     r"""A list containing the IDs of uploaded files that contain training data."""
     validation_files: NotRequired[Nullable[List[str]]]
     r"""A list containing the IDs of uploaded files that contain validation data."""
+    object: Object
+    r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
@@ -102,9 +106,10 @@ class JobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    # fmt: off
-    OBJECT: Annotated[Final[Optional[Object]], pydantic.Field(alias="object")] = "job" # type: ignore
-    # fmt: on
+    OBJECT: Annotated[
+        Annotated[Optional[Object], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
     r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET

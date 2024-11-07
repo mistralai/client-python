@@ -3,8 +3,7 @@
 from __future__ import annotations
 from mistralai.types import BaseModel
 from mistralai.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict(TypedDict):

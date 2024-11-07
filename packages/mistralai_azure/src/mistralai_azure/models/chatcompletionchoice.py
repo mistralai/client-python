@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from mistralai_azure.types import BaseModel
-from typing import Literal, TypedDict
+from mistralai_azure.types import BaseModel, UnrecognizedStr
+from mistralai_azure.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
+from typing import Literal, Union
+from typing_extensions import Annotated, TypedDict
 
 
-ChatCompletionChoiceFinishReason = Literal[
-    "stop", "length", "model_length", "error", "tool_calls"
+ChatCompletionChoiceFinishReason = Union[
+    Literal["stop", "length", "model_length", "error", "tool_calls"], UnrecognizedStr
 ]
 
 
@@ -22,4 +25,6 @@ class ChatCompletionChoice(BaseModel):
 
     message: AssistantMessage
 
-    finish_reason: ChatCompletionChoiceFinishReason
+    finish_reason: Annotated[
+        ChatCompletionChoiceFinishReason, PlainValidator(validate_open_enum(False))
+    ]

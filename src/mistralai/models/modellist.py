@@ -6,8 +6,8 @@ from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from mistralai.types import BaseModel
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag
-from typing import List, Optional, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 DataTypedDict = Union[BaseModelCardTypedDict, FTModelCardTypedDict]

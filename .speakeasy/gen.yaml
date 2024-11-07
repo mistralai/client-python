@@ -11,8 +11,9 @@ generation:
     requestResponseComponentNamesFeb2024: true
   auth:
     oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: false
 python:
-  version: 1.1.0
+  version: 1.2.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -23,8 +24,11 @@ python:
   description: Python Client SDK for the Mistral AI API.
   enumFormat: union
   envVarPrefix: MISTRAL
+  fixFlags:
+    responseRequiredSep2024: false
   flattenGlobalSecurity: true
   flattenRequests: true
+  flatteningOrder: parameters-first
   imports:
     option: openapi
     paths:
@@ -34,7 +38,7 @@ python:
       shared: ""
       webhooks: ""
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 15
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: mistralai

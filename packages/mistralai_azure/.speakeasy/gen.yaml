@@ -11,8 +11,9 @@ generation:
     requestResponseComponentNamesFeb2024: true
   auth:
     oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: false
 python:
-  version: 1.2.2
+  version: 1.2.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -22,8 +23,11 @@ python:
   clientServerStatusCodesAsErrors: true
   description: Python Client SDK for the Mistral AI API in Azure.
   enumFormat: union
+  fixFlags:
+    responseRequiredSep2024: false
   flattenGlobalSecurity: true
   flattenRequests: true
+  flatteningOrder: parameters-first
   imports:
     option: openapi
     paths:

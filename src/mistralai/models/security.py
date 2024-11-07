@@ -3,8 +3,8 @@
 from __future__ import annotations
 from mistralai.types import BaseModel
 from mistralai.utils import FieldMetadata, SecurityMetadata
-from typing import Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SecurityTypedDict(TypedDict):

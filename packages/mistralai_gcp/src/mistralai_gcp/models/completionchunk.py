@@ -7,8 +7,8 @@ from .completionresponsestreamchoice import (
 )
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from mistralai_gcp.types import BaseModel
-from typing import List, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CompletionChunkTypedDict(TypedDict):

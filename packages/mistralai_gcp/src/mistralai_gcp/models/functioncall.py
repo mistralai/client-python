@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from mistralai_gcp.types import BaseModel
-from typing import Any, Dict, TypedDict, Union
+from typing import Any, Dict, Union
+from typing_extensions import TypedDict
 
 
 ArgumentsTypedDict = Union[Dict[str, Any], str]

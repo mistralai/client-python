@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel
-from typing import List, TypedDict, Union
+from typing import List, Union
+from typing_extensions import TypedDict
 
 
 LocTypedDict = Union[str, int]

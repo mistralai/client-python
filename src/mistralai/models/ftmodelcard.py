@@ -4,10 +4,15 @@ from __future__ import annotations
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
 import pydantic
 from pydantic import model_serializer
-from typing import Final, List, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+FTModelCardType = Literal["fine-tuned"]
 
 
 class FTModelCardTypedDict(TypedDict):
@@ -25,6 +30,8 @@ class FTModelCardTypedDict(TypedDict):
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
     deprecation: NotRequired[Nullable[datetime]]
+    default_model_temperature: NotRequired[Nullable[float]]
+    type: FTModelCardType
     archived: NotRequired[bool]
 
 
@@ -55,9 +62,14 @@ class FTModelCard(BaseModel):
 
     deprecation: OptionalNullable[datetime] = UNSET
 
-    # fmt: off
-    TYPE: Annotated[Final[Optional[str]], pydantic.Field(alias="type")] = "fine-tuned" # type: ignore
-    # fmt: on
+    default_model_temperature: OptionalNullable[float] = UNSET
+
+    TYPE: Annotated[
+        Annotated[
+            Optional[FTModelCardType], AfterValidator(validate_const("fine-tuned"))
+        ],
+        pydantic.Field(alias="type"),
+    ] = "fine-tuned"
 
     archived: Optional[bool] = False
 
@@ -72,10 +84,16 @@ class FTModelCard(BaseModel):
             "max_context_length",
             "aliases",
             "deprecation",
+            "default_model_temperature",
             "type",
             "archived",
         ]
-        nullable_fields = ["name", "description", "deprecation"]
+        nullable_fields = [
+            "name",
+            "description",
+            "deprecation",
+            "default_model_temperature",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

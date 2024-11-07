@@ -24,6 +24,10 @@ targets:
         publish:
             pypi:
                 token: $pypi_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure-code-samples
+            blocking: false
     mistralai-gcp-sdk:
         target: python
         source: mistral-google-cloud-source
@@ -31,9 +35,17 @@ targets:
         publish:
             pypi:
                 token: $pypi_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud-code-samples
+            blocking: false
     mistralai-sdk:
         target: python
         source: mistral-openapi
         publish:
             pypi:
                 token: $pypi_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-code-samples
+            blocking: false

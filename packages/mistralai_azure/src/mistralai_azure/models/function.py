@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from mistralai_azure.types import BaseModel
-from typing import Any, Dict, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Any, Dict, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class FunctionTypedDict(TypedDict):

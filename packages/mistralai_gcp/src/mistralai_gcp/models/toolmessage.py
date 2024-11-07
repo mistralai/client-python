@@ -9,8 +9,8 @@ from mistralai_gcp.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Literal, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Literal, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 ToolMessageRole = Literal["tool"]

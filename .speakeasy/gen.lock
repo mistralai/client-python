@@ -1,44 +1,48 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: e75ca54601920b2770d9a559b299d272
+  docChecksum: ee15d853ecc28d415d6b33191893a6ff
   docVersion: 0.0.2
-  speakeasyVersion: 1.398.0
-  generationVersion: 2.415.8
-  releaseVersion: 1.1.0
-  configChecksum: 49094e0f156d020bd164f8b4bd41e97b
+  speakeasyVersion: 1.434.4
+  generationVersion: 2.452.0
+  releaseVersion: 1.2.0
+  configChecksum: 17ae764aa509274d1cf2d75af5bf6abb
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.2
-    core: 5.5.3
+    constsAndDefaults: 1.0.4
+    core: 5.6.4
     defaultEnabledRetries: 0.2.0
+    downloadStreams: 1.0.1
     enumUnions: 0.1.0
-    envVarSecurityUsage: 0.3.1
+    envVarSecurityUsage: 0.3.2
     examples: 3.0.0
     flatRequests: 1.0.1
-    flattening: 3.0.0
+    flattening: 3.1.0
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
+    methodArguments: 1.0.2
     multipartFileContentType: 1.0.0
     nameOverrides: 3.0.0
     nullables: 1.0.0
     openEnums: 1.0.0
-    responseFormat: 1.0.0
+    responseFormat: 1.0.1
     retries: 3.0.2
     sdkHooks: 1.0.0
-    serverEvents: 1.0.2
+    serverEvents: 1.0.4
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
-    unions: 3.0.2
+    tests: 1.6.0
+    unions: 3.0.3
     uploadStreams: 1.0.0
 generatedFiles:
   - .gitattributes
+  - .python-version
   - .vscode/settings.json
   - USAGE.md
   - docs/models/agentscompletionrequest.md
@@ -49,12 +53,23 @@ generatedFiles:
   - docs/models/agentscompletionstreamrequestmessages.md
   - docs/models/agentscompletionstreamrequeststop.md
   - docs/models/agentscompletionstreamrequesttoolchoice.md
+  - docs/models/apiendpoint.md
   - docs/models/archiveftmodelout.md
   - docs/models/archiveftmodeloutobject.md
   - docs/models/arguments.md
   - docs/models/assistantmessage.md
+  - docs/models/assistantmessagecontent.md
   - docs/models/assistantmessagerole.md
   - docs/models/basemodelcard.md
+  - docs/models/batcherror.md
+  - docs/models/batchjobin.md
+  - docs/models/batchjobout.md
+  - docs/models/batchjoboutobject.md
+  - docs/models/batchjobsout.md
+  - docs/models/batchjobsoutobject.md
+  - docs/models/batchjobstatus.md
+  - docs/models/chatclassificationrequest.md
+  - docs/models/chatclassificationrequestinputs.md
   - docs/models/chatcompletionchoice.md
   - docs/models/chatcompletionrequest.md
   - docs/models/chatcompletionrequesttoolchoice.md
@@ -64,6 +79,10 @@ generatedFiles:
   - docs/models/chatcompletionstreamrequeststop.md
   - docs/models/chatcompletionstreamrequesttoolchoice.md
   - docs/models/checkpointout.md
+  - docs/models/classificationobject.md
+  - docs/models/classificationrequest.md
+  - docs/models/classificationrequestinputs.md
+  - docs/models/classificationresponse.md
   - docs/models/completionchunk.md
   - docs/models/completionevent.md
   - docs/models/completionresponsestreamchoice.md
@@ -85,12 +104,13 @@ generatedFiles:
   - docs/models/embeddingresponsedata.md
   - docs/models/eventout.md
   - docs/models/file.md
+  - docs/models/filepurpose.md
   - docs/models/filesapiroutesdeletefilerequest.md
+  - docs/models/filesapiroutesdownloadfilerequest.md
+  - docs/models/filesapirouteslistfilesrequest.md
   - docs/models/filesapiroutesretrievefilerequest.md
   - docs/models/filesapiroutesuploadfilemultipartbodyparams.md
-  - docs/models/filesapiroutesuploadfilepurpose.md
   - docs/models/fileschema.md
-  - docs/models/fileschemapurpose.md
   - docs/models/fimcompletionrequest.md
   - docs/models/fimcompletionrequeststop.md
   - docs/models/fimcompletionresponse.md
@@ -100,6 +120,7 @@ generatedFiles:
   - docs/models/finishreason.md
   - docs/models/ftmodelcapabilitiesout.md
   - docs/models/ftmodelcard.md
+  - docs/models/ftmodelcardtype.md
   - docs/models/ftmodelout.md
   - docs/models/ftmodeloutobject.md
   - docs/models/function.md
@@ -121,6 +142,9 @@ generatedFiles:
   - docs/models/jobinrepositories.md
   - docs/models/jobmetadataout.md
   - docs/models/jobout.md
+  - docs/models/jobsapiroutesbatchcancelbatchjobrequest.md
+  - docs/models/jobsapiroutesbatchgetbatchjobrequest.md
+  - docs/models/jobsapiroutesbatchgetbatchjobsrequest.md
   - docs/models/jobsapiroutesfinetuningarchivefinetunedmodelrequest.md
   - docs/models/jobsapiroutesfinetuningcancelfinetuningjobrequest.md
   - docs/models/jobsapiroutesfinetuningcreatefinetuningjobresponse.md
@@ -140,13 +164,12 @@ generatedFiles:
   - docs/models/modelcapabilities.md
   - docs/models/modellist.md
   - docs/models/object.md
-  - docs/models/purpose.md
+  - docs/models/one.md
   - docs/models/queryparamstatus.md
   - docs/models/repositories.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/retrievefileout.md
-  - docs/models/retrievefileoutpurpose.md
   - docs/models/retrievemodelv1modelsmodelidgetrequest.md
   - docs/models/retrievemodelv1modelsmodelidgetresponseretrievemodelv1modelsmodelidget.md
   - docs/models/role.md
@@ -156,6 +179,7 @@ generatedFiles:
   - docs/models/status.md
   - docs/models/stop.md
   - docs/models/systemmessage.md
+  - docs/models/systemmessagecontent.md
   - docs/models/textchunk.md
   - docs/models/textchunktype.md
   - docs/models/tool.md
@@ -168,6 +192,7 @@ generatedFiles:
   - docs/models/trainingfile.md
   - docs/models/trainingparameters.md
   - docs/models/trainingparametersin.md
+  - docs/models/two.md
   - docs/models/type.md
   - docs/models/unarchiveftmodelout.md
   - docs/models/unarchiveftmodeloutobject.md
@@ -181,47 +206,63 @@ generatedFiles:
   - docs/models/validationerror.md
   - docs/models/wandbintegration.md
   - docs/models/wandbintegrationout.md
+  - docs/models/wandbintegrationouttype.md
   - docs/models/wandbintegrationtype.md
   - docs/sdks/agents/README.md
+  - docs/sdks/batch/README.md
   - docs/sdks/chat/README.md
+  - docs/sdks/classifiers/README.md
   - docs/sdks/embeddings/README.md
   - docs/sdks/files/README.md
   - docs/sdks/fim/README.md
   - docs/sdks/finetuning/README.md
   - docs/sdks/jobs/README.md
   - docs/sdks/mistral/README.md
+  - docs/sdks/mistraljobs/README.md
   - docs/sdks/models/README.md
   - poetry.toml
   - py.typed
   - pylintrc
-  - pyproject.toml
-  - scripts/compile.sh
   - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/mistralai/__init__.py
   - src/mistralai/_hooks/__init__.py
   - src/mistralai/_hooks/sdkhooks.py
   - src/mistralai/_hooks/types.py
+  - src/mistralai/_version.py
   - src/mistralai/agents.py
   - src/mistralai/basesdk.py
+  - src/mistralai/batch.py
   - src/mistralai/chat.py
+  - src/mistralai/classifiers.py
   - src/mistralai/embeddings.py
   - src/mistralai/files.py
   - src/mistralai/fim.py
   - src/mistralai/fine_tuning.py
   - src/mistralai/httpclient.py
   - src/mistralai/jobs.py
+  - src/mistralai/mistral_jobs.py
   - src/mistralai/models/__init__.py
   - src/mistralai/models/agentscompletionrequest.py
   - src/mistralai/models/agentscompletionstreamrequest.py
+  - src/mistralai/models/apiendpoint.py
   - src/mistralai/models/archiveftmodelout.py
   - src/mistralai/models/assistantmessage.py
   - src/mistralai/models/basemodelcard.py
+  - src/mistralai/models/batcherror.py
+  - src/mistralai/models/batchjobin.py
+  - src/mistralai/models/batchjobout.py
+  - src/mistralai/models/batchjobsout.py
+  - src/mistralai/models/batchjobstatus.py
+  - src/mistralai/models/chatclassificationrequest.py
   - src/mistralai/models/chatcompletionchoice.py
   - src/mistralai/models/chatcompletionrequest.py
   - src/mistralai/models/chatcompletionresponse.py
   - src/mistralai/models/chatcompletionstreamrequest.py
   - src/mistralai/models/checkpointout.py
+  - src/mistralai/models/classificationobject.py
+  - src/mistralai/models/classificationrequest.py
+  - src/mistralai/models/classificationresponse.py
   - src/mistralai/models/completionchunk.py
   - src/mistralai/models/completionevent.py
   - src/mistralai/models/completionresponsestreamchoice.py
@@ -235,7 +276,10 @@ generatedFiles:
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
   - src/mistralai/models/eventout.py
+  - src/mistralai/models/filepurpose.py
   - src/mistralai/models/files_api_routes_delete_fileop.py
+  - src/mistralai/models/files_api_routes_download_fileop.py
+  - src/mistralai/models/files_api_routes_list_filesop.py
   - src/mistralai/models/files_api_routes_retrieve_fileop.py
   - src/mistralai/models/files_api_routes_upload_fileop.py
   - src/mistralai/models/fileschema.py
@@ -257,6 +301,9 @@ generatedFiles:
   - src/mistralai/models/jobin.py
   - src/mistralai/models/jobmetadataout.py
   - src/mistralai/models/jobout.py
+  - src/mistralai/models/jobs_api_routes_batch_cancel_batch_jobop.py
+  - src/mistralai/models/jobs_api_routes_batch_get_batch_jobop.py
+  - src/mistralai/models/jobs_api_routes_batch_get_batch_jobsop.py
   - src/mistralai/models/jobs_api_routes_fine_tuning_archive_fine_tuned_modelop.py
   - src/mistralai/models/jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop.py
   - src/mistralai/models/jobs_api_routes_fine_tuning_create_fine_tuning_jobop.py
@@ -370,12 +417,12 @@ examples:
         multipart/form-data: {"file": {}}
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "sample_type": "pretrain", "source": "upload"}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "upload"}
   files_api_routes_list_files:
     speakeasy-default-files-api-routes-list-files:
       responses:
         "200":
-          application/json: {"data": [], "object": "<value>"}
+          application/json: {"data": [], "object": "<value>", "total": 768578}
   files_api_routes_retrieve_file:
     speakeasy-default-files-api-routes-retrieve-file:
       parameters:
@@ -383,7 +430,7 @@ examples:
           file_id: "<value>"
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "sample_type": "pretrain", "source": "repository"}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "repository", "deleted": false}
   files_api_routes_delete_file:
     speakeasy-default-files-api-routes-delete-file:
       parameters:
@@ -403,7 +450,7 @@ examples:
         application/json: {"model": "codestral-latest"}
       responses:
         "200":
-          application/json: {"id": "7ad642c1-fc6f-4e07-a41b-cdd89dc7fa50", "auto_start": true, "model": "open-mistral-nemo", "status": "QUEUED", "job_type": "<value>", "created_at": 519028, "modified_at": 230313, "training_files": []}
+          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "open-mistral-7b", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
   jobs_api_routes_fine_tuning_get_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
@@ -431,7 +478,7 @@ examples:
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": "<value>"}]}
+        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
@@ -439,7 +486,7 @@ examples:
   stream_chat:
     speakeasy-default-stream-chat:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": []}]}
+        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
@@ -455,7 +502,7 @@ examples:
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
-        application/json: {"messages": [{"content": "<value>"}], "agent_id": "<value>"}
+        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<value>"}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
@@ -463,12 +510,61 @@ examples:
   stream_agents:
     speakeasy-default-stream-agents:
       requestBody:
-        application/json: {"messages": [{"content": []}], "agent_id": "<value>"}
+        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<value>"}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:
-        application/json: {"input": "<value>", "model": "Wrangler"}
+        application/json: {"input": ["Embed this sentence.", "As well as this one."], "model": "Wrangler"}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}]}
+        "422": {}
+  files_api_routes_download_file:
+    speakeasy-default-files-api-routes-download-file:
+      parameters:
+        path:
+          file_id: "<id>"
+  jobs_api_routes_batch_get_batch_jobs:
+    speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
+      responses:
+        "200":
+          application/json: {"total": 768578}
+  jobs_api_routes_batch_create_batch_job:
+    speakeasy-default-jobs-api-routes-batch-create-batch-job:
+      requestBody:
+        application/json: {"input_files": ["a621cf02-1cd9-4cf5-8403-315211a509a3"], "endpoint": "/v1/fim/completions", "model": "2"}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>"}, {"message": "<value>"}, {"message": "<value>"}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
+  jobs_api_routes_batch_get_batch_job:
+    speakeasy-default-jobs-api-routes-batch-get-batch-job:
+      parameters:
+        path:
+          job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>"}, {"message": "<value>"}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
+  jobs_api_routes_batch_cancel_batch_job:
+    speakeasy-default-jobs-api-routes-batch-cancel-batch-job:
+      parameters:
+        path:
+          job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>"}, {"message": "<value>"}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
+  moderations_v1_moderations_post:
+    speakeasy-default-moderations-v1-moderations-post:
+      requestBody:
+        application/json: {"input": ["<value>"]}
+      responses:
+        "200":
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
+        "422": {}
+  moderations_chat_v1_chat_moderations_post:
+    speakeasy-default-moderations-chat-v1-chat-moderations-post:
+      requestBody:
+        application/json: {"input": [[{"content": "<value>"}, {"content": []}, {"content": "<value>"}], []], "model": "V90"}
+      responses:
+        "200":
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
         "422": {}

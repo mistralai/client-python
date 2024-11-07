@@ -6,8 +6,8 @@ from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from mistralai.types import BaseModel
 from mistralai.utils import FieldMetadata, PathParamMetadata, get_discriminator
 from pydantic import Discriminator, Tag
-from typing import TypedDict, Union
-from typing_extensions import Annotated
+from typing import Union
+from typing_extensions import Annotated, TypedDict
 
 
 class RetrieveModelV1ModelsModelIDGetRequestTypedDict(TypedDict):

@@ -9,6 +9,12 @@
 value: models.AssistantMessage = /* values here */
 ```
 
+### `models.SystemMessage`
+
+```python
+value: models.SystemMessage = /* values here */
+```
+
 ### `models.ToolMessage`
 
 ```python

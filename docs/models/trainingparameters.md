@@ -11,3 +11,4 @@
 | `warmup_fraction`         | *OptionalNullable[float]* | :heavy_minus_sign:        | N/A                       |
 | `epochs`                  | *OptionalNullable[float]* | :heavy_minus_sign:        | N/A                       |
 | `fim_ratio`               | *OptionalNullable[float]* | :heavy_minus_sign:        | N/A                       |
+| `seq_len`                 | *OptionalNullable[int]*   | :heavy_minus_sign:        | N/A                       |

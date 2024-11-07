@@ -6,10 +6,12 @@ from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOutTypedDict,
 )
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
 import pydantic
 from pydantic import model_serializer
-from typing import Final, List, Literal, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 FTModelOutObject = Literal["model"]
@@ -23,6 +25,7 @@ class FTModelOutTypedDict(TypedDict):
     archived: bool
     capabilities: FTModelCapabilitiesOutTypedDict
     job: str
+    object: FTModelOutObject
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
@@ -44,9 +47,10 @@ class FTModelOut(BaseModel):
 
     job: str
 
-    # fmt: off
-    OBJECT: Annotated[Final[Optional[FTModelOutObject]], pydantic.Field(alias="object")] = "model" # type: ignore
-    # fmt: on
+    OBJECT: Annotated[
+        Annotated[Optional[FTModelOutObject], AfterValidator(validate_const("model"))],
+        pydantic.Field(alias="object"),
+    ] = "model"
 
     name: OptionalNullable[str] = UNSET
 

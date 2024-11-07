@@ -16,10 +16,9 @@ class Fim(BaseSDK):
         *,
         model: Nullable[str],
         prompt: str,
-        temperature: Optional[float] = 0.7,
+        temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
@@ -29,6 +28,7 @@ class Fim(BaseSDK):
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,14 +39,14 @@ class Fim(BaseSDK):
 
         :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
         :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
+        :param temperature: What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value.
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -64,12 +64,12 @@ class Fim(BaseSDK):
             temperature=temperature,
             top_p=top_p,
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
             prompt=prompt,
             suffix=suffix,
+            min_tokens=min_tokens,
         )
 
         req = self.build_request(
@@ -118,18 +118,21 @@ class Fim(BaseSDK):
                 sentinel="[DONE]",
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            http_res_text = utils.stream_to_text(http_res)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -138,10 +141,9 @@ class Fim(BaseSDK):
         *,
         model: Nullable[str],
         prompt: str,
-        temperature: Optional[float] = 0.7,
+        temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
@@ -151,6 +153,7 @@ class Fim(BaseSDK):
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -161,14 +164,14 @@ class Fim(BaseSDK):
 
         :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
         :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
+        :param temperature: What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value.
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -186,12 +189,12 @@ class Fim(BaseSDK):
             temperature=temperature,
             top_p=top_p,
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
             prompt=prompt,
             suffix=suffix,
+            min_tokens=min_tokens,
         )
 
         req = self.build_request_async(
@@ -240,18 +243,21 @@ class Fim(BaseSDK):
                 sentinel="[DONE]",
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            http_res_text = await utils.stream_to_text_async(http_res)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -260,10 +266,9 @@ class Fim(BaseSDK):
         *,
         model: Nullable[str],
         prompt: str,
-        temperature: Optional[float] = 0.7,
+        temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
@@ -273,6 +278,7 @@ class Fim(BaseSDK):
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -283,14 +289,14 @@ class Fim(BaseSDK):
 
         :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
         :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
+        :param temperature: What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value.
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -308,12 +314,12 @@ class Fim(BaseSDK):
             temperature=temperature,
             top_p=top_p,
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
             prompt=prompt,
             suffix=suffix,
+            min_tokens=min_tokens,
         )
 
         req = self.build_request(
@@ -362,15 +368,17 @@ class Fim(BaseSDK):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )
 
@@ -379,10 +387,9 @@ class Fim(BaseSDK):
         *,
         model: Nullable[str],
         prompt: str,
-        temperature: Optional[float] = 0.7,
+        temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
         max_tokens: OptionalNullable[int] = UNSET,
-        min_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
@@ -392,6 +399,7 @@ class Fim(BaseSDK):
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -402,14 +410,14 @@ class Fim(BaseSDK):
 
         :param model: ID of the model to use. Only compatible for now with:   - `codestral-2405`   - `codestral-latest`
         :param prompt: The text/code to complete.
-        :param temperature: What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
+        :param temperature: What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value.
         :param top_p: Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
         :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
+        :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -427,12 +435,12 @@ class Fim(BaseSDK):
             temperature=temperature,
             top_p=top_p,
             max_tokens=max_tokens,
-            min_tokens=min_tokens,
             stream=stream,
             stop=stop,
             random_seed=random_seed,
             prompt=prompt,
             suffix=suffix,
+            min_tokens=min_tokens,
         )
 
         req = self.build_request_async(
@@ -481,14 +489,16 @@ class Fim(BaseSDK):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res.text, http_res
+                "API error occurred", http_res.status_code, http_res_text, http_res
             )
 
         content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
         raise models.SDKError(
             f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
             http_res.status_code,
-            http_res.text,
+            http_res_text,
             http_res,
         )

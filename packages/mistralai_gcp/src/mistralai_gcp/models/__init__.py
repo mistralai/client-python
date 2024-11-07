@@ -2,6 +2,8 @@
 
 from .assistantmessage import (
     AssistantMessage,
+    AssistantMessageContent,
+    AssistantMessageContentTypedDict,
     AssistantMessageRole,
     AssistantMessageTypedDict,
 )
@@ -42,7 +44,7 @@ from .completionresponsestreamchoice import (
     FinishReason,
 )
 from .contentchunk import ContentChunk, ContentChunkTypedDict
-from .deltamessage import DeltaMessage, DeltaMessageTypedDict
+from .deltamessage import Content, ContentTypedDict, DeltaMessage, DeltaMessageTypedDict
 from .fimcompletionrequest import (
     FIMCompletionRequest,
     FIMCompletionRequestStop,
@@ -70,10 +72,10 @@ from .responseformats import ResponseFormats
 from .sdkerror import SDKError
 from .security import Security, SecurityTypedDict
 from .systemmessage import (
-    Content,
-    ContentTypedDict,
     Role,
     SystemMessage,
+    SystemMessageContent,
+    SystemMessageContentTypedDict,
     SystemMessageTypedDict,
 )
 from .textchunk import TextChunk, TextChunkTypedDict, Type
@@ -102,6 +104,8 @@ __all__ = [
     "Arguments",
     "ArgumentsTypedDict",
     "AssistantMessage",
+    "AssistantMessageContent",
+    "AssistantMessageContentTypedDict",
     "AssistantMessageRole",
     "AssistantMessageTypedDict",
     "ChatCompletionChoice",
@@ -166,6 +170,8 @@ __all__ = [
     "Stop",
     "StopTypedDict",
     "SystemMessage",
+    "SystemMessageContent",
+    "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
     "TextChunk",
     "TextChunkTypedDict",

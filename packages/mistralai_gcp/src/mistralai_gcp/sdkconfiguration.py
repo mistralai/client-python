@@ -10,10 +10,10 @@ from pydantic import Field
 from typing import Callable, Dict, Optional, Tuple, Union
 
 
-SERVER_PROD = "prod"
-r"""Production server"""
+SERVER_EU = "eu"
+r"""EU Production server"""
 SERVERS = {
-    SERVER_PROD: "https://api.mistral.ai",
+    SERVER_EU: "https://api.mistral.ai",
 }
 """Contains the list of servers available to the SDK"""
 
@@ -28,9 +28,9 @@ class SDKConfiguration:
     server: Optional[str] = ""
     language: str = "python"
     openapi_doc_version: str = "0.0.2"
-    sdk_version: str = "1.2.2"
-    gen_version: str = "2.415.6"
-    user_agent: str = "speakeasy-sdk/python 1.2.2 2.415.6 0.0.2 mistralai-gcp"
+    sdk_version: str = "1.2.0"
+    gen_version: str = "2.452.0"
+    user_agent: str = "speakeasy-sdk/python 1.2.0 2.452.0 0.0.2 mistralai-gcp"
     retry_config: OptionalNullable[RetryConfig] = Field(default_factory=lambda: UNSET)
     timeout_ms: Optional[int] = None
 
@@ -41,7 +41,7 @@ class SDKConfiguration:
         if self.server_url is not None and self.server_url:
             return remove_suffix(self.server_url, "/"), {}
         if not self.server:
-            self.server = SERVER_PROD
+            self.server = SERVER_EU
 
         if self.server not in SERVERS:
             raise ValueError(f'Invalid server "{self.server}"')

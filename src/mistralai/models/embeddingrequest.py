@@ -4,8 +4,8 @@ from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import List, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 InputsTypedDict = Union[str, List[str]]
@@ -19,7 +19,7 @@ r"""Text to embed."""
 class EmbeddingRequestTypedDict(TypedDict):
     inputs: InputsTypedDict
     r"""Text to embed."""
-    model: str
+    model: NotRequired[str]
     r"""ID of the model to use."""
     encoding_format: NotRequired[Nullable[str]]
     r"""The format to return the embeddings in."""
@@ -29,7 +29,7 @@ class EmbeddingRequest(BaseModel):
     inputs: Annotated[Inputs, pydantic.Field(alias="input")]
     r"""Text to embed."""
 
-    model: str
+    model: Optional[str] = "mistral-embed"
     r"""ID of the model to use."""
 
     encoding_format: OptionalNullable[str] = UNSET
@@ -37,7 +37,7 @@ class EmbeddingRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["encoding_format"]
+        optional_fields = ["model", "encoding_format"]
         nullable_fields = ["encoding_format"]
         null_default_fields = []
 

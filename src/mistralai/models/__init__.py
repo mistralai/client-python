@@ -20,6 +20,7 @@ from .agentscompletionstreamrequest import (
     AgentsCompletionStreamRequestToolChoiceTypedDict,
     AgentsCompletionStreamRequestTypedDict,
 )
+from .apiendpoint import APIEndpoint
 from .archiveftmodelout import (
     ArchiveFTModelOut,
     ArchiveFTModelOutObject,
@@ -27,10 +28,27 @@ from .archiveftmodelout import (
 )
 from .assistantmessage import (
     AssistantMessage,
+    AssistantMessageContent,
+    AssistantMessageContentTypedDict,
     AssistantMessageRole,
     AssistantMessageTypedDict,
 )
-from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
+from .basemodelcard import BaseModelCard, BaseModelCardTypedDict, Type
+from .batcherror import BatchError, BatchErrorTypedDict
+from .batchjobin import BatchJobIn, BatchJobInTypedDict
+from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
+from .batchjobsout import BatchJobsOut, BatchJobsOutObject, BatchJobsOutTypedDict
+from .batchjobstatus import BatchJobStatus
+from .chatclassificationrequest import (
+    ChatClassificationRequest,
+    ChatClassificationRequestInputs,
+    ChatClassificationRequestInputsTypedDict,
+    ChatClassificationRequestTypedDict,
+    One,
+    OneTypedDict,
+    Two,
+    TwoTypedDict,
+)
 from .chatcompletionchoice import (
     ChatCompletionChoice,
     ChatCompletionChoiceTypedDict,
@@ -61,6 +79,17 @@ from .chatcompletionstreamrequest import (
     ChatCompletionStreamRequestTypedDict,
 )
 from .checkpointout import CheckpointOut, CheckpointOutTypedDict
+from .classificationobject import ClassificationObject, ClassificationObjectTypedDict
+from .classificationrequest import (
+    ClassificationRequest,
+    ClassificationRequestInputs,
+    ClassificationRequestInputsTypedDict,
+    ClassificationRequestTypedDict,
+)
+from .classificationresponse import (
+    ClassificationResponse,
+    ClassificationResponseTypedDict,
+)
 from .completionchunk import CompletionChunk, CompletionChunkTypedDict
 from .completionevent import CompletionEvent, CompletionEventTypedDict
 from .completionresponsestreamchoice import (
@@ -75,7 +104,7 @@ from .delete_model_v1_models_model_id_deleteop import (
 )
 from .deletefileout import DeleteFileOut, DeleteFileOutTypedDict
 from .deletemodelout import DeleteModelOut, DeleteModelOutTypedDict
-from .deltamessage import DeltaMessage, DeltaMessageTypedDict
+from .deltamessage import Content, ContentTypedDict, DeltaMessage, DeltaMessageTypedDict
 from .detailedjobout import (
     DetailedJobOut,
     DetailedJobOutIntegrations,
@@ -95,9 +124,18 @@ from .embeddingrequest import (
 from .embeddingresponse import EmbeddingResponse, EmbeddingResponseTypedDict
 from .embeddingresponsedata import EmbeddingResponseData, EmbeddingResponseDataTypedDict
 from .eventout import EventOut, EventOutTypedDict
+from .filepurpose import FilePurpose
 from .files_api_routes_delete_fileop import (
     FilesAPIRoutesDeleteFileRequest,
     FilesAPIRoutesDeleteFileRequestTypedDict,
+)
+from .files_api_routes_download_fileop import (
+    FilesAPIRoutesDownloadFileRequest,
+    FilesAPIRoutesDownloadFileRequestTypedDict,
+)
+from .files_api_routes_list_filesop import (
+    FilesAPIRoutesListFilesRequest,
+    FilesAPIRoutesListFilesRequestTypedDict,
 )
 from .files_api_routes_retrieve_fileop import (
     FilesAPIRoutesRetrieveFileRequest,
@@ -108,9 +146,8 @@ from .files_api_routes_upload_fileop import (
     FileTypedDict,
     FilesAPIRoutesUploadFileMultiPartBodyParams,
     FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict,
-    FilesAPIRoutesUploadFilePurpose,
 )
-from .fileschema import FileSchema, FileSchemaPurpose, FileSchemaTypedDict
+from .fileschema import FileSchema, FileSchemaTypedDict
 from .fimcompletionrequest import (
     FIMCompletionRequest,
     FIMCompletionRequestStop,
@@ -129,7 +166,7 @@ from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOut,
     FTModelCapabilitiesOutTypedDict,
 )
-from .ftmodelcard import FTModelCard, FTModelCardTypedDict
+from .ftmodelcard import FTModelCard, FTModelCardType, FTModelCardTypedDict
 from .ftmodelout import FTModelOut, FTModelOutObject, FTModelOutTypedDict
 from .function import Function, FunctionTypedDict
 from .functioncall import (
@@ -176,6 +213,18 @@ from .jobout import (
     Repositories,
     RepositoriesTypedDict,
     Status,
+)
+from .jobs_api_routes_batch_cancel_batch_jobop import (
+    JobsAPIRoutesBatchCancelBatchJobRequest,
+    JobsAPIRoutesBatchCancelBatchJobRequestTypedDict,
+)
+from .jobs_api_routes_batch_get_batch_jobop import (
+    JobsAPIRoutesBatchGetBatchJobRequest,
+    JobsAPIRoutesBatchGetBatchJobRequestTypedDict,
+)
+from .jobs_api_routes_batch_get_batch_jobsop import (
+    JobsAPIRoutesBatchGetBatchJobsRequest,
+    JobsAPIRoutesBatchGetBatchJobsRequestTypedDict,
 )
 from .jobs_api_routes_fine_tuning_archive_fine_tuned_modelop import (
     JobsAPIRoutesFineTuningArchiveFineTunedModelRequest,
@@ -228,20 +277,16 @@ from .retrieve_model_v1_models_model_id_getop import (
     RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
     RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict,
 )
-from .retrievefileout import (
-    RetrieveFileOut,
-    RetrieveFileOutPurpose,
-    RetrieveFileOutTypedDict,
-)
+from .retrievefileout import RetrieveFileOut, RetrieveFileOutTypedDict
 from .sampletype import SampleType
 from .sdkerror import SDKError
 from .security import Security, SecurityTypedDict
 from .source import Source
 from .systemmessage import (
-    Content,
-    ContentTypedDict,
     Role,
     SystemMessage,
+    SystemMessageContent,
+    SystemMessageContentTypedDict,
     SystemMessageTypedDict,
 )
 from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
@@ -260,7 +305,7 @@ from .unarchiveftmodelout import (
     UnarchiveFTModelOutTypedDict,
 )
 from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
-from .uploadfileout import Purpose, UploadFileOut, UploadFileOutTypedDict
+from .uploadfileout import UploadFileOut, UploadFileOutTypedDict
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from .usermessage import (
     UserMessage,
@@ -280,9 +325,14 @@ from .wandbintegration import (
     WandbIntegrationType,
     WandbIntegrationTypedDict,
 )
-from .wandbintegrationout import Type, WandbIntegrationOut, WandbIntegrationOutTypedDict
+from .wandbintegrationout import (
+    WandbIntegrationOut,
+    WandbIntegrationOutType,
+    WandbIntegrationOutTypedDict,
+)
 
 __all__ = [
+    "APIEndpoint",
     "AgentsCompletionRequest",
     "AgentsCompletionRequestMessages",
     "AgentsCompletionRequestMessagesTypedDict",
@@ -305,10 +355,27 @@ __all__ = [
     "Arguments",
     "ArgumentsTypedDict",
     "AssistantMessage",
+    "AssistantMessageContent",
+    "AssistantMessageContentTypedDict",
     "AssistantMessageRole",
     "AssistantMessageTypedDict",
     "BaseModelCard",
     "BaseModelCardTypedDict",
+    "BatchError",
+    "BatchErrorTypedDict",
+    "BatchJobIn",
+    "BatchJobInTypedDict",
+    "BatchJobOut",
+    "BatchJobOutObject",
+    "BatchJobOutTypedDict",
+    "BatchJobStatus",
+    "BatchJobsOut",
+    "BatchJobsOutObject",
+    "BatchJobsOutTypedDict",
+    "ChatClassificationRequest",
+    "ChatClassificationRequestInputs",
+    "ChatClassificationRequestInputsTypedDict",
+    "ChatClassificationRequestTypedDict",
     "ChatCompletionChoice",
     "ChatCompletionChoiceTypedDict",
     "ChatCompletionRequest",
@@ -327,6 +394,14 @@ __all__ = [
     "ChatCompletionStreamRequestTypedDict",
     "CheckpointOut",
     "CheckpointOutTypedDict",
+    "ClassificationObject",
+    "ClassificationObjectTypedDict",
+    "ClassificationRequest",
+    "ClassificationRequestInputs",
+    "ClassificationRequestInputsTypedDict",
+    "ClassificationRequestTypedDict",
+    "ClassificationResponse",
+    "ClassificationResponseTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
     "CompletionEvent",
@@ -377,22 +452,26 @@ __all__ = [
     "FTModelCapabilitiesOut",
     "FTModelCapabilitiesOutTypedDict",
     "FTModelCard",
+    "FTModelCardType",
     "FTModelCardTypedDict",
     "FTModelOut",
     "FTModelOutObject",
     "FTModelOutTypedDict",
     "File",
+    "FilePurpose",
     "FileSchema",
-    "FileSchemaPurpose",
     "FileSchemaTypedDict",
     "FileTypedDict",
     "FilesAPIRoutesDeleteFileRequest",
     "FilesAPIRoutesDeleteFileRequestTypedDict",
+    "FilesAPIRoutesDownloadFileRequest",
+    "FilesAPIRoutesDownloadFileRequestTypedDict",
+    "FilesAPIRoutesListFilesRequest",
+    "FilesAPIRoutesListFilesRequestTypedDict",
     "FilesAPIRoutesRetrieveFileRequest",
     "FilesAPIRoutesRetrieveFileRequestTypedDict",
     "FilesAPIRoutesUploadFileMultiPartBodyParams",
     "FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict",
-    "FilesAPIRoutesUploadFilePurpose",
     "FineTuneableModel",
     "FinishReason",
     "Function",
@@ -430,6 +509,12 @@ __all__ = [
     "JobMetadataOutTypedDict",
     "JobOut",
     "JobOutTypedDict",
+    "JobsAPIRoutesBatchCancelBatchJobRequest",
+    "JobsAPIRoutesBatchCancelBatchJobRequestTypedDict",
+    "JobsAPIRoutesBatchGetBatchJobRequest",
+    "JobsAPIRoutesBatchGetBatchJobRequestTypedDict",
+    "JobsAPIRoutesBatchGetBatchJobsRequest",
+    "JobsAPIRoutesBatchGetBatchJobsRequestTypedDict",
     "JobsAPIRoutesFineTuningArchiveFineTunedModelRequest",
     "JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict",
     "JobsAPIRoutesFineTuningCancelFineTuningJobRequest",
@@ -465,7 +550,8 @@ __all__ = [
     "ModelList",
     "ModelListTypedDict",
     "Object",
-    "Purpose",
+    "One",
+    "OneTypedDict",
     "QueryParamStatus",
     "Repositories",
     "RepositoriesTypedDict",
@@ -473,7 +559,6 @@ __all__ = [
     "ResponseFormatTypedDict",
     "ResponseFormats",
     "RetrieveFileOut",
-    "RetrieveFileOutPurpose",
     "RetrieveFileOutTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
@@ -489,6 +574,8 @@ __all__ = [
     "Stop",
     "StopTypedDict",
     "SystemMessage",
+    "SystemMessageContent",
+    "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
     "TextChunk",
     "TextChunkType",
@@ -510,6 +597,8 @@ __all__ = [
     "TrainingParametersIn",
     "TrainingParametersInTypedDict",
     "TrainingParametersTypedDict",
+    "Two",
+    "TwoTypedDict",
     "Type",
     "UnarchiveFTModelOut",
     "UnarchiveFTModelOutObject",
@@ -529,6 +618,7 @@ __all__ = [
     "ValidationErrorTypedDict",
     "WandbIntegration",
     "WandbIntegrationOut",
+    "WandbIntegrationOutType",
     "WandbIntegrationOutTypedDict",
     "WandbIntegrationType",
     "WandbIntegrationTypedDict",

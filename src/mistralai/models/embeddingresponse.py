@@ -4,7 +4,8 @@ from __future__ import annotations
 from .embeddingresponsedata import EmbeddingResponseData, EmbeddingResponseDataTypedDict
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from mistralai.types import BaseModel
-from typing import List, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class EmbeddingResponseTypedDict(TypedDict):

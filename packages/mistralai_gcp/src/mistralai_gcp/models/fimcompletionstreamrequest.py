@@ -9,8 +9,8 @@ from mistralai_gcp.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict, Union
-from typing_extensions import NotRequired
+from typing import List, Optional, Union
+from typing_extensions import NotRequired, TypedDict
 
 
 FIMCompletionStreamRequestStopTypedDict = Union[str, List[str]]
@@ -29,14 +29,12 @@ class FIMCompletionStreamRequestTypedDict(TypedDict):
     """
     prompt: str
     r"""The text/code to complete."""
-    temperature: NotRequired[float]
-    r"""What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."""
+    temperature: NotRequired[Nullable[float]]
+    r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
     top_p: NotRequired[float]
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-    min_tokens: NotRequired[Nullable[int]]
-    r"""The minimum number of tokens to generate in the completion."""
     stream: NotRequired[bool]
     stop: NotRequired[FIMCompletionStreamRequestStopTypedDict]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
@@ -44,6 +42,8 @@ class FIMCompletionStreamRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     suffix: NotRequired[Nullable[str]]
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
+    min_tokens: NotRequired[Nullable[int]]
+    r"""The minimum number of tokens to generate in the completion."""
 
 
 class FIMCompletionStreamRequest(BaseModel):
@@ -56,17 +56,14 @@ class FIMCompletionStreamRequest(BaseModel):
     prompt: str
     r"""The text/code to complete."""
 
-    temperature: Optional[float] = 0.7
-    r"""What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."""
+    temperature: OptionalNullable[float] = UNSET
+    r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
 
     top_p: Optional[float] = 1
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
 
     max_tokens: OptionalNullable[int] = UNSET
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
-
-    min_tokens: OptionalNullable[int] = UNSET
-    r"""The minimum number of tokens to generate in the completion."""
 
     stream: Optional[bool] = True
 
@@ -79,19 +76,29 @@ class FIMCompletionStreamRequest(BaseModel):
     suffix: OptionalNullable[str] = UNSET
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
 
+    min_tokens: OptionalNullable[int] = UNSET
+    r"""The minimum number of tokens to generate in the completion."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
             "temperature",
             "top_p",
             "max_tokens",
-            "min_tokens",
             "stream",
             "stop",
             "random_seed",
             "suffix",
+            "min_tokens",
         ]
-        nullable_fields = ["model", "max_tokens", "min_tokens", "random_seed", "suffix"]
+        nullable_fields = [
+            "model",
+            "temperature",
+            "max_tokens",
+            "random_seed",
+            "suffix",
+            "min_tokens",
+        ]
         null_default_fields = []
 
         serialized = handler(self)
