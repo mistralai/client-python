@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 46baf8da7636ea1bf44557571d011045
+  docChecksum: 8bc1c90dedd2c59748c2223094996bd8
   docVersion: 0.0.2
-  speakeasyVersion: 1.434.4
-  generationVersion: 2.452.0
-  releaseVersion: 1.2.0
-  configChecksum: 6036ab871ca1cf21d35bfc75dc25089b
+  speakeasyVersion: 1.435.1
+  generationVersion: 2.455.2
+  releaseVersion: 1.2.2
+  configChecksum: 7a72231e8edb9fb1f1ec889593282b6d
   published: true
 features:
   python:
@@ -16,6 +16,7 @@ features:
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
+    errorUnions: 1.0.2
     examples: 3.0.0
     flatRequests: 1.0.1
     globalSecurity: 3.0.2
@@ -67,8 +68,10 @@ generatedFiles:
   - docs/models/functioncall.md
   - docs/models/functionname.md
   - docs/models/httpvalidationerror.md
+  - docs/models/httpvalidationerror1.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/payloadvalidationerror.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/role.md
@@ -91,6 +94,7 @@ generatedFiles:
   - docs/models/usermessagerole.md
   - docs/models/utils/retryconfig.md
   - docs/models/validationerror.md
+  - docs/models/wrappedhttpvalidationerror.md
   - poetry.toml
   - py.typed
   - pylintrc
@@ -124,6 +128,8 @@ generatedFiles:
   - src/mistralai_gcp/models/functioncall.py
   - src/mistralai_gcp/models/functionname.py
   - src/mistralai_gcp/models/httpvalidationerror.py
+  - src/mistralai_gcp/models/httpvalidationerror1.py
+  - src/mistralai_gcp/models/payloadvalidationerror.py
   - src/mistralai_gcp/models/responseformat.py
   - src/mistralai_gcp/models/responseformats.py
   - src/mistralai_gcp/models/sdkerror.py
@@ -139,6 +145,7 @@ generatedFiles:
   - src/mistralai_gcp/models/usageinfo.py
   - src/mistralai_gcp/models/usermessage.py
   - src/mistralai_gcp/models/validationerror.py
+  - src/mistralai_gcp/models/wrappedhttpvalidationerror.py
   - src/mistralai_gcp/py.typed
   - src/mistralai_gcp/sdkconfiguration.py
   - src/mistralai_gcp/types/__init__.py

@@ -186,7 +186,8 @@ from .githubrepositoryout import (
     GithubRepositoryOutType,
     GithubRepositoryOutTypedDict,
 )
-from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
+from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorTypedDict
+from .httpvalidationerror1 import HTTPValidationError1, HTTPValidationError1Data
 from .imageurl import ImageURL, ImageURLTypedDict
 from .imageurlchunk import (
     ImageURLChunk,
@@ -269,6 +270,7 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
+from .payloadvalidationerror import PayloadValidationError, PayloadValidationErrorUnion
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
 from .retrieve_model_v1_models_model_id_getop import (
@@ -329,6 +331,10 @@ from .wandbintegrationout import (
     WandbIntegrationOut,
     WandbIntegrationOutType,
     WandbIntegrationOutTypedDict,
+)
+from .wrappedhttpvalidationerror import (
+    WrappedHTTPValidationError,
+    WrappedHTTPValidationErrorData,
 )
 
 __all__ = [
@@ -487,7 +493,9 @@ __all__ = [
     "GithubRepositoryOutType",
     "GithubRepositoryOutTypedDict",
     "HTTPValidationError",
-    "HTTPValidationErrorData",
+    "HTTPValidationError1",
+    "HTTPValidationError1Data",
+    "HTTPValidationErrorTypedDict",
     "ImageURL",
     "ImageURLChunk",
     "ImageURLChunkImageURL",
@@ -552,6 +560,8 @@ __all__ = [
     "Object",
     "One",
     "OneTypedDict",
+    "PayloadValidationError",
+    "PayloadValidationErrorUnion",
     "QueryParamStatus",
     "Repositories",
     "RepositoriesTypedDict",
@@ -622,4 +632,6 @@ __all__ = [
     "WandbIntegrationOutTypedDict",
     "WandbIntegrationType",
     "WandbIntegrationTypedDict",
+    "WrappedHTTPValidationError",
+    "WrappedHTTPValidationErrorData",
 ]

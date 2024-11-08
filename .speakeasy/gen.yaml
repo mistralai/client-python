@@ -13,7 +13,7 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 1.2.1
+  version: 1.2.2
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -21,6 +21,7 @@ python:
   authors:
     - Mistral
   clientServerStatusCodesAsErrors: true
+  defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
   enumFormat: union
   envVarPrefix: MISTRAL

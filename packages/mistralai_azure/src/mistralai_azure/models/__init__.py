@@ -53,7 +53,9 @@ from .functioncall import (
     FunctionCallTypedDict,
 )
 from .functionname import FunctionName, FunctionNameTypedDict
-from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
+from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorTypedDict
+from .httpvalidationerror1 import HTTPValidationError1, HTTPValidationError1Data
+from .payloadvalidationerror import PayloadValidationError, PayloadValidationErrorUnion
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
 from .sdkerror import SDKError
@@ -85,6 +87,10 @@ from .validationerror import (
     LocTypedDict,
     ValidationError,
     ValidationErrorTypedDict,
+)
+from .wrappedhttpvalidationerror import (
+    WrappedHTTPValidationError,
+    WrappedHTTPValidationErrorData,
 )
 
 __all__ = [
@@ -132,11 +138,15 @@ __all__ = [
     "FunctionNameTypedDict",
     "FunctionTypedDict",
     "HTTPValidationError",
-    "HTTPValidationErrorData",
+    "HTTPValidationError1",
+    "HTTPValidationError1Data",
+    "HTTPValidationErrorTypedDict",
     "Loc",
     "LocTypedDict",
     "Messages",
     "MessagesTypedDict",
+    "PayloadValidationError",
+    "PayloadValidationErrorUnion",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
@@ -173,4 +183,6 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
+    "WrappedHTTPValidationError",
+    "WrappedHTTPValidationErrorData",
 ]

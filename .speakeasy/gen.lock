@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: ee15d853ecc28d415d6b33191893a6ff
+  docChecksum: 376006cc2a5f2f90da74747765436115
   docVersion: 0.0.2
-  speakeasyVersion: 1.434.7
-  generationVersion: 2.452.0
-  releaseVersion: 1.2.1
-  configChecksum: 5d659f51b118508e47958545e6b539d2
+  speakeasyVersion: 1.435.1
+  generationVersion: 2.455.2
+  releaseVersion: 1.2.2
+  configChecksum: bfa571f32b68bdb4917b69135c2eb818
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -19,6 +19,7 @@ features:
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
+    errorUnions: 1.0.2
     examples: 3.0.0
     flatRequests: 1.0.1
     flattening: 3.1.0
@@ -131,6 +132,7 @@ generatedFiles:
   - docs/models/githubrepositoryout.md
   - docs/models/githubrepositoryouttype.md
   - docs/models/httpvalidationerror.md
+  - docs/models/httpvalidationerror1.md
   - docs/models/imageurl.md
   - docs/models/imageurlchunk.md
   - docs/models/imageurlchunkimageurl.md
@@ -165,6 +167,7 @@ generatedFiles:
   - docs/models/modellist.md
   - docs/models/object.md
   - docs/models/one.md
+  - docs/models/payloadvalidationerror.md
   - docs/models/queryparamstatus.md
   - docs/models/repositories.md
   - docs/models/responseformat.md
@@ -208,6 +211,7 @@ generatedFiles:
   - docs/models/wandbintegrationout.md
   - docs/models/wandbintegrationouttype.md
   - docs/models/wandbintegrationtype.md
+  - docs/models/wrappedhttpvalidationerror.md
   - docs/sdks/agents/README.md
   - docs/sdks/batch/README.md
   - docs/sdks/chat/README.md
@@ -296,6 +300,7 @@ generatedFiles:
   - src/mistralai/models/githubrepositoryin.py
   - src/mistralai/models/githubrepositoryout.py
   - src/mistralai/models/httpvalidationerror.py
+  - src/mistralai/models/httpvalidationerror1.py
   - src/mistralai/models/imageurl.py
   - src/mistralai/models/imageurlchunk.py
   - src/mistralai/models/jobin.py
@@ -318,6 +323,7 @@ generatedFiles:
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modellist.py
+  - src/mistralai/models/payloadvalidationerror.py
   - src/mistralai/models/responseformat.py
   - src/mistralai/models/responseformats.py
   - src/mistralai/models/retrieve_model_v1_models_model_id_getop.py
@@ -345,6 +351,7 @@ generatedFiles:
   - src/mistralai/models/validationerror.py
   - src/mistralai/models/wandbintegration.py
   - src/mistralai/models/wandbintegrationout.py
+  - src/mistralai/models/wrappedhttpvalidationerror.py
   - src/mistralai/models_.py
   - src/mistralai/py.typed
   - src/mistralai/sdk.py

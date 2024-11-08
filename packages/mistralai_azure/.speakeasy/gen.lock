@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 0f195020b1080b5c3b1fc5834d30a929
+  docChecksum: 8e53e1e879f29330a549f0df516740de
   docVersion: 0.0.2
-  speakeasyVersion: 1.434.4
-  generationVersion: 2.452.0
-  releaseVersion: 1.2.0
-  configChecksum: 0600a305e49d44a5fcb3a5a33dc00999
+  speakeasyVersion: 1.435.1
+  generationVersion: 2.455.2
+  releaseVersion: 1.2.2
+  configChecksum: 6e48ad4c1d53e2d1ed143720e0d54487
   published: true
 features:
   python:
@@ -16,6 +16,7 @@ features:
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
+    errorUnions: 1.0.2
     examples: 3.0.0
     flatRequests: 1.0.1
     globalSecurity: 3.0.2
@@ -62,8 +63,10 @@ generatedFiles:
   - docs/models/functioncall.md
   - docs/models/functionname.md
   - docs/models/httpvalidationerror.md
+  - docs/models/httpvalidationerror1.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/payloadvalidationerror.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/role.md
@@ -86,6 +89,7 @@ generatedFiles:
   - docs/models/usermessagerole.md
   - docs/models/utils/retryconfig.md
   - docs/models/validationerror.md
+  - docs/models/wrappedhttpvalidationerror.md
   - poetry.toml
   - py.typed
   - pylintrc
@@ -115,6 +119,8 @@ generatedFiles:
   - src/mistralai_azure/models/functioncall.py
   - src/mistralai_azure/models/functionname.py
   - src/mistralai_azure/models/httpvalidationerror.py
+  - src/mistralai_azure/models/httpvalidationerror1.py
+  - src/mistralai_azure/models/payloadvalidationerror.py
   - src/mistralai_azure/models/responseformat.py
   - src/mistralai_azure/models/responseformats.py
   - src/mistralai_azure/models/sdkerror.py
@@ -130,6 +136,7 @@ generatedFiles:
   - src/mistralai_azure/models/usageinfo.py
   - src/mistralai_azure/models/usermessage.py
   - src/mistralai_azure/models/validationerror.py
+  - src/mistralai_azure/models/wrappedhttpvalidationerror.py
   - src/mistralai_azure/py.typed
   - src/mistralai_azure/sdkconfiguration.py
   - src/mistralai_azure/types/__init__.py

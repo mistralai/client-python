@@ -34,8 +34,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -142,8 +142,8 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationError1Data)
+            raise models.HTTPValidationError1(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -182,8 +182,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -290,8 +290,8 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(http_res_text, models.HTTPValidationError1Data)
+            raise models.HTTPValidationError1(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -338,8 +338,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -442,8 +442,10 @@ class Chat(BaseSDK):
                 http_res.text, Optional[models.ChatCompletionResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -490,8 +492,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         safe_prompt: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -594,8 +596,10 @@ class Chat(BaseSDK):
                 http_res.text, Optional[models.ChatCompletionResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

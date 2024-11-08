@@ -110,10 +110,10 @@ class ChatCompletionStreamRequest(BaseModel):
 
     tool_choice: Optional[ChatCompletionStreamRequestToolChoice] = None
 
-    presence_penalty: Optional[float] = 0
+    presence_penalty: Optional[float] = None
     r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
 
-    frequency_penalty: Optional[float] = 0
+    frequency_penalty: Optional[float] = None
     r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
     n: OptionalNullable[int] = UNSET

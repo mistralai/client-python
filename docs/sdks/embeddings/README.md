@@ -49,7 +49,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| models.PayloadValidationError | 422                           | application/json              |
+| models.SDKError               | 4XX, 5XX                      | \*/\*                         |

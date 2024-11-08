@@ -89,8 +89,10 @@ class Classifiers(BaseSDK):
                 http_res.text, Optional[models.ClassificationResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -184,8 +186,10 @@ class Classifiers(BaseSDK):
                 http_res.text, Optional[models.ClassificationResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -281,8 +285,10 @@ class Classifiers(BaseSDK):
                 http_res.text, Optional[models.ClassificationResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -378,8 +384,10 @@ class Classifiers(BaseSDK):
                 http_res.text, Optional[models.ClassificationResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            data = utils.unmarshal_json(
+                http_res.text, models.PayloadValidationErrorUnion
+            )
+            raise models.PayloadValidationError(data=data)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
