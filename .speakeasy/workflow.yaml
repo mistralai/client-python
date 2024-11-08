@@ -4,18 +4,12 @@ sources:
     mistral-azure-source:
         inputs:
             - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
-        registry:
-            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
     mistral-google-cloud-source:
         inputs:
             - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
-        registry:
-            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
     mistral-openapi:
         inputs:
             - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
-        registry:
-            location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
 targets:
     mistralai-azure-sdk:
         target: python
