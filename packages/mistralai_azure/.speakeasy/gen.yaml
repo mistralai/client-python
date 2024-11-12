@@ -21,6 +21,7 @@ python:
   authors:
     - Mistral
   clientServerStatusCodesAsErrors: true
+  defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in Azure.
   enumFormat: union
   fixFlags:
