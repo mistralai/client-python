@@ -1,42 +1,46 @@
-speakeasyVersion: 1.434.7
+speakeasyVersion: 1.438.1
 sources:
     mistral-azure-source:
-        sourceNamespace: mistral-openapi-azure
-        sourceRevisionDigest: sha256:8fda8235e30128cc8e1c4e1b828316551d03b584568789f262dc287b81d584ee
-        sourceBlobDigest: sha256:3c039e1f8a2230a86b0e1acec6224f6b8d6f181fb222b6b3b39d38b52075a8ec
+        sourceNamespace: mistral-azure-source
+        sourceRevisionDigest: sha256:2e3e3792ec63f3d59dd2a4de2f97ea6a80bd46f8905576069c54810feb930c12
+        sourceBlobDigest: sha256:da059f78d331ea36f2ec69dfc6c5aa65be0bf0eda011597281cea6499b7ebac8
         tags:
             - latest
     mistral-google-cloud-source:
-        sourceNamespace: mistral-openapi-google-cloud
-        sourceRevisionDigest: sha256:b2ce8e0e63674ea7ccfa3a75ff231bb97a39748331bcc0a3629f29c158f5b31e
-        sourceBlobDigest: sha256:a895adbf903776492b28daa3dd8c624f509decbbfe9ca6cda6510a33226604be
+        sourceNamespace: mistral-google-cloud-source
+        sourceRevisionDigest: sha256:22da209c58cb1591b3fde77467a9affce33c874724b220dd68f11a8f5fe92fbe
+        sourceBlobDigest: sha256:79c11900db52030ed8d8fff8066f9fe716670f4eadca41936f2cbc1a270fb087
         tags:
             - latest
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:e658442ebfc83351cbb7873fb17b03f07ff9edebd8eddfce5577e2c5c7bfafce
-        sourceBlobDigest: sha256:559403eaaa97c021eaf0022adddb1066694d879a946c87057e942806d5a2a2a2
+        sourceRevisionDigest: sha256:e44702b93f6a8ac450f1d85b4197f6640f8efb3d5e06be98418ea79acd8f70be
+        sourceBlobDigest: sha256:94a9891a3bdf3fafea5c41cee226c5e366c206e91e39e734cd2d1163af74f688
         tags:
             - latest
             - main
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
-        sourceNamespace: mistral-openapi-azure
-        sourceRevisionDigest: sha256:8fda8235e30128cc8e1c4e1b828316551d03b584568789f262dc287b81d584ee
-        sourceBlobDigest: sha256:3c039e1f8a2230a86b0e1acec6224f6b8d6f181fb222b6b3b39d38b52075a8ec
+        sourceNamespace: mistral-azure-source
+        sourceRevisionDigest: sha256:2e3e3792ec63f3d59dd2a4de2f97ea6a80bd46f8905576069c54810feb930c12
+        sourceBlobDigest: sha256:da059f78d331ea36f2ec69dfc6c5aa65be0bf0eda011597281cea6499b7ebac8
+        codeSamplesNamespace: mistral-openapi-azure-code-samples
+        codeSamplesRevisionDigest: sha256:e90c3293cb23081fed599d4528b168335a2ac58deb76ecc3afd7140d49b68816
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
-        sourceNamespace: mistral-openapi-google-cloud
-        sourceRevisionDigest: sha256:b2ce8e0e63674ea7ccfa3a75ff231bb97a39748331bcc0a3629f29c158f5b31e
-        sourceBlobDigest: sha256:a895adbf903776492b28daa3dd8c624f509decbbfe9ca6cda6510a33226604be
+        sourceNamespace: mistral-google-cloud-source
+        sourceRevisionDigest: sha256:22da209c58cb1591b3fde77467a9affce33c874724b220dd68f11a8f5fe92fbe
+        sourceBlobDigest: sha256:79c11900db52030ed8d8fff8066f9fe716670f4eadca41936f2cbc1a270fb087
+        codeSamplesNamespace: mistral-openapi-google-cloud-code-samples
+        codeSamplesRevisionDigest: sha256:8539ff0f99be949906dad55250e1d230dfebf062e8f7c38398713e11c6bb48ec
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:e658442ebfc83351cbb7873fb17b03f07ff9edebd8eddfce5577e2c5c7bfafce
-        sourceBlobDigest: sha256:559403eaaa97c021eaf0022adddb1066694d879a946c87057e942806d5a2a2a2
+        sourceRevisionDigest: sha256:e44702b93f6a8ac450f1d85b4197f6640f8efb3d5e06be98418ea79acd8f70be
+        sourceBlobDigest: sha256:94a9891a3bdf3fafea5c41cee226c5e366c206e91e39e734cd2d1163af74f688
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:f48900efe513aa95888e4035452ba1d54a2b1f8e872454ccb5bdca24d4fc7b09
+        codeSamplesRevisionDigest: sha256:9e9f8f0da360280a8d42e2ccbee423871b74abd07e872e10892636ba4be4e3a5
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -44,18 +48,12 @@ workflow:
         mistral-azure-source:
             inputs:
                 - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
-            registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
         mistral-google-cloud-source:
             inputs:
                 - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
-            registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
         mistral-openapi:
             inputs:
                 - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
-            registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
     targets:
         mistralai-azure-sdk:
             target: python
