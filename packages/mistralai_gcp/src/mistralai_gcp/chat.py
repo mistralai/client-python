@@ -34,8 +34,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -179,8 +179,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -332,8 +332,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -481,8 +481,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = 0,
-        frequency_penalty: Optional[float] = 0,
+        presence_penalty: Optional[float] = None,
+        frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

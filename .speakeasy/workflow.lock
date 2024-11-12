@@ -7,9 +7,9 @@ sources:
         tags:
             - latest
     mistral-google-cloud-source:
-        sourceNamespace: mistral-openapi-google-cloud
-        sourceRevisionDigest: sha256:b2ce8e0e63674ea7ccfa3a75ff231bb97a39748331bcc0a3629f29c158f5b31e
-        sourceBlobDigest: sha256:a895adbf903776492b28daa3dd8c624f509decbbfe9ca6cda6510a33226604be
+        sourceNamespace: mistral-google-cloud-source
+        sourceRevisionDigest: sha256:22da209c58cb1591b3fde77467a9affce33c874724b220dd68f11a8f5fe92fbe
+        sourceBlobDigest: sha256:79c11900db52030ed8d8fff8066f9fe716670f4eadca41936f2cbc1a270fb087
         tags:
             - latest
     mistral-openapi:
@@ -27,9 +27,11 @@ targets:
         sourceBlobDigest: sha256:3c039e1f8a2230a86b0e1acec6224f6b8d6f181fb222b6b3b39d38b52075a8ec
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
-        sourceNamespace: mistral-openapi-google-cloud
-        sourceRevisionDigest: sha256:b2ce8e0e63674ea7ccfa3a75ff231bb97a39748331bcc0a3629f29c158f5b31e
-        sourceBlobDigest: sha256:a895adbf903776492b28daa3dd8c624f509decbbfe9ca6cda6510a33226604be
+        sourceNamespace: mistral-google-cloud-source
+        sourceRevisionDigest: sha256:22da209c58cb1591b3fde77467a9affce33c874724b220dd68f11a8f5fe92fbe
+        sourceBlobDigest: sha256:79c11900db52030ed8d8fff8066f9fe716670f4eadca41936f2cbc1a270fb087
+        codeSamplesNamespace: mistral-openapi-google-cloud-code-samples
+        codeSamplesRevisionDigest: sha256:8539ff0f99be949906dad55250e1d230dfebf062e8f7c38398713e11c6bb48ec
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
