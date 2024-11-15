@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: a4b0284a2171be4279ac869462fc2ba5
+  docChecksum: e6c0a4254e61b1f171b409862f717867
   docVersion: 0.0.2
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 1.2.0
-  configChecksum: 5a6e207048dd06f191872088627d9018
+  speakeasyVersion: 1.440.1
+  generationVersion: 2.460.1
+  releaseVersion: 1.2.3
+  configChecksum: 3fc99d7ec7ee057a323b593ebf8fdb8c
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.4
-    core: 5.6.4
+    constsAndDefaults: 1.0.5
+    core: 5.6.5
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -69,6 +69,8 @@ generatedFiles:
   - docs/models/httpvalidationerror.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/referencechunk.md
+  - docs/models/referencechunktype.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/role.md
@@ -82,6 +84,7 @@ generatedFiles:
   - docs/models/toolchoice.md
   - docs/models/toolchoiceenum.md
   - docs/models/toolmessage.md
+  - docs/models/toolmessagecontent.md
   - docs/models/toolmessagerole.md
   - docs/models/tooltypes.md
   - docs/models/type.md
@@ -124,6 +127,7 @@ generatedFiles:
   - src/mistralai_gcp/models/functioncall.py
   - src/mistralai_gcp/models/functionname.py
   - src/mistralai_gcp/models/httpvalidationerror.py
+  - src/mistralai_gcp/models/referencechunk.py
   - src/mistralai_gcp/models/responseformat.py
   - src/mistralai_gcp/models/responseformats.py
   - src/mistralai_gcp/models/sdkerror.py
