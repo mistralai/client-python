@@ -15,3 +15,9 @@ value: models.ImageURLChunk = /* values here */
 value: models.TextChunk = /* values here */
 ```
 
+### `models.ReferenceChunk`
+
+```python
+value: models.ReferenceChunk = /* values here */
+```
+

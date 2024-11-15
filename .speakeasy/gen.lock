@@ -1,20 +1,20 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 87f5a2bcfbc64bec79241e2b0de25b9f
+  docChecksum: d066d98bdd0ef905d4126e0e69940946
   docVersion: 0.0.2
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 1.2.2
-  configChecksum: bfa571f32b68bdb4917b69135c2eb818
+  speakeasyVersion: 1.440.1
+  generationVersion: 2.460.1
+  releaseVersion: 1.2.3
+  configChecksum: 25fa33668bf14110dfe5bac267dcc8b4
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.4
-    core: 5.6.4
+    constsAndDefaults: 1.0.5
+    core: 5.6.5
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
@@ -166,6 +166,8 @@ generatedFiles:
   - docs/models/object.md
   - docs/models/one.md
   - docs/models/queryparamstatus.md
+  - docs/models/referencechunk.md
+  - docs/models/referencechunktype.md
   - docs/models/repositories.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
@@ -187,6 +189,7 @@ generatedFiles:
   - docs/models/toolchoice.md
   - docs/models/toolchoiceenum.md
   - docs/models/toolmessage.md
+  - docs/models/toolmessagecontent.md
   - docs/models/toolmessagerole.md
   - docs/models/tooltypes.md
   - docs/models/trainingfile.md
@@ -318,6 +321,7 @@ generatedFiles:
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modellist.py
+  - src/mistralai/models/referencechunk.py
   - src/mistralai/models/responseformat.py
   - src/mistralai/models/responseformats.py
   - src/mistralai/models/retrieve_model_v1_models_model_id_getop.py
@@ -563,7 +567,7 @@ examples:
   moderations_chat_v1_chat_moderations_post:
     speakeasy-default-moderations-chat-v1-chat-moderations-post:
       requestBody:
-        application/json: {"input": [[{"content": "<value>"}, {"content": []}, {"content": "<value>"}], []], "model": "V90"}
+        application/json: {"input": [[{"content": "<value>"}, {"content": "<value>"}, {"content": "<value>"}], [{"content": "<value>"}]], "model": "V90"}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
