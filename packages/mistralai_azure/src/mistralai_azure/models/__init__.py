@@ -54,6 +54,7 @@ from .functioncall import (
 )
 from .functionname import FunctionName, FunctionNameTypedDict
 from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
+from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
 from .sdkerror import SDKError
@@ -70,7 +71,13 @@ from .tool import Tool, ToolTypedDict
 from .toolcall import ToolCall, ToolCallTypedDict
 from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
-from .toolmessage import ToolMessage, ToolMessageRole, ToolMessageTypedDict
+from .toolmessage import (
+    ToolMessage,
+    ToolMessageContent,
+    ToolMessageContentTypedDict,
+    ToolMessageRole,
+    ToolMessageTypedDict,
+)
 from .tooltypes import ToolTypes
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from .usermessage import (
@@ -137,6 +144,9 @@ __all__ = [
     "LocTypedDict",
     "Messages",
     "MessagesTypedDict",
+    "ReferenceChunk",
+    "ReferenceChunkType",
+    "ReferenceChunkTypedDict",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
@@ -159,6 +169,8 @@ __all__ = [
     "ToolChoiceEnum",
     "ToolChoiceTypedDict",
     "ToolMessage",
+    "ToolMessageContent",
+    "ToolMessageContentTypedDict",
     "ToolMessageRole",
     "ToolMessageTypedDict",
     "ToolTypedDict",

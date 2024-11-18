@@ -70,7 +70,12 @@ s = Mistral(
 res = s.classifiers.moderate_chat(inputs=[
     [
         {
-            "content": "<value>",
+            "content": [
+                {
+                    "text": "<value>",
+                    "type": "text",
+                },
+            ],
         },
     ],
 ], model="V90")

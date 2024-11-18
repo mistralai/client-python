@@ -269,6 +269,7 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
+from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
 from .retrieve_model_v1_models_model_id_getop import (
@@ -294,7 +295,13 @@ from .tool import Tool, ToolTypedDict
 from .toolcall import ToolCall, ToolCallTypedDict
 from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
-from .toolmessage import ToolMessage, ToolMessageRole, ToolMessageTypedDict
+from .toolmessage import (
+    ToolMessage,
+    ToolMessageContent,
+    ToolMessageContentTypedDict,
+    ToolMessageRole,
+    ToolMessageTypedDict,
+)
 from .tooltypes import ToolTypes
 from .trainingfile import TrainingFile, TrainingFileTypedDict
 from .trainingparameters import TrainingParameters, TrainingParametersTypedDict
@@ -553,6 +560,9 @@ __all__ = [
     "One",
     "OneTypedDict",
     "QueryParamStatus",
+    "ReferenceChunk",
+    "ReferenceChunkType",
+    "ReferenceChunkTypedDict",
     "Repositories",
     "RepositoriesTypedDict",
     "ResponseFormat",
@@ -587,6 +597,8 @@ __all__ = [
     "ToolChoiceEnum",
     "ToolChoiceTypedDict",
     "ToolMessage",
+    "ToolMessageContent",
+    "ToolMessageContentTypedDict",
     "ToolMessageRole",
     "ToolMessageTypedDict",
     "ToolTypedDict",

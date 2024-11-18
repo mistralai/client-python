@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "mistralai_azure"
-__version__: str = "1.2.0"
+__version__: str = "1.2.3"
 
 try:
     if __package__ is not None:

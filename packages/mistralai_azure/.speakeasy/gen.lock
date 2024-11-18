@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 1eac78d7698423fcd3bc58124f860d30
+  docChecksum: d0000cbe03848bfe843794965cba332f
   docVersion: 0.0.2
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 1.2.0
-  configChecksum: f69f129b40abc60e88685a36201ebb87
+  speakeasyVersion: 1.440.1
+  generationVersion: 2.460.1
+  releaseVersion: 1.2.3
+  configChecksum: 60295c765204eb0aa26205ec02e574fc
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.4
-    core: 5.6.4
+    constsAndDefaults: 1.0.5
+    core: 5.6.5
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -64,6 +64,8 @@ generatedFiles:
   - docs/models/httpvalidationerror.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/referencechunk.md
+  - docs/models/referencechunktype.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/role.md
@@ -77,6 +79,7 @@ generatedFiles:
   - docs/models/toolchoice.md
   - docs/models/toolchoiceenum.md
   - docs/models/toolmessage.md
+  - docs/models/toolmessagecontent.md
   - docs/models/toolmessagerole.md
   - docs/models/tooltypes.md
   - docs/models/type.md
@@ -115,6 +118,7 @@ generatedFiles:
   - src/mistralai_azure/models/functioncall.py
   - src/mistralai_azure/models/functionname.py
   - src/mistralai_azure/models/httpvalidationerror.py
+  - src/mistralai_azure/models/referencechunk.py
   - src/mistralai_azure/models/responseformat.py
   - src/mistralai_azure/models/responseformats.py
   - src/mistralai_azure/models/sdkerror.py

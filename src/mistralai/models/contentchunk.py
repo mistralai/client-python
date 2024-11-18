@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
+from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag
@@ -9,12 +10,16 @@ from typing import Union
 from typing_extensions import Annotated
 
 
-ContentChunkTypedDict = Union[TextChunkTypedDict, ImageURLChunkTypedDict]
+ContentChunkTypedDict = Union[
+    TextChunkTypedDict, ImageURLChunkTypedDict, ReferenceChunkTypedDict
+]
 
 
 ContentChunk = Annotated[
     Union[
-        Annotated[ImageURLChunk, Tag("image_url")], Annotated[TextChunk, Tag("text")]
+        Annotated[ImageURLChunk, Tag("image_url")],
+        Annotated[TextChunk, Tag("text")],
+        Annotated[ReferenceChunk, Tag("reference")],
     ],
     Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]
