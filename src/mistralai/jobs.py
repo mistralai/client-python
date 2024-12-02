@@ -225,7 +225,7 @@ class Jobs(BaseSDK):
     def create(
         self,
         *,
-        model: models.FineTuneableModel,
+        model: str,
         hyperparameters: Union[
             models.TrainingParametersIn, models.TrainingParametersInTypedDict
         ],
@@ -354,7 +354,7 @@ class Jobs(BaseSDK):
     async def create_async(
         self,
         *,
-        model: models.FineTuneableModel,
+        model: str,
         hyperparameters: Union[
             models.TrainingParametersIn, models.TrainingParametersInTypedDict
         ],

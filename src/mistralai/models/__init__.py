@@ -133,6 +133,10 @@ from .files_api_routes_download_fileop import (
     FilesAPIRoutesDownloadFileRequest,
     FilesAPIRoutesDownloadFileRequestTypedDict,
 )
+from .files_api_routes_get_signed_urlop import (
+    FilesAPIRoutesGetSignedURLRequest,
+    FilesAPIRoutesGetSignedURLRequestTypedDict,
+)
 from .files_api_routes_list_filesop import (
     FilesAPIRoutesListFilesRequest,
     FilesAPIRoutesListFilesRequestTypedDict,
@@ -148,6 +152,7 @@ from .files_api_routes_upload_fileop import (
     FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict,
 )
 from .fileschema import FileSchema, FileSchemaTypedDict
+from .filesignedurl import FileSignedURL, FileSignedURLTypedDict
 from .fimcompletionrequest import (
     FIMCompletionRequest,
     FIMCompletionRequestStop,
@@ -161,7 +166,6 @@ from .fimcompletionstreamrequest import (
     FIMCompletionStreamRequestStopTypedDict,
     FIMCompletionStreamRequestTypedDict,
 )
-from .finetuneablemodel import FineTuneableModel
 from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOut,
     FTModelCapabilitiesOutTypedDict,
@@ -468,18 +472,21 @@ __all__ = [
     "FilePurpose",
     "FileSchema",
     "FileSchemaTypedDict",
+    "FileSignedURL",
+    "FileSignedURLTypedDict",
     "FileTypedDict",
     "FilesAPIRoutesDeleteFileRequest",
     "FilesAPIRoutesDeleteFileRequestTypedDict",
     "FilesAPIRoutesDownloadFileRequest",
     "FilesAPIRoutesDownloadFileRequestTypedDict",
+    "FilesAPIRoutesGetSignedURLRequest",
+    "FilesAPIRoutesGetSignedURLRequestTypedDict",
     "FilesAPIRoutesListFilesRequest",
     "FilesAPIRoutesListFilesRequestTypedDict",
     "FilesAPIRoutesRetrieveFileRequest",
     "FilesAPIRoutesRetrieveFileRequestTypedDict",
     "FilesAPIRoutesUploadFileMultiPartBodyParams",
     "FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict",
-    "FineTuneableModel",
     "FinishReason",
     "Function",
     "FunctionCall",

@@ -73,7 +73,6 @@ res = s.classifiers.moderate_chat(inputs=[
             "content": [
                 {
                     "text": "<value>",
-                    "type": "text",
                 },
             ],
         },

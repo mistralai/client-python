@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: d066d98bdd0ef905d4126e0e69940946
+  docChecksum: 36ad3563d9d2b3af47015100d060570b
   docVersion: 0.0.2
   speakeasyVersion: 1.440.1
   generationVersion: 2.460.1
-  releaseVersion: 1.2.3
-  configChecksum: 25fa33668bf14110dfe5bac267dcc8b4
+  releaseVersion: 1.2.4
+  configChecksum: 4fe789bac842073beb4e2d9c6c3f833d
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -107,16 +107,17 @@ generatedFiles:
   - docs/models/filepurpose.md
   - docs/models/filesapiroutesdeletefilerequest.md
   - docs/models/filesapiroutesdownloadfilerequest.md
+  - docs/models/filesapiroutesgetsignedurlrequest.md
   - docs/models/filesapirouteslistfilesrequest.md
   - docs/models/filesapiroutesretrievefilerequest.md
   - docs/models/filesapiroutesuploadfilemultipartbodyparams.md
   - docs/models/fileschema.md
+  - docs/models/filesignedurl.md
   - docs/models/fimcompletionrequest.md
   - docs/models/fimcompletionrequeststop.md
   - docs/models/fimcompletionresponse.md
   - docs/models/fimcompletionstreamrequest.md
   - docs/models/fimcompletionstreamrequeststop.md
-  - docs/models/finetuneablemodel.md
   - docs/models/finishreason.md
   - docs/models/ftmodelcapabilitiesout.md
   - docs/models/ftmodelcard.md
@@ -282,14 +283,15 @@ generatedFiles:
   - src/mistralai/models/filepurpose.py
   - src/mistralai/models/files_api_routes_delete_fileop.py
   - src/mistralai/models/files_api_routes_download_fileop.py
+  - src/mistralai/models/files_api_routes_get_signed_urlop.py
   - src/mistralai/models/files_api_routes_list_filesop.py
   - src/mistralai/models/files_api_routes_retrieve_fileop.py
   - src/mistralai/models/files_api_routes_upload_fileop.py
   - src/mistralai/models/fileschema.py
+  - src/mistralai/models/filesignedurl.py
   - src/mistralai/models/fimcompletionrequest.py
   - src/mistralai/models/fimcompletionresponse.py
   - src/mistralai/models/fimcompletionstreamrequest.py
-  - src/mistralai/models/finetuneablemodel.py
   - src/mistralai/models/ftmodelcapabilitiesout.py
   - src/mistralai/models/ftmodelcard.py
   - src/mistralai/models/ftmodelout.py
@@ -454,7 +456,7 @@ examples:
         application/json: {"model": "codestral-latest"}
       responses:
         "200":
-          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "open-mistral-7b", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
+          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "2", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
   jobs_api_routes_fine_tuning_get_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
@@ -521,7 +523,7 @@ examples:
         application/json: {"input": ["Embed this sentence.", "As well as this one."], "model": "Wrangler"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
         "422": {}
   files_api_routes_download_file:
     speakeasy-default-files-api-routes-download-file:
@@ -572,3 +574,12 @@ examples:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
         "422": {}
+  files_api_routes_get_signed_url:
+    speakeasy-default-files-api-routes-get-signed-url:
+      parameters:
+        path:
+          file_id: "<id>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"url": "https://scornful-daughter.com/"}

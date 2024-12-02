@@ -401,6 +401,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
 * [delete](docs/sdks/files/README.md#delete) - Delete File
 * [download](docs/sdks/files/README.md#download) - Download File
+* [get_signed_url](docs/sdks/files/README.md#get_signed_url) - Get Signed Url
 
 ### [fim](docs/sdks/fim/README.md)
 

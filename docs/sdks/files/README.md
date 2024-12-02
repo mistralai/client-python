@@ -12,6 +12,7 @@ Files API
 * [retrieve](#retrieve) - Retrieve File
 * [delete](#delete) - Delete File
 * [download](#download) - Download File
+* [get_signed_url](#get_signed_url) - Get Signed Url
 
 ## upload
 
@@ -214,6 +215,46 @@ if res is not None:
 ### Response
 
 **[httpx.Response](../../models/.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
+
+## get_signed_url
+
+Get Signed Url
+
+### Example Usage
+
+```python
+from mistralai import Mistral
+import os
+
+s = Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+)
+
+res = s.files.get_signed_url(file_id="<id>")
+
+if res is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `file_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `expiry`                                                            | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of hours before the url becomes invalid. Defaults to 24h     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.FileSignedURL](../../models/filesignedurl.md)**
 
 ### Errors
 
