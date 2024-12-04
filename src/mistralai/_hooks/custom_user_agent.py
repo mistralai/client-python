@@ -5,18 +5,18 @@ import httpx
 
 from .types import BeforeRequestContext, BeforeRequestHook
 
-prefix = "mistral-client-python/"
+PREFIX = "mistral-client-python/"
 
 class CustomUserAgentHook(BeforeRequestHook):
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
         current = request.headers["user-agent"]
-        if current.startswith(prefix):
+        if current.startswith(PREFIX):
             return request
         
         request.headers["user-agent"] = (
-            prefix + current.split(" ")[1]
+            PREFIX + current.split(" ")[1]
         )
 
         return request
