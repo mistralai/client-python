@@ -13,23 +13,30 @@ from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-AgentsCompletionRequestStopTypedDict = Union[str, List[str]]
+AgentsCompletionRequestStopTypedDict = TypeAliasType(
+    "AgentsCompletionRequestStopTypedDict", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionRequestStop = Union[str, List[str]]
+AgentsCompletionRequestStop = TypeAliasType(
+    "AgentsCompletionRequestStop", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionRequestMessagesTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+AgentsCompletionRequestMessagesTypedDict = TypeAliasType(
+    "AgentsCompletionRequestMessagesTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 AgentsCompletionRequestMessages = Annotated[
@@ -43,10 +50,15 @@ AgentsCompletionRequestMessages = Annotated[
 ]
 
 
-AgentsCompletionRequestToolChoiceTypedDict = Union[ToolChoiceTypedDict, ToolChoiceEnum]
+AgentsCompletionRequestToolChoiceTypedDict = TypeAliasType(
+    "AgentsCompletionRequestToolChoiceTypedDict",
+    Union[ToolChoiceTypedDict, ToolChoiceEnum],
+)
 
 
-AgentsCompletionRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+AgentsCompletionRequestToolChoice = TypeAliasType(
+    "AgentsCompletionRequestToolChoice", Union[ToolChoice, ToolChoiceEnum]
+)
 
 
 class AgentsCompletionRequestTypedDict(TypedDict):

@@ -20,20 +20,19 @@ Chat Completion
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.chat.complete(model="mistral-small-latest", messages=[
+        {
+            "content": "Who is the best French painter? Answer in one short sentence.",
+            "role": "user",
+        },
+    ])
 
-res = s.chat.complete(model="mistral-small-latest", messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-])
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -79,21 +78,21 @@ Mistral AI provides the ability to stream responses back to a client in order to
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.chat.stream(model="mistral-small-latest", messages=[
+        {
+            "content": "Who is the best French painter? Answer in one short sentence.",
+            "role": "user",
+        },
+    ])
 
-res = s.chat.stream(model="mistral-small-latest", messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-])
-
-if res is not None:
-    for event in res:
-        # handle event
-        print(event, flush=True)
+    if res is not None:
+        with res as event_stream:
+            for event in event_stream:
+                # handle event
+                print(event, flush=True)
 
 ```
 
@@ -120,7 +119,7 @@ if res is not None:
 
 ### Response
 
-**[Union[Generator[models.CompletionEvent, None, None], AsyncGenerator[models.CompletionEvent, None]]](../../models/.md)**
+**[Union[eventstreaming.EventStream[models.CompletionEvent], eventstreaming.EventStreamAsync[models.CompletionEvent]]](../../models/.md)**
 
 ### Errors
 

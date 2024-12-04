@@ -19,18 +19,17 @@ Embeddings
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.embeddings.create(inputs=[
+        "Embed this sentence.",
+        "As well as this one.",
+    ], model="Wrangler")
 
-res = s.embeddings.create(inputs=[
-    "Embed this sentence.",
-    "As well as this one.",
-], model="Wrangler")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

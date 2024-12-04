@@ -5,14 +5,18 @@ from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_
 import pydantic
 from pydantic import model_serializer
 from typing import List, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ClassificationRequestInputsTypedDict = Union[str, List[str]]
+ClassificationRequestInputsTypedDict = TypeAliasType(
+    "ClassificationRequestInputsTypedDict", Union[str, List[str]]
+)
 r"""Text to classify."""
 
 
-ClassificationRequestInputs = Union[str, List[str]]
+ClassificationRequestInputs = TypeAliasType(
+    "ClassificationRequestInputs", Union[str, List[str]]
+)
 r"""Text to classify."""
 
 

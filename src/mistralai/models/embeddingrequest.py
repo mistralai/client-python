@@ -5,14 +5,14 @@ from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_
 import pydantic
 from pydantic import model_serializer
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-InputsTypedDict = Union[str, List[str]]
+InputsTypedDict = TypeAliasType("InputsTypedDict", Union[str, List[str]])
 r"""Text to embed."""
 
 
-Inputs = Union[str, List[str]]
+Inputs = TypeAliasType("Inputs", Union[str, List[str]])
 r"""Text to embed."""
 
 

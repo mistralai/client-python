@@ -3,8 +3,8 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: 36ad3563d9d2b3af47015100d060570b
   docVersion: 0.0.2
-  speakeasyVersion: 1.440.1
-  generationVersion: 2.460.1
+  speakeasyVersion: 1.451.1
+  generationVersion: 2.470.1
   releaseVersion: 1.2.4
   configChecksum: 4fe789bac842073beb4e2d9c6c3f833d
   repoURL: https://github.com/mistralai/client-python.git
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.5
+    core: 5.6.8
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
@@ -34,11 +34,10 @@ features:
     responseFormat: 1.0.1
     retries: 3.0.2
     sdkHooks: 1.0.0
-    serverEvents: 1.0.4
+    serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
-    tests: 1.6.0
-    unions: 3.0.3
+    unions: 3.0.4
     uploadStreams: 1.0.0
 generatedFiles:
   - .gitattributes
@@ -583,3 +582,4 @@ examples:
       responses:
         "200":
           application/json: {"url": "https://scornful-daughter.com/"}
+generatedTests: {}

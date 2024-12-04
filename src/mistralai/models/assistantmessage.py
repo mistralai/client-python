@@ -6,13 +6,17 @@ from .toolcall import ToolCall, ToolCallTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-AssistantMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
+AssistantMessageContentTypedDict = TypeAliasType(
+    "AssistantMessageContentTypedDict", Union[str, List[ContentChunkTypedDict]]
+)
 
 
-AssistantMessageContent = Union[str, List[ContentChunk]]
+AssistantMessageContent = TypeAliasType(
+    "AssistantMessageContent", Union[str, List[ContentChunk]]
+)
 
 
 AssistantMessageRole = Literal["assistant"]

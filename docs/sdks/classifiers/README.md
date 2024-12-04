@@ -20,17 +20,16 @@ Moderations
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.classifiers.moderate(inputs=[
+        "<value>",
+    ])
 
-res = s.classifiers.moderate(inputs=[
-    "<value>",
-])
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -63,25 +62,24 @@ Moderations Chat
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.classifiers.moderate_chat(inputs=[
+        [
+            {
+                "content": [
+                    {
+                        "text": "<value>",
+                    },
+                ],
+            },
+        ],
+    ], model="V90")
 
-res = s.classifiers.moderate_chat(inputs=[
-    [
-        {
-            "content": [
-                {
-                    "text": "<value>",
-                },
-            ],
-        },
-    ],
-], model="V90")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

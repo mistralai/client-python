@@ -4,13 +4,15 @@ from __future__ import annotations
 from .imageurl import ImageURL, ImageURLTypedDict
 from mistralai.types import BaseModel
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ImageURLChunkImageURLTypedDict = Union[ImageURLTypedDict, str]
+ImageURLChunkImageURLTypedDict = TypeAliasType(
+    "ImageURLChunkImageURLTypedDict", Union[ImageURLTypedDict, str]
+)
 
 
-ImageURLChunkImageURL = Union[ImageURL, str]
+ImageURLChunkImageURL = TypeAliasType("ImageURLChunkImageURL", Union[ImageURL, str])
 
 
 ImageURLChunkType = Literal["image_url"]

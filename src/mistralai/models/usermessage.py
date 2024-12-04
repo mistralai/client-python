@@ -5,13 +5,15 @@ from .contentchunk import ContentChunk, ContentChunkTypedDict
 from mistralai.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-UserMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
+UserMessageContentTypedDict = TypeAliasType(
+    "UserMessageContentTypedDict", Union[str, List[ContentChunkTypedDict]]
+)
 
 
-UserMessageContent = Union[str, List[ContentChunk]]
+UserMessageContent = TypeAliasType("UserMessageContent", Union[str, List[ContentChunk]])
 
 
 UserMessageRole = Literal["user"]
