@@ -6,10 +6,12 @@ from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai_azure.utils import get_discriminator
 from pydantic import Discriminator, Tag
 from typing import Union
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypeAliasType
 
 
-ContentChunkTypedDict = Union[TextChunkTypedDict, ReferenceChunkTypedDict]
+ContentChunkTypedDict = TypeAliasType(
+    "ContentChunkTypedDict", Union[TextChunkTypedDict, ReferenceChunkTypedDict]
+)
 
 
 ContentChunk = Annotated[

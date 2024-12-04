@@ -4,13 +4,17 @@ from __future__ import annotations
 from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai_azure.types import BaseModel
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-SystemMessageContentTypedDict = Union[str, List[TextChunkTypedDict]]
+SystemMessageContentTypedDict = TypeAliasType(
+    "SystemMessageContentTypedDict", Union[str, List[TextChunkTypedDict]]
+)
 
 
-SystemMessageContent = Union[str, List[TextChunk]]
+SystemMessageContent = TypeAliasType(
+    "SystemMessageContent", Union[str, List[TextChunk]]
+)
 
 
 Role = Literal["system"]
