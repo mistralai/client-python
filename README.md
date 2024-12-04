@@ -27,19 +27,26 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [Mistral Python Client](#mistral-python-client)
+  * [Migration warning](#migration-warning)
+  * [API Key Setup](#api-key-setup)
+  * [SDK Installation](#sdk-installation)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Providers' SDKs Example Usage](#providers-sdks-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Server-sent event streaming](#server-sent-event-streaming)
+  * [File uploads](#file-uploads)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Authentication](#authentication)
+  * [Debugging](#debugging)
+  * [IDE Support](#ide-support)
+* [Development](#development)
+  * [Contributions](#contributions)
 
-* [SDK Installation](#sdk-installation)
-* [IDE Support](#ide-support)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Server-sent event streaming](#server-sent-event-streaming)
-* [File uploads](#file-uploads)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
-* [Debugging](#debugging)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -76,20 +83,19 @@ This example shows how to create chat completions.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.chat.complete(model="mistral-small-latest", messages=[
+        {
+            "content": "Who is the best French painter? Answer in one short sentence.",
+            "role": "user",
+        },
+    ])
 
-res = s.chat.complete(model="mistral-small-latest", messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-])
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -102,18 +108,19 @@ from mistralai import Mistral
 import os
 
 async def main():
-    s = Mistral(
+    async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    )
-    res = await s.chat.complete_async(model="mistral-small-latest", messages=[
-        {
-            "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
-        },
-    ])
-    if res is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.chat.complete_async(model="mistral-small-latest", messages=[
+            {
+                "content": "Who is the best French painter? Answer in one short sentence.",
+                "role": "user",
+            },
+        ])
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -127,18 +134,17 @@ This example shows how to upload a file.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.upload(file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+    })
 
-res = s.files.upload(file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -151,16 +157,17 @@ from mistralai import Mistral
 import os
 
 async def main():
-    s = Mistral(
+    async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    )
-    res = await s.files.upload_async(file={
-        "file_name": "example.file",
-        "content": open("example.file", "rb"),
-    })
-    if res is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.files.upload_async(file={
+            "file_name": "example.file",
+            "content": open("example.file", "rb"),
+        })
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -174,20 +181,19 @@ This example shows how to create agents completions.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.agents.complete(messages=[
+        {
+            "content": "Who is the best French painter? Answer in one short sentence.",
+            "role": "user",
+        },
+    ], agent_id="<value>")
 
-res = s.agents.complete(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], agent_id="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -200,18 +206,19 @@ from mistralai import Mistral
 import os
 
 async def main():
-    s = Mistral(
+    async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    )
-    res = await s.agents.complete_async(messages=[
-        {
-            "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
-        },
-    ], agent_id="<value>")
-    if res is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.agents.complete_async(messages=[
+            {
+                "content": "Who is the best French painter? Answer in one short sentence.",
+                "role": "user",
+            },
+        ], agent_id="<value>")
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -225,18 +232,17 @@ This example shows how to create embedding request.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.embeddings.create(inputs=[
+        "Embed this sentence.",
+        "As well as this one.",
+    ], model="Wrangler")
 
-res = s.embeddings.create(inputs=[
-    "Embed this sentence.",
-    "As well as this one.",
-], model="Wrangler")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -249,16 +255,17 @@ from mistralai import Mistral
 import os
 
 async def main():
-    s = Mistral(
+    async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    )
-    res = await s.embeddings.create_async(inputs=[
-        "Embed this sentence.",
-        "As well as this one.",
-    ], model="Wrangler")
-    if res is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.embeddings.create_async(inputs=[
+            "Embed this sentence.",
+            "As well as this one.",
+        ], model="Wrangler")
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -401,6 +408,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
 * [delete](docs/sdks/files/README.md#delete) - Delete File
 * [download](docs/sdks/files/README.md#download) - Download File
+* [get_signed_url](docs/sdks/files/README.md#get_signed_url) - Get Signed Url
 
 ### [fim](docs/sdks/fim/README.md)
 
@@ -438,32 +446,36 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 operations. These operations will expose the stream as [Generator][generator] that
 can be consumed using a simple `for` loop. The loop will
 terminate when the server no longer has any events to send and closes the
-underlying connection.
+underlying connection.  
+
+The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
+underlying connection when the context is exited.
 
 ```python
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.chat.stream(model="mistral-small-latest", messages=[
+        {
+            "content": "Who is the best French painter? Answer in one short sentence.",
+            "role": "user",
+        },
+    ])
 
-res = s.chat.stream(model="mistral-small-latest", messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-])
-
-if res is not None:
-    for event in res:
-        # handle event
-        print(event, flush=True)
+    if res is not None:
+        with res as event_stream:
+            for event in event_stream:
+                # handle event
+                print(event, flush=True)
 
 ```
 
 [mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
-[generator]: https://wiki.python.org/moin/Generators
+[generator]: https://book.pythontips.com/en/latest/generators.html
+[context-manager]: https://book.pythontips.com/en/latest/context_managers.html
 <!-- End Server-sent event streaming [eventstream] -->
 
 <!-- Start File uploads [file-upload] -->
@@ -480,18 +492,17 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.upload(file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+    })
 
-res = s.files.upload(file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -507,16 +518,15 @@ from mistral.utils import BackoffStrategy, RetryConfig
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list(,
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-res = s.models.list(,
-    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -526,16 +536,15 @@ from mistral.utils import BackoffStrategy, RetryConfig
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list()
 
-res = s.models.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Retries [retries] -->
@@ -567,24 +576,23 @@ When custom error responses are specified for an operation, the SDK may also rai
 from mistralai import Mistral, models
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = None
+    try:
+        res = s.models.list()
 
-res = None
-try:
-    res = s.models.list()
+        if res is not None:
+            # handle response
+            pass
 
-    if res is not None:
-        # handle response
-        pass
-
-except models.HTTPValidationError as e:
-    # handle e.data: models.HTTPValidationErrorData
-    raise(e)
-except models.SDKError as e:
-    # handle exception
-    raise(e)
+    except models.HTTPValidationError as e:
+        # handle e.data: models.HTTPValidationErrorData
+        raise(e)
+    except models.SDKError as e:
+        # handle exception
+        raise(e)
 ```
 <!-- End Error Handling [errors] -->
 
@@ -605,16 +613,15 @@ You can override the default server globally by passing a server name to the `se
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     server="eu",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list()
 
-res = s.models.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -625,16 +632,15 @@ The default server can also be overridden globally by passing a URL to the `serv
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     server_url="https://api.mistral.ai",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list()
 
-res = s.models.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Server Selection [server] -->
@@ -736,15 +742,14 @@ To authenticate with the API the `api_key` parameter must be set when initializi
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list()
 
-res = s.models.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Authentication [security] -->

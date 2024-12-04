@@ -1,46 +1,45 @@
-speakeasyVersion: 1.440.1
+speakeasyVersion: 1.451.1
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-azure-source
-        sourceRevisionDigest: sha256:c441f2d21e7879f5fb9d8d99e2ae242d1e5a84c0c06db971911eb578173e7f62
-        sourceBlobDigest: sha256:de4af0f100f15fef89e093a6b5393302b2218fb154230594ec811aacdd4f2ec7
+        sourceRevisionDigest: sha256:9c35eed0174f2d8165807bcd7c8e7b7111fa97c059a77ae7eeaa352ca7e83b4d
+        sourceBlobDigest: sha256:07283bfde08363f9f69b133888b482472c4bf12d2e5b59cb33c8993c517278e3
         tags:
             - latest
     mistral-google-cloud-source:
         sourceNamespace: mistral-google-cloud-source
-        sourceRevisionDigest: sha256:d3e3d15303dcc1acb27b8895aa3064328bd5b8013ea635c2bce553b6e647b498
-        sourceBlobDigest: sha256:db72004ee842a27c3e77980be28a727811e0581daa7a51ad34d142302f8ba2f3
+        sourceRevisionDigest: sha256:e0fd58ce2dbba068f375d3a23d758b8678c2a68cf4fc7bc46ea7e1b37abe0647
+        sourceBlobDigest: sha256:0707d8d2566a9ef4ef286bb0abe467f8696ccf83ba73091065d7caf627a06611
         tags:
             - latest
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:9b6ad47076b570f4e23494bf744a7822547d0003e4b10985f26f1c3b5128e631
-        sourceBlobDigest: sha256:150e3da2a6bfb74e86e2ce864e9a094fc796f3a08df91f6a6e8745b54b3e16bc
+        sourceRevisionDigest: sha256:f74c08bdc7ae39f5fe2394df8f31ae623ece30a7f65019ab6b7bcea352953f05
+        sourceBlobDigest: sha256:5de08a038994ec94c0889341d434b598f541459d114f9935deb9ef3b3af90c5f
         tags:
             - latest
-            - speakeasy-sdk-regen-1731693697
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
         sourceNamespace: mistral-azure-source
-        sourceRevisionDigest: sha256:c441f2d21e7879f5fb9d8d99e2ae242d1e5a84c0c06db971911eb578173e7f62
-        sourceBlobDigest: sha256:de4af0f100f15fef89e093a6b5393302b2218fb154230594ec811aacdd4f2ec7
+        sourceRevisionDigest: sha256:9c35eed0174f2d8165807bcd7c8e7b7111fa97c059a77ae7eeaa352ca7e83b4d
+        sourceBlobDigest: sha256:07283bfde08363f9f69b133888b482472c4bf12d2e5b59cb33c8993c517278e3
         codeSamplesNamespace: mistral-openapi-azure-code-samples
-        codeSamplesRevisionDigest: sha256:5db0b04cc2b3962de41cb07e87fe817dd5ec8bc5d8b0254245b26faf70ede027
+        codeSamplesRevisionDigest: sha256:79a227720579444358a825b1a272c153f3d9dd48cd0913be6c988d7931a44241
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
         sourceNamespace: mistral-google-cloud-source
-        sourceRevisionDigest: sha256:d3e3d15303dcc1acb27b8895aa3064328bd5b8013ea635c2bce553b6e647b498
-        sourceBlobDigest: sha256:db72004ee842a27c3e77980be28a727811e0581daa7a51ad34d142302f8ba2f3
+        sourceRevisionDigest: sha256:e0fd58ce2dbba068f375d3a23d758b8678c2a68cf4fc7bc46ea7e1b37abe0647
+        sourceBlobDigest: sha256:0707d8d2566a9ef4ef286bb0abe467f8696ccf83ba73091065d7caf627a06611
         codeSamplesNamespace: mistral-openapi-google-cloud-code-samples
-        codeSamplesRevisionDigest: sha256:7d95ba7aa230088b9975be341ba638e51cc574b6e863bd3a0f53e9c5ee261bba
+        codeSamplesRevisionDigest: sha256:0657ec41e473356a5a0eeaca3dff137e9ff16080ec1fb50e72553245aa86ffe5
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:9b6ad47076b570f4e23494bf744a7822547d0003e4b10985f26f1c3b5128e631
-        sourceBlobDigest: sha256:150e3da2a6bfb74e86e2ce864e9a094fc796f3a08df91f6a6e8745b54b3e16bc
+        sourceRevisionDigest: sha256:f74c08bdc7ae39f5fe2394df8f31ae623ece30a7f65019ab6b7bcea352953f05
+        sourceBlobDigest: sha256:5de08a038994ec94c0889341d434b598f541459d114f9935deb9ef3b3af90c5f
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:d1ea6603d96bdc063cc747cde1cadcbf443be580935e12438e7b915d0cd9a019
+        codeSamplesRevisionDigest: sha256:09212fda8fc13e0f486f157495d028138bc9babedfba6dd85f7024575f30fd0e
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

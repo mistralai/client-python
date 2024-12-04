@@ -3,9 +3,11 @@
 from __future__ import annotations
 from .apiendpoint import APIEndpoint
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_open_enum
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import Dict, List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class BatchJobInTypedDict(TypedDict):
@@ -19,7 +21,7 @@ class BatchJobInTypedDict(TypedDict):
 class BatchJobIn(BaseModel):
     input_files: List[str]
 
-    endpoint: APIEndpoint
+    endpoint: Annotated[APIEndpoint, PlainValidator(validate_open_enum(False))]
 
     model: str
 

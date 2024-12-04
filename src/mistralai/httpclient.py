@@ -41,6 +41,9 @@ class HttpClient(Protocol):
     ) -> httpx.Request:
         pass
 
+    def close(self) -> None:
+        pass
+
 
 @runtime_checkable
 class AsyncHttpClient(Protocol):
@@ -75,4 +78,7 @@ class AsyncHttpClient(Protocol):
         ] = httpx.USE_CLIENT_DEFAULT,
         extensions: Optional[httpx._types.RequestExtensions] = None,
     ) -> httpx.Request:
+        pass
+
+    async def aclose(self) -> None:
         pass

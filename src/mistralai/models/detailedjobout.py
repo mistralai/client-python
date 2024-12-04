@@ -3,7 +3,6 @@
 from __future__ import annotations
 from .checkpointout import CheckpointOut, CheckpointOutTypedDict
 from .eventout import EventOut, EventOutTypedDict
-from .finetuneablemodel import FineTuneableModel
 from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .trainingparameters import TrainingParameters, TrainingParametersTypedDict
@@ -48,7 +47,7 @@ class DetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
     hyperparameters: TrainingParametersTypedDict
-    model: FineTuneableModel
+    model: str
     r"""The name of the model to fine-tune."""
     status: DetailedJobOutStatus
     job_type: str
@@ -75,7 +74,7 @@ class DetailedJobOut(BaseModel):
 
     hyperparameters: TrainingParameters
 
-    model: FineTuneableModel
+    model: str
     r"""The name of the model to fine-tune."""
 
     status: DetailedJobOutStatus

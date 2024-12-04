@@ -12,13 +12,15 @@ from mistralai_azure.types import (
 )
 from pydantic import model_serializer
 from typing import List, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ContentTypedDict = Union[str, List[ContentChunkTypedDict]]
+ContentTypedDict = TypeAliasType(
+    "ContentTypedDict", Union[str, List[ContentChunkTypedDict]]
+)
 
 
-Content = Union[str, List[ContentChunk]]
+Content = TypeAliasType("Content", Union[str, List[ContentChunk]])
 
 
 class DeltaMessageTypedDict(TypedDict):

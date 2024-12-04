@@ -10,15 +10,18 @@ from mistralai.utils import get_discriminator
 import pydantic
 from pydantic import Discriminator, Tag, model_serializer
 from typing import List, Union
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-TwoTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+TwoTypedDict = TypeAliasType(
+    "TwoTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 Two = Annotated[
@@ -32,12 +35,15 @@ Two = Annotated[
 ]
 
 
-OneTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+OneTypedDict = TypeAliasType(
+    "OneTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 One = Annotated[
@@ -51,13 +57,16 @@ One = Annotated[
 ]
 
 
-ChatClassificationRequestInputsTypedDict = Union[
-    List[OneTypedDict], List[List[TwoTypedDict]]
-]
+ChatClassificationRequestInputsTypedDict = TypeAliasType(
+    "ChatClassificationRequestInputsTypedDict",
+    Union[List[OneTypedDict], List[List[TwoTypedDict]]],
+)
 r"""Chat to classify"""
 
 
-ChatClassificationRequestInputs = Union[List[One], List[List[Two]]]
+ChatClassificationRequestInputs = TypeAliasType(
+    "ChatClassificationRequestInputs", Union[List[One], List[List[Two]]]
+)
 r"""Chat to classify"""
 
 

@@ -4,13 +4,18 @@ from __future__ import annotations
 from .jobout import JobOut, JobOutTypedDict
 from .legacyjobmetadataout import LegacyJobMetadataOut, LegacyJobMetadataOutTypedDict
 from typing import Union
+from typing_extensions import TypeAliasType
 
 
-JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = Union[
-    LegacyJobMetadataOutTypedDict, JobOutTypedDict
-]
+JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = TypeAliasType(
+    "JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict",
+    Union[LegacyJobMetadataOutTypedDict, JobOutTypedDict],
+)
 r"""OK"""
 
 
-JobsAPIRoutesFineTuningCreateFineTuningJobResponse = Union[LegacyJobMetadataOut, JobOut]
+JobsAPIRoutesFineTuningCreateFineTuningJobResponse = TypeAliasType(
+    "JobsAPIRoutesFineTuningCreateFineTuningJobResponse",
+    Union[LegacyJobMetadataOut, JobOut],
+)
 r"""OK"""

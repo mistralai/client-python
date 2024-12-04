@@ -13,23 +13,30 @@ from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ChatCompletionStreamRequestStopTypedDict = Union[str, List[str]]
+ChatCompletionStreamRequestStopTypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestStopTypedDict", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-ChatCompletionStreamRequestStop = Union[str, List[str]]
+ChatCompletionStreamRequestStop = TypeAliasType(
+    "ChatCompletionStreamRequestStop", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-ChatCompletionStreamRequestMessagesTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+ChatCompletionStreamRequestMessagesTypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestMessagesTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 ChatCompletionStreamRequestMessages = Annotated[
@@ -43,12 +50,15 @@ ChatCompletionStreamRequestMessages = Annotated[
 ]
 
 
-ChatCompletionStreamRequestToolChoiceTypedDict = Union[
-    ToolChoiceTypedDict, ToolChoiceEnum
-]
+ChatCompletionStreamRequestToolChoiceTypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestToolChoiceTypedDict",
+    Union[ToolChoiceTypedDict, ToolChoiceEnum],
+)
 
 
-ChatCompletionStreamRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+ChatCompletionStreamRequestToolChoice = TypeAliasType(
+    "ChatCompletionStreamRequestToolChoice", Union[ToolChoice, ToolChoiceEnum]
+)
 
 
 class ChatCompletionStreamRequestTypedDict(TypedDict):

@@ -26,11 +26,12 @@ LEGACY_MODEL_ID_FORMAT = {
     "mistral-nemo-2407": "mistral-nemo@2407",
 }
 
-def get_model_info(model: str) -> Tuple[str,str]:
+def get_model_info(model: str) -> Tuple[str, str]:
     # if the model requiers the legacy fomat, use it, else do nothing.
-    model_id = LEGACY_MODEL_ID_FORMAT.get(model, model)
-    model = "-".join(model.split("-")[:-1])
-    return model, model_id
+    if model in LEGACY_MODEL_ID_FORMAT:
+        return "-".join(model.split("-")[:-1]), LEGACY_MODEL_ID_FORMAT[model]
+    else:
+        return model, model
 
 
 

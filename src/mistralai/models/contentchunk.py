@@ -7,12 +7,13 @@ from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag
 from typing import Union
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypeAliasType
 
 
-ContentChunkTypedDict = Union[
-    TextChunkTypedDict, ImageURLChunkTypedDict, ReferenceChunkTypedDict
-]
+ContentChunkTypedDict = TypeAliasType(
+    "ContentChunkTypedDict",
+    Union[TextChunkTypedDict, ImageURLChunkTypedDict, ReferenceChunkTypedDict],
+)
 
 
 ContentChunk = Annotated[

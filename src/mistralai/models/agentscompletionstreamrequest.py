@@ -13,23 +13,30 @@ from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-AgentsCompletionStreamRequestStopTypedDict = Union[str, List[str]]
+AgentsCompletionStreamRequestStopTypedDict = TypeAliasType(
+    "AgentsCompletionStreamRequestStopTypedDict", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionStreamRequestStop = Union[str, List[str]]
+AgentsCompletionStreamRequestStop = TypeAliasType(
+    "AgentsCompletionStreamRequestStop", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionStreamRequestMessagesTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+AgentsCompletionStreamRequestMessagesTypedDict = TypeAliasType(
+    "AgentsCompletionStreamRequestMessagesTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 AgentsCompletionStreamRequestMessages = Annotated[
@@ -43,12 +50,15 @@ AgentsCompletionStreamRequestMessages = Annotated[
 ]
 
 
-AgentsCompletionStreamRequestToolChoiceTypedDict = Union[
-    ToolChoiceTypedDict, ToolChoiceEnum
-]
+AgentsCompletionStreamRequestToolChoiceTypedDict = TypeAliasType(
+    "AgentsCompletionStreamRequestToolChoiceTypedDict",
+    Union[ToolChoiceTypedDict, ToolChoiceEnum],
+)
 
 
-AgentsCompletionStreamRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+AgentsCompletionStreamRequestToolChoice = TypeAliasType(
+    "AgentsCompletionStreamRequestToolChoice", Union[ToolChoice, ToolChoiceEnum]
+)
 
 
 class AgentsCompletionStreamRequestTypedDict(TypedDict):

@@ -24,15 +24,14 @@ List all models available to the user.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.list()
 
-res = s.models.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -63,15 +62,14 @@ Retrieve a model information.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-res = s.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -103,15 +101,14 @@ Delete a fine-tuned model.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-res = s.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -143,15 +140,14 @@ Update a model name or description.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-res = s.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -184,15 +180,14 @@ Archive a fine-tuned model.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-res = s.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -223,15 +218,14 @@ Un-archive a fine-tuned model.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-res = s.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

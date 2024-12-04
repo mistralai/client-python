@@ -10,14 +10,18 @@ from mistralai_gcp.types import (
 )
 from pydantic import model_serializer
 from typing import List, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-FIMCompletionRequestStopTypedDict = Union[str, List[str]]
+FIMCompletionRequestStopTypedDict = TypeAliasType(
+    "FIMCompletionRequestStopTypedDict", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-FIMCompletionRequestStop = Union[str, List[str]]
+FIMCompletionRequestStop = TypeAliasType(
+    "FIMCompletionRequestStop", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 

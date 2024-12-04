@@ -3,13 +3,13 @@
 from __future__ import annotations
 from mistralai_gcp.types import BaseModel
 from typing import Any, Dict, Union
-from typing_extensions import TypedDict
+from typing_extensions import TypeAliasType, TypedDict
 
 
-ArgumentsTypedDict = Union[Dict[str, Any], str]
+ArgumentsTypedDict = TypeAliasType("ArgumentsTypedDict", Union[Dict[str, Any], str])
 
 
-Arguments = Union[Dict[str, Any], str]
+Arguments = TypeAliasType("Arguments", Union[Dict[str, Any], str])
 
 
 class FunctionCallTypedDict(TypedDict):

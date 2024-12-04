@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 from mistralai_azure.types import BaseModel
-from mistralai_azure.utils import validate_const
-import pydantic
-from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 ReferenceChunkType = Literal["reference"]
@@ -14,15 +11,10 @@ ReferenceChunkType = Literal["reference"]
 
 class ReferenceChunkTypedDict(TypedDict):
     reference_ids: List[int]
-    type: ReferenceChunkType
+    type: NotRequired[ReferenceChunkType]
 
 
 class ReferenceChunk(BaseModel):
     reference_ids: List[int]
 
-    TYPE: Annotated[
-        Annotated[
-            Optional[ReferenceChunkType], AfterValidator(validate_const("reference"))
-        ],
-        pydantic.Field(alias="type"),
-    ] = "reference"
+    type: Optional[ReferenceChunkType] = "reference"

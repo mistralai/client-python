@@ -7,10 +7,12 @@ from mistralai.types import BaseModel
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-DataTypedDict = Union[BaseModelCardTypedDict, FTModelCardTypedDict]
+DataTypedDict = TypeAliasType(
+    "DataTypedDict", Union[BaseModelCardTypedDict, FTModelCardTypedDict]
+)
 
 
 Data = Annotated[

@@ -12,6 +12,7 @@ Files API
 * [retrieve](#retrieve) - Retrieve File
 * [delete](#delete) - Delete File
 * [download](#download) - Download File
+* [get_signed_url](#get_signed_url) - Get Signed Url
 
 ## upload
 
@@ -27,18 +28,17 @@ Please contact us if you need to increase these storage limits.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.upload(file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+    })
 
-res = s.files.upload(file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -70,15 +70,14 @@ Returns a list of files that belong to the user's organization.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.list()
 
-res = s.files.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -114,15 +113,14 @@ Returns information about a specific file.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.retrieve(file_id="<value>")
 
-res = s.files.retrieve(file_id="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -153,15 +151,14 @@ Delete a file.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.delete(file_id="<value>")
 
-res = s.files.delete(file_id="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -192,15 +189,14 @@ Download a file
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.files.download(file_id="<id>")
 
-res = s.files.download(file_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -214,6 +210,45 @@ if res is not None:
 ### Response
 
 **[httpx.Response](../../models/.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
+
+## get_signed_url
+
+Get Signed Url
+
+### Example Usage
+
+```python
+from mistralai import Mistral
+import os
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as s:
+    res = s.files.get_signed_url(file_id="<id>")
+
+    if res is not None:
+        # handle response
+        pass
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `file_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `expiry`                                                            | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of hours before the url becomes invalid. Defaults to 24h     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.FileSignedURL](../../models/filesignedurl.md)**
 
 ### Errors
 

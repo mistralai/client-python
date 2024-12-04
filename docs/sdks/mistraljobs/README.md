@@ -20,15 +20,14 @@ Get a list of batch jobs for your organization and user.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.batch.jobs.list()
 
-res = s.batch.jobs.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -65,17 +64,16 @@ Create a new batch job, it will be queued for processing.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.batch.jobs.create(input_files=[
+        "a621cf02-1cd9-4cf5-8403-315211a509a3",
+    ], endpoint="/v1/fim/completions", model="2")
 
-res = s.batch.jobs.create(input_files=[
-    "a621cf02-1cd9-4cf5-8403-315211a509a3",
-], endpoint="/v1/fim/completions", model="2")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -110,15 +108,14 @@ Get a batch job details by its UUID.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.batch.jobs.get(job_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
 
-res = s.batch.jobs.get(job_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -149,15 +146,14 @@ Request the cancellation of a batch job.
 from mistralai import Mistral
 import os
 
-s = Mistral(
+with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-)
+) as s:
+    res = s.batch.jobs.cancel(job_id="0f713502-9233-41c6-9ebd-c570b7edb496")
 
-res = s.batch.jobs.cancel(job_id="0f713502-9233-41c6-9ebd-c570b7edb496")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

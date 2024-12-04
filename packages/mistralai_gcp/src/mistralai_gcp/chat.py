@@ -5,7 +5,7 @@ from mistralai_gcp import models, utils
 from mistralai_gcp._hooks import HookContext
 from mistralai_gcp.types import Nullable, OptionalNullable, UNSET
 from mistralai_gcp.utils import eventstreaming
-from typing import Any, AsyncGenerator, Generator, List, Optional, Union
+from typing import Any, List, Optional, Union
 
 
 class Chat(BaseSDK):
@@ -40,7 +40,7 @@ class Chat(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[Generator[models.CompletionEvent, None, None]]:
+    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -132,7 +132,7 @@ class Chat(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.stream_events(
+            return eventstreaming.EventStream(
                 http_res,
                 lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
                 sentinel="[DONE]",
@@ -185,7 +185,7 @@ class Chat(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[AsyncGenerator[models.CompletionEvent, None]]:
+    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -277,7 +277,7 @@ class Chat(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.stream_events_async(
+            return eventstreaming.EventStreamAsync(
                 http_res,
                 lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
                 sentinel="[DONE]",

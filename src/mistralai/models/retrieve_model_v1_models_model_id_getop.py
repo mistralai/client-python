@@ -7,7 +7,7 @@ from mistralai.types import BaseModel
 from mistralai.utils import FieldMetadata, PathParamMetadata, get_discriminator
 from pydantic import Discriminator, Tag
 from typing import Union
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 class RetrieveModelV1ModelsModelIDGetRequestTypedDict(TypedDict):
@@ -22,9 +22,10 @@ class RetrieveModelV1ModelsModelIDGetRequest(BaseModel):
     r"""The ID of the model to retrieve."""
 
 
-RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict = Union[
-    BaseModelCardTypedDict, FTModelCardTypedDict
-]
+RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict = TypeAliasType(
+    "RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict",
+    Union[BaseModelCardTypedDict, FTModelCardTypedDict],
+)
 r"""Successful Response"""
 
 
