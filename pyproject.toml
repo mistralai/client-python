@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mistralai"
-version = "1.2.4"
+version = "1.2.5"
 description = "Python Client SDK for the Mistral AI API."
 authors = ["Mistral"]
 readme = "README-PYPI.md"

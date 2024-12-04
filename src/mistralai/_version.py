@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "mistralai"
-__version__: str = "1.2.4"
+__version__: str = "1.2.5"
 
 try:
     if __package__ is not None:
