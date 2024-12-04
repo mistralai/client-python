@@ -11,13 +11,15 @@ from mistralai_gcp.types import (
 )
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolMessageContentTypedDict = Union[str, List[ContentChunkTypedDict]]
+ToolMessageContentTypedDict = TypeAliasType(
+    "ToolMessageContentTypedDict", Union[str, List[ContentChunkTypedDict]]
+)
 
 
-ToolMessageContent = Union[str, List[ContentChunk]]
+ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[ContentChunk]])
 
 
 ToolMessageRole = Literal["tool"]

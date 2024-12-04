@@ -19,23 +19,26 @@ from mistralai_gcp.types import (
 from mistralai_gcp.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-StopTypedDict = Union[str, List[str]]
+StopTypedDict = TypeAliasType("StopTypedDict", Union[str, List[str]])
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-Stop = Union[str, List[str]]
+Stop = TypeAliasType("Stop", Union[str, List[str]])
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-MessagesTypedDict = Union[
-    SystemMessageTypedDict,
-    UserMessageTypedDict,
-    AssistantMessageTypedDict,
-    ToolMessageTypedDict,
-]
+MessagesTypedDict = TypeAliasType(
+    "MessagesTypedDict",
+    Union[
+        SystemMessageTypedDict,
+        UserMessageTypedDict,
+        AssistantMessageTypedDict,
+        ToolMessageTypedDict,
+    ],
+)
 
 
 Messages = Annotated[
@@ -49,12 +52,15 @@ Messages = Annotated[
 ]
 
 
-ChatCompletionStreamRequestToolChoiceTypedDict = Union[
-    ToolChoiceTypedDict, ToolChoiceEnum
-]
+ChatCompletionStreamRequestToolChoiceTypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestToolChoiceTypedDict",
+    Union[ToolChoiceTypedDict, ToolChoiceEnum],
+)
 
 
-ChatCompletionStreamRequestToolChoice = Union[ToolChoice, ToolChoiceEnum]
+ChatCompletionStreamRequestToolChoice = TypeAliasType(
+    "ChatCompletionStreamRequestToolChoice", Union[ToolChoice, ToolChoiceEnum]
+)
 
 
 class ChatCompletionStreamRequestTypedDict(TypedDict):

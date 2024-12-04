@@ -1,10 +1,10 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: e6c0a4254e61b1f171b409862f717867
+  docChecksum: d50a06ac34844141709fa2e57cc940c5
   docVersion: 0.0.2
-  speakeasyVersion: 1.440.1
-  generationVersion: 2.460.1
+  speakeasyVersion: 1.451.1
+  generationVersion: 2.470.1
   releaseVersion: 1.2.3
   configChecksum: 3fc99d7ec7ee057a323b593ebf8fdb8c
   published: true
@@ -12,7 +12,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.5
+    core: 5.6.8
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -29,11 +29,10 @@ features:
     responseFormat: 1.0.1
     retries: 3.0.2
     sdkHooks: 1.0.0
-    serverEvents: 1.0.4
+    serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
-    tests: 1.6.0
-    unions: 3.0.3
+    unions: 3.0.4
 generatedFiles:
   - .gitattributes
   - .python-version
@@ -187,3 +186,4 @@ examples:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
         "422": {}
+generatedTests: {}
