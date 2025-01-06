@@ -22,14 +22,16 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.classifiers.moderate(inputs=[
+) as mistral:
+
+    res = mistral.classifiers.moderate(inputs=[
         "<value>",
     ])
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -64,8 +66,9 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.classifiers.moderate_chat(inputs=[
+) as mistral:
+
+    res = mistral.classifiers.moderate_chat(inputs=[
         [
             {
                 "content": [
@@ -77,9 +80,10 @@ with Mistral(
         ],
     ], model="V90")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "mistralai-gcp"
-__version__: str = "1.2.3"
+__version__: str = "1.2.6"
 
 try:
     if __package__ is not None:

@@ -5,7 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
-from typing import Any, Optional, Union
+from typing import Any, Mapping, Optional, Union
 
 
 class Classifiers(BaseSDK):
@@ -22,6 +22,7 @@ class Classifiers(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ClassificationResponse]:
         r"""Moderations
 
@@ -30,6 +31,7 @@ class Classifiers(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -44,7 +46,7 @@ class Classifiers(BaseSDK):
             model=model,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/moderations",
             base_url=base_url,
@@ -55,6 +57,7 @@ class Classifiers(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
@@ -117,6 +120,7 @@ class Classifiers(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ClassificationResponse]:
         r"""Moderations
 
@@ -125,6 +129,7 @@ class Classifiers(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -139,7 +144,7 @@ class Classifiers(BaseSDK):
             model=model,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/moderations",
             base_url=base_url,
@@ -150,6 +155,7 @@ class Classifiers(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
@@ -212,6 +218,7 @@ class Classifiers(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ClassificationResponse]:
         r"""Moderations Chat
 
@@ -220,6 +227,7 @@ class Classifiers(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -236,7 +244,7 @@ class Classifiers(BaseSDK):
             model=model,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/chat/moderations",
             base_url=base_url,
@@ -247,6 +255,7 @@ class Classifiers(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatClassificationRequest
@@ -309,6 +318,7 @@ class Classifiers(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ClassificationResponse]:
         r"""Moderations Chat
 
@@ -317,6 +327,7 @@ class Classifiers(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -333,7 +344,7 @@ class Classifiers(BaseSDK):
             model=model,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/chat/moderations",
             base_url=base_url,
@@ -344,6 +355,7 @@ class Classifiers(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatClassificationRequest

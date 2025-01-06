@@ -22,17 +22,19 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.chat.complete(model="mistral-small-latest", messages=[
+) as mistral:
+
+    res = mistral.chat.complete(model="mistral-small-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
     ])
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -80,19 +82,21 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.chat.stream(model="mistral-small-latest", messages=[
+) as mistral:
+
+    res = mistral.chat.stream(model="mistral-small-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
     ])
 
-    if res is not None:
-        with res as event_stream:
-            for event in event_stream:
-                # handle event
-                print(event, flush=True)
+    assert res is not None
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 

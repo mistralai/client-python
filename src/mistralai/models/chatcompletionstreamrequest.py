@@ -100,7 +100,7 @@ class ChatCompletionStreamRequest(BaseModel):
     temperature: OptionalNullable[float] = UNSET
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
 
-    top_p: Optional[float] = 1
+    top_p: Optional[float] = None
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
 
     max_tokens: OptionalNullable[int] = UNSET
@@ -129,7 +129,7 @@ class ChatCompletionStreamRequest(BaseModel):
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
-    safe_prompt: Optional[bool] = False
+    safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
     @model_serializer(mode="wrap")

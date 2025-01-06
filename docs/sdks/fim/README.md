@@ -22,12 +22,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fim.complete(model="codestral-2405", prompt="def", suffix="return a+b")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fim.complete(model="codestral-2405", prompt="def", suffix="return a+b")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -70,14 +72,16 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fim.stream(model="codestral-2405", prompt="def", suffix="return a+b")
+) as mistral:
 
-    if res is not None:
-        with res as event_stream:
-            for event in event_stream:
-                # handle event
-                print(event, flush=True)
+    res = mistral.fim.stream(model="codestral-2405", prompt="def", suffix="return a+b")
+
+    assert res is not None
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 

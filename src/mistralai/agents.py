@@ -5,7 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
-from typing import Any, List, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 
 class Agents(BaseSDK):
@@ -46,6 +46,7 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ChatCompletionResponse]:
         r"""Agents Completion
 
@@ -64,6 +65,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -94,7 +96,7 @@ class Agents(BaseSDK):
             agent_id=agent_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/agents/completions",
             base_url=base_url,
@@ -105,6 +107,7 @@ class Agents(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionRequest
@@ -191,6 +194,7 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ChatCompletionResponse]:
         r"""Agents Completion
 
@@ -209,6 +213,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -239,7 +244,7 @@ class Agents(BaseSDK):
             agent_id=agent_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/agents/completions",
             base_url=base_url,
@@ -250,6 +255,7 @@ class Agents(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionRequest
@@ -336,6 +342,7 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
         r"""Stream Agents completion
 
@@ -356,6 +363,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -386,7 +394,7 @@ class Agents(BaseSDK):
             agent_id=agent_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/agents/completions#stream",
             base_url=base_url,
@@ -397,6 +405,7 @@ class Agents(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionStreamRequest
@@ -487,6 +496,7 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
         r"""Stream Agents completion
 
@@ -507,6 +517,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -537,7 +548,7 @@ class Agents(BaseSDK):
             agent_id=agent_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/agents/completions#stream",
             base_url=base_url,
@@ -548,6 +559,7 @@ class Agents(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionStreamRequest

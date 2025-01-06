@@ -23,7 +23,7 @@ SERIALIZATION_METHOD_TO_CONTENT_TYPE = {
 
 @dataclass
 class SerializedRequestBody:
-    media_type: str
+    media_type: Optional[str] = None
     content: Optional[Any] = None
     data: Optional[Any] = None
     files: Optional[Any] = None

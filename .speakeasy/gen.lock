@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 36ad3563d9d2b3af47015100d060570b
+  docChecksum: 7ad277ed0527b2949ed9d503ce742fab
   docVersion: 0.0.2
-  speakeasyVersion: 1.451.1
-  generationVersion: 2.470.1
-  releaseVersion: 1.2.5
-  configChecksum: 9dbada68b30d84dc9c102c143b926b3d
+  speakeasyVersion: 1.462.2
+  generationVersion: 2.486.1
+  releaseVersion: 1.2.6
+  configChecksum: 195a36c6a88eb19c3a487f1fe4a39bcc
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.8
+    core: 5.7.4
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
@@ -25,10 +25,10 @@ features:
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.0.0
+    globalServerURLs: 3.1.0
     methodArguments: 1.0.2
     multipartFileContentType: 1.0.0
-    nameOverrides: 3.0.0
+    nameOverrides: 3.0.1
     nullables: 1.0.0
     openEnums: 1.0.0
     responseFormat: 1.0.1
@@ -373,7 +373,12 @@ generatedFiles:
   - src/mistralai/utils/values.py
 examples:
   list_models_v1_models_get:
-    speakeasy-default-list-models-v1-models-get: {}
+    speakeasy-default-list-models-v1-models-get:
+      responses:
+        "200":
+          application/json: {}
+        "422":
+          application/json: {}
   retrieve_model_v1_models__model_id__get:
     "":
       parameters:
@@ -487,11 +492,15 @@ examples:
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422": {}
+        "422":
+          application/json: {}
   stream_chat:
     speakeasy-default-stream-chat:
       requestBody:
         application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+      responses:
+        "422":
+          application/json: {}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
@@ -499,11 +508,15 @@ examples:
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422": {}
+        "422":
+          application/json: {}
   stream_fim:
     speakeasy-default-stream-fim:
       requestBody:
         application/json: {"model": "codestral-2405", "prompt": "def", "suffix": "return a+b"}
+      responses:
+        "422":
+          application/json: {}
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
@@ -511,11 +524,15 @@ examples:
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422": {}
+        "422":
+          application/json: {}
   stream_agents:
     speakeasy-default-stream-agents:
       requestBody:
         application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<value>"}
+      responses:
+        "422":
+          application/json: {}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:
@@ -523,7 +540,8 @@ examples:
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
-        "422": {}
+        "422":
+          application/json: {}
   files_api_routes_download_file:
     speakeasy-default-files-api-routes-download-file:
       parameters:
@@ -564,7 +582,8 @@ examples:
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
-        "422": {}
+        "422":
+          application/json: {}
   moderations_chat_v1_chat_moderations_post:
     speakeasy-default-moderations-chat-v1-chat-moderations-post:
       requestBody:
@@ -572,7 +591,8 @@ examples:
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
-        "422": {}
+        "422":
+          application/json: {}
   files_api_routes_get_signed_url:
     speakeasy-default-files-api-routes-get-signed-url:
       parameters:
