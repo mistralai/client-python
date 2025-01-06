@@ -9,7 +9,8 @@ from mistralai_azure._hooks import (
     BeforeRequestContext,
 )
 from mistralai_azure.utils import RetryConfig, SerializedRequestBody, get_body_content
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Mapping, Optional, Tuple
+from urllib.parse import parse_qs, urlparse
 
 
 class BaseSDK:
@@ -18,7 +19,7 @@ class BaseSDK:
     def __init__(self, sdk_config: SDKConfiguration) -> None:
         self.sdk_configuration = sdk_config
 
-    def get_url(self, base_url, url_variables):
+    def _get_url(self, base_url, url_variables):
         sdk_url, sdk_variables = self.sdk_configuration.get_server_details()
 
         if base_url is None:
@@ -29,7 +30,7 @@ class BaseSDK:
 
         return utils.template_url(base_url, url_variables)
 
-    def build_request_async(
+    def _build_request_async(
         self,
         method,
         path,
@@ -48,9 +49,10 @@ class BaseSDK:
             Callable[[], Optional[SerializedRequestBody]]
         ] = None,
         url_override: Optional[str] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.async_client
-        return self.build_request_with_client(
+        return self._build_request_with_client(
             client,
             method,
             path,
@@ -67,9 +69,10 @@ class BaseSDK:
             timeout_ms,
             get_serialized_body,
             url_override,
+            http_headers,
         )
 
-    def build_request(
+    def _build_request(
         self,
         method,
         path,
@@ -88,9 +91,10 @@ class BaseSDK:
             Callable[[], Optional[SerializedRequestBody]]
         ] = None,
         url_override: Optional[str] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.client
-        return self.build_request_with_client(
+        return self._build_request_with_client(
             client,
             method,
             path,
@@ -107,9 +111,10 @@ class BaseSDK:
             timeout_ms,
             get_serialized_body,
             url_override,
+            http_headers,
         )
 
-    def build_request_with_client(
+    def _build_request_with_client(
         self,
         client,
         method,
@@ -129,13 +134,14 @@ class BaseSDK:
             Callable[[], Optional[SerializedRequestBody]]
         ] = None,
         url_override: Optional[str] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> httpx.Request:
         query_params = {}
 
         url = url_override
         if url is None:
             url = utils.generate_url(
-                self.get_url(base_url, url_variables),
+                self._get_url(base_url, url_variables),
                 path,
                 request if request_has_path_params else None,
                 _globals if request_has_path_params else None,
@@ -145,6 +151,12 @@ class BaseSDK:
                 request if request_has_query_params else None,
                 _globals if request_has_query_params else None,
             )
+        else:
+            # Pick up the query parameter from the override so they can be
+            # preserved when building the request later on (necessary as of
+            # httpx 0.28).
+            parsed_override = urlparse(str(url_override))
+            query_params = parse_qs(parsed_override.query, keep_blank_values=True)
 
         headers = utils.get_headers(request, _globals)
         headers["Accept"] = accept_header_value
@@ -159,7 +171,7 @@ class BaseSDK:
             headers = {**headers, **security_headers}
             query_params = {**query_params, **security_query_params}
 
-        serialized_request_body = SerializedRequestBody("application/octet-stream")
+        serialized_request_body = SerializedRequestBody()
         if get_serialized_body is not None:
             rb = get_serialized_body()
             if request_body_required and rb is None:
@@ -177,6 +189,10 @@ class BaseSDK:
             )
         ):
             headers["content-type"] = serialized_request_body.media_type
+
+        if http_headers is not None:
+            for header, value in http_headers.items():
+                headers[header] = value
 
         timeout = timeout_ms / 1000 if timeout_ms is not None else None
 

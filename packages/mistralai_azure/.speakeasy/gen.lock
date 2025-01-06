@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 26271aa279a7a7182f7af19df8b67038
+  docChecksum: 4da7c33f650ddf206c58fa6c941d347f
   docVersion: 0.0.2
-  speakeasyVersion: 1.451.1
-  generationVersion: 2.470.1
-  releaseVersion: 1.2.3
-  configChecksum: 60295c765204eb0aa26205ec02e574fc
+  speakeasyVersion: 1.462.2
+  generationVersion: 2.486.1
+  releaseVersion: 1.2.6
+  configChecksum: cc2ac1769a87215774fce0075ff2e77d
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.8
+    core: 5.7.4
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -21,9 +21,9 @@ features:
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.0.0
+    globalServerURLs: 3.1.0
     methodArguments: 1.0.2
-    nameOverrides: 3.0.0
+    nameOverrides: 3.0.1
     nullables: 1.0.0
     openEnums: 1.0.0
     responseFormat: 1.0.1
@@ -157,6 +157,9 @@ examples:
     speakeasy-default-stream-chat:
       requestBody:
         application/json: {"model": "azureai", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+      responses:
+        "422":
+          application/json: {}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
@@ -164,5 +167,6 @@ examples:
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422": {}
+        "422":
+          application/json: {}
 generatedTests: {}
