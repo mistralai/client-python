@@ -109,13 +109,12 @@ def serialize_multipart_form(
         if not field_metadata:
             continue
 
-        f_name = field.alias if field.alias is not None else name
+        f_name = field.alias if field.alias else name
 
         if field_metadata.file:
             file_fields: Dict[str, FieldInfo] = val.__class__.model_fields
 
             file_name = ""
-            field_name = ""
             content = None
             content_type = None
 
@@ -131,20 +130,15 @@ def serialize_multipart_form(
                 elif file_field_name == "content_type":
                     content_type = getattr(val, file_field_name, None)
                 else:
-                    field_name = (
-                        file_field.alias
-                        if file_field.alias is not None
-                        else file_field_name
-                    )
                     file_name = getattr(val, file_field_name)
 
-            if field_name == "" or file_name == "" or content is None:
+            if file_name == "" or content is None:
                 raise ValueError("invalid multipart/form-data file")
 
             if content_type is not None:
-                files[field_name] = (file_name, content, content_type)
+                files[f_name] = (file_name, content, content_type)
             else:
-                files[field_name] = (file_name, content)
+                files[f_name] = (file_name, content)
         elif field_metadata.json:
             files[f_name] = (
                 None,
