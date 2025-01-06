@@ -23,12 +23,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fine_tuning.jobs.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fine_tuning.jobs.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -69,12 +71,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fine_tuning.jobs.create(model="codestral-latest", hyperparameters={})
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fine_tuning.jobs.create(model="codestral-latest", hyperparameters={})
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -114,12 +118,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fine_tuning.jobs.get(job_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fine_tuning.jobs.get(job_id="b18d8d81-fd7b-4764-a31e-475cb1f36591")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -152,12 +158,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fine_tuning.jobs.cancel(job_id="03fa7112-315a-4072-a9f2-43f3f1ec962e")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fine_tuning.jobs.cancel(job_id="03fa7112-315a-4072-a9f2-43f3f1ec962e")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -190,12 +198,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.fine_tuning.jobs.start(job_id="0eb0f807-fb9f-4e46-9c13-4e257df6e1ba")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.fine_tuning.jobs.start(job_id="0eb0f807-fb9f-4e46-9c13-4e257df6e1ba")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

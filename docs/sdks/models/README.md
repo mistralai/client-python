@@ -26,12 +26,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -64,12 +66,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -103,12 +107,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -142,12 +148,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -182,12 +190,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -220,12 +230,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

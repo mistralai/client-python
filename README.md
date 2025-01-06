@@ -85,17 +85,19 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.chat.complete(model="mistral-small-latest", messages=[
+) as mistral:
+
+    res = mistral.chat.complete(model="mistral-small-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
     ])
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -110,17 +112,19 @@ import os
 async def main():
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    ) as s:
-        res = await s.chat.complete_async(model="mistral-small-latest", messages=[
+    ) as mistral:
+
+        res = await mistral.chat.complete_async(model="mistral-small-latest", messages=[
             {
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
         ])
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -136,15 +140,17 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.upload(file={
+) as mistral:
+
+    res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -159,15 +165,17 @@ import os
 async def main():
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    ) as s:
-        res = await s.files.upload_async(file={
+    ) as mistral:
+
+        res = await mistral.files.upload_async(file={
             "file_name": "example.file",
             "content": open("example.file", "rb"),
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -183,17 +191,19 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.agents.complete(messages=[
+) as mistral:
+
+    res = mistral.agents.complete(messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
     ], agent_id="<value>")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -208,17 +218,19 @@ import os
 async def main():
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    ) as s:
-        res = await s.agents.complete_async(messages=[
+    ) as mistral:
+
+        res = await mistral.agents.complete_async(messages=[
             {
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
         ], agent_id="<value>")
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -234,15 +246,17 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.embeddings.create(inputs=[
+) as mistral:
+
+    res = mistral.embeddings.create(inputs=[
         "Embed this sentence.",
         "As well as this one.",
     ], model="Wrangler")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -257,15 +271,17 @@ import os
 async def main():
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
-    ) as s:
-        res = await s.embeddings.create_async(inputs=[
+    ) as mistral:
+
+        res = await mistral.embeddings.create_async(inputs=[
             "Embed this sentence.",
             "As well as this one.",
         ], model="Wrangler")
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -457,19 +473,21 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.chat.stream(model="mistral-small-latest", messages=[
+) as mistral:
+
+    res = mistral.chat.stream(model="mistral-small-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
     ])
 
-    if res is not None:
-        with res as event_stream:
-            for event in event_stream:
-                # handle event
-                print(event, flush=True)
+    assert res is not None
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -494,15 +512,17 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.upload(file={
+) as mistral:
+
+    res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -514,37 +534,41 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
-from mistral.utils import BackoffStrategy, RetryConfig
 from mistralai import Mistral
+from mistralai.utils import BackoffStrategy, RetryConfig
 import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list(,
+) as mistral:
+
+    res = mistral.models.list(,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
-from mistral.utils import BackoffStrategy, RetryConfig
 from mistralai import Mistral
+from mistralai.utils import BackoffStrategy, RetryConfig
 import os
 
 with Mistral(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Retries [retries] -->
@@ -578,14 +602,16 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
+) as mistral:
     res = None
     try:
-        res = s.models.list()
 
-        if res is not None:
-            # handle response
-            pass
+        res = mistral.models.list()
+
+        assert res is not None
+
+        # Handle response
+        print(res)
 
     except models.HTTPValidationError as e:
         # handle e.data: models.HTTPValidationErrorData
@@ -616,12 +642,14 @@ import os
 with Mistral(
     server="eu",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -635,12 +663,14 @@ import os
 with Mistral(
     server_url="https://api.mistral.ai",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Server Selection [server] -->
@@ -744,12 +774,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.models.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.models.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->

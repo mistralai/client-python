@@ -19,7 +19,7 @@ class FileTypedDict(TypedDict):
 
 class File(BaseModel):
     file_name: Annotated[
-        str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)
+        str, pydantic.Field(alias="fileName"), FieldMetadata(multipart=True)
     ]
 
     content: Annotated[
@@ -51,11 +51,7 @@ class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
 
 
 class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
-    file: Annotated[
-        File,
-        pydantic.Field(alias=""),
-        FieldMetadata(multipart=MultipartFormMetadata(file=True)),
-    ]
+    file: Annotated[File, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
     ```bash

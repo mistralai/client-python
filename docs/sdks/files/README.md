@@ -30,15 +30,17 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.upload(file={
+) as mistral:
+
+    res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -72,12 +74,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.list()
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.files.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -115,12 +119,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.retrieve(file_id="<value>")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.files.retrieve(file_id="<value>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -153,12 +159,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.delete(file_id="<value>")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.files.delete(file_id="<value>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -191,12 +199,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.download(file_id="<id>")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.files.download(file_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -229,12 +239,14 @@ import os
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as s:
-    res = s.files.get_signed_url(file_id="<id>")
+) as mistral:
 
-    if res is not None:
-        # handle response
-        pass
+    res = mistral.files.get_signed_url(file_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

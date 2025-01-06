@@ -5,7 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
-from typing import Any, List, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 
 class Chat(BaseSDK):
@@ -17,7 +17,7 @@ class Chat(BaseSDK):
         model: Nullable[str],
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
@@ -37,10 +37,11 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
-        safe_prompt: Optional[bool] = False,
+        safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ChatCompletionResponse]:
         r"""Chat Completion
 
@@ -62,6 +63,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -93,7 +95,7 @@ class Chat(BaseSDK):
             safe_prompt=safe_prompt,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/chat/completions",
             base_url=base_url,
@@ -104,6 +106,7 @@ class Chat(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
@@ -161,7 +164,7 @@ class Chat(BaseSDK):
         model: Nullable[str],
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
@@ -181,10 +184,11 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
-        safe_prompt: Optional[bool] = False,
+        safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.ChatCompletionResponse]:
         r"""Chat Completion
 
@@ -206,6 +210,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -237,7 +242,7 @@ class Chat(BaseSDK):
             safe_prompt=safe_prompt,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/chat/completions",
             base_url=base_url,
@@ -248,6 +253,7 @@ class Chat(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
@@ -308,7 +314,7 @@ class Chat(BaseSDK):
             List[models.ChatCompletionStreamRequestMessagesTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
@@ -333,10 +339,11 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
-        safe_prompt: Optional[bool] = False,
+        safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
         r"""Stream chat completion
 
@@ -360,6 +367,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -393,7 +401,7 @@ class Chat(BaseSDK):
             safe_prompt=safe_prompt,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/v1/chat/completions#stream",
             base_url=base_url,
@@ -404,6 +412,7 @@ class Chat(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
@@ -468,7 +477,7 @@ class Chat(BaseSDK):
             List[models.ChatCompletionStreamRequestMessagesTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
@@ -493,10 +502,11 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
-        safe_prompt: Optional[bool] = False,
+        safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
         r"""Stream chat completion
 
@@ -520,6 +530,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -553,7 +564,7 @@ class Chat(BaseSDK):
             safe_prompt=safe_prompt,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/v1/chat/completions#stream",
             base_url=base_url,
@@ -564,6 +575,7 @@ class Chat(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="text/event-stream",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
