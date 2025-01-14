@@ -5,8 +5,8 @@ management:
   docVersion: 0.0.2
   speakeasyVersion: 1.462.2
   generationVersion: 2.486.1
-  releaseVersion: 1.2.6
-  configChecksum: 195a36c6a88eb19c3a487f1fe4a39bcc
+  releaseVersion: 1.3.0
+  configChecksum: e3b0a94e8a244b9061b81373ae58d4ed
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -402,9 +402,11 @@ examples:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
+      requestBody:
+        application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "created": 857478, "owned_by": "<value>", "root": "<value>", "archived": true, "job": "905bf4aa-77f2-404e-b754-c352acfe5407"}
+          application/json: {"id": "<id>", "created": 857478, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {}, "job": "905bf4aa-77f2-404e-b754-c352acfe5407"}
   jobs_api_routes_fine_tuning_archive_fine_tuned_model:
     "":
       parameters:
@@ -457,7 +459,7 @@ examples:
   jobs_api_routes_fine_tuning_create_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
       requestBody:
-        application/json: {"model": "codestral-latest"}
+        application/json: {"model": "codestral-latest", "hyperparameters": {}}
       responses:
         "200":
           application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "2", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
@@ -468,7 +470,7 @@ examples:
           job_id: "b18d8d81-fd7b-4764-a31e-475cb1f36591"
       responses:
         "200":
-          application/json: {"id": "58ccc65b-c928-4154-952e-30c048b8c2b5", "auto_start": false, "model": "open-mistral-nemo", "status": "VALIDATED", "job_type": "<value>", "created_at": 968091, "modified_at": 32069, "training_files": [], "checkpoints": []}
+          application/json: {"id": "58ccc65b-c928-4154-952e-30c048b8c2b5", "auto_start": false, "hyperparameters": {}, "model": "open-mistral-nemo", "status": "VALIDATED", "job_type": "<value>", "created_at": 968091, "modified_at": 32069, "training_files": [], "checkpoints": []}
   jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
       parameters:
@@ -476,7 +478,7 @@ examples:
           job_id: "03fa7112-315a-4072-a9f2-43f3f1ec962e"
       responses:
         "200":
-          application/json: {"id": "fb7dec95-f740-47b2-b8ee-d9b046936a67", "auto_start": true, "model": "mistral-large-latest", "status": "VALIDATED", "job_type": "<value>", "created_at": 252151, "modified_at": 56775, "training_files": [], "checkpoints": []}
+          application/json: {"id": "fb7dec95-f740-47b2-b8ee-d9b046936a67", "auto_start": true, "hyperparameters": {}, "model": "mistral-large-latest", "status": "VALIDATED", "job_type": "<value>", "created_at": 252151, "modified_at": 56775, "training_files": [], "checkpoints": []}
   jobs_api_routes_fine_tuning_start_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
       parameters:
@@ -484,7 +486,7 @@ examples:
           job_id: "0eb0f807-fb9f-4e46-9c13-4e257df6e1ba"
       responses:
         "200":
-          application/json: {"id": "bc3810ce-43e6-4fde-85a4-cd01d1f9cf8f", "auto_start": true, "model": "codestral-latest", "status": "RUNNING", "job_type": "<value>", "created_at": 186591, "modified_at": 451468, "training_files": [], "checkpoints": []}
+          application/json: {"id": "bc3810ce-43e6-4fde-85a4-cd01d1f9cf8f", "auto_start": true, "hyperparameters": {}, "model": "codestral-latest", "status": "RUNNING", "job_type": "<value>", "created_at": 186591, "modified_at": 451468, "training_files": [], "checkpoints": []}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
@@ -501,6 +503,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
@@ -517,6 +520,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
@@ -533,6 +537,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:
@@ -547,6 +552,9 @@ examples:
       parameters:
         path:
           file_id: "<id>"
+      responses:
+        "200":
+          application/octet-stream: "x-file: example.file"
   jobs_api_routes_batch_get_batch_jobs:
     speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
       responses:
