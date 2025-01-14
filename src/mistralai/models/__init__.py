@@ -342,7 +342,6 @@ from .wandbintegrationout import (
     WandbIntegrationOutTypedDict,
 )
 
-
 __all__ = [
     "APIEndpoint",
     "AgentsCompletionRequest",

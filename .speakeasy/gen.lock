@@ -3,8 +3,8 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: 7ad277ed0527b2949ed9d503ce742fab
   docVersion: 0.0.2
-  speakeasyVersion: 1.468.5
-  generationVersion: 2.493.11
+  speakeasyVersion: 1.462.2
+  generationVersion: 2.486.1
   releaseVersion: 1.3.0
   configChecksum: e3b0a94e8a244b9061b81373ae58d4ed
   repoURL: https://github.com/mistralai/client-python.git
@@ -14,12 +14,12 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.10.1
+    core: 5.7.4
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    examples: 3.0.1
+    examples: 3.0.0
     flatRequests: 1.0.1
     flattening: 3.1.0
     globalSecurity: 3.0.2
@@ -386,7 +386,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "capabilities": {}}
+          application/json: {"id": "<id>"}
         "422": {}
   delete_model_v1_models__model_id__delete:
     "":
@@ -462,7 +462,7 @@ examples:
         application/json: {"model": "codestral-latest", "hyperparameters": {}}
       responses:
         "200":
-          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "hyperparameters": {}, "model": "2", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
+          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "2", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
   jobs_api_routes_fine_tuning_get_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
@@ -595,7 +595,7 @@ examples:
   moderations_chat_v1_chat_moderations_post:
     speakeasy-default-moderations-chat-v1-chat-moderations-post:
       requestBody:
-        application/json: {"input": [[{"content": "<value>"}, {"content": "<value>"}, {"content": "<value>"}], [{}, {"content": "<value>"}, {}]], "model": "V90"}
+        application/json: {"input": [[{"content": "<value>"}, {"content": "<value>"}, {"content": "<value>"}], [{"content": "<value>"}]], "model": "V90"}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}

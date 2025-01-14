@@ -6,7 +6,6 @@ from .sampletype import SampleType
 from .source import Source
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import validate_open_enum
-import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -17,7 +16,7 @@ class UploadFileOutTypedDict(TypedDict):
     r"""The unique identifier of the file."""
     object: str
     r"""The object type, which is always \"file\"."""
-    bytes_: int
+    bytes: int
     r"""The size of the file, in bytes."""
     created_at: int
     r"""The UNIX timestamp (in seconds) of the event."""
@@ -36,7 +35,7 @@ class UploadFileOut(BaseModel):
     object: str
     r"""The object type, which is always \"file\"."""
 
-    bytes_: Annotated[int, pydantic.Field(alias="bytes")]
+    bytes: int
     r"""The size of the file, in bytes."""
 
     created_at: int
