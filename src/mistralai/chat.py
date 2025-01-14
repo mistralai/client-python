@@ -38,6 +38,7 @@ class Chat(BaseSDK):
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         safe_prompt: Optional[bool] = None,
+        truncate_for_context_length: bool = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -93,6 +94,7 @@ class Chat(BaseSDK):
             frequency_penalty=frequency_penalty,
             n=n,
             safe_prompt=safe_prompt,
+            truncate_for_context_length=truncate_for_context_length,
         )
 
         req = self._build_request(

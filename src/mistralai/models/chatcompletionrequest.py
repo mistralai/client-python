@@ -130,6 +130,9 @@ class ChatCompletionRequest(BaseModel):
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
+    truncate_for_context_length: bool = False,
+    r"""Whether to truncate the history to fit the context length."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -146,6 +149,7 @@ class ChatCompletionRequest(BaseModel):
             "frequency_penalty",
             "n",
             "safe_prompt",
+            "truncate_for_context_length",
         ]
         nullable_fields = [
             "model",
