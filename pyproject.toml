@@ -19,7 +19,7 @@ include = ["py.typed", "src/mistralai/py.typed"]
 in-project = true
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8"
 eval-type-backport = ">=0.2.0"
 httpx = ">=0.27.0"
 jsonpath-python = ">=1.0.6"
