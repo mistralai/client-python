@@ -30,8 +30,7 @@ def get_model_info(model: str) -> Tuple[str, str]:
     # if the model requiers the legacy fomat, use it, else do nothing.
     if model in LEGACY_MODEL_ID_FORMAT:
         return "-".join(model.split("-")[:-1]), LEGACY_MODEL_ID_FORMAT[model]
-    else:
-        return model, model
+    return model, model
 
 
 
