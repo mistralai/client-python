@@ -92,9 +92,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ])
-
-    assert res is not None
+    ], stream=False)
 
     # Handle response
     print(res)
@@ -119,9 +117,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ])
-
-        assert res is not None
+        ], stream=False)
 
         # Handle response
         print(res)
@@ -147,8 +143,6 @@ with Mistral(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 ```
@@ -171,8 +165,6 @@ async def main():
             "file_name": "example.file",
             "content": open("example.file", "rb"),
         })
-
-        assert res is not None
 
         # Handle response
         print(res)
@@ -198,9 +190,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<value>")
-
-    assert res is not None
+    ], agent_id="<id>", stream=False)
 
     # Handle response
     print(res)
@@ -225,9 +215,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<value>")
-
-        assert res is not None
+        ], agent_id="<id>", stream=False)
 
         # Handle response
         print(res)
@@ -251,9 +239,7 @@ with Mistral(
     res = mistral.embeddings.create(inputs=[
         "Embed this sentence.",
         "As well as this one.",
-    ], model="Wrangler")
-
-    assert res is not None
+    ], model="mistral-embed")
 
     # Handle response
     print(res)
@@ -276,9 +262,7 @@ async def main():
         res = await mistral.embeddings.create_async(inputs=[
             "Embed this sentence.",
             "As well as this one.",
-        ], model="Wrangler")
-
-        assert res is not None
+        ], model="mistral-embed")
 
         # Handle response
         print(res)
@@ -424,7 +408,6 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
 * [delete](docs/sdks/files/README.md#delete) - Delete File
 * [download](docs/sdks/files/README.md#download) - Download File
-* [get_signed_url](docs/sdks/files/README.md#get_signed_url) - Get Signed Url
 
 ### [fim](docs/sdks/fim/README.md)
 
@@ -480,9 +463,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ])
-
-    assert res is not None
+    ], stream=True)
 
     with res as event_stream:
         for event in event_stream:
@@ -519,8 +500,6 @@ with Mistral(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -545,8 +524,6 @@ with Mistral(
     res = mistral.models.list(,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -564,8 +541,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.list()
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -608,8 +583,6 @@ with Mistral(
 
         res = mistral.models.list()
 
-        assert res is not None
-
         # Handle response
         print(res)
 
@@ -646,8 +619,6 @@ with Mistral(
 
     res = mistral.models.list()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -666,8 +637,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.list()
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -777,8 +746,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.list()
-
-    assert res is not None
 
     # Handle response
     print(res)

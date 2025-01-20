@@ -12,7 +12,6 @@ Files API
 * [retrieve](#retrieve) - Retrieve File
 * [delete](#delete) - Delete File
 * [download](#download) - Download File
-* [get_signed_url](#get_signed_url) - Get Signed Url
 
 ## upload
 
@@ -36,8 +35,6 @@ with Mistral(
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -76,9 +73,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list()
-
-    assert res is not None
+    res = mistral.files.list(page=0, page_size=100)
 
     # Handle response
     print(res)
@@ -121,9 +116,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.retrieve(file_id="<value>")
-
-    assert res is not None
+    res = mistral.files.retrieve(file_id="<id>")
 
     # Handle response
     print(res)
@@ -161,9 +154,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.delete(file_id="<value>")
-
-    assert res is not None
+    res = mistral.files.delete(file_id="<id>")
 
     # Handle response
     print(res)
@@ -203,8 +194,6 @@ with Mistral(
 
     res = mistral.files.download(file_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -220,47 +209,6 @@ with Mistral(
 ### Response
 
 **[httpx.Response](../../models/.md)**
-
-### Errors
-
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
-
-## get_signed_url
-
-Get Signed Url
-
-### Example Usage
-
-```python
-from mistralai import Mistral
-import os
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.files.get_signed_url(file_id="<id>")
-
-    assert res is not None
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `file_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `expiry`                                                            | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of hours before the url becomes invalid. Defaults to 24h     |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.FileSignedURL](../../models/filesignedurl.md)**
 
 ### Errors
 

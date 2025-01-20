@@ -33,7 +33,7 @@ class Fim(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FIMCompletionResponse]:
+    ) -> models.FIMCompletionResponse:
         r"""Fim Completion
 
         FIM completion.
@@ -116,9 +116,7 @@ class Fim(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.FIMCompletionResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.FIMCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -159,7 +157,7 @@ class Fim(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FIMCompletionResponse]:
+    ) -> models.FIMCompletionResponse:
         r"""Fim Completion
 
         FIM completion.
@@ -242,9 +240,7 @@ class Fim(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.FIMCompletionResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.FIMCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -285,7 +281,7 @@ class Fim(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
         r"""Stream fim completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -415,7 +411,7 @@ class Fim(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
         r"""Stream fim completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.

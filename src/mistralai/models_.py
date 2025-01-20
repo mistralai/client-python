@@ -18,7 +18,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ModelList]:
+    ) -> models.ModelList:
         r"""List Models
 
         List all models available to the user.
@@ -74,7 +74,7 @@ class Models(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ModelList])
+            return utils.unmarshal_json(http_res.text, models.ModelList)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -100,7 +100,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ModelList]:
+    ) -> models.ModelList:
         r"""List Models
 
         List all models available to the user.
@@ -156,7 +156,7 @@ class Models(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ModelList])
+            return utils.unmarshal_json(http_res.text, models.ModelList)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -183,9 +183,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[
-        models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet
-    ]:
+    ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
         Retrieve a model information.
@@ -249,9 +247,7 @@ class Models(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
-                Optional[
-                    models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet
-                ],
+                models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
             )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
@@ -279,9 +275,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[
-        models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet
-    ]:
+    ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
         Retrieve a model information.
@@ -345,9 +339,7 @@ class Models(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
-                Optional[
-                    models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet
-                ],
+                models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
             )
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
@@ -375,7 +367,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteModelOut]:
+    ) -> models.DeleteModelOut:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -437,7 +429,7 @@ class Models(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.DeleteModelOut])
+            return utils.unmarshal_json(http_res.text, models.DeleteModelOut)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -464,7 +456,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteModelOut]:
+    ) -> models.DeleteModelOut:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -526,7 +518,7 @@ class Models(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.DeleteModelOut])
+            return utils.unmarshal_json(http_res.text, models.DeleteModelOut)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -555,7 +547,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FTModelOut]:
+    ) -> models.FTModelOut:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -625,7 +617,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FTModelOut])
+            return utils.unmarshal_json(http_res.text, models.FTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -651,7 +643,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FTModelOut]:
+    ) -> models.FTModelOut:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -721,7 +713,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FTModelOut])
+            return utils.unmarshal_json(http_res.text, models.FTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -745,7 +737,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ArchiveFTModelOut]:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -806,9 +798,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.ArchiveFTModelOut]
-            )
+            return utils.unmarshal_json(http_res.text, models.ArchiveFTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -832,7 +822,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ArchiveFTModelOut]:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -893,9 +883,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.ArchiveFTModelOut]
-            )
+            return utils.unmarshal_json(http_res.text, models.ArchiveFTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -919,7 +907,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.UnarchiveFTModelOut]:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -980,9 +968,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.UnarchiveFTModelOut]
-            )
+            return utils.unmarshal_json(http_res.text, models.UnarchiveFTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1006,7 +992,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.UnarchiveFTModelOut]:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -1067,9 +1053,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.UnarchiveFTModelOut]
-            )
+            return utils.unmarshal_json(http_res.text, models.UnarchiveFTModelOut)
         if utils.match_response(http_res, ["4XX", "5XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

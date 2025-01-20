@@ -1,7 +1,4 @@
 workflowVersion: 1.0.0
-# speakeasyVersion is pinned to unblock https://github.com/mistralai/client-python/pull/173
-# The speakeasy run was appending `_` to some attributes to avoid conflicts with reserved keywords.
-# This would have change the SDK APIs and break the existing clients which we don't want.
 speakeasyVersion: latest
 sources:
     mistral-azure-source:

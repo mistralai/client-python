@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 7ad277ed0527b2949ed9d503ce742fab
+  docChecksum: 39c2d5164800547d881d2ad869b5217b
   docVersion: 0.0.2
   speakeasyVersion: 1.462.2
   generationVersion: 2.486.1
-  releaseVersion: 1.3.1
-  configChecksum: 8f82dea19ae1fcd5cea1d4f7837fc137
+  releaseVersion: 1.4.1
+  configChecksum: f8816ac6d786bfd4ff67cfe3b04c43a1
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -106,12 +106,10 @@ generatedFiles:
   - docs/models/filepurpose.md
   - docs/models/filesapiroutesdeletefilerequest.md
   - docs/models/filesapiroutesdownloadfilerequest.md
-  - docs/models/filesapiroutesgetsignedurlrequest.md
   - docs/models/filesapirouteslistfilesrequest.md
   - docs/models/filesapiroutesretrievefilerequest.md
   - docs/models/filesapiroutesuploadfilemultipartbodyparams.md
   - docs/models/fileschema.md
-  - docs/models/filesignedurl.md
   - docs/models/fimcompletionrequest.md
   - docs/models/fimcompletionrequeststop.md
   - docs/models/fimcompletionresponse.md
@@ -165,6 +163,8 @@ generatedFiles:
   - docs/models/modellist.md
   - docs/models/object.md
   - docs/models/one.md
+  - docs/models/prediction.md
+  - docs/models/predictiontype.md
   - docs/models/queryparamstatus.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -282,12 +282,10 @@ generatedFiles:
   - src/mistralai/models/filepurpose.py
   - src/mistralai/models/files_api_routes_delete_fileop.py
   - src/mistralai/models/files_api_routes_download_fileop.py
-  - src/mistralai/models/files_api_routes_get_signed_urlop.py
   - src/mistralai/models/files_api_routes_list_filesop.py
   - src/mistralai/models/files_api_routes_retrieve_fileop.py
   - src/mistralai/models/files_api_routes_upload_fileop.py
   - src/mistralai/models/fileschema.py
-  - src/mistralai/models/filesignedurl.py
   - src/mistralai/models/fimcompletionrequest.py
   - src/mistralai/models/fimcompletionresponse.py
   - src/mistralai/models/fimcompletionstreamrequest.py
@@ -322,6 +320,7 @@ generatedFiles:
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modellist.py
+  - src/mistralai/models/prediction.py
   - src/mistralai/models/referencechunk.py
   - src/mistralai/models/responseformat.py
   - src/mistralai/models/responseformats.py
@@ -376,7 +375,7 @@ examples:
     speakeasy-default-list-models-v1-models-get:
       responses:
         "200":
-          application/json: {}
+          application/json: {"object": "list"}
         "422":
           application/json: {}
   retrieve_model_v1_models__model_id__get:
@@ -395,7 +394,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "ft:open-mistral-7b:587a6b29:20240514:7e773925", "deleted": true}
+          application/json: {"id": "ft:open-mistral-7b:587a6b29:20240514:7e773925", "object": "model", "deleted": true}
         "422": {}
   jobs_api_routes_fine_tuning_update_fine_tuned_model:
     "":
@@ -406,7 +405,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "created": 857478, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {}, "job": "905bf4aa-77f2-404e-b754-c352acfe5407"}
+          application/json: {"id": "<id>", "created": 857478, "owned_by": "<value>", "root": "<value>", "archived": false, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false}, "max_context_length": 32768, "job": "5fa7f0e7-432c-4e47-acb6-0cc78135ddeb"}
   jobs_api_routes_fine_tuning_archive_fine_tuned_model:
     "":
       parameters:
@@ -414,7 +413,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>"}
+          application/json: {"id": "<id>", "archived": true}
   jobs_api_routes_fine_tuning_unarchive_fine_tuned_model:
     "":
       parameters:
@@ -422,131 +421,39 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>"}
+          application/json: {"id": "<id>", "archived": false}
   files_api_routes_upload_file:
     speakeasy-default-files-api-routes-upload-file:
       requestBody:
         multipart/form-data: {"file": {}}
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "upload"}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_request", "source": "repository"}
   files_api_routes_list_files:
     speakeasy-default-files-api-routes-list-files:
+      parameters:
+        query:
+          page: 0
+          page_size: 100
       responses:
         "200":
-          application/json: {"data": [], "object": "<value>", "total": 768578}
+          application/json: {"data": [{"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "batch_result", "source": "upload"}, {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "repository"}, {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "pretrain", "source": "mistral"}], "object": "<value>", "total": 86140}
   files_api_routes_retrieve_file:
     speakeasy-default-files-api-routes-retrieve-file:
       parameters:
         path:
-          file_id: "<value>"
+          file_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "repository", "deleted": false}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_error", "source": "upload", "deleted": true}
   files_api_routes_delete_file:
     speakeasy-default-files-api-routes-delete-file:
       parameters:
         path:
-          file_id: "<value>"
+          file_id: "<id>"
       responses:
         "200":
           application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "deleted": false}
-  jobs_api_routes_fine_tuning_get_fine_tuning_jobs:
-    speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-jobs:
-      responses:
-        "200":
-          application/json: {"total": 768578}
-  jobs_api_routes_fine_tuning_create_fine_tuning_job:
-    speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
-      requestBody:
-        application/json: {"model": "codestral-latest", "hyperparameters": {}}
-      responses:
-        "200":
-          application/json: {"id": "a621cf02-1cd9-4cf5-8403-315211a509a3", "auto_start": false, "model": "2", "status": "FAILED", "job_type": "<value>", "created_at": 550483, "modified_at": 906537, "training_files": ["74c2becc-3769-4177-b5e0-24985613de0e"]}
-  jobs_api_routes_fine_tuning_get_fine_tuning_job:
-    speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
-      parameters:
-        path:
-          job_id: "b18d8d81-fd7b-4764-a31e-475cb1f36591"
-      responses:
-        "200":
-          application/json: {"id": "58ccc65b-c928-4154-952e-30c048b8c2b5", "auto_start": false, "hyperparameters": {}, "model": "open-mistral-nemo", "status": "VALIDATED", "job_type": "<value>", "created_at": 968091, "modified_at": 32069, "training_files": [], "checkpoints": []}
-  jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
-    speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
-      parameters:
-        path:
-          job_id: "03fa7112-315a-4072-a9f2-43f3f1ec962e"
-      responses:
-        "200":
-          application/json: {"id": "fb7dec95-f740-47b2-b8ee-d9b046936a67", "auto_start": true, "hyperparameters": {}, "model": "mistral-large-latest", "status": "VALIDATED", "job_type": "<value>", "created_at": 252151, "modified_at": 56775, "training_files": [], "checkpoints": []}
-  jobs_api_routes_fine_tuning_start_fine_tuning_job:
-    speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
-      parameters:
-        path:
-          job_id: "0eb0f807-fb9f-4e46-9c13-4e257df6e1ba"
-      responses:
-        "200":
-          application/json: {"id": "bc3810ce-43e6-4fde-85a4-cd01d1f9cf8f", "auto_start": true, "hyperparameters": {}, "model": "codestral-latest", "status": "RUNNING", "job_type": "<value>", "created_at": 186591, "modified_at": 451468, "training_files": [], "checkpoints": []}
-  chat_completion_v1_chat_completions_post:
-    speakeasy-default-chat-completion-v1-chat-completions-post:
-      requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
-      responses:
-        "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422":
-          application/json: {}
-  stream_chat:
-    speakeasy-default-stream-chat:
-      requestBody:
-        application/json: {"model": "mistral-small-latest", "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  fim_completion_v1_fim_completions_post:
-    speakeasy-default-fim-completion-v1-fim-completions-post:
-      requestBody:
-        application/json: {"model": "codestral-2405", "prompt": "def", "suffix": "return a+b"}
-      responses:
-        "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422":
-          application/json: {}
-  stream_fim:
-    speakeasy-default-stream-fim:
-      requestBody:
-        application/json: {"model": "codestral-2405", "prompt": "def", "suffix": "return a+b"}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  agents_completion_v1_agents_completions_post:
-    speakeasy-default-agents-completion-v1-agents-completions-post:
-      requestBody:
-        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<value>"}
-      responses:
-        "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
-        "422":
-          application/json: {}
-  stream_agents:
-    speakeasy-default-stream-agents:
-      requestBody:
-        application/json: {"messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<value>"}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  embeddings_v1_embeddings_post:
-    speakeasy-default-embeddings-v1-embeddings-post:
-      requestBody:
-        application/json: {"input": ["Embed this sentence.", "As well as this one."], "model": "Wrangler"}
-      responses:
-        "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
-        "422":
-          application/json: {}
   files_api_routes_download_file:
     speakeasy-default-files-api-routes-download-file:
       parameters:
@@ -555,18 +462,64 @@ examples:
       responses:
         "200":
           application/octet-stream: "x-file: example.file"
+  jobs_api_routes_fine_tuning_get_fine_tuning_jobs:
+    speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-jobs:
+      parameters:
+        query:
+          page: 0
+          page_size: 100
+          created_by_me: false
+      responses:
+        "200":
+          application/json: {"total": 768578}
+  jobs_api_routes_fine_tuning_create_fine_tuning_job:
+    speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
+      requestBody:
+        application/json: {"model": "Fiesta", "hyperparameters": {"learning_rate": 0.0001}}
+      responses:
+        "200":
+          application/json: {"expected_duration_seconds": 220, "cost": 10, "cost_currency": "EUR", "train_tokens_per_step": 131072, "train_tokens": 1310720, "data_tokens": 305375, "deprecated": true, "details": "<value>", "epochs": 4.2922, "training_steps": 10}
+  jobs_api_routes_fine_tuning_get_fine_tuning_job:
+    speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
+      parameters:
+        path:
+          job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
+      responses:
+        "200":
+          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "Model Y", "status": "CANCELLED", "job_type": "<value>", "created_at": 415305, "modified_at": 149108, "training_files": ["8f7112aa-f0ab-44e4-83b4-cca3716f6208", "7aa1f8cf-05d8-49d5-88ee-381f6b4b885c"], "checkpoints": [{"metrics": {}, "step_number": 856562, "created_at": 1716963433}, {"metrics": {}, "step_number": 328633, "created_at": 1716963433}]}
+  jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
+    speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
+      parameters:
+        path:
+          job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
+      responses:
+        "200":
+          application/json: {"id": "d50fbe4e-3e32-4613-8574-4d82f3fd6b3c", "auto_start": true, "hyperparameters": {"learning_rate": 0.0001}, "model": "Taurus", "status": "SUCCESS", "job_type": "<value>", "created_at": 251316, "modified_at": 342605, "training_files": ["247ac10c-dc31-412f-a7cc-924123024afa", "0f84bd49-4511-4689-9d07-a64aa724280b", "200aa489-3801-4d6e-a454-eb14cac448cb"], "checkpoints": [{"metrics": {}, "step_number": 949854, "created_at": 1716963433}, {"metrics": {}, "step_number": 516599, "created_at": 1716963433}, {"metrics": {}, "step_number": 439590, "created_at": 1716963433}]}
+  jobs_api_routes_fine_tuning_start_fine_tuning_job:
+    speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
+      parameters:
+        path:
+          job_id: "0bf0f9e6-c3e5-4d61-aac8-0e36dcac0dfc"
+      responses:
+        "200":
+          application/json: {"id": "b676fe58-2c47-483e-831e-c71dbed4c90a", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "A4", "status": "CANCELLED", "job_type": "<value>", "created_at": 874397, "modified_at": 483387, "training_files": [], "checkpoints": [{"metrics": {}, "step_number": 331375, "created_at": 1716963433}, {"metrics": {}, "step_number": 590686, "created_at": 1716963433}, {"metrics": {}, "step_number": 543177, "created_at": 1716963433}]}
   jobs_api_routes_batch_get_batch_jobs:
     speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
+      parameters:
+        query:
+          page: 0
+          page_size: 100
+          created_by_me: false
       responses:
         "200":
           application/json: {"total": 768578}
   jobs_api_routes_batch_create_batch_job:
     speakeasy-default-jobs-api-routes-batch-create-batch-job:
       requestBody:
-        application/json: {"input_files": ["a621cf02-1cd9-4cf5-8403-315211a509a3"], "endpoint": "/v1/fim/completions", "model": "2"}
+        application/json: {"input_files": ["a621cf02-1cd9-4cf5-8403-315211a509a3"], "endpoint": "/v1/fim/completions", "model": "2", "timeout_hours": 24}
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>"}, {"message": "<value>"}, {"message": "<value>"}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
+          application/json: {"id": "<id>", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
   jobs_api_routes_batch_get_batch_job:
     speakeasy-default-jobs-api-routes-batch-get-batch-job:
       parameters:
@@ -574,7 +527,7 @@ examples:
           job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>"}, {"message": "<value>"}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
+          application/json: {"id": "<id>", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
   jobs_api_routes_batch_cancel_batch_job:
     speakeasy-default-jobs-api-routes-batch-cancel-batch-job:
       parameters:
@@ -582,7 +535,67 @@ examples:
           job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>"}, {"message": "<value>"}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
+          application/json: {"id": "<id>", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
+  chat_completion_v1_chat_completions_post:
+    speakeasy-default-chat-completion-v1-chat-completions-post:
+      requestBody:
+        application/json: {"model": "mistral-small-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+        "422":
+          application/json: {}
+  stream_chat:
+    speakeasy-default-stream-chat:
+      requestBody:
+        application/json: {"model": "mistral-small-latest", "stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+      responses:
+        "422":
+          application/json: {}
+        "200": {}
+  fim_completion_v1_fim_completions_post:
+    speakeasy-default-fim-completion-v1-fim-completions-post:
+      requestBody:
+        application/json: {"model": "codestral-2405", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+        "422":
+          application/json: {}
+  stream_fim:
+    speakeasy-default-stream-fim:
+      requestBody:
+        application/json: {"model": "codestral-2405", "top_p": 1, "stream": true, "prompt": "def", "suffix": "return a+b"}
+      responses:
+        "422":
+          application/json: {}
+        "200": {}
+  agents_completion_v1_agents_completions_post:
+    speakeasy-default-agents-completion-v1-agents-completions-post:
+      requestBody:
+        application/json: {"stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<id>"}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+        "422":
+          application/json: {}
+  stream_agents:
+    speakeasy-default-stream-agents:
+      requestBody:
+        application/json: {"stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<id>"}
+      responses:
+        "422":
+          application/json: {}
+        "200": {}
+  embeddings_v1_embeddings_post:
+    speakeasy-default-embeddings-v1-embeddings-post:
+      requestBody:
+        application/json: {"input": ["Embed this sentence.", "As well as this one."], "model": "mistral-embed"}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
+        "422":
+          application/json: {}
   moderations_v1_moderations_post:
     speakeasy-default-moderations-v1-moderations-post:
       requestBody:
@@ -595,19 +608,11 @@ examples:
   moderations_chat_v1_chat_moderations_post:
     speakeasy-default-moderations-chat-v1-chat-moderations-post:
       requestBody:
-        application/json: {"input": [[{"content": "<value>"}, {"content": "<value>"}, {"content": "<value>"}], [{"content": "<value>"}]], "model": "V90"}
+        application/json: {"input": [[{"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}]], "model": "Roadster"}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
         "422":
           application/json: {}
-  files_api_routes_get_signed_url:
-    speakeasy-default-files-api-routes-get-signed-url:
-      parameters:
-        path:
-          file_id: "<id>"
-        query: {}
-      responses:
-        "200":
-          application/json: {"url": "https://scornful-daughter.com/"}
 generatedTests: {}
+examplesVersion: 1.0.0

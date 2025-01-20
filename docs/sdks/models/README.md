@@ -30,8 +30,6 @@ with Mistral(
 
     res = mistral.models.list()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -69,8 +67,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -111,8 +107,6 @@ with Mistral(
 
     res = mistral.models.delete(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -151,8 +145,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.update(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -194,8 +186,6 @@ with Mistral(
 
     res = mistral.models.archive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -233,8 +223,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.models.unarchive(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
-
-    assert res is not None
 
     # Handle response
     print(res)

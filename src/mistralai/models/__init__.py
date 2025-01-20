@@ -133,10 +133,6 @@ from .files_api_routes_download_fileop import (
     FilesAPIRoutesDownloadFileRequest,
     FilesAPIRoutesDownloadFileRequestTypedDict,
 )
-from .files_api_routes_get_signed_urlop import (
-    FilesAPIRoutesGetSignedURLRequest,
-    FilesAPIRoutesGetSignedURLRequestTypedDict,
-)
 from .files_api_routes_list_filesop import (
     FilesAPIRoutesListFilesRequest,
     FilesAPIRoutesListFilesRequestTypedDict,
@@ -152,7 +148,6 @@ from .files_api_routes_upload_fileop import (
     FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict,
 )
 from .fileschema import FileSchema, FileSchemaTypedDict
-from .filesignedurl import FileSignedURL, FileSignedURLTypedDict
 from .fimcompletionrequest import (
     FIMCompletionRequest,
     FIMCompletionRequestStop,
@@ -273,6 +268,7 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
+from .prediction import Prediction, PredictionType, PredictionTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
@@ -472,15 +468,11 @@ __all__ = [
     "FilePurpose",
     "FileSchema",
     "FileSchemaTypedDict",
-    "FileSignedURL",
-    "FileSignedURLTypedDict",
     "FileTypedDict",
     "FilesAPIRoutesDeleteFileRequest",
     "FilesAPIRoutesDeleteFileRequestTypedDict",
     "FilesAPIRoutesDownloadFileRequest",
     "FilesAPIRoutesDownloadFileRequestTypedDict",
-    "FilesAPIRoutesGetSignedURLRequest",
-    "FilesAPIRoutesGetSignedURLRequestTypedDict",
     "FilesAPIRoutesListFilesRequest",
     "FilesAPIRoutesListFilesRequestTypedDict",
     "FilesAPIRoutesRetrieveFileRequest",
@@ -566,6 +558,9 @@ __all__ = [
     "Object",
     "One",
     "OneTypedDict",
+    "Prediction",
+    "PredictionType",
+    "PredictionTypedDict",
     "QueryParamStatus",
     "ReferenceChunk",
     "ReferenceChunkType",

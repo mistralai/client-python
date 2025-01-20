@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -82,6 +83,7 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
+    prediction: NotRequired[PredictionTypedDict]
 
 
 class AgentsCompletionStreamRequest(BaseModel):
@@ -117,6 +119,8 @@ class AgentsCompletionStreamRequest(BaseModel):
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
+    prediction: Optional[Prediction] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -130,6 +134,7 @@ class AgentsCompletionStreamRequest(BaseModel):
             "presence_penalty",
             "frequency_penalty",
             "n",
+            "prediction",
         ]
         nullable_fields = ["max_tokens", "random_seed", "tools", "n"]
         null_default_fields = []

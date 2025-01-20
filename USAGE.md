@@ -17,9 +17,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ])
-
-    assert res is not None
+    ], stream=False)
 
     # Handle response
     print(res)
@@ -44,9 +42,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ])
-
-        assert res is not None
+        ], stream=False)
 
         # Handle response
         print(res)
@@ -72,8 +68,6 @@ with Mistral(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 ```
@@ -96,8 +90,6 @@ async def main():
             "file_name": "example.file",
             "content": open("example.file", "rb"),
         })
-
-        assert res is not None
 
         # Handle response
         print(res)
@@ -123,9 +115,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<value>")
-
-    assert res is not None
+    ], agent_id="<id>", stream=False)
 
     # Handle response
     print(res)
@@ -150,9 +140,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<value>")
-
-        assert res is not None
+        ], agent_id="<id>", stream=False)
 
         # Handle response
         print(res)
@@ -176,9 +164,7 @@ with Mistral(
     res = mistral.embeddings.create(inputs=[
         "Embed this sentence.",
         "As well as this one.",
-    ], model="Wrangler")
-
-    assert res is not None
+    ], model="mistral-embed")
 
     # Handle response
     print(res)
@@ -201,9 +187,7 @@ async def main():
         res = await mistral.embeddings.create_async(inputs=[
             "Embed this sentence.",
             "As well as this one.",
-        ], model="Wrangler")
-
-        assert res is not None
+        ], model="mistral-embed")
 
         # Handle response
         print(res)

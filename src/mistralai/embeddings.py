@@ -21,7 +21,7 @@ class Embeddings(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmbeddingResponse]:
+    ) -> models.EmbeddingResponse:
         r"""Embeddings
 
         Embeddings
@@ -90,9 +90,7 @@ class Embeddings(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.EmbeddingResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -121,7 +119,7 @@ class Embeddings(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmbeddingResponse]:
+    ) -> models.EmbeddingResponse:
         r"""Embeddings
 
         Embeddings
@@ -190,9 +188,7 @@ class Embeddings(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.EmbeddingResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
