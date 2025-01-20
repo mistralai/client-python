@@ -26,7 +26,7 @@ python:
   enumFormat: union
   envVarPrefix: MISTRAL
   fixFlags:
-    responseRequiredSep2024: false
+    responseRequiredSep2024: true
   flattenGlobalSecurity: true
   flattenRequests: true
   flatteningOrder: parameters-first
