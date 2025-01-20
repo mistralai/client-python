@@ -20,9 +20,6 @@ jobs:
     with:
       force: ${{ github.event.inputs.force }}
       mode: pr
-      # We need poetry < 2.0 to avoid the speakeasy run failure.
-      # This was fixed in speakasy v1.467.0 but we're locked at 1.462.2 waiting for other speakeasy fixes.
-      poetry_version: 1.8.5
       set_version: ${{ github.event.inputs.set_version }}
       speakeasy_version: latest
       target: mistral-python-sdk-azure

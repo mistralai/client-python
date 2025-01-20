@@ -10,14 +10,10 @@ permissions:
       - main
     paths:
       - RELEASES.md
-      - '*/RELEASES.md'
+      - "*/RELEASES.md"
 jobs:
   publish:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
-    with:
-      # We need poetry < 2.0 to avoid the speakeasy run failure.
-      # This was fixed in speakasy v1.467.0 but we're locked at 1.462.2 waiting for other speakeasy fixes.
-      poetry_version: 1.8.5
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
