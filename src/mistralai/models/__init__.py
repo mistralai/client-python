@@ -273,6 +273,7 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
+from .prediction import Prediction, PredictionType, PredictionTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
@@ -341,6 +342,7 @@ from .wandbintegrationout import (
     WandbIntegrationOutType,
     WandbIntegrationOutTypedDict,
 )
+
 
 __all__ = [
     "APIEndpoint",
@@ -566,6 +568,9 @@ __all__ = [
     "Object",
     "One",
     "OneTypedDict",
+    "Prediction",
+    "PredictionType",
+    "PredictionTypedDict",
     "QueryParamStatus",
     "ReferenceChunk",
     "ReferenceChunkType",

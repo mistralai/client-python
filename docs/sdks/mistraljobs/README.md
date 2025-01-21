@@ -24,9 +24,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list()
-
-    assert res is not None
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False)
 
     # Handle response
     print(res)
@@ -72,9 +70,7 @@ with Mistral(
 
     res = mistral.batch.jobs.create(input_files=[
         "a621cf02-1cd9-4cf5-8403-315211a509a3",
-    ], endpoint="/v1/fim/completions", model="2")
-
-    assert res is not None
+    ], endpoint="/v1/fim/completions", model="2", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -118,8 +114,6 @@ with Mistral(
 
     res = mistral.batch.jobs.get(job_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -157,8 +151,6 @@ with Mistral(
 ) as mistral:
 
     res = mistral.batch.jobs.cancel(job_id="0f713502-9233-41c6-9ebd-c570b7edb496")
-
-    assert res is not None
 
     # Handle response
     print(res)

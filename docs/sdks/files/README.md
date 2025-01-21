@@ -37,8 +37,6 @@ with Mistral(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -76,9 +74,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list()
-
-    assert res is not None
+    res = mistral.files.list(page=0, page_size=100)
 
     # Handle response
     print(res)
@@ -121,9 +117,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.retrieve(file_id="<value>")
-
-    assert res is not None
+    res = mistral.files.retrieve(file_id="<id>")
 
     # Handle response
     print(res)
@@ -161,9 +155,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.delete(file_id="<value>")
-
-    assert res is not None
+    res = mistral.files.delete(file_id="<id>")
 
     # Handle response
     print(res)
@@ -203,8 +195,6 @@ with Mistral(
 
     res = mistral.files.download(file_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -241,9 +231,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.get_signed_url(file_id="<id>")
-
-    assert res is not None
+    res = mistral.files.get_signed_url(file_id="<id>", expiry=24)
 
     # Handle response
     print(res)

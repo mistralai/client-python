@@ -21,7 +21,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.UploadFileOut]:
+    ) -> models.UploadFileOut:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -95,8 +95,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.UploadFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.UploadFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -120,7 +125,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.UploadFileOut]:
+    ) -> models.UploadFileOut:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -194,8 +199,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.UploadFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.UploadFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -223,7 +233,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ListFilesOut]:
+    ) -> models.ListFilesOut:
         r"""List Files
 
         Returns a list of files that belong to the user's organization.
@@ -294,8 +304,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ListFilesOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.ListFilesOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -323,7 +338,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ListFilesOut]:
+    ) -> models.ListFilesOut:
         r"""List Files
 
         Returns a list of files that belong to the user's organization.
@@ -394,8 +409,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.ListFilesOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.ListFilesOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -418,7 +438,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.RetrieveFileOut]:
+    ) -> models.RetrieveFileOut:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -479,8 +499,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.RetrieveFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.RetrieveFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -503,7 +528,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.RetrieveFileOut]:
+    ) -> models.RetrieveFileOut:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -564,8 +589,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.RetrieveFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.RetrieveFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -588,7 +618,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteFileOut]:
+    ) -> models.DeleteFileOut:
         r"""Delete File
 
         Delete a file.
@@ -649,8 +679,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.DeleteFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.DeleteFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -673,7 +708,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteFileOut]:
+    ) -> models.DeleteFileOut:
         r"""Delete File
 
         Delete a file.
@@ -734,8 +769,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.DeleteFileOut])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.DeleteFileOut)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -758,7 +798,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[httpx.Response]:
+    ) -> httpx.Response:
         r"""Download File
 
         Download a file
@@ -821,7 +861,12 @@ class Files(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/octet-stream"):
             return http_res
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -844,7 +889,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[httpx.Response]:
+    ) -> httpx.Response:
         r"""Download File
 
         Download a file
@@ -907,7 +952,12 @@ class Files(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/octet-stream"):
             return http_res
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -931,7 +981,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FileSignedURL]:
+    ) -> models.FileSignedURL:
         r"""Get Signed Url
 
         :param file_id:
@@ -992,8 +1042,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FileSignedURL])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.FileSignedURL)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1017,7 +1072,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FileSignedURL]:
+    ) -> models.FileSignedURL:
         r"""Get Signed Url
 
         :param file_id:
@@ -1078,8 +1133,13 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.FileSignedURL])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, models.FileSignedURL)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

@@ -26,9 +26,7 @@ with Mistral(
     res = mistral.embeddings.create(inputs=[
         "Embed this sentence.",
         "As well as this one.",
-    ], model="Wrangler")
-
-    assert res is not None
+    ], model="mistral-embed")
 
     # Handle response
     print(res)

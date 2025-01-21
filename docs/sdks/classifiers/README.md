@@ -28,8 +28,6 @@ with Mistral(
         "<value>",
     ])
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -71,16 +69,33 @@ with Mistral(
     res = mistral.classifiers.moderate_chat(inputs=[
         [
             {
-                "content": [
-                    {
-                        "text": "<value>",
-                    },
-                ],
+                "content": "<value>",
+                "role": "tool",
+            },
+            {
+                "content": "<value>",
+                "role": "tool",
+            },
+            {
+                "content": "<value>",
+                "role": "tool",
             },
         ],
-    ], model="V90")
-
-    assert res is not None
+        [
+            {
+                "prefix": False,
+                "role": "assistant",
+            },
+            {
+                "content": "<value>",
+                "role": "user",
+            },
+            {
+                "prefix": False,
+                "role": "assistant",
+            },
+        ],
+    ], model="Roadster")
 
     # Handle response
     print(res)
