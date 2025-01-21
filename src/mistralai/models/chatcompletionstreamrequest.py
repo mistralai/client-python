@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -86,6 +87,7 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
+    prediction: NotRequired[PredictionTypedDict]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -129,6 +131,8 @@ class ChatCompletionStreamRequest(BaseModel):
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
+    prediction: Optional[Prediction] = None
+
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -147,6 +151,7 @@ class ChatCompletionStreamRequest(BaseModel):
             "presence_penalty",
             "frequency_penalty",
             "n",
+            "prediction",
             "safe_prompt",
         ]
         nullable_fields = [

@@ -43,11 +43,14 @@ class Agents(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
@@ -62,6 +65,7 @@ class Agents(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -93,6 +97,9 @@ class Agents(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             agent_id=agent_id,
         )
 
@@ -138,13 +145,16 @@ class Agents(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.ChatCompletionResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -191,11 +201,14 @@ class Agents(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
@@ -210,6 +223,7 @@ class Agents(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -241,6 +255,9 @@ class Agents(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             agent_id=agent_id,
         )
 
@@ -286,13 +303,16 @@ class Agents(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.ChatCompletionResponse]
-            )
+            return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -339,11 +359,14 @@ class Agents(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
         r"""Stream Agents completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -360,6 +383,7 @@ class Agents(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -391,6 +415,9 @@ class Agents(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             agent_id=agent_id,
         )
 
@@ -446,7 +473,12 @@ class Agents(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -493,11 +525,14 @@ class Agents(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
         r"""Stream Agents completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -514,6 +549,7 @@ class Agents(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -545,6 +581,9 @@ class Agents(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             agent_id=agent_id,
         )
 
@@ -600,7 +639,12 @@ class Agents(BaseSDK):
             http_res_text = await utils.stream_to_text_async(http_res)
             data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
