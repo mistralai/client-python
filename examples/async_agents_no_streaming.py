@@ -9,11 +9,12 @@ from mistralai.models import UserMessage
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
+    agent_id = os.environ["MISTRAL_AGENT_ID"]
 
     client = Mistral(api_key=api_key)
 
     chat_response = await client.agents.complete_async(
-        agent_id="<your_agent_id>",
+        agent_id=agent_id,
         messages=[UserMessage(content="What is the best French cheese?")],
     )
 
