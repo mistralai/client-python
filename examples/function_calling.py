@@ -117,6 +117,8 @@ for tool_call in response.choices[0].message.tool_calls:
             tool_call_id=tool_call.id,
         )
     )
+print(messages)
+
 response = client.chat.complete(model=model, messages=messages, tools=tools)
 
 print(f"{response.choices[0].message.content}")

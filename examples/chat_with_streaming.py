@@ -8,7 +8,7 @@ from mistralai.models import UserMessage
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
-    model = "mistral-tiny"
+    model = "mistral-large-latest"
 
     client = Mistral(api_key=api_key)
 
@@ -17,7 +17,7 @@ def main():
         messages=[UserMessage(content="What is the best French cheese?")],
     ):
 
-        print(chunk.data.choices[0].delta.content)
+        print(chunk.data.choices[0].delta.content, end="")
 
 
 if __name__ == "__main__":
