@@ -7,7 +7,7 @@ def rec_strict_json_schema(schema_node: Any) -> Any:
     """
     if isinstance(schema_node, (str, bool)):
         return schema_node
-    elif isinstance(schema_node, dict):
+    if isinstance(schema_node, dict):
         if "type" in schema_node and schema_node["type"] == "object":
             schema_node["additionalProperties"] = False
         for key, value in schema_node.items():

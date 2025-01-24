@@ -19,7 +19,7 @@ def convert_to_parsed_chat_completion_response(response: ChatCompletionResponse,
     if response.choices:
         for choice in response.choices:
             if choice.message:
-                parsed_message = ParsedAssistantMessage(
+                parsed_message: ParsedAssistantMessage = ParsedAssistantMessage(
                     **choice.message.model_dump(),
                     parsed=None
                 )
@@ -31,12 +31,10 @@ def convert_to_parsed_chat_completion_response(response: ChatCompletionResponse,
                     raise TypeError(f"Unexpected type for message.content: {type(parsed_message.content)}")
                 choice_dict = choice.model_dump()
                 choice_dict["message"] = parsed_message
-                parsed_choice = ParsedChatCompletionChoice(**choice_dict)
+                parsed_choice: ParsedChatCompletionChoice = ParsedChatCompletionChoice(**choice_dict)
                 parsed_choices.append(parsed_choice)
             else:
-                parsed_choice = ParsedChatCompletionChoice(
-                    **choice.model_dump(),
-                )
+                parsed_choice = ParsedChatCompletionChoice(**choice.model_dump())
                 parsed_choices.append(parsed_choice)
     response_dict = response.model_dump()
     response_dict["choices"] = parsed_choices

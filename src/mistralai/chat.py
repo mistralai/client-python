@@ -17,8 +17,10 @@ from mistralai.extra import (
 )
 # endregion imports
 
+
 class Chat(BaseSDK):
     r"""Chat Completion API."""
+
     # region sdk-class-body
     # Custom .parse methods for the Structure Outputs Feature.
 
@@ -51,7 +53,7 @@ class Chat(BaseSDK):
         :return: The parsed response
         """
         json_response_format = response_format_from_pydantic_model(response_format)
-        response = await self.complete_async(
+        response = await self.complete_async(  # pylint: disable=E1125
             **kwargs, response_format=json_response_format
         )
         parsed_response = convert_to_parsed_chat_completion_response(
@@ -84,7 +86,7 @@ class Chat(BaseSDK):
         :return: The JSON parsed response
         """
         json_response_format = response_format_from_pydantic_model(response_format)
-        response = await self.stream_async(
+        response = await self.stream_async(  # pylint: disable=E1125
             **kwargs, response_format=json_response_format
         )
         return response
