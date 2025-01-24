@@ -1,4 +1,4 @@
-from mistralai.models import ChatCompletionResponse, ChatCompletionChoice, AssistantMessage
+from ..models import ChatCompletionResponse, ChatCompletionChoice, AssistantMessage
 from .utils.response_format import  CustomPydanticModel, pydantic_model_from_json
 from typing import List, Optional, Type, Generic
 from pydantic import BaseModel
