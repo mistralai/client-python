@@ -25,7 +25,10 @@ jobs:
         uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
 
       - name: Install dependencies
-        run: poetry install --no-root
+        # Creating the README-PYPI.md file to avoid getting a 'Readme path does not exist' error 
+        run: |
+          touch README-PYPI.md
+          poetry install
 
       - name: Run the 'src/mistralai/extra' package unit tests
         run: python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
