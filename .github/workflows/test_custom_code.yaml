@@ -1,0 +1,31 @@
+name: Testing Python custom files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run the 'src/mistralai/extra' package unit tests
+        run: python3.12 -m unittest discover -s src/mistralai/extra/tests -t src

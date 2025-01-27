@@ -1,0 +1,32 @@
+name: Linting Python custom files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Lint with ruff
+        # No need to lint the automatically generated Speakeasy code
+        run: |
+          ruff check examples/
+          ruff check src/mistralai/_hooks/ --exclude __init__.py --exclude sdkhooks.py --exclude types.py
+          ruff check src/mistralai/extra/
