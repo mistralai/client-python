@@ -25,7 +25,7 @@ jobs:
         uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --no-root
 
       - name: Run the 'src/mistralai/extra' package unit tests
         run: python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
