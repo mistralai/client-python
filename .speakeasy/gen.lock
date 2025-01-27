@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: dbfa566129ede53f4e3b2c91e81f6f74
+  docChecksum: 5ef33856df33168340ad3e69ffde3085
   docVersion: 0.0.2
-  speakeasyVersion: 1.469.11
-  generationVersion: 2.493.32
-  releaseVersion: 1.4.0
-  configChecksum: 46cde4e28fb5efba97051b54ac2e1c83
+  speakeasyVersion: 1.476.2
+  generationVersion: 2.495.1
+  releaseVersion: 1.5.0
+  configChecksum: aa9c73bd3d06405a7cfdedad9e35b3ef
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.10.4
+    core: 5.10.5
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
@@ -155,6 +155,7 @@ generatedFiles:
   - docs/models/jobsapiroutesfinetuningupdatefinetunedmodelrequest.md
   - docs/models/jobsout.md
   - docs/models/jobsoutobject.md
+  - docs/models/jsonschema.md
   - docs/models/legacyjobmetadataout.md
   - docs/models/legacyjobmetadataoutobject.md
   - docs/models/listfilesout.md
@@ -319,6 +320,7 @@ generatedFiles:
   - src/mistralai/models/jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop.py
   - src/mistralai/models/jobs_api_routes_fine_tuning_update_fine_tuned_modelop.py
   - src/mistralai/models/jobsout.py
+  - src/mistralai/models/jsonschema.py
   - src/mistralai/models/legacyjobmetadataout.py
   - src/mistralai/models/listfilesout.py
   - src/mistralai/models/metricout.py
@@ -566,6 +568,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
@@ -582,6 +585,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
@@ -598,6 +602,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:

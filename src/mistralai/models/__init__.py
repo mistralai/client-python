@@ -264,6 +264,7 @@ from .jobs_api_routes_fine_tuning_update_fine_tuned_modelop import (
     JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict,
 )
 from .jobsout import JobsOut, JobsOutObject, JobsOutTypedDict
+from .jsonschema import JSONSchema, JSONSchemaTypedDict
 from .legacyjobmetadataout import (
     LegacyJobMetadataOut,
     LegacyJobMetadataOutObject,
@@ -515,6 +516,8 @@ __all__ = [
     "InputsTypedDict",
     "Integrations",
     "IntegrationsTypedDict",
+    "JSONSchema",
+    "JSONSchemaTypedDict",
     "JobIn",
     "JobInIntegrations",
     "JobInIntegrationsTypedDict",
