@@ -3,10 +3,9 @@
 import asyncio
 import os
 
-import httpx
 
 from mistralai import Mistral
-from mistralai.models import ImageURLChunk, TextChunk, UserMessage
+from mistralai.models import UserMessage
 
 
 async def main():

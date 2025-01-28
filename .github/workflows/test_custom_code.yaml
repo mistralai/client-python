@@ -1,0 +1,48 @@
+name: Testing Python custom files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          virtualenvs-path: .venv
+          installer-parallel: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        # Install dependencies if cache does not exist
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      - name: Run the 'src/mistralai/extra' package unit tests
+        run: |
+          source .venv/bin/activate
+          python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
