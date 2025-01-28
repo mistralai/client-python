@@ -10,7 +10,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class JSONSchemaTypedDict(TypedDict):
     name: str
-    schema_: Dict[str, Any]
+    schema_definition: Dict[str, Any]
     description: NotRequired[Nullable[str]]
     strict: NotRequired[bool]
 
@@ -18,7 +18,7 @@ class JSONSchemaTypedDict(TypedDict):
 class JSONSchema(BaseModel):
     name: str
 
-    schema_: Annotated[Dict[str, Any], pydantic.Field(alias="schema")]
+    schema_definition: Annotated[Dict[str, Any], pydantic.Field(alias="schema")]
 
     description: OptionalNullable[str] = UNSET
 

@@ -52,14 +52,14 @@ mathdemo_schema = {
 }
 
 mathdemo_strict_schema = mathdemo_schema.copy()
-mathdemo_strict_schema["$defs"]["Explanation"]["additionalProperties"] = False
+mathdemo_strict_schema["$defs"]["Explanation"]["additionalProperties"] = False # type: ignore
 mathdemo_strict_schema["additionalProperties"] = False
 
 mathdemo_response_format = ResponseFormat(
     type="json_schema",
     json_schema=JSONSchema(
         name="MathDemonstration",
-        schema_=mathdemo_strict_schema,
+        schema_definition=mathdemo_strict_schema,
         description=Unset(),
         strict=True,
     ),
