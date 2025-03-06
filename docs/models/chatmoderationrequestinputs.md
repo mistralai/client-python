@@ -1,4 +1,4 @@
-# ChatClassificationRequestInputs
+# ChatModerationRequestInputs
 
 Chat to classify
 

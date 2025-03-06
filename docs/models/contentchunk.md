@@ -9,6 +9,12 @@
 value: models.ImageURLChunk = /* values here */
 ```
 
+### `models.DocumentURLChunk`
+
+```python
+value: models.DocumentURLChunk = /* values here */
+```
+
 ### `models.TextChunk`
 
 ```python

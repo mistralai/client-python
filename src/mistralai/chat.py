@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import Nullable, OptionalNullable, UNSET
+from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from typing import Any, List, Mapping, Optional, Union
 
@@ -96,7 +96,7 @@ class Chat(BaseSDK):
     def complete(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -253,7 +253,7 @@ class Chat(BaseSDK):
     async def complete_async(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -410,7 +410,7 @@ class Chat(BaseSDK):
     def stream(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         messages: Union[
             List[models.ChatCompletionStreamRequestMessages],
             List[models.ChatCompletionStreamRequestMessagesTypedDict],
@@ -585,7 +585,7 @@ class Chat(BaseSDK):
     async def stream_async(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         messages: Union[
             List[models.ChatCompletionStreamRequestMessages],
             List[models.ChatCompletionStreamRequestMessagesTypedDict],

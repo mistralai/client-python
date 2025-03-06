@@ -442,6 +442,10 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [archive](docs/sdks/models/README.md#archive) - Archive Fine Tuned Model
 * [unarchive](docs/sdks/models/README.md#unarchive) - Unarchive Fine Tuned Model
 
+### [ocr](docs/sdks/ocr/README.md)
+
+* [process](docs/sdks/ocr/README.md#process) - OCR
+
 </details>
 <!-- End Available Resources and Operations [operations] -->
 

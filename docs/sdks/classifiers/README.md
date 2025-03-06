@@ -24,7 +24,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.moderate(inputs=[
+    res = mistral.classifiers.moderate(model="V90", inputs=[
         "<value>",
     ])
 
@@ -37,8 +37,8 @@ with Mistral(
 
 | Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           |
 | `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |
-| `model`                                                                           | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | N/A                                                                               |
 | `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 ### Response
@@ -66,7 +66,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.moderate_chat(inputs=[
+    res = mistral.classifiers.moderate_chat(model="Roadster", inputs=[
         [
             {
                 "content": "<value>",
@@ -95,7 +95,7 @@ with Mistral(
                 "role": "assistant",
             },
         ],
-    ], model="Roadster")
+    ], truncate_for_context_length=False)
 
     # Handle response
     print(res)
@@ -104,11 +104,12 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `inputs`                                                                                  | [models.ChatClassificationRequestInputs](../../models/chatclassificationrequestinputs.md) | :heavy_check_mark:                                                                        | Chat to classify                                                                          |
-| `model`                                                                                   | *Nullable[str]*                                                                           | :heavy_check_mark:                                                                        | N/A                                                                                       |
-| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | N/A                                                                               |
+| `inputs`                                                                          | [models.ChatModerationRequestInputs](../../models/chatmoderationrequestinputs.md) | :heavy_check_mark:                                                                | Chat to classify                                                                  |
+| `truncate_for_context_length`                                                     | *Optional[bool]*                                                                  | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 ### Response
 

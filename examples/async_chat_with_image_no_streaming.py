@@ -21,7 +21,7 @@ async def main():
                     {"type": "text", "text": "What's in this image?"},
                     {
                         "type": "image_url",
-                        "image_url": "https://mistral.ai/images/news/codestral/FIM_table.png",
+                        "image_url": "https://cms.mistral.ai/assets/af26a11d-0793-439f-a06e-7694b24b8270",
                     },
                 ]
             )

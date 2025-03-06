@@ -59,7 +59,7 @@ ChatCompletionRequestToolChoice = TypeAliasType(
 
 
 class ChatCompletionRequestTypedDict(TypedDict):
-    model: Nullable[str]
+    model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
     messages: List[MessagesTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
@@ -90,7 +90,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
 
 
 class ChatCompletionRequest(BaseModel):
-    model: Nullable[str]
+    model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
 
     messages: List[Messages]
@@ -152,14 +152,7 @@ class ChatCompletionRequest(BaseModel):
             "prediction",
             "safe_prompt",
         ]
-        nullable_fields = [
-            "model",
-            "temperature",
-            "max_tokens",
-            "random_seed",
-            "tools",
-            "n",
-        ]
+        nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
         null_default_fields = []
 
         serialized = handler(self)

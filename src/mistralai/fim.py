@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import Nullable, OptionalNullable, UNSET
+from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from typing import Any, Mapping, Optional, Union
 
@@ -14,7 +14,7 @@ class Fim(BaseSDK):
     def complete(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
@@ -143,7 +143,7 @@ class Fim(BaseSDK):
     async def complete_async(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
@@ -272,7 +272,7 @@ class Fim(BaseSDK):
     def stream(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,
@@ -407,7 +407,7 @@ class Fim(BaseSDK):
     async def stream_async(
         self,
         *,
-        model: Nullable[str],
+        model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = 1,

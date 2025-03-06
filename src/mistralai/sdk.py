@@ -17,6 +17,7 @@ from mistralai.files import Files
 from mistralai.fim import Fim
 from mistralai.fine_tuning import FineTuning
 from mistralai.models_ import Models
+from mistralai.ocr import Ocr
 from mistralai.types import OptionalNullable, UNSET
 from typing import Any, Callable, Dict, Optional, Union, cast
 import weakref
@@ -41,6 +42,8 @@ class Mistral(BaseSDK):
     r"""Embeddings API."""
     classifiers: Classifiers
     r"""Classifiers API."""
+    ocr: Ocr
+    r"""OCR API"""
 
     def __init__(
         self,
@@ -139,6 +142,7 @@ class Mistral(BaseSDK):
         self.agents = Agents(self.sdk_configuration)
         self.embeddings = Embeddings(self.sdk_configuration)
         self.classifiers = Classifiers(self.sdk_configuration)
+        self.ocr = Ocr(self.sdk_configuration)
 
     def __enter__(self):
         return self
