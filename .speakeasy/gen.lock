@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 553c31591e8dc33a58cb75f348c3aa72
+  docChecksum: 81cc8be96362e2f1cb145b08a2e6c4fa
   docVersion: 0.0.2
   speakeasyVersion: 1.477.0
   generationVersion: 2.497.0
-  releaseVersion: 1.5.0
-  configChecksum: 9a5649c5c372dc5fd2fde38a0faee40e
+  releaseVersion: 1.5.1
+  configChecksum: ef3439d915c5d16e7cfb88fe2bf94907
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -68,8 +68,6 @@ generatedFiles:
   - docs/models/batchjobsout.md
   - docs/models/batchjobsoutobject.md
   - docs/models/batchjobstatus.md
-  - docs/models/chatclassificationrequest.md
-  - docs/models/chatclassificationrequestinputs.md
   - docs/models/chatcompletionchoice.md
   - docs/models/chatcompletionrequest.md
   - docs/models/chatcompletionrequesttoolchoice.md
@@ -78,6 +76,8 @@ generatedFiles:
   - docs/models/chatcompletionstreamrequestmessages.md
   - docs/models/chatcompletionstreamrequeststop.md
   - docs/models/chatcompletionstreamrequesttoolchoice.md
+  - docs/models/chatmoderationrequest.md
+  - docs/models/chatmoderationrequestinputs.md
   - docs/models/checkpointout.md
   - docs/models/classificationobject.md
   - docs/models/classificationrequest.md
@@ -99,6 +99,8 @@ generatedFiles:
   - docs/models/detailedjoboutobject.md
   - docs/models/detailedjoboutrepositories.md
   - docs/models/detailedjoboutstatus.md
+  - docs/models/document.md
+  - docs/models/documenturlchunk.md
   - docs/models/embeddingrequest.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
@@ -166,9 +168,14 @@ generatedFiles:
   - docs/models/modelcapabilities.md
   - docs/models/modellist.md
   - docs/models/object.md
+  - docs/models/ocrimageobject.md
+  - docs/models/ocrpagedimensions.md
+  - docs/models/ocrpageobject.md
+  - docs/models/ocrrequest.md
+  - docs/models/ocrresponse.md
+  - docs/models/ocrusageinfo.md
   - docs/models/one.md
   - docs/models/prediction.md
-  - docs/models/predictiontype.md
   - docs/models/queryparamstatus.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -227,6 +234,7 @@ generatedFiles:
   - docs/sdks/mistral/README.md
   - docs/sdks/mistraljobs/README.md
   - docs/sdks/models/README.md
+  - docs/sdks/ocr/README.md
   - poetry.toml
   - py.typed
   - pylintrc
@@ -261,11 +269,11 @@ generatedFiles:
   - src/mistralai/models/batchjobout.py
   - src/mistralai/models/batchjobsout.py
   - src/mistralai/models/batchjobstatus.py
-  - src/mistralai/models/chatclassificationrequest.py
   - src/mistralai/models/chatcompletionchoice.py
   - src/mistralai/models/chatcompletionrequest.py
   - src/mistralai/models/chatcompletionresponse.py
   - src/mistralai/models/chatcompletionstreamrequest.py
+  - src/mistralai/models/chatmoderationrequest.py
   - src/mistralai/models/checkpointout.py
   - src/mistralai/models/classificationobject.py
   - src/mistralai/models/classificationrequest.py
@@ -279,6 +287,7 @@ generatedFiles:
   - src/mistralai/models/deletemodelout.py
   - src/mistralai/models/deltamessage.py
   - src/mistralai/models/detailedjobout.py
+  - src/mistralai/models/documenturlchunk.py
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
@@ -327,6 +336,12 @@ generatedFiles:
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modellist.py
+  - src/mistralai/models/ocrimageobject.py
+  - src/mistralai/models/ocrpagedimensions.py
+  - src/mistralai/models/ocrpageobject.py
+  - src/mistralai/models/ocrrequest.py
+  - src/mistralai/models/ocrresponse.py
+  - src/mistralai/models/ocrusageinfo.py
   - src/mistralai/models/prediction.py
   - src/mistralai/models/referencechunk.py
   - src/mistralai/models/responseformat.py
@@ -357,6 +372,7 @@ generatedFiles:
   - src/mistralai/models/wandbintegration.py
   - src/mistralai/models/wandbintegrationout.py
   - src/mistralai/models_.py
+  - src/mistralai/ocr.py
   - src/mistralai/py.typed
   - src/mistralai/sdk.py
   - src/mistralai/sdkconfiguration.py
@@ -607,7 +623,7 @@ examples:
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:
-        application/json: {"input": ["Embed this sentence.", "As well as this one."], "model": "mistral-embed"}
+        application/json: {"model": "mistral-embed", "input": ["Embed this sentence.", "As well as this one."]}
       responses:
         "200":
           application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
@@ -616,7 +632,7 @@ examples:
   moderations_v1_moderations_post:
     speakeasy-default-moderations-v1-moderations-post:
       requestBody:
-        application/json: {"input": ["<value>"]}
+        application/json: {"model": "V90", "input": ["<value>"]}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
@@ -625,10 +641,19 @@ examples:
   moderations_chat_v1_chat_moderations_post:
     speakeasy-default-moderations-chat-v1-chat-moderations-post:
       requestBody:
-        application/json: {"input": [[{"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}]], "model": "Roadster"}
+        application/json: {"model": "Roadster", "input": [[{"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}]], "truncate_for_context_length": false}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
+        "422":
+          application/json: {}
+  ocr_v1_ocr_post:
+    speakeasy-default-ocr-v1-ocr-post:
+      requestBody:
+        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org"}}
+      responses:
+        "200":
+          application/json: {"pages": [], "model": "A4", "usage_info": {"pages_processed": 442675}}
         "422":
           application/json: {}
 examplesVersion: 1.0.0

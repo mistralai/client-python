@@ -9,17 +9,16 @@ from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-PredictionType = Literal["content"]
-
-
 class PredictionTypedDict(TypedDict):
-    type: PredictionType
+    type: Literal["content"]
     content: NotRequired[str]
 
 
 class Prediction(BaseModel):
     TYPE: Annotated[
-        Annotated[Optional[PredictionType], AfterValidator(validate_const("content"))],
+        Annotated[
+            Optional[Literal["content"]], AfterValidator(validate_const("content"))
+        ],
         pydantic.Field(alias="type"),
     ] = "content"
 

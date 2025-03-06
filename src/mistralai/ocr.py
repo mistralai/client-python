@@ -3,30 +3,38 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import OptionalNullable, UNSET
+from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
-from typing import Any, Mapping, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 
-class Embeddings(BaseSDK):
-    r"""Embeddings API."""
+class Ocr(BaseSDK):
+    r"""OCR API"""
 
-    def create(
+    def process(
         self,
         *,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
-        model: Optional[str] = "mistral-embed",
+        model: Nullable[str],
+        document: Union[models.Document, models.DocumentTypedDict],
+        id: Optional[str] = None,
+        pages: OptionalNullable[List[int]] = UNSET,
+        include_image_base64: OptionalNullable[bool] = UNSET,
+        image_limit: OptionalNullable[int] = UNSET,
+        image_min_size: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.EmbeddingResponse:
-        r"""Embeddings
+    ) -> models.OCRResponse:
+        r"""OCR
 
-        Embeddings
-
-        :param inputs: Text to embed.
-        :param model: ID of the model to use.
+        :param model:
+        :param document: Document to run OCR on
+        :param id:
+        :param pages: Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0
+        :param include_image_base64: Include image URLs in response
+        :param image_limit: Max images to extract
+        :param image_min_size: Minimum height and width of image to extract
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -40,14 +48,19 @@ class Embeddings(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.EmbeddingRequest(
+        request = models.OCRRequest(
             model=model,
-            inputs=inputs,
+            id=id,
+            document=utils.get_pydantic_model(document, models.Document),
+            pages=pages,
+            include_image_base64=include_image_base64,
+            image_limit=image_limit,
+            image_min_size=image_min_size,
         )
 
         req = self._build_request(
             method="POST",
-            path="/v1/embeddings",
+            path="/v1/ocr",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -59,7 +72,7 @@ class Embeddings(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.EmbeddingRequest
+                request, False, False, "json", models.OCRRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -74,7 +87,7 @@ class Embeddings(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                operation_id="embeddings_v1_embeddings_post",
+                operation_id="ocr_v1_ocr_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -87,7 +100,7 @@ class Embeddings(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
+            return utils.unmarshal_json(http_res.text, models.OCRResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)
@@ -111,22 +124,30 @@ class Embeddings(BaseSDK):
             http_res,
         )
 
-    async def create_async(
+    async def process_async(
         self,
         *,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
-        model: Optional[str] = "mistral-embed",
+        model: Nullable[str],
+        document: Union[models.Document, models.DocumentTypedDict],
+        id: Optional[str] = None,
+        pages: OptionalNullable[List[int]] = UNSET,
+        include_image_base64: OptionalNullable[bool] = UNSET,
+        image_limit: OptionalNullable[int] = UNSET,
+        image_min_size: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.EmbeddingResponse:
-        r"""Embeddings
+    ) -> models.OCRResponse:
+        r"""OCR
 
-        Embeddings
-
-        :param inputs: Text to embed.
-        :param model: ID of the model to use.
+        :param model:
+        :param document: Document to run OCR on
+        :param id:
+        :param pages: Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0
+        :param include_image_base64: Include image URLs in response
+        :param image_limit: Max images to extract
+        :param image_min_size: Minimum height and width of image to extract
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -140,14 +161,19 @@ class Embeddings(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.EmbeddingRequest(
+        request = models.OCRRequest(
             model=model,
-            inputs=inputs,
+            id=id,
+            document=utils.get_pydantic_model(document, models.Document),
+            pages=pages,
+            include_image_base64=include_image_base64,
+            image_limit=image_limit,
+            image_min_size=image_min_size,
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/embeddings",
+            path="/v1/ocr",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -159,7 +185,7 @@ class Embeddings(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.EmbeddingRequest
+                request, False, False, "json", models.OCRRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -174,7 +200,7 @@ class Embeddings(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                operation_id="embeddings_v1_embeddings_post",
+                operation_id="ocr_v1_ocr_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -187,7 +213,7 @@ class Embeddings(BaseSDK):
 
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
+            return utils.unmarshal_json(http_res.text, models.OCRResponse)
         if utils.match_response(http_res, "422", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
             raise models.HTTPValidationError(data=data)

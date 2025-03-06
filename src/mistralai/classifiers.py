@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
-from mistralai.types import Nullable, OptionalNullable, UNSET
+from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from typing import Any, Mapping, Optional, Union
 
@@ -14,11 +14,11 @@ class Classifiers(BaseSDK):
     def moderate(
         self,
         *,
+        model: str,
         inputs: Union[
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -26,8 +26,8 @@ class Classifiers(BaseSDK):
     ) -> models.ClassificationResponse:
         r"""Moderations
 
+        :param model: ID of the model to use.
         :param inputs: Text to classify.
-        :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -42,8 +42,8 @@ class Classifiers(BaseSDK):
             base_url = server_url
 
         request = models.ClassificationRequest(
-            inputs=inputs,
             model=model,
+            inputs=inputs,
         )
 
         req = self._build_request(
@@ -115,11 +115,11 @@ class Classifiers(BaseSDK):
     async def moderate_async(
         self,
         *,
+        model: str,
         inputs: Union[
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -127,8 +127,8 @@ class Classifiers(BaseSDK):
     ) -> models.ClassificationResponse:
         r"""Moderations
 
+        :param model: ID of the model to use.
         :param inputs: Text to classify.
-        :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -143,8 +143,8 @@ class Classifiers(BaseSDK):
             base_url = server_url
 
         request = models.ClassificationRequest(
-            inputs=inputs,
             model=model,
+            inputs=inputs,
         )
 
         req = self._build_request_async(
@@ -216,11 +216,12 @@ class Classifiers(BaseSDK):
     def moderate_chat(
         self,
         *,
+        model: str,
         inputs: Union[
-            models.ChatClassificationRequestInputs,
-            models.ChatClassificationRequestInputsTypedDict,
+            models.ChatModerationRequestInputs,
+            models.ChatModerationRequestInputsTypedDict,
         ],
-        model: Nullable[str],
+        truncate_for_context_length: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -228,8 +229,9 @@ class Classifiers(BaseSDK):
     ) -> models.ClassificationResponse:
         r"""Moderations Chat
 
-        :param inputs: Chat to classify
         :param model:
+        :param inputs: Chat to classify
+        :param truncate_for_context_length:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -243,11 +245,10 @@ class Classifiers(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.ChatClassificationRequest(
-            inputs=utils.get_pydantic_model(
-                inputs, models.ChatClassificationRequestInputs
-            ),
+        request = models.ChatModerationRequest(
             model=model,
+            inputs=utils.get_pydantic_model(inputs, models.ChatModerationRequestInputs),
+            truncate_for_context_length=truncate_for_context_length,
         )
 
         req = self._build_request(
@@ -264,7 +265,7 @@ class Classifiers(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ChatClassificationRequest
+                request, False, False, "json", models.ChatModerationRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -319,11 +320,12 @@ class Classifiers(BaseSDK):
     async def moderate_chat_async(
         self,
         *,
+        model: str,
         inputs: Union[
-            models.ChatClassificationRequestInputs,
-            models.ChatClassificationRequestInputsTypedDict,
+            models.ChatModerationRequestInputs,
+            models.ChatModerationRequestInputsTypedDict,
         ],
-        model: Nullable[str],
+        truncate_for_context_length: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -331,8 +333,9 @@ class Classifiers(BaseSDK):
     ) -> models.ClassificationResponse:
         r"""Moderations Chat
 
-        :param inputs: Chat to classify
         :param model:
+        :param inputs: Chat to classify
+        :param truncate_for_context_length:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -346,11 +349,10 @@ class Classifiers(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.ChatClassificationRequest(
-            inputs=utils.get_pydantic_model(
-                inputs, models.ChatClassificationRequestInputs
-            ),
+        request = models.ChatModerationRequest(
             model=model,
+            inputs=utils.get_pydantic_model(inputs, models.ChatModerationRequestInputs),
+            truncate_for_context_length=truncate_for_context_length,
         )
 
         req = self._build_request_async(
@@ -367,7 +369,7 @@ class Classifiers(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ChatClassificationRequest
+                request, False, False, "json", models.ChatModerationRequest
             ),
             timeout_ms=timeout_ms,
         )

@@ -39,16 +39,6 @@ from .batchjobin import BatchJobIn, BatchJobInTypedDict
 from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
 from .batchjobsout import BatchJobsOut, BatchJobsOutObject, BatchJobsOutTypedDict
 from .batchjobstatus import BatchJobStatus
-from .chatclassificationrequest import (
-    ChatClassificationRequest,
-    ChatClassificationRequestInputs,
-    ChatClassificationRequestInputsTypedDict,
-    ChatClassificationRequestTypedDict,
-    One,
-    OneTypedDict,
-    Two,
-    TwoTypedDict,
-)
 from .chatcompletionchoice import (
     ChatCompletionChoice,
     ChatCompletionChoiceTypedDict,
@@ -77,6 +67,16 @@ from .chatcompletionstreamrequest import (
     ChatCompletionStreamRequestToolChoice,
     ChatCompletionStreamRequestToolChoiceTypedDict,
     ChatCompletionStreamRequestTypedDict,
+)
+from .chatmoderationrequest import (
+    ChatModerationRequest,
+    ChatModerationRequestInputs,
+    ChatModerationRequestInputsTypedDict,
+    ChatModerationRequestTypedDict,
+    One,
+    OneTypedDict,
+    Two,
+    TwoTypedDict,
 )
 from .checkpointout import CheckpointOut, CheckpointOutTypedDict
 from .classificationobject import ClassificationObject, ClassificationObjectTypedDict
@@ -115,6 +115,7 @@ from .detailedjobout import (
     DetailedJobOutStatus,
     DetailedJobOutTypedDict,
 )
+from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .embeddingrequest import (
     EmbeddingRequest,
     EmbeddingRequestTypedDict,
@@ -274,7 +275,13 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
-from .prediction import Prediction, PredictionType, PredictionTypedDict
+from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
+from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
+from .ocrrequest import Document, DocumentTypedDict, OCRRequest, OCRRequestTypedDict
+from .ocrresponse import OCRResponse, OCRResponseTypedDict
+from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
+from .prediction import Prediction, PredictionTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
@@ -386,10 +393,6 @@ __all__ = [
     "BatchJobsOut",
     "BatchJobsOutObject",
     "BatchJobsOutTypedDict",
-    "ChatClassificationRequest",
-    "ChatClassificationRequestInputs",
-    "ChatClassificationRequestInputsTypedDict",
-    "ChatClassificationRequestTypedDict",
     "ChatCompletionChoice",
     "ChatCompletionChoiceTypedDict",
     "ChatCompletionRequest",
@@ -406,6 +409,10 @@ __all__ = [
     "ChatCompletionStreamRequestToolChoice",
     "ChatCompletionStreamRequestToolChoiceTypedDict",
     "ChatCompletionStreamRequestTypedDict",
+    "ChatModerationRequest",
+    "ChatModerationRequestInputs",
+    "ChatModerationRequestInputsTypedDict",
+    "ChatModerationRequestTypedDict",
     "CheckpointOut",
     "CheckpointOutTypedDict",
     "ClassificationObject",
@@ -445,6 +452,10 @@ __all__ = [
     "DetailedJobOutRepositoriesTypedDict",
     "DetailedJobOutStatus",
     "DetailedJobOutTypedDict",
+    "Document",
+    "DocumentTypedDict",
+    "DocumentURLChunk",
+    "DocumentURLChunkTypedDict",
     "EmbeddingRequest",
     "EmbeddingRequestTypedDict",
     "EmbeddingResponse",
@@ -568,11 +579,22 @@ __all__ = [
     "ModelCapabilitiesTypedDict",
     "ModelList",
     "ModelListTypedDict",
+    "OCRImageObject",
+    "OCRImageObjectTypedDict",
+    "OCRPageDimensions",
+    "OCRPageDimensionsTypedDict",
+    "OCRPageObject",
+    "OCRPageObjectTypedDict",
+    "OCRRequest",
+    "OCRRequestTypedDict",
+    "OCRResponse",
+    "OCRResponseTypedDict",
+    "OCRUsageInfo",
+    "OCRUsageInfoTypedDict",
     "Object",
     "One",
     "OneTypedDict",
     "Prediction",
-    "PredictionType",
     "PredictionTypedDict",
     "QueryParamStatus",
     "ReferenceChunk",
