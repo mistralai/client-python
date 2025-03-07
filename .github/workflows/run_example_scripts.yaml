@@ -39,7 +39,7 @@ jobs:
       - name: Set MISTRAL_API_KEY
         run: |
           VERSION=$(echo ${{ matrix.python-version }} | tr -d .)
-          echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', $VERSION)] }}" >> $GITHUB_ENV
+          echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', VERSION)] }}" >> $GITHUB_ENV
 
       - name: Run the example scripts
         run: |
