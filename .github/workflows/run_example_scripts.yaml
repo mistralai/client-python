@@ -41,7 +41,7 @@ jobs:
           for file in examples/*.py; do
             if [ -f "$file" ] && [ "$file" != "examples/chatbot_with_streaming.py" ]; then
               echo "Running $file"
-              MISTRAL_AGENT_ID="..." python3 "$file" > /dev/null
+              python3 "$file" > /dev/null
             fi
           done
         env:
