@@ -35,7 +35,12 @@ jobs:
           touch README-PYPI.md # Create this file since the client is not built from Speakeasy
           poetry build
           python3 -m pip install dist/mistralai-*.whl
-      
+
+      - name: Set MISTRAL_API_KEY
+        run: |
+          VERSION=$(echo ${{ matrix.python-version }} | tr -d .)
+          echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', $VERSION)] }}" >> $GITHUB_ENV
+
       - name: Run the example scripts
         run: |
           failed=0
@@ -52,4 +57,4 @@ jobs:
           fi
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
-          MISTRAL_API_KEY: ${{ secrets.CI_MISTRAL_API_KEY }}
+          MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
