@@ -1,19 +1,25 @@
-from mistralai import Mistral
-import os
 import json
+import os
 
-MISTRAL_7B_PDF_URL = "https://arxiv.org/pdf/2310.06825"
+from mistralai import Mistral
+
+MISTRAL_7B_PDF_URL = "https://arxiv.org/pdf/2310.06825.pdf"
+
 
 def main():
     api_key = os.environ["MISTRAL_API_KEY"]
     client = Mistral(api_key=api_key)
 
     # Using an URL
-    pdf_response = client.ocr.process(document={
-        "document_url": MISTRAL_7B_PDF_URL,
-        "type": "document_url",
-        "document_name": "mistral-7b-pdf",
-    }, model="mistral-ocr-latest", include_image_base64=True)
+    pdf_response = client.ocr.process(
+        document={
+            "document_url": MISTRAL_7B_PDF_URL,
+            "type": "document_url",
+            "document_name": "mistral-7b-pdf",
+        },
+        model="mistral-ocr-latest",
+        include_image_base64=True,
+    )
 
     # Print the parsed PDF
     response_dict = json.loads(pdf_response.model_dump_json())
@@ -22,4 +28,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()
