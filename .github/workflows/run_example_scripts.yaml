@@ -36,10 +36,14 @@ jobs:
           poetry build
           python3 -m pip install dist/mistralai-*.whl
 
-      - name: Set MISTRAL_API_KEY
+      - name: Set VERSION
         run: |
           VERSION=$(echo ${{ matrix.python-version }} | tr -d .)
-          echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', VERSION)] }}" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Set MISTRAL_API_KEY using VERSION
+        run: |
+          echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', env.VERSION)] }}" >> $GITHUB_ENV
 
       - name: Run the example scripts
         run: |
