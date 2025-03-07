@@ -44,6 +44,8 @@ jobs:
               python3 "$file" > /dev/null
             fi
           done
+        # Run all the example scripts even if one fails
+        continue-on-error: true
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ secrets.CI_MISTRAL_API_KEY }}
