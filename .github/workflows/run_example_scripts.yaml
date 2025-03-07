@@ -43,10 +43,7 @@ jobs:
             if [ -f "$file" ] && [ "$file" != "examples/chatbot_with_streaming.py" ]; then
               echo "Running $file"
               # Do not fail if the script fails, but save it in the failed variable
-              python3 "$file" > /dev/null || true
-              if [ ${PIPESTATUS[0]} -ne 0 ]; then
-                failed=1
-              fi
+              python3 "$file" > /dev/null || failed=1
             fi
           done
           # If one of the example script failed then exit
