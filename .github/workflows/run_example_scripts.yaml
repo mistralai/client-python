@@ -38,14 +38,21 @@ jobs:
       
       - name: Run the example scripts
         run: |
+          failed=0
           for file in examples/*.py; do
             if [ -f "$file" ] && [ "$file" != "examples/chatbot_with_streaming.py" ]; then
               echo "Running $file"
-              python3 "$file" > /dev/null
+              # Do not fail if the script fails, but save it in the failed variable
+              python3 "$file" > /dev/null || true
+              if [ ${PIPESTATUS[0]} -ne 0 ]; then
+                failed=1
+              fi
             fi
           done
-        # Run all the example scripts even if one fails
-        continue-on-error: true
+          # If one of the example script failed then exit
+          if [ $failed -ne 0 ]; then
+            exit 1
+          fi
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ secrets.CI_MISTRAL_API_KEY }}
