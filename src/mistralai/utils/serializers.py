@@ -163,7 +163,7 @@ def marshal_json(val, typ):
     if len(d) == 0:
         return ""
 
-    return json.dumps(d[next(iter(d))], separators=(",", ":"), sort_keys=True)
+    return json.dumps(d[next(iter(d))], separators=(",", ":"), sort_keys=False)
 
 
 def is_nullable(field):
