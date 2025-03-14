@@ -116,11 +116,11 @@ class MistralGoogleCloud(BaseSDK):
 
         security: Any = None
         if callable(auth_token):
-
-            def f():
-                return models.Security(api_key=auth_token())
-
-            security = f
+            security = lambda: models.Security(  # pylint: disable=unnecessary-lambda-assignment
+                api_key=auth_token()
+            )
+        else:
+            security = models.Security(api_key=auth_token)
 
         BaseSDK.__init__(
             self,
