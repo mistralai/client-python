@@ -94,7 +94,9 @@ class ClientOwner(Protocol):
 def close_clients(
     owner: ClientOwner,
     sync_client: Union[HttpClient, None],
+    sync_client_supplied: bool,
     async_client: Union[AsyncHttpClient, None],
+    async_client_supplied: bool,
 ) -> None:
     """
     A finalizer function that is meant to be used with weakref.finalize to close
@@ -107,13 +109,13 @@ def close_clients(
     owner.client = None
     owner.async_client = None
 
-    if sync_client is not None:
+    if sync_client is not None and not sync_client_supplied:
         try:
             sync_client.close()
         except Exception:
             pass
 
-    if async_client is not None:
+    if async_client is not None and not async_client_supplied:
         is_async = False
         try:
             asyncio.get_running_loop()

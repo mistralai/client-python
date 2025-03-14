@@ -20,6 +20,7 @@ Moderations
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -62,6 +63,7 @@ Moderations Chat
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -95,7 +97,7 @@ with Mistral(
                 "role": "assistant",
             },
         ],
-    ], truncate_for_context_length=False)
+    ])
 
     # Handle response
     print(res)
