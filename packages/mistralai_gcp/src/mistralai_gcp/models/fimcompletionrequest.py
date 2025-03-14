@@ -26,7 +26,7 @@ r"""Stop generation if this token is detected. Or if one of these tokens is dete
 
 
 class FIMCompletionRequestTypedDict(TypedDict):
-    model: Nullable[str]
+    model: str
     r"""ID of the model to use. Only compatible for now with:
     - `codestral-2405`
     - `codestral-latest`
@@ -52,7 +52,7 @@ class FIMCompletionRequestTypedDict(TypedDict):
 
 
 class FIMCompletionRequest(BaseModel):
-    model: Nullable[str]
+    model: str
     r"""ID of the model to use. Only compatible for now with:
     - `codestral-2405`
     - `codestral-latest`
@@ -98,7 +98,6 @@ class FIMCompletionRequest(BaseModel):
             "min_tokens",
         ]
         nullable_fields = [
-            "model",
             "temperature",
             "max_tokens",
             "random_seed",

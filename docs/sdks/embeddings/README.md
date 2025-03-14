@@ -19,14 +19,15 @@ Embeddings
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.embeddings.create(inputs=[
+    res = mistral.embeddings.create(model="mistral-embed", inputs=[
         "Embed this sentence.",
         "As well as this one.",
-    ], model="mistral-embed")
+    ])
 
     # Handle response
     print(res)
@@ -37,8 +38,8 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `model`                                                             | *str*                                                               | :heavy_check_mark:                                                  | ID of the model to use.                                             | mistral-embed                                                       |
 | `inputs`                                                            | [models.Inputs](../../models/inputs.md)                             | :heavy_check_mark:                                                  | Text to embed.                                                      | [<br/>"Embed this sentence.",<br/>"As well as this one."<br/>]      |
-| `model`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | ID of the model to use.                                             |                                                                     |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response

@@ -3,8 +3,9 @@
 from datetime import datetime
 from enum import Enum
 from email.message import Message
+from functools import partial
 import os
-from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union, cast
 
 from httpx import Response
 from pydantic import BaseModel
@@ -51,6 +52,8 @@ def match_status_codes(status_codes: List[str], status_code: int) -> bool:
 
 T = TypeVar("T")
 
+def cast_partial(typ):
+    return partial(cast, typ)
 
 def get_global_from_env(
     value: Optional[T], env_key: str, type_cast: Callable[[str], T]

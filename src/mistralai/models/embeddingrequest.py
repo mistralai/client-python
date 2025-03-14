@@ -3,8 +3,8 @@
 from __future__ import annotations
 from mistralai.types import BaseModel
 import pydantic
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 InputsTypedDict = TypeAliasType("InputsTypedDict", Union[str, List[str]])
@@ -16,15 +16,15 @@ r"""Text to embed."""
 
 
 class EmbeddingRequestTypedDict(TypedDict):
+    model: str
+    r"""ID of the model to use."""
     inputs: InputsTypedDict
     r"""Text to embed."""
-    model: NotRequired[str]
-    r"""ID of the model to use."""
 
 
 class EmbeddingRequest(BaseModel):
+    model: str
+    r"""ID of the model to use."""
+
     inputs: Annotated[Inputs, pydantic.Field(alias="input")]
     r"""Text to embed."""
-
-    model: Optional[str] = "mistral-embed"
-    r"""ID of the model to use."""

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 81cc8be96362e2f1cb145b08a2e6c4fa
+  docChecksum: 406e00c323dba0db26d6994620926af4
   docVersion: 0.0.2
-  speakeasyVersion: 1.477.0
-  generationVersion: 2.497.0
-  releaseVersion: 1.5.1
-  configChecksum: ef3439d915c5d16e7cfb88fe2bf94907
+  speakeasyVersion: 1.517.3
+  generationVersion: 2.548.6
+  releaseVersion: 1.5.2-rc.1
+  configChecksum: 321ba0a46c45c1b64b391afe2abe901c
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.10.5
+    core: 5.12.3
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
@@ -22,19 +22,19 @@ features:
     envVarSecurityUsage: 0.3.2
     examples: 3.0.1
     flatRequests: 1.0.1
-    flattening: 3.1.0
-    globalSecurity: 3.0.2
+    flattening: 3.1.1
+    globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.1.0
     methodArguments: 1.0.2
     multipartFileContentType: 1.0.0
     nameOverrides: 3.0.1
-    nullables: 1.0.0
+    nullables: 1.0.1
     openEnums: 1.0.0
     responseFormat: 1.0.1
     retries: 3.0.2
-    sdkHooks: 1.0.0
+    sdkHooks: 1.0.1
     serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
@@ -101,6 +101,7 @@ generatedFiles:
   - docs/models/detailedjoboutstatus.md
   - docs/models/document.md
   - docs/models/documenturlchunk.md
+  - docs/models/documenturlchunktype.md
   - docs/models/embeddingrequest.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
@@ -238,7 +239,7 @@ generatedFiles:
   - poetry.toml
   - py.typed
   - pylintrc
-  - scripts/prepare-readme.py
+  - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai/__init__.py
   - src/mistralai/_hooks/__init__.py
@@ -448,7 +449,7 @@ examples:
   files_api_routes_upload_file:
     speakeasy-default-files-api-routes-upload-file:
       requestBody:
-        multipart/form-data: {"file": {"": "x-file: example.file"}}
+        multipart/form-data: {"file": {}}
       responses:
         "200":
           application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_request", "source": "repository"}
@@ -504,14 +505,14 @@ examples:
           created_by_me: false
       responses:
         "200":
-          application/json: {"total": 768578}
+          application/json: {"object": "list", "total": 768578}
   jobs_api_routes_fine_tuning_create_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
       requestBody:
         application/json: {"model": "Fiesta", "hyperparameters": {"learning_rate": 0.0001}}
       responses:
         "200":
-          application/json: {"expected_duration_seconds": 220, "cost": 10, "cost_currency": "EUR", "train_tokens_per_step": 131072, "train_tokens": 1310720, "data_tokens": 305375, "deprecated": true, "details": "<value>", "epochs": 4.2922, "training_steps": 10}
+          application/json: {"expected_duration_seconds": 220, "cost": 10, "cost_currency": "EUR", "train_tokens_per_step": 131072, "train_tokens": 1310720, "data_tokens": 305375, "deprecated": true, "details": "<value>", "epochs": 4.2922, "training_steps": 10, "object": "job.metadata"}
   jobs_api_routes_fine_tuning_get_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
@@ -519,7 +520,7 @@ examples:
           job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
       responses:
         "200":
-          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "Model Y", "status": "CANCELLED", "job_type": "<value>", "created_at": 415305, "modified_at": 149108, "training_files": ["8f7112aa-f0ab-44e4-83b4-cca3716f6208", "7aa1f8cf-05d8-49d5-88ee-381f6b4b885c"], "checkpoints": [{"metrics": {}, "step_number": 856562, "created_at": 1716963433}, {"metrics": {}, "step_number": 328633, "created_at": 1716963433}]}
+          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "Model Y", "status": "CANCELLED", "job_type": "<value>", "created_at": 415305, "modified_at": 149108, "training_files": ["8f7112aa-f0ab-44e4-83b4-cca3716f6208", "7aa1f8cf-05d8-49d5-88ee-381f6b4b885c"], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 856562, "created_at": 1716963433}, {"metrics": {}, "step_number": 328633, "created_at": 1716963433}]}
   jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
       parameters:
@@ -527,7 +528,7 @@ examples:
           job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
       responses:
         "200":
-          application/json: {"id": "d50fbe4e-3e32-4613-8574-4d82f3fd6b3c", "auto_start": true, "hyperparameters": {"learning_rate": 0.0001}, "model": "Taurus", "status": "SUCCESS", "job_type": "<value>", "created_at": 251316, "modified_at": 342605, "training_files": ["247ac10c-dc31-412f-a7cc-924123024afa", "0f84bd49-4511-4689-9d07-a64aa724280b", "200aa489-3801-4d6e-a454-eb14cac448cb"], "checkpoints": [{"metrics": {}, "step_number": 949854, "created_at": 1716963433}, {"metrics": {}, "step_number": 516599, "created_at": 1716963433}, {"metrics": {}, "step_number": 439590, "created_at": 1716963433}]}
+          application/json: {"id": "d50fbe4e-3e32-4613-8574-4d82f3fd6b3c", "auto_start": true, "hyperparameters": {"learning_rate": 0.0001}, "model": "Taurus", "status": "SUCCESS", "job_type": "<value>", "created_at": 251316, "modified_at": 342605, "training_files": ["247ac10c-dc31-412f-a7cc-924123024afa", "0f84bd49-4511-4689-9d07-a64aa724280b", "200aa489-3801-4d6e-a454-eb14cac448cb"], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 949854, "created_at": 1716963433}, {"metrics": {}, "step_number": 516599, "created_at": 1716963433}, {"metrics": {}, "step_number": 439590, "created_at": 1716963433}]}
   jobs_api_routes_fine_tuning_start_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
       parameters:
@@ -535,7 +536,7 @@ examples:
           job_id: "0bf0f9e6-c3e5-4d61-aac8-0e36dcac0dfc"
       responses:
         "200":
-          application/json: {"id": "b676fe58-2c47-483e-831e-c71dbed4c90a", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "A4", "status": "CANCELLED", "job_type": "<value>", "created_at": 874397, "modified_at": 483387, "training_files": [], "checkpoints": [{"metrics": {}, "step_number": 331375, "created_at": 1716963433}, {"metrics": {}, "step_number": 590686, "created_at": 1716963433}, {"metrics": {}, "step_number": 543177, "created_at": 1716963433}]}
+          application/json: {"id": "b676fe58-2c47-483e-831e-c71dbed4c90a", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "A4", "status": "CANCELLED", "job_type": "<value>", "created_at": 874397, "modified_at": 483387, "training_files": [], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 331375, "created_at": 1716963433}, {"metrics": {}, "step_number": 590686, "created_at": 1716963433}, {"metrics": {}, "step_number": 543177, "created_at": 1716963433}]}
   jobs_api_routes_batch_get_batch_jobs:
     speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
       parameters:
@@ -545,14 +546,14 @@ examples:
           created_by_me: false
       responses:
         "200":
-          application/json: {"total": 768578}
+          application/json: {"object": "list", "total": 768578}
   jobs_api_routes_batch_create_batch_job:
     speakeasy-default-jobs-api-routes-batch-create-batch-job:
       requestBody:
         application/json: {"input_files": ["a621cf02-1cd9-4cf5-8403-315211a509a3"], "endpoint": "/v1/fim/completions", "model": "2", "timeout_hours": 24}
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
   jobs_api_routes_batch_get_batch_job:
     speakeasy-default-jobs-api-routes-batch-get-batch-job:
       parameters:
@@ -560,7 +561,7 @@ examples:
           job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
   jobs_api_routes_batch_cancel_batch_job:
     speakeasy-default-jobs-api-routes-batch-cancel-batch-job:
       parameters:
@@ -568,7 +569,7 @@ examples:
           job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
       responses:
         "200":
-          application/json: {"id": "<id>", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
@@ -650,7 +651,7 @@ examples:
   ocr_v1_ocr_post:
     speakeasy-default-ocr-v1-ocr-post:
       requestBody:
-        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org"}}
+        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org", "type": "document_url"}}
       responses:
         "200":
           application/json: {"pages": [], "model": "A4", "usage_info": {"pages_processed": 442675}}

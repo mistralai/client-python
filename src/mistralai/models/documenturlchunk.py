@@ -2,38 +2,32 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
+
+
+DocumentURLChunkType = Literal["document_url"]
 
 
 class DocumentURLChunkTypedDict(TypedDict):
     document_url: str
-    type: Literal["document_url"]
     document_name: NotRequired[Nullable[str]]
     r"""The filename of the document"""
+    type: NotRequired[DocumentURLChunkType]
 
 
 class DocumentURLChunk(BaseModel):
     document_url: str
 
-    TYPE: Annotated[
-        Annotated[
-            Optional[Literal["document_url"]],
-            AfterValidator(validate_const("document_url")),
-        ],
-        pydantic.Field(alias="type"),
-    ] = "document_url"
-
     document_name: OptionalNullable[str] = UNSET
     r"""The filename of the document"""
 
+    type: Optional[DocumentURLChunkType] = "document_url"
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "document_name"]
+        optional_fields = ["document_name", "type"]
         nullable_fields = ["document_name"]
         null_default_fields = []
 

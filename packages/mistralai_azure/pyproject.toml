@@ -1,9 +1,19 @@
-[tool.poetry]
+[project]
 name = "mistralai_azure"
 version = "1.2.6"
 description = "Python Client SDK for the Mistral AI API in Azure."
-authors = ["Mistral",]
+authors = [{ name = "Mistral" },]
 readme = "README-PYPI.md"
+requires-python = ">=3.9"
+dependencies = [
+    "eval-type-backport >=0.2.0",
+    "httpx >=0.28.1",
+    "pydantic >=2.10.3",
+    "python-dateutil >=2.8.2",
+    "typing-inspection >=0.4.0",
+]
+
+[tool.poetry]
 packages = [
     { include = "mistralai_azure", from = "src" }
 ]
@@ -15,17 +25,8 @@ include = ["py.typed", "src/mistralai_azure/py.typed"]
 [virtualenvs]
 in-project = true
 
-[tool.poetry.dependencies]
-python = "^3.8"
-eval-type-backport = "^0.2.0"
-httpx = "^0.28.1"
-jsonpath-python = "^1.0.6"
-pydantic = "~2.10.3"
-python-dateutil = "^2.8.2"
-typing-inspect = "^0.9.0"
-
 [tool.poetry.group.dev.dependencies]
-mypy = "==1.13.0"
+mypy = "==1.14.1"
 pylint = "==3.2.3"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
@@ -36,6 +37,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 pythonpath = ["src"]
 
 [tool.mypy]

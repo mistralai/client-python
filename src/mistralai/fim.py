@@ -60,6 +60,8 @@ class Fim(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FIMCompletionRequest(
             model=model,
@@ -103,6 +105,7 @@ class Fim(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -114,12 +117,14 @@ class Fim(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.FIMCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -189,6 +194,8 @@ class Fim(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FIMCompletionRequest(
             model=model,
@@ -232,6 +239,7 @@ class Fim(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -243,12 +251,14 @@ class Fim(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.FIMCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -318,6 +328,8 @@ class Fim(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FIMCompletionStreamRequest(
             model=model,
@@ -361,6 +373,7 @@ class Fim(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_fim",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -373,7 +386,7 @@ class Fim(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
@@ -382,8 +395,10 @@ class Fim(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -453,6 +468,8 @@ class Fim(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FIMCompletionStreamRequest(
             model=model,
@@ -496,6 +513,7 @@ class Fim(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_fim",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -508,7 +526,7 @@ class Fim(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
@@ -517,8 +535,10 @@ class Fim(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

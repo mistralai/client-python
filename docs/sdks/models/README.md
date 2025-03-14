@@ -24,6 +24,7 @@ List all models available to the user.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -61,6 +62,7 @@ Retrieve a model information.
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -101,6 +103,7 @@ Delete a fine-tuned model.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -139,6 +142,7 @@ Update a model name or description.
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -180,6 +184,7 @@ Archive a fine-tuned model.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -217,6 +222,7 @@ Un-archive a fine-tuned model.
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),

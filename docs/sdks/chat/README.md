@@ -20,6 +20,7 @@ Chat Completion
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -29,7 +30,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=False)
+    ])
 
     # Handle response
     print(res)
@@ -79,6 +80,7 @@ Mistral AI provides the ability to stream responses back to a client in order to
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -88,7 +90,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=True)
+    ])
 
     with res as event_stream:
         for event in event_stream:

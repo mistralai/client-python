@@ -89,7 +89,7 @@ persistent=yes
 
 # Minimum Python version to use for version dependent checks. Will default to
 # the version used to run pylint.
-py-version=3.8
+py-version=3.9
 
 # Discover python modules and packages in the file system subtree.
 recursive=no
@@ -455,7 +455,10 @@ disable=raw-checker-failed,
         bare-except,
         broad-exception-caught,
         fixme,
-        relative-beyond-top-level
+        relative-beyond-top-level,
+        consider-using-with,
+        wildcard-import,
+        unused-wildcard-import
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

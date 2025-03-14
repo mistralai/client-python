@@ -7,16 +7,19 @@ from typing import Any, Callable, List, Optional, Tuple, Union
 
 
 class HookContext:
+    base_url: str
     operation_id: str
     oauth2_scopes: Optional[List[str]] = None
     security_source: Optional[Union[Any, Callable[[], Any]]] = None
 
     def __init__(
         self,
+        base_url: str,
         operation_id: str,
         oauth2_scopes: Optional[List[str]],
         security_source: Optional[Union[Any, Callable[[], Any]]],
     ):
+        self.base_url = base_url
         self.operation_id = operation_id
         self.oauth2_scopes = oauth2_scopes
         self.security_source = security_source
@@ -25,21 +28,30 @@ class HookContext:
 class BeforeRequestContext(HookContext):
     def __init__(self, hook_ctx: HookContext):
         super().__init__(
-            hook_ctx.operation_id, hook_ctx.oauth2_scopes, hook_ctx.security_source
+            hook_ctx.base_url,
+            hook_ctx.operation_id,
+            hook_ctx.oauth2_scopes,
+            hook_ctx.security_source,
         )
 
 
 class AfterSuccessContext(HookContext):
     def __init__(self, hook_ctx: HookContext):
         super().__init__(
-            hook_ctx.operation_id, hook_ctx.oauth2_scopes, hook_ctx.security_source
+            hook_ctx.base_url,
+            hook_ctx.operation_id,
+            hook_ctx.oauth2_scopes,
+            hook_ctx.security_source,
         )
 
 
 class AfterErrorContext(HookContext):
     def __init__(self, hook_ctx: HookContext):
         super().__init__(
-            hook_ctx.operation_id, hook_ctx.oauth2_scopes, hook_ctx.security_source
+            hook_ctx.base_url,
+            hook_ctx.operation_id,
+            hook_ctx.oauth2_scopes,
+            hook_ctx.security_source,
         )
 
 

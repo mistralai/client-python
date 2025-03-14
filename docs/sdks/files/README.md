@@ -28,6 +28,7 @@ Please contact us if you need to increase these storage limits.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -70,11 +71,12 @@ Returns a list of files that belong to the user's organization.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list(page=0, page_size=100)
+    res = mistral.files.list()
 
     # Handle response
     print(res)
@@ -112,6 +114,7 @@ Returns information about a specific file.
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -151,6 +154,7 @@ Delete a file.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -188,6 +192,7 @@ Download a file
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -227,11 +232,12 @@ Get Signed Url
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.get_signed_url(file_id="<id>", expiry=24)
+    res = mistral.files.get_signed_url(file_id="<id>")
 
     # Handle response
     print(res)

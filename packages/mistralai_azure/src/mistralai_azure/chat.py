@@ -15,7 +15,7 @@ class Chat(BaseSDK):
         self,
         *,
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
-        model: OptionalNullable[str] = "azureai",
+        model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -37,6 +37,9 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -61,6 +64,7 @@ class Chat(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -74,6 +78,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionStreamRequest(
             model=model,
@@ -94,6 +100,9 @@ class Chat(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             safe_prompt=safe_prompt,
         )
 
@@ -126,6 +135,7 @@ class Chat(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_chat",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -136,7 +146,7 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
@@ -145,9 +155,16 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -166,7 +183,7 @@ class Chat(BaseSDK):
         self,
         *,
         messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
-        model: OptionalNullable[str] = "azureai",
+        model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -188,6 +205,9 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -212,6 +232,7 @@ class Chat(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -225,6 +246,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionStreamRequest(
             model=model,
@@ -245,6 +268,9 @@ class Chat(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             safe_prompt=safe_prompt,
         )
 
@@ -277,6 +303,7 @@ class Chat(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_chat",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -287,7 +314,7 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
@@ -296,9 +323,16 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -320,7 +354,7 @@ class Chat(BaseSDK):
             List[models.ChatCompletionRequestMessages],
             List[models.ChatCompletionRequestMessagesTypedDict],
         ],
-        model: OptionalNullable[str] = "azureai",
+        model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -347,6 +381,9 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -369,6 +406,7 @@ class Chat(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -382,6 +420,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionRequest(
             model=model,
@@ -404,6 +444,9 @@ class Chat(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             safe_prompt=safe_prompt,
         )
 
@@ -436,6 +479,7 @@ class Chat(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -445,15 +489,22 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.ChatCompletionResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -475,7 +526,7 @@ class Chat(BaseSDK):
             List[models.ChatCompletionRequestMessages],
             List[models.ChatCompletionRequestMessagesTypedDict],
         ],
-        model: OptionalNullable[str] = "azureai",
+        model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -502,6 +553,9 @@ class Chat(BaseSDK):
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
+        prediction: Optional[
+            Union[models.Prediction, models.PredictionTypedDict]
+        ] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -524,6 +578,7 @@ class Chat(BaseSDK):
         :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
+        :param prediction:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -537,6 +592,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionRequest(
             model=model,
@@ -559,6 +616,9 @@ class Chat(BaseSDK):
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             n=n,
+            prediction=utils.get_pydantic_model(
+                prediction, Optional[models.Prediction]
+            ),
             safe_prompt=safe_prompt,
         )
 
@@ -591,6 +651,7 @@ class Chat(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -600,15 +661,22 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.ChatCompletionResponse]
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
