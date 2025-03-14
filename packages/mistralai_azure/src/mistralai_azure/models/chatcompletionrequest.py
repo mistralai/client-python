@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -70,7 +71,7 @@ ChatCompletionRequestToolChoice = TypeAliasType(
 class ChatCompletionRequestTypedDict(TypedDict):
     messages: List[ChatCompletionRequestMessagesTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
-    model: NotRequired[Nullable[str]]
+    model: NotRequired[str]
     r"""The ID of the model to use for this request."""
     temperature: NotRequired[Nullable[float]]
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
@@ -93,6 +94,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
+    prediction: NotRequired[PredictionTypedDict]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -101,7 +103,7 @@ class ChatCompletionRequest(BaseModel):
     messages: List[ChatCompletionRequestMessages]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
 
-    model: OptionalNullable[str] = "azureai"
+    model: Optional[str] = "azureai"
     r"""The ID of the model to use for this request."""
 
     temperature: OptionalNullable[float] = UNSET
@@ -137,6 +139,8 @@ class ChatCompletionRequest(BaseModel):
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
+    prediction: Optional[Prediction] = None
+
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -156,16 +160,10 @@ class ChatCompletionRequest(BaseModel):
             "presence_penalty",
             "frequency_penalty",
             "n",
+            "prediction",
             "safe_prompt",
         ]
-        nullable_fields = [
-            "model",
-            "temperature",
-            "max_tokens",
-            "random_seed",
-            "tools",
-            "n",
-        ]
+        nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
         null_default_fields = []
 
         serialized = handler(self)
