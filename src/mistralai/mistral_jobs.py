@@ -48,6 +48,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
             page=page,
@@ -85,6 +87,7 @@ class MistralJobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_jobs",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -156,6 +159,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
             page=page,
@@ -193,6 +198,7 @@ class MistralJobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_jobs",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -260,6 +266,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchJobIn(
             input_files=input_files,
@@ -298,6 +306,7 @@ class MistralJobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_create_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -365,6 +374,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchJobIn(
             input_files=input_files,
@@ -403,6 +414,7 @@ class MistralJobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_create_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -462,6 +474,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchGetBatchJobRequest(
             job_id=job_id,
@@ -493,6 +507,7 @@ class MistralJobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -552,6 +567,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchGetBatchJobRequest(
             job_id=job_id,
@@ -583,6 +600,7 @@ class MistralJobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -642,6 +660,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
             job_id=job_id,
@@ -673,6 +693,7 @@ class MistralJobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_cancel_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -732,6 +753,8 @@ class MistralJobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
             job_id=job_id,
@@ -763,6 +786,7 @@ class MistralJobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_cancel_batch_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(

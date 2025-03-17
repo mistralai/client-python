@@ -67,6 +67,8 @@ from .functioncall import (
 )
 from .functionname import FunctionName, FunctionNameTypedDict
 from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
+from .jsonschema import JSONSchema, JSONSchemaTypedDict
+from .prediction import Prediction, PredictionTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkType, ReferenceChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .responseformats import ResponseFormats
@@ -106,6 +108,7 @@ from .validationerror import (
     ValidationError,
     ValidationErrorTypedDict,
 )
+
 
 __all__ = [
     "Arguments",
@@ -163,10 +166,14 @@ __all__ = [
     "FunctionTypedDict",
     "HTTPValidationError",
     "HTTPValidationErrorData",
+    "JSONSchema",
+    "JSONSchemaTypedDict",
     "Loc",
     "LocTypedDict",
     "Messages",
     "MessagesTypedDict",
+    "Prediction",
+    "PredictionTypedDict",
     "ReferenceChunk",
     "ReferenceChunkType",
     "ReferenceChunkTypedDict",

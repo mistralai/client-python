@@ -35,6 +35,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
         req = self._build_request(
             method="GET",
             path="/v1/models",
@@ -61,6 +63,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -72,12 +75,14 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ModelList)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -122,6 +127,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
         req = self._build_request_async(
             method="GET",
             path="/v1/models",
@@ -148,6 +155,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -159,12 +167,14 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ModelList)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -211,6 +221,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.RetrieveModelV1ModelsModelIDGetRequest(
             model_id=model_id,
@@ -242,6 +254,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -253,15 +266,17 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
                 models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -308,6 +323,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.RetrieveModelV1ModelsModelIDGetRequest(
             model_id=model_id,
@@ -339,6 +356,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -350,15 +368,17 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
                 models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
             )
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -405,6 +425,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteModelV1ModelsModelIDDeleteRequest(
             model_id=model_id,
@@ -436,6 +458,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -447,12 +470,14 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.DeleteModelOut)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -499,6 +524,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteModelV1ModelsModelIDDeleteRequest(
             model_id=model_id,
@@ -530,6 +557,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -541,12 +569,14 @@ class Models(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.DeleteModelOut)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -597,6 +627,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
@@ -635,6 +667,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -698,6 +731,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
@@ -736,6 +771,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -795,6 +831,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
             model_id=model_id,
@@ -826,6 +864,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -885,6 +924,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
             model_id=model_id,
@@ -916,6 +957,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -975,6 +1017,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
             model_id=model_id,
@@ -1006,6 +1050,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -1065,6 +1110,8 @@ class Models(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
             model_id=model_id,
@@ -1096,6 +1143,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
