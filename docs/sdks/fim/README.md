@@ -20,12 +20,11 @@ FIM completion.
 from mistralai import Mistral
 import os
 
-
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fim.complete(model="codestral-2405", prompt="def", suffix="return a+b")
+    res = mistral.fim.complete(model="codestral-2405", prompt="def", top_p=1, stream=False, suffix="return a+b")
 
     # Handle response
     print(res)
@@ -69,12 +68,11 @@ Mistral AI provides the ability to stream responses back to a client in order to
 from mistralai import Mistral
 import os
 
-
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fim.stream(model="codestral-2405", prompt="def", suffix="return a+b")
+    res = mistral.fim.stream(model="codestral-2405", prompt="def", top_p=1, stream=True, suffix="return a+b")
 
     with res as event_stream:
         for event in event_stream:

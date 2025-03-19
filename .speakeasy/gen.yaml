@@ -7,15 +7,13 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
-    nameResolutionFeb2025: false
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
-    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 1.5.2-rc.1
+  version: 1.5.1
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -46,6 +44,5 @@ python:
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: mistralai
-  pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2

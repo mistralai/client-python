@@ -40,8 +40,6 @@ class Classifiers(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.ClassificationRequest(
             model=model,
@@ -77,7 +75,6 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -89,14 +86,12 @@ class Classifiers(BaseSDK):
             retry_config=retry_config,
         )
 
-        response_data: Any = None
+        data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ClassificationResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
-            )
-            raise models.HTTPValidationError(data=response_data)
+            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -146,8 +141,6 @@ class Classifiers(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.ClassificationRequest(
             model=model,
@@ -183,7 +176,6 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -195,14 +187,12 @@ class Classifiers(BaseSDK):
             retry_config=retry_config,
         )
 
-        response_data: Any = None
+        data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ClassificationResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
-            )
-            raise models.HTTPValidationError(data=response_data)
+            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -254,8 +244,6 @@ class Classifiers(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatModerationRequest(
             model=model,
@@ -292,7 +280,6 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="moderations_chat_v1_chat_moderations_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -304,14 +291,12 @@ class Classifiers(BaseSDK):
             retry_config=retry_config,
         )
 
-        response_data: Any = None
+        data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ClassificationResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
-            )
-            raise models.HTTPValidationError(data=response_data)
+            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -363,8 +348,6 @@ class Classifiers(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatModerationRequest(
             model=model,
@@ -401,7 +384,6 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="moderations_chat_v1_chat_moderations_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -413,14 +395,12 @@ class Classifiers(BaseSDK):
             retry_config=retry_config,
         )
 
-        response_data: Any = None
+        data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ClassificationResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
-            )
-            raise models.HTTPValidationError(data=response_data)
+            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
+            raise models.HTTPValidationError(data=data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

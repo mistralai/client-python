@@ -231,10 +231,6 @@ class BaseSDK:
                     req.headers,
                     get_body_content(req),
                 )
-
-                if client is None:
-                    raise ValueError("client is required")
-
                 http_res = client.send(req, stream=stream)
             except Exception as e:
                 _, e = self.sdk_configuration.get_hooks().after_error(
@@ -307,10 +303,6 @@ class BaseSDK:
                     req.headers,
                     get_body_content(req),
                 )
-
-                if client is None:
-                    raise ValueError("client is required")
-
                 http_res = await client.send(req, stream=stream)
             except Exception as e:
                 _, e = self.sdk_configuration.get_hooks().after_error(

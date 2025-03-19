@@ -7,10 +7,8 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
-    nameResolutionFeb2025: false
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
-    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
@@ -28,7 +26,6 @@ python:
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in GCP.
-  enableCustomCodeRegions: false
   enumFormat: union
   fixFlags:
     responseRequiredSep2024: false
@@ -48,6 +45,5 @@ python:
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: mistralai-gcp
-  pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2

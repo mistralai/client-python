@@ -26,10 +26,8 @@ SERVERS = {
 
 @dataclass
 class SDKConfiguration:
-    client: Union[HttpClient, None]
-    client_supplied: bool
-    async_client: Union[AsyncHttpClient, None]
-    async_client_supplied: bool
+    client: HttpClient
+    async_client: AsyncHttpClient
     debug_logger: Logger
     security: Optional[Union[models.Security, Callable[[], models.Security]]] = None
     server_url: Optional[str] = ""

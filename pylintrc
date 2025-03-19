@@ -455,10 +455,7 @@ disable=raw-checker-failed,
         bare-except,
         broad-exception-caught,
         fixme,
-        relative-beyond-top-level,
-        consider-using-with,
-        wildcard-import,
-        unused-wildcard-import
+        relative-beyond-top-level
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
