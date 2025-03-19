@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -65,7 +64,7 @@ ChatCompletionStreamRequestToolChoice = TypeAliasType(
 
 
 class ChatCompletionStreamRequestTypedDict(TypedDict):
-    model: str
+    model: Nullable[str]
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
     messages: List[MessagesTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
@@ -89,11 +88,10 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
-    prediction: NotRequired[PredictionTypedDict]
 
 
 class ChatCompletionStreamRequest(BaseModel):
-    model: str
+    model: Nullable[str]
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
 
     messages: List[Messages]
@@ -131,8 +129,6 @@ class ChatCompletionStreamRequest(BaseModel):
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
-    prediction: Optional[Prediction] = None
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -148,9 +144,15 @@ class ChatCompletionStreamRequest(BaseModel):
             "presence_penalty",
             "frequency_penalty",
             "n",
-            "prediction",
         ]
-        nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
+        nullable_fields = [
+            "model",
+            "temperature",
+            "max_tokens",
+            "random_seed",
+            "tools",
+            "n",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

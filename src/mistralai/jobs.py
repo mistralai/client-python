@@ -52,8 +52,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningGetFineTuningJobsRequest(
             page=page,
@@ -93,7 +91,6 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -169,8 +166,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningGetFineTuningJobsRequest(
             page=page,
@@ -210,7 +205,6 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -296,8 +290,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobIn(
             model=model,
@@ -347,7 +339,6 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -435,8 +426,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobIn(
             model=model,
@@ -486,7 +475,6 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -548,8 +536,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningGetFineTuningJobRequest(
             job_id=job_id,
@@ -581,7 +567,6 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -641,8 +626,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningGetFineTuningJobRequest(
             job_id=job_id,
@@ -674,7 +657,6 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -734,8 +716,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningCancelFineTuningJobRequest(
             job_id=job_id,
@@ -767,7 +747,6 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -827,8 +806,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningCancelFineTuningJobRequest(
             job_id=job_id,
@@ -860,7 +837,6 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -920,8 +896,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningStartFineTuningJobRequest(
             job_id=job_id,
@@ -953,7 +927,6 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -1013,8 +986,6 @@ class Jobs(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
 
         request = models.JobsAPIRoutesFineTuningStartFineTuningJobRequest(
             job_id=job_id,
@@ -1046,7 +1017,6 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
-                base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(

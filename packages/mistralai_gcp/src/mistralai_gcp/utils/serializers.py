@@ -7,15 +7,14 @@ import httpx
 from typing_extensions import get_origin
 from pydantic import ConfigDict, create_model
 from pydantic_core import from_json
-from typing_inspection.typing_objects import is_union
+from typing_inspect import is_optional_type
 
 from ..types.basemodel import BaseModel, Nullable, OptionalNullable, Unset
 
 
 def serialize_decimal(as_str: bool):
     def serialize(d):
-        # Optional[T] is a Union[T, None]
-        if is_union(type(d)) and type(None) in get_args(type(d)) and d is None:
+        if is_optional_type(type(d)) and d is None:
             return None
         if isinstance(d, Unset):
             return d
@@ -43,8 +42,7 @@ def validate_decimal(d):
 
 def serialize_float(as_str: bool):
     def serialize(f):
-        # Optional[T] is a Union[T, None]
-        if is_union(type(f)) and type(None) in get_args(type(f)) and f is None:
+        if is_optional_type(type(f)) and f is None:
             return None
         if isinstance(f, Unset):
             return f
@@ -72,8 +70,7 @@ def validate_float(f):
 
 def serialize_int(as_str: bool):
     def serialize(i):
-        # Optional[T] is a Union[T, None]
-        if is_union(type(i)) and type(None) in get_args(type(i)) and i is None:
+        if is_optional_type(type(i)) and i is None:
             return None
         if isinstance(i, Unset):
             return i
@@ -121,8 +118,7 @@ def validate_open_enum(is_int: bool):
 
 def validate_const(v):
     def validate(c):
-        # Optional[T] is a Union[T, None]
-        if is_union(type(c)) and type(None) in get_args(type(c)) and c is None:
+        if is_optional_type(type(c)) and c is None:
             return None
 
         if v != c:
@@ -167,7 +163,7 @@ def marshal_json(val, typ):
     if len(d) == 0:
         return ""
 
-    return json.dumps(d[next(iter(d))], separators=(",", ":"))
+    return json.dumps(d[next(iter(d))], separators=(",", ":"), sort_keys=True)
 
 
 def is_nullable(field):

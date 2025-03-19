@@ -20,12 +20,11 @@ Get a list of batch jobs for your organization and user.
 from mistralai import Mistral
 import os
 
-
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list()
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False)
 
     # Handle response
     print(res)
@@ -65,14 +64,13 @@ Create a new batch job, it will be queued for processing.
 from mistralai import Mistral
 import os
 
-
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
     res = mistral.batch.jobs.create(input_files=[
         "a621cf02-1cd9-4cf5-8403-315211a509a3",
-    ], endpoint="/v1/fim/completions", model="2")
+    ], endpoint="/v1/fim/completions", model="2", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -109,7 +107,6 @@ Get a batch job details by its UUID.
 ```python
 from mistralai import Mistral
 import os
-
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -148,7 +145,6 @@ Request the cancellation of a batch job.
 ```python
 from mistralai import Mistral
 import os
-
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),

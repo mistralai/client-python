@@ -32,7 +32,6 @@ class AssistantMessageTypedDict(TypedDict):
     content: NotRequired[Nullable[AssistantMessageContentTypedDict]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
     prefix: NotRequired[bool]
-    r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
     role: NotRequired[AssistantMessageRole]
 
 
@@ -42,7 +41,6 @@ class AssistantMessage(BaseModel):
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
 
     prefix: Optional[bool] = False
-    r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
 
     role: Optional[AssistantMessageRole] = "assistant"
 

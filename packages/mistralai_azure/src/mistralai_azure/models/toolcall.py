@@ -14,7 +14,6 @@ class ToolCallTypedDict(TypedDict):
     function: FunctionCallTypedDict
     id: NotRequired[str]
     type: NotRequired[ToolTypes]
-    index: NotRequired[int]
 
 
 class ToolCall(BaseModel):
@@ -25,5 +24,3 @@ class ToolCall(BaseModel):
     type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
         None
     )
-
-    index: Optional[int] = 0

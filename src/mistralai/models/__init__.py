@@ -115,11 +115,7 @@ from .detailedjobout import (
     DetailedJobOutStatus,
     DetailedJobOutTypedDict,
 )
-from .documenturlchunk import (
-    DocumentURLChunk,
-    DocumentURLChunkType,
-    DocumentURLChunkTypedDict,
-)
+from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .embeddingrequest import (
     EmbeddingRequest,
     EmbeddingRequestTypedDict,
@@ -459,7 +455,6 @@ __all__ = [
     "Document",
     "DocumentTypedDict",
     "DocumentURLChunk",
-    "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
     "EmbeddingRequest",
     "EmbeddingRequestTypedDict",
