@@ -7,3 +7,4 @@
 | ----------- | ----------- |
 | `FINE_TUNE` | fine-tune   |
 | `BATCH`     | batch       |
+| `OCR`       | ocr         |

@@ -14,8 +14,8 @@ class Embeddings(BaseSDK):
     def create(
         self,
         *,
+        model: str,
         inputs: Union[models.Inputs, models.InputsTypedDict],
-        model: Optional[str] = "mistral-embed",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -25,8 +25,8 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param inputs: Text to embed.
         :param model: ID of the model to use.
+        :param inputs: Text to embed.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -114,8 +114,8 @@ class Embeddings(BaseSDK):
     async def create_async(
         self,
         *,
+        model: str,
         inputs: Union[models.Inputs, models.InputsTypedDict],
-        model: Optional[str] = "mistral-embed",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -125,8 +125,8 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param inputs: Text to embed.
         :param model: ID of the model to use.
+        :param inputs: Text to embed.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

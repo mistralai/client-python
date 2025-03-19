@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 81cc8be96362e2f1cb145b08a2e6c4fa
+  docChecksum: 406e00c323dba0db26d6994620926af4
   docVersion: 0.0.2
   speakeasyVersion: 1.477.0
   generationVersion: 2.497.0
-  releaseVersion: 1.5.1
-  configChecksum: ef3439d915c5d16e7cfb88fe2bf94907
+  releaseVersion: 1.5.2
+  configChecksum: 27786d5cae3bfccc8b434aba9bde02a3
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -101,6 +101,7 @@ generatedFiles:
   - docs/models/detailedjoboutstatus.md
   - docs/models/document.md
   - docs/models/documenturlchunk.md
+  - docs/models/documenturlchunktype.md
   - docs/models/embeddingrequest.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
@@ -650,7 +651,7 @@ examples:
   ocr_v1_ocr_post:
     speakeasy-default-ocr-v1-ocr-post:
       requestBody:
-        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org"}}
+        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org", "type": "document_url"}}
       responses:
         "200":
           application/json: {"pages": [], "model": "A4", "usage_info": {"pages_processed": 442675}}
