@@ -242,10 +242,10 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.embeddings.create(inputs=[
+    res = mistral.embeddings.create(model="mistral-embed", inputs=[
         "Embed this sentence.",
         "As well as this one.",
-    ], model="mistral-embed")
+    ])
 
     # Handle response
     print(res)
@@ -265,10 +265,10 @@ async def main():
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
 
-        res = await mistral.embeddings.create_async(inputs=[
+        res = await mistral.embeddings.create_async(model="mistral-embed", inputs=[
             "Embed this sentence.",
             "As well as this one.",
-        ], model="mistral-embed")
+        ])
 
         # Handle response
         print(res)
