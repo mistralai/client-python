@@ -85,6 +85,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
     prediction: NotRequired[PredictionTypedDict]
+    parallel_tool_calls: NotRequired[bool]
 
 
 class AgentsCompletionRequest(BaseModel):
@@ -123,6 +124,8 @@ class AgentsCompletionRequest(BaseModel):
 
     prediction: Optional[Prediction] = None
 
+    parallel_tool_calls: Optional[bool] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -137,6 +140,7 @@ class AgentsCompletionRequest(BaseModel):
             "frequency_penalty",
             "n",
             "prediction",
+            "parallel_tool_calls",
         ]
         nullable_fields = ["max_tokens", "random_seed", "tools", "n"]
         null_default_fields = []

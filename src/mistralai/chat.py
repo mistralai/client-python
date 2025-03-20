@@ -122,6 +122,7 @@ class Chat(BaseSDK):
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
+        parallel_tool_calls: Optional[bool] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -145,6 +146,7 @@ class Chat(BaseSDK):
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
+        :param parallel_tool_calls:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -158,6 +160,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionRequest(
             model=model,
@@ -181,6 +185,7 @@ class Chat(BaseSDK):
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
             ),
+            parallel_tool_calls=parallel_tool_calls,
             safe_prompt=safe_prompt,
         )
 
@@ -213,6 +218,7 @@ class Chat(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -224,12 +230,14 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -279,6 +287,7 @@ class Chat(BaseSDK):
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
+        parallel_tool_calls: Optional[bool] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -302,6 +311,7 @@ class Chat(BaseSDK):
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
+        :param parallel_tool_calls:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -315,6 +325,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionRequest(
             model=model,
@@ -338,6 +350,7 @@ class Chat(BaseSDK):
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
             ),
+            parallel_tool_calls=parallel_tool_calls,
             safe_prompt=safe_prompt,
         )
 
@@ -370,6 +383,7 @@ class Chat(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -381,12 +395,14 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -444,6 +460,7 @@ class Chat(BaseSDK):
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
+        parallel_tool_calls: Optional[bool] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -469,6 +486,7 @@ class Chat(BaseSDK):
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
+        :param parallel_tool_calls:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -482,6 +500,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionStreamRequest(
             model=model,
@@ -507,6 +527,7 @@ class Chat(BaseSDK):
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
             ),
+            parallel_tool_calls=parallel_tool_calls,
             safe_prompt=safe_prompt,
         )
 
@@ -539,6 +560,7 @@ class Chat(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_chat",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -551,7 +573,7 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
@@ -560,8 +582,10 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -619,6 +643,7 @@ class Chat(BaseSDK):
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
+        parallel_tool_calls: Optional[bool] = None,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -644,6 +669,7 @@ class Chat(BaseSDK):
         :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
+        :param parallel_tool_calls:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -657,6 +683,8 @@ class Chat(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatCompletionStreamRequest(
             model=model,
@@ -682,6 +710,7 @@ class Chat(BaseSDK):
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
             ),
+            parallel_tool_calls=parallel_tool_calls,
             safe_prompt=safe_prompt,
         )
 
@@ -714,6 +743,7 @@ class Chat(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="stream_chat",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -726,7 +756,7 @@ class Chat(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
@@ -735,8 +765,10 @@ class Chat(BaseSDK):
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            data = utils.unmarshal_json(http_res_text, models.HTTPValidationErrorData)
-            raise models.HTTPValidationError(data=data)
+            response_data = utils.unmarshal_json(
+                http_res_text, models.HTTPValidationErrorData
+            )
+            raise models.HTTPValidationError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

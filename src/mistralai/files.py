@@ -44,6 +44,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
             file=utils.get_pydantic_model(file, models.File),
@@ -83,6 +85,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_upload_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -148,6 +151,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
             file=utils.get_pydantic_model(file, models.File),
@@ -187,6 +192,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_upload_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -256,6 +262,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesListFilesRequest(
             page=page,
@@ -292,6 +300,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_list_files",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -361,6 +370,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesListFilesRequest(
             page=page,
@@ -397,6 +408,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_list_files",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -456,6 +468,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
@@ -487,6 +501,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -546,6 +561,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
@@ -577,6 +594,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -636,6 +654,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
@@ -667,6 +687,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_delete_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -726,6 +747,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
@@ -757,6 +780,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_delete_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -816,6 +840,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
@@ -847,6 +873,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_download_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -907,6 +934,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
@@ -938,6 +967,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_download_file",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -998,6 +1028,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
@@ -1030,6 +1062,7 @@ class Files(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(
@@ -1089,6 +1122,8 @@ class Files(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
@@ -1121,6 +1156,7 @@ class Files(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=[],
                 security_source=get_security_from_env(

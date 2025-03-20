@@ -8,6 +8,7 @@ This example shows how to create chat completions.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -17,7 +18,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=False)
+    ])
 
     # Handle response
     print(res)
@@ -33,6 +34,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -42,7 +44,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], stream=False)
+        ])
 
         # Handle response
         print(res)
@@ -58,6 +60,7 @@ This example shows how to upload a file.
 # Synchronous Example
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -82,6 +85,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -106,6 +110,7 @@ This example shows how to create agents completions.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -115,7 +120,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>", stream=False)
+    ], agent_id="<id>")
 
     # Handle response
     print(res)
@@ -131,6 +136,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -140,7 +146,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<id>", stream=False)
+        ], agent_id="<id>")
 
         # Handle response
         print(res)
@@ -156,6 +162,7 @@ This example shows how to create embedding request.
 # Synchronous Example
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -180,6 +187,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:

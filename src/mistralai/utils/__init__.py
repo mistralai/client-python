@@ -43,6 +43,7 @@ from .values import (
     match_content_type,
     match_status_codes,
     match_response,
+    cast_partial,
 )
 from .logger import Logger, get_body_content, get_default_logger
 
@@ -96,4 +97,5 @@ __all__ = [
     "validate_float",
     "validate_int",
     "validate_open_enum",
+    "cast_partial",
 ]

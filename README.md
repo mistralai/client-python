@@ -75,6 +75,37 @@ pip install mistralai
 ```bash
 poetry add mistralai
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from mistralai python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "mistralai",
+# ]
+# ///
+
+from mistralai import Mistral
+
+sdk = Mistral(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start SDK Example Usage [usage] -->
@@ -89,6 +120,7 @@ This example shows how to create chat completions.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -98,7 +130,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=False)
+    ])
 
     # Handle response
     print(res)
@@ -114,6 +146,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -123,7 +156,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], stream=False)
+        ])
 
         # Handle response
         print(res)
@@ -139,6 +172,7 @@ This example shows how to upload a file.
 # Synchronous Example
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -163,6 +197,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -187,6 +222,7 @@ This example shows how to create agents completions.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -196,7 +232,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>", stream=False)
+    ], agent_id="<id>")
 
     # Handle response
     print(res)
@@ -212,6 +248,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -221,7 +258,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<id>", stream=False)
+        ], agent_id="<id>")
 
         # Handle response
         print(res)
@@ -237,6 +274,7 @@ This example shows how to create embedding request.
 # Synchronous Example
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -261,6 +299,7 @@ from mistralai import Mistral
 import os
 
 async def main():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -401,7 +440,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 ### [classifiers](docs/sdks/classifiers/README.md)
 
 * [moderate](docs/sdks/classifiers/README.md#moderate) - Moderations
-* [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Moderations Chat
+* [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Chat Moderations
 
 ### [embeddings](docs/sdks/embeddings/README.md)
 
@@ -465,6 +504,7 @@ underlying connection when the context is exited.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -474,7 +514,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=True)
+    ])
 
     with res as event_stream:
         for event in event_stream:
@@ -502,6 +542,7 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -528,6 +569,7 @@ from mistralai import Mistral
 from mistralai.utils import BackoffStrategy, RetryConfig
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -545,6 +587,7 @@ If you'd like to override the default retry strategy for all operations that sup
 from mistralai import Mistral
 from mistralai.utils import BackoffStrategy, RetryConfig
 import os
+
 
 with Mistral(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
@@ -586,6 +629,7 @@ When custom error responses are specified for an operation, the SDK may also rai
 from mistralai import Mistral, models
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -613,15 +657,16 @@ with Mistral(
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name | Server                   |
-| ---- | ------------------------ |
-| `eu` | `https://api.mistral.ai` |
+| Name | Server                   | Description          |
+| ---- | ------------------------ | -------------------- |
+| `eu` | `https://api.mistral.ai` | EU Production server |
 
 #### Example
 
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     server="eu",
@@ -641,6 +686,7 @@ The default server can also be overridden globally by passing a URL to the `serv
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     server_url="https://api.mistral.ai",
@@ -752,6 +798,7 @@ To authenticate with the API the `api_key` parameter must be set when initializi
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -775,6 +822,7 @@ The `Mistral` class implements the context manager protocol and registers a fina
 from mistralai import Mistral
 import os
 def main():
+
     with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
@@ -783,6 +831,7 @@ def main():
 
 # Or when using async:
 async def amain():
+
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
