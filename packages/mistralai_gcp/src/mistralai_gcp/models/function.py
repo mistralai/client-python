@@ -10,6 +10,7 @@ class FunctionTypedDict(TypedDict):
     name: str
     parameters: Dict[str, Any]
     description: NotRequired[str]
+    strict: NotRequired[bool]
 
 
 class Function(BaseModel):
@@ -17,4 +18,6 @@ class Function(BaseModel):
 
     parameters: Dict[str, Any]
 
-    description: Optional[str] = ""
+    description: Optional[str] = None
+
+    strict: Optional[bool] = None

@@ -9,3 +9,4 @@ An object specifying the format that the model must output. Setting to `{ "type"
 | ------------- | ------------- |
 | `TEXT`        | text          |
 | `JSON_OBJECT` | json_object   |
+| `JSON_SCHEMA` | json_schema   |
