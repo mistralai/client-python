@@ -21,11 +21,12 @@ Get a list of fine-tuning jobs for your organization and user.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.list(page=0, page_size=100, created_by_me=False)
+    res = mistral.fine_tuning.jobs.list()
 
     # Handle response
     print(res)
@@ -67,13 +68,12 @@ Create a new fine-tuning job, it will be queued for processing.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.create(model="Fiesta", hyperparameters={
-        "learning_rate": 0.0001,
-    })
+    res = mistral.fine_tuning.jobs.create(model="Fiesta", hyperparameters={})
 
     # Handle response
     print(res)
@@ -114,6 +114,7 @@ Get a fine-tuned job details by its UUID.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -152,6 +153,7 @@ Request the cancellation of a fine tuning job.
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
@@ -189,6 +191,7 @@ Request the start of a validated fine tuning job.
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),

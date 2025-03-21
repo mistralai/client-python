@@ -22,7 +22,7 @@ class JSONSchema(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    strict: Optional[bool] = False
+    strict: Optional[bool] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

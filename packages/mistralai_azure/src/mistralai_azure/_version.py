@@ -3,7 +3,10 @@
 import importlib.metadata
 
 __title__: str = "mistralai_azure"
-__version__: str = "1.2.6"
+__version__: str = "1.6.0"
+__openapi_doc_version__: str = "0.0.2"
+__gen_version__: str = "2.548.6"
+__user_agent__: str = "speakeasy-sdk/python 1.6.0 2.548.6 0.0.2 mistralai_azure"
 
 try:
     if __package__ is not None:

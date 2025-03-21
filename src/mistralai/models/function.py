@@ -18,6 +18,6 @@ class Function(BaseModel):
 
     parameters: Dict[str, Any]
 
-    description: Optional[str] = ""
+    description: Optional[str] = None
 
-    strict: Optional[bool] = False
+    strict: Optional[bool] = None

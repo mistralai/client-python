@@ -8,7 +8,7 @@ Classifiers API.
 ### Available Operations
 
 * [moderate](#moderate) - Moderations
-* [moderate_chat](#moderate_chat) - Moderations Chat
+* [moderate_chat](#moderate_chat) - Chat Moderations
 
 ## moderate
 
@@ -19,6 +19,7 @@ Moderations
 ```python
 from mistralai import Mistral
 import os
+
 
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
@@ -54,7 +55,7 @@ with Mistral(
 
 ## moderate_chat
 
-Moderations Chat
+Chat Moderations
 
 ### Example Usage
 
@@ -62,19 +63,18 @@ Moderations Chat
 from mistralai import Mistral
 import os
 
+
 with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.moderate_chat(model="Roadster", inputs=[
+    res = mistral.classifiers.moderate_chat(model="Model Y", inputs=[
         [
             {
-                "content": "<value>",
-                "role": "tool",
-            },
-            {
-                "content": "<value>",
-                "role": "tool",
+                "content": [
+
+                ],
+                "role": "system",
             },
             {
                 "content": "<value>",
@@ -95,7 +95,26 @@ with Mistral(
                 "role": "assistant",
             },
         ],
-    ], truncate_for_context_length=False)
+        [
+            {
+                "content": "<value>",
+                "role": "system",
+            },
+            {
+                "content": [
+                    {
+                        "image_url": "https://fatherly-colon.name",
+                        "type": "image_url",
+                    },
+                ],
+                "role": "user",
+            },
+            {
+                "content": "<value>",
+                "role": "user",
+            },
+        ],
+    ])
 
     # Handle response
     print(res)

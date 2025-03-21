@@ -88,6 +88,7 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
     prediction: NotRequired[PredictionTypedDict]
+    parallel_tool_calls: NotRequired[bool]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -133,6 +134,8 @@ class ChatCompletionStreamRequest(BaseModel):
 
     prediction: Optional[Prediction] = None
 
+    parallel_tool_calls: Optional[bool] = None
+
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -152,6 +155,7 @@ class ChatCompletionStreamRequest(BaseModel):
             "frequency_penalty",
             "n",
             "prediction",
+            "parallel_tool_calls",
             "safe_prompt",
         ]
         nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
