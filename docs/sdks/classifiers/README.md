@@ -9,6 +9,8 @@ Classifiers API.
 
 * [moderate](#moderate) - Moderations
 * [moderate_chat](#moderate_chat) - Chat Moderations
+* [classify](#classify) - Classifications
+* [classify_chat](#classify_chat) - Chat Classifications
 
 ## moderate
 
@@ -44,7 +46,7 @@ with Mistral(
 
 ### Response
 
-**[models.ClassificationResponse](../../models/classificationresponse.md)**
+**[models.ModerationResponse](../../models/moderationresponse.md)**
 
 ### Errors
 
@@ -129,6 +131,102 @@ with Mistral(
 | `inputs`                                                                          | [models.ChatModerationRequestInputs](../../models/chatmoderationrequestinputs.md) | :heavy_check_mark:                                                                | Chat to classify                                                                  |
 | `truncate_for_context_length`                                                     | *Optional[bool]*                                                                  | :heavy_minus_sign:                                                                | N/A                                                                               |
 | `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
+
+### Response
+
+**[models.ModerationResponse](../../models/moderationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## classify
+
+Classifications
+
+### Example Usage
+
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.classifiers.classify(model="Altima", inputs="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           |
+| `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
+
+### Response
+
+**[models.ClassificationResponse](../../models/classificationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## classify_chat
+
+Chat Classifications
+
+### Example Usage
+
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.classifiers.classify_chat(model="Fortwo", inputs=[
+        {
+            "messages": [
+                {
+                    "prefix": False,
+                    "role": "assistant",
+                },
+                {
+                    "prefix": False,
+                    "role": "assistant",
+                },
+            ],
+        },
+    ])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `model`                                                                                   | *str*                                                                                     | :heavy_check_mark:                                                                        | N/A                                                                                       |
+| `inputs`                                                                                  | [models.ChatClassificationRequestInputs](../../models/chatclassificationrequestinputs.md) | :heavy_check_mark:                                                                        | Chat to classify                                                                          |
+| `truncate_for_context_length`                                                             | *Optional[bool]*                                                                          | :heavy_minus_sign:                                                                        | N/A                                                                                       |
+| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
 
 ### Response
 

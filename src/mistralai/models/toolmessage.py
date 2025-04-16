@@ -16,6 +16,14 @@ ToolMessageContentTypedDict = TypeAliasType(
 ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[ContentChunk]])
 
 
+class MetadataTypedDict(TypedDict):
+    pass
+
+
+class Metadata(BaseModel):
+    pass
+
+
 ToolMessageRole = Literal["tool"]
 
 
@@ -23,6 +31,7 @@ class ToolMessageTypedDict(TypedDict):
     content: Nullable[ToolMessageContentTypedDict]
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
+    metadata: NotRequired[Nullable[MetadataTypedDict]]
     role: NotRequired[ToolMessageRole]
 
 
@@ -33,12 +42,14 @@ class ToolMessage(BaseModel):
 
     name: OptionalNullable[str] = UNSET
 
+    metadata: OptionalNullable[Metadata] = UNSET
+
     role: Optional[ToolMessageRole] = "tool"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["tool_call_id", "name", "role"]
-        nullable_fields = ["content", "tool_call_id", "name"]
+        optional_fields = ["tool_call_id", "name", "metadata", "role"]
+        nullable_fields = ["content", "tool_call_id", "name", "metadata"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -20,6 +20,7 @@ class WandbIntegrationOutTypedDict(TypedDict):
     name: NotRequired[Nullable[str]]
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
     run_name: NotRequired[Nullable[str]]
+    url: NotRequired[Nullable[str]]
 
 
 class WandbIntegrationOut(BaseModel):
@@ -38,10 +39,12 @@ class WandbIntegrationOut(BaseModel):
 
     run_name: OptionalNullable[str] = UNSET
 
+    url: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "name", "run_name"]
-        nullable_fields = ["name", "run_name"]
+        optional_fields = ["type", "name", "run_name", "url"]
+        nullable_fields = ["name", "run_name", "url"]
         null_default_fields = []
 
         serialized = handler(self)

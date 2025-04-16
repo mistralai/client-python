@@ -33,6 +33,7 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict(TypedDict):
     r"""The model name used for fine-tuning to filter on. When set, the other results are not displayed."""
     created_after: NotRequired[Nullable[datetime]]
     r"""The date/time to filter on. When set, the results for previous creation times are not displayed."""
+    created_before: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
     r"""When set, only return results for jobs created by the API caller. Other results are not displayed."""
     status: NotRequired[Nullable[QueryParamStatus]]
@@ -69,6 +70,11 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""The date/time to filter on. When set, the results for previous creation times are not displayed."""
+
+    created_before: Annotated[
+        OptionalNullable[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
 
     created_by_me: Annotated[
         Optional[bool],
@@ -107,6 +113,7 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequest(BaseModel):
             "page_size",
             "model",
             "created_after",
+            "created_before",
             "created_by_me",
             "status",
             "wandb_project",
@@ -116,6 +123,7 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequest(BaseModel):
         nullable_fields = [
             "model",
             "created_after",
+            "created_before",
             "status",
             "wandb_project",
             "wandb_name",

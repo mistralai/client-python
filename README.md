@@ -441,6 +441,8 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 
 * [moderate](docs/sdks/classifiers/README.md#moderate) - Moderations
 * [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Chat Moderations
+* [classify](docs/sdks/classifiers/README.md#classify) - Classifications
+* [classify_chat](docs/sdks/classifiers/README.md#classify_chat) - Chat Classifications
 
 ### [embeddings](docs/sdks/embeddings/README.md)
 
