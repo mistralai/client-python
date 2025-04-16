@@ -11,6 +11,7 @@ class FTModelCapabilitiesOutTypedDict(TypedDict):
     completion_fim: NotRequired[bool]
     function_calling: NotRequired[bool]
     fine_tuning: NotRequired[bool]
+    classification: NotRequired[bool]
 
 
 class FTModelCapabilitiesOut(BaseModel):
@@ -21,3 +22,5 @@ class FTModelCapabilitiesOut(BaseModel):
     function_calling: Optional[bool] = False
 
     fine_tuning: Optional[bool] = False
+
+    classification: Optional[bool] = False

@@ -1,0 +1,33 @@
+{"text": "I love this product!", "labels": {"sentiment": "positive"}}
+{"text": "The game was amazing.", "labels": {"sentiment": "positive"}}
+{"text": "The new policy is controversial.", "labels": {"sentiment": "neutral"}}
+{"text": "I don't like the new design.", "labels": {"sentiment": "negative"}}
+{"text": "The team won the championship.", "labels": {"sentiment": "positive"}}
+{"text": "The economy is in a bad shape.", "labels": {"sentiment": "negative"}}
+{"text": "The weather is nice today.", "labels": {"sentiment": "positive"}}
+{"text": "The match ended in a draw.", "labels": {"sentiment": "neutral"}}
+{"text": "The new law will be implemented soon.", "labels": {"sentiment": "neutral"}}
+{"text": "I had a great time at the concert.", "labels": {"sentiment": "positive"}}
+{"text": "This movie was fantastic!", "labels": {"sentiment": "positive"}}
+{"text": "The service was terrible.", "labels": {"sentiment": "negative"}}
+{"text": "The food was delicious.", "labels": {"sentiment": "positive"}}
+{"text": "I'm not sure about this decision.", "labels": {"sentiment": "neutral"}}
+{"text": "The book was boring.", "labels": {"sentiment": "negative"}}
+{"text": "The view from the top was breathtaking.", "labels": {"sentiment": "positive"}}
+{"text": "The traffic was awful today.", "labels": {"sentiment": "negative"}}
+{"text": "The event was well-organized.", "labels": {"sentiment": "positive"}}
+{"text": "The meeting went on for too long.", "labels": {"sentiment": "negative"}}
+{"text": "The presentation was informative.", "labels": {"sentiment": "positive"}}
+{"text": "The new software update is buggy.", "labels": {"sentiment": "negative"}}
+{"text": "The concert was sold out.", "labels": {"sentiment": "positive"}}
+{"text": "The weather forecast is unreliable.", "labels": {"sentiment": "negative"}}
+{"text": "The new phone is expensive.", "labels": {"sentiment": "neutral"}}
+{"text": "The customer service was excellent.", "labels": {"sentiment": "positive"}}
+{"text": "The new restaurant opened today.", "labels": {"sentiment": "neutral"}}
+{"text": "The movie had a surprising ending.", "labels": {"sentiment": "positive"}}
+{"text": "The project deadline is approaching.", "labels": {"sentiment": "neutral"}}
+{"text": "The team is working hard.", "labels": {"sentiment": "positive"}}
+{"text": "The new product launch was successful.", "labels": {"sentiment": "positive"}}
+{"text": "The conference was insightful.", "labels": {"sentiment": "positive"}}
+{"text": "The flight was delayed.", "labels": {"sentiment": "negative"}}
+{"text": "The vacation was relaxing.", "labels": {"sentiment": "positive"}}

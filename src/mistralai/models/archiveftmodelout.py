@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel
-from mistralai.utils import validate_const
-import pydantic
-from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 ArchiveFTModelOutObject = Literal["model"]
@@ -14,18 +11,13 @@ ArchiveFTModelOutObject = Literal["model"]
 
 class ArchiveFTModelOutTypedDict(TypedDict):
     id: str
-    object: ArchiveFTModelOutObject
+    object: NotRequired[ArchiveFTModelOutObject]
     archived: NotRequired[bool]
 
 
 class ArchiveFTModelOut(BaseModel):
     id: str
 
-    OBJECT: Annotated[
-        Annotated[
-            Optional[ArchiveFTModelOutObject], AfterValidator(validate_const("model"))
-        ],
-        pydantic.Field(alias="object"),
-    ] = "model"
+    object: Optional[ArchiveFTModelOutObject] = "model"
 
     archived: Optional[bool] = True

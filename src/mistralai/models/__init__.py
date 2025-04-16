@@ -39,6 +39,10 @@ from .batchjobin import BatchJobIn, BatchJobInTypedDict
 from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
 from .batchjobsout import BatchJobsOut, BatchJobsOutObject, BatchJobsOutTypedDict
 from .batchjobstatus import BatchJobStatus
+from .chatclassificationrequest import (
+    ChatClassificationRequest,
+    ChatClassificationRequestTypedDict,
+)
 from .chatcompletionchoice import (
     ChatCompletionChoice,
     ChatCompletionChoiceTypedDict,
@@ -79,7 +83,6 @@ from .chatmoderationrequest import (
     TwoTypedDict,
 )
 from .checkpointout import CheckpointOut, CheckpointOutTypedDict
-from .classificationobject import ClassificationObject, ClassificationObjectTypedDict
 from .classificationrequest import (
     ClassificationRequest,
     ClassificationRequestInputs,
@@ -90,12 +93,86 @@ from .classificationresponse import (
     ClassificationResponse,
     ClassificationResponseTypedDict,
 )
+from .classificationtargetresult import (
+    ClassificationTargetResult,
+    ClassificationTargetResultTypedDict,
+)
+from .classifierdetailedjobout import (
+    ClassifierDetailedJobOut,
+    ClassifierDetailedJobOutIntegrations,
+    ClassifierDetailedJobOutIntegrationsTypedDict,
+    ClassifierDetailedJobOutJobType,
+    ClassifierDetailedJobOutObject,
+    ClassifierDetailedJobOutStatus,
+    ClassifierDetailedJobOutTypedDict,
+)
+from .classifierftmodelout import (
+    ClassifierFTModelOut,
+    ClassifierFTModelOutModelType,
+    ClassifierFTModelOutObject,
+    ClassifierFTModelOutTypedDict,
+)
+from .classifierjobout import (
+    ClassifierJobOut,
+    ClassifierJobOutIntegrations,
+    ClassifierJobOutIntegrationsTypedDict,
+    ClassifierJobOutJobType,
+    ClassifierJobOutObject,
+    ClassifierJobOutStatus,
+    ClassifierJobOutTypedDict,
+)
+from .classifiertargetin import ClassifierTargetIn, ClassifierTargetInTypedDict
+from .classifiertargetout import ClassifierTargetOut, ClassifierTargetOutTypedDict
+from .classifiertrainingparameters import (
+    ClassifierTrainingParameters,
+    ClassifierTrainingParametersTypedDict,
+)
+from .classifiertrainingparametersin import (
+    ClassifierTrainingParametersIn,
+    ClassifierTrainingParametersInTypedDict,
+)
 from .completionchunk import CompletionChunk, CompletionChunkTypedDict
+from .completiondetailedjobout import (
+    CompletionDetailedJobOut,
+    CompletionDetailedJobOutIntegrations,
+    CompletionDetailedJobOutIntegrationsTypedDict,
+    CompletionDetailedJobOutJobType,
+    CompletionDetailedJobOutObject,
+    CompletionDetailedJobOutRepositories,
+    CompletionDetailedJobOutRepositoriesTypedDict,
+    CompletionDetailedJobOutStatus,
+    CompletionDetailedJobOutTypedDict,
+)
 from .completionevent import CompletionEvent, CompletionEventTypedDict
+from .completionftmodelout import (
+    CompletionFTModelOut,
+    CompletionFTModelOutObject,
+    CompletionFTModelOutTypedDict,
+    ModelType,
+)
+from .completionjobout import (
+    CompletionJobOut,
+    CompletionJobOutTypedDict,
+    Integrations,
+    IntegrationsTypedDict,
+    JobType,
+    Object,
+    Repositories,
+    RepositoriesTypedDict,
+    Status,
+)
 from .completionresponsestreamchoice import (
     CompletionResponseStreamChoice,
     CompletionResponseStreamChoiceFinishReason,
     CompletionResponseStreamChoiceTypedDict,
+)
+from .completiontrainingparameters import (
+    CompletionTrainingParameters,
+    CompletionTrainingParametersTypedDict,
+)
+from .completiontrainingparametersin import (
+    CompletionTrainingParametersIn,
+    CompletionTrainingParametersInTypedDict,
 )
 from .contentchunk import ContentChunk, ContentChunkTypedDict
 from .delete_model_v1_models_model_id_deleteop import (
@@ -105,16 +182,6 @@ from .delete_model_v1_models_model_id_deleteop import (
 from .deletefileout import DeleteFileOut, DeleteFileOutTypedDict
 from .deletemodelout import DeleteModelOut, DeleteModelOutTypedDict
 from .deltamessage import Content, ContentTypedDict, DeltaMessage, DeltaMessageTypedDict
-from .detailedjobout import (
-    DetailedJobOut,
-    DetailedJobOutIntegrations,
-    DetailedJobOutIntegrationsTypedDict,
-    DetailedJobOutObject,
-    DetailedJobOutRepositories,
-    DetailedJobOutRepositoriesTypedDict,
-    DetailedJobOutStatus,
-    DetailedJobOutTypedDict,
-)
 from .documenturlchunk import (
     DocumentURLChunk,
     DocumentURLChunkType,
@@ -122,9 +189,9 @@ from .documenturlchunk import (
 )
 from .embeddingrequest import (
     EmbeddingRequest,
+    EmbeddingRequestInputs,
+    EmbeddingRequestInputsTypedDict,
     EmbeddingRequestTypedDict,
-    Inputs,
-    InputsTypedDict,
 )
 from .embeddingresponse import EmbeddingResponse, EmbeddingResponseTypedDict
 from .embeddingresponsedata import EmbeddingResponseData, EmbeddingResponseDataTypedDict
@@ -171,12 +238,13 @@ from .fimcompletionstreamrequest import (
     FIMCompletionStreamRequestStopTypedDict,
     FIMCompletionStreamRequestTypedDict,
 )
+from .finetuneablemodeltype import FineTuneableModelType
+from .ftclassifierlossfunction import FTClassifierLossFunction
 from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOut,
     FTModelCapabilitiesOutTypedDict,
 )
 from .ftmodelcard import FTModelCard, FTModelCardType, FTModelCardTypedDict
-from .ftmodelout import FTModelOut, FTModelOutObject, FTModelOutTypedDict
 from .function import Function, FunctionTypedDict
 from .functioncall import (
     Arguments,
@@ -204,7 +272,23 @@ from .imageurlchunk import (
     ImageURLChunkType,
     ImageURLChunkTypedDict,
 )
+from .inputs import (
+    Inputs,
+    InputsTypedDict,
+    InstructRequestInputs,
+    InstructRequestInputsMessages,
+    InstructRequestInputsMessagesTypedDict,
+    InstructRequestInputsTypedDict,
+)
+from .instructrequest import (
+    InstructRequest,
+    InstructRequestMessages,
+    InstructRequestMessagesTypedDict,
+    InstructRequestTypedDict,
+)
 from .jobin import (
+    Hyperparameters,
+    HyperparametersTypedDict,
     JobIn,
     JobInIntegrations,
     JobInIntegrationsTypedDict,
@@ -213,16 +297,6 @@ from .jobin import (
     JobInTypedDict,
 )
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-from .jobout import (
-    Integrations,
-    IntegrationsTypedDict,
-    JobOut,
-    JobOutTypedDict,
-    Object,
-    Repositories,
-    RepositoriesTypedDict,
-    Status,
-)
 from .jobs_api_routes_batch_cancel_batch_jobop import (
     JobsAPIRoutesBatchCancelBatchJobRequest,
     JobsAPIRoutesBatchCancelBatchJobRequestTypedDict,
@@ -242,14 +316,20 @@ from .jobs_api_routes_fine_tuning_archive_fine_tuned_modelop import (
 from .jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop import (
     JobsAPIRoutesFineTuningCancelFineTuningJobRequest,
     JobsAPIRoutesFineTuningCancelFineTuningJobRequestTypedDict,
+    JobsAPIRoutesFineTuningCancelFineTuningJobResponse,
+    JobsAPIRoutesFineTuningCancelFineTuningJobResponseTypedDict,
 )
 from .jobs_api_routes_fine_tuning_create_fine_tuning_jobop import (
     JobsAPIRoutesFineTuningCreateFineTuningJobResponse,
     JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict,
+    Response1,
+    Response1TypedDict,
 )
 from .jobs_api_routes_fine_tuning_get_fine_tuning_jobop import (
     JobsAPIRoutesFineTuningGetFineTuningJobRequest,
     JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict,
+    JobsAPIRoutesFineTuningGetFineTuningJobResponse,
+    JobsAPIRoutesFineTuningGetFineTuningJobResponseTypedDict,
 )
 from .jobs_api_routes_fine_tuning_get_fine_tuning_jobsop import (
     JobsAPIRoutesFineTuningGetFineTuningJobsRequest,
@@ -259,6 +339,8 @@ from .jobs_api_routes_fine_tuning_get_fine_tuning_jobsop import (
 from .jobs_api_routes_fine_tuning_start_fine_tuning_jobop import (
     JobsAPIRoutesFineTuningStartFineTuningJobRequest,
     JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict,
+    JobsAPIRoutesFineTuningStartFineTuningJobResponse,
+    JobsAPIRoutesFineTuningStartFineTuningJobResponseTypedDict,
 )
 from .jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop import (
     JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest,
@@ -267,8 +349,16 @@ from .jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop import (
 from .jobs_api_routes_fine_tuning_update_fine_tuned_modelop import (
     JobsAPIRoutesFineTuningUpdateFineTunedModelRequest,
     JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict,
+    JobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
+    JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict,
 )
-from .jobsout import JobsOut, JobsOutObject, JobsOutTypedDict
+from .jobsout import (
+    JobsOut,
+    JobsOutData,
+    JobsOutDataTypedDict,
+    JobsOutObject,
+    JobsOutTypedDict,
+)
 from .jsonschema import JSONSchema, JSONSchemaTypedDict
 from .legacyjobmetadataout import (
     LegacyJobMetadataOut,
@@ -279,6 +369,8 @@ from .listfilesout import ListFilesOut, ListFilesOutTypedDict
 from .metricout import MetricOut, MetricOutTypedDict
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
+from .moderationobject import ModerationObject, ModerationObjectTypedDict
+from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
 from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
 from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
 from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
@@ -321,8 +413,6 @@ from .toolmessage import (
 )
 from .tooltypes import ToolTypes
 from .trainingfile import TrainingFile, TrainingFileTypedDict
-from .trainingparameters import TrainingParameters, TrainingParametersTypedDict
-from .trainingparametersin import TrainingParametersIn, TrainingParametersInTypedDict
 from .unarchiveftmodelout import (
     UnarchiveFTModelOut,
     UnarchiveFTModelOutObject,
@@ -397,6 +487,8 @@ __all__ = [
     "BatchJobsOut",
     "BatchJobsOutObject",
     "BatchJobsOutTypedDict",
+    "ChatClassificationRequest",
+    "ChatClassificationRequestTypedDict",
     "ChatCompletionChoice",
     "ChatCompletionChoiceTypedDict",
     "ChatCompletionRequest",
@@ -419,21 +511,65 @@ __all__ = [
     "ChatModerationRequestTypedDict",
     "CheckpointOut",
     "CheckpointOutTypedDict",
-    "ClassificationObject",
-    "ClassificationObjectTypedDict",
     "ClassificationRequest",
     "ClassificationRequestInputs",
     "ClassificationRequestInputsTypedDict",
     "ClassificationRequestTypedDict",
     "ClassificationResponse",
     "ClassificationResponseTypedDict",
+    "ClassificationTargetResult",
+    "ClassificationTargetResultTypedDict",
+    "ClassifierDetailedJobOut",
+    "ClassifierDetailedJobOutIntegrations",
+    "ClassifierDetailedJobOutIntegrationsTypedDict",
+    "ClassifierDetailedJobOutJobType",
+    "ClassifierDetailedJobOutObject",
+    "ClassifierDetailedJobOutStatus",
+    "ClassifierDetailedJobOutTypedDict",
+    "ClassifierFTModelOut",
+    "ClassifierFTModelOutModelType",
+    "ClassifierFTModelOutObject",
+    "ClassifierFTModelOutTypedDict",
+    "ClassifierJobOut",
+    "ClassifierJobOutIntegrations",
+    "ClassifierJobOutIntegrationsTypedDict",
+    "ClassifierJobOutJobType",
+    "ClassifierJobOutObject",
+    "ClassifierJobOutStatus",
+    "ClassifierJobOutTypedDict",
+    "ClassifierTargetIn",
+    "ClassifierTargetInTypedDict",
+    "ClassifierTargetOut",
+    "ClassifierTargetOutTypedDict",
+    "ClassifierTrainingParameters",
+    "ClassifierTrainingParametersIn",
+    "ClassifierTrainingParametersInTypedDict",
+    "ClassifierTrainingParametersTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
+    "CompletionDetailedJobOut",
+    "CompletionDetailedJobOutIntegrations",
+    "CompletionDetailedJobOutIntegrationsTypedDict",
+    "CompletionDetailedJobOutJobType",
+    "CompletionDetailedJobOutObject",
+    "CompletionDetailedJobOutRepositories",
+    "CompletionDetailedJobOutRepositoriesTypedDict",
+    "CompletionDetailedJobOutStatus",
+    "CompletionDetailedJobOutTypedDict",
     "CompletionEvent",
     "CompletionEventTypedDict",
+    "CompletionFTModelOut",
+    "CompletionFTModelOutObject",
+    "CompletionFTModelOutTypedDict",
+    "CompletionJobOut",
+    "CompletionJobOutTypedDict",
     "CompletionResponseStreamChoice",
     "CompletionResponseStreamChoiceFinishReason",
     "CompletionResponseStreamChoiceTypedDict",
+    "CompletionTrainingParameters",
+    "CompletionTrainingParametersIn",
+    "CompletionTrainingParametersInTypedDict",
+    "CompletionTrainingParametersTypedDict",
     "Content",
     "ContentChunk",
     "ContentChunkTypedDict",
@@ -448,20 +584,14 @@ __all__ = [
     "DeleteModelV1ModelsModelIDDeleteRequestTypedDict",
     "DeltaMessage",
     "DeltaMessageTypedDict",
-    "DetailedJobOut",
-    "DetailedJobOutIntegrations",
-    "DetailedJobOutIntegrationsTypedDict",
-    "DetailedJobOutObject",
-    "DetailedJobOutRepositories",
-    "DetailedJobOutRepositoriesTypedDict",
-    "DetailedJobOutStatus",
-    "DetailedJobOutTypedDict",
     "Document",
     "DocumentTypedDict",
     "DocumentURLChunk",
     "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
     "EmbeddingRequest",
+    "EmbeddingRequestInputs",
+    "EmbeddingRequestInputsTypedDict",
     "EmbeddingRequestTypedDict",
     "EmbeddingResponse",
     "EmbeddingResponseData",
@@ -479,14 +609,12 @@ __all__ = [
     "FIMCompletionStreamRequestStop",
     "FIMCompletionStreamRequestStopTypedDict",
     "FIMCompletionStreamRequestTypedDict",
+    "FTClassifierLossFunction",
     "FTModelCapabilitiesOut",
     "FTModelCapabilitiesOutTypedDict",
     "FTModelCard",
     "FTModelCardType",
     "FTModelCardTypedDict",
-    "FTModelOut",
-    "FTModelOutObject",
-    "FTModelOutTypedDict",
     "File",
     "FilePurpose",
     "FileSchema",
@@ -506,6 +634,7 @@ __all__ = [
     "FilesAPIRoutesRetrieveFileRequestTypedDict",
     "FilesAPIRoutesUploadFileMultiPartBodyParams",
     "FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict",
+    "FineTuneableModelType",
     "FinishReason",
     "Function",
     "FunctionCall",
@@ -521,6 +650,8 @@ __all__ = [
     "GithubRepositoryOutTypedDict",
     "HTTPValidationError",
     "HTTPValidationErrorData",
+    "Hyperparameters",
+    "HyperparametersTypedDict",
     "ImageURL",
     "ImageURLChunk",
     "ImageURLChunkImageURL",
@@ -530,6 +661,14 @@ __all__ = [
     "ImageURLTypedDict",
     "Inputs",
     "InputsTypedDict",
+    "InstructRequest",
+    "InstructRequestInputs",
+    "InstructRequestInputsMessages",
+    "InstructRequestInputsMessagesTypedDict",
+    "InstructRequestInputsTypedDict",
+    "InstructRequestMessages",
+    "InstructRequestMessagesTypedDict",
+    "InstructRequestTypedDict",
     "Integrations",
     "IntegrationsTypedDict",
     "JSONSchema",
@@ -542,8 +681,7 @@ __all__ = [
     "JobInTypedDict",
     "JobMetadataOut",
     "JobMetadataOutTypedDict",
-    "JobOut",
-    "JobOutTypedDict",
+    "JobType",
     "JobsAPIRoutesBatchCancelBatchJobRequest",
     "JobsAPIRoutesBatchCancelBatchJobRequestTypedDict",
     "JobsAPIRoutesBatchGetBatchJobRequest",
@@ -554,19 +692,29 @@ __all__ = [
     "JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict",
     "JobsAPIRoutesFineTuningCancelFineTuningJobRequest",
     "JobsAPIRoutesFineTuningCancelFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobResponse",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobResponseTypedDict",
     "JobsAPIRoutesFineTuningCreateFineTuningJobResponse",
     "JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict",
     "JobsAPIRoutesFineTuningGetFineTuningJobRequest",
     "JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobResponse",
+    "JobsAPIRoutesFineTuningGetFineTuningJobResponseTypedDict",
     "JobsAPIRoutesFineTuningGetFineTuningJobsRequest",
     "JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict",
     "JobsAPIRoutesFineTuningStartFineTuningJobRequest",
     "JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningStartFineTuningJobResponse",
+    "JobsAPIRoutesFineTuningStartFineTuningJobResponseTypedDict",
     "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest",
     "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequest",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict",
     "JobsOut",
+    "JobsOutData",
+    "JobsOutDataTypedDict",
     "JobsOutObject",
     "JobsOutTypedDict",
     "LegacyJobMetadataOut",
@@ -584,6 +732,11 @@ __all__ = [
     "ModelCapabilitiesTypedDict",
     "ModelList",
     "ModelListTypedDict",
+    "ModelType",
+    "ModerationObject",
+    "ModerationObjectTypedDict",
+    "ModerationResponse",
+    "ModerationResponseTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
     "OCRPageDimensions",
@@ -607,6 +760,8 @@ __all__ = [
     "ReferenceChunkTypedDict",
     "Repositories",
     "RepositoriesTypedDict",
+    "Response1",
+    "Response1TypedDict",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
@@ -647,10 +802,6 @@ __all__ = [
     "ToolTypes",
     "TrainingFile",
     "TrainingFileTypedDict",
-    "TrainingParameters",
-    "TrainingParametersIn",
-    "TrainingParametersInTypedDict",
-    "TrainingParametersTypedDict",
     "Two",
     "TwoTypedDict",
     "Type",

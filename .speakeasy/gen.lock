@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 292a97e4dd465554d420c92d78d70c5f
+  docChecksum: 63f1a973632e9afab0da3d2498994c1b
   docVersion: 0.0.2
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
-  releaseVersion: 1.6.0
-  configChecksum: 1cfb4e3f53a140213b7b400e79811fe5
+  releaseVersion: 1.7.0
+  configChecksum: d52ab0a71ab9e0798da08262c59bf31d
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -68,6 +68,7 @@ generatedFiles:
   - docs/models/batchjobsout.md
   - docs/models/batchjobsoutobject.md
   - docs/models/batchjobstatus.md
+  - docs/models/chatclassificationrequest.md
   - docs/models/chatcompletionchoice.md
   - docs/models/chatcompletionrequest.md
   - docs/models/chatcompletionrequesttoolchoice.md
@@ -79,14 +80,42 @@ generatedFiles:
   - docs/models/chatmoderationrequest.md
   - docs/models/chatmoderationrequestinputs.md
   - docs/models/checkpointout.md
-  - docs/models/classificationobject.md
   - docs/models/classificationrequest.md
   - docs/models/classificationrequestinputs.md
   - docs/models/classificationresponse.md
+  - docs/models/classificationtargetresult.md
+  - docs/models/classifierdetailedjobout.md
+  - docs/models/classifierdetailedjoboutintegrations.md
+  - docs/models/classifierdetailedjoboutjobtype.md
+  - docs/models/classifierdetailedjoboutobject.md
+  - docs/models/classifierdetailedjoboutstatus.md
+  - docs/models/classifierftmodelout.md
+  - docs/models/classifierftmodeloutmodeltype.md
+  - docs/models/classifierftmodeloutobject.md
+  - docs/models/classifierjobout.md
+  - docs/models/classifierjoboutintegrations.md
+  - docs/models/classifierjoboutjobtype.md
+  - docs/models/classifierjoboutobject.md
+  - docs/models/classifierjoboutstatus.md
+  - docs/models/classifiertargetin.md
+  - docs/models/classifiertargetout.md
+  - docs/models/classifiertrainingparameters.md
+  - docs/models/classifiertrainingparametersin.md
   - docs/models/completionchunk.md
+  - docs/models/completiondetailedjobout.md
+  - docs/models/completiondetailedjoboutintegrations.md
+  - docs/models/completiondetailedjoboutjobtype.md
+  - docs/models/completiondetailedjoboutobject.md
+  - docs/models/completiondetailedjoboutrepositories.md
+  - docs/models/completiondetailedjoboutstatus.md
   - docs/models/completionevent.md
+  - docs/models/completionftmodelout.md
+  - docs/models/completionftmodeloutobject.md
+  - docs/models/completionjobout.md
   - docs/models/completionresponsestreamchoice.md
   - docs/models/completionresponsestreamchoicefinishreason.md
+  - docs/models/completiontrainingparameters.md
+  - docs/models/completiontrainingparametersin.md
   - docs/models/content.md
   - docs/models/contentchunk.md
   - docs/models/data.md
@@ -94,15 +123,11 @@ generatedFiles:
   - docs/models/deletemodelout.md
   - docs/models/deletemodelv1modelsmodeliddeleterequest.md
   - docs/models/deltamessage.md
-  - docs/models/detailedjobout.md
-  - docs/models/detailedjoboutintegrations.md
-  - docs/models/detailedjoboutobject.md
-  - docs/models/detailedjoboutrepositories.md
-  - docs/models/detailedjoboutstatus.md
   - docs/models/document.md
   - docs/models/documenturlchunk.md
   - docs/models/documenturlchunktype.md
   - docs/models/embeddingrequest.md
+  - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
   - docs/models/eventout.md
@@ -121,12 +146,12 @@ generatedFiles:
   - docs/models/fimcompletionresponse.md
   - docs/models/fimcompletionstreamrequest.md
   - docs/models/fimcompletionstreamrequeststop.md
+  - docs/models/finetuneablemodeltype.md
   - docs/models/finishreason.md
+  - docs/models/ftclassifierlossfunction.md
   - docs/models/ftmodelcapabilitiesout.md
   - docs/models/ftmodelcard.md
   - docs/models/ftmodelcardtype.md
-  - docs/models/ftmodelout.md
-  - docs/models/ftmodeloutobject.md
   - docs/models/function.md
   - docs/models/functioncall.md
   - docs/models/functionname.md
@@ -135,30 +160,40 @@ generatedFiles:
   - docs/models/githubrepositoryout.md
   - docs/models/githubrepositoryouttype.md
   - docs/models/httpvalidationerror.md
+  - docs/models/hyperparameters.md
   - docs/models/imageurl.md
   - docs/models/imageurlchunk.md
   - docs/models/imageurlchunkimageurl.md
   - docs/models/imageurlchunktype.md
   - docs/models/inputs.md
+  - docs/models/instructrequest.md
+  - docs/models/instructrequestinputs.md
+  - docs/models/instructrequestinputsmessages.md
+  - docs/models/instructrequestmessages.md
   - docs/models/integrations.md
   - docs/models/jobin.md
   - docs/models/jobinintegrations.md
   - docs/models/jobinrepositories.md
   - docs/models/jobmetadataout.md
-  - docs/models/jobout.md
   - docs/models/jobsapiroutesbatchcancelbatchjobrequest.md
   - docs/models/jobsapiroutesbatchgetbatchjobrequest.md
   - docs/models/jobsapiroutesbatchgetbatchjobsrequest.md
   - docs/models/jobsapiroutesfinetuningarchivefinetunedmodelrequest.md
   - docs/models/jobsapiroutesfinetuningcancelfinetuningjobrequest.md
+  - docs/models/jobsapiroutesfinetuningcancelfinetuningjobresponse.md
   - docs/models/jobsapiroutesfinetuningcreatefinetuningjobresponse.md
   - docs/models/jobsapiroutesfinetuninggetfinetuningjobrequest.md
+  - docs/models/jobsapiroutesfinetuninggetfinetuningjobresponse.md
   - docs/models/jobsapiroutesfinetuninggetfinetuningjobsrequest.md
   - docs/models/jobsapiroutesfinetuningstartfinetuningjobrequest.md
+  - docs/models/jobsapiroutesfinetuningstartfinetuningjobresponse.md
   - docs/models/jobsapiroutesfinetuningunarchivefinetunedmodelrequest.md
   - docs/models/jobsapiroutesfinetuningupdatefinetunedmodelrequest.md
+  - docs/models/jobsapiroutesfinetuningupdatefinetunedmodelresponse.md
   - docs/models/jobsout.md
+  - docs/models/jobsoutdata.md
   - docs/models/jobsoutobject.md
+  - docs/models/jobtype.md
   - docs/models/jsonschema.md
   - docs/models/legacyjobmetadataout.md
   - docs/models/legacyjobmetadataoutobject.md
@@ -168,6 +203,9 @@ generatedFiles:
   - docs/models/metricout.md
   - docs/models/modelcapabilities.md
   - docs/models/modellist.md
+  - docs/models/modeltype.md
+  - docs/models/moderationobject.md
+  - docs/models/moderationresponse.md
   - docs/models/object.md
   - docs/models/ocrimageobject.md
   - docs/models/ocrpagedimensions.md
@@ -181,6 +219,7 @@ generatedFiles:
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
   - docs/models/repositories.md
+  - docs/models/response1.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
   - docs/models/retrievefileout.md
@@ -205,8 +244,6 @@ generatedFiles:
   - docs/models/toolmessagerole.md
   - docs/models/tooltypes.md
   - docs/models/trainingfile.md
-  - docs/models/trainingparameters.md
-  - docs/models/trainingparametersin.md
   - docs/models/two.md
   - docs/models/type.md
   - docs/models/unarchiveftmodelout.md
@@ -270,24 +307,36 @@ generatedFiles:
   - src/mistralai/models/batchjobout.py
   - src/mistralai/models/batchjobsout.py
   - src/mistralai/models/batchjobstatus.py
+  - src/mistralai/models/chatclassificationrequest.py
   - src/mistralai/models/chatcompletionchoice.py
   - src/mistralai/models/chatcompletionrequest.py
   - src/mistralai/models/chatcompletionresponse.py
   - src/mistralai/models/chatcompletionstreamrequest.py
   - src/mistralai/models/chatmoderationrequest.py
   - src/mistralai/models/checkpointout.py
-  - src/mistralai/models/classificationobject.py
   - src/mistralai/models/classificationrequest.py
   - src/mistralai/models/classificationresponse.py
+  - src/mistralai/models/classificationtargetresult.py
+  - src/mistralai/models/classifierdetailedjobout.py
+  - src/mistralai/models/classifierftmodelout.py
+  - src/mistralai/models/classifierjobout.py
+  - src/mistralai/models/classifiertargetin.py
+  - src/mistralai/models/classifiertargetout.py
+  - src/mistralai/models/classifiertrainingparameters.py
+  - src/mistralai/models/classifiertrainingparametersin.py
   - src/mistralai/models/completionchunk.py
+  - src/mistralai/models/completiondetailedjobout.py
   - src/mistralai/models/completionevent.py
+  - src/mistralai/models/completionftmodelout.py
+  - src/mistralai/models/completionjobout.py
   - src/mistralai/models/completionresponsestreamchoice.py
+  - src/mistralai/models/completiontrainingparameters.py
+  - src/mistralai/models/completiontrainingparametersin.py
   - src/mistralai/models/contentchunk.py
   - src/mistralai/models/delete_model_v1_models_model_id_deleteop.py
   - src/mistralai/models/deletefileout.py
   - src/mistralai/models/deletemodelout.py
   - src/mistralai/models/deltamessage.py
-  - src/mistralai/models/detailedjobout.py
   - src/mistralai/models/documenturlchunk.py
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
@@ -305,9 +354,10 @@ generatedFiles:
   - src/mistralai/models/fimcompletionrequest.py
   - src/mistralai/models/fimcompletionresponse.py
   - src/mistralai/models/fimcompletionstreamrequest.py
+  - src/mistralai/models/finetuneablemodeltype.py
+  - src/mistralai/models/ftclassifierlossfunction.py
   - src/mistralai/models/ftmodelcapabilitiesout.py
   - src/mistralai/models/ftmodelcard.py
-  - src/mistralai/models/ftmodelout.py
   - src/mistralai/models/function.py
   - src/mistralai/models/functioncall.py
   - src/mistralai/models/functionname.py
@@ -316,9 +366,10 @@ generatedFiles:
   - src/mistralai/models/httpvalidationerror.py
   - src/mistralai/models/imageurl.py
   - src/mistralai/models/imageurlchunk.py
+  - src/mistralai/models/inputs.py
+  - src/mistralai/models/instructrequest.py
   - src/mistralai/models/jobin.py
   - src/mistralai/models/jobmetadataout.py
-  - src/mistralai/models/jobout.py
   - src/mistralai/models/jobs_api_routes_batch_cancel_batch_jobop.py
   - src/mistralai/models/jobs_api_routes_batch_get_batch_jobop.py
   - src/mistralai/models/jobs_api_routes_batch_get_batch_jobsop.py
@@ -337,6 +388,8 @@ generatedFiles:
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modellist.py
+  - src/mistralai/models/moderationobject.py
+  - src/mistralai/models/moderationresponse.py
   - src/mistralai/models/ocrimageobject.py
   - src/mistralai/models/ocrpagedimensions.py
   - src/mistralai/models/ocrpageobject.py
@@ -362,8 +415,6 @@ generatedFiles:
   - src/mistralai/models/toolmessage.py
   - src/mistralai/models/tooltypes.py
   - src/mistralai/models/trainingfile.py
-  - src/mistralai/models/trainingparameters.py
-  - src/mistralai/models/trainingparametersin.py
   - src/mistralai/models/unarchiveftmodelout.py
   - src/mistralai/models/updateftmodelin.py
   - src/mistralai/models/uploadfileout.py
@@ -429,7 +480,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "created": 857478, "owned_by": "<value>", "root": "<value>", "archived": false, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false}, "max_context_length": 32768, "job": "5fa7f0e7-432c-4e47-acb6-0cc78135ddeb"}
+          application/json: {"id": "<id>", "object": "model", "created": 597129, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false, "classification": false}, "max_context_length": 32768, "job": "fa7f0e74-32ce-447c-9b60-cc78135ddeb8", "model_type": "completion"}
   jobs_api_routes_fine_tuning_archive_fine_tuned_model:
     "":
       parameters:
@@ -437,7 +488,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "archived": true}
+          application/json: {"id": "<id>", "object": "model", "archived": true}
   jobs_api_routes_fine_tuning_unarchive_fine_tuned_model:
     "":
       parameters:
@@ -445,7 +496,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "archived": false}
+          application/json: {"id": "<id>", "object": "model", "archived": false}
   files_api_routes_upload_file:
     speakeasy-default-files-api-routes-upload-file:
       requestBody:
@@ -509,7 +560,7 @@ examples:
   jobs_api_routes_fine_tuning_create_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
       requestBody:
-        application/json: {"model": "Fiesta", "hyperparameters": {"learning_rate": 0.0001}}
+        application/json: {"model": "Fiesta", "invalid_sample_skip_percentage": 0, "hyperparameters": {"learning_rate": 0.0001}}
       responses:
         "200":
           application/json: {"expected_duration_seconds": 220, "cost": 10, "cost_currency": "EUR", "train_tokens_per_step": 131072, "train_tokens": 1310720, "data_tokens": 305375, "deprecated": true, "details": "<value>", "epochs": 4.2922, "training_steps": 10, "object": "job.metadata"}
@@ -520,7 +571,7 @@ examples:
           job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
       responses:
         "200":
-          application/json: {"id": "e50f7622-81da-484b-9c66-1c8a99c6b71b", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "Model Y", "status": "CANCELLED", "job_type": "<value>", "created_at": 415305, "modified_at": 149108, "training_files": ["8f7112aa-f0ab-44e4-83b4-cca3716f6208", "7aa1f8cf-05d8-49d5-88ee-381f6b4b885c"], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 856562, "created_at": 1716963433}, {"metrics": {}, "step_number": 328633, "created_at": 1716963433}]}
+          application/json: {"id": "888f7743-e7c1-4351-b8c6-b985523c4bcb", "auto_start": true, "model": "2", "status": "CANCELLATION_REQUESTED", "created_at": 444836, "modified_at": 424256, "training_files": [], "object": "job", "job_type": "completion", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 550563, "created_at": 1716963433}]}
   jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
       parameters:
@@ -528,7 +579,7 @@ examples:
           job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
       responses:
         "200":
-          application/json: {"id": "d50fbe4e-3e32-4613-8574-4d82f3fd6b3c", "auto_start": true, "hyperparameters": {"learning_rate": 0.0001}, "model": "Taurus", "status": "SUCCESS", "job_type": "<value>", "created_at": 251316, "modified_at": 342605, "training_files": ["247ac10c-dc31-412f-a7cc-924123024afa", "0f84bd49-4511-4689-9d07-a64aa724280b", "200aa489-3801-4d6e-a454-eb14cac448cb"], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 949854, "created_at": 1716963433}, {"metrics": {}, "step_number": 516599, "created_at": 1716963433}, {"metrics": {}, "step_number": 439590, "created_at": 1716963433}]}
+          application/json: {"id": "f7135029-2331-4c6e-bbdc-570b7edb4966", "auto_start": true, "model": "A4", "status": "CANCELLATION_REQUESTED", "created_at": 703131, "modified_at": 929437, "training_files": ["e3e32613-5744-4d82-8f3f-d6b3c11eb45e"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 466651, "created_at": 1716963433}], "classifier_targets": [{"name": "<value>", "labels": ["<value>", "<value>", "<value>"], "weight": 687.66, "loss_function": "single_class"}, {"name": "<value>", "labels": ["<value>", "<value>", "<value>"], "weight": 8470.22, "loss_function": "multi_class"}]}
   jobs_api_routes_fine_tuning_start_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
       parameters:
@@ -536,7 +587,7 @@ examples:
           job_id: "0bf0f9e6-c3e5-4d61-aac8-0e36dcac0dfc"
       responses:
         "200":
-          application/json: {"id": "b676fe58-2c47-483e-831e-c71dbed4c90a", "auto_start": false, "hyperparameters": {"learning_rate": 0.0001}, "model": "A4", "status": "CANCELLED", "job_type": "<value>", "created_at": 874397, "modified_at": 483387, "training_files": [], "object": "job", "checkpoints": [{"metrics": {}, "step_number": 331375, "created_at": 1716963433}, {"metrics": {}, "step_number": 590686, "created_at": 1716963433}, {"metrics": {}, "step_number": 543177, "created_at": 1716963433}]}
+          application/json: {"id": "bf0f9e6c-3e5d-461a-ac80-e36dcac0dfc8", "auto_start": true, "model": "Explorer", "status": "RUNNING", "created_at": 961967, "modified_at": 914446, "training_files": ["82c4783e-31ec-471d-bbed-4c90a1b0dd73"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 590686, "created_at": 1716963433}], "classifier_targets": [{"name": "<value>", "labels": ["<value>"], "weight": 5494.15, "loss_function": "single_class"}, {"name": "<value>", "labels": ["<value>", "<value>"], "weight": 7945.15, "loss_function": "single_class"}]}
   jobs_api_routes_batch_get_batch_jobs:
     speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
       parameters:
@@ -636,7 +687,7 @@ examples:
         application/json: {"model": "V90", "input": ["<value>"]}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "V90", "results": [{}]}
         "422":
           application/json: {}
   moderations_chat_v1_chat_moderations_post:
@@ -660,10 +711,28 @@ examples:
   chat_moderations_v1_chat_moderations_post:
     speakeasy-default-chat-moderations-v1-chat-moderations-post:
       requestBody:
-        application/json: {"model": "Model Y", "input": [[{"content": [], "role": "system"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}], [{"content": "<value>", "role": "system"}, {"content": [{"image_url": "https://fatherly-colon.name", "type": "image_url"}], "role": "user"}, {"content": "<value>", "role": "user"}]], "truncate_for_context_length": false}
+        application/json: {"input": [[{"content": [], "role": "system"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}], [{"content": "<value>", "role": "system"}, {"content": [{"image_url": "https://fatherly-colon.name", "type": "image_url"}], "role": "user"}, {"content": "<value>", "role": "user"}]], "model": "Model Y"}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Model Y", "results": [{}, {}]}
+        "422":
+          application/json: {}
+  classifications_v1_classifications_post:
+    speakeasy-default-classifications-v1-classifications-post:
+      requestBody:
+        application/json: {"model": "Altima", "input": "<value>"}
+      responses:
+        "200":
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Camaro", "results": [{"key": {"scores": {"key": 6063.42, "key1": 1739.44}}, "key1": {"scores": {}}}, {"key": {"scores": {"key": 2625.67}}, "key1": {"scores": {}}}]}
+        "422":
+          application/json: {}
+  chat_classifications_v1_chat_classifications_post:
+    speakeasy-default-chat-classifications-v1-chat-classifications-post:
+      requestBody:
+        application/json: {"model": "Fortwo", "input": [{"messages": [{"content": "<value>", "role": "tool"}]}, {"messages": []}]}
+      responses:
+        "200":
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "CX-9", "results": [{"key": {"scores": {"key": 4386.53, "key1": 2974.85}}, "key1": {"scores": {"key": 7100.52, "key1": 480.47}}}]}
         "422":
           application/json: {}
 examplesVersion: 1.0.0

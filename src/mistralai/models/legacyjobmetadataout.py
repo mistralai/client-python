@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 LegacyJobMetadataOutObject = Literal["job.metadata"]
@@ -33,7 +30,7 @@ class LegacyJobMetadataOutTypedDict(TypedDict):
     r"""The number of complete passes through the entire training dataset."""
     training_steps: NotRequired[Nullable[int]]
     r"""The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."""
-    object: LegacyJobMetadataOutObject
+    object: NotRequired[LegacyJobMetadataOutObject]
 
 
 class LegacyJobMetadataOut(BaseModel):
@@ -67,13 +64,7 @@ class LegacyJobMetadataOut(BaseModel):
     training_steps: OptionalNullable[int] = UNSET
     r"""The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."""
 
-    OBJECT: Annotated[
-        Annotated[
-            Optional[LegacyJobMetadataOutObject],
-            AfterValidator(validate_const("job.metadata")),
-        ],
-        pydantic.Field(alias="object"),
-    ] = "job.metadata"
+    object: Optional[LegacyJobMetadataOutObject] = "job.metadata"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

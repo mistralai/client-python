@@ -1,19 +1,19 @@
 # Inputs
 
-Text to embed.
+Chat to classify
 
 
 ## Supported Types
 
-### `str`
+### `models.InstructRequestInputs`
 
 ```python
-value: str = /* values here */
+value: models.InstructRequestInputs = /* values here */
 ```
 
-### `List[str]`
+### `List[models.InstructRequest]`
 
 ```python
-value: List[str] = /* values here */
+value: List[models.InstructRequest] = /* values here */
 ```
 
