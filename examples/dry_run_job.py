@@ -4,7 +4,7 @@ import asyncio
 import os
 
 from mistralai import Mistral
-from mistralai.models import TrainingParametersIn
+from mistralai.models import CompletionTrainingParametersIn
 
 
 async def main():
@@ -13,7 +13,7 @@ async def main():
     client = Mistral(api_key=api_key)
 
     # Create new files
-    with open("examples/file.jsonl", "rb") as f:
+    with open("examples/fixtures/ft_training_file.jsonl", "rb") as f:
         training_file = await client.files.upload_async(
             file={"file_name": "test-file.jsonl", "content": f}
         )
@@ -22,7 +22,7 @@ async def main():
     dry_run_job = await client.fine_tuning.jobs.create_async(
         model="open-mistral-7b",
         training_files=[{"file_id": training_file.id, "weight": 1}],
-        hyperparameters=TrainingParametersIn(
+        hyperparameters=CompletionTrainingParametersIn(
             training_steps=1,
             learning_rate=0.0001,
             warmup_fraction=0.01,

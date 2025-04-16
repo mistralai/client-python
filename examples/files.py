@@ -15,7 +15,7 @@ def main():
     created_file = client.files.upload(
         file=File(
             file_name="training_file.jsonl",
-            content=open("examples/file.jsonl", "rb").read(),
+            content=open("examples/fixtures/ft_training_file.jsonl", "rb").read(),
         )
     )
     print(created_file)

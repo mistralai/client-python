@@ -4,7 +4,10 @@ import asyncio
 import os
 
 from mistralai import Mistral
-from mistralai.models import File, TrainingParametersIn
+from mistralai.models import (
+    File,
+    CompletionTrainingParametersIn,
+)
 
 POLLING_INTERVAL = 10
 
@@ -14,11 +17,11 @@ async def main():
     client = Mistral(api_key=api_key)
 
     # Create new files
-    with open("examples/file.jsonl", "rb") as f:
+    with open("examples/fixtures/ft_training_file.jsonl", "rb") as f:
         training_file = await client.files.upload_async(
             file=File(file_name="file.jsonl", content=f)
         )
-    with open("examples/validation_file.jsonl", "rb") as f:
+    with open("examples/fixtures/ft_validation_file.jsonl", "rb") as f:
         validation_file = await client.files.upload_async(
             file=File(file_name="validation_file.jsonl", content=f)
         )
@@ -27,22 +30,28 @@ async def main():
         model="open-mistral-7b",
         training_files=[{"file_id": training_file.id, "weight": 1}],
         validation_files=[validation_file.id],
-        hyperparameters=TrainingParametersIn(
-            training_steps=1,
+        hyperparameters=CompletionTrainingParametersIn(
+            training_steps=2,
             learning_rate=0.0001,
         ),
     )
     print(created_job)
 
-    while created_job.status in ["RUNNING", "QUEUED"]:
+    while created_job.status in [
+            "QUEUED",
+            "STARTED",
+            "VALIDATING",
+            "VALIDATED",
+            "RUNNING",
+        ]:
         created_job = await client.fine_tuning.jobs.get_async(job_id=created_job.id)
         print(f"Job is {created_job.status}, waiting {POLLING_INTERVAL} seconds")
         await asyncio.sleep(POLLING_INTERVAL)
 
-    if created_job.status == "FAILED":
+    if created_job.status != "SUCCESS":
         print("Job failed")
-        return
-
+        raise Exception(f"Job failed with {created_job.status}")
+    print(created_job)
     # Chat with model
     response = await client.chat.complete_async(
         model=created_job.fine_tuned_model,
