@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 2c14111bcd5cc5624575faefc3e5ddae
+  docChecksum: 63f1a973632e9afab0da3d2498994c1b
   docVersion: 0.0.2
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
@@ -69,7 +69,6 @@ generatedFiles:
   - docs/models/batchjobsoutobject.md
   - docs/models/batchjobstatus.md
   - docs/models/chatclassificationrequest.md
-  - docs/models/chatclassificationrequestinputs.md
   - docs/models/chatcompletionchoice.md
   - docs/models/chatcompletionrequest.md
   - docs/models/chatcompletionrequesttoolchoice.md
@@ -128,6 +127,7 @@ generatedFiles:
   - docs/models/documenturlchunk.md
   - docs/models/documenturlchunktype.md
   - docs/models/embeddingrequest.md
+  - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
   - docs/models/eventout.md
@@ -167,6 +167,8 @@ generatedFiles:
   - docs/models/imageurlchunktype.md
   - docs/models/inputs.md
   - docs/models/instructrequest.md
+  - docs/models/instructrequestinputs.md
+  - docs/models/instructrequestinputsmessages.md
   - docs/models/instructrequestmessages.md
   - docs/models/integrations.md
   - docs/models/jobin.md
@@ -306,7 +308,6 @@ generatedFiles:
   - src/mistralai/models/batchjobsout.py
   - src/mistralai/models/batchjobstatus.py
   - src/mistralai/models/chatclassificationrequest.py
-  - src/mistralai/models/chatclassificationrequestinputs.py
   - src/mistralai/models/chatcompletionchoice.py
   - src/mistralai/models/chatcompletionrequest.py
   - src/mistralai/models/chatcompletionresponse.py
@@ -365,6 +366,7 @@ generatedFiles:
   - src/mistralai/models/httpvalidationerror.py
   - src/mistralai/models/imageurl.py
   - src/mistralai/models/imageurlchunk.py
+  - src/mistralai/models/inputs.py
   - src/mistralai/models/instructrequest.py
   - src/mistralai/models/jobin.py
   - src/mistralai/models/jobmetadataout.py
@@ -727,7 +729,7 @@ examples:
   chat_classifications_v1_chat_classifications_post:
     speakeasy-default-chat-classifications-v1-chat-classifications-post:
       requestBody:
-        application/json: {"model": "Fortwo", "inputs": [{"messages": [{"prefix": false, "role": "assistant"}, {"prefix": false, "role": "assistant"}]}]}
+        application/json: {"model": "Fortwo", "input": [{"messages": [{"content": "<value>", "role": "tool"}]}, {"messages": []}]}
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "CX-9", "results": [{"key": {"scores": {"key": 4386.53, "key1": 2974.85}}, "key1": {"scores": {"key": 7100.52, "key1": 480.47}}}]}

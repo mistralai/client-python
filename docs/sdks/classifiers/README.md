@@ -202,13 +202,14 @@ with Mistral(
         {
             "messages": [
                 {
-                    "prefix": False,
-                    "role": "assistant",
+                    "content": "<value>",
+                    "role": "tool",
                 },
-                {
-                    "prefix": False,
-                    "role": "assistant",
-                },
+            ],
+        },
+        {
+            "messages": [
+
             ],
         },
     ])
@@ -220,11 +221,11 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `model`                                                                                   | *str*                                                                                     | :heavy_check_mark:                                                                        | N/A                                                                                       |
-| `inputs`                                                                                  | [models.ChatClassificationRequestInputs](../../models/chatclassificationrequestinputs.md) | :heavy_check_mark:                                                                        | Chat to classify                                                                          |
-| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `model`                                                             | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `inputs`                                                            | [models.Inputs](../../models/inputs.md)                             | :heavy_check_mark:                                                  | Chat to classify                                                    |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

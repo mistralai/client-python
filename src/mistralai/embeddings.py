@@ -15,7 +15,9 @@ class Embeddings(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -120,7 +122,9 @@ class Embeddings(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

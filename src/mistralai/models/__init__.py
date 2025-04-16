@@ -43,10 +43,6 @@ from .chatclassificationrequest import (
     ChatClassificationRequest,
     ChatClassificationRequestTypedDict,
 )
-from .chatclassificationrequestinputs import (
-    ChatClassificationRequestInputs,
-    ChatClassificationRequestInputsTypedDict,
-)
 from .chatcompletionchoice import (
     ChatCompletionChoice,
     ChatCompletionChoiceTypedDict,
@@ -193,9 +189,9 @@ from .documenturlchunk import (
 )
 from .embeddingrequest import (
     EmbeddingRequest,
+    EmbeddingRequestInputs,
+    EmbeddingRequestInputsTypedDict,
     EmbeddingRequestTypedDict,
-    Inputs,
-    InputsTypedDict,
 )
 from .embeddingresponse import EmbeddingResponse, EmbeddingResponseTypedDict
 from .embeddingresponsedata import EmbeddingResponseData, EmbeddingResponseDataTypedDict
@@ -275,6 +271,14 @@ from .imageurlchunk import (
     ImageURLChunkImageURLTypedDict,
     ImageURLChunkType,
     ImageURLChunkTypedDict,
+)
+from .inputs import (
+    Inputs,
+    InputsTypedDict,
+    InstructRequestInputs,
+    InstructRequestInputsMessages,
+    InstructRequestInputsMessagesTypedDict,
+    InstructRequestInputsTypedDict,
 )
 from .instructrequest import (
     InstructRequest,
@@ -484,8 +488,6 @@ __all__ = [
     "BatchJobsOutObject",
     "BatchJobsOutTypedDict",
     "ChatClassificationRequest",
-    "ChatClassificationRequestInputs",
-    "ChatClassificationRequestInputsTypedDict",
     "ChatClassificationRequestTypedDict",
     "ChatCompletionChoice",
     "ChatCompletionChoiceTypedDict",
@@ -588,6 +590,8 @@ __all__ = [
     "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
     "EmbeddingRequest",
+    "EmbeddingRequestInputs",
+    "EmbeddingRequestInputsTypedDict",
     "EmbeddingRequestTypedDict",
     "EmbeddingResponse",
     "EmbeddingResponseData",
@@ -658,6 +662,10 @@ __all__ = [
     "Inputs",
     "InputsTypedDict",
     "InstructRequest",
+    "InstructRequestInputs",
+    "InstructRequestInputsMessages",
+    "InstructRequestInputsMessagesTypedDict",
+    "InstructRequestInputsTypedDict",
     "InstructRequestMessages",
     "InstructRequestMessagesTypedDict",
     "InstructRequestTypedDict",

@@ -651,10 +651,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[
-            models.ChatClassificationRequestInputs,
-            models.ChatClassificationRequestInputsTypedDict,
-        ],
+        inputs: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -681,9 +678,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            inputs=utils.get_pydantic_model(
-                inputs, models.ChatClassificationRequestInputs
-            ),
+            inputs=utils.get_pydantic_model(inputs, models.Inputs),
         )
 
         req = self._build_request(
@@ -759,10 +754,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[
-            models.ChatClassificationRequestInputs,
-            models.ChatClassificationRequestInputsTypedDict,
-        ],
+        inputs: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -789,9 +781,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            inputs=utils.get_pydantic_model(
-                inputs, models.ChatClassificationRequestInputs
-            ),
+            inputs=utils.get_pydantic_model(inputs, models.Inputs),
         )
 
         req = self._build_request_async(

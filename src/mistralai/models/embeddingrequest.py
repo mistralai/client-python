@@ -7,18 +7,20 @@ from typing import List, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-InputsTypedDict = TypeAliasType("InputsTypedDict", Union[str, List[str]])
+EmbeddingRequestInputsTypedDict = TypeAliasType(
+    "EmbeddingRequestInputsTypedDict", Union[str, List[str]]
+)
 r"""Text to embed."""
 
 
-Inputs = TypeAliasType("Inputs", Union[str, List[str]])
+EmbeddingRequestInputs = TypeAliasType("EmbeddingRequestInputs", Union[str, List[str]])
 r"""Text to embed."""
 
 
 class EmbeddingRequestTypedDict(TypedDict):
     model: str
     r"""ID of the model to use."""
-    inputs: InputsTypedDict
+    inputs: EmbeddingRequestInputsTypedDict
     r"""Text to embed."""
 
 
@@ -26,5 +28,5 @@ class EmbeddingRequest(BaseModel):
     model: str
     r"""ID of the model to use."""
 
-    inputs: Annotated[Inputs, pydantic.Field(alias="input")]
+    inputs: Annotated[EmbeddingRequestInputs, pydantic.Field(alias="input")]
     r"""Text to embed."""
