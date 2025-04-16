@@ -4,7 +4,10 @@ import asyncio
 import os
 
 from mistralai import Mistral
-from mistralai.models import File, TrainingParametersIn
+from mistralai.models import (
+    File,
+    CompletionTrainingParametersIn,
+)
 
 POLLING_INTERVAL = 10
 
@@ -27,7 +30,7 @@ async def main():
         model="open-mistral-7b",
         training_files=[{"file_id": training_file.id, "weight": 1}],
         validation_files=[validation_file.id],
-        hyperparameters=TrainingParametersIn(
+        hyperparameters=CompletionTrainingParametersIn(
             training_steps=1,
             learning_rate=0.0001,
         ),
