@@ -16,7 +16,7 @@ async def main():
     created_file = await client.files.upload_async(
         file=File(
             file_name="training_file.jsonl",
-            content=open("examples/file.jsonl", "rb").read(),
+            content=open("examples/fixtures/ft_training_file.jsonl", "rb").read(),
         )
     )
     print(created_file)
