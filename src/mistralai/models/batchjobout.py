@@ -4,12 +4,9 @@ from __future__ import annotations
 from .batcherror import BatchError, BatchErrorTypedDict
 from .batchjobstatus import BatchJobStatus
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 BatchJobOutObject = Literal["batch"]
@@ -27,7 +24,7 @@ class BatchJobOutTypedDict(TypedDict):
     completed_requests: int
     succeeded_requests: int
     failed_requests: int
-    object: BatchJobOutObject
+    object: NotRequired[BatchJobOutObject]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     output_file: NotRequired[Nullable[str]]
     error_file: NotRequired[Nullable[str]]
@@ -58,10 +55,7 @@ class BatchJobOut(BaseModel):
 
     failed_requests: int
 
-    OBJECT: Annotated[
-        Annotated[Optional[BatchJobOutObject], AfterValidator(validate_const("batch"))],
-        pydantic.Field(alias="object"),
-    ] = "batch"
+    object: Optional[BatchJobOutObject] = "batch"
 
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 

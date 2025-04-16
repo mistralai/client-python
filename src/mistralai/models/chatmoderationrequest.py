@@ -9,8 +9,8 @@ from mistralai.types import BaseModel
 from mistralai.utils import get_discriminator
 import pydantic
 from pydantic import Discriminator, Tag
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 TwoTypedDict = TypeAliasType(
@@ -71,16 +71,13 @@ r"""Chat to classify"""
 
 
 class ChatModerationRequestTypedDict(TypedDict):
-    model: str
     inputs: ChatModerationRequestInputsTypedDict
     r"""Chat to classify"""
-    truncate_for_context_length: NotRequired[bool]
+    model: str
 
 
 class ChatModerationRequest(BaseModel):
-    model: str
-
     inputs: Annotated[ChatModerationRequestInputs, pydantic.Field(alias="input")]
     r"""Chat to classify"""
 
-    truncate_for_context_length: Optional[bool] = False
+    model: str

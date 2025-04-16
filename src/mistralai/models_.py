@@ -607,7 +607,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FTModelOut:
+    ) -> models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -680,7 +680,10 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.FTModelOut)
+            return utils.unmarshal_json(
+                http_res.text,
+                models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -711,7 +714,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FTModelOut:
+    ) -> models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -784,7 +787,10 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.FTModelOut)
+            return utils.unmarshal_json(
+                http_res.text,
+                models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

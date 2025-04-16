@@ -17,6 +17,7 @@ class Jobs(BaseSDK):
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
+        created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[models.QueryParamStatus] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
@@ -35,6 +36,7 @@ class Jobs(BaseSDK):
         :param page_size: The number of items to return per page.
         :param model: The model name used for fine-tuning to filter on. When set, the other results are not displayed.
         :param created_after: The date/time to filter on. When set, the results for previous creation times are not displayed.
+        :param created_before:
         :param created_by_me: When set, only return results for jobs created by the API caller. Other results are not displayed.
         :param status: The current job state to filter on. When set, the other results are not displayed.
         :param wandb_project: The Weights and Biases project to filter on. When set, the other results are not displayed.
@@ -60,6 +62,7 @@ class Jobs(BaseSDK):
             page_size=page_size,
             model=model,
             created_after=created_after,
+            created_before=created_before,
             created_by_me=created_by_me,
             status=status,
             wandb_project=wandb_project,
@@ -134,6 +137,7 @@ class Jobs(BaseSDK):
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
+        created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[models.QueryParamStatus] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
@@ -152,6 +156,7 @@ class Jobs(BaseSDK):
         :param page_size: The number of items to return per page.
         :param model: The model name used for fine-tuning to filter on. When set, the other results are not displayed.
         :param created_after: The date/time to filter on. When set, the results for previous creation times are not displayed.
+        :param created_before:
         :param created_by_me: When set, only return results for jobs created by the API caller. Other results are not displayed.
         :param status: The current job state to filter on. When set, the other results are not displayed.
         :param wandb_project: The Weights and Biases project to filter on. When set, the other results are not displayed.
@@ -177,6 +182,7 @@ class Jobs(BaseSDK):
             page_size=page_size,
             model=model,
             created_after=created_after,
+            created_before=created_before,
             created_by_me=created_by_me,
             status=status,
             wandb_project=wandb_project,
@@ -248,9 +254,7 @@ class Jobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models.TrainingParametersIn, models.TrainingParametersInTypedDict
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
             Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
@@ -261,12 +265,20 @@ class Jobs(BaseSDK):
                 List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]
             ]
         ] = UNSET,
-        repositories: Optional[
+        auto_start: Optional[bool] = None,
+        invalid_sample_skip_percentage: Optional[float] = 0,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
+        repositories: OptionalNullable[
             Union[
                 List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]
             ]
-        ] = None,
-        auto_start: Optional[bool] = None,
+        ] = UNSET,
+        classifier_targets: OptionalNullable[
+            Union[
+                List[models.ClassifierTargetIn],
+                List[models.ClassifierTargetInTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -277,13 +289,16 @@ class Jobs(BaseSDK):
         Create a new fine-tuning job, it will be queued for processing.
 
         :param model: The name of the model to fine-tune.
-        :param hyperparameters: The fine-tuning hyperparameter settings used in a fine-tune job.
+        :param hyperparameters:
         :param training_files:
         :param validation_files: A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files.
         :param suffix: A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`
         :param integrations: A list of integrations to enable for your fine-tuning job.
-        :param repositories:
         :param auto_start: This field will be required in a future release.
+        :param invalid_sample_skip_percentage:
+        :param job_type:
+        :param repositories:
+        :param classifier_targets:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -305,17 +320,22 @@ class Jobs(BaseSDK):
                 training_files, Optional[List[models.TrainingFile]]
             ),
             validation_files=validation_files,
-            hyperparameters=utils.get_pydantic_model(
-                hyperparameters, models.TrainingParametersIn
-            ),
             suffix=suffix,
             integrations=utils.get_pydantic_model(
                 integrations, OptionalNullable[List[models.JobInIntegrations]]
             ),
-            repositories=utils.get_pydantic_model(
-                repositories, Optional[List[models.JobInRepositories]]
-            ),
             auto_start=auto_start,
+            invalid_sample_skip_percentage=invalid_sample_skip_percentage,
+            job_type=job_type,
+            hyperparameters=utils.get_pydantic_model(
+                hyperparameters, models.Hyperparameters
+            ),
+            repositories=utils.get_pydantic_model(
+                repositories, OptionalNullable[List[models.JobInRepositories]]
+            ),
+            classifier_targets=utils.get_pydantic_model(
+                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+            ),
         )
 
         req = self._build_request(
@@ -387,9 +407,7 @@ class Jobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models.TrainingParametersIn, models.TrainingParametersInTypedDict
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
             Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
@@ -400,12 +418,20 @@ class Jobs(BaseSDK):
                 List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]
             ]
         ] = UNSET,
-        repositories: Optional[
+        auto_start: Optional[bool] = None,
+        invalid_sample_skip_percentage: Optional[float] = 0,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
+        repositories: OptionalNullable[
             Union[
                 List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]
             ]
-        ] = None,
-        auto_start: Optional[bool] = None,
+        ] = UNSET,
+        classifier_targets: OptionalNullable[
+            Union[
+                List[models.ClassifierTargetIn],
+                List[models.ClassifierTargetInTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -416,13 +442,16 @@ class Jobs(BaseSDK):
         Create a new fine-tuning job, it will be queued for processing.
 
         :param model: The name of the model to fine-tune.
-        :param hyperparameters: The fine-tuning hyperparameter settings used in a fine-tune job.
+        :param hyperparameters:
         :param training_files:
         :param validation_files: A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files.
         :param suffix: A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`
         :param integrations: A list of integrations to enable for your fine-tuning job.
-        :param repositories:
         :param auto_start: This field will be required in a future release.
+        :param invalid_sample_skip_percentage:
+        :param job_type:
+        :param repositories:
+        :param classifier_targets:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -444,17 +473,22 @@ class Jobs(BaseSDK):
                 training_files, Optional[List[models.TrainingFile]]
             ),
             validation_files=validation_files,
-            hyperparameters=utils.get_pydantic_model(
-                hyperparameters, models.TrainingParametersIn
-            ),
             suffix=suffix,
             integrations=utils.get_pydantic_model(
                 integrations, OptionalNullable[List[models.JobInIntegrations]]
             ),
-            repositories=utils.get_pydantic_model(
-                repositories, Optional[List[models.JobInRepositories]]
-            ),
             auto_start=auto_start,
+            invalid_sample_skip_percentage=invalid_sample_skip_percentage,
+            job_type=job_type,
+            hyperparameters=utils.get_pydantic_model(
+                hyperparameters, models.Hyperparameters
+            ),
+            repositories=utils.get_pydantic_model(
+                repositories, OptionalNullable[List[models.JobInRepositories]]
+            ),
+            classifier_targets=utils.get_pydantic_model(
+                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+            ),
         )
 
         req = self._build_request_async(
@@ -530,7 +564,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningGetFineTuningJobResponse:
         r"""Get Fine Tuning Job
 
         Get a fine-tuned job details by its UUID.
@@ -594,7 +628,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningGetFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -623,7 +659,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningGetFineTuningJobResponse:
         r"""Get Fine Tuning Job
 
         Get a fine-tuned job details by its UUID.
@@ -687,7 +723,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningGetFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -716,7 +754,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse:
         r"""Cancel Fine Tuning Job
 
         Request the cancellation of a fine tuning job.
@@ -780,7 +818,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -809,7 +849,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse:
         r"""Cancel Fine Tuning Job
 
         Request the cancellation of a fine tuning job.
@@ -873,7 +913,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -902,7 +944,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningStartFineTuningJobResponse:
         r"""Start Fine Tuning Job
 
         Request the start of a validated fine tuning job.
@@ -966,7 +1008,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningStartFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -995,7 +1039,7 @@ class Jobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DetailedJobOut:
+    ) -> models.JobsAPIRoutesFineTuningStartFineTuningJobResponse:
         r"""Start Fine Tuning Job
 
         Request the start of a validated fine tuning job.
@@ -1059,7 +1103,9 @@ class Jobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.DetailedJobOut)
+            return utils.unmarshal_json(
+                http_res.text, models.JobsAPIRoutesFineTuningStartFineTuningJobResponse
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(

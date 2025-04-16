@@ -6,7 +6,7 @@ from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -17,7 +17,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     created_after: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
-    status: NotRequired[Nullable[BatchJobStatus]]
+    status: NotRequired[Nullable[List[BatchJobStatus]]]
 
 
 class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
@@ -52,7 +52,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
     ] = False
 
     status: Annotated[
-        OptionalNullable[BatchJobStatus],
+        OptionalNullable[List[BatchJobStatus]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 

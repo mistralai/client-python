@@ -166,7 +166,7 @@ with Mistral(
 
 ### Response
 
-**[models.FTModelOut](../../models/ftmodelout.md)**
+**[models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse](../../models/jobsapiroutesfinetuningupdatefinetunedmodelresponse.md)**
 
 ### Errors
 

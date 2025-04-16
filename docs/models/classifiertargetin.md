@@ -1,0 +1,11 @@
+# ClassifierTargetIn
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `name`                                                                                     | *str*                                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `labels`                                                                                   | List[*str*]                                                                                | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `weight`                                                                                   | *Optional[float]*                                                                          | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `loss_function`                                                                            | [OptionalNullable[models.FTClassifierLossFunction]](../models/ftclassifierlossfunction.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
