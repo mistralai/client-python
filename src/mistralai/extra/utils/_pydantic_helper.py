@@ -15,6 +15,8 @@ def rec_strict_json_schema(schema_node: Any) -> Any:
     elif isinstance(schema_node, list):
         for i, value in enumerate(schema_node):
             schema_node[i] = rec_strict_json_schema(value)
+    elif not schema_node:
+        pass
     else:
         raise ValueError(f"Unexpected type: {schema_node}")
     return schema_node
