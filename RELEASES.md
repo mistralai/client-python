@@ -202,6 +202,8 @@ Based on:
 
 ## 2025-05-22 14:01:13
 ### Changes
+- Added support for `document_annotation_format` and `bbox_annotation_format` in `client.ocr.process`
+
 Based on:
 - OpenAPI Doc  
 - Speakeasy CLI 1.517.3 (2.548.6) https://github.com/speakeasy-api/speakeasy
