@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 3589e9f1ea5775264c5c8e0887b4ea0e
-  docVersion: 1.0.0
+  docChecksum: 63f1a973632e9afab0da3d2498994c1b
+  docVersion: 0.0.2
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
-  releaseVersion: 1.7.1
-  configChecksum: d35541d61057b11258d7d56bbc5c5260
+  releaseVersion: 1.7.0
+  configChecksum: d52ab0a71ab9e0798da08262c59bf31d
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true

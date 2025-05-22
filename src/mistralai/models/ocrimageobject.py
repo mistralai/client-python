@@ -19,8 +19,6 @@ class OCRImageObjectTypedDict(TypedDict):
     r"""Y coordinate of bottom-right corner of the extracted image"""
     image_base64: NotRequired[Nullable[str]]
     r"""Base64 string of the extracted image"""
-    image_annotation: NotRequired[Nullable[str]]
-    r"""Annotation of the extracted image in json str"""
 
 
 class OCRImageObject(BaseModel):
@@ -42,19 +40,15 @@ class OCRImageObject(BaseModel):
     image_base64: OptionalNullable[str] = UNSET
     r"""Base64 string of the extracted image"""
 
-    image_annotation: OptionalNullable[str] = UNSET
-    r"""Annotation of the extracted image in json str"""
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["image_base64", "image_annotation"]
+        optional_fields = ["image_base64"]
         nullable_fields = [
             "top_left_x",
             "top_left_y",
             "bottom_right_x",
             "bottom_right_y",
             "image_base64",
-            "image_annotation",
         ]
         null_default_fields = []
 
