@@ -29,11 +29,17 @@ include = ["py.typed", "src/mistralai/py.typed"]
 in-project = true
 
 [tool.poetry.group.dev.dependencies]
-mypy = "==1.14.1"
+mypy = "==1.15.0"
 pylint = "==3.2.3"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
 types-python-dateutil = "^2.9.0.20240316"
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.11.10"
+pyright = "^1.1.401"
+mypy = "==1.15.0"
+
 
 [project.optional-dependencies]
 gcp = [
