@@ -16,7 +16,6 @@ def main():
         model=model,
         messages=[UserMessage(content="What is the best French cheese?")],
     ):
-
         print(chunk.data.choices[0].delta.content, end="")
 
 

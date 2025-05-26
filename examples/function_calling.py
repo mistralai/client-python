@@ -90,35 +90,46 @@ client = Mistral(api_key=api_key)
 
 messages = [UserMessage(content="What's the status of my transaction?")]
 
-response = client.chat.complete(model=model, messages=messages, tools=tools)
+response = client.chat.complete(
+    model=model, messages=messages, tools=tools, temperature=0
+)
 
 print(response.choices[0].message.content)
 
 messages.append(AssistantMessage(content=response.choices[0].message.content))
 messages.append(UserMessage(content="My transaction ID is T1001."))
 
-response = client.chat.complete(model=model, messages=messages, tools=tools)
-messages.append(response.choices[0].message)
+response = client.chat.complete(
+    model=model, messages=messages, tools=tools, temperature=0
+)
 
-for tool_call in response.choices[0].message.tool_calls:
+tool_call = response.choices[0].message.tool_calls[0]
+function_name = tool_call.function.name
+function_params = json.loads(tool_call.function.arguments)
 
-    function_name = tool_call.function.name
-    function_params = json.loads(tool_call.function.arguments)
+print(
+    f"calling function_name: {function_name}, with function_params: {function_params}"
+)
 
-    print(
-        f"calling function_name: {function_name}, with function_params: {function_params}"
+function_result = names_to_functions[function_name](**function_params)
+
+messages.append(
+    AssistantMessage(
+        content=response.choices[0].message.content,
+        tool_calls=response.choices[0].message.tool_calls,
     )
-
-    function_result =names_to_functions[function_name](**function_params)
-    messages.append(
-        ToolMessage(
-            name=function_name,
-            content=function_result,
-            tool_call_id=tool_call.id,
-        )
+)
+messages.append(
+    ToolMessage(
+        name=function_name,
+        content=function_result,
+        tool_call_id=tool_call.id,
     )
+)
 print(messages)
 
-response = client.chat.complete(model=model, messages=messages, tools=tools)
+response = client.chat.complete(
+    model=model, messages=messages, tools=tools, temperature=0
+)
 
 print(f"{response.choices[0].message.content}")

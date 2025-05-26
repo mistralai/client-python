@@ -40,6 +40,11 @@ gcp = [
     "google-auth >=2.27.0",
     "requests >=2.32.3"
 ]
+agents = [
+    "mcp >=1.0,<2.0; python_version >= '3.10'",
+    "griffe >=1.7.3,<2.0",
+    "authlib >=1.5.2,<2.0",
+]
 
 [build-system]
 requires = ["poetry-core"]

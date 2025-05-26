@@ -7,8 +7,211 @@ from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from typing import Any, List, Mapping, Optional, Union
 
+# region imports
+import typing
+from typing import AsyncGenerator
+import logging
+from collections import defaultdict
+
+from mistralai.models import (
+    ResponseStartedEvent,
+    ConversationEventsData,
+    InputEntries,
+)
+from mistralai.extra.run.result import (
+    RunResult,
+    RunResultEvents,
+    FunctionResultEvent,
+    reconstitue_entries,
+)
+from mistralai.extra.run.utils import run_requirements
+
+logger = logging.getLogger(__name__)
+
+if typing.TYPE_CHECKING:
+    from mistralai.extra.run.context import RunContext
+
+# endregion imports
+
+
 
 class Conversations(BaseSDK):
+    # region sdk-class-body
+    # Custom run code allowing client side execution of code
+
+    @run_requirements
+    async def run_async(
+        self,
+        run_ctx: "RunContext",
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        instructions: OptionalNullable[str] = UNSET,
+        tools: OptionalNullable[
+            Union[List[models.Tools], List[models.ToolsTypedDict]]
+        ] = UNSET,
+        completion_args: OptionalNullable[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> RunResult:
+        """Run a conversation with the given inputs and context.
+
+        The execution of a run will only stop when no required local execution can be done."""
+        from mistralai.beta import Beta
+        from mistralai.extra.run.context import _validate_run
+        from mistralai.extra.run.tools import get_function_calls
+
+        req, run_result, input_entries = await _validate_run(
+            beta_client=Beta(self.sdk_configuration),
+            run_ctx=run_ctx,
+            inputs=inputs,
+            instructions=instructions,
+            tools=tools,
+            completion_args=completion_args,
+        )
+
+        while True:
+            if run_ctx.conversation_id is None:
+                res = await self.start_async(
+                    inputs=input_entries,
+                    http_headers=http_headers,
+                    name=name,
+                    description=description,
+                    retries=retries,
+                    server_url=server_url,
+                    timeout_ms=timeout_ms,
+                    **req,
+                )
+                run_result.conversation_id = res.conversation_id
+                run_ctx.conversation_id = res.conversation_id
+                logger.info(
+                    f"Started Run with conversation with id {res.conversation_id}"
+                )
+            else:
+                res = await self.append_async(
+                    conversation_id=run_ctx.conversation_id,
+                    inputs=input_entries,
+                    retries=retries,
+                    server_url=server_url,
+                    timeout_ms=timeout_ms,
+                )
+            run_ctx.request_count += 1
+            run_result.output_entries.extend(res.outputs)
+            fcalls = get_function_calls(res.outputs)
+            if not fcalls:
+                logger.debug("No more function calls to execute")
+                break
+            else:
+                fresults = await run_ctx.execute_function_calls(fcalls)
+                run_result.output_entries.extend(fresults)
+                input_entries = typing.cast(list[InputEntries], fresults)
+        return run_result
+
+    @run_requirements
+    async def run_stream_async(
+        self,
+        run_ctx: "RunContext",
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        instructions: OptionalNullable[str] = UNSET,
+        tools: OptionalNullable[
+            Union[List[models.Tools], List[models.ToolsTypedDict]]
+        ] = UNSET,
+        completion_args: OptionalNullable[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AsyncGenerator[Union[RunResultEvents, RunResult], None]:
+        """Similar to `run_async` but returns a generator which streams events.
+
+        The last streamed object is the RunResult object which summarises what happened in the run."""
+        from mistralai.beta import Beta
+        from mistralai.extra.run.context import _validate_run
+        from mistralai.extra.run.tools import get_function_calls
+
+        req, run_result, input_entries = await _validate_run(
+            beta_client=Beta(self.sdk_configuration),
+            run_ctx=run_ctx,
+            inputs=inputs,
+            instructions=instructions,
+            tools=tools,
+            completion_args=completion_args,
+        )
+
+        async def run_generator() -> AsyncGenerator[Union[RunResultEvents, RunResult], None]:
+            current_entries = input_entries
+            while True:
+                received_event_tracker: defaultdict[
+                    int, list[ConversationEventsData]
+                ] = defaultdict(list)
+                if run_ctx.conversation_id is None:
+                    res = await self.start_stream_async(
+                        inputs=current_entries,
+                        http_headers=http_headers,
+                        name=name,
+                        description=description,
+                        retries=retries,
+                        server_url=server_url,
+                        timeout_ms=timeout_ms,
+                        **req,
+                    )
+                else:
+                    res = await self.append_stream_async(
+                        conversation_id=run_ctx.conversation_id,
+                        inputs=current_entries,
+                        retries=retries,
+                        server_url=server_url,
+                        timeout_ms=timeout_ms,
+                    )
+                async for event in res:
+                    if (
+                        isinstance(event.data, ResponseStartedEvent)
+                        and run_ctx.conversation_id is None
+                    ):
+                        run_result.conversation_id = event.data.conversation_id
+                        run_ctx.conversation_id = event.data.conversation_id
+                        logger.info(
+                            f"Started Run with conversation with id {run_ctx.conversation_id}"
+                        )
+                    if (
+                        output_index := getattr(event.data, "output_index", None)
+                    ) is not None:
+                        received_event_tracker[output_index].append(event.data)
+                    yield typing.cast(RunResultEvents, event)
+                run_ctx.request_count += 1
+                outputs = reconstitue_entries(received_event_tracker)
+                run_result.output_entries.extend(outputs)
+                fcalls = get_function_calls(outputs)
+                if not fcalls:
+                    logger.debug("No more function calls to execute")
+                    break
+                else:
+                    fresults = await run_ctx.execute_function_calls(fcalls)
+                    run_result.output_entries.extend(fresults)
+                    for fresult in fresults:
+                        yield RunResultEvents(
+                            event="function.result",
+                            data=FunctionResultEvent(
+                                type="function.result",
+                                result=fresult.result,
+                                tool_call_id=fresult.tool_call_id,
+                            ),
+                        )
+                    current_entries = typing.cast(list[InputEntries], fresults)
+            yield run_result
+
+        return run_generator()
+
+    # endregion sdk-class-body
+
     def start(
         self,
         *,
