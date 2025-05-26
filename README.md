@@ -114,7 +114,7 @@ When using the agents related feature it is required to add the `agents` extra d
 installing the package:
 
 ```bash
-pip install "mistralai-private[agents]"
+pip install "mistralai[agents]"
 ```
 
 > Note: Because of some of our dependencies, these features are only available for python version higher or equal to 
