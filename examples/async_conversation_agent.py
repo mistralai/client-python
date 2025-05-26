@@ -2,14 +2,14 @@
 import asyncio
 import os
 
-from mistralai_private import MistralPrivate
+from mistralai import Mistral
 
 MODEL = "mistral-medium-latest"
 
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
-    client = MistralPrivate(api_key=api_key)
+    client = Mistral(api_key=api_key)
 
     agent = client.beta.agents.create(
         model=MODEL,

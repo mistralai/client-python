@@ -37,24 +37,27 @@ jobs:
         run: |
           echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', env.VERSION)] }}" >> $GITHUB_ENV
 
-      - name: For python 3.9, build and install client. Run examples without extra dependencies.
+      - name: Build the package
+        run: |
+          touch README-PYPI.md # Create this file since the client is not built by Speakeasy
+          poetry build
+
+      - name: For python 3.9, install the client and run examples without extra dependencies.
         if: matrix.python-version == '3.9'
         run: |
-          poetry build
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)"
           python3 -m pip install "$PACKAGE"
           ./examples/run_all.sh --no-extra-dep
         env:
-          MISTRAL_AGENT_ID: ${{ vars.CI_AGENT_ID }}
+          MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
 
-      - name: For python 3.10+, build and install client with extras. Run all examples.
+      - name: For python 3.10+, install client with extras and run all examples.
         if: matrix.python-version != '3.9'
         run: |
-          poetry build
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
           python3 -m pip install "$PACKAGE"
           ./examples/run_all.sh
         env:
-          MISTRAL_AGENT_ID: ${{ vars.CI_AGENT_ID }}
+          MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
