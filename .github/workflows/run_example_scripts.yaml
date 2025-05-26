@@ -28,12 +28,6 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
 
-      - name: Build and install client
-        run: |
-          touch README-PYPI.md # Create this file since the client is not built from Speakeasy
-          poetry build
-          python3 -m pip install dist/mistralai-*.whl
-
       - name: Set VERSION
         run: |
           VERSION=$(echo ${{ matrix.python-version }} | tr -d .)
@@ -43,20 +37,24 @@ jobs:
         run: |
           echo "MISTRAL_API_KEY=${{ secrets[format('CI_MISTRAL_API_KEY_PYTHON_{0}', env.VERSION)] }}" >> $GITHUB_ENV
 
-      - name: Run the example scripts
+      - name: For python 3.9, build and install client. Run examples without extra dependencies.
+        if: matrix.python-version == '3.9'
         run: |
-          failed=0
-          for file in examples/*.py; do
-            if [ -f "$file" ] && [ "$file" != "examples/chatbot_with_streaming.py" ]; then
-              echo "Running $file"
-              # Do not fail if the script fails, but save it in the failed variable
-              python3 "$file" > /dev/null || failed=1
-            fi
-          done
-          # If one of the example script failed then exit
-          if [ $failed -ne 0 ]; then
-            exit 1
-          fi
+          poetry build
+          PACKAGE="dist/$(ls dist | grep whl | head -n 1)"
+          python3 -m pip install "$PACKAGE"
+          ./examples/run_all.sh --no-extra-dep
         env:
-          MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
+          MISTRAL_AGENT_ID: ${{ vars.CI_AGENT_ID }}
+          MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
+
+      - name: For python 3.10+, build and install client with extras. Run all examples.
+        if: matrix.python-version != '3.9'
+        run: |
+          poetry build
+          PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
+          python3 -m pip install "$PACKAGE"
+          ./examples/run_all.sh
+        env:
+          MISTRAL_AGENT_ID: ${{ vars.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}

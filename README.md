@@ -117,6 +117,9 @@ installing the package:
 pip install "mistralai-private[agents]"
 ```
 
+> Note: Because of some of our dependencies, these features are only available for python version higher or equal to 
+> 3.10.
+
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
 
