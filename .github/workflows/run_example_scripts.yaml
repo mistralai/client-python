@@ -47,7 +47,7 @@ jobs:
         run: |
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)"
           python3 -m pip install "$PACKAGE"
-          ./examples/run_all.sh --no-extra-dep
+          ./scripts/run_examples.sh --no-extra-dep
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
@@ -57,7 +57,7 @@ jobs:
         run: |
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
           python3 -m pip install "$PACKAGE"
-          ./examples/run_all.sh
+          ./scripts/run_examples.sh
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}

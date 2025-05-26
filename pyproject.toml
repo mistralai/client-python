@@ -34,6 +34,7 @@ pylint = "==3.2.3"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
 types-python-dateutil = "^2.9.0.20240316"
+types-authlib = "^1.5.0.20250516"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.11.10"
