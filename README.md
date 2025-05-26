@@ -108,6 +108,15 @@ Once that is saved to a file, you can run it with `uv run script.py` where
 `script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
+### Agents extra dependencies
+
+When using the agents related feature it is required to add the `agents` extra dependencies. This can be added when 
+installing the package:
+
+```bash
+pip install "mistralai-private[agents]"
+```
+
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
 
