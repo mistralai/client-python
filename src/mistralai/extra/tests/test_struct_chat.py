@@ -45,7 +45,7 @@ mock_cc_response = ChatCompletionResponse(
 )
 
 
-expected_response = ParsedChatCompletionResponse(
+expected_response: ParsedChatCompletionResponse = ParsedChatCompletionResponse(
     choices=[
         ParsedChatCompletionChoice(
             index=0,

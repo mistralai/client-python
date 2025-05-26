@@ -1,0 +1,20 @@
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.11.10
+  hooks:
+    - id: ruff
+      args: [--fix]
+      files: ^(example/|src/mistralai/).*\.py$
+      exclude: ^src/mistralai/(__init__|sdkhooks|types)\.py$
+- repo: https://github.com/RobertCraigie/pyright-python
+  rev: v1.1.401
+  hooks:
+    - id: pyright
+      files: ^(example/|src/mistralai/).*\.py$
+      exclude: ^src/mistralai/(__init__|sdkhooks|types)\.py$
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.15.0
+  hooks:
+    - id: mypy
+      files: ^(example/|src/mistralai/).*\.py$
+      exclude: ^src/mistralai/(__init__|sdkhooks|types)\.py$
