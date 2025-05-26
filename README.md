@@ -432,6 +432,30 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [get](docs/sdks/mistraljobs/README.md#get) - Get Batch Job
 * [cancel](docs/sdks/mistraljobs/README.md#cancel) - Cancel Batch Job
 
+### [beta](docs/sdks/beta/README.md)
+
+
+#### [beta.agents](docs/sdks/mistralagents/README.md)
+
+* [create](docs/sdks/mistralagents/README.md#create) - Create a agent that can be used within a conversation.
+* [list](docs/sdks/mistralagents/README.md#list) - List agent entities.
+* [get](docs/sdks/mistralagents/README.md#get) - Retrieve an agent entity.
+* [update](docs/sdks/mistralagents/README.md#update) - Update an agent entity.
+* [update_version](docs/sdks/mistralagents/README.md#update_version) - Update an agent version.
+
+#### [beta.conversations](docs/sdks/conversations/README.md)
+
+* [start](docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
+* [list](docs/sdks/conversations/README.md#list) - List all created conversations.
+* [get](docs/sdks/conversations/README.md#get) - Retrieve a conversation information.
+* [append](docs/sdks/conversations/README.md#append) - Append new entries to an existing conversation.
+* [get_history](docs/sdks/conversations/README.md#get_history) - Retrieve all entries in a conversation.
+* [get_messages](docs/sdks/conversations/README.md#get_messages) - Retrieve all messages in a conversation.
+* [restart](docs/sdks/conversations/README.md#restart) - Restart a conversation starting from a given entry.
+* [start_stream](docs/sdks/conversations/README.md#start_stream) - Create a conversation and append entries to it.
+* [append_stream](docs/sdks/conversations/README.md#append_stream) - Append new entries to an existing conversation.
+* [restart_stream](docs/sdks/conversations/README.md#restart_stream) - Restart a conversation starting from a given entry.
+
 ### [chat](docs/sdks/chat/README.md)
 
 * [complete](docs/sdks/chat/README.md#complete) - Chat Completion
@@ -511,12 +535,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.chat.stream(model="mistral-small-latest", messages=[
-        {
-            "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
-        },
-    ])
+    res = mistral.beta.conversations.start_stream(inputs="<value>")
 
     with res as event_stream:
         for event in event_stream:

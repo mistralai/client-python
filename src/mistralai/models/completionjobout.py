@@ -28,7 +28,7 @@ Status = Literal[
 ]
 r"""The current status of the fine-tuning job."""
 
-Object = Literal["job"]
+CompletionJobOutObject = Literal["job"]
 r"""The object type of the fine-tuning job."""
 
 IntegrationsTypedDict = WandbIntegrationOutTypedDict
@@ -63,7 +63,7 @@ class CompletionJobOutTypedDict(TypedDict):
     hyperparameters: CompletionTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
     r"""A list containing the IDs of uploaded files that contain validation data."""
-    object: NotRequired[Object]
+    object: NotRequired[CompletionJobOutObject]
     r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
@@ -105,7 +105,7 @@ class CompletionJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    object: Optional[Object] = "job"
+    object: Optional[CompletionJobOutObject] = "job"
     r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET
