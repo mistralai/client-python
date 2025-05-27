@@ -10,6 +10,7 @@ from mistralai import models, utils
 from mistralai._hooks import SDKHooks
 from mistralai.agents import Agents
 from mistralai.batch import Batch
+from mistralai.beta import Beta
 from mistralai.chat import Chat
 from mistralai.classifiers import Classifiers
 from mistralai.embeddings import Embeddings
@@ -28,6 +29,7 @@ class Mistral(BaseSDK):
 
     models: Models
     r"""Model Management API"""
+    beta: Beta
     files: Files
     r"""Files API"""
     fine_tuning: FineTuning
@@ -142,6 +144,7 @@ class Mistral(BaseSDK):
 
     def _init_sdks(self):
         self.models = Models(self.sdk_configuration)
+        self.beta = Beta(self.sdk_configuration)
         self.files = Files(self.sdk_configuration)
         self.fine_tuning = FineTuning(self.sdk_configuration)
         self.batch = Batch(self.sdk_configuration)

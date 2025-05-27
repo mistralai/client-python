@@ -5,7 +5,6 @@ import os
 from pydantic import BaseModel
 
 from mistralai import Mistral
-from typing import List
 
 
 async def main():
@@ -17,7 +16,7 @@ async def main():
         output: str
 
     class MathDemonstration(BaseModel):
-        steps: List[Explanation]
+        steps: list[Explanation]
         final_answer: str
 
     chat_response = await client.chat.parse_async(

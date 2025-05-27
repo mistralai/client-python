@@ -1,0 +1,14 @@
+# FunctionCallEvent
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `id`                                                                         | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `name`                                                                       | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `tool_call_id`                                                               | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `arguments`                                                                  | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `type`                                                                       | [Optional[models.FunctionCallEventType]](../models/functioncalleventtype.md) | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `created_at`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)         | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `output_index`                                                               | *Optional[int]*                                                              | :heavy_minus_sign:                                                           | N/A                                                                          |

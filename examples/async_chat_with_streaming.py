@@ -20,6 +20,7 @@ async def main():
             UserMessage(content="What is the best French cheese?give the best 50")
         ],
     )
+    assert response
     async for chunk in response:
         if chunk.data.choices[0].delta.content is not None:
             print(chunk.data.choices[0].delta.content, end="")

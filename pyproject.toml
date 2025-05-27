@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "1.7.1"
+version = "1.8.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" },]
 readme = "README-PYPI.md"
@@ -34,6 +34,7 @@ pylint = "==3.2.3"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
 types-python-dateutil = "^2.9.0.20240316"
+types-authlib = "^1.5.0.20250516"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.11.10"
@@ -45,6 +46,11 @@ mypy = "==1.15.0"
 gcp = [
     "google-auth >=2.27.0",
     "requests >=2.32.3"
+]
+agents = [
+    "mcp >=1.0,<2.0; python_version >= '3.10'",
+    "griffe >=1.7.3,<2.0",
+    "authlib >=1.5.2,<2.0",
 ]
 
 [build-system]

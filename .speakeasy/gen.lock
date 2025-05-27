@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 3589e9f1ea5775264c5c8e0887b4ea0e
+  docChecksum: e9c447db719018a5721988252c09c2dc
   docVersion: 1.0.0
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
-  releaseVersion: 1.7.1
-  configChecksum: d35541d61057b11258d7d56bbc5c5260
+  releaseVersion: 1.8.0
+  configChecksum: 1f7adfac0b677cdca4c073a11cbcef02
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -45,6 +45,32 @@ generatedFiles:
   - .python-version
   - .vscode/settings.json
   - USAGE.md
+  - docs/models/agent.md
+  - docs/models/agentconversation.md
+  - docs/models/agentconversationobject.md
+  - docs/models/agentcreationrequest.md
+  - docs/models/agentcreationrequesttools.md
+  - docs/models/agenthandoffdoneevent.md
+  - docs/models/agenthandoffdoneeventtype.md
+  - docs/models/agenthandoffentry.md
+  - docs/models/agenthandoffentryobject.md
+  - docs/models/agenthandoffentrytype.md
+  - docs/models/agenthandoffstartedevent.md
+  - docs/models/agenthandoffstartedeventtype.md
+  - docs/models/agentobject.md
+  - docs/models/agentsapiv1agentsgetrequest.md
+  - docs/models/agentsapiv1agentslistrequest.md
+  - docs/models/agentsapiv1agentsupdaterequest.md
+  - docs/models/agentsapiv1agentsupdateversionrequest.md
+  - docs/models/agentsapiv1conversationsappendrequest.md
+  - docs/models/agentsapiv1conversationsappendstreamrequest.md
+  - docs/models/agentsapiv1conversationsgetrequest.md
+  - docs/models/agentsapiv1conversationsgetresponsev1conversationsget.md
+  - docs/models/agentsapiv1conversationshistoryrequest.md
+  - docs/models/agentsapiv1conversationslistrequest.md
+  - docs/models/agentsapiv1conversationsmessagesrequest.md
+  - docs/models/agentsapiv1conversationsrestartrequest.md
+  - docs/models/agentsapiv1conversationsrestartstreamrequest.md
   - docs/models/agentscompletionrequest.md
   - docs/models/agentscompletionrequestmessages.md
   - docs/models/agentscompletionrequeststop.md
@@ -53,6 +79,9 @@ generatedFiles:
   - docs/models/agentscompletionstreamrequestmessages.md
   - docs/models/agentscompletionstreamrequeststop.md
   - docs/models/agentscompletionstreamrequesttoolchoice.md
+  - docs/models/agenttools.md
+  - docs/models/agentupdaterequest.md
+  - docs/models/agentupdaterequesttools.md
   - docs/models/apiendpoint.md
   - docs/models/archiveftmodelout.md
   - docs/models/archiveftmodeloutobject.md
@@ -68,6 +97,7 @@ generatedFiles:
   - docs/models/batchjobsout.md
   - docs/models/batchjobsoutobject.md
   - docs/models/batchjobstatus.md
+  - docs/models/builtinconnectors.md
   - docs/models/chatclassificationrequest.md
   - docs/models/chatcompletionchoice.md
   - docs/models/chatcompletionrequest.md
@@ -101,6 +131,10 @@ generatedFiles:
   - docs/models/classifiertargetout.md
   - docs/models/classifiertrainingparameters.md
   - docs/models/classifiertrainingparametersin.md
+  - docs/models/codeinterpretertool.md
+  - docs/models/codeinterpretertooltype.md
+  - docs/models/completionargs.md
+  - docs/models/completionargsstop.md
   - docs/models/completionchunk.md
   - docs/models/completiondetailedjobout.md
   - docs/models/completiondetailedjoboutintegrations.md
@@ -112,24 +146,50 @@ generatedFiles:
   - docs/models/completionftmodelout.md
   - docs/models/completionftmodeloutobject.md
   - docs/models/completionjobout.md
+  - docs/models/completionjoboutobject.md
   - docs/models/completionresponsestreamchoice.md
   - docs/models/completionresponsestreamchoicefinishreason.md
   - docs/models/completiontrainingparameters.md
   - docs/models/completiontrainingparametersin.md
   - docs/models/content.md
   - docs/models/contentchunk.md
+  - docs/models/conversationappendrequest.md
+  - docs/models/conversationappendrequesthandoffexecution.md
+  - docs/models/conversationappendstreamrequest.md
+  - docs/models/conversationappendstreamrequesthandoffexecution.md
+  - docs/models/conversationevents.md
+  - docs/models/conversationeventsdata.md
+  - docs/models/conversationhistory.md
+  - docs/models/conversationhistoryobject.md
+  - docs/models/conversationinputs.md
+  - docs/models/conversationmessages.md
+  - docs/models/conversationmessagesobject.md
+  - docs/models/conversationrequest.md
+  - docs/models/conversationresponse.md
+  - docs/models/conversationresponseobject.md
+  - docs/models/conversationrestartrequest.md
+  - docs/models/conversationrestartrequesthandoffexecution.md
+  - docs/models/conversationrestartstreamrequest.md
+  - docs/models/conversationrestartstreamrequesthandoffexecution.md
+  - docs/models/conversationstreamrequest.md
+  - docs/models/conversationstreamrequesthandoffexecution.md
+  - docs/models/conversationstreamrequesttools.md
+  - docs/models/conversationusageinfo.md
   - docs/models/data.md
   - docs/models/deletefileout.md
   - docs/models/deletemodelout.md
   - docs/models/deletemodelv1modelsmodeliddeleterequest.md
   - docs/models/deltamessage.md
   - docs/models/document.md
+  - docs/models/documentlibrarytool.md
+  - docs/models/documentlibrarytooltype.md
   - docs/models/documenturlchunk.md
   - docs/models/documenturlchunktype.md
   - docs/models/embeddingrequest.md
   - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
+  - docs/models/entries.md
   - docs/models/eventout.md
   - docs/models/file.md
   - docs/models/filepurpose.md
@@ -154,17 +214,32 @@ generatedFiles:
   - docs/models/ftmodelcardtype.md
   - docs/models/function.md
   - docs/models/functioncall.md
+  - docs/models/functioncallentry.md
+  - docs/models/functioncallentryarguments.md
+  - docs/models/functioncallentryobject.md
+  - docs/models/functioncallentrytype.md
+  - docs/models/functioncallevent.md
+  - docs/models/functioncalleventtype.md
   - docs/models/functionname.md
+  - docs/models/functionresultentry.md
+  - docs/models/functionresultentryobject.md
+  - docs/models/functionresultentrytype.md
+  - docs/models/functiontool.md
+  - docs/models/functiontooltype.md
   - docs/models/githubrepositoryin.md
   - docs/models/githubrepositoryintype.md
   - docs/models/githubrepositoryout.md
   - docs/models/githubrepositoryouttype.md
+  - docs/models/handoffexecution.md
   - docs/models/httpvalidationerror.md
   - docs/models/hyperparameters.md
+  - docs/models/imagegenerationtool.md
+  - docs/models/imagegenerationtooltype.md
   - docs/models/imageurl.md
   - docs/models/imageurlchunk.md
   - docs/models/imageurlchunkimageurl.md
   - docs/models/imageurlchunktype.md
+  - docs/models/inputentries.md
   - docs/models/inputs.md
   - docs/models/instructrequest.md
   - docs/models/instructrequestinputs.md
@@ -199,9 +274,28 @@ generatedFiles:
   - docs/models/legacyjobmetadataoutobject.md
   - docs/models/listfilesout.md
   - docs/models/loc.md
+  - docs/models/messageentries.md
+  - docs/models/messageinputcontentchunks.md
+  - docs/models/messageinputentry.md
+  - docs/models/messageinputentrycontent.md
+  - docs/models/messageinputentryrole.md
+  - docs/models/messageinputentrytype.md
+  - docs/models/messageoutputcontentchunks.md
+  - docs/models/messageoutputentry.md
+  - docs/models/messageoutputentrycontent.md
+  - docs/models/messageoutputentryobject.md
+  - docs/models/messageoutputentryrole.md
+  - docs/models/messageoutputentrytype.md
+  - docs/models/messageoutputevent.md
+  - docs/models/messageoutputeventcontent.md
+  - docs/models/messageoutputeventrole.md
+  - docs/models/messageoutputeventtype.md
   - docs/models/messages.md
   - docs/models/metricout.md
   - docs/models/modelcapabilities.md
+  - docs/models/modelconversation.md
+  - docs/models/modelconversationobject.md
+  - docs/models/modelconversationtools.md
   - docs/models/modellist.md
   - docs/models/modeltype.md
   - docs/models/moderationobject.md
@@ -214,14 +308,23 @@ generatedFiles:
   - docs/models/ocrresponse.md
   - docs/models/ocrusageinfo.md
   - docs/models/one.md
+  - docs/models/outputcontentchunks.md
+  - docs/models/outputs.md
   - docs/models/prediction.md
   - docs/models/queryparamstatus.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
   - docs/models/repositories.md
   - docs/models/response1.md
+  - docs/models/responsebody.md
+  - docs/models/responsedoneevent.md
+  - docs/models/responsedoneeventtype.md
+  - docs/models/responseerrorevent.md
+  - docs/models/responseerroreventtype.md
   - docs/models/responseformat.md
   - docs/models/responseformats.md
+  - docs/models/responsestartedevent.md
+  - docs/models/responsestartedeventtype.md
   - docs/models/retrievefileout.md
   - docs/models/retrievemodelv1modelsmodelidgetrequest.md
   - docs/models/retrievemodelv1modelsmodelidgetresponseretrievemodelv1modelsmodelidget.md
@@ -229,6 +332,7 @@ generatedFiles:
   - docs/models/sampletype.md
   - docs/models/security.md
   - docs/models/source.md
+  - docs/models/ssetypes.md
   - docs/models/status.md
   - docs/models/stop.md
   - docs/models/systemmessage.md
@@ -239,9 +343,21 @@ generatedFiles:
   - docs/models/toolcall.md
   - docs/models/toolchoice.md
   - docs/models/toolchoiceenum.md
+  - docs/models/toolexecutiondoneevent.md
+  - docs/models/toolexecutiondoneeventtype.md
+  - docs/models/toolexecutionentry.md
+  - docs/models/toolexecutionentryobject.md
+  - docs/models/toolexecutionentrytype.md
+  - docs/models/toolexecutionstartedevent.md
+  - docs/models/toolexecutionstartedeventtype.md
+  - docs/models/toolfilechunk.md
+  - docs/models/toolfilechunktype.md
   - docs/models/toolmessage.md
   - docs/models/toolmessagecontent.md
   - docs/models/toolmessagerole.md
+  - docs/models/toolreferencechunk.md
+  - docs/models/toolreferencechunktype.md
+  - docs/models/tools.md
   - docs/models/tooltypes.md
   - docs/models/trainingfile.md
   - docs/models/two.md
@@ -260,16 +376,23 @@ generatedFiles:
   - docs/models/wandbintegrationout.md
   - docs/models/wandbintegrationouttype.md
   - docs/models/wandbintegrationtype.md
+  - docs/models/websearchpremiumtool.md
+  - docs/models/websearchpremiumtooltype.md
+  - docs/models/websearchtool.md
+  - docs/models/websearchtooltype.md
   - docs/sdks/agents/README.md
   - docs/sdks/batch/README.md
+  - docs/sdks/beta/README.md
   - docs/sdks/chat/README.md
   - docs/sdks/classifiers/README.md
+  - docs/sdks/conversations/README.md
   - docs/sdks/embeddings/README.md
   - docs/sdks/files/README.md
   - docs/sdks/fim/README.md
   - docs/sdks/finetuning/README.md
   - docs/sdks/jobs/README.md
   - docs/sdks/mistral/README.md
+  - docs/sdks/mistralagents/README.md
   - docs/sdks/mistraljobs/README.md
   - docs/sdks/models/README.md
   - docs/sdks/ocr/README.md
@@ -286,18 +409,40 @@ generatedFiles:
   - src/mistralai/agents.py
   - src/mistralai/basesdk.py
   - src/mistralai/batch.py
+  - src/mistralai/beta.py
   - src/mistralai/chat.py
   - src/mistralai/classifiers.py
+  - src/mistralai/conversations.py
   - src/mistralai/embeddings.py
   - src/mistralai/files.py
   - src/mistralai/fim.py
   - src/mistralai/fine_tuning.py
   - src/mistralai/httpclient.py
   - src/mistralai/jobs.py
+  - src/mistralai/mistral_agents.py
   - src/mistralai/mistral_jobs.py
   - src/mistralai/models/__init__.py
+  - src/mistralai/models/agent.py
+  - src/mistralai/models/agentconversation.py
+  - src/mistralai/models/agentcreationrequest.py
+  - src/mistralai/models/agenthandoffdoneevent.py
+  - src/mistralai/models/agenthandoffentry.py
+  - src/mistralai/models/agenthandoffstartedevent.py
+  - src/mistralai/models/agents_api_v1_agents_getop.py
+  - src/mistralai/models/agents_api_v1_agents_listop.py
+  - src/mistralai/models/agents_api_v1_agents_update_versionop.py
+  - src/mistralai/models/agents_api_v1_agents_updateop.py
+  - src/mistralai/models/agents_api_v1_conversations_append_streamop.py
+  - src/mistralai/models/agents_api_v1_conversations_appendop.py
+  - src/mistralai/models/agents_api_v1_conversations_getop.py
+  - src/mistralai/models/agents_api_v1_conversations_historyop.py
+  - src/mistralai/models/agents_api_v1_conversations_listop.py
+  - src/mistralai/models/agents_api_v1_conversations_messagesop.py
+  - src/mistralai/models/agents_api_v1_conversations_restart_streamop.py
+  - src/mistralai/models/agents_api_v1_conversations_restartop.py
   - src/mistralai/models/agentscompletionrequest.py
   - src/mistralai/models/agentscompletionstreamrequest.py
+  - src/mistralai/models/agentupdaterequest.py
   - src/mistralai/models/apiendpoint.py
   - src/mistralai/models/archiveftmodelout.py
   - src/mistralai/models/assistantmessage.py
@@ -307,6 +452,7 @@ generatedFiles:
   - src/mistralai/models/batchjobout.py
   - src/mistralai/models/batchjobsout.py
   - src/mistralai/models/batchjobstatus.py
+  - src/mistralai/models/builtinconnectors.py
   - src/mistralai/models/chatclassificationrequest.py
   - src/mistralai/models/chatcompletionchoice.py
   - src/mistralai/models/chatcompletionrequest.py
@@ -324,6 +470,9 @@ generatedFiles:
   - src/mistralai/models/classifiertargetout.py
   - src/mistralai/models/classifiertrainingparameters.py
   - src/mistralai/models/classifiertrainingparametersin.py
+  - src/mistralai/models/codeinterpretertool.py
+  - src/mistralai/models/completionargs.py
+  - src/mistralai/models/completionargsstop.py
   - src/mistralai/models/completionchunk.py
   - src/mistralai/models/completiondetailedjobout.py
   - src/mistralai/models/completionevent.py
@@ -333,10 +482,23 @@ generatedFiles:
   - src/mistralai/models/completiontrainingparameters.py
   - src/mistralai/models/completiontrainingparametersin.py
   - src/mistralai/models/contentchunk.py
+  - src/mistralai/models/conversationappendrequest.py
+  - src/mistralai/models/conversationappendstreamrequest.py
+  - src/mistralai/models/conversationevents.py
+  - src/mistralai/models/conversationhistory.py
+  - src/mistralai/models/conversationinputs.py
+  - src/mistralai/models/conversationmessages.py
+  - src/mistralai/models/conversationrequest.py
+  - src/mistralai/models/conversationresponse.py
+  - src/mistralai/models/conversationrestartrequest.py
+  - src/mistralai/models/conversationrestartstreamrequest.py
+  - src/mistralai/models/conversationstreamrequest.py
+  - src/mistralai/models/conversationusageinfo.py
   - src/mistralai/models/delete_model_v1_models_model_id_deleteop.py
   - src/mistralai/models/deletefileout.py
   - src/mistralai/models/deletemodelout.py
   - src/mistralai/models/deltamessage.py
+  - src/mistralai/models/documentlibrarytool.py
   - src/mistralai/models/documenturlchunk.py
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
@@ -360,12 +522,19 @@ generatedFiles:
   - src/mistralai/models/ftmodelcard.py
   - src/mistralai/models/function.py
   - src/mistralai/models/functioncall.py
+  - src/mistralai/models/functioncallentry.py
+  - src/mistralai/models/functioncallentryarguments.py
+  - src/mistralai/models/functioncallevent.py
   - src/mistralai/models/functionname.py
+  - src/mistralai/models/functionresultentry.py
+  - src/mistralai/models/functiontool.py
   - src/mistralai/models/githubrepositoryin.py
   - src/mistralai/models/githubrepositoryout.py
   - src/mistralai/models/httpvalidationerror.py
+  - src/mistralai/models/imagegenerationtool.py
   - src/mistralai/models/imageurl.py
   - src/mistralai/models/imageurlchunk.py
+  - src/mistralai/models/inputentries.py
   - src/mistralai/models/inputs.py
   - src/mistralai/models/instructrequest.py
   - src/mistralai/models/jobin.py
@@ -385,8 +554,15 @@ generatedFiles:
   - src/mistralai/models/jsonschema.py
   - src/mistralai/models/legacyjobmetadataout.py
   - src/mistralai/models/listfilesout.py
+  - src/mistralai/models/messageentries.py
+  - src/mistralai/models/messageinputcontentchunks.py
+  - src/mistralai/models/messageinputentry.py
+  - src/mistralai/models/messageoutputcontentchunks.py
+  - src/mistralai/models/messageoutputentry.py
+  - src/mistralai/models/messageoutputevent.py
   - src/mistralai/models/metricout.py
   - src/mistralai/models/modelcapabilities.py
+  - src/mistralai/models/modelconversation.py
   - src/mistralai/models/modellist.py
   - src/mistralai/models/moderationobject.py
   - src/mistralai/models/moderationresponse.py
@@ -396,23 +572,33 @@ generatedFiles:
   - src/mistralai/models/ocrrequest.py
   - src/mistralai/models/ocrresponse.py
   - src/mistralai/models/ocrusageinfo.py
+  - src/mistralai/models/outputcontentchunks.py
   - src/mistralai/models/prediction.py
   - src/mistralai/models/referencechunk.py
+  - src/mistralai/models/responsedoneevent.py
+  - src/mistralai/models/responseerrorevent.py
   - src/mistralai/models/responseformat.py
   - src/mistralai/models/responseformats.py
+  - src/mistralai/models/responsestartedevent.py
   - src/mistralai/models/retrieve_model_v1_models_model_id_getop.py
   - src/mistralai/models/retrievefileout.py
   - src/mistralai/models/sampletype.py
   - src/mistralai/models/sdkerror.py
   - src/mistralai/models/security.py
   - src/mistralai/models/source.py
+  - src/mistralai/models/ssetypes.py
   - src/mistralai/models/systemmessage.py
   - src/mistralai/models/textchunk.py
   - src/mistralai/models/tool.py
   - src/mistralai/models/toolcall.py
   - src/mistralai/models/toolchoice.py
   - src/mistralai/models/toolchoiceenum.py
+  - src/mistralai/models/toolexecutiondoneevent.py
+  - src/mistralai/models/toolexecutionentry.py
+  - src/mistralai/models/toolexecutionstartedevent.py
+  - src/mistralai/models/toolfilechunk.py
   - src/mistralai/models/toolmessage.py
+  - src/mistralai/models/toolreferencechunk.py
   - src/mistralai/models/tooltypes.py
   - src/mistralai/models/trainingfile.py
   - src/mistralai/models/unarchiveftmodelout.py
@@ -423,6 +609,8 @@ generatedFiles:
   - src/mistralai/models/validationerror.py
   - src/mistralai/models/wandbintegration.py
   - src/mistralai/models/wandbintegrationout.py
+  - src/mistralai/models/websearchpremiumtool.py
+  - src/mistralai/models/websearchtool.py
   - src/mistralai/models_.py
   - src/mistralai/ocr.py
   - src/mistralai/py.typed
@@ -733,6 +921,161 @@ examples:
       responses:
         "200":
           application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "CX-9", "results": [{"key": {"scores": {"key": 4386.53, "key1": 2974.85}}, "key1": {"scores": {"key": 7100.52, "key1": 480.47}}}]}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_start:
+    speakeasy-default-agents-api-v1-conversations-start:
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": false}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "agent.handoff", "previous_agent_id": "<id>", "previous_agent_name": "<value>", "next_agent_id": "<id>", "next_agent_name": "<value>"}, {"object": "entry", "type": "message.output", "role": "assistant", "content": [{"type": "tool_reference", "tool": "web_search_premium", "title": "<value>"}, {"document_url": "https://unrealistic-fund.org/", "type": "document_url"}]}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_list:
+    speakeasy-default-agents-api-v1-conversations-list:
+      parameters:
+        query:
+          page: 0
+          page_size: 100
+      responses:
+        "200":
+          application/json: [{"object": "conversation", "id": "<id>", "created_at": "2025-01-13T10:26:00.433Z", "updated_at": "2023-07-14T18:23:27.528Z", "agent_id": "<id>"}, {"object": "conversation", "id": "<id>", "created_at": "2023-06-17T12:14:27.999Z", "updated_at": "2024-11-27T13:02:27.296Z", "model": "LeBaron"}, {"object": "conversation", "id": "<id>", "created_at": "2025-02-26T06:14:46.641Z", "updated_at": "2023-04-05T09:49:38.010Z", "model": "A8"}]
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_get:
+    speakeasy-default-agents-api-v1-conversations-get:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation", "id": "<id>", "created_at": "2024-09-04T11:33:52.011Z", "updated_at": "2024-08-19T11:11:04.610Z", "agent_id": "<id>"}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_append:
+    speakeasy-default-agents-api-v1-conversations-append:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": false, "store": true, "handoff_execution": "server"}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "agent.handoff", "previous_agent_id": "<id>", "previous_agent_name": "<value>", "next_agent_id": "<id>", "next_agent_name": "<value>"}, {"object": "entry", "type": "function.call", "tool_call_id": "<id>", "name": "<value>", "arguments": "<value>"}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_history:
+    speakeasy-default-agents-api-v1-conversations-history:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation.history", "conversation_id": "<id>", "entries": [{"object": "entry", "type": "message.output", "role": "assistant", "content": [{"type": "tool_file", "tool": "web_search", "file_id": "<id>"}]}]}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_messages:
+    speakeasy-default-agents-api-v1-conversations-messages:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation.messages", "conversation_id": "<id>", "messages": [{"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}, {"object": "entry", "type": "message.input", "role": "assistant", "content": [{"document_url": "https://black-and-white-sauerkraut.biz", "type": "document_url"}, {"type": "tool_file", "tool": "code_interpreter", "file_id": "<id>"}, {"image_url": "https://emotional-couch.org", "type": "image_url"}]}, {"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}]}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_restart:
+    speakeasy-default-agents-api-v1-conversations-restart:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": false, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "tool.execution", "name": "image_generation"}, {"object": "entry", "type": "tool.execution", "name": "web_search_premium"}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_start_stream:
+    speakeasy-default-agents-api-v1-conversations-start-stream:
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": true}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_append_stream:
+    speakeasy-default-agents-api-v1-conversations-append-stream:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": true, "store": true, "handoff_execution": "server"}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_restart_stream:
+    speakeasy-default-agents-api-v1-conversations-restart-stream:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": true, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_agents_create:
+    speakeasy-default-agents-api-v1-agents-create:
+      requestBody:
+        application/json: {"model": "Fiesta", "name": "<value>"}
+      responses:
+        "200":
+          application/json: {"model": "LeBaron", "name": "<value>", "object": "agent", "id": "<id>", "version": 417458, "created_at": "2023-05-28T06:20:22.766Z", "updated_at": "2023-03-17T15:39:20.911Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_list:
+    speakeasy-default-agents-api-v1-agents-list:
+      parameters:
+        query:
+          page: 0
+          page_size: 20
+      responses:
+        "200":
+          application/json: [{"model": "Golf", "name": "<value>", "object": "agent", "id": "<id>", "version": 678317, "created_at": "2023-07-14T18:23:27.528Z", "updated_at": "2023-09-09T18:28:08.953Z"}, {"model": "Aventador", "name": "<value>", "object": "agent", "id": "<id>", "version": 635532, "created_at": "2024-12-01T18:25:37.169Z", "updated_at": "2023-01-20T06:21:22.156Z"}, {"model": "Model T", "name": "<value>", "object": "agent", "id": "<id>", "version": 86140, "created_at": "2023-03-17T01:57:00.187Z", "updated_at": "2025-01-24T00:05:25.844Z"}]
+        "422":
+          application/json: {}
+  agents_api_v1_agents_get:
+    speakeasy-default-agents-api-v1-agents-get:
+      parameters:
+        path:
+          agent_id: "<id>"
+      responses:
+        "200":
+          application/json: {"model": "Model S", "name": "<value>", "object": "agent", "id": "<id>", "version": 558834, "created_at": "2024-08-19T11:11:04.610Z", "updated_at": "2024-07-25T06:33:15.810Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_update:
+    speakeasy-default-agents-api-v1-agents-update:
+      parameters:
+        path:
+          agent_id: "<id>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"model": "Sentra", "name": "<value>", "object": "agent", "id": "<id>", "version": 597129, "created_at": "2024-01-13T16:52:57.274Z", "updated_at": "2025-12-22T15:27:45.882Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_update_version:
+    speakeasy-default-agents-api-v1-agents-update-version:
+      parameters:
+        path:
+          agent_id: "<id>"
+        query:
+          version: 193920
+      responses:
+        "200":
+          application/json: {"model": "Mercielago", "name": "<value>", "object": "agent", "id": "<id>", "version": 253661, "created_at": "2023-02-14T22:44:06.703Z", "updated_at": "2025-12-15T06:22:04.120Z"}
         "422":
           application/json: {}
 examplesVersion: 1.0.0

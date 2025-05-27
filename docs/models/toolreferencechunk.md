@@ -1,0 +1,12 @@
+# ToolReferenceChunk
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `tool`                                                                         | [models.BuiltInConnectors](../models/builtinconnectors.md)                     | :heavy_check_mark:                                                             | N/A                                                                            |
+| `title`                                                                        | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
+| `type`                                                                         | [Optional[models.ToolReferenceChunkType]](../models/toolreferencechunktype.md) | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `url`                                                                          | *OptionalNullable[str]*                                                        | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `source`                                                                       | *OptionalNullable[str]*                                                        | :heavy_minus_sign:                                                             | N/A                                                                            |

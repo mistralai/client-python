@@ -1,0 +1,14 @@
+# AgentUpdateRequest
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `instructions`                                                               | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Instruction prompt the model will follow during the conversation.            |
+| `tools`                                                                      | List[[models.AgentUpdateRequestTools](../models/agentupdaterequesttools.md)] | :heavy_minus_sign:                                                           | List of tools which are available to the model during the conversation.      |
+| `completion_args`                                                            | [Optional[models.CompletionArgs]](../models/completionargs.md)               | :heavy_minus_sign:                                                           | White-listed arguments from the completion API                               |
+| `model`                                                                      | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `name`                                                                       | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `description`                                                                | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `handoffs`                                                                   | List[*str*]                                                                  | :heavy_minus_sign:                                                           | N/A                                                                          |
