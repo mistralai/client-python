@@ -1,3 +1,4 @@
 pyproject.toml
 examples/*
 src/mistral/extra/*
+pylintrc
