@@ -34,8 +34,9 @@ if typing.TYPE_CHECKING:
 # endregion imports
 
 
-
 class Conversations(BaseSDK):
+    r"""(beta) Converstations API"""
+
     # region sdk-class-body
     # Custom run code allowing client side execution of code
 
@@ -146,7 +147,9 @@ class Conversations(BaseSDK):
             completion_args=completion_args,
         )
 
-        async def run_generator() -> AsyncGenerator[Union[RunResultEvents, RunResult], None]:
+        async def run_generator() -> (
+            AsyncGenerator[Union[RunResultEvents, RunResult], None]
+        ):
             current_entries = input_entries
             while True:
                 received_event_tracker: defaultdict[

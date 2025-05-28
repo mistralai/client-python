@@ -3,6 +3,8 @@
 
 ## Overview
 
+(beta) Agents API
+
 ### Available Operations
 
 * [create](#create) - Create a agent that can be used within a conversation.

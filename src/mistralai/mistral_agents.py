@@ -9,6 +9,8 @@ from typing import Any, List, Mapping, Optional, Union
 
 
 class MistralAgents(BaseSDK):
+    r"""(beta) Agents API"""
+
     def create(
         self,
         *,

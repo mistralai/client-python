@@ -4,8 +4,8 @@ from __future__ import annotations
 from .chatcompletionchoice import ChatCompletionChoice, ChatCompletionChoiceTypedDict
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from mistralai.types import BaseModel
-from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class ChatCompletionResponseTypedDict(TypedDict):
@@ -13,8 +13,8 @@ class ChatCompletionResponseTypedDict(TypedDict):
     object: str
     model: str
     usage: UsageInfoTypedDict
-    created: NotRequired[int]
-    choices: NotRequired[List[ChatCompletionChoiceTypedDict]]
+    created: int
+    choices: List[ChatCompletionChoiceTypedDict]
 
 
 class ChatCompletionResponse(BaseModel):
@@ -26,6 +26,6 @@ class ChatCompletionResponse(BaseModel):
 
     usage: UsageInfo
 
-    created: Optional[int] = None
+    created: int
 
-    choices: Optional[List[ChatCompletionChoice]] = None
+    choices: List[ChatCompletionChoice]
