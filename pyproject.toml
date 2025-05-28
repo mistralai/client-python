@@ -70,6 +70,7 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = [
+    "jsonpath.*
     "typing_inspect.*",
     "authlib.*",
     "mcp.*",
