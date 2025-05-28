@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: e9c447db719018a5721988252c09c2dc
+  docChecksum: 12226a12b72a82af24e4b098c631ff42
   docVersion: 1.0.0
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
-  releaseVersion: 1.8.0
-  configChecksum: 1f7adfac0b677cdca4c073a11cbcef02
+  releaseVersion: 1.8.1
+  configChecksum: a47e6a59e54c30528cf829e1a6fcc310
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -185,6 +185,7 @@ generatedFiles:
   - docs/models/documentlibrarytooltype.md
   - docs/models/documenturlchunk.md
   - docs/models/documenturlchunktype.md
+  - docs/models/embeddingdtype.md
   - docs/models/embeddingrequest.md
   - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
@@ -398,7 +399,6 @@ generatedFiles:
   - docs/sdks/ocr/README.md
   - poetry.toml
   - py.typed
-  - pylintrc
   - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai/__init__.py
@@ -500,6 +500,7 @@ generatedFiles:
   - src/mistralai/models/deltamessage.py
   - src/mistralai/models/documentlibrarytool.py
   - src/mistralai/models/documenturlchunk.py
+  - src/mistralai/models/embeddingdtype.py
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
@@ -1004,6 +1005,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   agents_api_v1_conversations_append_stream:
     speakeasy-default-agents-api-v1-conversations-append-stream:
       parameters:
@@ -1014,6 +1016,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   agents_api_v1_conversations_restart_stream:
     speakeasy-default-agents-api-v1-conversations-restart-stream:
       parameters:
@@ -1024,6 +1027,7 @@ examples:
       responses:
         "422":
           application/json: {}
+        "200": {}
   agents_api_v1_agents_create:
     speakeasy-default-agents-api-v1-agents-create:
       requestBody:

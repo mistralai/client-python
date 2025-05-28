@@ -8,7 +8,9 @@ from mistralai.mistral_agents import MistralAgents
 
 class Beta(BaseSDK):
     conversations: Conversations
+    r"""(beta) Converstations API"""
     agents: MistralAgents
+    r"""(beta) Agents API"""
 
     def __init__(self, sdk_config: SDKConfiguration) -> None:
         BaseSDK.__init__(self, sdk_config)

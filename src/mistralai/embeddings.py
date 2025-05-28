@@ -18,6 +18,8 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
+        output_dimension: OptionalNullable[int] = UNSET,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -29,6 +31,8 @@ class Embeddings(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to embed.
+        :param output_dimension: The dimension of the output embeddings.
+        :param output_dtype:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -47,6 +51,8 @@ class Embeddings(BaseSDK):
         request = models.EmbeddingRequest(
             model=model,
             inputs=inputs,
+            output_dimension=output_dimension,
+            output_dtype=output_dtype,
         )
 
         req = self._build_request(
@@ -125,6 +131,8 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
+        output_dimension: OptionalNullable[int] = UNSET,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -136,6 +144,8 @@ class Embeddings(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to embed.
+        :param output_dimension: The dimension of the output embeddings.
+        :param output_dtype:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -154,6 +164,8 @@ class Embeddings(BaseSDK):
         request = models.EmbeddingRequest(
             model=model,
             inputs=inputs,
+            output_dimension=output_dimension,
+            output_dtype=output_dtype,
         )
 
         req = self._build_request_async(

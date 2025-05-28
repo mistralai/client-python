@@ -347,6 +347,7 @@ from .documenturlchunk import (
     DocumentURLChunkType,
     DocumentURLChunkTypedDict,
 )
+from .embeddingdtype import EmbeddingDtype
 from .embeddingrequest import (
     EmbeddingRequest,
     EmbeddingRequestInputs,
@@ -964,6 +965,7 @@ __all__ = [
     "DocumentURLChunk",
     "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
+    "EmbeddingDtype",
     "EmbeddingRequest",
     "EmbeddingRequestInputs",
     "EmbeddingRequestInputsTypedDict",
