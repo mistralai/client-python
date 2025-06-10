@@ -591,6 +591,7 @@ from .messageoutputevent import (
     MessageOutputEventTypedDict,
 )
 from .metricout import MetricOut, MetricOutTypedDict
+from .mistralpromptmode import MistralPromptMode
 from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
 from .modelconversation import (
     ModelConversation,
@@ -1154,6 +1155,7 @@ __all__ = [
     "MessagesTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
+    "MistralPromptMode",
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
     "ModelConversation",

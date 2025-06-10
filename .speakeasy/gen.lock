@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 12226a12b72a82af24e4b098c631ff42
+  docChecksum: 9c8bd4d6bf675b159a80173b97c1265c
   docVersion: 1.0.0
   speakeasyVersion: 1.517.3
   generationVersion: 2.548.6
-  releaseVersion: 1.8.1
-  configChecksum: a47e6a59e54c30528cf829e1a6fcc310
+  releaseVersion: 1.8.2
+  configChecksum: 5024c28578f991eabb85310ad8df96b7
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -293,6 +293,7 @@ generatedFiles:
   - docs/models/messageoutputeventtype.md
   - docs/models/messages.md
   - docs/models/metricout.md
+  - docs/models/mistralpromptmode.md
   - docs/models/modelcapabilities.md
   - docs/models/modelconversation.md
   - docs/models/modelconversationobject.md
@@ -562,6 +563,7 @@ generatedFiles:
   - src/mistralai/models/messageoutputentry.py
   - src/mistralai/models/messageoutputevent.py
   - src/mistralai/models/metricout.py
+  - src/mistralai/models/mistralpromptmode.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modelconversation.py
   - src/mistralai/models/modellist.py

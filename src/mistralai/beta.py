@@ -8,7 +8,7 @@ from mistralai.mistral_agents import MistralAgents
 
 class Beta(BaseSDK):
     conversations: Conversations
-    r"""(beta) Converstations API"""
+    r"""(beta) Conversations API"""
     agents: MistralAgents
     r"""(beta) Agents API"""
 

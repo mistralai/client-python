@@ -47,6 +47,7 @@ class Agents(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -68,6 +69,7 @@ class Agents(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -105,6 +107,7 @@ class Agents(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             agent_id=agent_id,
         )
 
@@ -213,6 +216,7 @@ class Agents(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -234,6 +238,7 @@ class Agents(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -271,6 +276,7 @@ class Agents(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             agent_id=agent_id,
         )
 
@@ -379,6 +385,7 @@ class Agents(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -402,6 +409,7 @@ class Agents(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -439,6 +447,7 @@ class Agents(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             agent_id=agent_id,
         )
 
@@ -553,6 +562,7 @@ class Agents(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -576,6 +586,7 @@ class Agents(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -613,6 +624,7 @@ class Agents(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             agent_id=agent_id,
         )
 
