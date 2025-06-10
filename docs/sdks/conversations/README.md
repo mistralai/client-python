@@ -3,7 +3,7 @@
 
 ## Overview
 
-(beta) Converstations API
+(beta) Conversations API
 
 ### Available Operations
 

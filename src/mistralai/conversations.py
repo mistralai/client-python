@@ -35,7 +35,7 @@ if typing.TYPE_CHECKING:
 
 
 class Conversations(BaseSDK):
-    r"""(beta) Converstations API"""
+    r"""(beta) Conversations API"""
 
     # region sdk-class-body
     # Custom run code allowing client side execution of code

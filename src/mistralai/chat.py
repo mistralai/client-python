@@ -123,6 +123,7 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -147,6 +148,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -186,6 +188,7 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             safe_prompt=safe_prompt,
         )
 
@@ -288,6 +291,7 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -312,6 +316,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -351,6 +356,7 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             safe_prompt=safe_prompt,
         )
 
@@ -461,6 +467,7 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -487,6 +494,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -528,6 +536,7 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             safe_prompt=safe_prompt,
         )
 
@@ -644,6 +653,7 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -670,6 +680,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
+        :param prompt_mode:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -711,6 +722,7 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            prompt_mode=prompt_mode,
             safe_prompt=safe_prompt,
         )
 
