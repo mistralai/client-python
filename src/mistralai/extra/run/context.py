@@ -30,7 +30,6 @@ from mistralai.models import (
     FunctionTool,
     MessageInputEntry,
     InputEntries,
-    ResponseFormatTypedDict,
 )
 
 from logging import getLogger
@@ -229,9 +228,8 @@ class RunContext:
         elif isinstance(completion_args, CompletionArgs) and self.output_format:
             completion_args.response_format = self.response_format
         elif isinstance(completion_args, dict) and self.output_format:
-            completion_args["response_format"] = typing.cast(
-                ResponseFormatTypedDict, self.response_format.model_dump()
-            )
+            completion_args = CompletionArgs.model_validate(completion_args)
+            completion_args.response_format = self.response_format
         request_tools = []
         if isinstance(tools, list):
             for tool in tools:
