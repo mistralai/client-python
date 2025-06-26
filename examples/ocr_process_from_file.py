@@ -26,12 +26,9 @@ def main():
         purpose="ocr",
     )
 
-    signed_url = client.files.get_signed_url(file_id=uploaded_file.id, expiry=1)
-
     pdf_response = client.ocr.process(document={
-        "document_url": signed_url.url,
-        "type": "document_url",
-        "document_name": "mistral-7b-pdf",
+        "type": "file",
+        "file_id": uploaded_file.id,
     }, model="mistral-ocr-latest", include_image_base64=True)
 
     # Print the parsed PDF
