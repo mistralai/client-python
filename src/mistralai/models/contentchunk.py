@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
+from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
@@ -17,6 +18,7 @@ ContentChunkTypedDict = TypeAliasType(
         TextChunkTypedDict,
         ImageURLChunkTypedDict,
         ReferenceChunkTypedDict,
+        FileChunkTypedDict,
         DocumentURLChunkTypedDict,
     ],
 )
@@ -28,6 +30,7 @@ ContentChunk = Annotated[
         Annotated[DocumentURLChunk, Tag("document_url")],
         Annotated[TextChunk, Tag("text")],
         Annotated[ReferenceChunk, Tag("reference")],
+        Annotated[FileChunk, Tag("file")],
     ],
     Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]

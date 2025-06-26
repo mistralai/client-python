@@ -206,7 +206,7 @@ class Models(BaseSDK):
     ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
-        Retrieve a model information.
+        Retrieve information about a model.
 
         :param model_id: The ID of the model to retrieve.
         :param retries: Override the default retry configuration for this method
@@ -308,7 +308,7 @@ class Models(BaseSDK):
     ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
-        Retrieve a model information.
+        Retrieve information about a model.
 
         :param model_id: The ID of the model to retrieve.
         :param retries: Override the default retry configuration for this method

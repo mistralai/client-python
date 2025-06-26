@@ -3,6 +3,6 @@
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `BASE` | base   |
+| Name            | Value           |
+| --------------- | --------------- |
+| `MESSAGE_INPUT` | message.input   |

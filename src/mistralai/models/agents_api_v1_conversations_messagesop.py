@@ -8,9 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class AgentsAPIV1ConversationsMessagesRequestTypedDict(TypedDict):
     conversation_id: str
+    r"""ID of the conversation from which we are fetching messages."""
 
 
 class AgentsAPIV1ConversationsMessagesRequest(BaseModel):
     conversation_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""ID of the conversation from which we are fetching messages."""

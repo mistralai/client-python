@@ -148,7 +148,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
-        :param prompt_mode:
+        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -316,7 +316,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
-        :param prompt_mode:
+        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -494,7 +494,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
-        :param prompt_mode:
+        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -680,7 +680,7 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction:
         :param parallel_tool_calls:
-        :param prompt_mode:
+        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
