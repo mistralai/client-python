@@ -27,3 +27,9 @@ value: models.TextChunk = /* values here */
 value: models.ReferenceChunk = /* values here */
 ```
 
+### `models.FileChunk`
+
+```python
+value: models.FileChunk = /* values here */
+```
+

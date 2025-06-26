@@ -708,7 +708,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve a conversation entity with its attributes.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching metadata.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -810,7 +810,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve a conversation entity with its attributes.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching metadata.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1170,7 +1170,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the entries belonging to that conversation. The entries are sorted in the order they were appended, those can be messages, connectors or function_call.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching entries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1269,7 +1269,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the entries belonging to that conversation. The entries are sorted in the order they were appended, those can be messages, connectors or function_call.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching entries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1368,7 +1368,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the messages belonging to that conversation. This is similar to retrieving all entries except we filter the messages only.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching messages.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1467,7 +1467,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the messages belonging to that conversation. This is similar to retrieving all entries except we filter the messages only.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching messages.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1564,9 +1564,20 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartRequestTools],
+                List[models.ConversationRestartRequestToolsTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1576,13 +1587,19 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1605,10 +1622,18 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartRequestTools]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                name=name,
+                description=description,
+                from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
             ),
         )
 
@@ -1696,9 +1721,20 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartRequestTools],
+                List[models.ConversationRestartRequestToolsTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1708,13 +1744,19 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1737,10 +1779,18 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartRequestTools]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                name=name,
+                description=description,
+                from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
             ),
         )
 
@@ -2396,9 +2446,20 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartStreamRequestTools],
+                List[models.ConversationRestartStreamRequestToolsTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2408,13 +2469,19 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2437,10 +2504,18 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartStreamRequestTools]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                name=name,
+                description=description,
+                from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
             ),
         )
 
@@ -2533,9 +2608,20 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartStreamRequestTools],
+                List[models.ConversationRestartStreamRequestToolsTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2545,13 +2631,19 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2574,10 +2666,18 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartStreamRequestTools]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                name=name,
+                description=description,
+                from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
             ),
         )
 

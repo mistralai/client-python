@@ -119,7 +119,7 @@ from .assistantmessage import (
     AssistantMessageRole,
     AssistantMessageTypedDict,
 )
-from .basemodelcard import BaseModelCard, BaseModelCardTypedDict, Type
+from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .batcherror import BatchError, BatchErrorTypedDict
 from .batchjobin import BatchJobIn, BatchJobInTypedDict
 from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
@@ -315,11 +315,15 @@ from .conversationresponse import (
 from .conversationrestartrequest import (
     ConversationRestartRequest,
     ConversationRestartRequestHandoffExecution,
+    ConversationRestartRequestTools,
+    ConversationRestartRequestToolsTypedDict,
     ConversationRestartRequestTypedDict,
 )
 from .conversationrestartstreamrequest import (
     ConversationRestartStreamRequest,
     ConversationRestartStreamRequestHandoffExecution,
+    ConversationRestartStreamRequestTools,
+    ConversationRestartStreamRequestToolsTypedDict,
     ConversationRestartStreamRequestTypedDict,
 )
 from .conversationstreamrequest import (
@@ -357,6 +361,7 @@ from .embeddingrequest import (
 from .embeddingresponse import EmbeddingResponse, EmbeddingResponseTypedDict
 from .embeddingresponsedata import EmbeddingResponseData, EmbeddingResponseDataTypedDict
 from .eventout import EventOut, EventOutTypedDict
+from .filechunk import FileChunk, FileChunkTypedDict
 from .filepurpose import FilePurpose
 from .files_api_routes_delete_fileop import (
     FilesAPIRoutesDeleteFileRequest,
@@ -405,7 +410,7 @@ from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOut,
     FTModelCapabilitiesOutTypedDict,
 )
-from .ftmodelcard import FTModelCard, FTModelCardType, FTModelCardTypedDict
+from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from .function import Function, FunctionTypedDict
 from .functioncall import (
     Arguments,
@@ -565,9 +570,9 @@ from .messageinputentry import (
     MessageInputEntryContent,
     MessageInputEntryContentTypedDict,
     MessageInputEntryRole,
-    MessageInputEntryType,
     MessageInputEntryTypedDict,
     Object,
+    Type,
 )
 from .messageoutputcontentchunks import (
     MessageOutputContentChunks,
@@ -937,9 +942,13 @@ __all__ = [
     "ConversationResponseTypedDict",
     "ConversationRestartRequest",
     "ConversationRestartRequestHandoffExecution",
+    "ConversationRestartRequestTools",
+    "ConversationRestartRequestToolsTypedDict",
     "ConversationRestartRequestTypedDict",
     "ConversationRestartStreamRequest",
     "ConversationRestartStreamRequestHandoffExecution",
+    "ConversationRestartStreamRequestTools",
+    "ConversationRestartStreamRequestToolsTypedDict",
     "ConversationRestartStreamRequestTypedDict",
     "ConversationStreamRequest",
     "ConversationStreamRequestHandoffExecution",
@@ -993,9 +1002,10 @@ __all__ = [
     "FTModelCapabilitiesOut",
     "FTModelCapabilitiesOutTypedDict",
     "FTModelCard",
-    "FTModelCardType",
     "FTModelCardTypedDict",
     "File",
+    "FileChunk",
+    "FileChunkTypedDict",
     "FilePurpose",
     "FileSchema",
     "FileSchemaTypedDict",
@@ -1134,7 +1144,6 @@ __all__ = [
     "MessageInputEntryContent",
     "MessageInputEntryContentTypedDict",
     "MessageInputEntryRole",
-    "MessageInputEntryType",
     "MessageInputEntryTypedDict",
     "MessageOutputContentChunks",
     "MessageOutputContentChunksTypedDict",

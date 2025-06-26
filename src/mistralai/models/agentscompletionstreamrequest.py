@@ -88,6 +88,7 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     prediction: NotRequired[PredictionTypedDict]
     parallel_tool_calls: NotRequired[bool]
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
 
 class AgentsCompletionStreamRequest(BaseModel):
@@ -130,6 +131,7 @@ class AgentsCompletionStreamRequest(BaseModel):
     prompt_mode: Annotated[
         OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
     ] = UNSET
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

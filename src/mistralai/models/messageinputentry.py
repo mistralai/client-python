@@ -14,7 +14,7 @@ from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 Object = Literal["entry"]
 
-MessageInputEntryType = Literal["message.input"]
+Type = Literal["message.input"]
 
 MessageInputEntryRole = Literal["assistant", "user"]
 
@@ -35,7 +35,7 @@ class MessageInputEntryTypedDict(TypedDict):
     role: MessageInputEntryRole
     content: MessageInputEntryContentTypedDict
     object: NotRequired[Object]
-    type: NotRequired[MessageInputEntryType]
+    type: NotRequired[Type]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -50,7 +50,7 @@ class MessageInputEntry(BaseModel):
 
     object: Optional[Object] = "entry"
 
-    type: Optional[MessageInputEntryType] = "message.input"
+    type: Optional[Type] = "message.input"
 
     created_at: Optional[datetime] = None
 
