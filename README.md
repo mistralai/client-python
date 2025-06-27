@@ -142,7 +142,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ])
+    ], stream=False)
 
     # Handle response
     print(res)
@@ -168,7 +168,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ])
+        ], stream=False)
 
         # Handle response
         print(res)
@@ -244,7 +244,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>")
+    ], agent_id="<id>", stream=False)
 
     # Handle response
     print(res)
@@ -270,7 +270,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<id>")
+        ], agent_id="<id>", stream=False)
 
         # Handle response
         print(res)
@@ -547,7 +547,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs="<value>")
+    res = mistral.beta.conversations.start_stream(inputs=[
+        {
+            "object": "entry",
+            "type": "function.result",
+            "tool_call_id": "<id>",
+            "result": "<value>",
+        },
+    ], stream=True)
 
     with res as event_stream:
         for event in event_stream:

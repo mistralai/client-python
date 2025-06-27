@@ -24,9 +24,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.ocr.process(model="Focus", document={
-        "document_url": "https://dutiful-horst.org",
-        "type": "document_url",
+    res = mistral.ocr.process(model="CX-9", document={
+        "image_url": {
+            "url": "https://measly-scrap.com",
+        },
+        "type": "image_url",
     })
 
     # Handle response

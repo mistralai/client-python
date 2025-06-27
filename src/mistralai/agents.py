@@ -140,6 +140,7 @@ class Agents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_completion_v1_agents_completions_post",
                 oauth2_scopes=[],
@@ -309,6 +310,7 @@ class Agents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_completion_v1_agents_completions_post",
                 oauth2_scopes=[],
@@ -480,6 +482,7 @@ class Agents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_agents",
                 oauth2_scopes=[],
@@ -657,6 +660,7 @@ class Agents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_agents",
                 oauth2_scopes=[],

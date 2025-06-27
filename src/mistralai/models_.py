@@ -63,6 +63,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
                 oauth2_scopes=[],
@@ -155,6 +156,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
                 oauth2_scopes=[],
@@ -254,6 +256,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=[],
@@ -356,6 +359,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=[],
@@ -458,6 +462,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=[],
@@ -557,6 +562,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=[],
@@ -667,6 +673,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=[],
@@ -774,6 +781,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=[],
@@ -870,6 +878,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=[],
@@ -963,6 +972,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=[],
@@ -1056,6 +1066,7 @@ class Models(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=[],
@@ -1149,6 +1160,7 @@ class Models(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=[],

@@ -26,7 +26,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.list()
+    res = mistral.fine_tuning.jobs.list(page=0, page_size=100, created_by_me=False)
 
     # Handle response
     print(res)
@@ -74,9 +74,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.create(model="Fiesta", hyperparameters={
+    res = mistral.fine_tuning.jobs.create(model="Camaro", hyperparameters={
         "learning_rate": 0.0001,
-    })
+    }, invalid_sample_skip_percentage=0)
 
     # Handle response
     print(res)
@@ -125,7 +125,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.get(job_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+    res = mistral.fine_tuning.jobs.get(job_id="c167a961-ffca-4bcf-93ac-6169468dd389")
 
     # Handle response
     print(res)
@@ -164,7 +164,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.cancel(job_id="0f713502-9233-41c6-9ebd-c570b7edb496")
+    res = mistral.fine_tuning.jobs.cancel(job_id="6188a2f6-7513-4e0f-89cc-3f8088523a49")
 
     # Handle response
     print(res)
@@ -203,7 +203,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.start(job_id="0bf0f9e6-c3e5-4d61-aac8-0e36dcac0dfc")
+    res = mistral.fine_tuning.jobs.start(job_id="56553e4d-0679-471e-b9ac-59a77d671103")
 
     # Handle response
     print(res)

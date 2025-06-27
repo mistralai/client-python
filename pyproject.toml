@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "1.8.2"
+version = "1.9.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" },]
 readme = "README-PYPI.md"

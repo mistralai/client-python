@@ -1,3 +1,6 @@
+**/__pycache__/
+**/.speakeasy/temp/
+**/.speakeasy/logs/
 .vscode/
 .speakeasy/reports
 README-PYPI.md

@@ -102,6 +102,7 @@ class MistralAgents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
                 oauth2_scopes=[],
@@ -233,6 +234,7 @@ class MistralAgents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
                 oauth2_scopes=[],
@@ -335,6 +337,7 @@ class MistralAgents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
                 oauth2_scopes=[],
@@ -437,6 +440,7 @@ class MistralAgents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
                 oauth2_scopes=[],
@@ -536,6 +540,7 @@ class MistralAgents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
                 oauth2_scopes=[],
@@ -635,6 +640,7 @@ class MistralAgents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
                 oauth2_scopes=[],
@@ -775,6 +781,7 @@ class MistralAgents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
                 oauth2_scopes=[],
@@ -915,6 +922,7 @@ class MistralAgents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
                 oauth2_scopes=[],
@@ -1017,6 +1025,7 @@ class MistralAgents(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
                 oauth2_scopes=[],
@@ -1119,6 +1128,7 @@ class MistralAgents(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
                 oauth2_scopes=[],
