@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 9c8bd4d6bf675b159a80173b97c1265c
+  docChecksum: e0186c33d0269977e1790dfcc7d11aac
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.0
-  configChecksum: a67788bf50c3de92f0ef16f385b615b3
+  releaseVersion: 1.9.1
+  configChecksum: 5f97671226b9fdcc9adc3c7662003247
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -193,6 +193,7 @@ generatedFiles:
   - docs/models/entries.md
   - docs/models/eventout.md
   - docs/models/file.md
+  - docs/models/filechunk.md
   - docs/models/filepurpose.md
   - docs/models/filesapiroutesdeletefilerequest.md
   - docs/models/filesapiroutesdownloadfilerequest.md
@@ -212,7 +213,6 @@ generatedFiles:
   - docs/models/ftclassifierlossfunction.md
   - docs/models/ftmodelcapabilitiesout.md
   - docs/models/ftmodelcard.md
-  - docs/models/ftmodelcardtype.md
   - docs/models/function.md
   - docs/models/functioncall.md
   - docs/models/functioncallentry.md
@@ -280,7 +280,6 @@ generatedFiles:
   - docs/models/messageinputentry.md
   - docs/models/messageinputentrycontent.md
   - docs/models/messageinputentryrole.md
-  - docs/models/messageinputentrytype.md
   - docs/models/messageoutputcontentchunks.md
   - docs/models/messageoutputentry.md
   - docs/models/messageoutputentrycontent.md
@@ -506,6 +505,7 @@ generatedFiles:
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
   - src/mistralai/models/eventout.py
+  - src/mistralai/models/filechunk.py
   - src/mistralai/models/filepurpose.py
   - src/mistralai/models/files_api_routes_delete_fileop.py
   - src/mistralai/models/files_api_routes_download_fileop.py
@@ -652,7 +652,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": true, "fine_tuning": false, "vision": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
+          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": true, "fine_tuning": false, "vision": false, "classification": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
         "422":
           application/json: {}
   delete_model_v1_models__model_id__delete:

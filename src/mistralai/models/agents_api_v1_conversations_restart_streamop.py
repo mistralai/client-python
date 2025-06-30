@@ -12,6 +12,7 @@ from typing_extensions import Annotated, TypedDict
 
 class AgentsAPIV1ConversationsRestartStreamRequestTypedDict(TypedDict):
     conversation_id: str
+    r"""ID of the original conversation which is being restarted."""
     conversation_restart_stream_request: ConversationRestartStreamRequestTypedDict
 
 
@@ -19,6 +20,7 @@ class AgentsAPIV1ConversationsRestartStreamRequest(BaseModel):
     conversation_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""ID of the original conversation which is being restarted."""
 
     conversation_restart_stream_request: Annotated[
         ConversationRestartStreamRequest,

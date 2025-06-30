@@ -5,6 +5,12 @@ Document to run OCR on
 
 ## Supported Types
 
+### `models.FileChunk`
+
+```python
+value: models.FileChunk = /* values here */
+```
+
 ### `models.DocumentURLChunk`
 
 ```python

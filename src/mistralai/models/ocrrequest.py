@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
+from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
@@ -11,12 +12,13 @@ from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 DocumentTypedDict = TypeAliasType(
-    "DocumentTypedDict", Union[ImageURLChunkTypedDict, DocumentURLChunkTypedDict]
+    "DocumentTypedDict",
+    Union[FileChunkTypedDict, ImageURLChunkTypedDict, DocumentURLChunkTypedDict],
 )
 r"""Document to run OCR on"""
 
 
-Document = TypeAliasType("Document", Union[ImageURLChunk, DocumentURLChunk])
+Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURLChunk])
 r"""Document to run OCR on"""
 
 
