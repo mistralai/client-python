@@ -30,7 +30,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>")
+    ], agent_id="<id>", stream=False)
 
     # Handle response
     print(res)
@@ -89,7 +89,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>")
+    ], agent_id="<id>", stream=True)
 
     with res as event_stream:
         for event in event_stream:

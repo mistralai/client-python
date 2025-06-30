@@ -96,6 +96,7 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=[],
@@ -216,6 +217,7 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=[],
@@ -367,6 +369,7 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=[],
@@ -520,6 +523,7 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=[],
@@ -615,6 +619,7 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=[],
@@ -710,6 +715,7 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=[],
@@ -805,6 +811,7 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=[],
@@ -900,6 +907,7 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=[],
@@ -995,6 +1003,7 @@ class Jobs(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=[],
@@ -1090,6 +1099,7 @@ class Jobs(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=[],

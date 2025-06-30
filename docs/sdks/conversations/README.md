@@ -33,7 +33,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start(inputs="<value>")
+    res = mistral.beta.conversations.start(inputs="<value>", stream=False)
 
     # Handle response
     print(res)
@@ -83,7 +83,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.list()
+    res = mistral.beta.conversations.list(page=0, page_size=100)
 
     # Handle response
     print(res)
@@ -164,7 +164,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append(conversation_id="<id>", inputs="<value>")
+    res = mistral.beta.conversations.append(conversation_id="<id>", inputs=[], stream=False, store=True, handoff_execution="server")
 
     # Handle response
     print(res)
@@ -289,7 +289,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart(conversation_id="<id>", inputs="<value>", from_entry_id="<id>")
+    res = mistral.beta.conversations.restart(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=False, store=True, handoff_execution="server")
 
     # Handle response
     print(res)
@@ -335,7 +335,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs="<value>")
+    res = mistral.beta.conversations.start_stream(inputs=[
+        {
+            "object": "entry",
+            "type": "function.result",
+            "tool_call_id": "<id>",
+            "result": "<value>",
+        },
+    ], stream=True)
 
     with res as event_stream:
         for event in event_stream:
@@ -387,7 +394,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append_stream(conversation_id="<id>", inputs="<value>")
+    res = mistral.beta.conversations.append_stream(conversation_id="<id>", inputs="<value>", stream=True, store=True, handoff_execution="server")
 
     with res as event_stream:
         for event in event_stream:
@@ -434,7 +441,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", inputs="<value>", from_entry_id="<id>")
+    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", inputs=[
+        {
+            "object": "entry",
+            "type": "message.input",
+            "role": "assistant",
+            "content": "<value>",
+        },
+    ], from_entry_id="<id>", stream=True, store=True, handoff_execution="server")
 
     with res as event_stream:
         for event in event_stream:

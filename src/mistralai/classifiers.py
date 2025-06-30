@@ -77,6 +77,7 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
                 oauth2_scopes=[],
@@ -183,6 +184,7 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
                 oauth2_scopes=[],
@@ -289,6 +291,7 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_moderations_v1_chat_moderations_post",
                 oauth2_scopes=[],
@@ -395,6 +398,7 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_moderations_v1_chat_moderations_post",
                 oauth2_scopes=[],
@@ -501,6 +505,7 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="classifications_v1_classifications_post",
                 oauth2_scopes=[],
@@ -607,6 +612,7 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="classifications_v1_classifications_post",
                 oauth2_scopes=[],
@@ -710,6 +716,7 @@ class Classifiers(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_classifications_v1_chat_classifications_post",
                 oauth2_scopes=[],
@@ -813,6 +820,7 @@ class Classifiers(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_classifications_v1_chat_classifications_post",
                 oauth2_scopes=[],

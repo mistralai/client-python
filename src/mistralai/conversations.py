@@ -313,6 +313,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start",
                 oauth2_scopes=[],
@@ -451,6 +452,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start",
                 oauth2_scopes=[],
@@ -553,6 +555,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_list",
                 oauth2_scopes=[],
@@ -655,6 +658,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_list",
                 oauth2_scopes=[],
@@ -754,6 +758,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_get",
                 oauth2_scopes=[],
@@ -856,6 +861,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_get",
                 oauth2_scopes=[],
@@ -988,6 +994,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append",
                 oauth2_scopes=[],
@@ -1117,6 +1124,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append",
                 oauth2_scopes=[],
@@ -1216,6 +1224,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_history",
                 oauth2_scopes=[],
@@ -1315,6 +1324,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_history",
                 oauth2_scopes=[],
@@ -1414,6 +1424,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_messages",
                 oauth2_scopes=[],
@@ -1513,6 +1524,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_messages",
                 oauth2_scopes=[],
@@ -1645,6 +1657,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart",
                 oauth2_scopes=[],
@@ -1777,6 +1790,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart",
                 oauth2_scopes=[],
@@ -1922,6 +1936,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start_stream",
                 oauth2_scopes=[],
@@ -2072,6 +2087,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start_stream",
                 oauth2_scopes=[],
@@ -2206,6 +2222,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append_stream",
                 oauth2_scopes=[],
@@ -2340,6 +2357,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append_stream",
                 oauth2_scopes=[],
@@ -2477,6 +2495,7 @@ class Conversations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart_stream",
                 oauth2_scopes=[],
@@ -2614,6 +2633,7 @@ class Conversations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart_stream",
                 oauth2_scopes=[],

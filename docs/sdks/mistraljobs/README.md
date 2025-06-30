@@ -25,7 +25,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list()
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False)
 
     # Handle response
     print(res)
@@ -71,8 +71,8 @@ with Mistral(
 ) as mistral:
 
     res = mistral.batch.jobs.create(input_files=[
-        "a621cf02-1cd9-4cf5-8403-315211a509a3",
-    ], endpoint="/v1/fim/completions", model="2")
+        "fe3343a2-3b8d-404b-ba32-a78dede2614a",
+    ], endpoint="/v1/moderations", model="Altima", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -115,7 +115,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.get(job_id="b888f774-3e7c-4135-a18c-6b985523c4bc")
+    res = mistral.batch.jobs.get(job_id="4017dc9f-b629-42f4-9700-8c681b9e7f0f")
 
     # Handle response
     print(res)
@@ -154,7 +154,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.cancel(job_id="0f713502-9233-41c6-9ebd-c570b7edb496")
+    res = mistral.batch.jobs.cancel(job_id="4fb29d1c-535b-4f0a-a1cb-2167f86da569")
 
     # Handle response
     print(res)

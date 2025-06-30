@@ -6,46 +6,62 @@ from .sdkconfiguration import SDKConfiguration
 from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
+import importlib
 from mistralai import models, utils
 from mistralai._hooks import SDKHooks
-from mistralai.agents import Agents
-from mistralai.batch import Batch
-from mistralai.beta import Beta
-from mistralai.chat import Chat
-from mistralai.classifiers import Classifiers
-from mistralai.embeddings import Embeddings
-from mistralai.files import Files
-from mistralai.fim import Fim
-from mistralai.fine_tuning import FineTuning
-from mistralai.models_ import Models
-from mistralai.ocr import Ocr
 from mistralai.types import OptionalNullable, UNSET
-from typing import Any, Callable, Dict, Optional, Union, cast
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
+
+if TYPE_CHECKING:
+    from mistralai.agents import Agents
+    from mistralai.batch import Batch
+    from mistralai.beta import Beta
+    from mistralai.chat import Chat
+    from mistralai.classifiers import Classifiers
+    from mistralai.embeddings import Embeddings
+    from mistralai.files import Files
+    from mistralai.fim import Fim
+    from mistralai.fine_tuning import FineTuning
+    from mistralai.models_ import Models
+    from mistralai.ocr import Ocr
 
 
 class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
-    models: Models
+    models: "Models"
     r"""Model Management API"""
-    beta: Beta
-    files: Files
+    beta: "Beta"
+    files: "Files"
     r"""Files API"""
-    fine_tuning: FineTuning
-    batch: Batch
-    chat: Chat
+    fine_tuning: "FineTuning"
+    batch: "Batch"
+    chat: "Chat"
     r"""Chat Completion API."""
-    fim: Fim
+    fim: "Fim"
     r"""Fill-in-the-middle API."""
-    agents: Agents
+    agents: "Agents"
     r"""Agents API."""
-    embeddings: Embeddings
+    embeddings: "Embeddings"
     r"""Embeddings API."""
-    classifiers: Classifiers
+    classifiers: "Classifiers"
     r"""Classifiers API."""
-    ocr: Ocr
+    ocr: "Ocr"
     r"""OCR API"""
+    _sub_sdk_map = {
+        "models": ("mistralai.models_", "Models"),
+        "beta": ("mistralai.beta", "Beta"),
+        "files": ("mistralai.files", "Files"),
+        "fine_tuning": ("mistralai.fine_tuning", "FineTuning"),
+        "batch": ("mistralai.batch", "Batch"),
+        "chat": ("mistralai.chat", "Chat"),
+        "fim": ("mistralai.fim", "Fim"),
+        "agents": ("mistralai.agents", "Agents"),
+        "embeddings": ("mistralai.embeddings", "Embeddings"),
+        "classifiers": ("mistralai.classifiers", "Classifiers"),
+        "ocr": ("mistralai.ocr", "Ocr"),
+    }
 
     def __init__(
         self,
@@ -120,15 +136,15 @@ class Mistral(BaseSDK):
 
         hooks = SDKHooks()
 
+        # pylint: disable=protected-access
+        self.sdk_configuration.__dict__["_hooks"] = hooks
+
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
             current_server_url, client
         )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
-
-        # pylint: disable=protected-access
-        self.sdk_configuration.__dict__["_hooks"] = hooks
 
         weakref.finalize(
             self,
@@ -140,20 +156,32 @@ class Mistral(BaseSDK):
             self.sdk_configuration.async_client_supplied,
         )
 
-        self._init_sdks()
+    def __getattr__(self, name: str):
+        if name in self._sub_sdk_map:
+            module_path, class_name = self._sub_sdk_map[name]
+            try:
+                module = importlib.import_module(module_path)
+                klass = getattr(module, class_name)
+                instance = klass(self.sdk_configuration)
+                setattr(self, name, instance)
+                return instance
+            except ImportError as e:
+                raise AttributeError(
+                    f"Failed to import module {module_path} for attribute {name}: {e}"
+                ) from e
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Failed to find class {class_name} in module {module_path} for attribute {name}: {e}"
+                ) from e
 
-    def _init_sdks(self):
-        self.models = Models(self.sdk_configuration)
-        self.beta = Beta(self.sdk_configuration)
-        self.files = Files(self.sdk_configuration)
-        self.fine_tuning = FineTuning(self.sdk_configuration)
-        self.batch = Batch(self.sdk_configuration)
-        self.chat = Chat(self.sdk_configuration)
-        self.fim = Fim(self.sdk_configuration)
-        self.agents = Agents(self.sdk_configuration)
-        self.embeddings = Embeddings(self.sdk_configuration)
-        self.classifiers = Classifiers(self.sdk_configuration)
-        self.ocr = Ocr(self.sdk_configuration)
+        raise AttributeError(
+            f"'{type(self).__name__}' object has no attribute '{name}'"
+        )
+
+    def __dir__(self):
+        default_attrs = list(super().__dir__())
+        lazy_attrs = list(self._sub_sdk_map.keys())
+        return sorted(list(set(default_attrs + lazy_attrs)))
 
     def __enter__(self):
         return self

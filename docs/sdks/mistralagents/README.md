@@ -28,7 +28,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.agents.create(model="Fiesta", name="<value>")
+    res = mistral.beta.agents.create(model="LeBaron", name="<value>")
 
     # Handle response
     print(res)
@@ -74,7 +74,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.agents.list()
+    res = mistral.beta.agents.list(page=0, page_size=20)
 
     # Handle response
     print(res)
@@ -202,7 +202,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.agents.update_version(agent_id="<id>", version=193920)
+    res = mistral.beta.agents.update_version(agent_id="<id>", version=157995)
 
     # Handle response
     print(res)

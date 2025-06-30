@@ -76,7 +76,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list()
+    res = mistral.files.list(page=0, page_size=100)
 
     # Handle response
     print(res)
@@ -120,7 +120,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.retrieve(file_id="<id>")
+    res = mistral.files.retrieve(file_id="f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6")
 
     # Handle response
     print(res)
@@ -159,7 +159,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.delete(file_id="<id>")
+    res = mistral.files.delete(file_id="3b6d45eb-e30b-416f-8019-f47e2e93d930")
 
     # Handle response
     print(res)
@@ -198,7 +198,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.download(file_id="<id>")
+    res = mistral.files.download(file_id="f8919994-a4a1-46b2-8b5b-06335a4300ce")
 
     # Handle response
     print(res)
@@ -237,7 +237,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.get_signed_url(file_id="<id>")
+    res = mistral.files.get_signed_url(file_id="06a020ab-355c-49a6-b19d-304b7c01699f", expiry=24)
 
     # Handle response
     print(res)

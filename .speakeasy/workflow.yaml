@@ -1,15 +1,15 @@
 workflowVersion: 1.0.0
-speakeasyVersion:  1.517.3
+speakeasyVersion: 1.568.2
 sources:
     mistral-azure-source:
         inputs:
-            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
+        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
     mistral-google-cloud-source:
         inputs:
-            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
+        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
     mistral-openapi:
         inputs:
-            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
+        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
 targets:
     mistralai-azure-sdk:
         target: python

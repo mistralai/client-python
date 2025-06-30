@@ -27,8 +27,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.moderate(model="V90", inputs=[
-        "<value>",
+    res = mistral.classifiers.moderate(model="Durango", inputs=[
+        "<value 1>",
+        "<value 2>",
     ])
 
     # Handle response
@@ -71,52 +72,11 @@ with Mistral(
 ) as mistral:
 
     res = mistral.classifiers.moderate_chat(inputs=[
-        [
-            {
-                "content": [
-
-                ],
-                "role": "system",
-            },
-            {
-                "content": "<value>",
-                "role": "tool",
-            },
-        ],
-        [
-            {
-                "prefix": False,
-                "role": "assistant",
-            },
-            {
-                "content": "<value>",
-                "role": "user",
-            },
-            {
-                "prefix": False,
-                "role": "assistant",
-            },
-        ],
-        [
-            {
-                "content": "<value>",
-                "role": "system",
-            },
-            {
-                "content": [
-                    {
-                        "image_url": "https://fatherly-colon.name",
-                        "type": "image_url",
-                    },
-                ],
-                "role": "user",
-            },
-            {
-                "content": "<value>",
-                "role": "user",
-            },
-        ],
-    ], model="Model Y")
+        {
+            "content": "<value>",
+            "role": "tool",
+        },
+    ], model="LeBaron")
 
     # Handle response
     print(res)
@@ -157,7 +117,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.classify(model="Altima", inputs="<value>")
+    res = mistral.classifiers.classify(model="Silverado", inputs=[
+        "<value 1>",
+    ])
 
     # Handle response
     print(res)
@@ -198,18 +160,13 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.classify_chat(model="Fortwo", inputs=[
+    res = mistral.classifiers.classify_chat(model="Camry", inputs=[
         {
             "messages": [
                 {
                     "content": "<value>",
-                    "role": "tool",
+                    "role": "system",
                 },
-            ],
-        },
-        {
-            "messages": [
-
             ],
         },
     ])

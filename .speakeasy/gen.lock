@@ -3,10 +3,10 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: 9c8bd4d6bf675b159a80173b97c1265c
   docVersion: 1.0.0
-  speakeasyVersion: 1.517.3
-  generationVersion: 2.548.6
-  releaseVersion: 1.8.2
-  configChecksum: 5024c28578f991eabb85310ad8df96b7
+  speakeasyVersion: 1.568.2
+  generationVersion: 2.634.2
+  releaseVersion: 1.9.0
+  configChecksum: a67788bf50c3de92f0ef16f385b615b3
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.12.3
+    core: 5.19.3
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
@@ -26,15 +26,15 @@ features:
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     methodArguments: 1.0.2
     multipartFileContentType: 1.0.0
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.0
+    openEnums: 1.0.1
     responseFormat: 1.0.1
     retries: 3.0.2
-    sdkHooks: 1.0.1
+    sdkHooks: 1.1.0
     serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
@@ -623,6 +623,7 @@ generatedFiles:
   - src/mistralai/types/basemodel.py
   - src/mistralai/utils/__init__.py
   - src/mistralai/utils/annotations.py
+  - src/mistralai/utils/datetimes.py
   - src/mistralai/utils/enums.py
   - src/mistralai/utils/eventstreaming.py
   - src/mistralai/utils/forms.py
@@ -645,25 +646,27 @@ examples:
         "422":
           application/json: {}
   retrieve_model_v1_models__model_id__get:
-    "":
+    speakeasy-default-retrieve-model-v1-models-model-id-get:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": true, "fine_tuning": false, "vision": false}, "max_context_length": 32768}
-        "422": {}
+          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": true, "fine_tuning": false, "vision": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
+        "422":
+          application/json: {}
   delete_model_v1_models__model_id__delete:
-    "":
+    speakeasy-default-delete-model-v1-models-model-id-delete:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
           application/json: {"id": "ft:open-mistral-7b:587a6b29:20240514:7e773925", "object": "model", "deleted": true}
-        "422": {}
+        "422":
+          application/json: {}
   jobs_api_routes_fine_tuning_update_fine_tuned_model:
-    "":
+    speakeasy-default-jobs-api-routes-fine-tuning-update-fine-tuned-model:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
@@ -671,9 +674,9 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "created": 597129, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false, "classification": false}, "max_context_length": 32768, "job": "fa7f0e74-32ce-447c-9b60-cc78135ddeb8", "model_type": "completion"}
+          application/json: {"id": "<id>", "object": "model", "created": 124166, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false, "classification": false}, "max_context_length": 32768, "job": "c4f8ef9a-6612-4f49-88fa-a80eb8116e46", "model_type": "completion"}
   jobs_api_routes_fine_tuning_archive_fine_tuned_model:
-    "":
+    speakeasy-default-jobs-api-routes-fine-tuning-archive-fine-tuned-model:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
@@ -681,20 +684,175 @@ examples:
         "200":
           application/json: {"id": "<id>", "object": "model", "archived": true}
   jobs_api_routes_fine_tuning_unarchive_fine_tuned_model:
-    "":
+    speakeasy-default-jobs-api-routes-fine-tuning-unarchive-fine-tuned-model:
       parameters:
         path:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
           application/json: {"id": "<id>", "object": "model", "archived": false}
+  agents_api_v1_conversations_start:
+    speakeasy-default-agents-api-v1-conversations-start:
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": false}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "agent.handoff", "previous_agent_id": "<id>", "previous_agent_name": "<value>", "next_agent_id": "<id>", "next_agent_name": "<value>"}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_list:
+    speakeasy-default-agents-api-v1-conversations-list:
+      parameters:
+        query:
+          page: 0
+          page_size: 100
+      responses:
+        "200":
+          application/json: [{"object": "conversation", "id": "<id>", "created_at": "2025-11-20T22:30:47.754Z", "updated_at": "2025-08-05T08:36:20.296Z", "agent_id": "<id>"}]
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_get:
+    speakeasy-default-agents-api-v1-conversations-get:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation", "id": "<id>", "created_at": "2023-06-02T14:00:42.201Z", "updated_at": "2024-10-06T17:16:50.325Z", "agent_id": "<id>"}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_append:
+    speakeasy-default-agents-api-v1-conversations-append:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": [], "stream": false, "store": true, "handoff_execution": "server"}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_history:
+    speakeasy-default-agents-api-v1-conversations-history:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation.history", "conversation_id": "<id>", "entries": [{"object": "entry", "type": "tool.execution", "name": "code_interpreter"}]}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_messages:
+    speakeasy-default-agents-api-v1-conversations-messages:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "conversation.messages", "conversation_id": "<id>", "messages": []}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_restart:
+    speakeasy-default-agents-api-v1-conversations-restart:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": false, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
+      responses:
+        "200":
+          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_start_stream:
+    speakeasy-default-agents-api-v1-conversations-start-stream:
+      requestBody:
+        application/json: {"inputs": [{"object": "entry", "type": "function.result", "tool_call_id": "<id>", "result": "<value>"}], "stream": true}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_append_stream:
+    speakeasy-default-agents-api-v1-conversations-append-stream:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": "<value>", "stream": true, "store": true, "handoff_execution": "server"}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_conversations_restart_stream:
+    speakeasy-default-agents-api-v1-conversations-restart-stream:
+      parameters:
+        path:
+          conversation_id: "<id>"
+      requestBody:
+        application/json: {"inputs": [{"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}], "stream": true, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
+      responses:
+        "422":
+          application/json: {}
+  agents_api_v1_agents_create:
+    speakeasy-default-agents-api-v1-agents-create:
+      requestBody:
+        application/json: {"model": "LeBaron", "name": "<value>"}
+      responses:
+        "200":
+          application/json: {"model": "Ranchero", "name": "<value>", "object": "agent", "id": "<id>", "version": 316961, "created_at": "2025-03-26T19:00:51.430Z", "updated_at": "2023-04-28T15:08:02.110Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_list:
+    speakeasy-default-agents-api-v1-agents-list:
+      parameters:
+        query:
+          page: 0
+          page_size: 20
+      responses:
+        "200":
+          application/json: [{"model": "Impala", "name": "<value>", "object": "agent", "id": "<id>", "version": 43153, "created_at": "2024-04-26T15:54:09.954Z", "updated_at": "2024-02-11T18:27:55.607Z"}]
+        "422":
+          application/json: {}
+  agents_api_v1_agents_get:
+    speakeasy-default-agents-api-v1-agents-get:
+      parameters:
+        path:
+          agent_id: "<id>"
+      responses:
+        "200":
+          application/json: {"model": "Silverado", "name": "<value>", "object": "agent", "id": "<id>", "version": 845972, "created_at": "2025-08-21T03:10:48.135Z", "updated_at": "2024-11-11T17:15:57.309Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_update:
+    speakeasy-default-agents-api-v1-agents-update:
+      parameters:
+        path:
+          agent_id: "<id>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"model": "Model X", "name": "<value>", "object": "agent", "id": "<id>", "version": 799821, "created_at": "2025-10-20T17:35:08.067Z", "updated_at": "2023-11-16T08:47:13.265Z"}
+        "422":
+          application/json: {}
+  agents_api_v1_agents_update_version:
+    speakeasy-default-agents-api-v1-agents-update-version:
+      parameters:
+        path:
+          agent_id: "<id>"
+        query:
+          version: 157995
+      responses:
+        "200":
+          application/json: {"model": "XTS", "name": "<value>", "object": "agent", "id": "<id>", "version": 310764, "created_at": "2023-05-08T23:29:06.216Z", "updated_at": "2023-05-16T19:20:05.735Z"}
+        "422":
+          application/json: {}
   files_api_routes_upload_file:
     speakeasy-default-files-api-routes-upload-file:
       requestBody:
-        multipart/form-data: {"file": {}}
+        multipart/form-data: {"file": "x-file: example.file"}
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_request", "source": "repository"}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "batch_result", "source": "upload"}
   files_api_routes_list_files:
     speakeasy-default-files-api-routes-list-files:
       parameters:
@@ -703,20 +861,20 @@ examples:
           page_size: 100
       responses:
         "200":
-          application/json: {"data": [{"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "batch_result", "source": "upload"}, {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "pretrain", "source": "repository"}, {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "pretrain", "source": "mistral"}], "object": "<value>", "total": 86140}
+          application/json: {"data": [{"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_error", "source": "upload"}], "object": "<value>", "total": 999335}
   files_api_routes_retrieve_file:
     speakeasy-default-files-api-routes-retrieve-file:
       parameters:
         path:
-          file_id: "<id>"
+          file_id: "f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6"
       responses:
         "200":
-          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_error", "source": "upload", "deleted": true}
+          application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "instruct", "source": "repository", "deleted": false}
   files_api_routes_delete_file:
     speakeasy-default-files-api-routes-delete-file:
       parameters:
         path:
-          file_id: "<id>"
+          file_id: "3b6d45eb-e30b-416f-8019-f47e2e93d930"
       responses:
         "200":
           application/json: {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "deleted": false}
@@ -724,7 +882,7 @@ examples:
     speakeasy-default-files-api-routes-download-file:
       parameters:
         path:
-          file_id: "<id>"
+          file_id: "f8919994-a4a1-46b2-8b5b-06335a4300ce"
       responses:
         "200":
           application/octet-stream: "x-file: example.file"
@@ -732,12 +890,12 @@ examples:
     speakeasy-default-files-api-routes-get-signed-url:
       parameters:
         path:
-          file_id: "<id>"
+          file_id: "06a020ab-355c-49a6-b19d-304b7c01699f"
         query:
           expiry: 24
       responses:
         "200":
-          application/json: {"url": "https://scornful-daughter.com/"}
+          application/json: {"url": "https://knotty-birdcage.net/"}
   jobs_api_routes_fine_tuning_get_fine_tuning_jobs:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-jobs:
       parameters:
@@ -747,11 +905,11 @@ examples:
           created_by_me: false
       responses:
         "200":
-          application/json: {"object": "list", "total": 768578}
+          application/json: {"object": "list", "total": 843585}
   jobs_api_routes_fine_tuning_create_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-create-fine-tuning-job:
       requestBody:
-        application/json: {"model": "Fiesta", "invalid_sample_skip_percentage": 0, "hyperparameters": {"learning_rate": 0.0001}}
+        application/json: {"model": "Camaro", "invalid_sample_skip_percentage": 0, "hyperparameters": {"learning_rate": 0.0001}}
       responses:
         "200":
           application/json: {"expected_duration_seconds": 220, "cost": 10, "cost_currency": "EUR", "train_tokens_per_step": 131072, "train_tokens": 1310720, "data_tokens": 305375, "deprecated": true, "details": "<value>", "epochs": 4.2922, "training_steps": 10, "object": "job.metadata"}
@@ -759,26 +917,26 @@ examples:
     speakeasy-default-jobs-api-routes-fine-tuning-get-fine-tuning-job:
       parameters:
         path:
-          job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
+          job_id: "c167a961-ffca-4bcf-93ac-6169468dd389"
       responses:
         "200":
-          application/json: {"id": "888f7743-e7c1-4351-b8c6-b985523c4bcb", "auto_start": true, "model": "2", "status": "CANCELLATION_REQUESTED", "created_at": 444836, "modified_at": 424256, "training_files": [], "object": "job", "job_type": "completion", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 550563, "created_at": 1716963433}]}
+          application/json: {"id": "babac92a-96fa-48c4-931c-f6f97e1bf24c", "auto_start": false, "model": "Spyder", "status": "FAILED", "created_at": 232438, "modified_at": 32259, "training_files": ["7a95c5a0-399d-4665-84c8-deab766d22dc"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "classifier_targets": [{"name": "<value>", "labels": [], "weight": 5651, "loss_function": "single_class"}]}
   jobs_api_routes_fine_tuning_cancel_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-cancel-fine-tuning-job:
       parameters:
         path:
-          job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
+          job_id: "6188a2f6-7513-4e0f-89cc-3f8088523a49"
       responses:
         "200":
-          application/json: {"id": "f7135029-2331-4c6e-bbdc-570b7edb4966", "auto_start": true, "model": "A4", "status": "CANCELLATION_REQUESTED", "created_at": 703131, "modified_at": 929437, "training_files": ["e3e32613-5744-4d82-8f3f-d6b3c11eb45e"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 466651, "created_at": 1716963433}], "classifier_targets": [{"name": "<value>", "labels": ["<value>", "<value>", "<value>"], "weight": 687.66, "loss_function": "single_class"}, {"name": "<value>", "labels": ["<value>", "<value>", "<value>"], "weight": 8470.22, "loss_function": "multi_class"}]}
+          application/json: {"id": "770b9cc0-1ab6-44de-a816-67010644e9fb", "auto_start": false, "model": "Volt", "status": "CANCELLATION_REQUESTED", "created_at": 546404, "modified_at": 180081, "training_files": ["45e621c6-ac30-4133-b6d1-fc0d1fe24c9f"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "classifier_targets": [{"name": "<value>", "labels": ["<value 1>"], "weight": 1298.58, "loss_function": "multi_class"}]}
   jobs_api_routes_fine_tuning_start_fine_tuning_job:
     speakeasy-default-jobs-api-routes-fine-tuning-start-fine-tuning-job:
       parameters:
         path:
-          job_id: "0bf0f9e6-c3e5-4d61-aac8-0e36dcac0dfc"
+          job_id: "56553e4d-0679-471e-b9ac-59a77d671103"
       responses:
         "200":
-          application/json: {"id": "bf0f9e6c-3e5d-461a-ac80-e36dcac0dfc8", "auto_start": true, "model": "Explorer", "status": "RUNNING", "created_at": 961967, "modified_at": 914446, "training_files": ["82c4783e-31ec-471d-bbed-4c90a1b0dd73"], "object": "job", "job_type": "classifier", "hyperparameters": {"learning_rate": 0.0001}, "checkpoints": [{"metrics": {}, "step_number": 590686, "created_at": 1716963433}], "classifier_targets": [{"name": "<value>", "labels": ["<value>"], "weight": 5494.15, "loss_function": "single_class"}, {"name": "<value>", "labels": ["<value>", "<value>"], "weight": 7945.15, "loss_function": "single_class"}]}
+          application/json: {"id": "68ad461a-676e-47fe-a07e-15e38f5082b5", "auto_start": false, "model": "Grand Cherokee", "status": "STARTED", "created_at": 134515, "modified_at": 192651, "training_files": ["39dabc3d-15eb-49ac-a549-69973f33acee"], "object": "job", "job_type": "completion", "hyperparameters": {"learning_rate": 0.0001}}
   jobs_api_routes_batch_get_batch_jobs:
     speakeasy-default-jobs-api-routes-batch-get-batch-jobs:
       parameters:
@@ -788,37 +946,37 @@ examples:
           created_by_me: false
       responses:
         "200":
-          application/json: {"object": "list", "total": 768578}
+          application/json: {"object": "list", "total": 186589}
   jobs_api_routes_batch_create_batch_job:
     speakeasy-default-jobs-api-routes-batch-create-batch-job:
       requestBody:
-        application/json: {"input_files": ["a621cf02-1cd9-4cf5-8403-315211a509a3"], "endpoint": "/v1/fim/completions", "model": "2", "timeout_hours": 24}
+        application/json: {"input_files": ["fe3343a2-3b8d-404b-ba32-a78dede2614a"], "endpoint": "/v1/moderations", "model": "Altima", "timeout_hours": 24}
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["8e774c2b-ecc3-4769-b177-5e024985613d", "0ee803d5-6a1d-4f94-836b-fd39494798bc"], "endpoint": "<value>", "model": "Impala", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "RUNNING", "created_at": 770370, "total_requests": 350586, "completed_requests": 95214, "succeeded_requests": 930830, "failed_requests": 617761}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["7b2553d8-e17f-4df5-a862-a1678f6b5271", "8c618d9f-7d82-42ba-a284-d57d84f50a58", "c042f996-e842-441d-ae47-4e0850334e41"], "endpoint": "<value>", "model": "Taurus", "errors": [{"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 395527, "total_requests": 166919, "completed_requests": 258552, "succeeded_requests": 480980, "failed_requests": 684176}
   jobs_api_routes_batch_get_batch_job:
     speakeasy-default-jobs-api-routes-batch-get-batch-job:
       parameters:
         path:
-          job_id: "b888f774-3e7c-4135-a18c-6b985523c4bc"
+          job_id: "4017dc9f-b629-42f4-9700-8c681b9e7f0f"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["50f76228-1da8-44bc-b661-c8a99c6b71b6", "cd62b8f7-112a-4af0-bab4-e43b4cca3716", "620807aa-1f8c-4f05-ad89-d58ee381f6b4"], "endpoint": "<value>", "model": "Golf", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 790898, "total_requests": 55097, "completed_requests": 578320, "succeeded_requests": 856562, "failed_requests": 328633}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["11b83f16-f2f9-4de4-a81f-203fff419c99"], "endpoint": "<value>", "model": "Accord", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 900958, "total_requests": 458292, "completed_requests": 184893, "succeeded_requests": 104800, "failed_requests": 836210}
   jobs_api_routes_batch_cancel_batch_job:
     speakeasy-default-jobs-api-routes-batch-cancel-batch-job:
       parameters:
         path:
-          job_id: "0f713502-9233-41c6-9ebd-c570b7edb496"
+          job_id: "4fb29d1c-535b-4f0a-a1cb-2167f86da569"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["50fbe4e3-e326-4135-8744-d82f3fd6b3c1", "eb45e247-ac10-4cdc-8311-2f7cc9241230", "4afaa0f8-4bd4-4945-9116-89d07a64aa72"], "endpoint": "<value>", "model": "Alpine", "errors": [{"message": "<value>", "count": 1}, {"message": "<value>", "count": 1}], "status": "QUEUED", "created_at": 709109, "total_requests": 275794, "completed_requests": 158938, "succeeded_requests": 12381, "failed_requests": 11864}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["8fd9d88a-66be-43fd-a816-ba509ca3ca85"], "endpoint": "<value>", "model": "PT Cruiser", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 608251, "total_requests": 12693, "completed_requests": 203340, "succeeded_requests": 189291, "failed_requests": 969057}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
         application/json: {"model": "mistral-small-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_chat:
@@ -828,14 +986,13 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
         application/json: {"model": "codestral-2405", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_fim:
@@ -845,14 +1002,13 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   agents_completion_v1_agents_completions_post:
     speakeasy-default-agents-completion-v1-agents-completions-post:
       requestBody:
         application/json: {"stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<id>"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_agents:
@@ -862,7 +1018,6 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   embeddings_v1_embeddings_post:
     speakeasy-default-embeddings-v1-embeddings-post:
       requestBody:
@@ -875,214 +1030,47 @@ examples:
   moderations_v1_moderations_post:
     speakeasy-default-moderations-v1-moderations-post:
       requestBody:
-        application/json: {"model": "V90", "input": ["<value>"]}
+        application/json: {"model": "Durango", "input": ["<value 1>", "<value 2>"]}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "V90", "results": [{}]}
-        "422":
-          application/json: {}
-  moderations_chat_v1_chat_moderations_post:
-    speakeasy-default-moderations-chat-v1-chat-moderations-post:
-      requestBody:
-        application/json: {"model": "Roadster", "input": [[{"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}]], "truncate_for_context_length": false}
-      responses:
-        "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef"}
-        "422":
-          application/json: {}
-  ocr_v1_ocr_post:
-    speakeasy-default-ocr-v1-ocr-post:
-      requestBody:
-        application/json: {"model": "Focus", "document": {"document_url": "https://dutiful-horst.org", "type": "document_url"}}
-      responses:
-        "200":
-          application/json: {"pages": [], "model": "A4", "usage_info": {"pages_processed": 442675}}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Corvette", "results": [{}]}
         "422":
           application/json: {}
   chat_moderations_v1_chat_moderations_post:
     speakeasy-default-chat-moderations-v1-chat-moderations-post:
       requestBody:
-        application/json: {"input": [[{"content": [], "role": "system"}, {"content": "<value>", "role": "tool"}], [{"prefix": false, "role": "assistant"}, {"content": "<value>", "role": "user"}, {"prefix": false, "role": "assistant"}], [{"content": "<value>", "role": "system"}, {"content": [{"image_url": "https://fatherly-colon.name", "type": "image_url"}], "role": "user"}, {"content": "<value>", "role": "user"}]], "model": "Model Y"}
+        application/json: {"input": [{"content": "<value>", "role": "tool"}], "model": "LeBaron"}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Model Y", "results": [{}, {}]}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Explorer", "results": [{}]}
         "422":
           application/json: {}
   classifications_v1_classifications_post:
     speakeasy-default-classifications-v1-classifications-post:
       requestBody:
-        application/json: {"model": "Altima", "input": "<value>"}
+        application/json: {"model": "Silverado", "input": ["<value 1>"]}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Camaro", "results": [{"key": {"scores": {"key": 6063.42, "key1": 1739.44}}, "key1": {"scores": {}}}, {"key": {"scores": {"key": 2625.67}}, "key1": {"scores": {}}}]}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "ATS", "results": [{}, {"key": {"scores": {"key": 2080.19}}}]}
         "422":
           application/json: {}
   chat_classifications_v1_chat_classifications_post:
     speakeasy-default-chat-classifications-v1-chat-classifications-post:
       requestBody:
-        application/json: {"model": "Fortwo", "input": [{"messages": [{"content": "<value>", "role": "tool"}]}, {"messages": []}]}
+        application/json: {"model": "Camry", "input": [{"messages": [{"content": "<value>", "role": "system"}]}]}
       responses:
         "200":
-          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "CX-9", "results": [{"key": {"scores": {"key": 4386.53, "key1": 2974.85}}, "key1": {"scores": {"key": 7100.52, "key1": 480.47}}}]}
+          application/json: {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Altima", "results": [{}, {"key": {"scores": {"key": 1360.53, "key1": 5946.42}}}, {"key": {"scores": {"key": 1360.53, "key1": 5946.42}}}]}
         "422":
           application/json: {}
-  agents_api_v1_conversations_start:
-    speakeasy-default-agents-api-v1-conversations-start:
+  ocr_v1_ocr_post:
+    speakeasy-default-ocr-v1-ocr-post:
       requestBody:
-        application/json: {"inputs": "<value>", "stream": false}
+        application/json: {"model": "CX-9", "document": {"image_url": {"url": "https://measly-scrap.com"}, "type": "image_url"}}
       responses:
         "200":
-          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "agent.handoff", "previous_agent_id": "<id>", "previous_agent_name": "<value>", "next_agent_id": "<id>", "next_agent_name": "<value>"}, {"object": "entry", "type": "message.output", "role": "assistant", "content": [{"type": "tool_reference", "tool": "web_search_premium", "title": "<value>"}, {"document_url": "https://unrealistic-fund.org/", "type": "document_url"}]}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+          application/json: {"pages": [{"index": 944919, "markdown": "<value>", "images": [], "dimensions": {"dpi": 984283, "height": 453411, "width": 398292}}], "model": "Wrangler", "usage_info": {"pages_processed": 47064}}
         "422":
           application/json: {}
-  agents_api_v1_conversations_list:
-    speakeasy-default-agents-api-v1-conversations-list:
-      parameters:
-        query:
-          page: 0
-          page_size: 100
-      responses:
-        "200":
-          application/json: [{"object": "conversation", "id": "<id>", "created_at": "2025-01-13T10:26:00.433Z", "updated_at": "2023-07-14T18:23:27.528Z", "agent_id": "<id>"}, {"object": "conversation", "id": "<id>", "created_at": "2023-06-17T12:14:27.999Z", "updated_at": "2024-11-27T13:02:27.296Z", "model": "LeBaron"}, {"object": "conversation", "id": "<id>", "created_at": "2025-02-26T06:14:46.641Z", "updated_at": "2023-04-05T09:49:38.010Z", "model": "A8"}]
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_get:
-    speakeasy-default-agents-api-v1-conversations-get:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      responses:
-        "200":
-          application/json: {"object": "conversation", "id": "<id>", "created_at": "2024-09-04T11:33:52.011Z", "updated_at": "2024-08-19T11:11:04.610Z", "agent_id": "<id>"}
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_append:
-    speakeasy-default-agents-api-v1-conversations-append:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      requestBody:
-        application/json: {"inputs": "<value>", "stream": false, "store": true, "handoff_execution": "server"}
-      responses:
-        "200":
-          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "agent.handoff", "previous_agent_id": "<id>", "previous_agent_name": "<value>", "next_agent_id": "<id>", "next_agent_name": "<value>"}, {"object": "entry", "type": "function.call", "tool_call_id": "<id>", "name": "<value>", "arguments": "<value>"}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_history:
-    speakeasy-default-agents-api-v1-conversations-history:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      responses:
-        "200":
-          application/json: {"object": "conversation.history", "conversation_id": "<id>", "entries": [{"object": "entry", "type": "message.output", "role": "assistant", "content": [{"type": "tool_file", "tool": "web_search", "file_id": "<id>"}]}]}
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_messages:
-    speakeasy-default-agents-api-v1-conversations-messages:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      responses:
-        "200":
-          application/json: {"object": "conversation.messages", "conversation_id": "<id>", "messages": [{"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}, {"object": "entry", "type": "message.input", "role": "assistant", "content": [{"document_url": "https://black-and-white-sauerkraut.biz", "type": "document_url"}, {"type": "tool_file", "tool": "code_interpreter", "file_id": "<id>"}, {"image_url": "https://emotional-couch.org", "type": "image_url"}]}, {"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}]}
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_restart:
-    speakeasy-default-agents-api-v1-conversations-restart:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      requestBody:
-        application/json: {"inputs": "<value>", "stream": false, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
-      responses:
-        "200":
-          application/json: {"object": "conversation.response", "conversation_id": "<id>", "outputs": [{"object": "entry", "type": "tool.execution", "name": "image_generation"}, {"object": "entry", "type": "tool.execution", "name": "web_search_premium"}], "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
-        "422":
-          application/json: {}
-  agents_api_v1_conversations_start_stream:
-    speakeasy-default-agents-api-v1-conversations-start-stream:
-      requestBody:
-        application/json: {"inputs": "<value>", "stream": true}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  agents_api_v1_conversations_append_stream:
-    speakeasy-default-agents-api-v1-conversations-append-stream:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      requestBody:
-        application/json: {"inputs": "<value>", "stream": true, "store": true, "handoff_execution": "server"}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  agents_api_v1_conversations_restart_stream:
-    speakeasy-default-agents-api-v1-conversations-restart-stream:
-      parameters:
-        path:
-          conversation_id: "<id>"
-      requestBody:
-        application/json: {"inputs": "<value>", "stream": true, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
-      responses:
-        "422":
-          application/json: {}
-        "200": {}
-  agents_api_v1_agents_create:
-    speakeasy-default-agents-api-v1-agents-create:
-      requestBody:
-        application/json: {"model": "Fiesta", "name": "<value>"}
-      responses:
-        "200":
-          application/json: {"model": "LeBaron", "name": "<value>", "object": "agent", "id": "<id>", "version": 417458, "created_at": "2023-05-28T06:20:22.766Z", "updated_at": "2023-03-17T15:39:20.911Z"}
-        "422":
-          application/json: {}
-  agents_api_v1_agents_list:
-    speakeasy-default-agents-api-v1-agents-list:
-      parameters:
-        query:
-          page: 0
-          page_size: 20
-      responses:
-        "200":
-          application/json: [{"model": "Golf", "name": "<value>", "object": "agent", "id": "<id>", "version": 678317, "created_at": "2023-07-14T18:23:27.528Z", "updated_at": "2023-09-09T18:28:08.953Z"}, {"model": "Aventador", "name": "<value>", "object": "agent", "id": "<id>", "version": 635532, "created_at": "2024-12-01T18:25:37.169Z", "updated_at": "2023-01-20T06:21:22.156Z"}, {"model": "Model T", "name": "<value>", "object": "agent", "id": "<id>", "version": 86140, "created_at": "2023-03-17T01:57:00.187Z", "updated_at": "2025-01-24T00:05:25.844Z"}]
-        "422":
-          application/json: {}
-  agents_api_v1_agents_get:
-    speakeasy-default-agents-api-v1-agents-get:
-      parameters:
-        path:
-          agent_id: "<id>"
-      responses:
-        "200":
-          application/json: {"model": "Model S", "name": "<value>", "object": "agent", "id": "<id>", "version": 558834, "created_at": "2024-08-19T11:11:04.610Z", "updated_at": "2024-07-25T06:33:15.810Z"}
-        "422":
-          application/json: {}
-  agents_api_v1_agents_update:
-    speakeasy-default-agents-api-v1-agents-update:
-      parameters:
-        path:
-          agent_id: "<id>"
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {"model": "Sentra", "name": "<value>", "object": "agent", "id": "<id>", "version": 597129, "created_at": "2024-01-13T16:52:57.274Z", "updated_at": "2025-12-22T15:27:45.882Z"}
-        "422":
-          application/json: {}
-  agents_api_v1_agents_update_version:
-    speakeasy-default-agents-api-v1-agents-update-version:
-      parameters:
-        path:
-          agent_id: "<id>"
-        query:
-          version: 193920
-      responses:
-        "200":
-          application/json: {"model": "Mercielago", "name": "<value>", "object": "agent", "id": "<id>", "version": 253661, "created_at": "2023-02-14T22:44:06.703Z", "updated_at": "2025-12-15T06:22:04.120Z"}
-        "422":
-          application/json: {}
-examplesVersion: 1.0.0
+examplesVersion: 1.0.2
 generatedTests: {}
