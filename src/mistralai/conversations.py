@@ -712,7 +712,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve a conversation entity with its attributes.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching metadata.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -815,7 +815,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve a conversation entity with its attributes.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching metadata.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1178,7 +1178,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the entries belonging to that conversation. The entries are sorted in the order they were appended, those can be messages, connectors or function_call.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching entries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1278,7 +1278,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the entries belonging to that conversation. The entries are sorted in the order they were appended, those can be messages, connectors or function_call.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching entries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1378,7 +1378,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the messages belonging to that conversation. This is similar to retrieving all entries except we filter the messages only.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching messages.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1478,7 +1478,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id retrieve all the messages belonging to that conversation. This is similar to retrieving all entries except we filter the messages only.
 
-        :param conversation_id:
+        :param conversation_id: ID of the conversation from which we are fetching messages.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1588,7 +1588,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
@@ -1617,10 +1617,10 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                from_entry_id=from_entry_id,
             ),
         )
 
@@ -1721,7 +1721,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
@@ -1750,10 +1750,10 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                from_entry_id=from_entry_id,
             ),
         )
 
@@ -2426,7 +2426,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
@@ -2455,10 +2455,10 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                from_entry_id=from_entry_id,
             ),
         )
 
@@ -2564,7 +2564,7 @@ class Conversations(BaseSDK):
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
-        :param conversation_id:
+        :param conversation_id: ID of the original conversation which is being restarted.
         :param inputs:
         :param from_entry_id:
         :param stream:
@@ -2593,10 +2593,10 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
-                from_entry_id=from_entry_id,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                from_entry_id=from_entry_id,
             ),
         )
 

@@ -12,6 +12,7 @@ class ModelCapabilitiesTypedDict(TypedDict):
     function_calling: NotRequired[bool]
     fine_tuning: NotRequired[bool]
     vision: NotRequired[bool]
+    classification: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
@@ -24,3 +25,5 @@ class ModelCapabilities(BaseModel):
     fine_tuning: Optional[bool] = False
 
     vision: Optional[bool] = False
+
+    classification: Optional[bool] = False

@@ -11,12 +11,14 @@ from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 class AgentsAPIV1ConversationsGetRequestTypedDict(TypedDict):
     conversation_id: str
+    r"""ID of the conversation from which we are fetching metadata."""
 
 
 class AgentsAPIV1ConversationsGetRequest(BaseModel):
     conversation_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""ID of the conversation from which we are fetching metadata."""
 
 
 AgentsAPIV1ConversationsGetResponseV1ConversationsGetTypedDict = TypeAliasType(

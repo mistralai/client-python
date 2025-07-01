@@ -129,7 +129,7 @@ if TYPE_CHECKING:
         AssistantMessageRole,
         AssistantMessageTypedDict,
     )
-    from .basemodelcard import BaseModelCard, BaseModelCardTypedDict, Type
+    from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .batcherror import BatchError, BatchErrorTypedDict
     from .batchjobin import BatchJobIn, BatchJobInTypedDict
     from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
@@ -378,6 +378,7 @@ if TYPE_CHECKING:
         EmbeddingResponseDataTypedDict,
     )
     from .eventout import EventOut, EventOutTypedDict
+    from .filechunk import FileChunk, FileChunkTypedDict
     from .filepurpose import FilePurpose
     from .files_api_routes_delete_fileop import (
         FilesAPIRoutesDeleteFileRequest,
@@ -429,7 +430,7 @@ if TYPE_CHECKING:
         FTModelCapabilitiesOut,
         FTModelCapabilitiesOutTypedDict,
     )
-    from .ftmodelcard import FTModelCard, FTModelCardType, FTModelCardTypedDict
+    from .ftmodelcard import FTModelCard, FTModelCardTypedDict
     from .function import Function, FunctionTypedDict
     from .functioncall import (
         Arguments,
@@ -589,9 +590,9 @@ if TYPE_CHECKING:
         MessageInputEntryContent,
         MessageInputEntryContentTypedDict,
         MessageInputEntryRole,
-        MessageInputEntryType,
         MessageInputEntryTypedDict,
         Object,
+        Type,
     )
     from .messageoutputcontentchunks import (
         MessageOutputContentChunks,
@@ -1020,9 +1021,10 @@ __all__ = [
     "FTModelCapabilitiesOut",
     "FTModelCapabilitiesOutTypedDict",
     "FTModelCard",
-    "FTModelCardType",
     "FTModelCardTypedDict",
     "File",
+    "FileChunk",
+    "FileChunkTypedDict",
     "FilePurpose",
     "FileSchema",
     "FileSchemaTypedDict",
@@ -1161,7 +1163,6 @@ __all__ = [
     "MessageInputEntryContent",
     "MessageInputEntryContentTypedDict",
     "MessageInputEntryRole",
-    "MessageInputEntryType",
     "MessageInputEntryTypedDict",
     "MessageOutputContentChunks",
     "MessageOutputContentChunksTypedDict",
@@ -1411,7 +1412,6 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessageTypedDict": ".assistantmessage",
     "BaseModelCard": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
-    "Type": ".basemodelcard",
     "BatchError": ".batcherror",
     "BatchErrorTypedDict": ".batcherror",
     "BatchJobIn": ".batchjobin",
@@ -1603,6 +1603,8 @@ _dynamic_imports: dict[str, str] = {
     "EmbeddingResponseDataTypedDict": ".embeddingresponsedata",
     "EventOut": ".eventout",
     "EventOutTypedDict": ".eventout",
+    "FileChunk": ".filechunk",
+    "FileChunkTypedDict": ".filechunk",
     "FilePurpose": ".filepurpose",
     "FilesAPIRoutesDeleteFileRequest": ".files_api_routes_delete_fileop",
     "FilesAPIRoutesDeleteFileRequestTypedDict": ".files_api_routes_delete_fileop",
@@ -1637,7 +1639,6 @@ _dynamic_imports: dict[str, str] = {
     "FTModelCapabilitiesOut": ".ftmodelcapabilitiesout",
     "FTModelCapabilitiesOutTypedDict": ".ftmodelcapabilitiesout",
     "FTModelCard": ".ftmodelcard",
-    "FTModelCardType": ".ftmodelcard",
     "FTModelCardTypedDict": ".ftmodelcard",
     "Function": ".function",
     "FunctionTypedDict": ".function",
@@ -1756,9 +1757,9 @@ _dynamic_imports: dict[str, str] = {
     "MessageInputEntryContent": ".messageinputentry",
     "MessageInputEntryContentTypedDict": ".messageinputentry",
     "MessageInputEntryRole": ".messageinputentry",
-    "MessageInputEntryType": ".messageinputentry",
     "MessageInputEntryTypedDict": ".messageinputentry",
     "Object": ".messageinputentry",
+    "Type": ".messageinputentry",
     "MessageOutputContentChunks": ".messageoutputcontentchunks",
     "MessageOutputContentChunksTypedDict": ".messageoutputcontentchunks",
     "MessageOutputEntry": ".messageoutputentry",
