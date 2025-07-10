@@ -45,6 +45,12 @@ value: models.FunctionCallEvent = /* values here */
 value: models.MessageOutputEvent = /* values here */
 ```
 
+### `models.ToolExecutionDeltaEvent`
+
+```python
+value: models.ToolExecutionDeltaEvent = /* values here */
+```
+
 ### `models.ToolExecutionDoneEvent`
 
 ```python

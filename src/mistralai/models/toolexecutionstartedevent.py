@@ -14,6 +14,7 @@ ToolExecutionStartedEventType = Literal["tool.execution.started"]
 class ToolExecutionStartedEventTypedDict(TypedDict):
     id: str
     name: BuiltInConnectors
+    arguments: str
     type: NotRequired[ToolExecutionStartedEventType]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
@@ -23,6 +24,8 @@ class ToolExecutionStartedEvent(BaseModel):
     id: str
 
     name: BuiltInConnectors
+
+    arguments: str
 
     type: Optional[ToolExecutionStartedEventType] = "tool.execution.started"
 

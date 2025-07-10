@@ -447,6 +447,7 @@ with Mistral(
             "type": "message.input",
             "role": "assistant",
             "content": "<value>",
+            "prefix": False,
         },
     ], from_entry_id="<id>", stream=True, store=True, handoff_execution="server")
 

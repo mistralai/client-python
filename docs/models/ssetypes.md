@@ -12,6 +12,7 @@ Server side events sent when streaming a conversation response.
 | `CONVERSATION_RESPONSE_ERROR`   | conversation.response.error     |
 | `MESSAGE_OUTPUT_DELTA`          | message.output.delta            |
 | `TOOL_EXECUTION_STARTED`        | tool.execution.started          |
+| `TOOL_EXECUTION_DELTA`          | tool.execution.delta            |
 | `TOOL_EXECUTION_DONE`           | tool.execution.done             |
 | `AGENT_HANDOFF_STARTED`         | agent.handoff.started           |
 | `AGENT_HANDOFF_DONE`            | agent.handoff.done              |

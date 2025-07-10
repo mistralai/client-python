@@ -48,8 +48,8 @@ class Files(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
-            file=utils.get_pydantic_model(file, models.File),
             purpose=purpose,
+            file=utils.get_pydantic_model(file, models.File),
         )
 
         req = self._build_request(
@@ -156,8 +156,8 @@ class Files(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
-            file=utils.get_pydantic_model(file, models.File),
             purpose=purpose,
+            file=utils.get_pydantic_model(file, models.File),
         )
 
         req = self._build_request_async(

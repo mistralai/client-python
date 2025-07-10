@@ -16,7 +16,8 @@ class ToolReferenceChunkTypedDict(TypedDict):
     title: str
     type: NotRequired[ToolReferenceChunkType]
     url: NotRequired[Nullable[str]]
-    source: NotRequired[Nullable[str]]
+    favicon: NotRequired[Nullable[str]]
+    description: NotRequired[Nullable[str]]
 
 
 class ToolReferenceChunk(BaseModel):
@@ -28,12 +29,14 @@ class ToolReferenceChunk(BaseModel):
 
     url: OptionalNullable[str] = UNSET
 
-    source: OptionalNullable[str] = UNSET
+    favicon: OptionalNullable[str] = UNSET
+
+    description: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "url", "source"]
-        nullable_fields = ["url", "source"]
+        optional_fields = ["type", "url", "favicon", "description"]
+        nullable_fields = ["url", "favicon", "description"]
         null_default_fields = []
 
         serialized = handler(self)
