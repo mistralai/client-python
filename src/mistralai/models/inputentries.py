@@ -14,10 +14,10 @@ from typing_extensions import TypeAliasType
 InputEntriesTypedDict = TypeAliasType(
     "InputEntriesTypedDict",
     Union[
-        MessageInputEntryTypedDict,
         FunctionResultEntryTypedDict,
-        ToolExecutionEntryTypedDict,
+        MessageInputEntryTypedDict,
         FunctionCallEntryTypedDict,
+        ToolExecutionEntryTypedDict,
         MessageOutputEntryTypedDict,
         AgentHandoffEntryTypedDict,
     ],
@@ -27,10 +27,10 @@ InputEntriesTypedDict = TypeAliasType(
 InputEntries = TypeAliasType(
     "InputEntries",
     Union[
-        MessageInputEntry,
         FunctionResultEntry,
-        ToolExecutionEntry,
+        MessageInputEntry,
         FunctionCallEntry,
+        ToolExecutionEntry,
         MessageOutputEntry,
         AgentHandoffEntry,
     ],

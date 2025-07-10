@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: e0186c33d0269977e1790dfcc7d11aac
+  docChecksum: 82cf79b2dee6811d91e2912113c21d3a
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.1
-  configChecksum: 5f97671226b9fdcc9adc3c7662003247
+  releaseVersion: 1.9.2
+  configChecksum: 1ca921f44508650d65ccf46783910ff3
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -183,6 +183,9 @@ generatedFiles:
   - docs/models/document.md
   - docs/models/documentlibrarytool.md
   - docs/models/documentlibrarytooltype.md
+  - docs/models/documentout.md
+  - docs/models/documenttextcontent.md
+  - docs/models/documentupdatein.md
   - docs/models/documenturlchunk.md
   - docs/models/documenturlchunktype.md
   - docs/models/embeddingdtype.md
@@ -190,6 +193,7 @@ generatedFiles:
   - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
+  - docs/models/entitytype.md
   - docs/models/entries.md
   - docs/models/eventout.md
   - docs/models/file.md
@@ -213,6 +217,7 @@ generatedFiles:
   - docs/models/ftclassifierlossfunction.md
   - docs/models/ftmodelcapabilitiesout.md
   - docs/models/ftmodelcard.md
+  - docs/models/ftmodelcardtype.md
   - docs/models/function.md
   - docs/models/functioncall.md
   - docs/models/functioncallentry.md
@@ -273,13 +278,37 @@ generatedFiles:
   - docs/models/jsonschema.md
   - docs/models/legacyjobmetadataout.md
   - docs/models/legacyjobmetadataoutobject.md
+  - docs/models/librariesdeletev1request.md
+  - docs/models/librariesdocumentsdeletev1request.md
+  - docs/models/librariesdocumentsgetextractedtextsignedurlv1request.md
+  - docs/models/librariesdocumentsgetsignedurlv1request.md
+  - docs/models/librariesdocumentsgetstatusv1request.md
+  - docs/models/librariesdocumentsgettextcontentv1request.md
+  - docs/models/librariesdocumentsgetv1request.md
+  - docs/models/librariesdocumentslistv1request.md
+  - docs/models/librariesdocumentsreprocessv1request.md
+  - docs/models/librariesdocumentsupdatev1request.md
+  - docs/models/librariesdocumentsuploadv1documentupload.md
+  - docs/models/librariesdocumentsuploadv1request.md
+  - docs/models/librariesgetv1request.md
+  - docs/models/librariessharecreatev1request.md
+  - docs/models/librariessharedeletev1request.md
+  - docs/models/librariessharelistv1request.md
+  - docs/models/librariesupdatev1request.md
+  - docs/models/libraryin.md
+  - docs/models/libraryinupdate.md
+  - docs/models/libraryout.md
+  - docs/models/listdocumentout.md
   - docs/models/listfilesout.md
+  - docs/models/listlibraryout.md
+  - docs/models/listsharingout.md
   - docs/models/loc.md
   - docs/models/messageentries.md
   - docs/models/messageinputcontentchunks.md
   - docs/models/messageinputentry.md
   - docs/models/messageinputentrycontent.md
   - docs/models/messageinputentryrole.md
+  - docs/models/messageinputentrytype.md
   - docs/models/messageoutputcontentchunks.md
   - docs/models/messageoutputentry.md
   - docs/models/messageoutputentrycontent.md
@@ -311,7 +340,9 @@ generatedFiles:
   - docs/models/one.md
   - docs/models/outputcontentchunks.md
   - docs/models/outputs.md
+  - docs/models/paginationinfo.md
   - docs/models/prediction.md
+  - docs/models/processingstatusout.md
   - docs/models/queryparamstatus.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -332,6 +363,10 @@ generatedFiles:
   - docs/models/role.md
   - docs/models/sampletype.md
   - docs/models/security.md
+  - docs/models/shareenum.md
+  - docs/models/sharingdelete.md
+  - docs/models/sharingin.md
+  - docs/models/sharingout.md
   - docs/models/source.md
   - docs/models/ssetypes.md
   - docs/models/status.md
@@ -344,6 +379,8 @@ generatedFiles:
   - docs/models/toolcall.md
   - docs/models/toolchoice.md
   - docs/models/toolchoiceenum.md
+  - docs/models/toolexecutiondeltaevent.md
+  - docs/models/toolexecutiondeltaeventtype.md
   - docs/models/toolexecutiondoneevent.md
   - docs/models/toolexecutiondoneeventtype.md
   - docs/models/toolexecutionentry.md
@@ -381,17 +418,20 @@ generatedFiles:
   - docs/models/websearchpremiumtooltype.md
   - docs/models/websearchtool.md
   - docs/models/websearchtooltype.md
+  - docs/sdks/accesses/README.md
   - docs/sdks/agents/README.md
   - docs/sdks/batch/README.md
   - docs/sdks/beta/README.md
   - docs/sdks/chat/README.md
   - docs/sdks/classifiers/README.md
   - docs/sdks/conversations/README.md
+  - docs/sdks/documents/README.md
   - docs/sdks/embeddings/README.md
   - docs/sdks/files/README.md
   - docs/sdks/fim/README.md
   - docs/sdks/finetuning/README.md
   - docs/sdks/jobs/README.md
+  - docs/sdks/libraries/README.md
   - docs/sdks/mistral/README.md
   - docs/sdks/mistralagents/README.md
   - docs/sdks/mistraljobs/README.md
@@ -406,6 +446,7 @@ generatedFiles:
   - src/mistralai/_hooks/sdkhooks.py
   - src/mistralai/_hooks/types.py
   - src/mistralai/_version.py
+  - src/mistralai/accesses.py
   - src/mistralai/agents.py
   - src/mistralai/basesdk.py
   - src/mistralai/batch.py
@@ -413,12 +454,14 @@ generatedFiles:
   - src/mistralai/chat.py
   - src/mistralai/classifiers.py
   - src/mistralai/conversations.py
+  - src/mistralai/documents.py
   - src/mistralai/embeddings.py
   - src/mistralai/files.py
   - src/mistralai/fim.py
   - src/mistralai/fine_tuning.py
   - src/mistralai/httpclient.py
   - src/mistralai/jobs.py
+  - src/mistralai/libraries.py
   - src/mistralai/mistral_agents.py
   - src/mistralai/mistral_jobs.py
   - src/mistralai/models/__init__.py
@@ -499,12 +542,17 @@ generatedFiles:
   - src/mistralai/models/deletemodelout.py
   - src/mistralai/models/deltamessage.py
   - src/mistralai/models/documentlibrarytool.py
+  - src/mistralai/models/documentout.py
+  - src/mistralai/models/documenttextcontent.py
+  - src/mistralai/models/documentupdatein.py
   - src/mistralai/models/documenturlchunk.py
   - src/mistralai/models/embeddingdtype.py
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
+  - src/mistralai/models/entitytype.py
   - src/mistralai/models/eventout.py
+  - src/mistralai/models/file.py
   - src/mistralai/models/filechunk.py
   - src/mistralai/models/filepurpose.py
   - src/mistralai/models/files_api_routes_delete_fileop.py
@@ -555,7 +603,29 @@ generatedFiles:
   - src/mistralai/models/jobsout.py
   - src/mistralai/models/jsonschema.py
   - src/mistralai/models/legacyjobmetadataout.py
+  - src/mistralai/models/libraries_delete_v1op.py
+  - src/mistralai/models/libraries_documents_delete_v1op.py
+  - src/mistralai/models/libraries_documents_get_extracted_text_signed_url_v1op.py
+  - src/mistralai/models/libraries_documents_get_signed_url_v1op.py
+  - src/mistralai/models/libraries_documents_get_status_v1op.py
+  - src/mistralai/models/libraries_documents_get_text_content_v1op.py
+  - src/mistralai/models/libraries_documents_get_v1op.py
+  - src/mistralai/models/libraries_documents_list_v1op.py
+  - src/mistralai/models/libraries_documents_reprocess_v1op.py
+  - src/mistralai/models/libraries_documents_update_v1op.py
+  - src/mistralai/models/libraries_documents_upload_v1op.py
+  - src/mistralai/models/libraries_get_v1op.py
+  - src/mistralai/models/libraries_share_create_v1op.py
+  - src/mistralai/models/libraries_share_delete_v1op.py
+  - src/mistralai/models/libraries_share_list_v1op.py
+  - src/mistralai/models/libraries_update_v1op.py
+  - src/mistralai/models/libraryin.py
+  - src/mistralai/models/libraryinupdate.py
+  - src/mistralai/models/libraryout.py
+  - src/mistralai/models/listdocumentout.py
   - src/mistralai/models/listfilesout.py
+  - src/mistralai/models/listlibraryout.py
+  - src/mistralai/models/listsharingout.py
   - src/mistralai/models/messageentries.py
   - src/mistralai/models/messageinputcontentchunks.py
   - src/mistralai/models/messageinputentry.py
@@ -576,7 +646,9 @@ generatedFiles:
   - src/mistralai/models/ocrresponse.py
   - src/mistralai/models/ocrusageinfo.py
   - src/mistralai/models/outputcontentchunks.py
+  - src/mistralai/models/paginationinfo.py
   - src/mistralai/models/prediction.py
+  - src/mistralai/models/processingstatusout.py
   - src/mistralai/models/referencechunk.py
   - src/mistralai/models/responsedoneevent.py
   - src/mistralai/models/responseerrorevent.py
@@ -588,6 +660,10 @@ generatedFiles:
   - src/mistralai/models/sampletype.py
   - src/mistralai/models/sdkerror.py
   - src/mistralai/models/security.py
+  - src/mistralai/models/shareenum.py
+  - src/mistralai/models/sharingdelete.py
+  - src/mistralai/models/sharingin.py
+  - src/mistralai/models/sharingout.py
   - src/mistralai/models/source.py
   - src/mistralai/models/ssetypes.py
   - src/mistralai/models/systemmessage.py
@@ -596,6 +672,7 @@ generatedFiles:
   - src/mistralai/models/toolcall.py
   - src/mistralai/models/toolchoice.py
   - src/mistralai/models/toolchoiceenum.py
+  - src/mistralai/models/toolexecutiondeltaevent.py
   - src/mistralai/models/toolexecutiondoneevent.py
   - src/mistralai/models/toolexecutionentry.py
   - src/mistralai/models/toolexecutionstartedevent.py
@@ -740,7 +817,7 @@ examples:
           conversation_id: "<id>"
       responses:
         "200":
-          application/json: {"object": "conversation.history", "conversation_id": "<id>", "entries": [{"object": "entry", "type": "tool.execution", "name": "code_interpreter"}]}
+          application/json: {"object": "conversation.history", "conversation_id": "<id>", "entries": [{"object": "entry", "type": "tool.execution", "name": "image_generation", "arguments": "<value>"}]}
         "422":
           application/json: {}
   agents_api_v1_conversations_messages:
@@ -788,7 +865,7 @@ examples:
         path:
           conversation_id: "<id>"
       requestBody:
-        application/json: {"inputs": [{"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>"}], "stream": true, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
+        application/json: {"inputs": [{"object": "entry", "type": "message.input", "role": "assistant", "content": "<value>", "prefix": false}], "stream": true, "store": true, "handoff_execution": "server", "from_entry_id": "<id>"}
       responses:
         "422":
           application/json: {}
@@ -1070,6 +1147,199 @@ examples:
       responses:
         "200":
           application/json: {"pages": [{"index": 944919, "markdown": "<value>", "images": [], "dimensions": {"dpi": 984283, "height": 453411, "width": 398292}}], "model": "Wrangler", "usage_info": {"pages_processed": 47064}}
+        "422":
+          application/json: {}
+  libraries_list_v1:
+    speakeasy-default-libraries-list-v1:
+      responses:
+        "200":
+          application/json: {"data": [{"id": "bfc452fd-4bcb-46ec-9f68-ceea101e924d", "name": "<value>", "created_at": "2024-01-31T13:50:47.409Z", "updated_at": "2023-04-09T15:28:24.261Z", "owner_id": "3fb92cf9-0fea-44d0-958f-16963601a1f0", "owner_type": "<value>", "total_size": 811051, "nb_documents": 634577, "chunk_size": 502060}]}
+  libraries_create_v1:
+    speakeasy-default-libraries-create-v1:
+      requestBody:
+        application/json: {"name": "<value>"}
+      responses:
+        "201":
+          application/json: {"id": "7285d921-bbab-471e-a2df-600e096d8aca", "name": "<value>", "created_at": "2025-12-10T18:12:15.618Z", "updated_at": "2023-12-29T15:14:03.343Z", "owner_id": "d5e2af8f-c98a-479e-aece-62d79ea6bab3", "owner_type": "<value>", "total_size": 866940, "nb_documents": 123652, "chunk_size": 274694}
+        "422":
+          application/json: {}
+  libraries_get_v1:
+    speakeasy-default-libraries-get-v1:
+      parameters:
+        path:
+          library_id: "d0d23a1e-bfe5-45e7-b7bb-22a4ea78d47f"
+      responses:
+        "200":
+          application/json: {"id": "24e6ac5e-61cb-4f2c-b0c0-806dfd5d8dbf", "name": "<value>", "created_at": "2023-01-19T09:20:07.756Z", "updated_at": "2023-05-28T00:39:57.656Z", "owner_id": "546a730e-7d06-4324-a4fd-2b7ff127978c", "owner_type": "<value>", "total_size": 191122, "nb_documents": 932135, "chunk_size": null}
+        "422":
+          application/json: {}
+  libraries_delete_v1:
+    speakeasy-default-libraries-delete-v1:
+      parameters:
+        path:
+          library_id: "6cad0b6e-fd2e-4d11-a48b-21d30fb7c17a"
+      responses:
+        "200":
+          application/json: {"id": "04e83772-3f8e-41d3-a053-763ed9937e07", "name": "<value>", "created_at": "2025-03-15T23:45:26.060Z", "updated_at": "2024-08-03T06:23:12.129Z", "owner_id": "f636aa46-e1d5-4df4-966b-de4af27da6db", "owner_type": "<value>", "total_size": 268102, "nb_documents": 821714, "chunk_size": null}
+        "422":
+          application/json: {}
+  libraries_update_v1:
+    speakeasy-default-libraries-update-v1:
+      parameters:
+        path:
+          library_id: "e01880c3-d0b5-4a29-8b1b-abdb8ce917e4"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "c3bb20a7-df8c-4461-8cfb-9e2a978c00da", "name": "<value>", "created_at": "2025-03-12T04:49:28.349Z", "updated_at": "2025-12-18T03:09:25.092Z", "owner_id": "734e66b8-ae70-4069-9ebb-7eb7ee3967d5", "owner_type": "<value>", "total_size": 762363, "nb_documents": 896591, "chunk_size": 507889}
+        "422":
+          application/json: {}
+  libraries_documents_list_v1:
+    speakeasy-default-libraries-documents-list-v1:
+      parameters:
+        path:
+          library_id: "5c3ca4cd-62bc-4c71-ad8a-1531ae80d078"
+        query:
+          page_size: 100
+          page: 0
+          sort_by: "created_at"
+          sort_order: "desc"
+      responses:
+        "200":
+          application/json: {"pagination": {"total_items": 23246, "total_pages": 881485, "current_page": 173326, "page_size": 318395, "has_more": false}, "data": [{"id": "5106c0c7-30fb-4fd3-9083-129b77f9f509", "library_id": "71eb68a2-756e-48b0-9d2b-a04d7bf95ff5", "hash": "<value>", "mime_type": "<value>", "extension": "pdf", "size": 367159, "name": "<value>", "created_at": "2024-09-24T04:50:43.988Z", "processing_status": "<value>", "uploaded_by_id": "7d65f4d8-1997-479f-bfb4-535c0144b48c", "uploaded_by_type": "<value>", "tokens_processing_total": 957230}]}
+        "422":
+          application/json: {}
+  libraries_documents_upload_v1:
+    speakeasy-default-libraries-documents-upload-v1:
+      parameters:
+        path:
+          library_id: "a02150d9-5ee0-4877-b62c-28b1fcdf3b76"
+      requestBody:
+        multipart/form-data: {"file": "x-file: example.file"}
+      responses:
+        "200":
+          application/json: {"id": "d40f9b56-c832-405d-aa99-b3e442254dd8", "library_id": "868d7955-009a-4433-bfc6-ad7b4be4e7e4", "hash": "<value>", "mime_type": "<value>", "extension": "m2v", "size": 418415, "name": "<value>", "created_at": "2025-04-30T20:11:27.130Z", "processing_status": "<value>", "uploaded_by_id": "7db8d896-09c9-438c-b6dc-aa5c70102b3f", "uploaded_by_type": "<value>", "tokens_processing_total": 61161}
+        "422":
+          application/json: {}
+  libraries_documents_get_v1:
+    speakeasy-default-libraries-documents-get-v1:
+      parameters:
+        path:
+          library_id: "03d908c8-90a1-44fd-bf3a-8490fb7c9a03"
+          document_id: "90973aec-0508-4375-8b00-91d732414745"
+      responses:
+        "200":
+          application/json: {"id": "0de60230-717d-459a-8c0f-fbb9360c01be", "library_id": "e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e", "hash": "<value>", "mime_type": "<value>", "extension": "jpe", "size": 402478, "name": "<value>", "created_at": "2023-07-29T21:43:20.750Z", "processing_status": "<value>", "uploaded_by_id": "d5eadabe-d7f2-4f87-a337-f80c192f886d", "uploaded_by_type": "<value>", "tokens_processing_total": 793889}
+        "422":
+          application/json: {}
+  libraries_documents_update_v1:
+    speakeasy-default-libraries-documents-update-v1:
+      parameters:
+        path:
+          library_id: "3ddd8d93-dca5-4a6d-980d-173226c35742"
+          document_id: "2a25e44c-b160-40ca-b5c2-b65fb2fcae34"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "1111e519-9ba5-42de-9301-938fbfee59fc", "library_id": "70aac5e3-23f7-439b-bbef-090e4c1dbd6d", "hash": "<value>", "mime_type": "<value>", "extension": "m1v", "size": 802305, "name": "<value>", "created_at": "2024-07-02T20:02:03.680Z", "processing_status": "<value>", "uploaded_by_id": "08471957-b27d-4437-8242-57256727dc49", "uploaded_by_type": "<value>", "tokens_processing_total": 806683}
+        "422":
+          application/json: {}
+  libraries_documents_delete_v1:
+    speakeasy-default-libraries-documents-delete-v1:
+      parameters:
+        path:
+          library_id: "005daae9-d42e-407d-82d7-2261c6a1496c"
+          document_id: "edc236b0-baff-49a9-884b-4ca36a258da4"
+      responses:
+        "422":
+          application/json: {}
+  libraries_documents_get_text_content_v1:
+    speakeasy-default-libraries-documents-get-text-content-v1:
+      parameters:
+        path:
+          library_id: "1d177215-3b6b-45ba-9fa9-baf773223bec"
+          document_id: "60214c91-2aba-4692-a4e6-a53365de8caf"
+      responses:
+        "200":
+          application/json: {"text": "<value>"}
+        "422":
+          application/json: {}
+  libraries_documents_get_status_v1:
+    speakeasy-default-libraries-documents-get-status-v1:
+      parameters:
+        path:
+          library_id: "e6906f70-368f-4155-80da-c1718f01bc43"
+          document_id: "2c904915-d831-4e9d-a345-8ce405bcef66"
+      responses:
+        "200":
+          application/json: {"document_id": "90473b79-1fd5-437f-bee0-6638bdf69c90", "processing_status": "<value>"}
+        "422":
+          application/json: {}
+  libraries_documents_get_signed_url_v1:
+    speakeasy-default-libraries-documents-get-signed-url-v1:
+      parameters:
+        path:
+          library_id: "23cf6904-a602-4ee8-9f5b-8efc557c336d"
+          document_id: "48598486-df71-4994-acbb-1133c72efa8c"
+      responses:
+        "200":
+          application/json: "https://burdensome-jellyfish.name"
+        "422":
+          application/json: {}
+  libraries_documents_get_extracted_text_signed_url_v1:
+    speakeasy-default-libraries-documents-get-extracted-text-signed-url-v1:
+      parameters:
+        path:
+          library_id: "a6f15de3-1e82-4f95-af82-851499042ef8"
+          document_id: "9749d4f9-24e5-4ca2-99a3-a406863f805d"
+      responses:
+        "200":
+          application/json: "https://athletic-disadvantage.info"
+        "422":
+          application/json: {}
+  libraries_documents_reprocess_v1:
+    speakeasy-default-libraries-documents-reprocess-v1:
+      parameters:
+        path:
+          library_id: "51b29371-de8f-4ba4-932b-a0bafb3a7f64"
+          document_id: "3052422c-49ca-45ac-a918-cadb35d61fd8"
+      responses:
+        "422":
+          application/json: {}
+  libraries_share_list_v1:
+    speakeasy-default-libraries-share-list-v1:
+      parameters:
+        path:
+          library_id: "d2169833-d8e2-416e-a372-76518d3d99c2"
+      responses:
+        "200":
+          application/json: {"data": [{"library_id": "26c08a7a-d226-4d29-b4d8-c08f0ad41dd1", "org_id": "254e3633-51b9-47a9-bc14-466ecf29d167", "role": "<value>", "share_with_type": "<value>", "share_with_uuid": "815eb88e-1f97-4782-863f-5fd00d37268b"}]}
+        "422":
+          application/json: {}
+  libraries_share_create_v1:
+    speakeasy-default-libraries-share-create-v1:
+      parameters:
+        path:
+          library_id: "36de3a24-5b1c-4c8f-9d84-d5642205a976"
+      requestBody:
+        application/json: {"org_id": "aadd9ae1-f285-4437-884a-091c77efa6fd", "level": "Viewer", "share_with_uuid": "0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", "share_with_type": "User"}
+      responses:
+        "200":
+          application/json: {"library_id": "45b3a5b2-8b81-4453-9130-ded7f1e5a366", "org_id": "0fa6e542-f04b-431e-a1be-76a9a92b0e68", "role": "<value>", "share_with_type": "<value>", "share_with_uuid": "cdbcc0c5-e577-4880-8ed3-f919421d4fc5"}
+        "422":
+          application/json: {}
+  libraries_share_delete_v1:
+    speakeasy-default-libraries-share-delete-v1:
+      parameters:
+        path:
+          library_id: "709e3cad-9fb2-4f4e-bf88-143cf1808107"
+      requestBody:
+        application/json: {"org_id": "0814a235-c2d0-4814-875a-4b85f93d3dc7", "share_with_uuid": "b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", "share_with_type": "User"}
+      responses:
+        "200":
+          application/json: {"library_id": "7f9c6af4-e362-4cf1-9363-0409d51c2dfa", "org_id": "6b2cac3a-b29c-4d8f-bebb-0db06ec1bf97", "role": "<value>", "share_with_type": "<value>", "share_with_uuid": "618c78f1-41ca-45c3-8ef2-7d78898c7061"}
         "422":
           application/json: {}
 examplesVersion: 1.0.2

@@ -12,6 +12,10 @@ from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
 from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
 from .responsestartedevent import ResponseStartedEvent, ResponseStartedEventTypedDict
 from .ssetypes import SSETypes
+from .toolexecutiondeltaevent import (
+    ToolExecutionDeltaEvent,
+    ToolExecutionDeltaEventTypedDict,
+)
 from .toolexecutiondoneevent import (
     ToolExecutionDoneEvent,
     ToolExecutionDoneEventTypedDict,
@@ -34,6 +38,7 @@ ConversationEventsDataTypedDict = TypeAliasType(
         ResponseDoneEventTypedDict,
         ResponseErrorEventTypedDict,
         ToolExecutionStartedEventTypedDict,
+        ToolExecutionDeltaEventTypedDict,
         ToolExecutionDoneEventTypedDict,
         AgentHandoffStartedEventTypedDict,
         AgentHandoffDoneEventTypedDict,
@@ -52,6 +57,7 @@ ConversationEventsData = Annotated[
         Annotated[ResponseStartedEvent, Tag("conversation.response.started")],
         Annotated[FunctionCallEvent, Tag("function.call.delta")],
         Annotated[MessageOutputEvent, Tag("message.output.delta")],
+        Annotated[ToolExecutionDeltaEvent, Tag("tool.execution.delta")],
         Annotated[ToolExecutionDoneEvent, Tag("tool.execution.done")],
         Annotated[ToolExecutionStartedEvent, Tag("tool.execution.started")],
     ],

@@ -16,6 +16,7 @@ ToolExecutionEntryType = Literal["tool.execution"]
 
 class ToolExecutionEntryTypedDict(TypedDict):
     name: BuiltInConnectors
+    arguments: str
     object: NotRequired[ToolExecutionEntryObject]
     type: NotRequired[ToolExecutionEntryType]
     created_at: NotRequired[datetime]
@@ -26,6 +27,8 @@ class ToolExecutionEntryTypedDict(TypedDict):
 
 class ToolExecutionEntry(BaseModel):
     name: BuiltInConnectors
+
+    arguments: str
 
     object: Optional[ToolExecutionEntryObject] = "entry"
 
