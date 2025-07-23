@@ -27,6 +27,8 @@ class FileSchemaTypedDict(TypedDict):
     sample_type: SampleType
     source: Source
     num_lines: NotRequired[Nullable[int]]
+    mimetype: NotRequired[Nullable[str]]
+    signature: NotRequired[Nullable[str]]
 
 
 class FileSchema(BaseModel):
@@ -53,10 +55,14 @@ class FileSchema(BaseModel):
 
     num_lines: OptionalNullable[int] = UNSET
 
+    mimetype: OptionalNullable[str] = UNSET
+
+    signature: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["num_lines"]
-        nullable_fields = ["num_lines"]
+        optional_fields = ["num_lines", "mimetype", "signature"]
+        nullable_fields = ["num_lines", "mimetype", "signature"]
         null_default_fields = []
 
         serialized = handler(self)

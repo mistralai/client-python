@@ -16,6 +16,7 @@ class MistralJobs(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
@@ -32,6 +33,7 @@ class MistralJobs(BaseSDK):
         :param page:
         :param page_size:
         :param model:
+        :param agent_id:
         :param metadata:
         :param created_after:
         :param created_by_me:
@@ -55,6 +57,7 @@ class MistralJobs(BaseSDK):
             page=page,
             page_size=page_size,
             model=model,
+            agent_id=agent_id,
             metadata=metadata,
             created_after=created_after,
             created_by_me=created_by_me,
@@ -128,6 +131,7 @@ class MistralJobs(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
@@ -144,6 +148,7 @@ class MistralJobs(BaseSDK):
         :param page:
         :param page_size:
         :param model:
+        :param agent_id:
         :param metadata:
         :param created_after:
         :param created_by_me:
@@ -167,6 +172,7 @@ class MistralJobs(BaseSDK):
             page=page,
             page_size=page_size,
             model=model,
+            agent_id=agent_id,
             metadata=metadata,
             created_after=created_after,
             created_by_me=created_by_me,
@@ -239,7 +245,8 @@ class MistralJobs(BaseSDK):
         *,
         input_files: List[str],
         endpoint: models.APIEndpoint,
-        model: str,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, str]] = UNSET,
         timeout_hours: Optional[int] = 24,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -254,6 +261,7 @@ class MistralJobs(BaseSDK):
         :param input_files:
         :param endpoint:
         :param model:
+        :param agent_id:
         :param metadata:
         :param timeout_hours:
         :param retries: Override the default retry configuration for this method
@@ -275,6 +283,7 @@ class MistralJobs(BaseSDK):
             input_files=input_files,
             endpoint=endpoint,
             model=model,
+            agent_id=agent_id,
             metadata=metadata,
             timeout_hours=timeout_hours,
         )
@@ -348,7 +357,8 @@ class MistralJobs(BaseSDK):
         *,
         input_files: List[str],
         endpoint: models.APIEndpoint,
-        model: str,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, str]] = UNSET,
         timeout_hours: Optional[int] = 24,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -363,6 +373,7 @@ class MistralJobs(BaseSDK):
         :param input_files:
         :param endpoint:
         :param model:
+        :param agent_id:
         :param metadata:
         :param timeout_hours:
         :param retries: Override the default retry configuration for this method
@@ -384,6 +395,7 @@ class MistralJobs(BaseSDK):
             input_files=input_files,
             endpoint=endpoint,
             model=model,
+            agent_id=agent_id,
             metadata=metadata,
             timeout_hours=timeout_hours,
         )
