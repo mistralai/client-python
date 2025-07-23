@@ -1,0 +1,13 @@
+# TranscriptionResponse
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `model`                                                                          | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `text`                                                                           | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `segments`                                                                       | List[[models.TranscriptionSegmentChunk](../models/transcriptionsegmentchunk.md)] | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `usage`                                                                          | [models.UsageInfo](../models/usageinfo.md)                                       | :heavy_check_mark:                                                               | N/A                                                                              |
+| `language`                                                                       | *Nullable[str]*                                                                  | :heavy_check_mark:                                                               | N/A                                                                              |
+| `__pydantic_extra__`                                                             | Dict[str, *Any*]                                                                 | :heavy_minus_sign:                                                               | N/A                                                                              |

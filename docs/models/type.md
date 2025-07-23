@@ -3,6 +3,6 @@
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `BASE` | base   |
+| Name                    | Value                   |
+| ----------------------- | ----------------------- |
+| `TRANSCRIPTION_SEGMENT` | transcription_segment   |

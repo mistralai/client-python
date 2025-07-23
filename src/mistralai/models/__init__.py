@@ -129,7 +129,16 @@ if TYPE_CHECKING:
         AssistantMessageRole,
         AssistantMessageTypedDict,
     )
-    from .basemodelcard import BaseModelCard, BaseModelCardTypedDict, Type
+    from .audiochunk import AudioChunk, AudioChunkType, AudioChunkTypedDict
+    from .audiotranscriptionrequest import (
+        AudioTranscriptionRequest,
+        AudioTranscriptionRequestTypedDict,
+    )
+    from .audiotranscriptionrequeststream import (
+        AudioTranscriptionRequestStream,
+        AudioTranscriptionRequestStreamTypedDict,
+    )
+    from .basemodelcard import BaseModelCard, BaseModelCardType, BaseModelCardTypedDict
     from .batcherror import BatchError, BatchErrorTypedDict
     from .batchjobin import BatchJobIn, BatchJobInTypedDict
     from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
@@ -759,8 +768,16 @@ if TYPE_CHECKING:
         SystemMessageTypedDict,
     )
     from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
+    from .thinkchunk import (
+        ThinkChunk,
+        ThinkChunkType,
+        ThinkChunkTypedDict,
+        Thinking,
+        ThinkingTypedDict,
+    )
+    from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
-    from .toolcall import ToolCall, ToolCallTypedDict
+    from .toolcall import Metadata, MetadataTypedDict, ToolCall, ToolCallTypedDict
     from .toolchoice import ToolChoice, ToolChoiceTypedDict
     from .toolchoiceenum import ToolChoiceEnum
     from .toolexecutiondeltaevent import (
@@ -799,6 +816,42 @@ if TYPE_CHECKING:
     )
     from .tooltypes import ToolTypes
     from .trainingfile import TrainingFile, TrainingFileTypedDict
+    from .transcriptionresponse import (
+        TranscriptionResponse,
+        TranscriptionResponseTypedDict,
+    )
+    from .transcriptionsegmentchunk import (
+        TranscriptionSegmentChunk,
+        TranscriptionSegmentChunkTypedDict,
+        Type,
+    )
+    from .transcriptionstreamdone import (
+        TranscriptionStreamDone,
+        TranscriptionStreamDoneType,
+        TranscriptionStreamDoneTypedDict,
+    )
+    from .transcriptionstreamevents import (
+        TranscriptionStreamEvents,
+        TranscriptionStreamEventsData,
+        TranscriptionStreamEventsDataTypedDict,
+        TranscriptionStreamEventsTypedDict,
+    )
+    from .transcriptionstreameventtypes import TranscriptionStreamEventTypes
+    from .transcriptionstreamlanguage import (
+        TranscriptionStreamLanguage,
+        TranscriptionStreamLanguageType,
+        TranscriptionStreamLanguageTypedDict,
+    )
+    from .transcriptionstreamsegmentdelta import (
+        TranscriptionStreamSegmentDelta,
+        TranscriptionStreamSegmentDeltaType,
+        TranscriptionStreamSegmentDeltaTypedDict,
+    )
+    from .transcriptionstreamtextdelta import (
+        TranscriptionStreamTextDelta,
+        TranscriptionStreamTextDeltaType,
+        TranscriptionStreamTextDeltaTypedDict,
+    )
     from .unarchiveftmodelout import (
         UnarchiveFTModelOut,
         UnarchiveFTModelOutObject,
@@ -917,7 +970,15 @@ __all__ = [
     "AssistantMessageContentTypedDict",
     "AssistantMessageRole",
     "AssistantMessageTypedDict",
+    "AudioChunk",
+    "AudioChunkType",
+    "AudioChunkTypedDict",
+    "AudioTranscriptionRequest",
+    "AudioTranscriptionRequestStream",
+    "AudioTranscriptionRequestStreamTypedDict",
+    "AudioTranscriptionRequestTypedDict",
     "BaseModelCard",
+    "BaseModelCardType",
     "BaseModelCardTypedDict",
     "BatchError",
     "BatchErrorTypedDict",
@@ -1322,6 +1383,8 @@ __all__ = [
     "MessageOutputEventTypedDict",
     "Messages",
     "MessagesTypedDict",
+    "Metadata",
+    "MetadataTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
     "MistralPromptMode",
@@ -1416,6 +1479,12 @@ __all__ = [
     "TextChunk",
     "TextChunkType",
     "TextChunkTypedDict",
+    "ThinkChunk",
+    "ThinkChunkType",
+    "ThinkChunkTypedDict",
+    "Thinking",
+    "ThinkingTypedDict",
+    "TimestampGranularity",
     "Tool",
     "ToolCall",
     "ToolCallTypedDict",
@@ -1452,6 +1521,27 @@ __all__ = [
     "ToolsTypedDict",
     "TrainingFile",
     "TrainingFileTypedDict",
+    "TranscriptionResponse",
+    "TranscriptionResponseTypedDict",
+    "TranscriptionSegmentChunk",
+    "TranscriptionSegmentChunkTypedDict",
+    "TranscriptionStreamDone",
+    "TranscriptionStreamDoneType",
+    "TranscriptionStreamDoneTypedDict",
+    "TranscriptionStreamEventTypes",
+    "TranscriptionStreamEvents",
+    "TranscriptionStreamEventsData",
+    "TranscriptionStreamEventsDataTypedDict",
+    "TranscriptionStreamEventsTypedDict",
+    "TranscriptionStreamLanguage",
+    "TranscriptionStreamLanguageType",
+    "TranscriptionStreamLanguageTypedDict",
+    "TranscriptionStreamSegmentDelta",
+    "TranscriptionStreamSegmentDeltaType",
+    "TranscriptionStreamSegmentDeltaTypedDict",
+    "TranscriptionStreamTextDelta",
+    "TranscriptionStreamTextDeltaType",
+    "TranscriptionStreamTextDeltaTypedDict",
     "Two",
     "TwoTypedDict",
     "Type",
@@ -1565,9 +1655,16 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessageContentTypedDict": ".assistantmessage",
     "AssistantMessageRole": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
+    "AudioChunk": ".audiochunk",
+    "AudioChunkType": ".audiochunk",
+    "AudioChunkTypedDict": ".audiochunk",
+    "AudioTranscriptionRequest": ".audiotranscriptionrequest",
+    "AudioTranscriptionRequestTypedDict": ".audiotranscriptionrequest",
+    "AudioTranscriptionRequestStream": ".audiotranscriptionrequeststream",
+    "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "BaseModelCard": ".basemodelcard",
+    "BaseModelCardType": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
-    "Type": ".basemodelcard",
     "BatchError": ".batcherror",
     "BatchErrorTypedDict": ".batcherror",
     "BatchJobIn": ".batchjobin",
@@ -2067,8 +2164,16 @@ _dynamic_imports: dict[str, str] = {
     "TextChunk": ".textchunk",
     "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",
+    "ThinkChunk": ".thinkchunk",
+    "ThinkChunkType": ".thinkchunk",
+    "ThinkChunkTypedDict": ".thinkchunk",
+    "Thinking": ".thinkchunk",
+    "ThinkingTypedDict": ".thinkchunk",
+    "TimestampGranularity": ".timestampgranularity",
     "Tool": ".tool",
     "ToolTypedDict": ".tool",
+    "Metadata": ".toolcall",
+    "MetadataTypedDict": ".toolcall",
     "ToolCall": ".toolcall",
     "ToolCallTypedDict": ".toolcall",
     "ToolChoice": ".toolchoice",
@@ -2101,6 +2206,28 @@ _dynamic_imports: dict[str, str] = {
     "ToolTypes": ".tooltypes",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
+    "TranscriptionResponse": ".transcriptionresponse",
+    "TranscriptionResponseTypedDict": ".transcriptionresponse",
+    "TranscriptionSegmentChunk": ".transcriptionsegmentchunk",
+    "TranscriptionSegmentChunkTypedDict": ".transcriptionsegmentchunk",
+    "Type": ".transcriptionsegmentchunk",
+    "TranscriptionStreamDone": ".transcriptionstreamdone",
+    "TranscriptionStreamDoneType": ".transcriptionstreamdone",
+    "TranscriptionStreamDoneTypedDict": ".transcriptionstreamdone",
+    "TranscriptionStreamEvents": ".transcriptionstreamevents",
+    "TranscriptionStreamEventsData": ".transcriptionstreamevents",
+    "TranscriptionStreamEventsDataTypedDict": ".transcriptionstreamevents",
+    "TranscriptionStreamEventsTypedDict": ".transcriptionstreamevents",
+    "TranscriptionStreamEventTypes": ".transcriptionstreameventtypes",
+    "TranscriptionStreamLanguage": ".transcriptionstreamlanguage",
+    "TranscriptionStreamLanguageType": ".transcriptionstreamlanguage",
+    "TranscriptionStreamLanguageTypedDict": ".transcriptionstreamlanguage",
+    "TranscriptionStreamSegmentDelta": ".transcriptionstreamsegmentdelta",
+    "TranscriptionStreamSegmentDeltaType": ".transcriptionstreamsegmentdelta",
+    "TranscriptionStreamSegmentDeltaTypedDict": ".transcriptionstreamsegmentdelta",
+    "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
+    "TranscriptionStreamTextDeltaType": ".transcriptionstreamtextdelta",
+    "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "UnarchiveFTModelOut": ".unarchiveftmodelout",
     "UnarchiveFTModelOutObject": ".unarchiveftmodelout",
     "UnarchiveFTModelOutTypedDict": ".unarchiveftmodelout",

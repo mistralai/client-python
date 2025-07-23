@@ -14,6 +14,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
     page: NotRequired[int]
     page_size: NotRequired[int]
     model: NotRequired[Nullable[str]]
+    agent_id: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     created_after: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
@@ -32,6 +33,11 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
     ] = 100
 
     model: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
+    agent_id: Annotated[
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
@@ -62,12 +68,13 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
             "page",
             "page_size",
             "model",
+            "agent_id",
             "metadata",
             "created_after",
             "created_by_me",
             "status",
         ]
-        nullable_fields = ["model", "metadata", "created_after", "status"]
+        nullable_fields = ["model", "agent_id", "metadata", "created_after", "status"]
         null_default_fields = []
 
         serialized = handler(self)

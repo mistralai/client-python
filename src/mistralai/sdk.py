@@ -15,6 +15,7 @@ import weakref
 
 if TYPE_CHECKING:
     from mistralai.agents import Agents
+    from mistralai.audio import Audio
     from mistralai.batch import Batch
     from mistralai.beta import Beta
     from mistralai.chat import Chat
@@ -49,6 +50,7 @@ class Mistral(BaseSDK):
     r"""Classifiers API."""
     ocr: "Ocr"
     r"""OCR API"""
+    audio: "Audio"
     _sub_sdk_map = {
         "models": ("mistralai.models_", "Models"),
         "beta": ("mistralai.beta", "Beta"),
@@ -61,6 +63,7 @@ class Mistral(BaseSDK):
         "embeddings": ("mistralai.embeddings", "Embeddings"),
         "classifiers": ("mistralai.classifiers", "Classifiers"),
         "ocr": ("mistralai.ocr", "Ocr"),
+        "audio": ("mistralai.audio", "Audio"),
     }
 
     def __init__(

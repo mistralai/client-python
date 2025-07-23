@@ -434,6 +434,14 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [complete](docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
 
+### [audio](docs/sdks/audio/README.md)
+
+
+#### [audio.transcriptions](docs/sdks/transcriptions/README.md)
+
+* [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
+* [stream](docs/sdks/transcriptions/README.md#stream) - Create streaming transcription (SSE)
+
 ### [batch](docs/sdks/batch/README.md)
 
 
