@@ -1,18 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 82cf79b2dee6811d91e2912113c21d3a
+  docChecksum: c33c788946fa446bfcf90b60f68abde9
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.2
-  configChecksum: 1ca921f44508650d65ccf46783910ff3
+  releaseVersion: 1.9.3
+  configChecksum: 0f65a9bdd8df5ae03eaaaea3ab055bf1
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
     core: 5.19.3
     customCodeRegions: 0.1.1
@@ -89,7 +90,12 @@ generatedFiles:
   - docs/models/assistantmessage.md
   - docs/models/assistantmessagecontent.md
   - docs/models/assistantmessagerole.md
+  - docs/models/audiochunk.md
+  - docs/models/audiochunktype.md
+  - docs/models/audiotranscriptionrequest.md
+  - docs/models/audiotranscriptionrequeststream.md
   - docs/models/basemodelcard.md
+  - docs/models/basemodelcardtype.md
   - docs/models/batcherror.md
   - docs/models/batchjobin.md
   - docs/models/batchjobout.md
@@ -320,6 +326,7 @@ generatedFiles:
   - docs/models/messageoutputeventrole.md
   - docs/models/messageoutputeventtype.md
   - docs/models/messages.md
+  - docs/models/metadata.md
   - docs/models/metricout.md
   - docs/models/mistralpromptmode.md
   - docs/models/modelcapabilities.md
@@ -375,6 +382,10 @@ generatedFiles:
   - docs/models/systemmessagecontent.md
   - docs/models/textchunk.md
   - docs/models/textchunktype.md
+  - docs/models/thinkchunk.md
+  - docs/models/thinkchunktype.md
+  - docs/models/thinking.md
+  - docs/models/timestampgranularity.md
   - docs/models/tool.md
   - docs/models/toolcall.md
   - docs/models/toolchoice.md
@@ -398,6 +409,19 @@ generatedFiles:
   - docs/models/tools.md
   - docs/models/tooltypes.md
   - docs/models/trainingfile.md
+  - docs/models/transcriptionresponse.md
+  - docs/models/transcriptionsegmentchunk.md
+  - docs/models/transcriptionstreamdone.md
+  - docs/models/transcriptionstreamdonetype.md
+  - docs/models/transcriptionstreamevents.md
+  - docs/models/transcriptionstreameventsdata.md
+  - docs/models/transcriptionstreameventtypes.md
+  - docs/models/transcriptionstreamlanguage.md
+  - docs/models/transcriptionstreamlanguagetype.md
+  - docs/models/transcriptionstreamsegmentdelta.md
+  - docs/models/transcriptionstreamsegmentdeltatype.md
+  - docs/models/transcriptionstreamtextdelta.md
+  - docs/models/transcriptionstreamtextdeltatype.md
   - docs/models/two.md
   - docs/models/type.md
   - docs/models/unarchiveftmodelout.md
@@ -420,6 +444,7 @@ generatedFiles:
   - docs/models/websearchtooltype.md
   - docs/sdks/accesses/README.md
   - docs/sdks/agents/README.md
+  - docs/sdks/audio/README.md
   - docs/sdks/batch/README.md
   - docs/sdks/beta/README.md
   - docs/sdks/chat/README.md
@@ -437,6 +462,7 @@ generatedFiles:
   - docs/sdks/mistraljobs/README.md
   - docs/sdks/models/README.md
   - docs/sdks/ocr/README.md
+  - docs/sdks/transcriptions/README.md
   - poetry.toml
   - py.typed
   - scripts/prepare_readme.py
@@ -448,6 +474,7 @@ generatedFiles:
   - src/mistralai/_version.py
   - src/mistralai/accesses.py
   - src/mistralai/agents.py
+  - src/mistralai/audio.py
   - src/mistralai/basesdk.py
   - src/mistralai/batch.py
   - src/mistralai/beta.py
@@ -489,6 +516,9 @@ generatedFiles:
   - src/mistralai/models/apiendpoint.py
   - src/mistralai/models/archiveftmodelout.py
   - src/mistralai/models/assistantmessage.py
+  - src/mistralai/models/audiochunk.py
+  - src/mistralai/models/audiotranscriptionrequest.py
+  - src/mistralai/models/audiotranscriptionrequeststream.py
   - src/mistralai/models/basemodelcard.py
   - src/mistralai/models/batcherror.py
   - src/mistralai/models/batchjobin.py
@@ -668,6 +698,8 @@ generatedFiles:
   - src/mistralai/models/ssetypes.py
   - src/mistralai/models/systemmessage.py
   - src/mistralai/models/textchunk.py
+  - src/mistralai/models/thinkchunk.py
+  - src/mistralai/models/timestampgranularity.py
   - src/mistralai/models/tool.py
   - src/mistralai/models/toolcall.py
   - src/mistralai/models/toolchoice.py
@@ -681,6 +713,14 @@ generatedFiles:
   - src/mistralai/models/toolreferencechunk.py
   - src/mistralai/models/tooltypes.py
   - src/mistralai/models/trainingfile.py
+  - src/mistralai/models/transcriptionresponse.py
+  - src/mistralai/models/transcriptionsegmentchunk.py
+  - src/mistralai/models/transcriptionstreamdone.py
+  - src/mistralai/models/transcriptionstreamevents.py
+  - src/mistralai/models/transcriptionstreameventtypes.py
+  - src/mistralai/models/transcriptionstreamlanguage.py
+  - src/mistralai/models/transcriptionstreamsegmentdelta.py
+  - src/mistralai/models/transcriptionstreamtextdelta.py
   - src/mistralai/models/unarchiveftmodelout.py
   - src/mistralai/models/updateftmodelin.py
   - src/mistralai/models/uploadfileout.py
@@ -696,6 +736,7 @@ generatedFiles:
   - src/mistralai/py.typed
   - src/mistralai/sdk.py
   - src/mistralai/sdkconfiguration.py
+  - src/mistralai/transcriptions.py
   - src/mistralai/types/__init__.py
   - src/mistralai/types/basemodel.py
   - src/mistralai/utils/__init__.py
@@ -751,7 +792,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "created": 124166, "owned_by": "<value>", "root": "<value>", "archived": true, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false, "classification": false}, "max_context_length": 32768, "job": "c4f8ef9a-6612-4f49-88fa-a80eb8116e46", "model_type": "completion"}
+          application/json: {"id": "<id>", "object": "model", "created": 124166, "owned_by": "<value>", "workspace_id": "<id>", "root": "<value>", "root_version": "<value>", "archived": true, "capabilities": {"completion_chat": true, "completion_fim": false, "function_calling": false, "fine_tuning": false, "classification": false}, "max_context_length": 32768, "job": "c4f8ef9a-6612-4f49-88fa-a80eb8116e46", "model_type": "completion"}
   jobs_api_routes_fine_tuning_archive_fine_tuned_model:
     speakeasy-default-jobs-api-routes-fine-tuning-archive-fine-tuned-model:
       parameters:
@@ -1027,10 +1068,10 @@ examples:
   jobs_api_routes_batch_create_batch_job:
     speakeasy-default-jobs-api-routes-batch-create-batch-job:
       requestBody:
-        application/json: {"input_files": ["fe3343a2-3b8d-404b-ba32-a78dede2614a"], "endpoint": "/v1/moderations", "model": "Altima", "timeout_hours": 24}
+        application/json: {"input_files": ["fe3343a2-3b8d-404b-ba32-a78dede2614a"], "endpoint": "/v1/moderations", "timeout_hours": 24}
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["7b2553d8-e17f-4df5-a862-a1678f6b5271", "8c618d9f-7d82-42ba-a284-d57d84f50a58", "c042f996-e842-441d-ae47-4e0850334e41"], "endpoint": "<value>", "model": "Taurus", "errors": [{"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 395527, "total_requests": 166919, "completed_requests": 258552, "succeeded_requests": 480980, "failed_requests": 684176}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["7b2553d8-e17f-4df5-a862-a1678f6b5271", "8c618d9f-7d82-42ba-a284-d57d84f50a58", "c042f996-e842-441d-ae47-4e0850334e41"], "endpoint": "<value>", "errors": [{"message": "<value>", "count": 1}], "status": "SUCCESS", "created_at": 395527, "total_requests": 166919, "completed_requests": 258552, "succeeded_requests": 480980, "failed_requests": 684176}
   jobs_api_routes_batch_get_batch_job:
     speakeasy-default-jobs-api-routes-batch-get-batch-job:
       parameters:
@@ -1038,7 +1079,7 @@ examples:
           job_id: "4017dc9f-b629-42f4-9700-8c681b9e7f0f"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["11b83f16-f2f9-4de4-a81f-203fff419c99"], "endpoint": "<value>", "model": "Accord", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 900958, "total_requests": 458292, "completed_requests": 184893, "succeeded_requests": 104800, "failed_requests": 836210}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["11b83f16-f2f9-4de4-a81f-203fff419c99"], "endpoint": "<value>", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 900958, "total_requests": 458292, "completed_requests": 184893, "succeeded_requests": 104800, "failed_requests": 836210}
   jobs_api_routes_batch_cancel_batch_job:
     speakeasy-default-jobs-api-routes-batch-cancel-batch-job:
       parameters:
@@ -1046,14 +1087,14 @@ examples:
           job_id: "4fb29d1c-535b-4f0a-a1cb-2167f86da569"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "batch", "input_files": ["8fd9d88a-66be-43fd-a816-ba509ca3ca85"], "endpoint": "<value>", "model": "PT Cruiser", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 608251, "total_requests": 12693, "completed_requests": 203340, "succeeded_requests": 189291, "failed_requests": 969057}
+          application/json: {"id": "<id>", "object": "batch", "input_files": ["8fd9d88a-66be-43fd-a816-ba509ca3ca85"], "endpoint": "<value>", "errors": [], "status": "TIMEOUT_EXCEEDED", "created_at": 608251, "total_requests": 12693, "completed_requests": 203340, "succeeded_requests": 189291, "failed_requests": 969057}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
         application/json: {"model": "mistral-small-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_chat:
@@ -1069,7 +1110,7 @@ examples:
         application/json: {"model": "codestral-2405", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_fim:
@@ -1085,7 +1126,7 @@ examples:
         application/json: {"stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "agent_id": "<id>"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": []}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_agents:
@@ -1101,7 +1142,7 @@ examples:
         application/json: {"model": "mistral-embed", "input": ["Embed this sentence.", "As well as this one."]}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
         "422":
           application/json: {}
   moderations_v1_moderations_post:
@@ -1342,5 +1383,16 @@ examples:
           application/json: {"library_id": "7f9c6af4-e362-4cf1-9363-0409d51c2dfa", "org_id": "6b2cac3a-b29c-4d8f-bebb-0db06ec1bf97", "role": "<value>", "share_with_type": "<value>", "share_with_uuid": "618c78f1-41ca-45c3-8ef2-7d78898c7061"}
         "422":
           application/json: {}
+  audio_api_v1_transcriptions_post:
+    speakeasy-default-audio-api-v1-transcriptions-post:
+      requestBody:
+        multipart/form-data: {"model": "Model X", "stream": false}
+      responses:
+        "200":
+          application/json: {"model": "Beetle", "text": "<value>", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "language": "<value>"}
+  audio_api_v1_transcriptions_post_stream:
+    speakeasy-default-audio-api-v1-transcriptions-post-stream:
+      requestBody:
+        multipart/form-data: {"model": "Camry", "stream": true}
 examplesVersion: 1.0.2
 generatedTests: {}
