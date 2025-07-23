@@ -12,7 +12,7 @@ def main():
     model = "voxtral-small-latest"
 
     client = Mistral(api_key=api_key)
-    with open("examples/files/bcn_weather.mp3", "rb") as f:
+    with open("examples/fixtures/bcn_weather.mp3", "rb") as f:
         content = f.read()
     chat_response = client.chat.complete(
         model=model,

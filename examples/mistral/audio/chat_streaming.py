@@ -12,7 +12,7 @@ def main():
     model = "voxtral-small-latest"
 
     client = Mistral(api_key=api_key)
-    with open("examples/files/bcn_weather.mp3", "rb") as f:
+    with open("examples/fixtures/bcn_weather.mp3", "rb") as f:
         file = client.files.upload(file=File(content=f, file_name=f.name), purpose="audio")
         print(f"Uploaded audio file, id={file.id}")
         signed_url = client.files.get_signed_url(file_id=file.id)
