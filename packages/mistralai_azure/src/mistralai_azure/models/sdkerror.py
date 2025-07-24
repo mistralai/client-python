@@ -5,7 +5,7 @@ from typing import Optional
 import httpx
 
 
-@dataclass
+@dataclass(frozen=True)
 class SDKError(Exception):
     """Represents an error returned by the API."""
 
