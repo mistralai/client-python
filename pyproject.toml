@@ -12,6 +12,7 @@ dependencies = [
     "python-dateutil >=2.8.2",
     "typing-inspection >=0.4.0",
     "pyyaml (>=6.0.2,<7.0.0)",
+    "invoke (>=2.2.0,<3.0.0)",
 ]
 
 [tool.poetry]

@@ -11,6 +11,7 @@ import yaml
 from io import TextIOWrapper
 import copy
 import subprocess
+from enum import Enum
 
 WORKFLOW_PATH = ".speakeasy/workflow.yaml"
 WORKFLOW_LOCK_PATH = ".speakeasy/workflow.lock"
@@ -68,6 +69,21 @@ class OpenAPISpecsPinned:
     def unpin(self):
         with open(self.workflow_path, "w") as file:
             write_yaml(yaml_content=self.workflow_yaml, file=file)
+
+class SpeakeasyTargets(str, Enum):
+    """
+    The list of targets defined in the .speakeasy/workflow.yaml[.targets] section.
+    This can also be listed running `speakeasy list targets` in the root of the project.
+    """
+    ALL = "all"
+    MISTRALAI_SDK = "mistralai-sdk"
+    MISTRALAI_AZURE_SDK = "mistralai-azure-sdk"
+    MISTRALAI_GCP_SDK = "mistralai-gcp-sdk"
+
+    @classmethod
+    def list(cls):
+        return list(map(lambda c: c.value, cls))
+
 
 if __name__ == "__main__":
     pin_speakeasy_version(workflow_path=WORKFLOW_PATH, version="1.580.2")
