@@ -1,7 +1,7 @@
 import re
 from invoke.context import Context
 from invoke.tasks import task
-from scripts.update_speakeasy import (
+from utils.speakeasy import (
     pin_speakeasy_version,
     OpenAPISpecsPinned,
     SpeakeasyTargets,
