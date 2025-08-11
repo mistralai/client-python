@@ -85,7 +85,7 @@ class Conversations(BaseSDK):
                     retries=retries,
                     server_url=server_url,
                     timeout_ms=timeout_ms,
-                    **req,
+                    **req,  # type: ignore
                 )
                 run_result.conversation_id = res.conversation_id
                 run_ctx.conversation_id = res.conversation_id
@@ -164,7 +164,7 @@ class Conversations(BaseSDK):
                         retries=retries,
                         server_url=server_url,
                         timeout_ms=timeout_ms,
-                        **req,
+                        **req,  # type: ignore
                     )
                 else:
                     res = await self.append_stream_async(
