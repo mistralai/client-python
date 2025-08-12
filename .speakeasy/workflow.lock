@@ -1,4 +1,4 @@
-speakeasyVersion: 1.568.2
+speakeasyVersion: 1.580.2
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
@@ -18,7 +18,7 @@ sources:
         sourceBlobDigest: sha256:f3322d8a44d0bf1515b5c1c078525dbf00ff90e6110644de4c03b0b0e9050350
         tags:
             - latest
-            - speakeasy-sdk-regen-1753290410
+            - amenasria-speakeasy-update-workflow-fix
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -40,20 +40,20 @@ targets:
         sourceRevisionDigest: sha256:22d8044215dc1331ba83f3d25598409bc82fdc04d68033fb05e0133a13cc4dad
         sourceBlobDigest: sha256:f3322d8a44d0bf1515b5c1c078525dbf00ff90e6110644de4c03b0b0e9050350
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:1fd9897fdd851557c592b8fd46232518359401d15a6574933c43be63ec2edb53
+        codeSamplesRevisionDigest: sha256:ba0a715b345192c3916d059210df9c83205018f4c1f6919e7d75f3f7172c8fa4
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: 1.568.2
+    speakeasyVersion: 1.580.2
     sources:
         mistral-azure-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:sha256:c5931a7e0cc2db844149d71db57dfc2178665f0400bc26c90ee113795ea2872f
         mistral-google-cloud-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:sha256:4a5343e63c6a78152e472b00ccc46d7bcb15594496bc94c8040039d3a9d4c5f8
         mistral-openapi:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:sha256:22d8044215dc1331ba83f3d25598409bc82fdc04d68033fb05e0133a13cc4dad
     targets:
         mistralai-azure-sdk:
             target: python
