@@ -48,7 +48,7 @@ jobs:
       - name: Install Speakeasy CLI
         run: |
           curl -fsSL https://go.speakeasy.com/cli-install.sh | sh
-          speakeasy version
+          speakeasy --version
 
       - name: Configure Git
         run: |
