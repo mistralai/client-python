@@ -1,4 +1,5 @@
 pyproject.toml
 examples/*
+/utils/*
 src/mistral/extra/*
 pylintrc
