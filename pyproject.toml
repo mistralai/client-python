@@ -4,7 +4,7 @@ version = "1.9.3"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" },]
 readme = "README-PYPI.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "httpx >=0.28.1",
