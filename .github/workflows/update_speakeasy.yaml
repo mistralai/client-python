@@ -58,9 +58,7 @@ jobs:
 
       - name: Create branch
         run: |
-          branch_name="update-speakeasy-to-${{ github.event.inputs.version }}-${{ github.run_id }}"
-          git checkout -b $branch_name
-          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
+          git checkout -b update-speakeasy-to-${{ github.event.inputs.version }}-${{ github.run_id }}
 
       - name: Update Speakeasy SDKs
         run: |
@@ -105,7 +103,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: ${{ steps.create-branch.outputs.branch_name }}
+          branch: update-speakeasy-to-${{ github.event.inputs.version }}-${{ github.run_id }}
           title: "Update Speakeasy SDKs to version ${{ github.event.inputs.version }}"
           body: |
             ## Summary
