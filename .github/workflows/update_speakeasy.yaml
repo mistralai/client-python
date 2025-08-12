@@ -12,12 +12,14 @@ on:
         required: true
         type: string
       targets:
-        description: 'Targets to update. If not provided, all targets will be updated.'
+        description: 'Targets to update.'
+        required: true
         type: choice
         options:
           - mistralai-sdk
           - mistralai-azure-sdk
           - mistralai-gcp-sdk
+          - all
 
 jobs:
   update-sdks:
@@ -40,6 +42,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cp README.md README-PYPI.md
           poetry install --with dev
 
       - name: Configure Git
