@@ -70,6 +70,8 @@ jobs:
           poetry run inv update-speakeasy \
             --version "${{ github.event.inputs.version }}" \
             $TARGETS_ARGS
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
 
       - name: Check for changes
         id: check-changes
