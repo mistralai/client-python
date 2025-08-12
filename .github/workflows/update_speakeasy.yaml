@@ -45,6 +45,11 @@ jobs:
           cp README.md README-PYPI.md
           poetry install --with dev
 
+      - name: Install Speakeasy CLI
+        run: |
+          curl -fsSL https://go.speakeasy.com/cli-install.sh | sh
+          speakeasy version
+
       - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
