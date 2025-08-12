@@ -1,5 +1,9 @@
 name: Update Speakeasy SDKs
-
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+  statuses: write
 on:
   workflow_dispatch:
     inputs:
