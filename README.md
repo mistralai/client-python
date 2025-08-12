@@ -680,27 +680,20 @@ with Mistral(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
+[`MistralError`](./src/mistralai/models/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
 
-By default, an API error will raise a models.SDKError exception, which has the following properties:
-
-| Property        | Type             | Description           |
-|-----------------|------------------|-----------------------|
-| `.status_code`  | *int*            | The HTTP status code  |
-| `.message`      | *str*            | The error message     |
-| `.raw_response` | *httpx.Response* | The raw HTTP response |
-| `.body`         | *str*            | The response content  |
-
-When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `list_async` method may raise the following exceptions:
-
-| Error Type                 | Status Code | Content Type     |
-| -------------------------- | ----------- | ---------------- |
-| models.HTTPValidationError | 422         | application/json |
-| models.SDKError            | 4XX, 5XX    | \*/\*            |
+| Property           | Type             | Description                                                                             |
+| ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
+| `err.message`      | `str`            | Error message                                                                           |
+| `err.status_code`  | `int`            | HTTP response status code eg `404`                                                      |
+| `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
+| `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
+| `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
+| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
 ### Example
-
 ```python
+import mistralai
 from mistralai import Mistral, models
 import os
 
@@ -716,13 +709,41 @@ with Mistral(
         # Handle response
         print(res)
 
-    except models.HTTPValidationError as e:
-        # handle e.data: models.HTTPValidationErrorData
-        raise(e)
-    except models.SDKError as e:
-        # handle exception
-        raise(e)
+
+    except models.MistralError as e:
+        # The base class for HTTP error responses
+        print(e.message)
+        print(e.status_code)
+        print(e.body)
+        print(e.headers)
+        print(e.raw_response)
+
+        # Depending on the method different errors may be thrown
+        if isinstance(e, models.HTTPValidationError):
+            print(e.data.detail)  # Optional[List[mistralai.ValidationError]]
 ```
+
+### Error Classes
+**Primary error:**
+* [`MistralError`](./src/mistralai/models/mistralerror.py): The base class for HTTP error responses.
+
+<details><summary>Less common errors (6)</summary>
+
+<br />
+
+**Network errors:**
+* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
+    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
+    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
+
+
+**Inherit from [`MistralError`](./src/mistralai/models/mistralerror.py)**:
+* [`HTTPValidationError`](./src/mistralai/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 47 of 68 methods.*
+* [`ResponseValidationError`](./src/mistralai/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+
+</details>
+
+\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
