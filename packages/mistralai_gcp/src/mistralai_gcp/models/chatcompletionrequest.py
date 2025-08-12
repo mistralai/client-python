@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
@@ -17,8 +18,9 @@ from mistralai_gcp.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai_gcp.utils import get_discriminator
+from mistralai_gcp.utils import get_discriminator, validate_open_enum
 from pydantic import Discriminator, Tag, model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -96,6 +98,8 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""Number of completions to return for each request, input tokens are only billed once."""
     prediction: NotRequired[PredictionTypedDict]
     parallel_tool_calls: NotRequired[bool]
+    prompt_mode: NotRequired[Nullable[MistralPromptMode]]
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
 
 class ChatCompletionRequest(BaseModel):
@@ -142,6 +146,11 @@ class ChatCompletionRequest(BaseModel):
 
     parallel_tool_calls: Optional[bool] = None
 
+    prompt_mode: Annotated[
+        OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
+    ] = UNSET
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -159,15 +168,23 @@ class ChatCompletionRequest(BaseModel):
             "n",
             "prediction",
             "parallel_tool_calls",
+            "prompt_mode",
         ]
-        nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
+        nullable_fields = [
+            "temperature",
+            "max_tokens",
+            "random_seed",
+            "tools",
+            "n",
+            "prompt_mode",
+        ]
         null_default_fields = []
 
         serialized = handler(self)
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)

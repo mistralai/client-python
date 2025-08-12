@@ -1,18 +1,19 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 28fe1ab59b4dee005217f2dbbd836060
-  docVersion: 0.0.2
-  speakeasyVersion: 1.517.3
-  generationVersion: 2.548.6
-  releaseVersion: 1.6.0
-  configChecksum: 66bf5911f59189922e03a75a72923b32
+  docChecksum: c01cfc13b9e60701ce05c06c9d8ba0f7
+  docVersion: 1.0.0
+  speakeasyVersion: 1.568.2
+  generationVersion: 2.634.2
+  releaseVersion: 2.0.0
+  configChecksum: c336b9fab978757c4ac35f5febbe549b
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.12.3
+    core: 5.19.3
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -21,14 +22,14 @@ features:
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     methodArguments: 1.0.2
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.0
+    openEnums: 1.0.1
     responseFormat: 1.0.1
     retries: 3.0.2
-    sdkHooks: 1.0.1
+    sdkHooks: 1.1.0
     serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
@@ -73,6 +74,8 @@ generatedFiles:
   - docs/models/jsonschema.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/metadata.md
+  - docs/models/mistralpromptmode.md
   - docs/models/prediction.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -103,7 +106,6 @@ generatedFiles:
   - py.typed
   - pylintrc
   - pyproject.toml
-  - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai_gcp/__init__.py
   - src/mistralai_gcp/_hooks/__init__.py
@@ -135,6 +137,7 @@ generatedFiles:
   - src/mistralai_gcp/models/imageurl.py
   - src/mistralai_gcp/models/imageurlchunk.py
   - src/mistralai_gcp/models/jsonschema.py
+  - src/mistralai_gcp/models/mistralpromptmode.py
   - src/mistralai_gcp/models/prediction.py
   - src/mistralai_gcp/models/referencechunk.py
   - src/mistralai_gcp/models/responseformat.py
@@ -153,12 +156,12 @@ generatedFiles:
   - src/mistralai_gcp/models/usermessage.py
   - src/mistralai_gcp/models/validationerror.py
   - src/mistralai_gcp/py.typed
-  - src/mistralai_gcp/sdk.py
   - src/mistralai_gcp/sdkconfiguration.py
   - src/mistralai_gcp/types/__init__.py
   - src/mistralai_gcp/types/basemodel.py
   - src/mistralai_gcp/utils/__init__.py
   - src/mistralai_gcp/utils/annotations.py
+  - src/mistralai_gcp/utils/datetimes.py
   - src/mistralai_gcp/utils/enums.py
   - src/mistralai_gcp/utils/eventstreaming.py
   - src/mistralai_gcp/utils/forms.py
@@ -180,14 +183,13 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
         application/json: {"model": "mistral-small-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_fim:
@@ -197,15 +199,14 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   fim_completion_v1_fim_completions_post:
     speakeasy-default-fim-completion-v1-fim-completions-post:
       requestBody:
         application/json: {"model": "codestral-2405", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
-examplesVersion: 1.0.0
+examplesVersion: 1.0.2
 generatedTests: {}

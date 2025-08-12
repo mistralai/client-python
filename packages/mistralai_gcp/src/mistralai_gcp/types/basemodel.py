@@ -2,7 +2,7 @@
 
 from pydantic import ConfigDict, model_serializer
 from pydantic import BaseModel as PydanticBaseModel
-from typing import TYPE_CHECKING, Literal, Optional, TypeVar, Union, NewType
+from typing import TYPE_CHECKING, Literal, Optional, TypeVar, Union
 from typing_extensions import TypeAliasType, TypeAlias
 
 
@@ -35,5 +35,5 @@ else:
         "OptionalNullable", Union[Optional[Nullable[T]], Unset], type_params=(T,)
     )
 
-UnrecognizedInt = NewType("UnrecognizedInt", int)
-UnrecognizedStr = NewType("UnrecognizedStr", str)
+UnrecognizedInt: TypeAlias = int
+UnrecognizedStr: TypeAlias = str

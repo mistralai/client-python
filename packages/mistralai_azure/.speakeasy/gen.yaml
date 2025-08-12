@@ -4,6 +4,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -11,17 +12,23 @@ generation:
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
+    sharedErrorComponentsApr2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 python:
-  version: 1.6.0
+  version: 2.0.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
   authors:
     - Mistral
+  baseErrorName: MistralAzureError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in Azure.
@@ -43,8 +50,10 @@ python:
   inputModelSuffix: input
   maxMethodParams: 15
   methodArguments: infer-optional-args
+  moduleName: ""
   outputModelSuffix: output
   packageName: mistralai_azure
+  pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2

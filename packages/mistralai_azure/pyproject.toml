@@ -1,16 +1,14 @@
 [project]
 name = "mistralai_azure"
-version = "1.6.0"
+version = "2.0.0"
 description = "Python Client SDK for the Mistral AI API in Azure."
 authors = [{ name = "Mistral" },]
-readme = "README-PYPI.md"
-requires-python = ">=3.9"
+readme = "README.md"
+requires-python = ">=3.9.2"
 dependencies = [
-    "eval-type-backport >=0.2.0",
+    "httpcore >=1.0.9",
     "httpx >=0.28.1",
-    "pydantic >=2.10.3",
-    "python-dateutil >=2.8.2",
-    "typing-inspection >=0.4.0",
+    "pydantic >=2.11.2",
 ]
 
 [tool.poetry]
@@ -26,11 +24,10 @@ include = ["py.typed", "src/mistralai_azure/py.typed"]
 in-project = true
 
 [tool.poetry.group.dev.dependencies]
-mypy = "==1.14.1"
+mypy = "==1.15.0"
 pylint = "==3.2.3"
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
-types-python-dateutil = "^2.9.0.20240316"
 
 [build-system]
 requires = ["poetry-core"]
@@ -42,6 +39,8 @@ pythonpath = ["src"]
 
 [tool.mypy]
 disable_error_code = "misc"
+explicit_package_bases = true
+mypy_path = "src"
 
 [[tool.mypy.overrides]]
 module = "typing_inspect"
