@@ -700,6 +700,7 @@ if TYPE_CHECKING:
         MessageOutputEventTypedDict,
     )
     from .metricout import MetricOut, MetricOutTypedDict
+    from .mistralerror import MistralError
     from .mistralpromptmode import MistralPromptMode
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
     from .modelconversation import (
@@ -712,6 +713,7 @@ if TYPE_CHECKING:
     from .modellist import Data, DataTypedDict, ModelList, ModelListTypedDict
     from .moderationobject import ModerationObject, ModerationObjectTypedDict
     from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
+    from .no_response_error import NoResponseError
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
@@ -744,6 +746,7 @@ if TYPE_CHECKING:
         ResponseStartedEventType,
         ResponseStartedEventTypedDict,
     )
+    from .responsevalidationerror import ResponseValidationError
     from .retrieve_model_v1_models_model_id_getop import (
         RetrieveModelV1ModelsModelIDGetRequest,
         RetrieveModelV1ModelsModelIDGetRequestTypedDict,
@@ -1387,6 +1390,7 @@ __all__ = [
     "MetadataTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
+    "MistralError",
     "MistralPromptMode",
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
@@ -1402,6 +1406,7 @@ __all__ = [
     "ModerationObjectTypedDict",
     "ModerationResponse",
     "ModerationResponseTypedDict",
+    "NoResponseError",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
     "OCRPageDimensions",
@@ -1449,6 +1454,7 @@ __all__ = [
     "ResponseStartedEvent",
     "ResponseStartedEventType",
     "ResponseStartedEventTypedDict",
+    "ResponseValidationError",
     "RetrieveFileOut",
     "RetrieveFileOutTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
@@ -2084,6 +2090,7 @@ _dynamic_imports: dict[str, str] = {
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MetricOut": ".metricout",
     "MetricOutTypedDict": ".metricout",
+    "MistralError": ".mistralerror",
     "MistralPromptMode": ".mistralpromptmode",
     "ModelCapabilities": ".modelcapabilities",
     "ModelCapabilitiesTypedDict": ".modelcapabilities",
@@ -2100,6 +2107,7 @@ _dynamic_imports: dict[str, str] = {
     "ModerationObjectTypedDict": ".moderationobject",
     "ModerationResponse": ".moderationresponse",
     "ModerationResponseTypedDict": ".moderationresponse",
+    "NoResponseError": ".no_response_error",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
     "OCRPageDimensions": ".ocrpagedimensions",
@@ -2137,6 +2145,7 @@ _dynamic_imports: dict[str, str] = {
     "ResponseStartedEvent": ".responsestartedevent",
     "ResponseStartedEventType": ".responsestartedevent",
     "ResponseStartedEventTypedDict": ".responsestartedevent",
+    "ResponseValidationError": ".responsevalidationerror",
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",

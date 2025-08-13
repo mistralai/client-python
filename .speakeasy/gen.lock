@@ -3,8 +3,8 @@ id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
   docChecksum: c33c788946fa446bfcf90b60f68abde9
   docVersion: 1.0.0
-  speakeasyVersion: 1.568.2
-  generationVersion: 2.634.2
+  speakeasyVersion: 1.580.2
+  generationVersion: 2.656.5
   releaseVersion: 1.9.3
   configChecksum: 0f65a9bdd8df5ae03eaaaea3ab055bf1
   repoURL: https://github.com/mistralai/client-python.git
@@ -15,13 +15,13 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.19.3
+    core: 5.19.4
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     downloadStreams: 1.0.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    examples: 3.0.1
+    examples: 3.0.2
     flatRequests: 1.0.1
     flattening: 3.1.1
     globalSecurity: 3.0.3
@@ -43,7 +43,6 @@ features:
     uploadStreams: 1.0.0
 generatedFiles:
   - .gitattributes
-  - .python-version
   - .vscode/settings.json
   - USAGE.md
   - docs/models/agent.md
@@ -663,12 +662,14 @@ generatedFiles:
   - src/mistralai/models/messageoutputentry.py
   - src/mistralai/models/messageoutputevent.py
   - src/mistralai/models/metricout.py
+  - src/mistralai/models/mistralerror.py
   - src/mistralai/models/mistralpromptmode.py
   - src/mistralai/models/modelcapabilities.py
   - src/mistralai/models/modelconversation.py
   - src/mistralai/models/modellist.py
   - src/mistralai/models/moderationobject.py
   - src/mistralai/models/moderationresponse.py
+  - src/mistralai/models/no_response_error.py
   - src/mistralai/models/ocrimageobject.py
   - src/mistralai/models/ocrpagedimensions.py
   - src/mistralai/models/ocrpageobject.py
@@ -685,6 +686,7 @@ generatedFiles:
   - src/mistralai/models/responseformat.py
   - src/mistralai/models/responseformats.py
   - src/mistralai/models/responsestartedevent.py
+  - src/mistralai/models/responsevalidationerror.py
   - src/mistralai/models/retrieve_model_v1_models_model_id_getop.py
   - src/mistralai/models/retrievefileout.py
   - src/mistralai/models/sampletype.py
@@ -753,6 +755,7 @@ generatedFiles:
   - src/mistralai/utils/retries.py
   - src/mistralai/utils/security.py
   - src/mistralai/utils/serializers.py
+  - src/mistralai/utils/unmarshal_json_response.py
   - src/mistralai/utils/url.py
   - src/mistralai/utils/values.py
 examples:
