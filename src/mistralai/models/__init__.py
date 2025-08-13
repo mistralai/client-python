@@ -777,7 +777,7 @@ if TYPE_CHECKING:
     )
     from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
-    from .toolcall import Metadata, MetadataTypedDict, ToolCall, ToolCallTypedDict
+    from .toolcall import ToolCall, ToolCallTypedDict
     from .toolchoice import ToolChoice, ToolChoiceTypedDict
     from .toolchoiceenum import ToolChoiceEnum
     from .toolexecutiondeltaevent import (
@@ -1383,8 +1383,6 @@ __all__ = [
     "MessageOutputEventTypedDict",
     "Messages",
     "MessagesTypedDict",
-    "Metadata",
-    "MetadataTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
     "MistralPromptMode",
@@ -2172,8 +2170,6 @@ _dynamic_imports: dict[str, str] = {
     "TimestampGranularity": ".timestampgranularity",
     "Tool": ".tool",
     "ToolTypedDict": ".tool",
-    "Metadata": ".toolcall",
-    "MetadataTypedDict": ".toolcall",
     "ToolCall": ".toolcall",
     "ToolCallTypedDict": ".toolcall",
     "ToolChoice": ".toolchoice",

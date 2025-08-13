@@ -3,7 +3,7 @@
 
 ## Overview
 
-(beta) Libraries API for indexing documents to enhance agent capabilities.
+(beta) Libraries API to create and manage libraries - index your documents to enhance agent capabilities.
 
 ### Available Operations
 
