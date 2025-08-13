@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: c33c788946fa446bfcf90b60f68abde9
+  docChecksum: 52e6a68dbdc371fd28af0f2ae79505fa
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.4
-  configChecksum: f095a98769e81493ddf8a9a33e691a31
+  releaseVersion: 1.9.6
+  configChecksum: 2b88c684b4750a8f781b81adb8480b58
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -326,7 +326,6 @@ generatedFiles:
   - docs/models/messageoutputeventrole.md
   - docs/models/messageoutputeventtype.md
   - docs/models/messages.md
-  - docs/models/metadata.md
   - docs/models/metricout.md
   - docs/models/mistralpromptmode.md
   - docs/models/modelcapabilities.md

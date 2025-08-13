@@ -4,6 +4,7 @@ from __future__ import annotations
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
+from .thinkchunk import ThinkChunk, ThinkChunkTypedDict
 from .toolfilechunk import ToolFileChunk, ToolFileChunkTypedDict
 from .toolreferencechunk import ToolReferenceChunk, ToolReferenceChunkTypedDict
 from typing import Union
@@ -16,6 +17,7 @@ MessageOutputContentChunksTypedDict = TypeAliasType(
         TextChunkTypedDict,
         ImageURLChunkTypedDict,
         DocumentURLChunkTypedDict,
+        ThinkChunkTypedDict,
         ToolFileChunkTypedDict,
         ToolReferenceChunkTypedDict,
     ],
@@ -25,6 +27,11 @@ MessageOutputContentChunksTypedDict = TypeAliasType(
 MessageOutputContentChunks = TypeAliasType(
     "MessageOutputContentChunks",
     Union[
-        TextChunk, ImageURLChunk, DocumentURLChunk, ToolFileChunk, ToolReferenceChunk
+        TextChunk,
+        ImageURLChunk,
+        DocumentURLChunk,
+        ThinkChunk,
+        ToolFileChunk,
+        ToolReferenceChunk,
     ],
 )

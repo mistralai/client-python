@@ -9,6 +9,8 @@ from typing import Any, Mapping, Optional, Union
 
 
 class Documents(BaseSDK):
+    r"""(beta) Libraries API - manage documents in a library."""
+
     def list(
         self,
         *,

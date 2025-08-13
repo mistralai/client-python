@@ -1,6 +1,6 @@
 [project]
 name = "mistralai-gcp"
-version = "2.0.0"
+version = "2.0.2"
 description = "Python Client SDK for the Mistral AI API in GCP."
 authors = [{ name = "Mistral" },]
 readme = "README.md"
