@@ -3,6 +3,8 @@
 
 ## Overview
 
+(beta) Libraries API - manage documents in a library.
+
 ### Available Operations
 
 * [list](#list) - List document in a given library.

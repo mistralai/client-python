@@ -33,3 +33,9 @@ value: models.DocumentURLChunk = /* values here */
 value: models.ToolReferenceChunk = /* values here */
 ```
 
+### `models.ThinkChunk`
+
+```python
+value: models.ThinkChunk = /* values here */
+```
+

@@ -13,7 +13,7 @@ class Beta(BaseSDK):
     agents: MistralAgents
     r"""(beta) Agents API"""
     libraries: Libraries
-    r"""(beta) Libraries API for indexing documents to enhance agent capabilities."""
+    r"""(beta) Libraries API to create and manage libraries - index your documents to enhance agent capabilities."""
 
     def __init__(self, sdk_config: SDKConfiguration) -> None:
         BaseSDK.__init__(self, sdk_config)
