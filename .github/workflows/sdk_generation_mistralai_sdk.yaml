@@ -23,6 +23,7 @@ jobs:
       set_version: ${{ github.event.inputs.set_version }}
       speakeasy_version: latest
       target: mistralai-sdk
+      enable_sdk_changelog_july_2025: true
     secrets:
       github_access_token: ${{ secrets.SPEAKEASY_WORKFLOW_GITHUB_PAT }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}

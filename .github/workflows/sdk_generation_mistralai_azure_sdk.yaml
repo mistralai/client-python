@@ -23,6 +23,7 @@ jobs:
       set_version: ${{ github.event.inputs.set_version }}
       speakeasy_version: latest
       target: mistral-python-sdk-azure
+      enable_sdk_changelog_july_2025: true
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
