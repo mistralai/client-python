@@ -14,6 +14,8 @@ permissions:
 jobs:
   publish:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
+    with:
+      enable_sdk_changelog_july_2025: true
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
