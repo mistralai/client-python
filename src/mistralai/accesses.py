@@ -9,6 +9,8 @@ from typing import Any, Mapping, Optional
 
 
 class Accesses(BaseSDK):
+    r"""(beta) Libraries API - manage access to a library."""
+
     def list(
         self,
         *,

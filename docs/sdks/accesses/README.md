@@ -3,6 +3,8 @@
 
 ## Overview
 
+(beta) Libraries API - manage access to a library.
+
 ### Available Operations
 
 * [list](#list) - List all of the access to this library.
