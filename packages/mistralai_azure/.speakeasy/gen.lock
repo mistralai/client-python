@@ -1,18 +1,19 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 574e96caec9a63dbe3f39d646830f2c2
-  docVersion: 0.0.2
-  speakeasyVersion: 1.517.3
-  generationVersion: 2.548.6
+  docChecksum: 87653f040f5b36c90e066870f34c478e
+  docVersion: 1.0.0
+  speakeasyVersion: 1.568.2
+  generationVersion: 2.634.2
   releaseVersion: 1.6.0
-  configChecksum: 3a4d9b204b5731c461ed7279710d5ed6
+  configChecksum: 0b604304465a25f89acca310710262d1
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.12.3
+    core: 5.19.3
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -21,14 +22,14 @@ features:
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     methodArguments: 1.0.2
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.0
+    openEnums: 1.0.1
     responseFormat: 1.0.1
     retries: 3.0.2
-    sdkHooks: 1.0.1
+    sdkHooks: 1.1.0
     serverEvents: 1.0.7
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
@@ -56,6 +57,10 @@ generatedFiles:
   - docs/models/content.md
   - docs/models/contentchunk.md
   - docs/models/deltamessage.md
+  - docs/models/document.md
+  - docs/models/documenturlchunk.md
+  - docs/models/documenturlchunktype.md
+  - docs/models/filechunk.md
   - docs/models/finishreason.md
   - docs/models/function.md
   - docs/models/functioncall.md
@@ -68,6 +73,13 @@ generatedFiles:
   - docs/models/jsonschema.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/mistralpromptmode.md
+  - docs/models/ocrimageobject.md
+  - docs/models/ocrpagedimensions.md
+  - docs/models/ocrpageobject.md
+  - docs/models/ocrrequest.md
+  - docs/models/ocrresponse.md
+  - docs/models/ocrusageinfo.md
   - docs/models/prediction.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -98,7 +110,6 @@ generatedFiles:
   - py.typed
   - pylintrc
   - pyproject.toml
-  - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai_azure/__init__.py
   - src/mistralai_azure/_hooks/__init__.py
@@ -119,6 +130,8 @@ generatedFiles:
   - src/mistralai_azure/models/completionresponsestreamchoice.py
   - src/mistralai_azure/models/contentchunk.py
   - src/mistralai_azure/models/deltamessage.py
+  - src/mistralai_azure/models/documenturlchunk.py
+  - src/mistralai_azure/models/filechunk.py
   - src/mistralai_azure/models/function.py
   - src/mistralai_azure/models/functioncall.py
   - src/mistralai_azure/models/functionname.py
@@ -126,6 +139,13 @@ generatedFiles:
   - src/mistralai_azure/models/imageurl.py
   - src/mistralai_azure/models/imageurlchunk.py
   - src/mistralai_azure/models/jsonschema.py
+  - src/mistralai_azure/models/mistralpromptmode.py
+  - src/mistralai_azure/models/ocrimageobject.py
+  - src/mistralai_azure/models/ocrpagedimensions.py
+  - src/mistralai_azure/models/ocrpageobject.py
+  - src/mistralai_azure/models/ocrrequest.py
+  - src/mistralai_azure/models/ocrresponse.py
+  - src/mistralai_azure/models/ocrusageinfo.py
   - src/mistralai_azure/models/prediction.py
   - src/mistralai_azure/models/referencechunk.py
   - src/mistralai_azure/models/responseformat.py
@@ -143,13 +163,14 @@ generatedFiles:
   - src/mistralai_azure/models/usageinfo.py
   - src/mistralai_azure/models/usermessage.py
   - src/mistralai_azure/models/validationerror.py
+  - src/mistralai_azure/ocr.py
   - src/mistralai_azure/py.typed
-  - src/mistralai_azure/sdk.py
   - src/mistralai_azure/sdkconfiguration.py
   - src/mistralai_azure/types/__init__.py
   - src/mistralai_azure/types/basemodel.py
   - src/mistralai_azure/utils/__init__.py
   - src/mistralai_azure/utils/annotations.py
+  - src/mistralai_azure/utils/datetimes.py
   - src/mistralai_azure/utils/enums.py
   - src/mistralai_azure/utils/eventstreaming.py
   - src/mistralai_azure/utils/forms.py
@@ -171,15 +192,23 @@ examples:
       responses:
         "422":
           application/json: {}
-        "200": {}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
         application/json: {"model": "azureai", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
-examplesVersion: 1.0.0
+  ocr_v1_ocr_post:
+    speakeasy-default-ocr-v1-ocr-post:
+      requestBody:
+        application/json: {"model": "CX-9", "document": {"document_url": "https://upset-labourer.net/", "type": "document_url"}}
+      responses:
+        "200":
+          application/json: {"pages": [], "model": "Golf", "usage_info": {"pages_processed": 944919}}
+        "422":
+          application/json: {}
+examplesVersion: 1.0.2
 generatedTests: {}
