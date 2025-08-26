@@ -18,7 +18,7 @@ sources:
         sourceBlobDigest: sha256:64fa97f0836a2441e32bc255ced698234c147c790775988102f17b493f0da87d
         tags:
             - latest
-            - speakeasy-sdk-regen-1756133663
+            - speakeasy-sdk-regen-1756229662
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -40,7 +40,7 @@ targets:
         sourceRevisionDigest: sha256:fcdf40207fa983a6ad7c0346f499d2b87ef2f1381a48e791a9a485bd40525ff8
         sourceBlobDigest: sha256:64fa97f0836a2441e32bc255ced698234c147c790775988102f17b493f0da87d
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:f215393d076966760f8b24cb3db48d6dd9c2ba2e06daa7964860bab4b09f51f2
+        codeSamplesRevisionDigest: sha256:39367b425e8a1e7376b8900711e0852f653aaab239f74cc658567fe05ad11784
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.568.2

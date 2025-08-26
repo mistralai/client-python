@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.8
-  configChecksum: d7b7d0bf04e94ae161a650b203bc54df
+  releaseVersion: 1.9.9
+  configChecksum: b08e017cb434c255d6ef2c20584815e8
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
