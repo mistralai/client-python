@@ -165,6 +165,7 @@ generatedFiles:
   - src/mistralai_azure/models/validationerror.py
   - src/mistralai_azure/ocr.py
   - src/mistralai_azure/py.typed
+  - src/mistralai_azure/sdk.py
   - src/mistralai_azure/sdkconfiguration.py
   - src/mistralai_azure/types/__init__.py
   - src/mistralai_azure/types/basemodel.py
