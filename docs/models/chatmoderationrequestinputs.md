@@ -11,9 +11,9 @@ Chat to classify
 value: List[models.One] = /* values here */
 ```
 
-### `List[List[models.Two]]`
+### `List[List[models.Inputs2]]`
 
 ```python
-value: List[List[models.Two]] = /* values here */
+value: List[List[models.Inputs2]] = /* values here */
 ```
 

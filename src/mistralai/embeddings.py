@@ -20,6 +20,7 @@ class Embeddings(BaseSDK):
         ],
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,6 +34,7 @@ class Embeddings(BaseSDK):
         :param inputs: Text to embed.
         :param output_dimension: The dimension of the output embeddings.
         :param output_dtype:
+        :param encoding_format:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -53,6 +55,7 @@ class Embeddings(BaseSDK):
             inputs=inputs,
             output_dimension=output_dimension,
             output_dtype=output_dtype,
+            encoding_format=encoding_format,
         )
 
         req = self._build_request(
@@ -134,6 +137,7 @@ class Embeddings(BaseSDK):
         ],
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -147,6 +151,7 @@ class Embeddings(BaseSDK):
         :param inputs: Text to embed.
         :param output_dimension: The dimension of the output embeddings.
         :param output_dtype:
+        :param encoding_format:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -167,6 +172,7 @@ class Embeddings(BaseSDK):
             inputs=inputs,
             output_dimension=output_dimension,
             output_dtype=output_dtype,
+            encoding_format=encoding_format,
         )
 
         req = self._build_request_async(

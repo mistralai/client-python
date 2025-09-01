@@ -3,27 +3,21 @@
 
 ## Supported Types
 
-### `models.AssistantMessage`
+### `models.TextChunk`
 
 ```python
-value: models.AssistantMessage = /* values here */
+value: models.TextChunk = /* values here */
 ```
 
-### `models.SystemMessage`
+### `models.ThinkChunk`
 
 ```python
-value: models.SystemMessage = /* values here */
+value: models.ThinkChunk = /* values here */
 ```
 
-### `models.ToolMessage`
+### `models.ReferenceChunk`
 
 ```python
-value: models.ToolMessage = /* values here */
-```
-
-### `models.UserMessage`
-
-```python
-value: models.UserMessage = /* values here */
+value: models.ReferenceChunk = /* values here */
 ```
 
