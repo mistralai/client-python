@@ -183,10 +183,10 @@ if TYPE_CHECKING:
         ChatModerationRequestInputs,
         ChatModerationRequestInputsTypedDict,
         ChatModerationRequestTypedDict,
+        Inputs2,
+        Inputs2TypedDict,
         One,
         OneTypedDict,
-        Two,
-        TwoTypedDict,
     )
     from .checkpointout import CheckpointOut, CheckpointOutTypedDict
     from .classificationrequest import (
@@ -389,6 +389,7 @@ if TYPE_CHECKING:
         EmbeddingResponseData,
         EmbeddingResponseDataTypedDict,
     )
+    from .encodingformat import EncodingFormat
     from .entitytype import EntityType
     from .eventout import EventOut, EventOutTypedDict
     from .file import File, FileTypedDict
@@ -766,6 +767,8 @@ if TYPE_CHECKING:
         SystemMessageContent,
         SystemMessageContentTypedDict,
         SystemMessageTypedDict,
+        Two,
+        TwoTypedDict,
     )
     from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
     from .thinkchunk import (
@@ -1156,6 +1159,7 @@ __all__ = [
     "EmbeddingResponseData",
     "EmbeddingResponseDataTypedDict",
     "EmbeddingResponseTypedDict",
+    "EncodingFormat",
     "EntityType",
     "Entries",
     "EntriesTypedDict",
@@ -1246,6 +1250,8 @@ __all__ = [
     "InputEntries",
     "InputEntriesTypedDict",
     "Inputs",
+    "Inputs2",
+    "Inputs2TypedDict",
     "InputsTypedDict",
     "InstructRequest",
     "InstructRequestInputs",
@@ -1702,10 +1708,10 @@ _dynamic_imports: dict[str, str] = {
     "ChatModerationRequestInputs": ".chatmoderationrequest",
     "ChatModerationRequestInputsTypedDict": ".chatmoderationrequest",
     "ChatModerationRequestTypedDict": ".chatmoderationrequest",
+    "Inputs2": ".chatmoderationrequest",
+    "Inputs2TypedDict": ".chatmoderationrequest",
     "One": ".chatmoderationrequest",
     "OneTypedDict": ".chatmoderationrequest",
-    "Two": ".chatmoderationrequest",
-    "TwoTypedDict": ".chatmoderationrequest",
     "CheckpointOut": ".checkpointout",
     "CheckpointOutTypedDict": ".checkpointout",
     "ClassificationRequest": ".classificationrequest",
@@ -1858,6 +1864,7 @@ _dynamic_imports: dict[str, str] = {
     "EmbeddingResponseTypedDict": ".embeddingresponse",
     "EmbeddingResponseData": ".embeddingresponsedata",
     "EmbeddingResponseDataTypedDict": ".embeddingresponsedata",
+    "EncodingFormat": ".encodingformat",
     "EntityType": ".entitytype",
     "EventOut": ".eventout",
     "EventOutTypedDict": ".eventout",
@@ -2159,6 +2166,8 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
     "SystemMessageTypedDict": ".systemmessage",
+    "Two": ".systemmessage",
+    "TwoTypedDict": ".systemmessage",
     "TextChunk": ".textchunk",
     "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",

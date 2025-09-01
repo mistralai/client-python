@@ -13,8 +13,8 @@ from typing import List, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-TwoTypedDict = TypeAliasType(
-    "TwoTypedDict",
+Inputs2TypedDict = TypeAliasType(
+    "Inputs2TypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -24,7 +24,7 @@ TwoTypedDict = TypeAliasType(
 )
 
 
-Two = Annotated[
+Inputs2 = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -59,13 +59,13 @@ One = Annotated[
 
 ChatModerationRequestInputsTypedDict = TypeAliasType(
     "ChatModerationRequestInputsTypedDict",
-    Union[List[OneTypedDict], List[List[TwoTypedDict]]],
+    Union[List[OneTypedDict], List[List[Inputs2TypedDict]]],
 )
 r"""Chat to classify"""
 
 
 ChatModerationRequestInputs = TypeAliasType(
-    "ChatModerationRequestInputs", Union[List[One], List[List[Two]]]
+    "ChatModerationRequestInputs", Union[List[One], List[List[Inputs2]]]
 )
 r"""Chat to classify"""
 

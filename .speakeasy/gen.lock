@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: a38b769b82bac0658cf02fed22bdbde0
+  docChecksum: d88fc6da836fc7237380df90b01bc7a5
   docVersion: 1.0.0
   speakeasyVersion: 1.568.2
   generationVersion: 2.634.2
-  releaseVersion: 1.9.9
-  configChecksum: b08e017cb434c255d6ef2c20584815e8
+  releaseVersion: 1.9.10
+  configChecksum: 438b1373b4090838b050a2779ab5383f
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -199,6 +199,7 @@ generatedFiles:
   - docs/models/embeddingrequestinputs.md
   - docs/models/embeddingresponse.md
   - docs/models/embeddingresponsedata.md
+  - docs/models/encodingformat.md
   - docs/models/entitytype.md
   - docs/models/entries.md
   - docs/models/eventout.md
@@ -253,6 +254,7 @@ generatedFiles:
   - docs/models/imageurlchunktype.md
   - docs/models/inputentries.md
   - docs/models/inputs.md
+  - docs/models/inputs2.md
   - docs/models/instructrequest.md
   - docs/models/instructrequestinputs.md
   - docs/models/instructrequestinputsmessages.md
@@ -579,6 +581,7 @@ generatedFiles:
   - src/mistralai/models/embeddingrequest.py
   - src/mistralai/models/embeddingresponse.py
   - src/mistralai/models/embeddingresponsedata.py
+  - src/mistralai/models/encodingformat.py
   - src/mistralai/models/entitytype.py
   - src/mistralai/models/eventout.py
   - src/mistralai/models/file.py

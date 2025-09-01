@@ -12,6 +12,11 @@ APIEndpoint = Union[
         "/v1/fim/completions",
         "/v1/moderations",
         "/v1/chat/moderations",
+        "/v1/ocr",
+        "/v1/classifications",
+        "/v1/chat/classifications",
+        "/v1/conversations",
+        "/v1/audio/transcriptions",
     ],
     UnrecognizedStr,
 ]
