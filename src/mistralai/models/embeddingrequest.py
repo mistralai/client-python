@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .embeddingdtype import EmbeddingDtype
+from .encodingformat import EncodingFormat
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
@@ -27,6 +28,7 @@ class EmbeddingRequestTypedDict(TypedDict):
     output_dimension: NotRequired[Nullable[int]]
     r"""The dimension of the output embeddings."""
     output_dtype: NotRequired[EmbeddingDtype]
+    encoding_format: NotRequired[EncodingFormat]
 
 
 class EmbeddingRequest(BaseModel):
@@ -41,9 +43,11 @@ class EmbeddingRequest(BaseModel):
 
     output_dtype: Optional[EmbeddingDtype] = None
 
+    encoding_format: Optional[EncodingFormat] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["output_dimension", "output_dtype"]
+        optional_fields = ["output_dimension", "output_dtype", "encoding_format"]
         nullable_fields = ["output_dimension"]
         null_default_fields = []
 
