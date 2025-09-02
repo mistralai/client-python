@@ -10,6 +10,7 @@ exclude_files=(
  "examples/mistral/mcp_servers/stdio_server.py"
  "examples/mistral/agents/async_conversation_run_stream.py"
  "examples/mistral/agents/async_conversation_run_mcp.py"
+ "examples/mistral/agents/async_conversation_run_mcp_remote.py"
 )
 
 # Check if the first argument is "no-extra-dep" then remove all the files that require the extra dependencies
