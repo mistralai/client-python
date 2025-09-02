@@ -389,6 +389,7 @@ if TYPE_CHECKING:
         EmbeddingResponseData,
         EmbeddingResponseDataTypedDict,
     )
+    from .encodingformat import EncodingFormat
     from .entitytype import EntityType
     from .eventout import EventOut, EventOutTypedDict
     from .file import File, FileTypedDict
@@ -766,6 +767,10 @@ if TYPE_CHECKING:
         SystemMessageContent,
         SystemMessageContentTypedDict,
         SystemMessageTypedDict,
+    )
+    from .systemmessagecontentchunks import (
+        SystemMessageContentChunks,
+        SystemMessageContentChunksTypedDict,
     )
     from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
     from .thinkchunk import (
@@ -1156,6 +1161,7 @@ __all__ = [
     "EmbeddingResponseData",
     "EmbeddingResponseDataTypedDict",
     "EmbeddingResponseTypedDict",
+    "EncodingFormat",
     "EntityType",
     "Entries",
     "EntriesTypedDict",
@@ -1472,6 +1478,8 @@ __all__ = [
     "StopTypedDict",
     "SystemMessage",
     "SystemMessageContent",
+    "SystemMessageContentChunks",
+    "SystemMessageContentChunksTypedDict",
     "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
     "TextChunk",
@@ -1858,6 +1866,7 @@ _dynamic_imports: dict[str, str] = {
     "EmbeddingResponseTypedDict": ".embeddingresponse",
     "EmbeddingResponseData": ".embeddingresponsedata",
     "EmbeddingResponseDataTypedDict": ".embeddingresponsedata",
+    "EncodingFormat": ".encodingformat",
     "EntityType": ".entitytype",
     "EventOut": ".eventout",
     "EventOutTypedDict": ".eventout",
@@ -2159,6 +2168,8 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
     "SystemMessageTypedDict": ".systemmessage",
+    "SystemMessageContentChunks": ".systemmessagecontentchunks",
+    "SystemMessageContentChunksTypedDict": ".systemmessagecontentchunks",
     "TextChunk": ".textchunk",
     "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",
