@@ -5,4 +5,11 @@ from mistralai.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-FilePurpose = Union[Literal["fine-tune", "batch", "ocr"], UnrecognizedStr]
+FilePurpose = Union[
+    Literal[
+        "fine-tune",
+        "batch",
+        "ocr",
+    ],
+    UnrecognizedStr,
+]

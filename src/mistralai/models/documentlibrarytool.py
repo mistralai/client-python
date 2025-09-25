@@ -6,7 +6,7 @@ from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-DocumentLibraryToolType = Literal["document_library"]
+DocumentLibraryToolType = Literal["document_library",]
 
 
 class DocumentLibraryToolTypedDict(TypedDict):

@@ -4,4 +4,7 @@ from __future__ import annotations
 from typing import Literal
 
 
-FineTuneableModelType = Literal["completion", "classifier"]
+FineTuneableModelType = Literal[
+    "completion",
+    "classifier",
+]

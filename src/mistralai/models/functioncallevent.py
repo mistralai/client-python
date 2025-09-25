@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-FunctionCallEventType = Literal["function.call.delta"]
+FunctionCallEventType = Literal["function.call.delta",]
 
 
 class FunctionCallEventTypedDict(TypedDict):

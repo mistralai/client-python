@@ -8,7 +8,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ToolExecutionStartedEventType = Literal["tool.execution.started"]
+ToolExecutionStartedEventType = Literal["tool.execution.started",]
 
 
 class ToolExecutionStartedEventTypedDict(TypedDict):

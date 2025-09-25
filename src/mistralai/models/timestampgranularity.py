@@ -4,4 +4,4 @@ from __future__ import annotations
 from typing import Literal
 
 
-TimestampGranularity = Literal["segment"]
+TimestampGranularity = Literal["segment",]

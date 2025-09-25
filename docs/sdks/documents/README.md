@@ -24,6 +24,7 @@ Given a library, lists the document that have been uploaded to that library.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_list_v1" method="get" path="/v1/libraries/{library_id}/documents" -->
 ```python
 from mistralai import Mistral
 import os
@@ -69,6 +70,7 @@ Given a library, upload a new document to that library. It is queued for process
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_upload_v1" method="post" path="/v1/libraries/{library_id}/documents" -->
 ```python
 from mistralai import Mistral
 import os
@@ -113,6 +115,7 @@ Given a library and a document in this library, you can retrieve the metadata of
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -154,6 +157,7 @@ Given a library and a document in that library, update the name of that document
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_update_v1" method="put" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -196,6 +200,7 @@ Given a library and a document in that library, delete that document. The docume
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_delete_v1" method="delete" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -232,6 +237,7 @@ Given a library and a document in that library, you can retrieve the text conten
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_text_content_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/text_content" -->
 ```python
 from mistralai import Mistral
 import os
@@ -273,6 +279,7 @@ Given a library and a document in that library, retrieve the processing status o
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_status_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/status" -->
 ```python
 from mistralai import Mistral
 import os
@@ -314,6 +321,7 @@ Given a library and a document in that library, retrieve the signed URL of a spe
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_signed_url_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/signed-url" -->
 ```python
 from mistralai import Mistral
 import os
@@ -355,6 +363,7 @@ Given a library and a document in that library, retrieve the signed URL of text 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_extracted_text_signed_url_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/extracted-text-signed-url" -->
 ```python
 from mistralai import Mistral
 import os
@@ -396,6 +405,7 @@ Given a library and a document in that library, reprocess that document, it will
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_documents_reprocess_v1" method="post" path="/v1/libraries/{library_id}/documents/{document_id}/reprocess" -->
 ```python
 from mistralai import Mistral
 import os

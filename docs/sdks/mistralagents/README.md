@@ -19,6 +19,7 @@ Create a new agent giving it instructions, tools, description. The agent is then
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create" method="post" path="/v1/agents" -->
 ```python
 from mistralai import Mistral
 import os
@@ -65,6 +66,7 @@ Retrieve a list of agent entities sorted by creation time.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list" method="get" path="/v1/agents" -->
 ```python
 from mistralai import Mistral
 import os
@@ -106,6 +108,7 @@ Given an agent retrieve an agent entity with its attributes.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get" method="get" path="/v1/agents/{agent_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -146,6 +149,7 @@ Update an agent attributes and create a new version.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update" method="patch" path="/v1/agents/{agent_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -193,6 +197,7 @@ Switch the version of an agent.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update_version" method="patch" path="/v1/agents/{agent_id}/version" -->
 ```python
 from mistralai import Mistral
 import os

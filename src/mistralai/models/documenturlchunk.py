@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-DocumentURLChunkType = Literal["document_url"]
+DocumentURLChunkType = Literal["document_url",]
 
 
 class DocumentURLChunkTypedDict(TypedDict):

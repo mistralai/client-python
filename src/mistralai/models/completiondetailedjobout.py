@@ -29,7 +29,9 @@ CompletionDetailedJobOutStatus = Literal[
     "CANCELLATION_REQUESTED",
 ]
 
-CompletionDetailedJobOutObject = Literal["job"]
+
+CompletionDetailedJobOutObject = Literal["job",]
+
 
 CompletionDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
@@ -37,7 +39,8 @@ CompletionDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 CompletionDetailedJobOutIntegrations = WandbIntegrationOut
 
 
-CompletionDetailedJobOutJobType = Literal["completion"]
+CompletionDetailedJobOutJobType = Literal["completion",]
+
 
 CompletionDetailedJobOutRepositoriesTypedDict = GithubRepositoryOutTypedDict
 

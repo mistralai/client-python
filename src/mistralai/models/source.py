@@ -5,4 +5,11 @@ from mistralai.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-Source = Union[Literal["upload", "repository", "mistral"], UnrecognizedStr]
+Source = Union[
+    Literal[
+        "upload",
+        "repository",
+        "mistral",
+    ],
+    UnrecognizedStr,
+]

@@ -6,6 +6,12 @@ from typing import Literal, Union
 
 
 SampleType = Union[
-    Literal["pretrain", "instruct", "batch_request", "batch_result", "batch_error"],
+    Literal[
+        "pretrain",
+        "instruct",
+        "batch_request",
+        "batch_result",
+        "batch_error",
+    ],
     UnrecognizedStr,
 ]

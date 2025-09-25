@@ -11,9 +11,10 @@ from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-CompletionFTModelOutObject = Literal["model"]
+CompletionFTModelOutObject = Literal["model",]
 
-ModelType = Literal["completion"]
+
+ModelType = Literal["completion",]
 
 
 class CompletionFTModelOutTypedDict(TypedDict):

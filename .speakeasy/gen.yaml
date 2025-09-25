@@ -16,6 +16,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
   tests:
     generateTests: true
     generateNewTests: false
@@ -26,6 +27,10 @@ python:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+  allowedRedefinedBuiltins:
+    - id
+    - object
+  asyncMode: both
   authors:
     - Mistral
   baseErrorName: MistralError
@@ -49,12 +54,15 @@ python:
       shared: ""
       webhooks: ""
   inputModelSuffix: input
+  legacyPyright: true
   maxMethodParams: 15
   methodArguments: infer-optional-args
   moduleName: ""
   outputModelSuffix: output
+  packageManager: poetry
   packageName: mistralai
   pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
+  sseFlatResponse: false
   templateVersion: v2
