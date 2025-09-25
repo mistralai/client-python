@@ -9,9 +9,10 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ToolExecutionEntryObject = Literal["entry"]
+ToolExecutionEntryObject = Literal["entry",]
 
-ToolExecutionEntryType = Literal["tool.execution"]
+
+ToolExecutionEntryType = Literal["tool.execution",]
 
 
 class ToolExecutionEntryTypedDict(TypedDict):

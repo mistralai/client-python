@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-AudioChunkType = Literal["input_audio"]
+AudioChunkType = Literal["input_audio",]
 
 
 class AudioChunkTypedDict(TypedDict):

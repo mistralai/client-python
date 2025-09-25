@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ToolExecutionDoneEventType = Literal["tool.execution.done"]
+ToolExecutionDoneEventType = Literal["tool.execution.done",]
 
 
 class ToolExecutionDoneEventTypedDict(TypedDict):

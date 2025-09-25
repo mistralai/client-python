@@ -8,7 +8,10 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ConversationAppendRequestHandoffExecution = Literal["client", "server"]
+ConversationAppendRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
 
 
 class ConversationAppendRequestTypedDict(TypedDict):
