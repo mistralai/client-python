@@ -19,6 +19,7 @@ List all libraries that you have created or have been shared with you.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_list_v1" method="get" path="/v1/libraries" -->
 ```python
 from mistralai import Mistral
 import os
@@ -57,6 +58,7 @@ Create a new Library, you will be marked as the owner and only you will have the
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_create_v1" method="post" path="/v1/libraries" -->
 ```python
 from mistralai import Mistral
 import os
@@ -99,6 +101,7 @@ Given a library id, details information about that Library.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_get_v1" method="get" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -139,6 +142,7 @@ Given a library id, deletes it together with all documents that have been upload
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_delete_v1" method="delete" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -179,6 +183,7 @@ Given a library id, you can update the name and description.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="libraries_update_v1" method="put" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai import Mistral
 import os
