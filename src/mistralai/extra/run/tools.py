@@ -8,6 +8,7 @@ from pydantic.fields import FieldInfo
 import json
 from typing import cast, Callable, Sequence, Any, ForwardRef, get_type_hints, Union
 
+from opentelemetry import trace
 from griffe import (
     Docstring,
     DocstringSectionKind,
@@ -15,7 +16,6 @@ from griffe import (
     DocstringParameter,
     DocstringSection,
 )
-from opentelemetry import trace
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 
 from mistralai.extra.exceptions import RunException

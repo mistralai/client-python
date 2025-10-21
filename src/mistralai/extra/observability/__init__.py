@@ -1,6 +1,9 @@
 from contextlib import contextmanager
+
 from opentelemetry import trace as otel_trace
+
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
+
 
 @contextmanager
 def trace(name: str, **kwargs):

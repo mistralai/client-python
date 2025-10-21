@@ -1,25 +1,22 @@
+import copy
+import json
 import logging
 import os
-import json
-import copy
+import traceback
 from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional, Tuple
 
 import httpx
-from opentelemetry import trace, propagate
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.trace import TracerProvider, SpanProcessor
-from opentelemetry.trace import Span
-from opentelemetry.sdk.resources import SERVICE_NAME, Resource
-from opentelemetry.trace import set_span_in_context, Status, StatusCode, Tracer
-from opentelemetry.sdk.trace.export import SpanExportResult
-from enum import Enum
-from typing import Tuple, Optional
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
-import opentelemetry.semconv.attributes.server_attributes as server_attributes
 import opentelemetry.semconv._incubating.attributes.http_attributes as http_attributes
-import traceback
-
+import opentelemetry.semconv.attributes.server_attributes as server_attributes
+from opentelemetry import propagate, trace
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk.trace import SpanProcessor, TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor, SpanExportResult
+from opentelemetry.trace import Span, Status, StatusCode, Tracer, set_span_in_context
 
 logger = logging.getLogger(__name__)
 

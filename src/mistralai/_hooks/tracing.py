@@ -1,3 +1,15 @@
+import logging
+from typing import Optional, Tuple, Union
+
+import httpx
+from opentelemetry.trace import Span
+
+from ..extra.observability.otel import (
+    get_or_create_otel_tracer,
+    get_response_and_error,
+    get_traced_request_and_span,
+    get_traced_response,
+)
 from .types import (
     AfterErrorContext,
     AfterErrorHook,
@@ -6,18 +18,6 @@ from .types import (
     BeforeRequestContext,
     BeforeRequestHook,
 )
-from ..extra.observability.otel import (
-    get_traced_request_and_span,
-    get_traced_response,
-    get_response_and_error,
-    get_or_create_otel_tracer,
-)
-
-from opentelemetry.trace import Span
-from typing import Optional, Tuple, Union
-
-import httpx
-import logging
 
 logger = logging.getLogger(__name__)
 
