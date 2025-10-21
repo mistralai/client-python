@@ -26,8 +26,10 @@ from mistralai.extra.run.result import (
     reconstitue_entries,
 )
 from mistralai.extra.run.utils import run_requirements
+from mistralai.extra.observability.otel import GenAISpanEnum, get_or_create_otel_tracer
 
 logger = logging.getLogger(__name__)
+tracing_enabled, tracer = get_or_create_otel_tracer()
 
 if typing.TYPE_CHECKING:
     from mistralai.extra.run.context import RunContext
@@ -67,50 +69,52 @@ class Conversations(BaseSDK):
         from mistralai.extra.run.context import _validate_run
         from mistralai.extra.run.tools import get_function_calls
 
-        req, run_result, input_entries = await _validate_run(
-            beta_client=Beta(self.sdk_configuration),
-            run_ctx=run_ctx,
-            inputs=inputs,
-            instructions=instructions,
-            tools=tools,
-            completion_args=completion_args,
-        )
+        with tracer.start_as_current_span(GenAISpanEnum.VALIDATE_RUN.value):
+            req, run_result, input_entries = await _validate_run(
+                beta_client=Beta(self.sdk_configuration),
+                run_ctx=run_ctx,
+                inputs=inputs,
+                instructions=instructions,
+                tools=tools,
+                completion_args=completion_args,
+            )
 
-        while True:
-            if run_ctx.conversation_id is None:
-                res = await self.start_async(
-                    inputs=input_entries,
-                    http_headers=http_headers,
-                    name=name,
-                    description=description,
-                    retries=retries,
-                    server_url=server_url,
-                    timeout_ms=timeout_ms,
-                    **req,  # type: ignore
-                )
-                run_result.conversation_id = res.conversation_id
-                run_ctx.conversation_id = res.conversation_id
-                logger.info(
-                    f"Started Run with conversation with id {res.conversation_id}"
-                )
-            else:
-                res = await self.append_async(
-                    conversation_id=run_ctx.conversation_id,
-                    inputs=input_entries,
-                    retries=retries,
-                    server_url=server_url,
-                    timeout_ms=timeout_ms,
-                )
-            run_ctx.request_count += 1
-            run_result.output_entries.extend(res.outputs)
-            fcalls = get_function_calls(res.outputs)
-            if not fcalls:
-                logger.debug("No more function calls to execute")
-                break
-            else:
-                fresults = await run_ctx.execute_function_calls(fcalls)
-                run_result.output_entries.extend(fresults)
-                input_entries = typing.cast(list[InputEntries], fresults)
+        with tracer.start_as_current_span(GenAISpanEnum.CONVERSATION.value):
+            while True:
+                if run_ctx.conversation_id is None:
+                    res = await self.start_async(
+                        inputs=input_entries,
+                        http_headers=http_headers,
+                        name=name,
+                        description=description,
+                        retries=retries,
+                        server_url=server_url,
+                        timeout_ms=timeout_ms,
+                        **req,  # type: ignore
+                    )
+                    run_result.conversation_id = res.conversation_id
+                    run_ctx.conversation_id = res.conversation_id
+                    logger.info(
+                        f"Started Run with conversation with id {res.conversation_id}"
+                    )
+                else:
+                    res = await self.append_async(
+                        conversation_id=run_ctx.conversation_id,
+                        inputs=input_entries,
+                        retries=retries,
+                        server_url=server_url,
+                        timeout_ms=timeout_ms,
+                    )
+                run_ctx.request_count += 1
+                run_result.output_entries.extend(res.outputs)
+                fcalls = get_function_calls(res.outputs)
+                if not fcalls:
+                    logger.debug("No more function calls to execute")
+                    break
+                else:
+                    fresults = await run_ctx.execute_function_calls(fcalls)
+                    run_result.output_entries.extend(fresults)
+                    input_entries = typing.cast(list[InputEntries], fresults)
         return run_result
 
     @run_requirements
