@@ -58,20 +58,32 @@ failed=0
 run_test_with_retries() {
     local file="$1"
     local attempt=1
+    local error_outputs=()
     
     while [ $attempt -le $RETRY_COUNT ]; do
         echo "Running $file (attempt $attempt/$RETRY_COUNT)"
         
-        # Run the script and capture the exit status
-        if python3 "$file" > /dev/null 2>&1; then
+        # Run the script and capture both exit status and error output
+        local current_output=$(python3 "$file" 2>&1)
+        local exit_code=$?
+        
+        if [ $exit_code -eq 0 ]; then
             echo "Success"
             return 0
         else
+            # Store the error output from this attempt
+            error_outputs+=("Attempt $attempt: $current_output")
+            
             if [ $attempt -lt $RETRY_COUNT ]; then
                 echo "Failed (attempt $attempt/$RETRY_COUNT), retrying..."
                 sleep 1  # Brief pause before retry
             else
                 echo "Failed after $RETRY_COUNT attempts"
+                echo "Error outputs from all attempts:"
+                for error_output in "${error_outputs[@]}"; do
+                    echo "$error_output"
+                    echo "---"
+                done
                 return 1
             fi
         fi
