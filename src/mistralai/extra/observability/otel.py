@@ -18,10 +18,13 @@ from typing import Tuple, Optional
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 import opentelemetry.semconv.attributes.server_attributes as server_attributes
 import opentelemetry.semconv._incubating.attributes.http_attributes as http_attributes
+import traceback
+
+
 logger = logging.getLogger(__name__)
 
 
-OTEL_SERVICE_NAME: str = "mistralai_private_sdk"
+OTEL_SERVICE_NAME: str = "mistralai_sdk"
 OTEL_EXPORTER_OTLP_ENDPOINT: str = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "")
 OTEL_EXPORTER_OTLP_TIMEOUT: int = int(os.getenv("OTEL_EXPORTER_OTLP_TIMEOUT", "2"))
 OTEL_EXPORTER_OTLP_MAX_EXPORT_BATCH_SIZE: int = int(os.getenv("OTEL_EXPORTER_OTLP_MAX_EXPORT_BATCH_SIZE", "512"))
@@ -104,28 +107,29 @@ def enrich_span_from_request(span: Span, request: httpx.Request) -> Span:
         server_attributes.SERVER_ADDRESS: request.headers.get("host", ""),
         server_attributes.SERVER_PORT: port
     })
-    request_body = json.loads(request._content)
+    if request._content:
+        request_body = json.loads(request._content)
 
-    attributes = {
-        gen_ai_attributes.GEN_AI_REQUEST_CHOICE_COUNT: request_body.get("n", None),
-        gen_ai_attributes.GEN_AI_REQUEST_ENCODING_FORMATS: request_body.get("encoding_formats", None),
-        gen_ai_attributes.GEN_AI_REQUEST_FREQUENCY_PENALTY: request_body.get("frequency_penalty", None),
-        gen_ai_attributes.GEN_AI_REQUEST_MAX_TOKENS: request_body.get("max_tokens", None),
-        gen_ai_attributes.GEN_AI_REQUEST_MODEL: request_body.get("model", None),
-        gen_ai_attributes.GEN_AI_REQUEST_PRESENCE_PENALTY: request_body.get("presence_penalty", None),
-        gen_ai_attributes.GEN_AI_REQUEST_SEED: request_body.get("random_seed", None),
-        gen_ai_attributes.GEN_AI_REQUEST_STOP_SEQUENCES: request_body.get("stop", None),
-        gen_ai_attributes.GEN_AI_REQUEST_TEMPERATURE: request_body.get("temperature", None),
-        gen_ai_attributes.GEN_AI_REQUEST_TOP_P: request_body.get("top_p", None),
-        gen_ai_attributes.GEN_AI_REQUEST_TOP_K: request_body.get("top_k", None),
-        # Input messages are likely to be large, containing user/PII data and other sensitive information.
-        # Also structured attributes are not yet supported on spans in Python.
-        # For those reasons, we will not record the input messages for now.
-        gen_ai_attributes.GEN_AI_INPUT_MESSAGES: None,
-    }
-    # Set attributes only if they are not None.
-    # From OpenTelemetry documentation: None is not a valid attribute value per spec / is not a permitted value type for an attribute.
-    set_available_attributes(span, attributes)
+        attributes = {
+            gen_ai_attributes.GEN_AI_REQUEST_CHOICE_COUNT: request_body.get("n", None),
+            gen_ai_attributes.GEN_AI_REQUEST_ENCODING_FORMATS: request_body.get("encoding_formats", None),
+            gen_ai_attributes.GEN_AI_REQUEST_FREQUENCY_PENALTY: request_body.get("frequency_penalty", None),
+            gen_ai_attributes.GEN_AI_REQUEST_MAX_TOKENS: request_body.get("max_tokens", None),
+            gen_ai_attributes.GEN_AI_REQUEST_MODEL: request_body.get("model", None),
+            gen_ai_attributes.GEN_AI_REQUEST_PRESENCE_PENALTY: request_body.get("presence_penalty", None),
+            gen_ai_attributes.GEN_AI_REQUEST_SEED: request_body.get("random_seed", None),
+            gen_ai_attributes.GEN_AI_REQUEST_STOP_SEQUENCES: request_body.get("stop", None),
+            gen_ai_attributes.GEN_AI_REQUEST_TEMPERATURE: request_body.get("temperature", None),
+            gen_ai_attributes.GEN_AI_REQUEST_TOP_P: request_body.get("top_p", None),
+            gen_ai_attributes.GEN_AI_REQUEST_TOP_K: request_body.get("top_k", None),
+            # Input messages are likely to be large, containing user/PII data and other sensitive information.
+            # Also structured attributes are not yet supported on spans in Python.
+            # For those reasons, we will not record the input messages for now.
+            gen_ai_attributes.GEN_AI_INPUT_MESSAGES: None,
+        }
+        # Set attributes only if they are not None.
+        # From OpenTelemetry documentation: None is not a valid attribute value per spec / is not a permitted value type for an attribute.
+        set_available_attributes(span, attributes)
     return span
 
 
@@ -220,8 +224,8 @@ class QuietOTLPSpanExporter(OTLPSpanExporter):
     def export(self, spans):
         try:
             return super().export(spans)
-        except Exception as e:
-            logger.warning(f"{TracingErrors.FAILED_TO_EXPORT_OTEL_SPANS} {(str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT)}")
+        except Exception:
+            logger.warning(f"{TracingErrors.FAILED_TO_EXPORT_OTEL_SPANS} {(traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT)}")
             return SpanExportResult.FAILURE
 
 
@@ -261,8 +265,8 @@ def get_or_create_otel_tracer() -> Tuple[bool, Tracer]:
                 tracer_provider.add_span_processor(GenAISpanProcessor())
                 trace.set_tracer_provider(tracer_provider)
 
-            except Exception as e:
-                logger.warning(f"{TracingErrors.FAILED_TO_INITIALIZE_OPENTELEMETRY_TRACING} {(str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT)}")
+            except Exception:
+                logger.warning(f"{TracingErrors.FAILED_TO_INITIALIZE_OPENTELEMETRY_TRACING} {(traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT)}")
                 tracing_enabled = False
         else:
             # No tracer provider nor OTEL_EXPORTER_OTLP_ENDPOINT set -> tracing is disabled
@@ -281,11 +285,11 @@ def get_traced_request_and_span(tracing_enabled: bool, tracer: Tracer, span: Opt
             # Inject the span context into the request headers to be used by the backend service to continue the trace
             propagate.inject(request.headers)
             span = enrich_span_from_request(span, request)
-        except Exception as e:
+        except Exception:
             logger.warning(
                 "%s %s",
                 TracingErrors.FAILED_TO_CREATE_SPAN_FOR_REQUEST,
-                str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+                traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
             )
             if span:
                 end_span(span=span)
@@ -304,11 +308,11 @@ def get_traced_response(tracing_enabled: bool, tracer: Tracer, span: Optional[Sp
         enrich_span_from_response(
             tracer, span, operation_id, response
         )
-    except Exception as e:
+    except Exception:
         logger.warning(
             "%s %s",
             TracingErrors.FAILED_TO_ENRICH_SPAN_WITH_RESPONSE,
-            str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+            traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
         )
     if span:
         end_span(span=span)
@@ -321,7 +325,7 @@ def get_response_and_error(tracing_enabled: bool, tracer: Tracer, span: Optional
             if error:
                 span.record_exception(error)
                 span.set_status(Status(StatusCode.ERROR, str(error)))
-            if hasattr(response, "_content"):
+            if hasattr(response, "_content") and response._content:
                 response_body = json.loads(response._content)
                 if response_body.get("object", "") == "error":
                     if error_msg := response_body.get("message", ""):
@@ -336,11 +340,11 @@ def get_response_and_error(tracing_enabled: bool, tracer: Tracer, span: Optional
                                 span.set_attribute(attribute, value)
             span.end()
             span = None
-        except Exception as e:
+        except Exception:
             logger.warning(
                 "%s %s",
                 TracingErrors.FAILED_TO_HANDLE_ERROR_IN_SPAN,
-                str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+                traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
             )
 
             if span:
@@ -352,11 +356,11 @@ def get_response_and_error(tracing_enabled: bool, tracer: Tracer, span: Optional
 def end_span(span: Span) -> None:
     try:
         span.end()
-    except Exception as e:
+    except Exception:
         logger.warning(
             "%s %s",
             TracingErrors.FAILED_TO_END_SPAN,
-            str(e) if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+            traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
         )
 
 class TracedResponse(httpx.Response):
