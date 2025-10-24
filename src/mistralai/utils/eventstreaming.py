@@ -238,11 +238,9 @@ def _parse_event(
 
 
 def _peek_sequence(position: int, buffer: bytearray, sequence: bytes):
-    if len(sequence) > (len(buffer) - position):
+    buffer_len = len(buffer)
+    seq_len = len(sequence)
+    if position + seq_len > buffer_len:
         return None
-
-    for i, seq in enumerate(sequence):
-        if buffer[position + i] != seq:
-            return None
-
-    return sequence
+    view = memoryview(buffer)
+    return sequence if view[position:position + seq_len] == sequence else None
