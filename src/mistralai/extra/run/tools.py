@@ -2,7 +2,6 @@ import itertools
 import logging
 from dataclasses import dataclass
 import inspect
-from typing import Dict
 
 from pydantic import Field, create_model
 from pydantic.fields import FieldInfo
