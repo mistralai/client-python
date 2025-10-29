@@ -23,7 +23,8 @@ from mistralai.extra.run.result import RunOutputEntries
 from mistralai.models import (
     FunctionResultEntry,
     FunctionTool,
-    Function,
+    FunctionToolTypedDict,
+    ToolTypedDict,
     FunctionCallEntry,
 )
 
