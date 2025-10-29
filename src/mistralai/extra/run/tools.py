@@ -141,7 +141,7 @@ def _get_function_parameters(
     return schema
 
 
-def create_tool_call(func: Callable) -> Dict:
+def create_tool_call(func: Callable) -> FunctionToolTypedDict | ToolTypedDict:
     """Parse a function docstring / type annotations to create a FunctionToolTypedDict or a ToolTypedDict."""
     name = func.__name__
 
