@@ -48,7 +48,7 @@ class RunCoroutine:
 @dataclass
 class RunMCPTool:
     name: str
-    tool: FunctionToolTypedDict
+    tool: FunctionTool
     mcp_client: MCPClientProtocol
 
 
