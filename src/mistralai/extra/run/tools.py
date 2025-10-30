@@ -35,20 +35,20 @@ logger = logging.getLogger(__name__)
 class RunFunction:
     name: str
     callable: Callable
-    tool: FunctionTool
+    tool: Union[FunctionToolTypedDict, ToolTypedDict]
 
 
 @dataclass
 class RunCoroutine:
     name: str
     awaitable: Callable
-    tool: FunctionTool
+    tool: Union[FunctionToolTypedDict, ToolTypedDict]
 
 
 @dataclass
 class RunMCPTool:
     name: str
-    tool: FunctionTool
+    tool: FunctionToolTypedDict
     mcp_client: MCPClientProtocol
 
 
@@ -141,7 +141,7 @@ def _get_function_parameters(
     return schema
 
 
-def create_tool_call(func: Callable) -> FunctionToolTypedDict | ToolTypedDict:
+def create_tool_call(func: Callable) -> Union[FunctionToolTypedDict, ToolTypedDict]:
     """Parse a function docstring / type annotations to create a FunctionToolTypedDict or a ToolTypedDict."""
     name = func.__name__
 
