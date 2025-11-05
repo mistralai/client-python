@@ -24,7 +24,17 @@ def convert_to_parsed_chat_completion_response(response: ChatCompletionResponse,
                     parsed=None
                 )
                 if isinstance(parsed_message.content, str):
-                    parsed_message.parsed = pydantic_model_from_json(json.loads(parsed_message.content), response_format)
+                    # Validate content is non-empty and valid JSON before parsing
+                    content = parsed_message.content.strip()
+                    if content:
+                        try:
+                            parsed_message.parsed = pydantic_model_from_json(json.loads(content), response_format)
+                        except json.JSONDecodeError:
+                            # Handle invalid JSON gracefully - treat as unparseable content
+                            parsed_message.parsed = None
+                    else:
+                        # Empty or whitespace-only content
+                        parsed_message.parsed = None
                 elif parsed_message.content is None:
                     parsed_message.parsed = None
                 else:
