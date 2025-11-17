@@ -29,16 +29,14 @@ def retrieve_payment_status(data: Dict[str, List], transaction_id: str) -> str:
     for i, r in enumerate(data["transaction_id"]):
         if r == transaction_id:
             return json.dumps({"status": data["payment_status"][i]})
-        else:
-            return json.dumps({"status": "Error - transaction id not found"})
+    return json.dumps({"status": "Error - transaction id not found"})
 
 
 def retrieve_payment_date(data: Dict[str, List], transaction_id: str) -> str:
     for i, r in enumerate(data["transaction_id"]):
         if r == transaction_id:
             return json.dumps({"date": data["payment_date"][i]})
-        else:
-            return json.dumps({"status": "Error - transaction id not found"})
+    return json.dumps({"status": "Error - transaction id not found"})
 
 
 names_to_functions = {
