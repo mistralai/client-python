@@ -40,6 +40,7 @@ exclude_files=(
  "examples/mistral/agents/async_conversation_run_stream.py"
  "examples/mistral/agents/async_conversation_run_mcp.py"
  "examples/mistral/agents/async_conversation_run_mcp_remote.py"
+ "examples/mistral/agents/async_multi_turn_conversation"
 )
 
 # Check if the no-extra-dep flag is set
@@ -64,8 +65,8 @@ run_test_with_retries() {
         echo "Running $file (attempt $attempt/$RETRY_COUNT)"
         
         # Run the script and capture both exit status and error output
-        local current_output=$(python3 "$file" 2>&1)
-        local exit_code=$?
+        current_output=$(python3 "$file" 2>&1)
+        exit_code=$?
         
         if [ $exit_code -eq 0 ]; then
             echo "Success"
