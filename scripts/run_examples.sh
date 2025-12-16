@@ -39,21 +39,25 @@ exclude_files=(
  "examples/mistral/mcp_servers/stdio_server.py"
  "examples/mistral/agents/async_conversation_run_stream.py"
  "examples/mistral/agents/async_conversation_run_mcp.py"
- "examples/mistral/agents/async_conversation_run_mcp_remote.py"
- "examples/mistral/agents/async_multi_turn_conversation"
+  "examples/mistral/agents/async_conversation_run_mcp_remote.py"
 )
 
 # Check if the no-extra-dep flag is set
 if [ "$NO_EXTRA_DEP" = true ]; then
     # Add more files to the exclude list
     exclude_files+=(
-      "examples/mistral/agents/async_conversation_run_mcp_remote.py"
       "examples/mistral/agents/async_conversation_run_stream.py"
       "examples/mistral/agents/async_conversation_run.py"
+      "examples/mistral/agents/async_multi_turn_conversation.py"
     )
 fi
 
 failed=0
+
+echo "Skipping scripts"
+for file in "${exclude_files[@]}"; do
+    echo "$file"
+done
 
 # Function to run a test with retries
 run_test_with_retries() {
