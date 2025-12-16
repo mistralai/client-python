@@ -15,6 +15,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class FilesAPIRoutesListFilesRequestTypedDict(TypedDict):
     page: NotRequired[int]
     page_size: NotRequired[int]
+    include_total: NotRequired[bool]
     sample_type: NotRequired[Nullable[List[SampleType]]]
     source: NotRequired[Nullable[List[Source]]]
     search: NotRequired[Nullable[str]]
@@ -31,6 +32,11 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 100
+
+    include_total: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = True
 
     sample_type: Annotated[
         OptionalNullable[
@@ -63,6 +69,7 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
         optional_fields = [
             "page",
             "page_size",
+            "include_total",
             "sample_type",
             "source",
             "search",

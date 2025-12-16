@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -20,7 +20,10 @@ class AgentConversationTypedDict(TypedDict):
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
     r"""Description of the what the conversation is about."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    r"""Custom metadata for the conversation."""
     object: NotRequired[AgentConversationObject]
+    agent_version: NotRequired[Nullable[int]]
 
 
 class AgentConversation(BaseModel):
@@ -38,12 +41,17 @@ class AgentConversation(BaseModel):
     description: OptionalNullable[str] = UNSET
     r"""Description of the what the conversation is about."""
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    r"""Custom metadata for the conversation."""
+
     object: Optional[AgentConversationObject] = "conversation"
+
+    agent_version: OptionalNullable[int] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["name", "description", "object"]
-        nullable_fields = ["name", "description"]
+        optional_fields = ["name", "description", "metadata", "object", "agent_version"]
+        nullable_fields = ["name", "description", "metadata", "agent_version"]
         null_default_fields = []
 
         serialized = handler(self)

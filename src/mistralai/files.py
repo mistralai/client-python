@@ -212,6 +212,7 @@ class Files(BaseSDK):
         *,
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
+        include_total: Optional[bool] = True,
         sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
         source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
@@ -227,6 +228,7 @@ class Files(BaseSDK):
 
         :param page:
         :param page_size:
+        :param include_total:
         :param sample_type:
         :param source:
         :param search:
@@ -249,6 +251,7 @@ class Files(BaseSDK):
         request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
+            include_total=include_total,
             sample_type=sample_type,
             source=source,
             search=search,
@@ -310,6 +313,7 @@ class Files(BaseSDK):
         *,
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
+        include_total: Optional[bool] = True,
         sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
         source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
@@ -325,6 +329,7 @@ class Files(BaseSDK):
 
         :param page:
         :param page_size:
+        :param include_total:
         :param sample_type:
         :param source:
         :param search:
@@ -347,6 +352,7 @@ class Files(BaseSDK):
         request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
+            include_total=include_total,
             sample_type=sample_type,
             source=source,
             search=search,

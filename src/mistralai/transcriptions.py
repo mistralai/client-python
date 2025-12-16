@@ -29,7 +29,7 @@ class Transcriptions(BaseSDK):
     ) -> models.TranscriptionResponse:
         r"""Create Transcription
 
-        :param model:
+        :param model: ID of the model to be used.
         :param file:
         :param file_url: Url of a file to be transcribed
         :param file_id: ID of a file uploaded to /v1/files
@@ -131,7 +131,7 @@ class Transcriptions(BaseSDK):
     ) -> models.TranscriptionResponse:
         r"""Create Transcription
 
-        :param model:
+        :param model: ID of the model to be used.
         :param file:
         :param file_url: Url of a file to be transcribed
         :param file_id: ID of a file uploaded to /v1/files
@@ -231,7 +231,7 @@ class Transcriptions(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> eventstreaming.EventStream[models.TranscriptionStreamEvents]:
-        r"""Create streaming transcription (SSE)
+        r"""Create Streaming Transcription (SSE)
 
         :param model:
         :param file:
@@ -343,7 +343,7 @@ class Transcriptions(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> eventstreaming.EventStreamAsync[models.TranscriptionStreamEvents]:
-        r"""Create streaming transcription (SSE)
+        r"""Create Streaming Transcription (SSE)
 
         :param model:
         :param file:

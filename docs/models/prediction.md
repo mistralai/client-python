@@ -1,5 +1,7 @@
 # Prediction
 
+Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
+
 
 ## Fields
 

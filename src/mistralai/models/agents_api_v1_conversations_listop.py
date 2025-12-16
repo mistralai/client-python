@@ -3,15 +3,17 @@
 from __future__ import annotations
 from .agentconversation import AgentConversation, AgentConversationTypedDict
 from .modelconversation import ModelConversation, ModelConversationTypedDict
-from mistralai.types import BaseModel
+from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import FieldMetadata, QueryParamMetadata
-from typing import Optional, Union
+from pydantic import model_serializer
+from typing import Any, Dict, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class AgentsAPIV1ConversationsListRequestTypedDict(TypedDict):
     page: NotRequired[int]
     page_size: NotRequired[int]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class AgentsAPIV1ConversationsListRequest(BaseModel):
@@ -24,6 +26,41 @@ class AgentsAPIV1ConversationsListRequest(BaseModel):
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 100
+
+    metadata: Annotated[
+        OptionalNullable[Dict[str, Any]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = ["page", "page_size", "metadata"]
+        nullable_fields = ["metadata"]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m
 
 
 ResponseBodyTypedDict = TypeAliasType(

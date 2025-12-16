@@ -12,25 +12,35 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class BatchJobInTypedDict(TypedDict):
     input_files: List[str]
+    r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""
     endpoint: APIEndpoint
     model: NotRequired[Nullable[str]]
+    r"""The model to be used for batch inference."""
     agent_id: NotRequired[Nullable[str]]
+    r"""In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here."""
     metadata: NotRequired[Nullable[Dict[str, str]]]
+    r"""The metadata of your choice to be associated with the batch inference job."""
     timeout_hours: NotRequired[int]
+    r"""The timeout in hours for the batch inference job."""
 
 
 class BatchJobIn(BaseModel):
     input_files: List[str]
+    r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""
 
     endpoint: Annotated[APIEndpoint, PlainValidator(validate_open_enum(False))]
 
     model: OptionalNullable[str] = UNSET
+    r"""The model to be used for batch inference."""
 
     agent_id: OptionalNullable[str] = UNSET
+    r"""In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here."""
 
     metadata: OptionalNullable[Dict[str, str]] = UNSET
+    r"""The metadata of your choice to be associated with the batch inference job."""
 
     timeout_hours: Optional[int] = 24
+    r"""The timeout in hours for the batch inference job."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

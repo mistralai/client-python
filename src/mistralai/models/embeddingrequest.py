@@ -13,33 +13,33 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 EmbeddingRequestInputsTypedDict = TypeAliasType(
     "EmbeddingRequestInputsTypedDict", Union[str, List[str]]
 )
-r"""Text to embed."""
+r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
 
 
 EmbeddingRequestInputs = TypeAliasType("EmbeddingRequestInputs", Union[str, List[str]])
-r"""Text to embed."""
+r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
 
 
 class EmbeddingRequestTypedDict(TypedDict):
     model: str
-    r"""ID of the model to use."""
+    r"""The ID of the model to be used for embedding."""
     inputs: EmbeddingRequestInputsTypedDict
-    r"""Text to embed."""
+    r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
     output_dimension: NotRequired[Nullable[int]]
-    r"""The dimension of the output embeddings."""
+    r"""The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used."""
     output_dtype: NotRequired[EmbeddingDtype]
     encoding_format: NotRequired[EncodingFormat]
 
 
 class EmbeddingRequest(BaseModel):
     model: str
-    r"""ID of the model to use."""
+    r"""The ID of the model to be used for embedding."""
 
     inputs: Annotated[EmbeddingRequestInputs, pydantic.Field(alias="input")]
-    r"""Text to embed."""
+    r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
 
     output_dimension: OptionalNullable[int] = UNSET
-    r"""The dimension of the output embeddings."""
+    r"""The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used."""
 
     output_dtype: Optional[EmbeddingDtype] = None
 

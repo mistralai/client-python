@@ -7,7 +7,7 @@ from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -20,6 +20,9 @@ r"""Document to run OCR on"""
 
 Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURLChunk])
 r"""Document to run OCR on"""
+
+
+TableFormat = Literal["markdown", "html"]
 
 
 class OCRRequestTypedDict(TypedDict):
@@ -39,6 +42,9 @@ class OCRRequestTypedDict(TypedDict):
     r"""Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field"""
     document_annotation_format: NotRequired[Nullable[ResponseFormatTypedDict]]
     r"""Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field"""
+    table_format: NotRequired[Nullable[TableFormat]]
+    extract_header: NotRequired[bool]
+    extract_footer: NotRequired[bool]
 
 
 class OCRRequest(BaseModel):
@@ -67,6 +73,12 @@ class OCRRequest(BaseModel):
     document_annotation_format: OptionalNullable[ResponseFormat] = UNSET
     r"""Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field"""
 
+    table_format: OptionalNullable[TableFormat] = UNSET
+
+    extract_header: Optional[bool] = None
+
+    extract_footer: Optional[bool] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -77,6 +89,9 @@ class OCRRequest(BaseModel):
             "image_min_size",
             "bbox_annotation_format",
             "document_annotation_format",
+            "table_format",
+            "extract_header",
+            "extract_footer",
         ]
         nullable_fields = [
             "model",
@@ -86,6 +101,7 @@ class OCRRequest(BaseModel):
             "image_min_size",
             "bbox_annotation_format",
             "document_annotation_format",
+            "table_format",
         ]
         null_default_fields = []
 
