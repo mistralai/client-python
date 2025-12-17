@@ -5,17 +5,22 @@ from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Any, Dict, Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionEntryObject = Literal["entry"]
 
 ToolExecutionEntryType = Literal["tool.execution"]
 
+NameTypedDict = TypeAliasType("NameTypedDict", Union[BuiltInConnectors, str])
+
+
+Name = TypeAliasType("Name", Union[BuiltInConnectors, str])
+
 
 class ToolExecutionEntryTypedDict(TypedDict):
-    name: BuiltInConnectors
+    name: NameTypedDict
     arguments: str
     object: NotRequired[ToolExecutionEntryObject]
     type: NotRequired[ToolExecutionEntryType]
@@ -26,7 +31,7 @@ class ToolExecutionEntryTypedDict(TypedDict):
 
 
 class ToolExecutionEntry(BaseModel):
-    name: BuiltInConnectors
+    name: Name
 
     arguments: str
 

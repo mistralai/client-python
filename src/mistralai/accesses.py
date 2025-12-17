@@ -194,10 +194,10 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        org_id: str,
         level: models.ShareEnum,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -208,10 +208,10 @@ class Accesses(BaseSDK):
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
 
         :param library_id:
-        :param org_id:
         :param level:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -300,10 +300,10 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        org_id: str,
         level: models.ShareEnum,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -314,10 +314,10 @@ class Accesses(BaseSDK):
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
 
         :param library_id:
-        :param org_id:
         :param level:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -406,9 +406,9 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        org_id: str,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -419,9 +419,9 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
 
         :param library_id:
-        :param org_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -509,9 +509,9 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        org_id: str,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -522,9 +522,9 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
 
         :param library_id:
-        :param org_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

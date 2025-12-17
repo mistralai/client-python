@@ -78,7 +78,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list(page=0, page_size=100)
+    res = mistral.files.list(page=0, page_size=100, include_total=True)
 
     # Handle response
     print(res)
@@ -91,6 +91,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `include_total`                                                     | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sample_type`                                                       | List[[models.SampleType](../../models/sampletype.md)]               | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `source`                                                            | List[[models.Source](../../models/source.md)]                       | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |

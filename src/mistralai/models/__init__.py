@@ -41,6 +41,10 @@ if TYPE_CHECKING:
         AgentHandoffStartedEventType,
         AgentHandoffStartedEventTypedDict,
     )
+    from .agents_api_v1_agents_deleteop import (
+        AgentsAPIV1AgentsDeleteRequest,
+        AgentsAPIV1AgentsDeleteRequestTypedDict,
+    )
     from .agents_api_v1_agents_getop import (
         AgentsAPIV1AgentsGetRequest,
         AgentsAPIV1AgentsGetRequestTypedDict,
@@ -64,6 +68,10 @@ if TYPE_CHECKING:
     from .agents_api_v1_conversations_appendop import (
         AgentsAPIV1ConversationsAppendRequest,
         AgentsAPIV1ConversationsAppendRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_deleteop import (
+        AgentsAPIV1ConversationsDeleteRequest,
+        AgentsAPIV1ConversationsDeleteRequestTypedDict,
     )
     from .agents_api_v1_conversations_getop import (
         AgentsAPIV1ConversationsGetRequest,
@@ -374,7 +382,12 @@ if TYPE_CHECKING:
     )
     from .documentout import DocumentOut, DocumentOutTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
-    from .documentupdatein import DocumentUpdateIn, DocumentUpdateInTypedDict
+    from .documentupdatein import (
+        Attributes,
+        AttributesTypedDict,
+        DocumentUpdateIn,
+        DocumentUpdateInTypedDict,
+    )
     from .documenturlchunk import (
         DocumentURLChunk,
         DocumentURLChunkType,
@@ -720,8 +733,15 @@ if TYPE_CHECKING:
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
-    from .ocrrequest import Document, DocumentTypedDict, OCRRequest, OCRRequestTypedDict
+    from .ocrrequest import (
+        Document,
+        DocumentTypedDict,
+        OCRRequest,
+        OCRRequestTypedDict,
+        TableFormat,
+    )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
+    from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
@@ -732,6 +752,7 @@ if TYPE_CHECKING:
         ReferenceChunkType,
         ReferenceChunkTypedDict,
     )
+    from .requestsource import RequestSource
     from .responsedoneevent import (
         ResponseDoneEvent,
         ResponseDoneEventType,
@@ -792,15 +813,21 @@ if TYPE_CHECKING:
     from .toolchoiceenum import ToolChoiceEnum
     from .toolexecutiondeltaevent import (
         ToolExecutionDeltaEvent,
+        ToolExecutionDeltaEventName,
+        ToolExecutionDeltaEventNameTypedDict,
         ToolExecutionDeltaEventType,
         ToolExecutionDeltaEventTypedDict,
     )
     from .toolexecutiondoneevent import (
         ToolExecutionDoneEvent,
+        ToolExecutionDoneEventName,
+        ToolExecutionDoneEventNameTypedDict,
         ToolExecutionDoneEventType,
         ToolExecutionDoneEventTypedDict,
     )
     from .toolexecutionentry import (
+        Name,
+        NameTypedDict,
         ToolExecutionEntry,
         ToolExecutionEntryObject,
         ToolExecutionEntryType,
@@ -808,6 +835,8 @@ if TYPE_CHECKING:
     )
     from .toolexecutionstartedevent import (
         ToolExecutionStartedEvent,
+        ToolExecutionStartedEventName,
+        ToolExecutionStartedEventNameTypedDict,
         ToolExecutionStartedEventType,
         ToolExecutionStartedEventTypedDict,
     )
@@ -928,6 +957,8 @@ __all__ = [
     "AgentUpdateRequestTools",
     "AgentUpdateRequestToolsTypedDict",
     "AgentUpdateRequestTypedDict",
+    "AgentsAPIV1AgentsDeleteRequest",
+    "AgentsAPIV1AgentsDeleteRequestTypedDict",
     "AgentsAPIV1AgentsGetRequest",
     "AgentsAPIV1AgentsGetRequestTypedDict",
     "AgentsAPIV1AgentsListRequest",
@@ -940,6 +971,8 @@ __all__ = [
     "AgentsAPIV1ConversationsAppendRequestTypedDict",
     "AgentsAPIV1ConversationsAppendStreamRequest",
     "AgentsAPIV1ConversationsAppendStreamRequestTypedDict",
+    "AgentsAPIV1ConversationsDeleteRequest",
+    "AgentsAPIV1ConversationsDeleteRequestTypedDict",
     "AgentsAPIV1ConversationsGetRequest",
     "AgentsAPIV1ConversationsGetRequestTypedDict",
     "AgentsAPIV1ConversationsGetResponseV1ConversationsGet",
@@ -980,6 +1013,8 @@ __all__ = [
     "AssistantMessageContentTypedDict",
     "AssistantMessageRole",
     "AssistantMessageTypedDict",
+    "Attributes",
+    "AttributesTypedDict",
     "AudioChunk",
     "AudioChunkType",
     "AudioChunkTypedDict",
@@ -1211,6 +1246,7 @@ __all__ = [
     "FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict",
     "FineTuneableModelType",
     "FinishReason",
+    "Format",
     "Function",
     "FunctionCall",
     "FunctionCallEntry",
@@ -1412,6 +1448,8 @@ __all__ = [
     "ModerationObjectTypedDict",
     "ModerationResponse",
     "ModerationResponseTypedDict",
+    "Name",
+    "NameTypedDict",
     "NoResponseError",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
@@ -1423,6 +1461,8 @@ __all__ = [
     "OCRRequestTypedDict",
     "OCRResponse",
     "OCRResponseTypedDict",
+    "OCRTableObject",
+    "OCRTableObjectTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
     "Object",
@@ -1444,6 +1484,7 @@ __all__ = [
     "ReferenceChunkTypedDict",
     "Repositories",
     "RepositoriesTypedDict",
+    "RequestSource",
     "Response1",
     "Response1TypedDict",
     "ResponseBody",
@@ -1490,6 +1531,7 @@ __all__ = [
     "SystemMessageContentChunksTypedDict",
     "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
+    "TableFormat",
     "TextChunk",
     "TextChunkType",
     "TextChunkTypedDict",
@@ -1506,9 +1548,13 @@ __all__ = [
     "ToolChoiceEnum",
     "ToolChoiceTypedDict",
     "ToolExecutionDeltaEvent",
+    "ToolExecutionDeltaEventName",
+    "ToolExecutionDeltaEventNameTypedDict",
     "ToolExecutionDeltaEventType",
     "ToolExecutionDeltaEventTypedDict",
     "ToolExecutionDoneEvent",
+    "ToolExecutionDoneEventName",
+    "ToolExecutionDoneEventNameTypedDict",
     "ToolExecutionDoneEventType",
     "ToolExecutionDoneEventTypedDict",
     "ToolExecutionEntry",
@@ -1516,6 +1562,8 @@ __all__ = [
     "ToolExecutionEntryType",
     "ToolExecutionEntryTypedDict",
     "ToolExecutionStartedEvent",
+    "ToolExecutionStartedEventName",
+    "ToolExecutionStartedEventNameTypedDict",
     "ToolExecutionStartedEventType",
     "ToolExecutionStartedEventTypedDict",
     "ToolFileChunk",
@@ -1612,6 +1660,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventType": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
+    "AgentsAPIV1AgentsDeleteRequest": ".agents_api_v1_agents_deleteop",
+    "AgentsAPIV1AgentsDeleteRequestTypedDict": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsGetRequest": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsGetRequestTypedDict": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsListRequest": ".agents_api_v1_agents_listop",
@@ -1624,6 +1674,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentsAPIV1ConversationsAppendStreamRequestTypedDict": ".agents_api_v1_conversations_append_streamop",
     "AgentsAPIV1ConversationsAppendRequest": ".agents_api_v1_conversations_appendop",
     "AgentsAPIV1ConversationsAppendRequestTypedDict": ".agents_api_v1_conversations_appendop",
+    "AgentsAPIV1ConversationsDeleteRequest": ".agents_api_v1_conversations_deleteop",
+    "AgentsAPIV1ConversationsDeleteRequestTypedDict": ".agents_api_v1_conversations_deleteop",
     "AgentsAPIV1ConversationsGetRequest": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetRequestTypedDict": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetResponseV1ConversationsGet": ".agents_api_v1_conversations_getop",
@@ -1860,6 +1912,8 @@ _dynamic_imports: dict[str, str] = {
     "DocumentOutTypedDict": ".documentout",
     "DocumentTextContent": ".documenttextcontent",
     "DocumentTextContentTypedDict": ".documenttextcontent",
+    "Attributes": ".documentupdatein",
+    "AttributesTypedDict": ".documentupdatein",
     "DocumentUpdateIn": ".documentupdatein",
     "DocumentUpdateInTypedDict": ".documentupdatein",
     "DocumentURLChunk": ".documenturlchunk",
@@ -2126,8 +2180,12 @@ _dynamic_imports: dict[str, str] = {
     "DocumentTypedDict": ".ocrrequest",
     "OCRRequest": ".ocrrequest",
     "OCRRequestTypedDict": ".ocrrequest",
+    "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
+    "Format": ".ocrtableobject",
+    "OCRTableObject": ".ocrtableobject",
+    "OCRTableObjectTypedDict": ".ocrtableobject",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "OutputContentChunks": ".outputcontentchunks",
@@ -2141,6 +2199,7 @@ _dynamic_imports: dict[str, str] = {
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkType": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
+    "RequestSource": ".requestsource",
     "ResponseDoneEvent": ".responsedoneevent",
     "ResponseDoneEventType": ".responsedoneevent",
     "ResponseDoneEventTypedDict": ".responsedoneevent",
@@ -2197,16 +2256,24 @@ _dynamic_imports: dict[str, str] = {
     "ToolChoiceTypedDict": ".toolchoice",
     "ToolChoiceEnum": ".toolchoiceenum",
     "ToolExecutionDeltaEvent": ".toolexecutiondeltaevent",
+    "ToolExecutionDeltaEventName": ".toolexecutiondeltaevent",
+    "ToolExecutionDeltaEventNameTypedDict": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventType": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventTypedDict": ".toolexecutiondeltaevent",
     "ToolExecutionDoneEvent": ".toolexecutiondoneevent",
+    "ToolExecutionDoneEventName": ".toolexecutiondoneevent",
+    "ToolExecutionDoneEventNameTypedDict": ".toolexecutiondoneevent",
     "ToolExecutionDoneEventType": ".toolexecutiondoneevent",
     "ToolExecutionDoneEventTypedDict": ".toolexecutiondoneevent",
+    "Name": ".toolexecutionentry",
+    "NameTypedDict": ".toolexecutionentry",
     "ToolExecutionEntry": ".toolexecutionentry",
     "ToolExecutionEntryObject": ".toolexecutionentry",
     "ToolExecutionEntryType": ".toolexecutionentry",
     "ToolExecutionEntryTypedDict": ".toolexecutionentry",
     "ToolExecutionStartedEvent": ".toolexecutionstartedevent",
+    "ToolExecutionStartedEventName": ".toolexecutionstartedevent",
+    "ToolExecutionStartedEventNameTypedDict": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventType": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventTypedDict": ".toolexecutionstartedevent",
     "ToolFileChunk": ".toolfilechunk",

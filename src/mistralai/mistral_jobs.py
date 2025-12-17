@@ -237,12 +237,12 @@ class MistralJobs(BaseSDK):
 
         Create a new batch job, it will be queued for processing.
 
-        :param input_files:
+        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
         :param endpoint:
-        :param model:
-        :param agent_id:
-        :param metadata:
-        :param timeout_hours:
+        :param model: The model to be used for batch inference.
+        :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.
+        :param metadata: The metadata of your choice to be associated with the batch inference job.
+        :param timeout_hours: The timeout in hours for the batch inference job.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -338,12 +338,12 @@ class MistralJobs(BaseSDK):
 
         Create a new batch job, it will be queued for processing.
 
-        :param input_files:
+        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
         :param endpoint:
-        :param model:
-        :param agent_id:
-        :param metadata:
-        :param timeout_hours:
+        :param model: The model to be used for batch inference.
+        :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.
+        :param metadata: The metadata of your choice to be associated with the batch inference job.
+        :param timeout_hours: The timeout in hours for the batch inference job.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

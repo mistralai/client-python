@@ -6,7 +6,7 @@ from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Documents(BaseSDK):
@@ -19,6 +19,7 @@ class Documents(BaseSDK):
         search: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 100,
         page: Optional[int] = 0,
+        filters_attributes: OptionalNullable[str] = UNSET,
         sort_by: Optional[str] = "created_at",
         sort_order: Optional[str] = "desc",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -26,7 +27,7 @@ class Documents(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.ListDocumentOut:
-        r"""List document in a given library.
+        r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
 
@@ -34,6 +35,7 @@ class Documents(BaseSDK):
         :param search:
         :param page_size:
         :param page:
+        :param filters_attributes:
         :param sort_by:
         :param sort_order:
         :param retries: Override the default retry configuration for this method
@@ -56,6 +58,7 @@ class Documents(BaseSDK):
             search=search,
             page_size=page_size,
             page=page,
+            filters_attributes=filters_attributes,
             sort_by=sort_by,
             sort_order=sort_order,
         )
@@ -123,6 +126,7 @@ class Documents(BaseSDK):
         search: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 100,
         page: Optional[int] = 0,
+        filters_attributes: OptionalNullable[str] = UNSET,
         sort_by: Optional[str] = "created_at",
         sort_order: Optional[str] = "desc",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -130,7 +134,7 @@ class Documents(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.ListDocumentOut:
-        r"""List document in a given library.
+        r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
 
@@ -138,6 +142,7 @@ class Documents(BaseSDK):
         :param search:
         :param page_size:
         :param page:
+        :param filters_attributes:
         :param sort_by:
         :param sort_order:
         :param retries: Override the default retry configuration for this method
@@ -160,6 +165,7 @@ class Documents(BaseSDK):
             search=search,
             page_size=page_size,
             page=page,
+            filters_attributes=filters_attributes,
             sort_by=sort_by,
             sort_order=sort_order,
         )
@@ -612,6 +618,9 @@ class Documents(BaseSDK):
         library_id: str,
         document_id: str,
         name: OptionalNullable[str] = UNSET,
+        attributes: OptionalNullable[
+            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -624,6 +633,7 @@ class Documents(BaseSDK):
         :param library_id:
         :param document_id:
         :param name:
+        :param attributes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -644,6 +654,7 @@ class Documents(BaseSDK):
             document_id=document_id,
             document_update_in=models.DocumentUpdateIn(
                 name=name,
+                attributes=attributes,
             ),
         )
 
@@ -716,6 +727,9 @@ class Documents(BaseSDK):
         library_id: str,
         document_id: str,
         name: OptionalNullable[str] = UNSET,
+        attributes: OptionalNullable[
+            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -728,6 +742,7 @@ class Documents(BaseSDK):
         :param library_id:
         :param document_id:
         :param name:
+        :param attributes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -748,6 +763,7 @@ class Documents(BaseSDK):
             document_id=document_id,
             document_update_in=models.DocumentUpdateIn(
                 name=name,
+                attributes=attributes,
             ),
         )
 

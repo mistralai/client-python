@@ -28,6 +28,9 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        extract_header: Optional[bool] = None,
+        extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -44,6 +47,9 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param table_format:
+        :param extract_header:
+        :param extract_footer:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -73,6 +79,9 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            table_format=table_format,
+            extract_header=extract_header,
+            extract_footer=extract_footer,
         )
 
         req = self._build_request(
@@ -150,6 +159,9 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        extract_header: Optional[bool] = None,
+        extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -166,6 +178,9 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param table_format:
+        :param extract_header:
+        :param extract_footer:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -195,6 +210,9 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            table_format=table_format,
+            extract_header=extract_header,
+            extract_footer=extract_footer,
         )
 
         req = self._build_request_async(

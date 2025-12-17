@@ -11,7 +11,7 @@ class SharingOutTypedDict(TypedDict):
     org_id: str
     role: str
     share_with_type: str
-    share_with_uuid: str
+    share_with_uuid: Nullable[str]
     user_id: NotRequired[Nullable[str]]
 
 
@@ -24,14 +24,14 @@ class SharingOut(BaseModel):
 
     share_with_type: str
 
-    share_with_uuid: str
+    share_with_uuid: Nullable[str]
 
     user_id: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["user_id"]
-        nullable_fields = ["user_id"]
+        nullable_fields = ["user_id", "share_with_uuid"]
         null_default_fields = []
 
         serialized = handler(self)

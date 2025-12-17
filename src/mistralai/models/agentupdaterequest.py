@@ -11,7 +11,7 @@ from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -52,6 +52,8 @@ class AgentUpdateRequestTypedDict(TypedDict):
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
+    deployment_chat: NotRequired[Nullable[bool]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class AgentUpdateRequest(BaseModel):
@@ -72,6 +74,10 @@ class AgentUpdateRequest(BaseModel):
 
     handoffs: OptionalNullable[List[str]] = UNSET
 
+    deployment_chat: OptionalNullable[bool] = UNSET
+
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -82,8 +88,18 @@ class AgentUpdateRequest(BaseModel):
             "name",
             "description",
             "handoffs",
+            "deployment_chat",
+            "metadata",
         ]
-        nullable_fields = ["instructions", "model", "name", "description", "handoffs"]
+        nullable_fields = [
+            "instructions",
+            "model",
+            "name",
+            "description",
+            "handoffs",
+            "deployment_chat",
+            "metadata",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

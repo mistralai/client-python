@@ -12,7 +12,7 @@ from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -60,6 +60,8 @@ class ModelConversationTypedDict(TypedDict):
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
     r"""Description of the what the conversation is about."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    r"""Custom metadata for the conversation."""
     object: NotRequired[ModelConversationObject]
 
 
@@ -87,6 +89,9 @@ class ModelConversation(BaseModel):
     description: OptionalNullable[str] = UNSET
     r"""Description of the what the conversation is about."""
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    r"""Custom metadata for the conversation."""
+
     object: Optional[ModelConversationObject] = "conversation"
 
     @model_serializer(mode="wrap")
@@ -97,9 +102,10 @@ class ModelConversation(BaseModel):
             "completion_args",
             "name",
             "description",
+            "metadata",
             "object",
         ]
-        nullable_fields = ["instructions", "name", "description"]
+        nullable_fields = ["instructions", "name", "description", "metadata"]
         null_default_fields = []
 
         serialized = handler(self)

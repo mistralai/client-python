@@ -3,8 +3,9 @@
 from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
-from mistralai.types import BaseModel
-from typing import Literal, Optional
+from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -22,6 +23,10 @@ class ConversationRestartStreamRequestTypedDict(TypedDict):
     handoff_execution: NotRequired[ConversationRestartStreamRequestHandoffExecution]
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    r"""Custom metadata for the conversation."""
+    agent_version: NotRequired[Nullable[int]]
+    r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
 
 
 class ConversationRestartStreamRequest(BaseModel):
@@ -42,3 +47,46 @@ class ConversationRestartStreamRequest(BaseModel):
 
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
+
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    r"""Custom metadata for the conversation."""
+
+    agent_version: OptionalNullable[int] = UNSET
+    r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = [
+            "stream",
+            "store",
+            "handoff_execution",
+            "completion_args",
+            "metadata",
+            "agent_version",
+        ]
+        nullable_fields = ["metadata", "agent_version"]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m

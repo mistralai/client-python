@@ -7,7 +7,7 @@
 
 ### Available Operations
 
-* [list](#list) - List document in a given library.
+* [list](#list) - List documents in a given library.
 * [upload](#upload) - Upload a new document.
 * [get](#get) - Retrieve the metadata of a specific document.
 * [update](#update) - Update the metadata of a specific document.
@@ -49,6 +49,7 @@ with Mistral(
 | `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `filters_attributes`                                                | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sort_by`                                                           | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sort_order`                                                        | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
@@ -181,6 +182,7 @@ with Mistral(
 | `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `document_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `name`                                                              | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `attributes`                                                        | Dict[str, [models.Attributes](../../models/attributes.md)]          | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

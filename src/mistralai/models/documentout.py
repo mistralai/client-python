@@ -4,20 +4,21 @@ from __future__ import annotations
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
+from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
 
 class DocumentOutTypedDict(TypedDict):
     id: str
     library_id: str
-    hash: str
-    mime_type: str
-    extension: str
-    size: int
+    hash: Nullable[str]
+    mime_type: Nullable[str]
+    extension: Nullable[str]
+    size: Nullable[int]
     name: str
     created_at: datetime
     processing_status: str
-    uploaded_by_id: str
+    uploaded_by_id: Nullable[str]
     uploaded_by_type: str
     tokens_processing_total: int
     summary: NotRequired[Nullable[str]]
@@ -25,6 +26,8 @@ class DocumentOutTypedDict(TypedDict):
     number_of_pages: NotRequired[Nullable[int]]
     tokens_processing_main_content: NotRequired[Nullable[int]]
     tokens_processing_summary: NotRequired[Nullable[int]]
+    url: NotRequired[Nullable[str]]
+    attributes: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class DocumentOut(BaseModel):
@@ -32,13 +35,13 @@ class DocumentOut(BaseModel):
 
     library_id: str
 
-    hash: str
+    hash: Nullable[str]
 
-    mime_type: str
+    mime_type: Nullable[str]
 
-    extension: str
+    extension: Nullable[str]
 
-    size: int
+    size: Nullable[int]
 
     name: str
 
@@ -46,7 +49,7 @@ class DocumentOut(BaseModel):
 
     processing_status: str
 
-    uploaded_by_id: str
+    uploaded_by_id: Nullable[str]
 
     uploaded_by_type: str
 
@@ -62,6 +65,10 @@ class DocumentOut(BaseModel):
 
     tokens_processing_summary: OptionalNullable[int] = UNSET
 
+    url: OptionalNullable[str] = UNSET
+
+    attributes: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -70,13 +77,22 @@ class DocumentOut(BaseModel):
             "number_of_pages",
             "tokens_processing_main_content",
             "tokens_processing_summary",
+            "url",
+            "attributes",
         ]
         nullable_fields = [
+            "hash",
+            "mime_type",
+            "extension",
+            "size",
             "summary",
             "last_processed_at",
             "number_of_pages",
+            "uploaded_by_id",
             "tokens_processing_main_content",
             "tokens_processing_summary",
+            "url",
+            "attributes",
         ]
         null_default_fields = []
 

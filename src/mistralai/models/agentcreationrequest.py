@@ -11,7 +11,7 @@ from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -52,6 +52,7 @@ class AgentCreationRequestTypedDict(TypedDict):
     r"""White-listed arguments from the completion API"""
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class AgentCreationRequest(BaseModel):
@@ -72,6 +73,8 @@ class AgentCreationRequest(BaseModel):
 
     handoffs: OptionalNullable[List[str]] = UNSET
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -80,8 +83,9 @@ class AgentCreationRequest(BaseModel):
             "completion_args",
             "description",
             "handoffs",
+            "metadata",
         ]
-        nullable_fields = ["instructions", "description", "handoffs"]
+        nullable_fields = ["instructions", "description", "handoffs", "metadata"]
         null_default_fields = []
 
         serialized = handler(self)

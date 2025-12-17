@@ -14,6 +14,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class AudioTranscriptionRequestTypedDict(TypedDict):
     model: str
+    r"""ID of the model to be used."""
     file: NotRequired[FileTypedDict]
     file_url: NotRequired[Nullable[str]]
     r"""Url of a file to be transcribed"""
@@ -29,6 +30,7 @@ class AudioTranscriptionRequestTypedDict(TypedDict):
 
 class AudioTranscriptionRequest(BaseModel):
     model: Annotated[str, FieldMetadata(multipart=True)]
+    r"""ID of the model to be used."""
 
     file: Annotated[
         Optional[File], FieldMetadata(multipart=MultipartFormMetadata(file=True))

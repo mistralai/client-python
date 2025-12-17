@@ -10,6 +10,7 @@
 * [start](#start) - Create a conversation and append entries to it.
 * [list](#list) - List all created conversations.
 * [get](#get) - Retrieve a conversation information.
+* [delete](#delete) - Delete a conversation.
 * [append](#append) - Append new entries to an existing conversation.
 * [get_history](#get_history) - Retrieve all entries in a conversation.
 * [get_messages](#get_messages) - Retrieve all messages in a conversation.
@@ -34,7 +35,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start(inputs="<value>", stream=False)
+    res = mistral.beta.conversations.start(inputs="<value>", stream=False, completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     # Handle response
     print(res)
@@ -50,11 +55,13 @@ with Mistral(
 | `store`                                                                       | *OptionalNullable[bool]*                                                      | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `handoff_execution`                                                           | [OptionalNullable[models.HandoffExecution]](../../models/handoffexecution.md) | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `instructions`                                                                | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `tools`                                                                       | List[[models.Tools](../../models/tools.md)]                                   | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `tools`                                                                       | List[[models.Tools](../../models/tools.md)]                                   | :heavy_minus_sign:                                                            | List of tools which are available to the model during the conversation.       |
 | `completion_args`                                                             | [OptionalNullable[models.CompletionArgs]](../../models/completionargs.md)     | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `name`                                                                        | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `metadata`                                                                    | Dict[str, *Any*]                                                              | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `agent_id`                                                                    | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `agent_version`                                                               | *OptionalNullable[int]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `model`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
 
@@ -98,6 +105,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `metadata`                                                          | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -152,6 +160,42 @@ with Mistral(
 | models.HTTPValidationError | 422                        | application/json           |
 | models.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## delete
+
+Delete a conversation given a conversation_id.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_delete" method="delete" path="/v1/conversations/{conversation_id}" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    mistral.beta.conversations.delete(conversation_id="<id>")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `conversation_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | ID of the conversation from which we are fetching metadata.         |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## append
 
 Run completion on the history of the conversation and the user entries. Return the new created entries.
@@ -168,7 +212,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append(conversation_id="<id>", inputs=[], stream=False, store=True, handoff_execution="server")
+    res = mistral.beta.conversations.append(conversation_id="<id>", inputs=[], stream=False, store=True, handoff_execution="server", completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     # Handle response
     print(res)
@@ -296,7 +344,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=False, store=True, handoff_execution="server")
+    res = mistral.beta.conversations.restart(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=False, store=True, handoff_execution="server", completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     # Handle response
     print(res)
@@ -314,6 +366,8 @@ with Mistral(
 | `store`                                                                                                                   | *Optional[bool]*                                                                                                          | :heavy_minus_sign:                                                                                                        | Whether to store the results into our servers or not.                                                                     |
 | `handoff_execution`                                                                                                       | [Optional[models.ConversationRestartRequestHandoffExecution]](../../models/conversationrestartrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
 | `completion_args`                                                                                                         | [Optional[models.CompletionArgs]](../../models/completionargs.md)                                                         | :heavy_minus_sign:                                                                                                        | White-listed arguments from the completion API                                                                            |
+| `metadata`                                                                                                                | Dict[str, *Any*]                                                                                                          | :heavy_minus_sign:                                                                                                        | Custom metadata for the conversation.                                                                                     |
+| `agent_version`                                                                                                           | *OptionalNullable[int]*                                                                                                   | :heavy_minus_sign:                                                                                                        | Specific version of the agent to use when restarting. If not provided, uses the current version.                          |
 | `retries`                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                          | :heavy_minus_sign:                                                                                                        | Configuration to override the default retry behavior of the client.                                                       |
 
 ### Response
@@ -350,7 +404,11 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], stream=True)
+    ], stream=True, completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     with res as event_stream:
         for event in event_stream:
@@ -368,11 +426,13 @@ with Mistral(
 | `store`                                                                                                                         | *OptionalNullable[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `handoff_execution`                                                                                                             | [OptionalNullable[models.ConversationStreamRequestHandoffExecution]](../../models/conversationstreamrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `instructions`                                                                                                                  | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
-| `tools`                                                                                                                         | List[[models.ConversationStreamRequestTools](../../models/conversationstreamrequesttools.md)]                                   | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
+| `tools`                                                                                                                         | List[[models.ConversationStreamRequestTools](../../models/conversationstreamrequesttools.md)]                                   | :heavy_minus_sign:                                                                                                              | List of tools which are available to the model during the conversation.                                                         |
 | `completion_args`                                                                                                               | [OptionalNullable[models.CompletionArgs]](../../models/completionargs.md)                                                       | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `name`                                                                                                                          | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `description`                                                                                                                   | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
+| `metadata`                                                                                                                      | Dict[str, *Any*]                                                                                                                | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `agent_id`                                                                                                                      | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
+| `agent_version`                                                                                                                 | *OptionalNullable[int]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `model`                                                                                                                         | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `retries`                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                | :heavy_minus_sign:                                                                                                              | Configuration to override the default retry behavior of the client.                                                             |
 
@@ -403,7 +463,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append_stream(conversation_id="<id>", inputs="<value>", stream=True, store=True, handoff_execution="server")
+    res = mistral.beta.conversations.append_stream(conversation_id="<id>", inputs="<value>", stream=True, store=True, handoff_execution="server", completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     with res as event_stream:
         for event in event_stream:
@@ -459,7 +523,11 @@ with Mistral(
             "content": "<value>",
             "prefix": False,
         },
-    ], from_entry_id="<id>", stream=True, store=True, handoff_execution="server")
+    ], from_entry_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     with res as event_stream:
         for event in event_stream:
@@ -479,6 +547,8 @@ with Mistral(
 | `store`                                                                                                                               | *Optional[bool]*                                                                                                                      | :heavy_minus_sign:                                                                                                                    | Whether to store the results into our servers or not.                                                                                 |
 | `handoff_execution`                                                                                                                   | [Optional[models.ConversationRestartStreamRequestHandoffExecution]](../../models/conversationrestartstreamrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                                    | N/A                                                                                                                                   |
 | `completion_args`                                                                                                                     | [Optional[models.CompletionArgs]](../../models/completionargs.md)                                                                     | :heavy_minus_sign:                                                                                                                    | White-listed arguments from the completion API                                                                                        |
+| `metadata`                                                                                                                            | Dict[str, *Any*]                                                                                                                      | :heavy_minus_sign:                                                                                                                    | Custom metadata for the conversation.                                                                                                 |
+| `agent_version`                                                                                                                       | *OptionalNullable[int]*                                                                                                               | :heavy_minus_sign:                                                                                                                    | Specific version of the agent to use when restarting. If not provided, uses the current version.                                      |
 | `retries`                                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                      | :heavy_minus_sign:                                                                                                                    | Configuration to override the default retry behavior of the client.                                                                   |
 
 ### Response

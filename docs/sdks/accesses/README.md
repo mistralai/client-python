@@ -68,7 +68,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.update_or_create(library_id="36de3a24-5b1c-4c8f-9d84-d5642205a976", org_id="aadd9ae1-f285-4437-884a-091c77efa6fd", level="Viewer", share_with_uuid="0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", share_with_type="User")
+    res = mistral.beta.libraries.accesses.update_or_create(library_id="36de3a24-5b1c-4c8f-9d84-d5642205a976", level="Viewer", share_with_uuid="0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", share_with_type="User")
 
     # Handle response
     print(res)
@@ -80,10 +80,10 @@ with Mistral(
 | Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | `library_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
-| `org_id`                                                             | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
 | `level`                                                              | [models.ShareEnum](../../models/shareenum.md)                        | :heavy_check_mark:                                                   | N/A                                                                  |
 | `share_with_uuid`                                                    | *str*                                                                | :heavy_check_mark:                                                   | The id of the entity (user, workspace or organization) to share with |
 | `share_with_type`                                                    | [models.EntityType](../../models/entitytype.md)                      | :heavy_check_mark:                                                   | The type of entity, used to share a library.                         |
+| `org_id`                                                             | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
 
 ### Response
@@ -113,7 +113,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", org_id="0814a235-c2d0-4814-875a-4b85f93d3dc7", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type="User")
+    res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type="User")
 
     # Handle response
     print(res)
@@ -125,9 +125,9 @@ with Mistral(
 | Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | `library_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
-| `org_id`                                                             | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
 | `share_with_uuid`                                                    | *str*                                                                | :heavy_check_mark:                                                   | The id of the entity (user, workspace or organization) to share with |
 | `share_with_type`                                                    | [models.EntityType](../../models/entitytype.md)                      | :heavy_check_mark:                                                   | The type of entity, used to share a library.                         |
+| `org_id`                                                             | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
 
 ### Response

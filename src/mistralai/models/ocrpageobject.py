@@ -3,10 +3,11 @@
 from __future__ import annotations
 from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
 from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
-from mistralai.types import BaseModel, Nullable, UNSET_SENTINEL
+from .ocrtableobject import OCRTableObject, OCRTableObjectTypedDict
+from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List
-from typing_extensions import TypedDict
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class OCRPageObjectTypedDict(TypedDict):
@@ -18,6 +19,14 @@ class OCRPageObjectTypedDict(TypedDict):
     r"""List of all extracted images in the page"""
     dimensions: Nullable[OCRPageDimensionsTypedDict]
     r"""The dimensions of the PDF Page's screenshot image"""
+    tables: NotRequired[List[OCRTableObjectTypedDict]]
+    r"""List of all extracted tables in the page"""
+    hyperlinks: NotRequired[List[str]]
+    r"""List of all hyperlinks in the page"""
+    header: NotRequired[Nullable[str]]
+    r"""Header of the page"""
+    footer: NotRequired[Nullable[str]]
+    r"""Footer of the page"""
 
 
 class OCRPageObject(BaseModel):
@@ -33,10 +42,22 @@ class OCRPageObject(BaseModel):
     dimensions: Nullable[OCRPageDimensions]
     r"""The dimensions of the PDF Page's screenshot image"""
 
+    tables: Optional[List[OCRTableObject]] = None
+    r"""List of all extracted tables in the page"""
+
+    hyperlinks: Optional[List[str]] = None
+    r"""List of all hyperlinks in the page"""
+
+    header: OptionalNullable[str] = UNSET
+    r"""Header of the page"""
+
+    footer: OptionalNullable[str] = UNSET
+    r"""Footer of the page"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = []
-        nullable_fields = ["dimensions"]
+        optional_fields = ["tables", "hyperlinks", "header", "footer"]
+        nullable_fields = ["header", "footer", "dimensions"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -31,9 +31,9 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
-        :param output_dimension: The dimension of the output embeddings.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
         :param retries: Override the default retry configuration for this method
@@ -137,9 +137,9 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
-        :param output_dimension: The dimension of the output embeddings.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
         :param retries: Override the default retry configuration for this method
