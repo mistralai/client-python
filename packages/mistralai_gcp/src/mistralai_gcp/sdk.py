@@ -226,6 +226,7 @@ class GoogleCloudBeforeRequestHook(BeforeRequestHook):
             headers=headers,
             content=new_content,
             stream=None,
+            extensions=request.extensions,
         )
 
         return next_request
