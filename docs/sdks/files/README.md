@@ -24,6 +24,7 @@ Please contact us if you need to increase these storage limits.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_upload_file" method="post" path="/v1/files" -->
 ```python
 from mistralai import Mistral
 import os
@@ -67,6 +68,7 @@ Returns a list of files that belong to the user's organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_list_files" method="get" path="/v1/files" -->
 ```python
 from mistralai import Mistral
 import os
@@ -76,7 +78,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.list(page=0, page_size=100)
+    res = mistral.files.list(page=0, page_size=100, include_total=True)
 
     # Handle response
     print(res)
@@ -89,6 +91,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `include_total`                                                     | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sample_type`                                                       | List[[models.SampleType](../../models/sampletype.md)]               | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `source`                                                            | List[[models.Source](../../models/source.md)]                       | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
@@ -111,6 +114,7 @@ Returns information about a specific file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_retrieve_file" method="get" path="/v1/files/{file_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -150,6 +154,7 @@ Delete a file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_delete_file" method="delete" path="/v1/files/{file_id}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -189,6 +194,7 @@ Download a file
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_download_file" method="get" path="/v1/files/{file_id}/content" -->
 ```python
 from mistralai import Mistral
 import os
@@ -228,6 +234,7 @@ Get Signed Url
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="files_api_routes_get_signed_url" method="get" path="/v1/files/{file_id}/url" -->
 ```python
 from mistralai import Mistral
 import os

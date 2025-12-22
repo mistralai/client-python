@@ -12,18 +12,19 @@ class LibraryOutTypedDict(TypedDict):
     name: str
     created_at: datetime
     updated_at: datetime
-    owner_id: str
+    owner_id: Nullable[str]
     owner_type: str
     total_size: int
     nb_documents: int
     chunk_size: Nullable[int]
     emoji: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
-    generated_name: NotRequired[Nullable[str]]
     generated_description: NotRequired[Nullable[str]]
     explicit_user_members_count: NotRequired[Nullable[int]]
     explicit_workspace_members_count: NotRequired[Nullable[int]]
     org_sharing_role: NotRequired[Nullable[str]]
+    generated_name: NotRequired[Nullable[str]]
+    r"""Generated Name"""
 
 
 class LibraryOut(BaseModel):
@@ -35,7 +36,7 @@ class LibraryOut(BaseModel):
 
     updated_at: datetime
 
-    owner_id: str
+    owner_id: Nullable[str]
 
     owner_type: str
 
@@ -49,8 +50,6 @@ class LibraryOut(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    generated_name: OptionalNullable[str] = UNSET
-
     generated_description: OptionalNullable[str] = UNSET
 
     explicit_user_members_count: OptionalNullable[int] = UNSET
@@ -59,26 +58,30 @@ class LibraryOut(BaseModel):
 
     org_sharing_role: OptionalNullable[str] = UNSET
 
+    generated_name: OptionalNullable[str] = UNSET
+    r"""Generated Name"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
             "emoji",
             "description",
-            "generated_name",
             "generated_description",
             "explicit_user_members_count",
             "explicit_workspace_members_count",
             "org_sharing_role",
+            "generated_name",
         ]
         nullable_fields = [
+            "owner_id",
             "chunk_size",
             "emoji",
             "description",
-            "generated_name",
             "generated_description",
             "explicit_user_members_count",
             "explicit_workspace_members_count",
             "org_sharing_role",
+            "generated_name",
         ]
         null_default_fields = []
 

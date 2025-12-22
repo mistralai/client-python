@@ -8,22 +8,31 @@ from typing_extensions import NotRequired, TypedDict
 
 class ModelCapabilitiesTypedDict(TypedDict):
     completion_chat: NotRequired[bool]
-    completion_fim: NotRequired[bool]
     function_calling: NotRequired[bool]
+    completion_fim: NotRequired[bool]
     fine_tuning: NotRequired[bool]
     vision: NotRequired[bool]
+    ocr: NotRequired[bool]
     classification: NotRequired[bool]
+    moderation: NotRequired[bool]
+    audio: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
-    completion_chat: Optional[bool] = True
+    completion_chat: Optional[bool] = False
+
+    function_calling: Optional[bool] = False
 
     completion_fim: Optional[bool] = False
-
-    function_calling: Optional[bool] = True
 
     fine_tuning: Optional[bool] = False
 
     vision: Optional[bool] = False
 
+    ocr: Optional[bool] = False
+
     classification: Optional[bool] = False
+
+    moderation: Optional[bool] = False
+
+    audio: Optional[bool] = False

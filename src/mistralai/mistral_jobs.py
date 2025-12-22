@@ -6,6 +6,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
+from mistralai.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Dict, List, Mapping, Optional
 
 
@@ -104,26 +105,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobsOut)
+            return unmarshal_json_response(models.BatchJobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -219,26 +209,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobsOut)
+            return unmarshal_json_response(models.BatchJobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -258,12 +237,12 @@ class MistralJobs(BaseSDK):
 
         Create a new batch job, it will be queued for processing.
 
-        :param input_files:
+        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
         :param endpoint:
-        :param model:
-        :param agent_id:
-        :param metadata:
-        :param timeout_hours:
+        :param model: The model to be used for batch inference.
+        :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.
+        :param metadata: The metadata of your choice to be associated with the batch inference job.
+        :param timeout_hours: The timeout in hours for the batch inference job.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -331,26 +310,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -370,12 +338,12 @@ class MistralJobs(BaseSDK):
 
         Create a new batch job, it will be queued for processing.
 
-        :param input_files:
+        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
         :param endpoint:
-        :param model:
-        :param agent_id:
-        :param metadata:
-        :param timeout_hours:
+        :param model: The model to be used for batch inference.
+        :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.
+        :param metadata: The metadata of your choice to be associated with the batch inference job.
+        :param timeout_hours: The timeout in hours for the batch inference job.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -443,26 +411,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -537,26 +494,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -631,26 +577,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def cancel(
         self,
@@ -725,26 +660,15 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def cancel_async(
         self,
@@ -819,23 +743,12 @@ class MistralJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.BatchJobOut)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)

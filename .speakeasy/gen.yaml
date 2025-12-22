@@ -21,11 +21,14 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.9.10
+  version: 1.10.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+  allowedRedefinedBuiltins:
+    - id
+    - object
   authors:
     - Mistral
   baseErrorName: MistralError
@@ -53,6 +56,7 @@ python:
   methodArguments: infer-optional-args
   moduleName: ""
   outputModelSuffix: output
+  packageManager: poetry
   packageName: mistralai
   pytestFilterWarnings: []
   pytestTimeout: 0

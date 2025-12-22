@@ -18,6 +18,7 @@ Moderations
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="moderations_v1_moderations_post" method="post" path="/v1/moderations" -->
 ```python
 from mistralai import Mistral
 import os
@@ -39,11 +40,11 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           |
-| `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |
-| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       | Example                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           | mistral-moderation-latest                                                         |
+| `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |                                                                                   |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |                                                                                   |
 
 ### Response
 
@@ -62,6 +63,7 @@ Chat Moderations
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="chat_moderations_v1_chat_moderations_post" method="post" path="/v1/chat/moderations" -->
 ```python
 from mistralai import Mistral
 import os
@@ -108,6 +110,7 @@ Classifications
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="classifications_v1_classifications_post" method="post" path="/v1/classifications" -->
 ```python
 from mistralai import Mistral
 import os
@@ -117,7 +120,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.classify(model="Silverado", inputs=[
+    res = mistral.classifiers.classify(model="mistral-moderation-latest", inputs=[
         "<value 1>",
     ])
 
@@ -128,11 +131,11 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           |
-| `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |
-| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       | Example                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `model`                                                                           | *str*                                                                             | :heavy_check_mark:                                                                | ID of the model to use.                                                           | mistral-moderation-latest                                                         |
+| `inputs`                                                                          | [models.ClassificationRequestInputs](../../models/classificationrequestinputs.md) | :heavy_check_mark:                                                                | Text to classify.                                                                 |                                                                                   |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |                                                                                   |
 
 ### Response
 
@@ -151,6 +154,7 @@ Chat Classifications
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="chat_classifications_v1_chat_classifications_post" method="post" path="/v1/chat/classifications" -->
 ```python
 from mistralai import Mistral
 import os

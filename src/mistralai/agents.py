@@ -5,7 +5,8 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
-from typing import Any, List, Mapping, Optional, Union
+from mistralai.utils.unmarshal_json_response import unmarshal_json_response
+from typing import Any, Dict, List, Mapping, Optional, Union
 
 
 class Agents(BaseSDK):
@@ -28,6 +29,7 @@ class Agents(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -61,13 +63,14 @@ class Agents(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param response_format:
+        :param metadata:
+        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools:
         :param tool_choice:
-        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction:
+        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param retries: Override the default retry configuration for this method
@@ -90,6 +93,7 @@ class Agents(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionRequestMessages]
             ),
@@ -155,31 +159,20 @@ class Agents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def complete_async(
         self,
@@ -198,6 +191,7 @@ class Agents(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -231,13 +225,14 @@ class Agents(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param response_format:
+        :param metadata:
+        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools:
         :param tool_choice:
-        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction:
+        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param retries: Override the default retry configuration for this method
@@ -260,6 +255,7 @@ class Agents(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionRequestMessages]
             ),
@@ -325,31 +321,20 @@ class Agents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.ChatCompletionResponse)
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def stream(
         self,
@@ -368,6 +353,7 @@ class Agents(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -403,13 +389,14 @@ class Agents(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param response_format:
+        :param metadata:
+        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools:
         :param tool_choice:
-        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction:
+        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param retries: Override the default retry configuration for this method
@@ -432,6 +419,7 @@ class Agents(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionStreamRequestMessages]
             ),
@@ -502,32 +490,23 @@ class Agents(BaseSDK):
                 http_res,
                 lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
                 sentinel="[DONE]",
+                client_ref=self,
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
-            response_data = utils.unmarshal_json(
-                http_res_text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def stream_async(
         self,
@@ -546,6 +525,7 @@ class Agents(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -581,13 +561,14 @@ class Agents(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param response_format:
+        :param metadata:
+        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools:
         :param tool_choice:
-        :param presence_penalty: presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
         :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction:
+        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param retries: Override the default retry configuration for this method
@@ -610,6 +591,7 @@ class Agents(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionStreamRequestMessages]
             ),
@@ -680,29 +662,20 @@ class Agents(BaseSDK):
                 http_res,
                 lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
                 sentinel="[DONE]",
+                client_ref=self,
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            response_data = utils.unmarshal_json(
-                http_res_text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res, http_res_text)

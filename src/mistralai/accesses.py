@@ -5,6 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
+from mistralai.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Mapping, Optional
 
 
@@ -85,31 +86,20 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.ListSharingOut)
+            return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -185,40 +175,29 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.ListSharingOut)
+            return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def update_or_create(
         self,
         *,
         library_id: str,
-        org_id: str,
         level: models.ShareEnum,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -229,10 +208,10 @@ class Accesses(BaseSDK):
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
 
         :param library_id:
-        :param org_id:
         :param level:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -302,40 +281,29 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.SharingOut)
+            return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def update_or_create_async(
         self,
         *,
         library_id: str,
-        org_id: str,
         level: models.ShareEnum,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -346,10 +314,10 @@ class Accesses(BaseSDK):
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
 
         :param library_id:
-        :param org_id:
         :param level:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -419,39 +387,28 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.SharingOut)
+            return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
         *,
         library_id: str,
-        org_id: str,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -462,9 +419,9 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
 
         :param library_id:
-        :param org_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -533,39 +490,28 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.SharingOut)
+            return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
         *,
         library_id: str,
-        org_id: str,
         share_with_uuid: str,
         share_with_type: models.EntityType,
+        org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -576,9 +522,9 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
 
         :param library_id:
-        :param org_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
         :param share_with_type: The type of entity, used to share a library.
+        :param org_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -647,28 +593,17 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.SharingOut)
+            return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)

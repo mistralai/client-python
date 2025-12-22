@@ -12,7 +12,7 @@ from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -50,8 +50,11 @@ class AgentTypedDict(TypedDict):
     name: str
     id: str
     version: int
+    versions: List[int]
     created_at: datetime
     updated_at: datetime
+    deployment_chat: bool
+    source: str
     instructions: NotRequired[Nullable[str]]
     r"""Instruction prompt the model will follow during the conversation."""
     tools: NotRequired[List[AgentToolsTypedDict]]
@@ -60,6 +63,7 @@ class AgentTypedDict(TypedDict):
     r"""White-listed arguments from the completion API"""
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     object: NotRequired[AgentObject]
 
 
@@ -72,9 +76,15 @@ class Agent(BaseModel):
 
     version: int
 
+    versions: List[int]
+
     created_at: datetime
 
     updated_at: datetime
+
+    deployment_chat: bool
+
+    source: str
 
     instructions: OptionalNullable[str] = UNSET
     r"""Instruction prompt the model will follow during the conversation."""
@@ -89,6 +99,8 @@ class Agent(BaseModel):
 
     handoffs: OptionalNullable[List[str]] = UNSET
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     object: Optional[AgentObject] = "agent"
 
     @model_serializer(mode="wrap")
@@ -99,9 +111,10 @@ class Agent(BaseModel):
             "completion_args",
             "description",
             "handoffs",
+            "metadata",
             "object",
         ]
-        nullable_fields = ["instructions", "description", "handoffs"]
+        nullable_fields = ["instructions", "description", "handoffs", "metadata"]
         null_default_fields = []
 
         serialized = handler(self)

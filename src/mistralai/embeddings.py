@@ -5,6 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
+from mistralai.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Mapping, Optional, Union
 
 
@@ -30,9 +31,9 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
-        :param output_dimension: The dimension of the output embeddings.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
         :param retries: Override the default retry configuration for this method
@@ -102,31 +103,20 @@ class Embeddings(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
+            return unmarshal_json_response(models.EmbeddingResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -147,9 +137,9 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
-        :param output_dimension: The dimension of the output embeddings.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
         :param retries: Override the default retry configuration for this method
@@ -219,28 +209,17 @@ class Embeddings(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.EmbeddingResponse)
+            return unmarshal_json_response(models.EmbeddingResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)

@@ -58,7 +58,15 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add mistralai
+```
 
 ### PIP
 
@@ -137,12 +145,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.chat.complete(model="mistral-small-latest", messages=[
+    res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=False)
+    ], stream=False, response_format={
+        "type": "text",
+    })
 
     # Handle response
     print(res)
@@ -150,7 +160,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -163,12 +173,14 @@ async def main():
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
 
-        res = await mistral.chat.complete_async(model="mistral-small-latest", messages=[
+        res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
             {
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], stream=False)
+        ], stream=False, response_format={
+            "type": "text",
+        })
 
         # Handle response
         print(res)
@@ -201,7 +213,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -244,7 +256,9 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>", stream=False)
+    ], agent_id="<id>", stream=False, response_format={
+        "type": "text",
+    })
 
     # Handle response
     print(res)
@@ -252,7 +266,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -270,7 +284,9 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<id>", stream=False)
+        ], agent_id="<id>", stream=False, response_format={
+            "type": "text",
+        })
 
         # Handle response
         print(res)
@@ -303,7 +319,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -440,7 +456,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 #### [audio.transcriptions](docs/sdks/transcriptions/README.md)
 
 * [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
-* [stream](docs/sdks/transcriptions/README.md#stream) - Create streaming transcription (SSE)
+* [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
 
 ### [batch](docs/sdks/batch/README.md)
 
@@ -461,6 +477,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [list](docs/sdks/mistralagents/README.md#list) - List agent entities.
 * [get](docs/sdks/mistralagents/README.md#get) - Retrieve an agent entity.
 * [update](docs/sdks/mistralagents/README.md#update) - Update an agent entity.
+* [delete](docs/sdks/mistralagents/README.md#delete) - Delete an agent entity.
 * [update_version](docs/sdks/mistralagents/README.md#update_version) - Update an agent version.
 
 #### [beta.conversations](docs/sdks/conversations/README.md)
@@ -468,6 +485,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [start](docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
 * [list](docs/sdks/conversations/README.md#list) - List all created conversations.
 * [get](docs/sdks/conversations/README.md#get) - Retrieve a conversation information.
+* [delete](docs/sdks/conversations/README.md#delete) - Delete a conversation.
 * [append](docs/sdks/conversations/README.md#append) - Append new entries to an existing conversation.
 * [get_history](docs/sdks/conversations/README.md#get_history) - Retrieve all entries in a conversation.
 * [get_messages](docs/sdks/conversations/README.md#get_messages) - Retrieve all messages in a conversation.
@@ -492,7 +510,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 
 #### [beta.libraries.documents](docs/sdks/documents/README.md)
 
-* [list](docs/sdks/documents/README.md#list) - List document in a given library.
+* [list](docs/sdks/documents/README.md#list) - List documents in a given library.
 * [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
 * [get](docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
 * [update](docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
@@ -589,7 +607,11 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], stream=True)
+    ], stream=True, completion_args={
+        "response_format": {
+            "type": "text",
+        },
+    })
 
     with res as event_stream:
         for event in event_stream:
@@ -680,27 +702,20 @@ with Mistral(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
+[`MistralError`](./src/mistralai/models/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
 
-By default, an API error will raise a models.SDKError exception, which has the following properties:
-
-| Property        | Type             | Description           |
-|-----------------|------------------|-----------------------|
-| `.status_code`  | *int*            | The HTTP status code  |
-| `.message`      | *str*            | The error message     |
-| `.raw_response` | *httpx.Response* | The raw HTTP response |
-| `.body`         | *str*            | The response content  |
-
-When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `list_async` method may raise the following exceptions:
-
-| Error Type                 | Status Code | Content Type     |
-| -------------------------- | ----------- | ---------------- |
-| models.HTTPValidationError | 422         | application/json |
-| models.SDKError            | 4XX, 5XX    | \*/\*            |
+| Property           | Type             | Description                                                                             |
+| ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
+| `err.message`      | `str`            | Error message                                                                           |
+| `err.status_code`  | `int`            | HTTP response status code eg `404`                                                      |
+| `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
+| `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
+| `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
+| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
 ### Example
-
 ```python
+import mistralai
 from mistralai import Mistral, models
 import os
 
@@ -711,18 +726,46 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.models.list()
+        res = mistral.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
 
         # Handle response
         print(res)
 
-    except models.HTTPValidationError as e:
-        # handle e.data: models.HTTPValidationErrorData
-        raise(e)
-    except models.SDKError as e:
-        # handle exception
-        raise(e)
+
+    except models.MistralError as e:
+        # The base class for HTTP error responses
+        print(e.message)
+        print(e.status_code)
+        print(e.body)
+        print(e.headers)
+        print(e.raw_response)
+
+        # Depending on the method different errors may be thrown
+        if isinstance(e, models.HTTPValidationError):
+            print(e.data.detail)  # Optional[List[mistralai.ValidationError]]
 ```
+
+### Error Classes
+**Primary error:**
+* [`MistralError`](./src/mistralai/models/mistralerror.py): The base class for HTTP error responses.
+
+<details><summary>Less common errors (6)</summary>
+
+<br />
+
+**Network errors:**
+* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
+    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
+    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
+
+
+**Inherit from [`MistralError`](./src/mistralai/models/mistralerror.py)**:
+* [`HTTPValidationError`](./src/mistralai/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 48 of 70 methods.*
+* [`ResponseValidationError`](./src/mistralai/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+
+</details>
+
+\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->

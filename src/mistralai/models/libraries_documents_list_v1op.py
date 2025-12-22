@@ -13,6 +13,7 @@ class LibrariesDocumentsListV1RequestTypedDict(TypedDict):
     search: NotRequired[Nullable[str]]
     page_size: NotRequired[int]
     page: NotRequired[int]
+    filters_attributes: NotRequired[Nullable[str]]
     sort_by: NotRequired[str]
     sort_order: NotRequired[str]
 
@@ -37,6 +38,11 @@ class LibrariesDocumentsListV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 0
 
+    filters_attributes: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
     sort_by: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -49,8 +55,15 @@ class LibrariesDocumentsListV1Request(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["search", "page_size", "page", "sort_by", "sort_order"]
-        nullable_fields = ["search"]
+        optional_fields = [
+            "search",
+            "page_size",
+            "page",
+            "filters_attributes",
+            "sort_by",
+            "sort_order",
+        ]
+        nullable_fields = ["search", "filters_attributes"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -12,7 +12,7 @@ from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from typing import List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -50,11 +50,14 @@ class ConversationStreamRequestTypedDict(TypedDict):
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationStreamRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[Nullable[List[ConversationStreamRequestToolsTypedDict]]]
+    tools: NotRequired[List[ConversationStreamRequestToolsTypedDict]]
+    r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     agent_id: NotRequired[Nullable[str]]
+    agent_version: NotRequired[Nullable[int]]
     model: NotRequired[Nullable[str]]
 
 
@@ -71,7 +74,8 @@ class ConversationStreamRequest(BaseModel):
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: OptionalNullable[List[ConversationStreamRequestTools]] = UNSET
+    tools: Optional[List[ConversationStreamRequestTools]] = None
+    r"""List of tools which are available to the model during the conversation."""
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
 
@@ -79,7 +83,11 @@ class ConversationStreamRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     agent_id: OptionalNullable[str] = UNSET
+
+    agent_version: OptionalNullable[int] = UNSET
 
     model: OptionalNullable[str] = UNSET
 
@@ -94,18 +102,21 @@ class ConversationStreamRequest(BaseModel):
             "completion_args",
             "name",
             "description",
+            "metadata",
             "agent_id",
+            "agent_version",
             "model",
         ]
         nullable_fields = [
             "store",
             "handoff_execution",
             "instructions",
-            "tools",
             "completion_args",
             "name",
             "description",
+            "metadata",
             "agent_id",
+            "agent_version",
             "model",
         ]
         null_default_fields = []

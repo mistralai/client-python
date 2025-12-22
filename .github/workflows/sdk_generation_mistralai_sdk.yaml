@@ -16,7 +16,7 @@ permissions:
         type: string
 jobs:
   generate:
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
+    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@5b268931ef6902bbb70fa01b467dc361c68f7617 # v15
     with:
       force: ${{ github.event.inputs.force }}
       mode: pr
@@ -24,6 +24,6 @@ jobs:
       speakeasy_version: latest
       target: mistralai-sdk
     secrets:
-      github_access_token: ${{ secrets.SPEAKEASY_WORKFLOW_GITHUB_PAT }}
+      github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}

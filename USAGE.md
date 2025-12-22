@@ -13,12 +13,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.chat.complete(model="mistral-small-latest", messages=[
+    res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], stream=False)
+    ], stream=False, response_format={
+        "type": "text",
+    })
 
     # Handle response
     print(res)
@@ -26,7 +28,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -39,12 +41,14 @@ async def main():
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
 
-        res = await mistral.chat.complete_async(model="mistral-small-latest", messages=[
+        res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
             {
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], stream=False)
+        ], stream=False, response_format={
+            "type": "text",
+        })
 
         # Handle response
         print(res)
@@ -77,7 +81,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -120,7 +124,9 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], agent_id="<id>", stream=False)
+    ], agent_id="<id>", stream=False, response_format={
+        "type": "text",
+    })
 
     # Handle response
     print(res)
@@ -128,7 +134,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -146,7 +152,9 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
             },
-        ], agent_id="<id>", stream=False)
+        ], agent_id="<id>", stream=False, response_format={
+            "type": "text",
+        })
 
         # Handle response
         print(res)
@@ -179,7 +187,7 @@ with Mistral(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio

@@ -3,7 +3,7 @@
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -21,10 +21,7 @@ r"""Stop generation if this token is detected. Or if one of these tokens is dete
 
 class FIMCompletionStreamRequestTypedDict(TypedDict):
     model: str
-    r"""ID of the model to use. Only compatible for now with:
-    - `codestral-2405`
-    - `codestral-latest`
-    """
+    r"""ID of the model with FIM to use."""
     prompt: str
     r"""The text/code to complete."""
     temperature: NotRequired[Nullable[float]]
@@ -38,6 +35,7 @@ class FIMCompletionStreamRequestTypedDict(TypedDict):
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     suffix: NotRequired[Nullable[str]]
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
     min_tokens: NotRequired[Nullable[int]]
@@ -46,10 +44,7 @@ class FIMCompletionStreamRequestTypedDict(TypedDict):
 
 class FIMCompletionStreamRequest(BaseModel):
     model: str
-    r"""ID of the model to use. Only compatible for now with:
-    - `codestral-2405`
-    - `codestral-latest`
-    """
+    r"""ID of the model with FIM to use."""
 
     prompt: str
     r"""The text/code to complete."""
@@ -71,6 +66,8 @@ class FIMCompletionStreamRequest(BaseModel):
     random_seed: OptionalNullable[int] = UNSET
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     suffix: OptionalNullable[str] = UNSET
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
 
@@ -86,6 +83,7 @@ class FIMCompletionStreamRequest(BaseModel):
             "stream",
             "stop",
             "random_seed",
+            "metadata",
             "suffix",
             "min_tokens",
         ]
@@ -93,6 +91,7 @@ class FIMCompletionStreamRequest(BaseModel):
             "temperature",
             "max_tokens",
             "random_seed",
+            "metadata",
             "suffix",
             "min_tokens",
         ]

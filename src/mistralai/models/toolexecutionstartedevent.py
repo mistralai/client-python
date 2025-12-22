@@ -4,16 +4,25 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
 from mistralai.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionStartedEventType = Literal["tool.execution.started"]
 
+ToolExecutionStartedEventNameTypedDict = TypeAliasType(
+    "ToolExecutionStartedEventNameTypedDict", Union[BuiltInConnectors, str]
+)
+
+
+ToolExecutionStartedEventName = TypeAliasType(
+    "ToolExecutionStartedEventName", Union[BuiltInConnectors, str]
+)
+
 
 class ToolExecutionStartedEventTypedDict(TypedDict):
     id: str
-    name: BuiltInConnectors
+    name: ToolExecutionStartedEventNameTypedDict
     arguments: str
     type: NotRequired[ToolExecutionStartedEventType]
     created_at: NotRequired[datetime]
@@ -23,7 +32,7 @@ class ToolExecutionStartedEventTypedDict(TypedDict):
 class ToolExecutionStartedEvent(BaseModel):
     id: str
 
-    name: BuiltInConnectors
+    name: ToolExecutionStartedEventName
 
     arguments: str
 

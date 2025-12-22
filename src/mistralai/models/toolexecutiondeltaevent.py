@@ -4,16 +4,25 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
 from mistralai.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionDeltaEventType = Literal["tool.execution.delta"]
 
+ToolExecutionDeltaEventNameTypedDict = TypeAliasType(
+    "ToolExecutionDeltaEventNameTypedDict", Union[BuiltInConnectors, str]
+)
+
+
+ToolExecutionDeltaEventName = TypeAliasType(
+    "ToolExecutionDeltaEventName", Union[BuiltInConnectors, str]
+)
+
 
 class ToolExecutionDeltaEventTypedDict(TypedDict):
     id: str
-    name: BuiltInConnectors
+    name: ToolExecutionDeltaEventNameTypedDict
     arguments: str
     type: NotRequired[ToolExecutionDeltaEventType]
     created_at: NotRequired[datetime]
@@ -23,7 +32,7 @@ class ToolExecutionDeltaEventTypedDict(TypedDict):
 class ToolExecutionDeltaEvent(BaseModel):
     id: str
 
-    name: BuiltInConnectors
+    name: ToolExecutionDeltaEventName
 
     arguments: str
 

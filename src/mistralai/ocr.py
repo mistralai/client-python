@@ -5,6 +5,7 @@ from mistralai import models, utils
 from mistralai._hooks import HookContext
 from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
+from mistralai.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, List, Mapping, Optional, Union
 
 
@@ -27,6 +28,9 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        extract_header: Optional[bool] = None,
+        extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -43,6 +47,9 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param table_format:
+        :param extract_header:
+        :param extract_footer:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -72,6 +79,9 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            table_format=table_format,
+            extract_header=extract_header,
+            extract_footer=extract_footer,
         )
 
         req = self._build_request(
@@ -118,31 +128,20 @@ class Ocr(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.OCRResponse)
+            return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
 
     async def process_async(
         self,
@@ -160,6 +159,9 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        extract_header: Optional[bool] = None,
+        extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -176,6 +178,9 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param table_format:
+        :param extract_header:
+        :param extract_footer:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -205,6 +210,9 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            table_format=table_format,
+            extract_header=extract_header,
+            extract_footer=extract_footer,
         )
 
         req = self._build_request_async(
@@ -251,28 +259,17 @@ class Ocr(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, models.OCRResponse)
+            return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, models.HTTPValidationErrorData
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(data=response_data)
+            raise models.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise models.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise models.SDKError("Unexpected response received", http_res)
