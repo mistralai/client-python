@@ -3,7 +3,7 @@ from ..utils.response_format import (
     response_format_from_pydantic_model,
     rec_strict_json_schema,
 )
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 
 from ...models import ResponseFormat, JSONSchema
 from ...types.basemodel import Unset
@@ -149,10 +149,89 @@ class TestResponseFormat(unittest.TestCase):
         )
 
     def test_rec_strict_json_schema(self):
-        invalid_schema = mathdemo_schema | {"wrong_value": 1}
         self.assertEqual(
             rec_strict_json_schema(mathdemo_schema), mathdemo_strict_schema
         )
+
+    def test_rec_strict_json_schema_with_numeric_constraints(self):
+        """
+        Test that rec_strict_json_schema handles JSON Schema constraint keywords
+        that have numeric values (e.g., minLength, maxLength, minItems, maxItems).
+
+        This is a regression test for issue #300 where Pydantic models with
+        constraint keywords like min_length would cause a ValueError.
+        """
+        # Schema with numeric constraint values (minItems, maxItems, minimum, etc.)
+        schema_with_constraints = {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {"type": "integer"},
+                    "minItems": 1,
+                    "maxItems": 10,
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                },
+                "count": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "multipleOf": 0.5,  # float value
+                },
+            },
+            "required": ["items", "name"],
+        }
+
+        # Should not raise ValueError - integers and floats are valid terminal values
+        result = rec_strict_json_schema(schema_with_constraints)
+
+        # Check that additionalProperties was added
+        self.assertEqual(result["additionalProperties"], False)
+        # Check that numeric constraints are preserved
+        self.assertEqual(result["properties"]["items"]["minItems"], 1)
+        self.assertEqual(result["properties"]["items"]["maxItems"], 10)
+        self.assertEqual(result["properties"]["name"]["minLength"], 1)
+        self.assertEqual(result["properties"]["count"]["multipleOf"], 0.5)
+
+    def test_response_format_with_constrained_pydantic_model(self):
+        """
+        Test that response_format_from_pydantic_model works with Pydantic models
+        that use constraint keywords like min_length.
+
+        This is a regression test for issue #300.
+        """
+
+        class ModelWithConstraints(BaseModel):
+            some_list: list[int] = Field(
+                default_factory=list,
+                description="A list of integers",
+                min_length=1,
+            )
+            name: str = Field(
+                description="A name",
+                min_length=1,
+                max_length=100,
+            )
+
+        # Should not raise ValueError
+        result = response_format_from_pydantic_model(ModelWithConstraints)
+
+        # Verify it returns a valid ResponseFormat
+        self.assertIsInstance(result, ResponseFormat)
+        self.assertEqual(result.type, "json_schema")
+        self.assertIsNotNone(result.json_schema)
+
+    def test_rec_strict_json_schema_with_invalid_type(self):
+        """Test that rec_strict_json_schema raises ValueError for truly invalid types."""
+        # A custom object that is not a valid JSON schema node type
+        class CustomObject:
+            pass
+
+        invalid_schema = {"invalid": CustomObject()}
 
         with self.assertRaises(ValueError):
             rec_strict_json_schema(invalid_schema)
