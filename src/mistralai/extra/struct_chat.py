@@ -1,19 +1,26 @@
-from ..models import ChatCompletionResponse, ChatCompletionChoice, AssistantMessage
-from .utils.response_format import  CustomPydanticModel, pydantic_model_from_json
-from typing import List, Optional, Type, Generic
-from pydantic import BaseModel
 import json
+from typing import Generic
+
+from ..models import AssistantMessage, ChatCompletionChoice, ChatCompletionResponse
+from .utils.response_format import CustomPydanticModel, pydantic_model_from_json
+
 
 class ParsedAssistantMessage(AssistantMessage, Generic[CustomPydanticModel]):
-    parsed: Optional[CustomPydanticModel]
+    parsed: CustomPydanticModel | None
+
 
 class ParsedChatCompletionChoice(ChatCompletionChoice, Generic[CustomPydanticModel]):
-    message: Optional[ParsedAssistantMessage[CustomPydanticModel]]  # type: ignore
+    message: ParsedAssistantMessage[CustomPydanticModel] | None  # type: ignore
+
 
 class ParsedChatCompletionResponse(ChatCompletionResponse, Generic[CustomPydanticModel]):
-    choices: Optional[List[ParsedChatCompletionChoice[CustomPydanticModel]]] # type: ignore
+    choices: list[ParsedChatCompletionChoice[CustomPydanticModel]] | None  # type: ignore
 
-def convert_to_parsed_chat_completion_response(response: ChatCompletionResponse, response_format: Type[BaseModel]) -> ParsedChatCompletionResponse:
+
+def convert_to_parsed_chat_completion_response(
+    response: ChatCompletionResponse,
+    response_format: type[CustomPydanticModel],
+) -> ParsedChatCompletionResponse[CustomPydanticModel]:
     parsed_choices = []
 
     if response.choices:

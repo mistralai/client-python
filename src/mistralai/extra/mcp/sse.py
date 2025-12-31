@@ -1,22 +1,20 @@
 import http
 import logging
-import typing
-from typing import Any, Optional
 from contextlib import AsyncExitStack
 from functools import cached_property
+from typing import Any
 
 import httpx
+from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
+from authlib.oauth2.rfc6749 import OAuth2Token
+from mcp.client.sse import sse_client  # pyright: ignore[reportMissingImports]
+from mcp.shared.message import SessionMessage  # pyright: ignore[reportMissingImports]
 
 from mistralai.extra.exceptions import MCPAuthException
 from mistralai.extra.mcp.base import (
     MCPClientBase,
 )
 from mistralai.extra.mcp.auth import OAuthParams, AsyncOAuth2Client
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
-
-from mcp.client.sse import sse_client  # pyright: ignore[reportMissingImports]
-from mcp.shared.message import SessionMessage  # pyright: ignore[reportMissingImports]
-from authlib.oauth2.rfc6749 import OAuth2Token
 
 from mistralai.types import BaseModel
 
@@ -27,7 +25,7 @@ class SSEServerParams(BaseModel):
     """Parameters required for a MCPClient with SSE transport"""
 
     url: str
-    headers: Optional[dict[str, Any]] = None
+    headers: dict[str, Any] | None = None
     timeout: float = 5
     sse_read_timeout: float = 60 * 5
 
@@ -41,20 +39,20 @@ class MCPClientSSE(MCPClientBase):
     This is possibly going to change in the future since the protocol has ongoing discussions.
     """
 
-    _oauth_params: Optional[OAuthParams]
+    _oauth_params: OAuthParams | None
     _sse_params: SSEServerParams
 
     def __init__(
         self,
         sse_params: SSEServerParams,
-        name: Optional[str] = None,
-        oauth_params: Optional[OAuthParams] = None,
-        auth_token: Optional[OAuth2Token] = None,
+        name: str | None = None,
+        oauth_params: OAuthParams | None = None,
+        auth_token: OAuth2Token | None = None,
     ):
         super().__init__(name=name)
         self._sse_params = sse_params
-        self._oauth_params: Optional[OAuthParams] = oauth_params
-        self._auth_token: Optional[OAuth2Token] = auth_token
+        self._oauth_params: OAuthParams | None = oauth_params
+        self._auth_token: OAuth2Token | None = auth_token
 
     @cached_property
     def base_url(self) -> str:
@@ -142,7 +140,7 @@ class MCPClientSSE(MCPClientBase):
     async def _get_transport(
         self, exit_stack: AsyncExitStack
     ) -> tuple[
-        MemoryObjectReceiveStream[typing.Union[SessionMessage, Exception]],
+        MemoryObjectReceiveStream[SessionMessage | Exception],
         MemoryObjectSendStream[SessionMessage],
     ]:
         try:

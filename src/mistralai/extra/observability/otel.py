@@ -5,7 +5,6 @@ import os
 import traceback
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Optional, Tuple, Union
 
 import httpx
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
@@ -135,7 +134,7 @@ def enrich_span_from_response(tracer: trace.Tracer, span: Span, operation_id: st
     response_data = json.loads(response.content)
 
     # Base attributes
-    attributes: dict[str, Union[str, int]] = {
+    attributes: dict[str, str | int] = {
         http_attributes.HTTP_RESPONSE_STATUS_CODE: response.status_code,
         MistralAIAttributes.MISTRAL_AI_OPERATION_ID: operation_id,
         gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value
@@ -226,7 +225,7 @@ class QuietOTLPSpanExporter(OTLPSpanExporter):
             return SpanExportResult.FAILURE
 
 
-def get_or_create_otel_tracer() -> Tuple[bool, Tracer]:
+def get_or_create_otel_tracer() -> tuple[bool, Tracer]:
     """
     3 possible cases:
 
@@ -273,7 +272,13 @@ def get_or_create_otel_tracer() -> Tuple[bool, Tracer]:
 
     return tracing_enabled, tracer
 
-def get_traced_request_and_span(tracing_enabled: bool, tracer: Tracer, span: Optional[Span], operation_id: str, request: httpx.Request) -> Tuple[httpx.Request, Optional[Span]]:
+def get_traced_request_and_span(
+    tracing_enabled: bool,
+    tracer: Tracer,
+    span: Span | None,
+    operation_id: str,
+    request: httpx.Request,
+) -> tuple[httpx.Request, Span | None]:
         if not tracing_enabled:
             return request, span
 
@@ -295,7 +300,13 @@ def get_traced_request_and_span(tracing_enabled: bool, tracer: Tracer, span: Opt
         return request, span
 
 
-def get_traced_response(tracing_enabled: bool, tracer: Tracer, span: Optional[Span], operation_id: str, response: httpx.Response) -> httpx.Response:
+def get_traced_response(
+    tracing_enabled: bool,
+    tracer: Tracer,
+    span: Span | None,
+    operation_id: str,
+    response: httpx.Response,
+) -> httpx.Response:
     if not tracing_enabled or not span:
         return response
     try:
@@ -315,7 +326,14 @@ def get_traced_response(tracing_enabled: bool, tracer: Tracer, span: Optional[Sp
         end_span(span=span)
     return response
 
-def get_response_and_error(tracing_enabled: bool, tracer: Tracer, span: Optional[Span], operation_id: str, response: httpx.Response, error: Optional[Exception]) -> Tuple[httpx.Response, Optional[Exception]]:
+def get_response_and_error(
+    tracing_enabled: bool,
+    tracer: Tracer,
+    span: Span | None,
+    operation_id: str,
+    response: httpx.Response,
+    error: Exception | None,
+) -> tuple[httpx.Response, Exception | None]:
         if not tracing_enabled or not span:
             return response, error
         try:
@@ -366,7 +384,7 @@ class TracedResponse(httpx.Response):
 
     This hack allows ending the span only once the stream is fully consumed.
     """
-    def __init__(self, *args, span: Optional[Span], **kwargs) -> None:
+    def __init__(self, *args, span: Span | None, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.span = span
 
@@ -381,7 +399,7 @@ class TracedResponse(httpx.Response):
         await super().aclose()
 
     @classmethod
-    def from_response(cls, resp: httpx.Response, span: Optional[Span]) -> "TracedResponse":
+    def from_response(cls, resp: httpx.Response, span: Span | None) -> "TracedResponse":
         traced_resp = cls.__new__(cls)
         traced_resp.__dict__ = copy.copy(resp.__dict__)
         traced_resp.span = span

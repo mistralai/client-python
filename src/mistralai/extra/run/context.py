@@ -1,47 +1,41 @@
 import asyncio
 import inspect
 import typing
-from contextlib import AsyncExitStack
-from functools import wraps
 from collections.abc import Callable
-
+from contextlib import AsyncExitStack
 from dataclasses import dataclass, field
-from typing import Union, Optional
+from functools import wraps
+from logging import getLogger
 
 import pydantic
 
-from mistralai.extra import (
-    response_format_from_pydantic_model,
-)
+from mistralai.extra import response_format_from_pydantic_model
 from mistralai.extra.exceptions import RunException
 from mistralai.extra.mcp.base import MCPClientProtocol
 from mistralai.extra.run.result import RunResult
-from mistralai.types.basemodel import OptionalNullable, BaseModel, UNSET
+from mistralai.extra.run.tools import (
+    RunCoroutine,
+    RunFunction,
+    RunMCPTool,
+    RunTool,
+    create_function_result,
+    create_tool_call,
+)
 from mistralai.models import (
-    ResponseFormat,
-    FunctionCallEntry,
-    Tools,
-    ToolsTypedDict,
     CompletionArgs,
     CompletionArgsTypedDict,
-    FunctionResultEntry,
     ConversationInputs,
     ConversationInputsTypedDict,
+    FunctionCallEntry,
+    FunctionResultEntry,
     FunctionTool,
-    MessageInputEntry,
     InputEntries,
+    MessageInputEntry,
+    ResponseFormat,
+    Tools,
+    ToolsTypedDict,
 )
-
-from logging import getLogger
-
-from mistralai.extra.run.tools import (
-    create_function_result,
-    RunFunction,
-    create_tool_call,
-    RunTool,
-    RunMCPTool,
-    RunCoroutine,
-)
+from mistralai.types.basemodel import BaseModel, OptionalNullable, UNSET
 
 if typing.TYPE_CHECKING:
     from mistralai import Beta, OptionalNullable
@@ -56,8 +50,8 @@ class AgentRequestKwargs(typing.TypedDict):
 class ModelRequestKwargs(typing.TypedDict):
     model: str
     instructions: OptionalNullable[str]
-    tools: OptionalNullable[Union[list[Tools], list[ToolsTypedDict]]]
-    completion_args: OptionalNullable[Union[CompletionArgs, CompletionArgsTypedDict]]
+    tools: OptionalNullable[list[Tools] | list[ToolsTypedDict]]
+    completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict]
 
 
 @dataclass
@@ -72,7 +66,7 @@ class RunContext:
           passed if the user wants to continue an existing conversation.
         model (Options[str]): The model name to be used for the conversation. Can't be used along with 'agent_id'.
         agent_id (Options[str]): The agent id to be used for the conversation. Can't be used along with 'model'.
-        output_format (Optional[type[BaseModel]]): The output format expected from the conversation. It represents
+        output_format (type[BaseModel] | None): The output format expected from the conversation. It represents
           the `response_format` which is part of the `CompletionArgs`.
         request_count (int): The number of requests made in the current `RunContext`.
         continue_on_fn_error (bool): Flag to determine if the conversation should continue when function execution
@@ -83,10 +77,10 @@ class RunContext:
     _callable_tools: dict[str, RunTool] = field(init=False, default_factory=dict)
     _mcp_clients: list[MCPClientProtocol] = field(init=False, default_factory=list)
 
-    conversation_id: Optional[str] = field(default=None)
-    model: Optional[str] = field(default=None)
-    agent_id: Optional[str] = field(default=None)
-    output_format: Optional[type[BaseModel]] = field(default=None)
+    conversation_id: str | None = field(default=None)
+    model: str | None = field(default=None)
+    agent_id: str | None = field(default=None)
+    output_format: type[BaseModel] | None = field(default=None)
     request_count: int = field(default=0)
     continue_on_fn_error: bool = field(default=False)
 
@@ -215,10 +209,8 @@ class RunContext:
 
     async def prepare_model_request(
         self,
-        tools: OptionalNullable[Union[list[Tools], list[ToolsTypedDict]]] = UNSET,
-        completion_args: OptionalNullable[
-            Union[CompletionArgs, CompletionArgsTypedDict]
-        ] = UNSET,
+        tools: OptionalNullable[list[Tools] | list[ToolsTypedDict]] = UNSET,
+        completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict] = UNSET,
         instructions: OptionalNullable[str] = None,
     ) -> ModelRequestKwargs:
         if self.model is None:
@@ -254,14 +246,12 @@ async def _validate_run(
     *,
     beta_client: "Beta",
     run_ctx: RunContext,
-    inputs: Union[ConversationInputs, ConversationInputsTypedDict],
+    inputs: ConversationInputs | ConversationInputsTypedDict,
     instructions: OptionalNullable[str] = UNSET,
-    tools: OptionalNullable[Union[list[Tools], list[ToolsTypedDict]]] = UNSET,
-    completion_args: OptionalNullable[
-        Union[CompletionArgs, CompletionArgsTypedDict]
-    ] = UNSET,
+    tools: OptionalNullable[list[Tools] | list[ToolsTypedDict]] = UNSET,
+    completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict] = UNSET,
 ) -> tuple[
-    Union[AgentRequestKwargs, ModelRequestKwargs], RunResult, list[InputEntries]
+    AgentRequestKwargs | ModelRequestKwargs, RunResult, list[InputEntries]
 ]:
     input_entries: list[InputEntries] = []
     if isinstance(inputs, str):
@@ -277,7 +267,7 @@ async def _validate_run(
         output_model=run_ctx.output_format,
         conversation_id=run_ctx.conversation_id,
     )
-    req: Union[AgentRequestKwargs, ModelRequestKwargs]
+    req: AgentRequestKwargs | ModelRequestKwargs
     if run_ctx.agent_id:
         if tools or completion_args:
             raise RunException("Can't set tools or completion_args when using an agent")

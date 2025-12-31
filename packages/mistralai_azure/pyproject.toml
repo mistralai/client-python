@@ -3,7 +3,7 @@ name = "mistralai_azure"
 version = "1.6.0"
 description = "Python Client SDK for the Mistral AI API in Azure."
 authors = [{ name = "Mistral" }]
-requires-python = ">=3.9.2"
+requires-python = ">=3.10"
 readme = "README.md"
 dependencies = [
     "httpcore >=1.0.9",
@@ -62,5 +62,4 @@ ignore_missing_imports = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-
 

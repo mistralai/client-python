@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
       - name: Checkout code
@@ -42,18 +42,7 @@ jobs:
           touch README-PYPI.md # Create this file since the client is not built by Speakeasy
           uv build
 
-      - name: For python 3.9, install the client and run examples without extra dependencies.
-        if: matrix.python-version == '3.9'
-        run: |
-          PACKAGE="dist/$(ls dist | grep whl | head -n 1)"
-          uv pip install --system "$PACKAGE"
-          ./scripts/run_examples.sh --no-extra-dep
-        env:
-          MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
-          MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
-
-      - name: For python 3.10+, install client with extras and run all examples.
-        if: matrix.python-version != '3.9'
+      - name: Install client with extras and run all examples.
         run: |
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
           uv pip install --system "$PACKAGE"

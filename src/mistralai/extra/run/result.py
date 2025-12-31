@@ -1,9 +1,10 @@
 import datetime
 import json
 import typing
-from typing import Union, Annotated, Optional, Literal
 from dataclasses import dataclass, field
-from pydantic import Discriminator, Tag, BaseModel
+from typing import Annotated, Literal
+
+from pydantic import BaseModel, Discriminator, Tag
 
 from mistralai.extra.utils.response_format import pydantic_model_from_json
 from mistralai.models import (
@@ -35,15 +36,15 @@ from mistralai.models import (
 )
 from mistralai.utils import get_discriminator
 
-RunOutputEntries = typing.Union[
-    MessageOutputEntry,
-    FunctionCallEntry,
-    FunctionResultEntry,
-    AgentHandoffEntry,
-    ToolExecutionEntry,
-]
+RunOutputEntries = (
+    MessageOutputEntry
+    | FunctionCallEntry
+    | FunctionResultEntry
+    | AgentHandoffEntry
+    | ToolExecutionEntry
+)
 
-RunEntries = typing.Union[RunOutputEntries, MessageInputEntry]
+RunEntries = RunOutputEntries | MessageInputEntry
 
 
 def as_text(entry: RunOutputEntries) -> str:
@@ -140,12 +141,12 @@ class RunFiles:
 @dataclass
 class RunResult:
     input_entries: list[InputEntries]
-    conversation_id: Optional[str] = field(default=None)
+    conversation_id: str | None = field(default=None)
     output_entries: list[RunOutputEntries] = field(default_factory=list)
     files: dict[str, RunFiles] = field(default_factory=dict)
-    output_model: Optional[type[BaseModel]] = field(default=None)
+    output_model: type[BaseModel] | None = field(default=None)
 
-    def get_file(self, file_id: str) -> Optional[RunFiles]:
+    def get_file(self, file_id: str) -> RunFiles | None:
         return self.files.get(file_id)
 
     @property
@@ -172,36 +173,34 @@ class RunResult:
 
 
 class FunctionResultEvent(BaseModel):
-    id: Optional[str] = None
+    id: str | None = None
 
-    type: Optional[Literal["function.result"]] = "function.result"
+    type: Literal["function.result"] | None = "function.result"
 
     result: str
 
     tool_call_id: str
 
-    created_at: Optional[datetime.datetime] = datetime.datetime.now(
+    created_at: datetime.datetime | None = datetime.datetime.now(
         tz=datetime.timezone.utc
     )
 
-    output_index: Optional[int] = 0
+    output_index: int | None = 0
 
 
-RunResultEventsType = typing.Union[SSETypes, Literal["function.result"]]
+RunResultEventsType = SSETypes | Literal["function.result"]
 
 RunResultEventsData = typing.Annotated[
-    Union[
-        Annotated[AgentHandoffDoneEvent, Tag("agent.handoff.done")],
-        Annotated[AgentHandoffStartedEvent, Tag("agent.handoff.started")],
-        Annotated[ResponseDoneEvent, Tag("conversation.response.done")],
-        Annotated[ResponseErrorEvent, Tag("conversation.response.error")],
-        Annotated[ResponseStartedEvent, Tag("conversation.response.started")],
-        Annotated[FunctionCallEvent, Tag("function.call.delta")],
-        Annotated[MessageOutputEvent, Tag("message.output.delta")],
-        Annotated[ToolExecutionDoneEvent, Tag("tool.execution.done")],
-        Annotated[ToolExecutionStartedEvent, Tag("tool.execution.started")],
-        Annotated[FunctionResultEvent, Tag("function.result")],
-    ],
+    Annotated[AgentHandoffDoneEvent, Tag("agent.handoff.done")]
+    | Annotated[AgentHandoffStartedEvent, Tag("agent.handoff.started")]
+    | Annotated[ResponseDoneEvent, Tag("conversation.response.done")]
+    | Annotated[ResponseErrorEvent, Tag("conversation.response.error")]
+    | Annotated[ResponseStartedEvent, Tag("conversation.response.started")]
+    | Annotated[FunctionCallEvent, Tag("function.call.delta")]
+    | Annotated[MessageOutputEvent, Tag("message.output.delta")]
+    | Annotated[ToolExecutionDoneEvent, Tag("tool.execution.done")]
+    | Annotated[ToolExecutionStartedEvent, Tag("tool.execution.started")]
+    | Annotated[FunctionResultEvent, Tag("function.result")],
     Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]
 

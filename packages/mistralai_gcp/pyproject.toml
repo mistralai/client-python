@@ -3,7 +3,7 @@ name = "mistralai-gcp"
 version = "1.6.0"
 description = "Python Client SDK for the Mistral AI API in GCP."
 authors = [{ name = "Mistral" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README-PYPI.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
@@ -65,5 +65,4 @@ ignore_missing_imports = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-
 

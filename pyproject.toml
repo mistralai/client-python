@@ -3,7 +3,7 @@ name = "mistralai"
 version = "1.10.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README-PYPI.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
@@ -25,7 +25,7 @@ gcp = [
     "requests >=2.32.3",
 ]
 agents = [
-    "mcp >=1.0,<2.0; python_version >= '3.10'",
+    "mcp >=1.0,<2.0",
     "griffe >=1.7.3,<2.0",
     "authlib >=1.5.2,<2.0",
 ]
@@ -42,7 +42,7 @@ dev = [
     "types-python-dateutil>=2.9.0.20240316,<3",
     "types-authlib>=1.5.0.20250516,<2",
     "types-pyyaml>=6.0.12.20250516,<7",
-    "mcp>=1.0,<2 ; python_version >= '3.10'",
+    "mcp>=1.0,<2",
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
 ]

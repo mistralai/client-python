@@ -1,12 +1,9 @@
-from typing import Optional
 import logging
 from contextlib import AsyncExitStack
 
-from mistralai.extra.mcp.base import (
-    MCPClientBase,
-)
+from mcp import StdioServerParameters, stdio_client  # pyright: ignore[reportMissingImports]
 
-from mcp import stdio_client, StdioServerParameters  # pyright: ignore[reportMissingImports]
+from mistralai.extra.mcp.base import MCPClientBase
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +11,9 @@ logger = logging.getLogger(__name__)
 class MCPClientSTDIO(MCPClientBase):
     """MCP client that uses stdio for communication."""
 
-    def __init__(self, stdio_params: StdioServerParameters, name: Optional[str] = None):
+    def __init__(
+        self, stdio_params: StdioServerParameters, name: str | None = None
+    ):
         super().__init__(name=name)
         self._stdio_params = stdio_params
 

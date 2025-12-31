@@ -1,14 +1,11 @@
+import inspect
 import itertools
+import json
 import logging
 from dataclasses import dataclass
-import inspect
+from typing import Any, Callable, ForwardRef, Sequence, cast, get_type_hints
 
-from pydantic import Field, create_model
-from pydantic.fields import FieldInfo
-import json
-from typing import cast, Callable, Sequence, Any, ForwardRef, get_type_hints, Union
-
-from opentelemetry import trace
+import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 from griffe import (
     Docstring,
     DocstringSectionKind,
@@ -16,7 +13,9 @@ from griffe import (
     DocstringParameter,
     DocstringSection,
 )
-import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
+from opentelemetry import trace
+from pydantic import Field, create_model
+from pydantic.fields import FieldInfo
 
 from mistralai.extra.exceptions import RunException
 from mistralai.extra.mcp.base import MCPClientProtocol
@@ -54,7 +53,7 @@ class RunMCPTool:
     mcp_client: MCPClientProtocol
 
 
-RunTool = Union[RunFunction, RunCoroutine, RunMCPTool]
+RunTool = RunFunction | RunCoroutine | RunMCPTool
 
 
 def _get_function_description(docstring_sections: list[DocstringSection]) -> str:
