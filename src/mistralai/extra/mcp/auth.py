@@ -1,9 +1,8 @@
-from typing import Optional
-
-from authlib.oauth2.rfc8414 import AuthorizationServerMetadata
-from authlib.integrations.httpx_client import AsyncOAuth2Client as AsyncOAuth2ClientBase
-import httpx
 import logging
+
+import httpx
+from authlib.integrations.httpx_client import AsyncOAuth2Client as AsyncOAuth2ClientBase
+from authlib.oauth2.rfc8414 import AuthorizationServerMetadata
 
 from mistralai.types import BaseModel
 
@@ -16,8 +15,8 @@ class Oauth2AuthorizationScheme(BaseModel):
     authorization_url: str
     token_url: str
     scope: list[str]
-    description: Optional[str] = None
-    refresh_url: Optional[str] = None
+    description: str | None = None
+    refresh_url: str | None = None
 
 
 class OAuthParams(BaseModel):
@@ -42,7 +41,7 @@ class AsyncOAuth2Client(AsyncOAuth2ClientBase):
 
 async def get_well_known_authorization_server_metadata(
     server_url: str,
-) -> Optional[AuthorizationServerMetadata]:
+) -> AuthorizationServerMetadata | None:
     """Fetch the metadata from the well-known location.
 
     This should be available on MCP servers as described by the specification:
@@ -123,10 +122,10 @@ async def dynamic_client_registration(
 async def build_oauth_params(
     server_url: str,
     redirect_url: str,
-    client_id: Optional[str] = None,
-    client_secret: Optional[str] = None,
-    scope: Optional[list[str]] = None,
-    async_client: Optional[httpx.AsyncClient] = None,
+    client_id: str | None = None,
+    client_secret: str | None = None,
+    scope: list[str] | None = None,
+    async_client: httpx.AsyncClient | None = None,
 ) -> OAuthParams:
     """Get issuer metadata and build the oauth required params."""
     metadata = await get_oauth_server_metadata(server_url=server_url)

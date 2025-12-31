@@ -89,7 +89,7 @@ It's also possible to write a standalone Python script without needing to set up
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.9"
+# requires-python = ">=3.10"
 # dependencies = [
 #     "mistralai",
 # ]
@@ -117,8 +117,7 @@ installing the package:
 pip install "mistralai[agents]"
 ```
 
-> Note: Because of some of our dependencies, these features are only available for python version higher or equal to 
-> 3.10.
+> Note: These features require Python 3.10+ (the SDK minimum).
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
