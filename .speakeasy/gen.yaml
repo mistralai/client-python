@@ -56,7 +56,7 @@ python:
   methodArguments: infer-optional-args
   moduleName: ""
   outputModelSuffix: output
-  packageManager: poetry
+  packageManager: uv
   packageName: mistralai
   pytestFilterWarnings: []
   pytestTimeout: 0

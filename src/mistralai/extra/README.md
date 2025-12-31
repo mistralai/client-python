@@ -34,7 +34,7 @@ class Chat(BaseSDK):
 
 3. Now build the SDK with the custom code:
 ```bash
-rm -rf dist; poetry build; python3 -m pip install ~/client-python/dist/mistralai-1.4.1-py3-none-any.whl --force-reinstall
+rm -rf dist; uv build; uv pip install --reinstall ~/client-python/dist/mistralai-1.4.1-py3-none-any.whl
 ```
 
 4. And now you should be able to call the custom method:

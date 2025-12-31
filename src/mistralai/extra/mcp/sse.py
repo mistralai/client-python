@@ -14,8 +14,8 @@ from mistralai.extra.mcp.base import (
 from mistralai.extra.mcp.auth import OAuthParams, AsyncOAuth2Client
 from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 
-from mcp.client.sse import sse_client
-from mcp.shared.message import SessionMessage
+from mcp.client.sse import sse_client  # pyright: ignore[reportMissingImports]
+from mcp.shared.message import SessionMessage  # pyright: ignore[reportMissingImports]
 from authlib.oauth2.rfc6749 import OAuth2Token
 
 from mistralai.types import BaseModel

@@ -2,9 +2,9 @@
 name = "mistralai-gcp"
 version = "1.6.0"
 description = "Python Client SDK for the Mistral AI API in GCP."
-authors = [{ name = "Mistral" },]
-readme = "README-PYPI.md"
+authors = [{ name = "Mistral" }]
 requires-python = ">=3.9"
+readme = "README-PYPI.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "google-auth (>=2.31.0,<3.0.0)",
@@ -15,28 +15,37 @@ dependencies = [
     "typing-inspection >=0.4.0",
 ]
 
-[tool.poetry]
-packages = [
-    { include = "mistralai_gcp", from = "src" }
+[dependency-groups]
+dev = [
+    "mypy==1.14.1",
+    "pylint==3.2.3",
+    "pytest>=8.2.2,<9",
+    "pytest-asyncio>=0.23.7,<0.24",
+    "types-python-dateutil>=2.9.0.20240316,<3",
 ]
-include = ["py.typed", "src/mistralai_gcp/py.typed"]
 
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai_gcp/py.typed"]
 
+[tool.hatch.build.targets.sdist]
+include = ["src/mistralai_gcp"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"py.typed" = "py.typed"
+"src/mistralai_gcp/py.typed" = "src/mistralai_gcp/py.typed"
+
+[tool.hatch.build.targets.wheel]
+include = ["src/mistralai_gcp"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/mistralai_gcp" = "mistralai_gcp"
+
 [virtualenvs]
 in-project = true
 
-[tool.poetry.group.dev.dependencies]
-mypy = "==1.14.1"
-pylint = "==3.2.3"
-pytest = "^8.2.2"
-pytest-asyncio = "^0.23.7"
-types-python-dateutil = "^2.9.0.20240316"
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"

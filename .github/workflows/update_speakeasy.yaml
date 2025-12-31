@@ -33,17 +33,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Poetry
-        uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
-        with:
-          version: latest
-          virtualenvs-create: true
-          virtualenvs-in-project: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
       - name: Install dependencies
         run: |
           cp README.md README-PYPI.md
-          poetry install --with dev
+          uv sync --group dev --no-default-groups
 
       - name: Install Speakeasy CLI
         run: |
@@ -70,7 +66,7 @@ jobs:
             TARGETS_ARGS="$TARGETS_ARGS --targets $target"
           done
           
-          poetry run inv update-speakeasy \
+          uv run inv update-speakeasy \
             --version "${{ github.event.inputs.version }}" \
             $TARGETS_ARGS
         env:
