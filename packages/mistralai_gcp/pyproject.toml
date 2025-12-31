@@ -4,7 +4,7 @@ version = "1.6.0"
 description = "Python Client SDK for the Mistral AI API in GCP."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
-readme = "README-PYPI.md"
+readme = "README.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "google-auth (>=2.31.0,<3.0.0)",
@@ -48,7 +48,6 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "function"
 pythonpath = ["src"]
 
 [tool.mypy]
@@ -65,4 +64,3 @@ ignore_missing_imports = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-

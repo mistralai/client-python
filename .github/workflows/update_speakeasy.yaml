@@ -38,7 +38,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cp README.md README-PYPI.md
           uv sync --group dev --no-default-groups
 
       - name: Install Speakeasy CLI

@@ -27,8 +27,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          touch README-PYPI.md
           uv sync --all-extras
 
       - name: Run the 'src/mistralai/extra' package unit tests
         run: uv run python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
+
+      - name: Run pytest for repository tests
+        run: uv run pytest tests/

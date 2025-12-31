@@ -4,7 +4,7 @@ version = "1.10.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
-readme = "README-PYPI.md"
+readme = "README.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "httpx >=0.28.1",
@@ -89,7 +89,6 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "function"
 pythonpath = ["src"]
 
 [tool.mypy]
