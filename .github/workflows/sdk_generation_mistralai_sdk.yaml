@@ -16,7 +16,7 @@ permissions:
         type: string
 jobs:
   generate:
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@5b268931ef6902bbb70fa01b467dc361c68f7617 # v15
+    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@a658ca0a4a9b11bbcd7d3fb4e3063fa843afabff # v15
     with:
       force: ${{ github.event.inputs.force }}
       mode: pr
