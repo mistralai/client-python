@@ -39,7 +39,6 @@ jobs:
 
       - name: Build the package
         run: |
-          touch README-PYPI.md # Create this file since the client is not built by Speakeasy
           uv build
 
       - name: Install client with extras and run all examples.
