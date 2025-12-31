@@ -7,9 +7,9 @@ PIP
 pip install mistralai
 ```
 
-Poetry
+UV
 ```bash
-poetry add mistralai
+uv add mistralai
 ```
 
 **Prerequisites**

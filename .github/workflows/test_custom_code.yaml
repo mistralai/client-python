@@ -22,27 +22,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Poetry
-        uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          virtualenvs-path: .venv
-          installer-parallel: true
-
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
       - name: Install dependencies
-        # Install dependencies if cache does not exist
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
+        run: |
+          touch README-PYPI.md
+          uv sync --all-extras
 
       - name: Run the 'src/mistralai/extra' package unit tests
-        run: |
-          source .venv/bin/activate
-          python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
+        run: uv run python3.12 -m unittest discover -s src/mistralai/extra/tests -t src

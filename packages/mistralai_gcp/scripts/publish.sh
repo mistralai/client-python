@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-export POETRY_PYPI_TOKEN_PYPI=${PYPI_TOKEN}
+export UV_PUBLISH_TOKEN=${PYPI_TOKEN}
 
-poetry run python scripts/prepare_readme.py
+uv run python scripts/prepare_readme.py
 
-poetry publish --build --skip-existing
+uv build
+uv publish

@@ -1,11 +1,14 @@
-from typing import Optional, Union
+from typing import Optional, Sequence, Union
 import logging
 import typing
 from contextlib import AsyncExitStack
 from typing import Protocol, Any
 
-from mcp import ClientSession
-from mcp.types import ListPromptsResult, EmbeddedResource, ImageContent, TextContent
+from mcp import ClientSession  # pyright: ignore[reportMissingImports]
+from mcp.types import (  # pyright: ignore[reportMissingImports]
+    ContentBlock,
+    ListPromptsResult,
+)
 
 from mistralai.extra.exceptions import MCPException
 from mistralai.models import (
@@ -62,15 +65,13 @@ class MCPClientBase(MCPClientProtocol):
         self._exit_stack: Optional[AsyncExitStack] = None
         self._is_initialized = False
 
-    def _convert_content(
-        self, mcp_content: Union[TextContent, ImageContent, EmbeddedResource]
-    ) -> TextChunkTypedDict:
+    def _convert_content(self, mcp_content: ContentBlock) -> TextChunkTypedDict:
         if not mcp_content.type == "text":
             raise MCPException("Only supporting text tool responses for now.")
         return {"type": "text", "text": mcp_content.text}
 
     def _convert_content_list(
-        self, mcp_contents: list[Union[TextContent, ImageContent, EmbeddedResource]]
+        self, mcp_contents: Sequence[ContentBlock]
     ) -> list[TextChunkTypedDict]:
         content_chunks = []
         for mcp_content in mcp_contents:

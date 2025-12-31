@@ -6,7 +6,7 @@ from mistralai.extra.mcp.base import (
     MCPClientBase,
 )
 
-from mcp import stdio_client, StdioServerParameters
+from mcp import stdio_client, StdioServerParameters  # pyright: ignore[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 

@@ -25,8 +25,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Poetry
-        uses: snok/install-poetry@76e04a911780d5b312d89783f7b1cd627778900a # v1.4.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
       - name: Set VERSION
         run: |
@@ -40,13 +40,13 @@ jobs:
       - name: Build the package
         run: |
           touch README-PYPI.md # Create this file since the client is not built by Speakeasy
-          poetry build
+          uv build
 
       - name: For python 3.9, install the client and run examples without extra dependencies.
         if: matrix.python-version == '3.9'
         run: |
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)"
-          python3 -m pip install "$PACKAGE"
+          uv pip install --system "$PACKAGE"
           ./scripts/run_examples.sh --no-extra-dep
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
@@ -56,7 +56,7 @@ jobs:
         if: matrix.python-version != '3.9'
         run: |
           PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
-          python3 -m pip install "$PACKAGE"
+          uv pip install --system "$PACKAGE"
           ./scripts/run_examples.sh
         env:
           MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}

@@ -5,7 +5,7 @@ import os
 import traceback
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 import httpx
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
@@ -135,7 +135,7 @@ def enrich_span_from_response(tracer: trace.Tracer, span: Span, operation_id: st
     response_data = json.loads(response.content)
 
     # Base attributes
-    attributes: dict[str, str | int] = {
+    attributes: dict[str, Union[str, int]] = {
         http_attributes.HTTP_RESPONSE_STATUS_CODE: response.status_code,
         MistralAIAttributes.MISTRAL_AI_OPERATION_ID: operation_id,
         gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value
