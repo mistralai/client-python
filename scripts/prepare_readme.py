@@ -1,7 +1,3 @@
-"""Rewrite README links for PyPI builds and run a command or print to stdout."""
-
-from __future__ import annotations
-
 import argparse
 import re
 import subprocess
