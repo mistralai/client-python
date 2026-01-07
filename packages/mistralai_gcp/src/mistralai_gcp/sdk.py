@@ -9,6 +9,8 @@ import google.auth.credentials
 import google.auth.transport
 import google.auth.transport.requests
 import httpx
+import importlib
+import sys
 
 from mistralai_gcp import models
 from mistralai_gcp._hooks import BeforeRequestHook, SDKHooks
@@ -28,13 +30,11 @@ LEGACY_MODEL_ID_FORMAT = {
     "mistral-nemo-2407": "mistral-nemo@2407",
 }
 
-
 def get_model_info(model: str) -> tuple[str, str]:
     # if the model requiers the legacy fomat, use it, else do nothing.
     if model in LEGACY_MODEL_ID_FORMAT:
         return "-".join(model.split("-")[:-1]), LEGACY_MODEL_ID_FORMAT[model]
     return model, model
-
 
 class MistralGoogleCloud(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
@@ -43,6 +43,10 @@ class MistralGoogleCloud(BaseSDK):
     r"""Chat Completion API."""
     fim: Fim
     r"""Fill-in-the-middle API."""
+    _sub_sdk_map = {
+        "chat": ("mistralai_gcp.chat", "Chat"),
+        "fim": ("mistralai_gcp.fim", "Fim"),
+    }
 
     def __init__(
         self,
@@ -66,36 +70,37 @@ class MistralGoogleCloud(BaseSDK):
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
-
+        credentials = None
         if not access_token:
             credentials, loaded_project_id = google.auth.default(
                 scopes=["https://www.googleapis.com/auth/cloud-platform"],
             )
+
+            # default will already raise a google.auth.exceptions.DefaultCredentialsError if no credentials are found
+            assert isinstance(
+                credentials, google.auth.credentials.Credentials
+            ), "credentials must be an instance of google.auth.credentials.Credentials"
+
             credentials.refresh(google.auth.transport.requests.Request())
-
-            if not isinstance(credentials, google.auth.credentials.Credentials):
-                raise models.SDKError(
-                    "credentials must be an instance of google.auth.credentials.Credentials"
-                )
-
             project_id = project_id or loaded_project_id
 
         if project_id is None:
-            raise models.SDKError("project_id must be provided")
+            raise ValueError("project_id must be provided")
 
         def auth_token() -> str:
             if access_token:
                 return access_token
 
+            assert credentials is not None, "credentials must be initialized"
             credentials.refresh(google.auth.transport.requests.Request())
             token = credentials.token
             if not token:
-                raise models.SDKError("Failed to get token from credentials")
+                raise Exception("Failed to get token from credentials")
             return token
 
         client_supplied = True
         if client is None:
-            client = httpx.Client()
+            client = httpx.Client(follow_redirects=True)
             client_supplied = False
 
         assert issubclass(
@@ -104,7 +109,7 @@ class MistralGoogleCloud(BaseSDK):
 
         async_client_supplied = True
         if async_client is None:
-            async_client = httpx.AsyncClient()
+            async_client = httpx.AsyncClient(follow_redirects=True)
             async_client_supplied = False
 
         if debug_logger is None:
@@ -114,13 +119,7 @@ class MistralGoogleCloud(BaseSDK):
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
 
-        security: Any = None
-        if callable(auth_token):
-            security = lambda: models.Security(  # pylint: disable=unnecessary-lambda-assignment
-                api_key=auth_token()
-            )
-        else:
-            security = models.Security(api_key=auth_token)
+        security = lambda: models.Security(api_key=auth_token())
 
         BaseSDK.__init__(
             self,
@@ -139,17 +138,19 @@ class MistralGoogleCloud(BaseSDK):
         )
 
         hooks = SDKHooks()
+
+        # pylint: disable=protected-access
+        self.sdk_configuration.__dict__["_hooks"] = hooks
+
         hook = GoogleCloudBeforeRequestHook(region, project_id)
         hooks.register_before_request_hook(hook)
+
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
             current_server_url, client
         )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
-
-        # pylint: disable=protected-access
-        self.sdk_configuration.__dict__["_hooks"] = hooks
 
         weakref.finalize(
             self,
@@ -161,11 +162,43 @@ class MistralGoogleCloud(BaseSDK):
             self.sdk_configuration.async_client_supplied,
         )
 
-        self._init_sdks()
+    def dynamic_import(self, modname, retries=3):
+        for attempt in range(retries):
+            try:
+                return importlib.import_module(modname)
+            except KeyError:
+                # Clear any half-initialized module and retry
+                sys.modules.pop(modname, None)
+                if attempt == retries - 1:
+                    break
+        raise KeyError(f"Failed to import module '{modname}' after {retries} attempts")
 
-    def _init_sdks(self):
-        self.chat = Chat(self.sdk_configuration)
-        self.fim = Fim(self.sdk_configuration)
+    def __getattr__(self, name: str):
+        if name in self._sub_sdk_map:
+            module_path, class_name = self._sub_sdk_map[name]
+            try:
+                module = self.dynamic_import(module_path)
+                klass = getattr(module, class_name)
+                instance = klass(self.sdk_configuration, parent_ref=self)
+                setattr(self, name, instance)
+                return instance
+            except ImportError as e:
+                raise AttributeError(
+                    f"Failed to import module {module_path} for attribute {name}: {e}"
+                ) from e
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Failed to find class {class_name} in module {module_path} for attribute {name}: {e}"
+                ) from e
+
+        raise AttributeError(
+            f"'{type(self).__name__}' object has no attribute '{name}'"
+        )
+
+    def __dir__(self):
+        default_attrs = list(super().__dir__())
+        lazy_attrs = list(self._sub_sdk_map.keys())
+        return sorted(list(set(default_attrs + lazy_attrs)))
 
     def __enter__(self):
         return self
@@ -189,7 +222,6 @@ class MistralGoogleCloud(BaseSDK):
             await self.sdk_configuration.async_client.aclose()
         self.sdk_configuration.async_client = None
 
-
 class GoogleCloudBeforeRequestHook(BeforeRequestHook):
     def __init__(self, region: str, project_id: str):
         self.region = region
@@ -210,7 +242,7 @@ class GoogleCloudBeforeRequestHook(BeforeRequestHook):
             new_content = json.dumps(parsed).encode("utf-8")
 
         if model_id == "":
-            raise models.SDKError("model must be provided")
+            raise ValueError("model must be provided")
 
         stream = "streamRawPredict" in request.url.path
         specifier = "streamRawPredict" if stream else "rawPredict"

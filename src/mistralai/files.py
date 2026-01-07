@@ -31,7 +31,15 @@ class Files(BaseSDK):
 
         Please contact us if you need to increase these storage limits.
 
-        :param file: The File object (not file name) to be uploaded.  To upload a file and specify a custom file name you should format your request as such:  ```bash  file=@path/to/your/file.jsonl;filename=custom_name.jsonl  ```  Otherwise, you can just keep the original file name:  ```bash  file=@path/to/your/file.jsonl  ```
+        :param file: The File object (not file name) to be uploaded.
+            To upload a file and specify a custom file name you should format your request as such:
+            ```bash
+            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
+            ```
+            Otherwise, you can just keep the original file name:
+            ```bash
+            file=@path/to/your/file.jsonl
+            ```
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -73,6 +81,7 @@ class Files(BaseSDK):
                 "multipart",
                 models.FilesAPIRoutesUploadFileMultiPartBodyParams,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -89,7 +98,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_upload_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -128,7 +137,15 @@ class Files(BaseSDK):
 
         Please contact us if you need to increase these storage limits.
 
-        :param file: The File object (not file name) to be uploaded.  To upload a file and specify a custom file name you should format your request as such:  ```bash  file=@path/to/your/file.jsonl;filename=custom_name.jsonl  ```  Otherwise, you can just keep the original file name:  ```bash  file=@path/to/your/file.jsonl  ```
+        :param file: The File object (not file name) to be uploaded.
+            To upload a file and specify a custom file name you should format your request as such:
+            ```bash
+            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
+            ```
+            Otherwise, you can just keep the original file name:
+            ```bash
+            file=@path/to/your/file.jsonl
+            ```
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -170,6 +187,7 @@ class Files(BaseSDK):
                 "multipart",
                 models.FilesAPIRoutesUploadFileMultiPartBodyParams,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -186,7 +204,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_upload_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -271,6 +289,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -287,7 +306,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_list_files",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -372,6 +391,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -388,7 +408,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_list_files",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -455,6 +475,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -471,7 +492,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_retrieve_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -538,6 +559,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -554,7 +576,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_retrieve_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -621,6 +643,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -637,7 +660,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_delete_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -704,6 +727,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -720,7 +744,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_delete_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -787,6 +811,7 @@ class Files(BaseSDK):
             accept_header_value="application/octet-stream",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -803,7 +828,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_download_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -872,6 +897,7 @@ class Files(BaseSDK):
             accept_header_value="application/octet-stream",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -888,7 +914,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_download_file",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -958,6 +984,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -974,7 +1001,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_get_signed_url",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1042,6 +1069,7 @@ class Files(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1058,7 +1086,7 @@ class Files(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="files_api_routes_get_signed_url",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

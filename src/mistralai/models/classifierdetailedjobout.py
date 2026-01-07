@@ -29,7 +29,9 @@ ClassifierDetailedJobOutStatus = Literal[
     "CANCELLATION_REQUESTED",
 ]
 
-ClassifierDetailedJobOutObject = Literal["job"]
+
+ClassifierDetailedJobOutObject = Literal["job",]
+
 
 ClassifierDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
@@ -37,7 +39,7 @@ ClassifierDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 ClassifierDetailedJobOutIntegrations = WandbIntegrationOut
 
 
-ClassifierDetailedJobOutJobType = Literal["classifier"]
+ClassifierDetailedJobOutJobType = Literal["classifier",]
 
 
 class ClassifierDetailedJobOutTypedDict(TypedDict):

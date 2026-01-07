@@ -8,7 +8,7 @@ from mistralai_gcp.models.usermessage import UserMessage
 
 
 async def main():
-    model = "mistral-large-2407"
+    model = "mistral-small-2503"
 
     client = MistralGoogleCloud(project_id=os.environ["GCP_PROJECT_ID"])
 

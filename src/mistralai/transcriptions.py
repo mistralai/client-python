@@ -77,6 +77,7 @@ class Transcriptions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "multipart", models.AudioTranscriptionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -93,7 +94,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -179,6 +180,7 @@ class Transcriptions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "multipart", models.AudioTranscriptionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -195,7 +197,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -285,6 +287,7 @@ class Transcriptions(BaseSDK):
                 "multipart",
                 models.AudioTranscriptionRequestStream,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -301,7 +304,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -397,6 +400,7 @@ class Transcriptions(BaseSDK):
                 "multipart",
                 models.AudioTranscriptionRequestStream,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -413,7 +417,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

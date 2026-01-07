@@ -4,4 +4,7 @@ from __future__ import annotations
 from typing import Literal
 
 
-EncodingFormat = Literal["float", "base64"]
+EncodingFormat = Literal[
+    "float",
+    "base64",
+]

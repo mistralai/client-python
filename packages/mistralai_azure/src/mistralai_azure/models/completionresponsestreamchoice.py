@@ -10,7 +10,15 @@ from typing import Literal, Union
 from typing_extensions import Annotated, TypedDict
 
 
-FinishReason = Union[Literal["stop", "length", "error", "tool_calls"], UnrecognizedStr]
+FinishReason = Union[
+    Literal[
+        "stop",
+        "length",
+        "error",
+        "tool_calls",
+    ],
+    UnrecognizedStr,
+]
 
 
 class CompletionResponseStreamChoiceTypedDict(TypedDict):
