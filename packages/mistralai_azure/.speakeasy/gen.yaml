@@ -16,20 +16,30 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.6.0
+  version: 1.7.9
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+  allowedRedefinedBuiltins:
+    - id
+    - object
+  asyncMode: both
   authors:
     - Mistral
   baseErrorName: MistralAzureError
   clientServerStatusCodesAsErrors: true
+  constFieldCasing: upper
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in Azure.
   enableCustomCodeRegions: false
@@ -47,13 +57,19 @@ python:
       operations: ""
       shared: ""
       webhooks: ""
+  inferUnionDiscriminators: true
   inputModelSuffix: input
+  license: ""
   maxMethodParams: 15
   methodArguments: infer-optional-args
   moduleName: ""
+  multipartArrayFormat: legacy
   outputModelSuffix: output
+  packageManager: uv
   packageName: mistralai_azure
+  preApplyUnionDiscriminators: false
   pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
+  sseFlatResponse: false
   templateVersion: v2
