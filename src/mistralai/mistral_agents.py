@@ -93,6 +93,7 @@ class MistralAgents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentCreationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -109,7 +110,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -217,6 +218,7 @@ class MistralAgents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentCreationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -233,7 +235,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -324,6 +326,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -340,7 +343,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -431,6 +434,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -447,7 +451,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -523,6 +527,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -539,7 +544,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -615,6 +620,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -631,7 +637,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -751,6 +757,7 @@ class MistralAgents(BaseSDK):
                 "json",
                 models.AgentUpdateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -767,7 +774,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -887,6 +894,7 @@ class MistralAgents(BaseSDK):
                 "json",
                 models.AgentUpdateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -903,7 +911,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -974,6 +982,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -990,7 +999,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1061,6 +1070,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1077,7 +1087,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1153,6 +1163,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1169,7 +1180,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1245,6 +1256,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1261,7 +1273,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

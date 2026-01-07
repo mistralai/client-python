@@ -8,9 +8,10 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-FunctionResultEntryObject = Literal["entry"]
+FunctionResultEntryObject = Literal["entry",]
 
-FunctionResultEntryType = Literal["function.result"]
+
+FunctionResultEntryType = Literal["function.result",]
 
 
 class FunctionResultEntryTypedDict(TypedDict):

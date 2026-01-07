@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 from .validationerror import ValidationError
-from mistralai_gcp import utils
+from dataclasses import dataclass, field
+import httpx
+from mistralai_gcp.models import MistralGcpError
 from mistralai_gcp.types import BaseModel
 from typing import List, Optional
 
@@ -11,11 +13,16 @@ class HTTPValidationErrorData(BaseModel):
     detail: Optional[List[ValidationError]] = None
 
 
-class HTTPValidationError(Exception):
-    data: HTTPValidationErrorData
+@dataclass(unsafe_hash=True)
+class HTTPValidationError(MistralGcpError):
+    data: HTTPValidationErrorData = field(hash=False)
 
-    def __init__(self, data: HTTPValidationErrorData):
-        self.data = data
-
-    def __str__(self) -> str:
-        return utils.marshal_json(self.data, HTTPValidationErrorData)
+    def __init__(
+        self,
+        data: HTTPValidationErrorData,
+        raw_response: httpx.Response,
+        body: Optional[str] = None,
+    ):
+        message = body or raw_response.text
+        super().__init__(message, raw_response, body)
+        object.__setattr__(self, "data", data)

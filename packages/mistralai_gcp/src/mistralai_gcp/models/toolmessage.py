@@ -22,7 +22,7 @@ ToolMessageContentTypedDict = TypeAliasType(
 ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[ContentChunk]])
 
 
-ToolMessageRole = Literal["tool"]
+ToolMessageRole = Literal["tool",]
 
 
 class ToolMessageTypedDict(TypedDict):
@@ -51,7 +51,7 @@ class ToolMessage(BaseModel):
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)

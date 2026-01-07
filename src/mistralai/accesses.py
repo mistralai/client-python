@@ -58,6 +58,7 @@ class Accesses(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -74,7 +75,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_list_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -147,6 +148,7 @@ class Accesses(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -163,7 +165,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_list_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -253,6 +255,7 @@ class Accesses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.sharing_in, False, False, "json", models.SharingIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -269,7 +272,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_create_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -359,6 +362,7 @@ class Accesses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.sharing_in, False, False, "json", models.SharingIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -375,7 +379,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_create_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -462,6 +466,7 @@ class Accesses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.sharing_delete, False, False, "json", models.SharingDelete
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -478,7 +483,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_delete_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -565,6 +570,7 @@ class Accesses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.sharing_delete, False, False, "json", models.SharingDelete
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -581,7 +587,7 @@ class Accesses(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_share_delete_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

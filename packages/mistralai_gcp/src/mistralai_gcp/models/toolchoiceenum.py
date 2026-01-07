@@ -4,4 +4,9 @@ from __future__ import annotations
 from typing import Literal
 
 
-ToolChoiceEnum = Literal["auto", "none", "any", "required"]
+ToolChoiceEnum = Literal[
+    "auto",
+    "none",
+    "any",
+    "required",
+]

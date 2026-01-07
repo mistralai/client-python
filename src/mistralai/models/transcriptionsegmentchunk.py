@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-Type = Literal["transcription_segment"]
+Type = Literal["transcription_segment",]
 
 
 class TranscriptionSegmentChunkTypedDict(TypedDict):

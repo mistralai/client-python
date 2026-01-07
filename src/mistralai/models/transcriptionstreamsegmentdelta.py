@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-TranscriptionStreamSegmentDeltaType = Literal["transcription.segment"]
+TranscriptionStreamSegmentDeltaType = Literal["transcription.segment",]
 
 
 class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):

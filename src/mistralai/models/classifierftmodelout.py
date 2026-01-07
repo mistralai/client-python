@@ -12,9 +12,10 @@ from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ClassifierFTModelOutObject = Literal["model"]
+ClassifierFTModelOutObject = Literal["model",]
 
-ClassifierFTModelOutModelType = Literal["classifier"]
+
+ClassifierFTModelOutModelType = Literal["classifier",]
 
 
 class ClassifierFTModelOutTypedDict(TypedDict):

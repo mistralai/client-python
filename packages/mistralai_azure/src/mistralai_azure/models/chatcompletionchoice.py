@@ -10,7 +10,14 @@ from typing_extensions import Annotated, TypedDict
 
 
 ChatCompletionChoiceFinishReason = Union[
-    Literal["stop", "length", "model_length", "error", "tool_calls"], UnrecognizedStr
+    Literal[
+        "stop",
+        "length",
+        "model_length",
+        "error",
+        "tool_calls",
+    ],
+    UnrecognizedStr,
 ]
 
 

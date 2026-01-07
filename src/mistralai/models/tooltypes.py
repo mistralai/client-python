@@ -5,4 +5,4 @@ from mistralai.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-ToolTypes = Union[Literal["function"], UnrecognizedStr]
+ToolTypes = Union[Literal["function",], UnrecognizedStr]

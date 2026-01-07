@@ -22,7 +22,10 @@ Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURL
 r"""Document to run OCR on"""
 
 
-TableFormat = Literal["markdown", "html"]
+TableFormat = Literal[
+    "markdown",
+    "html",
+]
 
 
 class OCRRequestTypedDict(TypedDict):

@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-Type = Literal["text"]
+Type = Literal["text",]
 
 
 class TextChunkTypedDict(TypedDict):

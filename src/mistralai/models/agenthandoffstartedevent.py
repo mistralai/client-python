@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-AgentHandoffStartedEventType = Literal["agent.handoff.started"]
+AgentHandoffStartedEventType = Literal["agent.handoff.started",]
 
 
 class AgentHandoffStartedEventTypedDict(TypedDict):
