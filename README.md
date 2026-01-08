@@ -58,7 +58,15 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *uv* package managers.
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add mistralai
+```
 
 ### PIP
 
@@ -68,12 +76,12 @@ The SDK can be installed with either *pip* or *uv* package managers.
 pip install mistralai
 ```
 
-### UV
+### Poetry
 
-*UV* is an extremely fast Python package and project manager. You can use it to add the SDK to your project:
+*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-uv add mistralai
+poetry add mistralai
 ```
 
 ### Shell and script usage with `uv`
@@ -89,7 +97,7 @@ It's also possible to write a standalone Python script without needing to set up
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.9"
 # dependencies = [
 #     "mistralai",
 # ]
