@@ -29,6 +29,9 @@ agents = [
     "griffe >=1.7.3,<2.0",
     "authlib >=1.5.2,<2.0",
 ]
+workflows = [
+    "mistralai-workflows; python_version >= '3.12'",
+]
 
 [project.urls]
 Repository = "https://github.com/mistralai/client-python.git"
@@ -57,6 +60,9 @@ default-groups = [
     "dev",
     "lint",
 ]
+
+[tool.uv.sources]
+mistralai-workflows = { path = "../dashboard/workflow_sdk" }
 
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai/py.typed"]
@@ -104,10 +110,12 @@ module = [
     "typing_inspect.*",
     "authlib.*",
     "mcp.*",
-    "griffe.*"
+    "griffe.*",
+    "mistralai_workflows.*"
 ]
 ignore_missing_imports = true
 
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+ignore = ["src/mistralai/workflows"]

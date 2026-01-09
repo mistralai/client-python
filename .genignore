@@ -4,3 +4,4 @@ examples/*
 src/mistral/extra/*
 pylintrc
 scripts/prepare_readme.py
+src/mistralai/workflows/*
