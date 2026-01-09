@@ -2,7 +2,7 @@
 
 import json
 import weakref
-from typing import Any, Optional, cast
+from typing import Any, Optional, Union, cast
 
 import google.auth
 import google.auth.credentials
@@ -197,7 +197,7 @@ class GoogleCloudBeforeRequestHook(BeforeRequestHook):
 
     def before_request(
         self, hook_ctx, request: httpx.Request
-    ) -> httpx.Request | Exception:
+    ) -> Union[httpx.Request, Exception]:
         # The goal of this function is to template in the region, project and model into the URL path
         # We do this here so that the API remains more user-friendly
         model_id = None
