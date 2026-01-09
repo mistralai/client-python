@@ -3,8 +3,10 @@
 
 ## Fields
 
-| Field               | Type                | Required            | Description         | Example             |
-| ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
-| `prompt_tokens`     | *int*               | :heavy_check_mark:  | N/A                 | 16                  |
-| `completion_tokens` | *int*               | :heavy_check_mark:  | N/A                 | 34                  |
-| `total_tokens`      | *int*               | :heavy_check_mark:  | N/A                 | 50                  |
+| Field                   | Type                    | Required                | Description             |
+| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
+| `prompt_tokens`         | *Optional[int]*         | :heavy_minus_sign:      | N/A                     |
+| `completion_tokens`     | *Optional[int]*         | :heavy_minus_sign:      | N/A                     |
+| `total_tokens`          | *Optional[int]*         | :heavy_minus_sign:      | N/A                     |
+| `prompt_audio_seconds`  | *OptionalNullable[int]* | :heavy_minus_sign:      | N/A                     |
+| `__pydantic_extra__`    | Dict[str, *Any*]        | :heavy_minus_sign:      | N/A                     |

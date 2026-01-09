@@ -27,10 +27,7 @@ r"""Stop generation if this token is detected. Or if one of these tokens is dete
 
 class FIMCompletionRequestTypedDict(TypedDict):
     model: str
-    r"""ID of the model to use. Only compatible for now with:
-    - `codestral-2405`
-    - `codestral-latest`
-    """
+    r"""ID of the model with FIM to use."""
     prompt: str
     r"""The text/code to complete."""
     temperature: NotRequired[Nullable[float]]
@@ -53,10 +50,7 @@ class FIMCompletionRequestTypedDict(TypedDict):
 
 class FIMCompletionRequest(BaseModel):
     model: str
-    r"""ID of the model to use. Only compatible for now with:
-    - `codestral-2405`
-    - `codestral-latest`
-    """
+    r"""ID of the model with FIM to use."""
 
     prompt: str
     r"""The text/code to complete."""
@@ -110,7 +104,7 @@ class FIMCompletionRequest(BaseModel):
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)
