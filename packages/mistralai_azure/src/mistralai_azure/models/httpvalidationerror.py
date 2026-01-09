@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from .validationerror import ValidationError
-from mistralai_azure import utils
+import httpx
+from mistralai_azure.models import MistralAzureError
 from mistralai_azure.types import BaseModel
 from typing import List, Optional
 
@@ -11,11 +12,15 @@ class HTTPValidationErrorData(BaseModel):
     detail: Optional[List[ValidationError]] = None
 
 
-class HTTPValidationError(Exception):
+class HTTPValidationError(MistralAzureError):
     data: HTTPValidationErrorData
 
-    def __init__(self, data: HTTPValidationErrorData):
+    def __init__(
+        self,
+        data: HTTPValidationErrorData,
+        raw_response: httpx.Response,
+        body: Optional[str] = None,
+    ):
+        message = body or raw_response.text
+        super().__init__(message, raw_response, body)
         self.data = data
-
-    def __str__(self) -> str:
-        return utils.marshal_json(self.data, HTTPValidationErrorData)

@@ -1,48 +1,43 @@
+
 [project]
 name = "mistralai_azure"
-version = "1.6.0"
+version = "1.7.0"
 description = "Python Client SDK for the Mistral AI API in Azure."
-authors = [{ name = "Mistral" }]
-requires-python = ">=3.10"
-readme = "README.md"
+authors = [{ name = "Mistral" },]
+readme = "README-PYPI.md"
+requires-python = ">=3.9.2"
 dependencies = [
     "httpcore >=1.0.9",
     "httpx >=0.28.1",
     "pydantic >=2.11.2",
 ]
 
-[dependency-groups]
-dev = [
-    "mypy==1.15.0",
-    "pylint==3.2.3",
-    "pytest>=8.2.2,<9",
-    "pytest-asyncio>=0.23.7,<0.24",
+[tool.poetry]
+repository = "https://github.com/mistralai/client-python.git"
+packages = [
+    { include = "mistralai_azure", from = "src" }
 ]
+include = ["py.typed", "src/mistralai_azure/py.typed"]
 
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai_azure/py.typed"]
 
-[tool.hatch.build.targets.sdist]
-include = ["src/mistralai_azure"]
-
-[tool.hatch.build.targets.sdist.force-include]
-"py.typed" = "py.typed"
-"src/mistralai_azure/py.typed" = "src/mistralai_azure/py.typed"
-
-[tool.hatch.build.targets.wheel]
-include = ["src/mistralai_azure"]
-
-[tool.hatch.build.targets.wheel.sources]
-"src/mistralai_azure" = "mistralai_azure"
-
 [virtualenvs]
 in-project = true
 
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.15.0"
+pylint = "==3.2.3"
+pytest = "^8.2.2"
+pytest-asyncio = "^0.23.7"
+
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
 pythonpath = ["src"]
 
 [tool.mypy]
@@ -61,3 +56,5 @@ ignore_missing_imports = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+
+
