@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ResponseErrorEventType = Literal["conversation.response.error"]
+ResponseErrorEventType = Literal["conversation.response.error",]
 
 
 class ResponseErrorEventTypedDict(TypedDict):

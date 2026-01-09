@@ -5,10 +5,8 @@ from .filepurpose import FilePurpose
 from .sampletype import SampleType
 from .source import Source
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import validate_open_enum
 import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -47,11 +45,11 @@ class UploadFileOut(BaseModel):
     filename: str
     r"""The name of the uploaded file."""
 
-    purpose: Annotated[FilePurpose, PlainValidator(validate_open_enum(False))]
+    purpose: FilePurpose
 
-    sample_type: Annotated[SampleType, PlainValidator(validate_open_enum(False))]
+    sample_type: SampleType
 
-    source: Annotated[Source, PlainValidator(validate_open_enum(False))]
+    source: Source
 
     num_lines: OptionalNullable[int] = UNSET
 

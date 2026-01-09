@@ -12,9 +12,10 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-FunctionCallEntryObject = Literal["entry"]
+FunctionCallEntryObject = Literal["entry",]
 
-FunctionCallEntryType = Literal["function.call"]
+
+FunctionCallEntryType = Literal["function.call",]
 
 
 class FunctionCallEntryTypedDict(TypedDict):

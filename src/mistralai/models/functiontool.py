@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-FunctionToolType = Literal["function"]
+FunctionToolType = Literal["function",]
 
 
 class FunctionToolTypedDict(TypedDict):

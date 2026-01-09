@@ -44,7 +44,7 @@ def serialize_request_body(
 
     serialized_request_body = SerializedRequestBody(media_type)
 
-    if re.match(r"(application|text)\/.*?\+*json.*", media_type) is not None:
+    if re.match(r"(application|text)\/([^+]+\+)*json.*", media_type) is not None:
         serialized_request_body.content = marshal_json(request_body, request_body_type)
     elif re.match(r"multipart\/.*", media_type) is not None:
         (

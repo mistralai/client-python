@@ -16,7 +16,11 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ConversationStreamRequestHandoffExecution = Literal["client", "server"]
+ConversationStreamRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
+
 
 ConversationStreamRequestToolsTypedDict = TypeAliasType(
     "ConversationStreamRequestToolsTypedDict",

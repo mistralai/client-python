@@ -1,3 +1,4 @@
+.env.local
 .idea
 **/__pycache__/
 **/.speakeasy/temp/

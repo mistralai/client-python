@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-CodeInterpreterToolType = Literal["code_interpreter"]
+CodeInterpreterToolType = Literal["code_interpreter",]
 
 
 class CodeInterpreterToolTypedDict(TypedDict):

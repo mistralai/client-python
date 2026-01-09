@@ -8,7 +8,8 @@ from typing import Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolExecutionDeltaEventType = Literal["tool.execution.delta"]
+ToolExecutionDeltaEventType = Literal["tool.execution.delta",]
+
 
 ToolExecutionDeltaEventNameTypedDict = TypeAliasType(
     "ToolExecutionDeltaEventNameTypedDict", Union[BuiltInConnectors, str]

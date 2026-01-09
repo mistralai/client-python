@@ -16,23 +16,32 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.10.0
+  version: 1.11.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+    main:
+      mistral-workflows: ^1.2.2
   allowedRedefinedBuiltins:
     - id
     - object
+  asyncMode: both
   authors:
     - Mistral
   baseErrorName: MistralError
   clientServerStatusCodesAsErrors: true
+  constFieldCasing: upper
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
   enableCustomCodeRegions: true
@@ -51,14 +60,19 @@ python:
       operations: ""
       shared: ""
       webhooks: ""
+  inferUnionDiscriminators: true
   inputModelSuffix: input
+  license: ""
   maxMethodParams: 15
   methodArguments: infer-optional-args
   moduleName: ""
+  multipartArrayFormat: legacy
   outputModelSuffix: output
   packageManager: uv
   packageName: mistralai
+  preApplyUnionDiscriminators: false
   pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
+  sseFlatResponse: false
   templateVersion: v2
