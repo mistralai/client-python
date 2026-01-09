@@ -2,7 +2,7 @@
 
 import json
 import weakref
-from typing import Any, Optional, cast
+from typing import Any, Optional, Union, cast
 
 import google.auth
 import google.auth.credentials
@@ -67,30 +67,32 @@ class MistralGoogleCloud(BaseSDK):
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
 
+        credentials = None
         if not access_token:
             credentials, loaded_project_id = google.auth.default(
                 scopes=["https://www.googleapis.com/auth/cloud-platform"],
             )
+
+            # default will already raise a google.auth.exceptions.DefaultCredentialsError if no credentials are found
+            assert isinstance(
+                credentials, google.auth.credentials.Credentials
+            ), "credentials must be an instance of google.auth.credentials.Credentials"
+
             credentials.refresh(google.auth.transport.requests.Request())
-
-            if not isinstance(credentials, google.auth.credentials.Credentials):
-                raise models.SDKError(
-                    "credentials must be an instance of google.auth.credentials.Credentials"
-                )
-
             project_id = project_id or loaded_project_id
 
         if project_id is None:
-            raise models.SDKError("project_id must be provided")
+            raise ValueError("project_id must be provided")
 
         def auth_token() -> str:
             if access_token:
                 return access_token
 
+            assert credentials is not None, "credentials must be initialized"
             credentials.refresh(google.auth.transport.requests.Request())
             token = credentials.token
             if not token:
-                raise models.SDKError("Failed to get token from credentials")
+                raise Exception("Failed to get token from credentials")
             return token
 
         client_supplied = True
@@ -197,7 +199,7 @@ class GoogleCloudBeforeRequestHook(BeforeRequestHook):
 
     def before_request(
         self, hook_ctx, request: httpx.Request
-    ) -> httpx.Request | Exception:
+    ) -> Union[httpx.Request, Exception]:
         # The goal of this function is to template in the region, project and model into the URL path
         # We do this here so that the API remains more user-friendly
         model_id = None
@@ -210,7 +212,7 @@ class GoogleCloudBeforeRequestHook(BeforeRequestHook):
             new_content = json.dumps(parsed).encode("utf-8")
 
         if model_id == "":
-            raise models.SDKError("model must be provided")
+            raise ValueError("model must be provided")
 
         stream = "streamRawPredict" in request.url.path
         specifier = "streamRawPredict" if stream else "rawPredict"

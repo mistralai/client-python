@@ -22,7 +22,7 @@ jobs:
       mode: pr
       set_version: ${{ github.event.inputs.set_version }}
       speakeasy_version: latest
-      target: mistral-python-sdk-azure
+      target: mistralai-azure-sdk
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
