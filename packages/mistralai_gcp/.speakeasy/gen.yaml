@@ -4,6 +4,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -11,11 +12,16 @@ generation:
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
+    sharedErrorComponentsApr2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 python:
-  version: 1.6.0
+  version: 2.0.1
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -23,8 +29,12 @@ python:
     main:
       google-auth: ^2.31.0
       requests: ^2.32.3
+  allowedRedefinedBuiltins:
+    - id
+    - object
   authors:
     - Mistral
+  baseErrorName: MistralGcpError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in GCP.
@@ -46,8 +56,11 @@ python:
   inputModelSuffix: input
   maxMethodParams: 15
   methodArguments: infer-optional-args
+  moduleName: ""
   outputModelSuffix: output
+  packageManager: poetry
   packageName: mistralai-gcp
+  pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2
