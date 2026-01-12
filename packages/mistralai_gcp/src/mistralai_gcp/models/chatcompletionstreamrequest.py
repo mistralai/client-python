@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
@@ -17,8 +18,9 @@ from mistralai_gcp.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai_gcp.utils import get_discriminator
+from mistralai_gcp.utils import get_discriminator, validate_open_enum
 from pydantic import Discriminator, Tag, model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -57,11 +59,13 @@ ChatCompletionStreamRequestToolChoiceTypedDict = TypeAliasType(
     "ChatCompletionStreamRequestToolChoiceTypedDict",
     Union[ToolChoiceTypedDict, ToolChoiceEnum],
 )
+r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
 
 
 ChatCompletionStreamRequestToolChoice = TypeAliasType(
     "ChatCompletionStreamRequestToolChoice", Union[ToolChoice, ToolChoiceEnum]
 )
+r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
 
 
 class ChatCompletionStreamRequestTypedDict(TypedDict):
@@ -81,16 +85,23 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     response_format: NotRequired[ResponseFormatTypedDict]
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
+    r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
     tool_choice: NotRequired[ChatCompletionStreamRequestToolChoiceTypedDict]
+    r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
     presence_penalty: NotRequired[float]
-    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+    r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
     frequency_penalty: NotRequired[float]
-    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+    r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
     prediction: NotRequired[PredictionTypedDict]
+    r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
     parallel_tool_calls: NotRequired[bool]
+    r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
+    prompt_mode: NotRequired[Nullable[MistralPromptMode]]
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
 
 class ChatCompletionStreamRequest(BaseModel):
@@ -118,23 +129,33 @@ class ChatCompletionStreamRequest(BaseModel):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
 
     response_format: Optional[ResponseFormat] = None
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
     tools: OptionalNullable[List[Tool]] = UNSET
+    r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
 
     tool_choice: Optional[ChatCompletionStreamRequestToolChoice] = None
+    r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
 
     presence_penalty: Optional[float] = None
-    r"""presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
+    r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
 
     frequency_penalty: Optional[float] = None
-    r"""frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+    r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
     prediction: Optional[Prediction] = None
+    r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
 
     parallel_tool_calls: Optional[bool] = None
+    r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
+
+    prompt_mode: Annotated[
+        OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
+    ] = UNSET
+    r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -153,15 +174,23 @@ class ChatCompletionStreamRequest(BaseModel):
             "n",
             "prediction",
             "parallel_tool_calls",
+            "prompt_mode",
         ]
-        nullable_fields = ["temperature", "max_tokens", "random_seed", "tools", "n"]
+        nullable_fields = [
+            "temperature",
+            "max_tokens",
+            "random_seed",
+            "tools",
+            "n",
+            "prompt_mode",
+        ]
         null_default_fields = []
 
         serialized = handler(self)
 
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)
