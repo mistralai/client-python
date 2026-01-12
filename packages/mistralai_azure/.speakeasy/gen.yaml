@@ -21,11 +21,14 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.6.0
+  version: 1.7.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+  allowedRedefinedBuiltins:
+    - id
+    - object
   authors:
     - Mistral
   baseErrorName: MistralAzureError
