@@ -1,41 +1,44 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 28fe1ab59b4dee005217f2dbbd836060
-  docVersion: 0.0.2
-  speakeasyVersion: 1.517.3
-  generationVersion: 2.548.6
-  releaseVersion: 1.6.0
-  configChecksum: 66bf5911f59189922e03a75a72923b32
+  docChecksum: 05fc6f45406deac180ffc1df760c67f4
+  docVersion: 1.0.0
+  speakeasyVersion: 1.606.10
+  generationVersion: 2.687.13
+  releaseVersion: 2.0.0
+  configChecksum: e06da40263700e7b70008e31ef55ced3
+  repoURL: https://github.com/mistralai/client-python.git
+  repoSubDirectory: packages/mistralai_gcp
+  installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/mistralai_gcp
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.12.3
+    core: 5.20.1
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    examples: 3.0.1
+    examples: 3.0.2
     flatRequests: 1.0.1
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     methodArguments: 1.0.2
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.0
+    openEnums: 1.0.1
     responseFormat: 1.0.1
     retries: 3.0.2
-    sdkHooks: 1.0.1
-    serverEvents: 1.0.7
+    sdkHooks: 1.1.0
+    serverEvents: 1.0.8
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
     unions: 3.0.4
 generatedFiles:
   - .gitattributes
-  - .python-version
   - .vscode/settings.json
   - docs/models/arguments.md
   - docs/models/assistantmessage.md
@@ -73,6 +76,7 @@ generatedFiles:
   - docs/models/jsonschema.md
   - docs/models/loc.md
   - docs/models/messages.md
+  - docs/models/mistralpromptmode.md
   - docs/models/prediction.md
   - docs/models/referencechunk.md
   - docs/models/referencechunktype.md
@@ -83,7 +87,11 @@ generatedFiles:
   - docs/models/stop.md
   - docs/models/systemmessage.md
   - docs/models/systemmessagecontent.md
+  - docs/models/systemmessagecontentchunks.md
   - docs/models/textchunk.md
+  - docs/models/thinkchunk.md
+  - docs/models/thinkchunktype.md
+  - docs/models/thinking.md
   - docs/models/tool.md
   - docs/models/toolcall.md
   - docs/models/toolchoice.md
@@ -99,10 +107,8 @@ generatedFiles:
   - docs/models/usermessagerole.md
   - docs/models/utils/retryconfig.md
   - docs/models/validationerror.md
-  - poetry.toml
   - py.typed
   - pylintrc
-  - pyproject.toml
   - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai_gcp/__init__.py
@@ -135,14 +141,20 @@ generatedFiles:
   - src/mistralai_gcp/models/imageurl.py
   - src/mistralai_gcp/models/imageurlchunk.py
   - src/mistralai_gcp/models/jsonschema.py
+  - src/mistralai_gcp/models/mistralgcperror.py
+  - src/mistralai_gcp/models/mistralpromptmode.py
+  - src/mistralai_gcp/models/no_response_error.py
   - src/mistralai_gcp/models/prediction.py
   - src/mistralai_gcp/models/referencechunk.py
   - src/mistralai_gcp/models/responseformat.py
   - src/mistralai_gcp/models/responseformats.py
+  - src/mistralai_gcp/models/responsevalidationerror.py
   - src/mistralai_gcp/models/sdkerror.py
   - src/mistralai_gcp/models/security.py
   - src/mistralai_gcp/models/systemmessage.py
+  - src/mistralai_gcp/models/systemmessagecontentchunks.py
   - src/mistralai_gcp/models/textchunk.py
+  - src/mistralai_gcp/models/thinkchunk.py
   - src/mistralai_gcp/models/tool.py
   - src/mistralai_gcp/models/toolcall.py
   - src/mistralai_gcp/models/toolchoice.py
@@ -153,12 +165,12 @@ generatedFiles:
   - src/mistralai_gcp/models/usermessage.py
   - src/mistralai_gcp/models/validationerror.py
   - src/mistralai_gcp/py.typed
-  - src/mistralai_gcp/sdk.py
   - src/mistralai_gcp/sdkconfiguration.py
   - src/mistralai_gcp/types/__init__.py
   - src/mistralai_gcp/types/basemodel.py
   - src/mistralai_gcp/utils/__init__.py
   - src/mistralai_gcp/utils/annotations.py
+  - src/mistralai_gcp/utils/datetimes.py
   - src/mistralai_gcp/utils/enums.py
   - src/mistralai_gcp/utils/eventstreaming.py
   - src/mistralai_gcp/utils/forms.py
@@ -170,42 +182,40 @@ generatedFiles:
   - src/mistralai_gcp/utils/retries.py
   - src/mistralai_gcp/utils/security.py
   - src/mistralai_gcp/utils/serializers.py
+  - src/mistralai_gcp/utils/unmarshal_json_response.py
   - src/mistralai_gcp/utils/url.py
   - src/mistralai_gcp/utils/values.py
 examples:
   stream_chat:
     speakeasy-default-stream-chat:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+        application/json: {"model": "mistral-large-latest", "stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
       responses:
         "422":
           application/json: {}
-        "200": {}
   chat_completion_v1_chat_completions_post:
     speakeasy-default-chat-completion-v1-chat-completions-post:
       requestBody:
-        application/json: {"model": "mistral-small-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}]}
+        application/json: {"model": "mistral-large-latest", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
         "422":
           application/json: {}
   stream_fim:
     speakeasy-default-stream-fim:
       requestBody:
-        application/json: {"model": "codestral-2405", "top_p": 1, "stream": true, "prompt": "def", "suffix": "return a+b"}
+        application/json: {"model": "codestral-latest", "top_p": 1, "stream": true, "prompt": "def", "suffix": "return a+b"}
       responses:
         "422":
           application/json: {}
-        "200": {}
   fim_completion_v1_fim_completions_post:
-    speakeasy-default-fim-completion-v1-fim-completions-post:
+    userExample:
       requestBody:
-        application/json: {"model": "codestral-2405", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
+        application/json: {"model": "codestral-latest", "top_p": 1, "stream": false, "prompt": "def", "suffix": "return a+b"}
       responses:
         "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 16, "completion_tokens": 34, "total_tokens": 50}, "created": 1702256327, "choices": [{"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}, {"index": 0, "message": {"prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
-        "422":
-          application/json: {}
-examplesVersion: 1.0.0
+          application/json: {"id": "447e3e0d457e42e98248b5d2ef52a2a3", "object": "chat.completion", "model": "codestral-2508", "usage": {"prompt_tokens": 8, "completion_tokens": 91, "total_tokens": 99}, "created": 1759496862, "choices": [{"index": 0, "message": {"content": "add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n", "tool_calls": null, "prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
+examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: "## SDK Changes Detected:\n* `mistral_gcp.chat.complete()`: \n  *  `request` **Changed** **Breaking** :warning:\n  *  `response` **Changed**\n* `mistral_gcp.fim.complete()`:  `response` **Changed**\n"
