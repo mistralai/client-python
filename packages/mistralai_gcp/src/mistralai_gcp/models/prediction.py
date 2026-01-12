@@ -10,11 +10,15 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PredictionTypedDict(TypedDict):
+    r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
+
     type: Literal["content"]
     content: NotRequired[str]
 
 
 class Prediction(BaseModel):
+    r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
+
     TYPE: Annotated[
         Annotated[
             Optional[Literal["content"]], AfterValidator(validate_const("content"))
