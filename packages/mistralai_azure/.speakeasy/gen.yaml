@@ -52,6 +52,7 @@ python:
   methodArguments: infer-optional-args
   moduleName: ""
   outputModelSuffix: output
+  packageManager: uv
   packageName: mistralai_azure
   pytestFilterWarnings: []
   pytestTimeout: 0

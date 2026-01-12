@@ -1,3 +1,4 @@
+pyproject.toml
 src/mistralai_azure/sdk.py
 README.md
 USAGE.md
