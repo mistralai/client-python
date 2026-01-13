@@ -5,9 +5,8 @@ from .filepurpose import FilePurpose
 from .sampletype import SampleType
 from .source import Source
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import FieldMetadata, QueryParamMetadata, validate_open_enum
+from mistralai.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -39,16 +38,12 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
     ] = True
 
     sample_type: Annotated[
-        OptionalNullable[
-            List[Annotated[SampleType, PlainValidator(validate_open_enum(False))]]
-        ],
+        OptionalNullable[List[SampleType]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
     source: Annotated[
-        OptionalNullable[
-            List[Annotated[Source, PlainValidator(validate_open_enum(False))]]
-        ],
+        OptionalNullable[List[Source]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
@@ -58,9 +53,7 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
     ] = UNSET
 
     purpose: Annotated[
-        Annotated[
-            OptionalNullable[FilePurpose], PlainValidator(validate_open_enum(False))
-        ],
+        OptionalNullable[FilePurpose],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 

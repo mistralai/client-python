@@ -25,7 +25,7 @@ AssistantMessageContent = TypeAliasType(
 )
 
 
-AssistantMessageRole = Literal["assistant"]
+AssistantMessageRole = Literal["assistant",]
 
 
 class AssistantMessageTypedDict(TypedDict):

@@ -4,8 +4,7 @@ from __future__ import annotations
 from .file import File, FileTypedDict
 from .filepurpose import FilePurpose
 from mistralai.types import BaseModel
-from mistralai.utils import FieldMetadata, MultipartFormMetadata, validate_open_enum
-from pydantic.functional_validators import PlainValidator
+from mistralai.utils import FieldMetadata, MultipartFormMetadata
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -38,7 +37,4 @@ class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
     ```
     """
 
-    purpose: Annotated[
-        Annotated[Optional[FilePurpose], PlainValidator(validate_open_enum(False))],
-        FieldMetadata(multipart=True),
-    ] = None
+    purpose: Annotated[Optional[FilePurpose], FieldMetadata(multipart=True)] = None

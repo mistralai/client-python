@@ -8,7 +8,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ToolFileChunkType = Literal["tool_file"]
+ToolFileChunkType = Literal["tool_file",]
 
 
 class ToolFileChunkTypedDict(TypedDict):

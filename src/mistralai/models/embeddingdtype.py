@@ -4,4 +4,10 @@ from __future__ import annotations
 from typing import Literal
 
 
-EmbeddingDtype = Literal["float", "int8", "uint8", "binary", "ubinary"]
+EmbeddingDtype = Literal[
+    "float",
+    "int8",
+    "uint8",
+    "binary",
+    "ubinary",
+]

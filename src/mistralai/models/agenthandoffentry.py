@@ -8,9 +8,10 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-AgentHandoffEntryObject = Literal["entry"]
+AgentHandoffEntryObject = Literal["entry",]
 
-AgentHandoffEntryType = Literal["agent.handoff"]
+
+AgentHandoffEntryType = Literal["agent.handoff",]
 
 
 class AgentHandoffEntryTypedDict(TypedDict):

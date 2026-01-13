@@ -3,6 +3,14 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    agentscompletionrequest as models_agentscompletionrequest,
+    agentscompletionstreamrequest as models_agentscompletionstreamrequest,
+    mistralpromptmode as models_mistralpromptmode,
+    prediction as models_prediction,
+    responseformat as models_responseformat,
+    tool as models_tool,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -16,40 +24,47 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionRequestMessages],
-            List[models.AgentsCompletionRequestMessagesTypedDict],
+            List[models_agentscompletionrequest.AgentsCompletionRequestMessages],
+            List[
+                models_agentscompletionrequest.AgentsCompletionRequestMessagesTypedDict
+            ],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models.AgentsCompletionRequestStop,
-                models.AgentsCompletionRequestStopTypedDict,
+                models_agentscompletionrequest.AgentsCompletionRequestStop,
+                models_agentscompletionrequest.AgentsCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.AgentsCompletionRequestToolChoice,
-                models.AgentsCompletionRequestToolChoiceTypedDict,
+                models_agentscompletionrequest.AgentsCompletionRequestToolChoice,
+                models_agentscompletionrequest.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -131,6 +146,7 @@ class Agents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -147,7 +163,7 @@ class Agents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_completion_v1_agents_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -178,40 +194,47 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionRequestMessages],
-            List[models.AgentsCompletionRequestMessagesTypedDict],
+            List[models_agentscompletionrequest.AgentsCompletionRequestMessages],
+            List[
+                models_agentscompletionrequest.AgentsCompletionRequestMessagesTypedDict
+            ],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models.AgentsCompletionRequestStop,
-                models.AgentsCompletionRequestStopTypedDict,
+                models_agentscompletionrequest.AgentsCompletionRequestStop,
+                models_agentscompletionrequest.AgentsCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.AgentsCompletionRequestToolChoice,
-                models.AgentsCompletionRequestToolChoiceTypedDict,
+                models_agentscompletionrequest.AgentsCompletionRequestToolChoice,
+                models_agentscompletionrequest.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -293,6 +316,7 @@ class Agents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -309,7 +333,7 @@ class Agents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_completion_v1_agents_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -340,40 +364,49 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionStreamRequestMessages],
-            List[models.AgentsCompletionStreamRequestMessagesTypedDict],
+            List[
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessages
+            ],
+            List[
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessagesTypedDict
+            ],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.AgentsCompletionStreamRequestStop,
-                models.AgentsCompletionStreamRequestStopTypedDict,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestStop,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.AgentsCompletionStreamRequestToolChoice,
-                models.AgentsCompletionStreamRequestToolChoiceTypedDict,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestToolChoice,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -457,6 +490,7 @@ class Agents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -473,7 +507,7 @@ class Agents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_agents",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -512,40 +546,49 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionStreamRequestMessages],
-            List[models.AgentsCompletionStreamRequestMessagesTypedDict],
+            List[
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessages
+            ],
+            List[
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessagesTypedDict
+            ],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.AgentsCompletionStreamRequestStop,
-                models.AgentsCompletionStreamRequestStopTypedDict,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestStop,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.AgentsCompletionStreamRequestToolChoice,
-                models.AgentsCompletionStreamRequestToolChoiceTypedDict,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestToolChoice,
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -629,6 +672,7 @@ class Agents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentsCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -645,7 +689,7 @@ class Agents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_agents",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

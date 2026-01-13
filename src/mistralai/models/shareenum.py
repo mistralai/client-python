@@ -5,4 +5,10 @@ from mistralai.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-ShareEnum = Union[Literal["Viewer", "Editor"], UnrecognizedStr]
+ShareEnum = Union[
+    Literal[
+        "Viewer",
+        "Editor",
+    ],
+    UnrecognizedStr,
+]

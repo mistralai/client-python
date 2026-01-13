@@ -4,10 +4,8 @@ from __future__ import annotations
 from .function import Function, FunctionTypedDict
 from .tooltypes import ToolTypes
 from mistralai_gcp.types import BaseModel
-from mistralai_gcp.utils import validate_open_enum
-from pydantic.functional_validators import PlainValidator
 from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class ToolTypedDict(TypedDict):
@@ -18,6 +16,4 @@ class ToolTypedDict(TypedDict):
 class Tool(BaseModel):
     function: Function
 
-    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
-        None
-    )
+    type: Optional[ToolTypes] = None
