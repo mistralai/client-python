@@ -102,7 +102,7 @@ jobs:
             --label speakeasy-update \
             --assignee ${{ github.actor }}
         env:
-          GITHUB_TOKEN: ${{ secrets.SPEAKEASY_WORKFLOW_GITHUB_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment on workflow run
         if: steps.check-changes.outputs.has_changes == 'false'
