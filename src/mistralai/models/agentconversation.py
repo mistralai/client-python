@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-AgentConversationObject = Literal["conversation"]
+AgentConversationObject = Literal["conversation",]
 
 
 class AgentConversationTypedDict(TypedDict):

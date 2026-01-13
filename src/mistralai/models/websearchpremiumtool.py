@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-WebSearchPremiumToolType = Literal["web_search_premium"]
+WebSearchPremiumToolType = Literal["web_search_premium",]
 
 
 class WebSearchPremiumToolTypedDict(TypedDict):

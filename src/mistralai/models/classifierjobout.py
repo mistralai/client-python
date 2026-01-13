@@ -27,8 +27,10 @@ ClassifierJobOutStatus = Literal[
 ]
 r"""The current status of the fine-tuning job."""
 
-ClassifierJobOutObject = Literal["job"]
+
+ClassifierJobOutObject = Literal["job",]
 r"""The object type of the fine-tuning job."""
+
 
 ClassifierJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
@@ -36,7 +38,7 @@ ClassifierJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 ClassifierJobOutIntegrations = WandbIntegrationOut
 
 
-ClassifierJobOutJobType = Literal["classifier"]
+ClassifierJobOutJobType = Literal["classifier",]
 r"""The type of job (`FT` for fine-tuning)."""
 
 
