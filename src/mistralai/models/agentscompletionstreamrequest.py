@@ -12,9 +12,8 @@ from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import get_discriminator, validate_open_enum
+from mistralai.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -135,9 +134,7 @@ class AgentsCompletionStreamRequest(BaseModel):
 
     parallel_tool_calls: Optional[bool] = None
 
-    prompt_mode: Annotated[
-        OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
-    ] = UNSET
+    prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     @model_serializer(mode="wrap")

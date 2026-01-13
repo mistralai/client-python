@@ -4,6 +4,13 @@ from .basesdk import BaseSDK
 from datetime import datetime
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    classifiertargetin as models_classifiertargetin,
+    finetuneablemodeltype as models_finetuneablemodeltype,
+    jobin as models_jobin,
+    jobs_api_routes_fine_tuning_get_fine_tuning_jobsop as models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop,
+    trainingfile as models_trainingfile,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -20,7 +27,9 @@ class Jobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[models.QueryParamStatus] = UNSET,
+        status: OptionalNullable[
+            models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop.QueryParamStatus
+        ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -84,6 +93,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -100,7 +110,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -130,7 +140,9 @@ class Jobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[models.QueryParamStatus] = UNSET,
+        status: OptionalNullable[
+            models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop.QueryParamStatus
+        ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -194,6 +206,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -210,7 +223,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -235,29 +248,38 @@ class Jobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
+        hyperparameters: Union[
+            models_jobin.Hyperparameters, models_jobin.HyperparametersTypedDict
+        ],
         training_files: Optional[
-            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
+            Union[
+                List[models_trainingfile.TrainingFile],
+                List[models_trainingfile.TrainingFileTypedDict],
+            ]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]
+                List[models_jobin.JobInIntegrations],
+                List[models_jobin.JobInIntegrationsTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
+        job_type: OptionalNullable[
+            models_finetuneablemodeltype.FineTuneableModelType
+        ] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]
+                List[models_jobin.JobInRepositories],
+                List[models_jobin.JobInRepositoriesTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
             Union[
-                List[models.ClassifierTargetIn],
-                List[models.ClassifierTargetInTypedDict],
+                List[models_classifiertargetin.ClassifierTargetIn],
+                List[models_classifiertargetin.ClassifierTargetInTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -335,6 +357,7 @@ class Jobs(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.JobIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -351,7 +374,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -378,29 +401,38 @@ class Jobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
+        hyperparameters: Union[
+            models_jobin.Hyperparameters, models_jobin.HyperparametersTypedDict
+        ],
         training_files: Optional[
-            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
+            Union[
+                List[models_trainingfile.TrainingFile],
+                List[models_trainingfile.TrainingFileTypedDict],
+            ]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[models.JobInIntegrations], List[models.JobInIntegrationsTypedDict]
+                List[models_jobin.JobInIntegrations],
+                List[models_jobin.JobInIntegrationsTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
+        job_type: OptionalNullable[
+            models_finetuneablemodeltype.FineTuneableModelType
+        ] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[models.JobInRepositories], List[models.JobInRepositoriesTypedDict]
+                List[models_jobin.JobInRepositories],
+                List[models_jobin.JobInRepositoriesTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
             Union[
-                List[models.ClassifierTargetIn],
-                List[models.ClassifierTargetInTypedDict],
+                List[models_classifiertargetin.ClassifierTargetIn],
+                List[models_classifiertargetin.ClassifierTargetInTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -478,6 +510,7 @@ class Jobs(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.JobIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -494,7 +527,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -563,6 +596,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -579,7 +613,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -648,6 +682,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -664,7 +699,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -733,6 +768,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -749,7 +785,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -818,6 +854,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -834,7 +871,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -903,6 +940,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -919,7 +957,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -988,6 +1026,7 @@ class Jobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1004,7 +1043,7 @@ class Jobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

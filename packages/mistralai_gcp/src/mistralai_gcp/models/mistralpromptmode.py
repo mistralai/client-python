@@ -5,4 +5,4 @@ from mistralai_gcp.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-MistralPromptMode = Union[Literal["reasoning"], UnrecognizedStr]
+MistralPromptMode = Union[Literal["reasoning",], UnrecognizedStr]

@@ -9,9 +9,11 @@ from typing import Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-MessageOutputEventType = Literal["message.output.delta"]
+MessageOutputEventType = Literal["message.output.delta",]
 
-MessageOutputEventRole = Literal["assistant"]
+
+MessageOutputEventRole = Literal["assistant",]
+
 
 MessageOutputEventContentTypedDict = TypeAliasType(
     "MessageOutputEventContentTypedDict", Union[str, OutputContentChunksTypedDict]

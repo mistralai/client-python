@@ -4,10 +4,8 @@ from __future__ import annotations
 from .functionname import FunctionName, FunctionNameTypedDict
 from .tooltypes import ToolTypes
 from mistralai_azure.types import BaseModel
-from mistralai_azure.utils import validate_open_enum
-from pydantic.functional_validators import PlainValidator
 from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class ToolChoiceTypedDict(TypedDict):
@@ -24,6 +22,4 @@ class ToolChoice(BaseModel):
     function: FunctionName
     r"""this restriction of `Function` is used to select a specific function to call"""
 
-    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
-        None
-    )
+    type: Optional[ToolTypes] = None

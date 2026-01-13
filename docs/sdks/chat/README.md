@@ -1,5 +1,4 @@
 # Chat
-(*chat*)
 
 ## Overview
 

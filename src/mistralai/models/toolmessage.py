@@ -16,7 +16,7 @@ ToolMessageContentTypedDict = TypeAliasType(
 ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[ContentChunk]])
 
 
-ToolMessageRole = Literal["tool"]
+ToolMessageRole = Literal["tool",]
 
 
 class ToolMessageTypedDict(TypedDict):

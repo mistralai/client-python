@@ -1,5 +1,4 @@
 # Ocr
-(*ocr*)
 
 ## Overview
 

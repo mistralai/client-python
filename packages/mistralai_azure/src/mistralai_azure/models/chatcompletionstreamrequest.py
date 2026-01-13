@@ -18,9 +18,8 @@ from mistralai_azure.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai_azure.utils import get_discriminator, validate_open_enum
+from mistralai_azure.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -154,9 +153,7 @@ class ChatCompletionStreamRequest(BaseModel):
     parallel_tool_calls: Optional[bool] = None
     r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
 
-    prompt_mode: Annotated[
-        OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
-    ] = UNSET
+    prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     safe_prompt: Optional[bool] = None

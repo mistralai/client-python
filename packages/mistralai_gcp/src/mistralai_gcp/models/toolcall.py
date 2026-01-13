@@ -4,10 +4,8 @@ from __future__ import annotations
 from .functioncall import FunctionCall, FunctionCallTypedDict
 from .tooltypes import ToolTypes
 from mistralai_gcp.types import BaseModel
-from mistralai_gcp.utils import validate_open_enum
-from pydantic.functional_validators import PlainValidator
 from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class ToolCallTypedDict(TypedDict):
@@ -22,8 +20,6 @@ class ToolCall(BaseModel):
 
     id: Optional[str] = "null"
 
-    type: Annotated[Optional[ToolTypes], PlainValidator(validate_open_enum(False))] = (
-        None
-    )
+    type: Optional[ToolTypes] = None
 
     index: Optional[int] = 0

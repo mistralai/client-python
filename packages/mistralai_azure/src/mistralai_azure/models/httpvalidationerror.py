@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .validationerror import ValidationError
+from dataclasses import dataclass, field
 import httpx
 from mistralai_azure.models import MistralAzureError
 from mistralai_azure.types import BaseModel
@@ -12,8 +13,9 @@ class HTTPValidationErrorData(BaseModel):
     detail: Optional[List[ValidationError]] = None
 
 
+@dataclass(unsafe_hash=True)
 class HTTPValidationError(MistralAzureError):
-    data: HTTPValidationErrorData
+    data: HTTPValidationErrorData = field(hash=False)
 
     def __init__(
         self,
@@ -23,4 +25,4 @@ class HTTPValidationError(MistralAzureError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
