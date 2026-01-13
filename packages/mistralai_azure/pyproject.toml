@@ -18,6 +18,11 @@ dev = [
     "pytest>=8.2.2,<9",
     "pytest-asyncio>=0.23.7,<0.24",
 ]
+lint = [
+    "ruff>=0.11.10,<0.12",
+    "pyright>=1.1.401,<2",
+    "mypy==1.15.0",
+]
 
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai_azure/py.typed"]

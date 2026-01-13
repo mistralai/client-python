@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --group dev --no-default-groups
+          uv sync --group dev --group lint --no-default-groups
 
       - name: Install Speakeasy CLI
         run: |
