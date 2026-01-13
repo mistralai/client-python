@@ -3,6 +3,10 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    ocrrequest as models_ocrrequest,
+    responseformat as models_responseformat,
+)
 from mistralai.types import Nullable, OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -16,19 +20,27 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[models.Document, models.DocumentTypedDict],
+        document: Union[
+            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+        ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = UNSET,
-        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -100,6 +112,7 @@ class Ocr(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.OCRRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -116,7 +129,7 @@ class Ocr(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ocr_v1_ocr_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -147,19 +160,27 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[models.Document, models.DocumentTypedDict],
+        document: Union[
+            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+        ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = UNSET,
-        table_format: OptionalNullable[models.TableFormat] = UNSET,
+        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -231,6 +252,7 @@ class Ocr(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.OCRRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -247,7 +269,7 @@ class Ocr(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ocr_v1_ocr_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

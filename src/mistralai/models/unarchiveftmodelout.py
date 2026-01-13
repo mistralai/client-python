@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-UnarchiveFTModelOutObject = Literal["model"]
+UnarchiveFTModelOutObject = Literal["model",]
 
 
 class UnarchiveFTModelOutTypedDict(TypedDict):

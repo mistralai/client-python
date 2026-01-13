@@ -1,5 +1,4 @@
-# Conversations
-(*beta.conversations*)
+# Beta.Conversations
 
 ## Overview
 

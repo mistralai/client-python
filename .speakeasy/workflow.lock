@@ -1,4 +1,4 @@
-speakeasyVersion: 1.606.10
+speakeasyVersion: 1.685.0
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
@@ -6,21 +6,21 @@ sources:
         sourceBlobDigest: sha256:9e6fc34474062726ceb96e424e858a0ae1b0506659cd11a58c72e1dd50dae885
         tags:
             - latest
-            - speakeasy-sdk-regen-1768231850
+            - main
     mistral-google-cloud-source:
         sourceNamespace: mistral-openapi-google-cloud
         sourceRevisionDigest: sha256:bc59aaf55dc46e94ddf6cc687292807629d7a17ee5f573a504e7e44fd365e147
         sourceBlobDigest: sha256:545fe85c5dae11def2741fc7a99f297b7f0728c9677c3c7b94d56ddbed70581d
         tags:
             - latest
-            - speakeasy-sdk-regen-1768231856
+            - main
     mistral-openapi:
         sourceNamespace: mistral-openapi
         sourceRevisionDigest: sha256:cb63bd997cefe7b3b36e91a475df57cb779bf79f183340e0713d8ffb16a2dabc
         sourceBlobDigest: sha256:f0caa06fb9bcadc35b097aa5ff69bb5020937652df311722b5e44a282bd95d6d
         tags:
             - latest
-            - speakeasy-sdk-regen-1765914268
+            - main
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -28,34 +28,34 @@ targets:
         sourceRevisionDigest: sha256:fcc7262f29ef89a07cb718d7e6094c272627cf9f531588aef15a6e92dd50130a
         sourceBlobDigest: sha256:9e6fc34474062726ceb96e424e858a0ae1b0506659cd11a58c72e1dd50dae885
         codeSamplesNamespace: mistral-openapi-azure-code-samples
-        codeSamplesRevisionDigest: sha256:9ab092d625da8034f7c17321ce5295ecad19ca4e2be2851a1a5a977c6bbeff05
+        codeSamplesRevisionDigest: sha256:dcb6445660a0e52084ede5adb8d5690bb5661934a26d6eee965cde4b51a04f7d
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
         sourceNamespace: mistral-openapi-google-cloud
         sourceRevisionDigest: sha256:bc59aaf55dc46e94ddf6cc687292807629d7a17ee5f573a504e7e44fd365e147
         sourceBlobDigest: sha256:545fe85c5dae11def2741fc7a99f297b7f0728c9677c3c7b94d56ddbed70581d
         codeSamplesNamespace: mistral-openapi-google-cloud-code-samples
-        codeSamplesRevisionDigest: sha256:31fd0ba45daa00020ef6f07df435ad343b62328bf56489dfcb66b647beeb52b5
+        codeSamplesRevisionDigest: sha256:ddcf6397d64480a43c2fdc9fdf0279beda911c657b0242286c8d0dacb03a02db
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
         sourceRevisionDigest: sha256:cb63bd997cefe7b3b36e91a475df57cb779bf79f183340e0713d8ffb16a2dabc
         sourceBlobDigest: sha256:f0caa06fb9bcadc35b097aa5ff69bb5020937652df311722b5e44a282bd95d6d
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:b1eacff97275a14ab0c2143e07bdfa4f4bd58f5370b2f106bcc6ada92b754d08
+        codeSamplesRevisionDigest: sha256:685559d1d8feb0764845aebb04968f2b9ad1f3030900380afc86cbdd8ef9a006
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: 1.606.10
+    speakeasyVersion: 1.685.0
     sources:
         mistral-azure-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:sha256:fcc7262f29ef89a07cb718d7e6094c272627cf9f531588aef15a6e92dd50130a
         mistral-google-cloud-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:sha256:bc59aaf55dc46e94ddf6cc687292807629d7a17ee5f573a504e7e44fd365e147
         mistral-openapi:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:sha256:cb63bd997cefe7b3b36e91a475df57cb779bf79f183340e0713d8ffb16a2dabc
     targets:
         mistralai-azure-sdk:
             target: python

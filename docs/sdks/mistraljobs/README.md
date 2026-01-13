@@ -1,5 +1,4 @@
-# MistralJobs
-(*batch.jobs*)
+# Batch.Jobs
 
 ## Overview
 

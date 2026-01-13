@@ -7,7 +7,10 @@ from typing import Literal
 from typing_extensions import Annotated, TypedDict
 
 
-Format = Literal["markdown", "html"]
+Format = Literal[
+    "markdown",
+    "html",
+]
 r"""Format of the table"""
 
 

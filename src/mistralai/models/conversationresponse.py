@@ -11,7 +11,8 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ConversationResponseObject = Literal["conversation.response"]
+ConversationResponseObject = Literal["conversation.response",]
+
 
 OutputsTypedDict = TypeAliasType(
     "OutputsTypedDict",

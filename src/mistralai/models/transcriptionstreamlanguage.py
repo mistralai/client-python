@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-TranscriptionStreamLanguageType = Literal["transcription.language"]
+TranscriptionStreamLanguageType = Literal["transcription.language",]
 
 
 class TranscriptionStreamLanguageTypedDict(TypedDict):

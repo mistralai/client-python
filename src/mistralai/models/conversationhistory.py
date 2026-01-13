@@ -12,7 +12,8 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ConversationHistoryObject = Literal["conversation.history"]
+ConversationHistoryObject = Literal["conversation.history",]
+
 
 EntriesTypedDict = TypeAliasType(
     "EntriesTypedDict",

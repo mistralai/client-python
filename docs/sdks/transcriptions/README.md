@@ -1,5 +1,4 @@
-# Transcriptions
-(*audio.transcriptions*)
+# Audio.Transcriptions
 
 ## Overview
 

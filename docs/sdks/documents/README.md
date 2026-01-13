@@ -1,5 +1,4 @@
-# Documents
-(*beta.libraries.documents*)
+# Beta.Libraries.Documents
 
 ## Overview
 

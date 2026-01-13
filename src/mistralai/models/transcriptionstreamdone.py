@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-TranscriptionStreamDoneType = Literal["transcription.done"]
+TranscriptionStreamDoneType = Literal["transcription.done",]
 
 
 class TranscriptionStreamDoneTypedDict(TypedDict):

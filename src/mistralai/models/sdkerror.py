@@ -2,12 +2,14 @@
 
 import httpx
 from typing import Optional
+from dataclasses import dataclass
 
 from mistralai.models import MistralError
 
 MAX_MESSAGE_LEN = 10_000
 
 
+@dataclass(unsafe_hash=True)
 class SDKError(MistralError):
     """The fallback error class if no more specific error class is matched."""
 

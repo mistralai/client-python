@@ -1,3 +1,5 @@
+.env
+.env.local
 **/__pycache__/
 **/.speakeasy/temp/
 **/.speakeasy/logs/

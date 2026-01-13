@@ -7,7 +7,7 @@ from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ConversationMessagesObject = Literal["conversation.messages"]
+ConversationMessagesObject = Literal["conversation.messages",]
 
 
 class ConversationMessagesTypedDict(TypedDict):

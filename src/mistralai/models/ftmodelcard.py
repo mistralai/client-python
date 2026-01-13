@@ -12,7 +12,7 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-FTModelCardType = Literal["fine-tuned"]
+FTModelCardType = Literal["fine-tuned",]
 
 
 class FTModelCardTypedDict(TypedDict):

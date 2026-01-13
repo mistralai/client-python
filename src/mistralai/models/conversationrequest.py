@@ -16,7 +16,11 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-HandoffExecution = Literal["client", "server"]
+HandoffExecution = Literal[
+    "client",
+    "server",
+]
+
 
 ToolsTypedDict = TypeAliasType(
     "ToolsTypedDict",

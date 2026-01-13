@@ -3,6 +3,16 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    completionargs as models_completionargs,
+    conversationappendrequest as models_conversationappendrequest,
+    conversationappendstreamrequest as models_conversationappendstreamrequest,
+    conversationinputs as models_conversationinputs,
+    conversationrequest as models_conversationrequest,
+    conversationrestartrequest as models_conversationrestartrequest,
+    conversationrestartstreamrequest as models_conversationrestartstreamrequest,
+    conversationstreamrequest as models_conversationstreamrequest,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -223,14 +233,27 @@ class Conversations(BaseSDK):
     def start(
         self,
         *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
-        handoff_execution: OptionalNullable[models.HandoffExecution] = UNSET,
+        handoff_execution: OptionalNullable[
+            models_conversationrequest.HandoffExecution
+        ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[Union[List[models.Tools], List[models.ToolsTypedDict]]] = None,
+        tools: Optional[
+            Union[
+                List[models_conversationrequest.Tools],
+                List[models_conversationrequest.ToolsTypedDict],
+            ]
+        ] = None,
         completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -309,6 +332,7 @@ class Conversations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ConversationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -325,7 +349,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -355,14 +379,27 @@ class Conversations(BaseSDK):
     async def start_async(
         self,
         *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
-        handoff_execution: OptionalNullable[models.HandoffExecution] = UNSET,
+        handoff_execution: OptionalNullable[
+            models_conversationrequest.HandoffExecution
+        ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[Union[List[models.Tools], List[models.ToolsTypedDict]]] = None,
+        tools: Optional[
+            Union[
+                List[models_conversationrequest.Tools],
+                List[models_conversationrequest.ToolsTypedDict],
+            ]
+        ] = None,
         completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -441,6 +478,7 @@ class Conversations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ConversationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -457,7 +495,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -536,6 +574,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -552,7 +591,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -631,6 +670,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -647,7 +687,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -720,6 +760,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -736,7 +777,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -811,6 +852,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -827,7 +869,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -902,6 +944,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -918,7 +961,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -991,6 +1034,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1007,7 +1051,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1038,14 +1082,20 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendRequestHandoffExecution
+            models_conversationappendrequest.ConversationAppendRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1110,6 +1160,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationAppendRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1126,7 +1177,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1157,14 +1208,20 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendRequestHandoffExecution
+            models_conversationappendrequest.ConversationAppendRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1229,6 +1286,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationAppendRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1245,7 +1303,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1318,6 +1376,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1334,7 +1393,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_history",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1407,6 +1466,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1423,7 +1483,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_history",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1496,6 +1556,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1512,7 +1573,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_messages",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1585,6 +1646,7 @@ class Conversations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1601,7 +1663,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_messages",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1632,15 +1694,21 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         from_entry_id: str,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartRequestHandoffExecution
+            models_conversationrestartrequest.ConversationRestartRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[int] = UNSET,
@@ -1713,6 +1781,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationRestartRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1729,7 +1798,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1760,15 +1829,21 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         from_entry_id: str,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartRequestHandoffExecution
+            models_conversationrestartrequest.ConversationRestartRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[int] = UNSET,
@@ -1841,6 +1916,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationRestartRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1857,7 +1933,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1887,21 +1963,29 @@ class Conversations(BaseSDK):
     def start_stream(
         self,
         *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models.ConversationStreamRequestHandoffExecution
+            models_conversationstreamrequest.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.ConversationStreamRequestTools],
-                List[models.ConversationStreamRequestToolsTypedDict],
+                List[models_conversationstreamrequest.ConversationStreamRequestTools],
+                List[
+                    models_conversationstreamrequest.ConversationStreamRequestToolsTypedDict
+                ],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -1982,6 +2066,7 @@ class Conversations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ConversationStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1998,7 +2083,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -2035,21 +2120,29 @@ class Conversations(BaseSDK):
     async def start_stream_async(
         self,
         *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models.ConversationStreamRequestHandoffExecution
+            models_conversationstreamrequest.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.ConversationStreamRequestTools],
-                List[models.ConversationStreamRequestToolsTypedDict],
+                List[models_conversationstreamrequest.ConversationStreamRequestTools],
+                List[
+                    models_conversationstreamrequest.ConversationStreamRequestToolsTypedDict
+                ],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -2130,6 +2223,7 @@ class Conversations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ConversationStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -2146,7 +2240,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_start_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -2184,14 +2278,20 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
+            models_conversationappendstreamrequest.ConversationAppendStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2256,6 +2356,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationAppendStreamRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -2272,7 +2373,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -2310,14 +2411,20 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
+            models_conversationappendstreamrequest.ConversationAppendStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2382,6 +2489,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationAppendStreamRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -2398,7 +2506,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_append_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -2436,15 +2544,21 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         from_entry_id: str,
         stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
+            models_conversationrestartstreamrequest.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[int] = UNSET,
@@ -2517,6 +2631,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationRestartStreamRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -2533,7 +2648,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -2571,15 +2686,21 @@ class Conversations(BaseSDK):
         self,
         *,
         conversation_id: str,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        inputs: Union[
+            models_conversationinputs.ConversationInputs,
+            models_conversationinputs.ConversationInputsTypedDict,
+        ],
         from_entry_id: str,
         stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
+            models_conversationrestartstreamrequest.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[int] = UNSET,
@@ -2652,6 +2773,7 @@ class Conversations(BaseSDK):
                 "json",
                 models.ConversationRestartStreamRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -2668,7 +2790,7 @@ class Conversations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_conversations_restart_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

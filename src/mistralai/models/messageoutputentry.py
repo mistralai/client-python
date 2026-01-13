@@ -12,11 +12,14 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-MessageOutputEntryObject = Literal["entry"]
+MessageOutputEntryObject = Literal["entry",]
 
-MessageOutputEntryType = Literal["message.output"]
 
-MessageOutputEntryRole = Literal["assistant"]
+MessageOutputEntryType = Literal["message.output",]
+
+
+MessageOutputEntryRole = Literal["assistant",]
+
 
 MessageOutputEntryContentTypedDict = TypeAliasType(
     "MessageOutputEntryContentTypedDict",

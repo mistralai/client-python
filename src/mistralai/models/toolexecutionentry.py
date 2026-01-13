@@ -9,9 +9,11 @@ from typing import Any, Dict, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolExecutionEntryObject = Literal["entry"]
+ToolExecutionEntryObject = Literal["entry",]
 
-ToolExecutionEntryType = Literal["tool.execution"]
+
+ToolExecutionEntryType = Literal["tool.execution",]
+
 
 NameTypedDict = TypeAliasType("NameTypedDict", Union[BuiltInConnectors, str])
 

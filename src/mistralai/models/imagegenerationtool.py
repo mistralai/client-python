@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ImageGenerationToolType = Literal["image_generation"]
+ImageGenerationToolType = Literal["image_generation",]
 
 
 class ImageGenerationToolTypedDict(TypedDict):

@@ -15,7 +15,7 @@ ImageURLChunkImageURLTypedDict = TypeAliasType(
 ImageURLChunkImageURL = TypeAliasType("ImageURLChunkImageURL", Union[ImageURL, str])
 
 
-ImageURLChunkType = Literal["image_url"]
+ImageURLChunkType = Literal["image_url",]
 
 
 class ImageURLChunkTypedDict(TypedDict):

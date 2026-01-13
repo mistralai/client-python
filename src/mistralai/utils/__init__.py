@@ -42,7 +42,6 @@ if TYPE_CHECKING:
         validate_decimal,
         validate_float,
         validate_int,
-        validate_open_enum,
     )
     from .url import generate_url, template_url, remove_suffix
     from .values import (
@@ -104,7 +103,6 @@ __all__ = [
     "validate_const",
     "validate_float",
     "validate_int",
-    "validate_open_enum",
     "cast_partial",
 ]
 
@@ -158,7 +156,6 @@ _dynamic_imports: dict[str, str] = {
     "validate_const": ".serializers",
     "validate_float": ".serializers",
     "validate_int": ".serializers",
-    "validate_open_enum": ".serializers",
     "cast_partial": ".values",
 }
 

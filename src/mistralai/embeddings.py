@@ -3,6 +3,11 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    embeddingdtype as models_embeddingdtype,
+    embeddingrequest as models_embeddingrequest,
+    encodingformat as models_encodingformat,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -17,11 +22,12 @@ class Embeddings(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
+            models_embeddingrequest.EmbeddingRequestInputs,
+            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
         ],
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models.EmbeddingDtype] = None,
-        encoding_format: Optional[models.EncodingFormat] = None,
+        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
+        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -75,6 +81,7 @@ class Embeddings(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.EmbeddingRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -91,7 +98,7 @@ class Embeddings(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="embeddings_v1_embeddings_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -123,11 +130,12 @@ class Embeddings(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
+            models_embeddingrequest.EmbeddingRequestInputs,
+            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
         ],
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models.EmbeddingDtype] = None,
-        encoding_format: Optional[models.EncodingFormat] = None,
+        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
+        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -181,6 +189,7 @@ class Embeddings(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.EmbeddingRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -197,7 +206,7 @@ class Embeddings(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="embeddings_v1_embeddings_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

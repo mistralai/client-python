@@ -1,5 +1,4 @@
-# Accesses
-(*beta.libraries.accesses*)
+# Beta.Libraries.Accesses
 
 ## Overview
 

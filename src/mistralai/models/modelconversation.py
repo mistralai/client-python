@@ -42,7 +42,7 @@ ModelConversationTools = Annotated[
 ]
 
 
-ModelConversationObject = Literal["conversation"]
+ModelConversationObject = Literal["conversation",]
 
 
 class ModelConversationTypedDict(TypedDict):

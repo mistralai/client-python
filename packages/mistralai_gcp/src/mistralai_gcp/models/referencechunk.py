@@ -6,7 +6,7 @@ from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ReferenceChunkType = Literal["reference"]
+ReferenceChunkType = Literal["reference",]
 
 
 class ReferenceChunkTypedDict(TypedDict):

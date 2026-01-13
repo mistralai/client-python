@@ -3,6 +3,10 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    fimcompletionrequest as models_fimcompletionrequest,
+    fimcompletionstreamrequest as models_fimcompletionstreamrequest,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,8 +27,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models.FIMCompletionRequestStop,
-                models.FIMCompletionRequestStopTypedDict,
+                models_fimcompletionrequest.FIMCompletionRequestStop,
+                models_fimcompletionrequest.FIMCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -96,6 +100,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -112,7 +117,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -150,8 +155,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models.FIMCompletionRequestStop,
-                models.FIMCompletionRequestStopTypedDict,
+                models_fimcompletionrequest.FIMCompletionRequestStop,
+                models_fimcompletionrequest.FIMCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -223,6 +228,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -239,7 +245,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -277,8 +283,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.FIMCompletionStreamRequestStop,
-                models.FIMCompletionStreamRequestStopTypedDict,
+                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStop,
+                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -350,6 +356,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -366,7 +373,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_fim",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -412,8 +419,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.FIMCompletionStreamRequestStop,
-                models.FIMCompletionStreamRequestStopTypedDict,
+                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStop,
+                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -485,6 +492,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -501,7 +509,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_fim",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

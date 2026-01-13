@@ -3,6 +3,10 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    file as models_file,
+    timestampgranularity as models_timestampgranularity,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -16,12 +20,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models.File, models.FileTypedDict]] = None,
+        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        timestamp_granularities: Optional[
+            List[models_timestampgranularity.TimestampGranularity]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -77,6 +83,7 @@ class Transcriptions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "multipart", models.AudioTranscriptionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -93,7 +100,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -118,12 +125,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models.File, models.FileTypedDict]] = None,
+        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        timestamp_granularities: Optional[
+            List[models_timestampgranularity.TimestampGranularity]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -179,6 +188,7 @@ class Transcriptions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "multipart", models.AudioTranscriptionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -195,7 +205,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -220,12 +230,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models.File, models.FileTypedDict]] = None,
+        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        timestamp_granularities: Optional[
+            List[models_timestampgranularity.TimestampGranularity]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -285,6 +297,7 @@ class Transcriptions(BaseSDK):
                 "multipart",
                 models.AudioTranscriptionRequestStream,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -301,7 +314,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -332,12 +345,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models.File, models.FileTypedDict]] = None,
+        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        timestamp_granularities: Optional[
+            List[models_timestampgranularity.TimestampGranularity]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -397,6 +412,7 @@ class Transcriptions(BaseSDK):
                 "multipart",
                 models.AudioTranscriptionRequestStream,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -413,7 +429,7 @@ class Transcriptions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="audio_api_v1_transcriptions_post_stream",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

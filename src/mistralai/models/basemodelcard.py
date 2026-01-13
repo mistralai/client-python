@@ -12,7 +12,7 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-BaseModelCardType = Literal["base"]
+BaseModelCardType = Literal["base",]
 
 
 class BaseModelCardTypedDict(TypedDict):

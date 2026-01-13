@@ -16,7 +16,7 @@ ThinkingTypedDict = TypeAliasType(
 Thinking = TypeAliasType("Thinking", Union[ReferenceChunk, TextChunk])
 
 
-ThinkChunkType = Literal["thinking"]
+ThinkChunkType = Literal["thinking",]
 
 
 class ThinkChunkTypedDict(TypedDict):

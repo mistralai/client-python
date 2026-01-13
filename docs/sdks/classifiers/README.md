@@ -1,5 +1,4 @@
 # Classifiers
-(*classifiers*)
 
 ## Overview
 

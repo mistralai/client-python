@@ -3,15 +3,19 @@
 from __future__ import annotations
 from .deltamessage import DeltaMessage, DeltaMessageTypedDict
 from mistralai.types import BaseModel, Nullable, UNSET_SENTINEL, UnrecognizedStr
-from mistralai.utils import validate_open_enum
 from pydantic import model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import Literal, Union
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import TypedDict
 
 
 CompletionResponseStreamChoiceFinishReason = Union[
-    Literal["stop", "length", "error", "tool_calls"], UnrecognizedStr
+    Literal[
+        "stop",
+        "length",
+        "error",
+        "tool_calls",
+    ],
+    UnrecognizedStr,
 ]
 
 
@@ -26,10 +30,7 @@ class CompletionResponseStreamChoice(BaseModel):
 
     delta: DeltaMessage
 
-    finish_reason: Annotated[
-        Nullable[CompletionResponseStreamChoiceFinishReason],
-        PlainValidator(validate_open_enum(False)),
-    ]
+    finish_reason: Nullable[CompletionResponseStreamChoiceFinishReason]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-BatchJobOutObject = Literal["batch"]
+BatchJobOutObject = Literal["batch",]
 
 
 class BatchJobOutTypedDict(TypedDict):

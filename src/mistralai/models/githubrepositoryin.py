@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-GithubRepositoryInType = Literal["github"]
+GithubRepositoryInType = Literal["github",]
 
 
 class GithubRepositoryInTypedDict(TypedDict):

@@ -3,6 +3,14 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    chatcompletionrequest as models_chatcompletionrequest,
+    chatcompletionstreamrequest as models_chatcompletionstreamrequest,
+    mistralpromptmode as models_mistralpromptmode,
+    prediction as models_prediction,
+    responseformat as models_responseformat,
+    tool as models_tool,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import eventstreaming, get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -98,34 +106,47 @@ class Chat(BaseSDK):
         self,
         *,
         model: str,
-        messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
+        messages: Union[
+            List[models_chatcompletionrequest.Messages],
+            List[models_chatcompletionrequest.MessagesTypedDict],
+        ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models_chatcompletionrequest.Stop,
+                models_chatcompletionrequest.StopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.ChatCompletionRequestToolChoice,
-                models.ChatCompletionRequestToolChoiceTypedDict,
+                models_chatcompletionrequest.ChatCompletionRequestToolChoice,
+                models_chatcompletionrequest.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -212,6 +233,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -228,7 +250,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -259,34 +281,47 @@ class Chat(BaseSDK):
         self,
         *,
         model: str,
-        messages: Union[List[models.Messages], List[models.MessagesTypedDict]],
+        messages: Union[
+            List[models_chatcompletionrequest.Messages],
+            List[models_chatcompletionrequest.MessagesTypedDict],
+        ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
+        stop: Optional[
+            Union[
+                models_chatcompletionrequest.Stop,
+                models_chatcompletionrequest.StopTypedDict,
+            ]
+        ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.ChatCompletionRequestToolChoice,
-                models.ChatCompletionRequestToolChoiceTypedDict,
+                models_chatcompletionrequest.ChatCompletionRequestToolChoice,
+                models_chatcompletionrequest.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -373,6 +408,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -389,7 +425,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -421,8 +457,12 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionStreamRequestMessages],
-            List[models.ChatCompletionStreamRequestMessagesTypedDict],
+            List[
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessages
+            ],
+            List[
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessagesTypedDict
+            ],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -430,32 +470,37 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.ChatCompletionStreamRequestStop,
-                models.ChatCompletionStreamRequestStopTypedDict,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStop,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.ChatCompletionStreamRequestToolChoice,
-                models.ChatCompletionStreamRequestToolChoiceTypedDict,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoice,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -546,6 +591,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -562,7 +608,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -602,8 +648,12 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionStreamRequestMessages],
-            List[models.ChatCompletionStreamRequestMessagesTypedDict],
+            List[
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessages
+            ],
+            List[
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessagesTypedDict
+            ],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -611,32 +661,37 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models.ChatCompletionStreamRequestStop,
-                models.ChatCompletionStreamRequestStopTypedDict,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStop,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
+            Union[
+                models_responseformat.ResponseFormat,
+                models_responseformat.ResponseFormatTypedDict,
+            ]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models.ChatCompletionStreamRequestToolChoice,
-                models.ChatCompletionStreamRequestToolChoiceTypedDict,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoice,
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
+            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        prompt_mode: OptionalNullable[
+            models_mistralpromptmode.MistralPromptMode
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -727,6 +782,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -743,7 +799,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

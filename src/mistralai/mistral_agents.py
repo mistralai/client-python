@@ -3,6 +3,12 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    agentcreationrequest as models_agentcreationrequest,
+    agentupdaterequest as models_agentupdaterequest,
+    completionargs as models_completionargs,
+    requestsource as models_requestsource,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -20,12 +26,15 @@ class MistralAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.AgentCreationRequestTools],
-                List[models.AgentCreationRequestToolsTypedDict],
+                List[models_agentcreationrequest.AgentCreationRequestTools],
+                List[models_agentcreationrequest.AgentCreationRequestToolsTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -93,6 +102,7 @@ class MistralAgents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentCreationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -109,7 +119,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -144,12 +154,15 @@ class MistralAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.AgentCreationRequestTools],
-                List[models.AgentCreationRequestToolsTypedDict],
+                List[models_agentcreationrequest.AgentCreationRequestTools],
+                List[models_agentcreationrequest.AgentCreationRequestToolsTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -217,6 +230,7 @@ class MistralAgents(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.AgentCreationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -233,7 +247,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_create",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -266,7 +280,7 @@ class MistralAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -324,6 +338,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -340,7 +355,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -373,7 +388,7 @@ class MistralAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -431,6 +446,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -447,7 +463,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_list",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -523,6 +539,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -539,7 +556,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -615,6 +632,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -631,7 +649,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -665,12 +683,15 @@ class MistralAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.AgentUpdateRequestTools],
-                List[models.AgentUpdateRequestToolsTypedDict],
+                List[models_agentupdaterequest.AgentUpdateRequestTools],
+                List[models_agentupdaterequest.AgentUpdateRequestToolsTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
@@ -751,6 +772,7 @@ class MistralAgents(BaseSDK):
                 "json",
                 models.AgentUpdateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -767,7 +789,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -801,12 +823,15 @@ class MistralAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.AgentUpdateRequestTools],
-                List[models.AgentUpdateRequestToolsTypedDict],
+                List[models_agentupdaterequest.AgentUpdateRequestTools],
+                List[models_agentupdaterequest.AgentUpdateRequestToolsTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
@@ -887,6 +912,7 @@ class MistralAgents(BaseSDK):
                 "json",
                 models.AgentUpdateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -903,7 +929,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -974,6 +1000,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -990,7 +1017,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1061,6 +1088,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1077,7 +1105,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1153,6 +1181,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1169,7 +1198,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1245,6 +1274,7 @@ class MistralAgents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1261,7 +1291,7 @@ class MistralAgents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="agents_api_v1_agents_update_version",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

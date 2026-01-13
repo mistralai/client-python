@@ -28,8 +28,10 @@ Status = Literal[
 ]
 r"""The current status of the fine-tuning job."""
 
-CompletionJobOutObject = Literal["job"]
+
+CompletionJobOutObject = Literal["job",]
 r"""The object type of the fine-tuning job."""
+
 
 IntegrationsTypedDict = WandbIntegrationOutTypedDict
 
@@ -37,8 +39,9 @@ IntegrationsTypedDict = WandbIntegrationOutTypedDict
 Integrations = WandbIntegrationOut
 
 
-JobType = Literal["completion"]
+JobType = Literal["completion",]
 r"""The type of job (`FT` for fine-tuning)."""
+
 
 RepositoriesTypedDict = GithubRepositoryOutTypedDict
 

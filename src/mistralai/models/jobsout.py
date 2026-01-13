@@ -24,7 +24,7 @@ JobsOutData = Annotated[
 ]
 
 
-JobsOutObject = Literal["list"]
+JobsOutObject = Literal["list",]
 
 
 class JobsOutTypedDict(TypedDict):

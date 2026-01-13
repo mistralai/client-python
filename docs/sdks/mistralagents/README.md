@@ -1,5 +1,4 @@
-# MistralAgents
-(*beta.agents*)
+# Beta.Agents
 
 ## Overview
 

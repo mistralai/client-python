@@ -16,7 +16,7 @@ UserMessageContentTypedDict = TypeAliasType(
 UserMessageContent = TypeAliasType("UserMessageContent", Union[str, List[ContentChunk]])
 
 
-UserMessageRole = Literal["user"]
+UserMessageRole = Literal["user",]
 
 
 class UserMessageTypedDict(TypedDict):

@@ -4,4 +4,7 @@ from __future__ import annotations
 from typing import Literal
 
 
-FTClassifierLossFunction = Literal["single_class", "multi_class"]
+FTClassifierLossFunction = Literal[
+    "single_class",
+    "multi_class",
+]

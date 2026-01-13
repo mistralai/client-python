@@ -47,7 +47,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -126,6 +126,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -142,7 +143,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -210,7 +211,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -289,6 +290,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -305,7 +307,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -381,7 +383,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -460,6 +462,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -476,7 +479,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -486,9 +489,7 @@ class Chat(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.ChatCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -546,7 +547,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -625,6 +626,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -641,7 +643,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -651,9 +653,7 @@ class Chat(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.ChatCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

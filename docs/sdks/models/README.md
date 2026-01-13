@@ -1,5 +1,4 @@
 # Models
-(*models*)
 
 ## Overview
 

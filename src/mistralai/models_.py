@@ -51,6 +51,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -67,7 +68,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -127,6 +128,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -143,7 +145,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="list_models_v1_models_get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -210,6 +212,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -226,7 +229,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -302,6 +305,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -318,7 +322,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="retrieve_model_v1_models__model_id__get",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -394,6 +398,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -410,7 +415,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -483,6 +488,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -499,7 +505,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="delete_model_v1_models__model_id__delete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -583,6 +589,7 @@ class Models(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -599,7 +606,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -679,6 +686,7 @@ class Models(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -695,7 +703,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -764,6 +772,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -780,7 +789,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -847,6 +856,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -863,7 +873,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -930,6 +940,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -946,7 +957,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1013,6 +1024,7 @@ class Models(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1029,7 +1041,7 @@ class Models(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
