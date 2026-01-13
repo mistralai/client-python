@@ -1,4 +1,4 @@
-speakeasyVersion: 1.606.10
+speakeasyVersion: 1.685.0
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:9e6fc34474062726ceb96e424e858a0ae1b0506659cd11a58c72e1dd50dae885
         tags:
             - latest
-            - speakeasy-sdk-regen-1768231850
+            - guillaume.dumont-fix-upgrade-workflow
     mistral-google-cloud-source:
         sourceNamespace: mistral-openapi-google-cloud
         sourceRevisionDigest: sha256:bc59aaf55dc46e94ddf6cc687292807629d7a17ee5f573a504e7e44fd365e147
@@ -28,7 +28,7 @@ targets:
         sourceRevisionDigest: sha256:fcc7262f29ef89a07cb718d7e6094c272627cf9f531588aef15a6e92dd50130a
         sourceBlobDigest: sha256:9e6fc34474062726ceb96e424e858a0ae1b0506659cd11a58c72e1dd50dae885
         codeSamplesNamespace: mistral-openapi-azure-code-samples
-        codeSamplesRevisionDigest: sha256:9ab092d625da8034f7c17321ce5295ecad19ca4e2be2851a1a5a977c6bbeff05
+        codeSamplesRevisionDigest: sha256:64cb5e8ed5799838e6dd650db59db02b21573aeebaa777203cb7a49989795aa3
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
         sourceNamespace: mistral-openapi-google-cloud
@@ -45,17 +45,17 @@ targets:
         codeSamplesRevisionDigest: sha256:b1eacff97275a14ab0c2143e07bdfa4f4bd58f5370b2f106bcc6ada92b754d08
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: 1.606.10
+    speakeasyVersion: 1.685.0
     sources:
         mistral-azure-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:sha256:fcc7262f29ef89a07cb718d7e6094c272627cf9f531588aef15a6e92dd50130a
         mistral-google-cloud-source:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:sha256:bc59aaf55dc46e94ddf6cc687292807629d7a17ee5f573a504e7e44fd365e147
         mistral-openapi:
             inputs:
-                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:main
+                - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:sha256:cb63bd997cefe7b3b36e91a475df57cb779bf79f183340e0713d8ffb16a2dabc
     targets:
         mistralai-azure-sdk:
             target: python
