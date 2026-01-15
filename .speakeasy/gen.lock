@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.606.10
   generationVersion: 2.687.13
-  releaseVersion: 1.10.0
-  configChecksum: 1446aab5f184e7184590fe5756b556a8
+  releaseVersion: 1.10.1
+  configChecksum: cfe28e4ccef517bdf74a267098925450
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -474,9 +474,7 @@ generatedFiles:
   - docs/sdks/models/README.md
   - docs/sdks/ocr/README.md
   - docs/sdks/transcriptions/README.md
-  - poetry.toml
   - py.typed
-  - scripts/prepare_readme.py
   - scripts/publish.sh
   - src/mistralai/__init__.py
   - src/mistralai/_hooks/__init__.py
@@ -1531,4 +1529,3 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `mistral.beta.libraries.create()`:  `response.owner_id` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.documents.get()`:  `response` **Changed** **Breaking** :warning:\n* `mistral.models.list()`: \n  *  `response.data.[].[base].capabilities` **Changed**\n  *  `error.status[422]` **Removed** **Breaking** :warning:\n* `mistral.files.list()`: \n  *  `request.include_total` **Added**\n  *  `response.total` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.start()`: \n  *  `request` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[tool_execution_entry].name` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.accesses.delete()`: \n  *  `request.org_id` **Changed**\n  *  `response.share_with_uuid` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.accesses.update_or_create()`: \n  *  `request.org_id` **Changed**\n  *  `response.share_with_uuid` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.append()`: \n  *  `request.inputs.[array].[].[tool_execution_entry].name` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[tool_execution_entry].name` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.accesses.list()`:  `response.data.[].share_with_uuid` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.restart()`: \n  *  `request` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[tool_execution_entry].name` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.documents.update()`: \n  *  `request.attributes` **Added**\n  *  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.documents.upload()`:  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.documents.list()`: \n  *  `request.filters_attributes` **Added**\n  *  `response.data.[]` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.update()`:  `response.owner_id` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.delete()`:  `response.owner_id` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.get()`:  `response.owner_id` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get_history()`:  `response.entries.[].[tool_execution_entry].name` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.list()`:  `response.data.[].owner_id` **Changed** **Breaking** :warning:\n* `mistral.models.retrieve()`:  `response.[base].capabilities` **Changed**\n* `mistral.agents.complete()`:  `request.metadata` **Added**\n* `mistral.beta.agents.get()`: \n  *  `request.agent_version` **Added**\n  *  `response` **Changed**\n* `mistral.beta.agents.list()`: \n  *  `request` **Changed**\n  *  `response.[]` **Changed**\n* `mistral.beta.agents.update_version()`:  `response` **Changed**\n* `mistral.beta.agents.delete()`: **Added**\n* `mistral.beta.conversations.list()`: \n  *  `request.metadata` **Added**\n  *  `response.[]` **Changed**\n* `mistral.beta.conversations.get()`:  `response` **Changed**\n* `mistral.beta.agents.update()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `mistral.beta.conversations.delete()`: **Added**\n* `mistral.chat.complete()`:  `request.metadata` **Added**\n* `mistral.fim.complete()`:  `request.metadata` **Added**\n* `mistral.beta.agents.create()`: \n  *  `request.metadata` **Added**\n  *  `response` **Changed**\n* `mistral.ocr.process()`: \n  *  `request` **Changed**\n  *  `response.pages.[]` **Changed**\n"
