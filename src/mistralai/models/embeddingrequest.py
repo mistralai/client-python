@@ -6,7 +6,7 @@ from .encodingformat import EncodingFormat
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -25,6 +25,7 @@ class EmbeddingRequestTypedDict(TypedDict):
     r"""The ID of the model to be used for embedding."""
     inputs: EmbeddingRequestInputsTypedDict
     r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     output_dimension: NotRequired[Nullable[int]]
     r"""The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used."""
     output_dtype: NotRequired[EmbeddingDtype]
@@ -38,6 +39,8 @@ class EmbeddingRequest(BaseModel):
     inputs: Annotated[EmbeddingRequestInputs, pydantic.Field(alias="input")]
     r"""The text content to be embedded, can be a string or an array of strings for fast processing in bulk."""
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     output_dimension: OptionalNullable[int] = UNSET
     r"""The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used."""
 
@@ -47,8 +50,13 @@ class EmbeddingRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["output_dimension", "output_dtype", "encoding_format"]
-        nullable_fields = ["output_dimension"]
+        optional_fields = [
+            "metadata",
+            "output_dimension",
+            "output_dtype",
+            "encoding_format",
+        ]
+        nullable_fields = ["metadata", "output_dimension"]
         null_default_fields = []
 
         serialized = handler(self)

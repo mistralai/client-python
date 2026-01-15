@@ -141,6 +141,8 @@ if TYPE_CHECKING:
         AssistantMessageTypedDict,
     )
     from .audiochunk import AudioChunk, AudioChunkType, AudioChunkTypedDict
+    from .audioencoding import AudioEncoding
+    from .audioformat import AudioFormat, AudioFormatTypedDict
     from .audiotranscriptionrequest import (
         AudioTranscriptionRequest,
         AudioTranscriptionRequestTypedDict,
@@ -155,6 +157,7 @@ if TYPE_CHECKING:
     from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
     from .batchjobsout import BatchJobsOut, BatchJobsOutObject, BatchJobsOutTypedDict
     from .batchjobstatus import BatchJobStatus
+    from .batchrequest import BatchRequest, BatchRequestTypedDict
     from .builtinconnectors import BuiltInConnectors
     from .chatclassificationrequest import (
         ChatClassificationRequest,
@@ -840,7 +843,13 @@ if TYPE_CHECKING:
         ToolExecutionStartedEventType,
         ToolExecutionStartedEventTypedDict,
     )
-    from .toolfilechunk import ToolFileChunk, ToolFileChunkType, ToolFileChunkTypedDict
+    from .toolfilechunk import (
+        ToolFileChunk,
+        ToolFileChunkTool,
+        ToolFileChunkToolTypedDict,
+        ToolFileChunkType,
+        ToolFileChunkTypedDict,
+    )
     from .toolmessage import (
         ToolMessage,
         ToolMessageContent,
@@ -850,6 +859,8 @@ if TYPE_CHECKING:
     )
     from .toolreferencechunk import (
         ToolReferenceChunk,
+        ToolReferenceChunkTool,
+        ToolReferenceChunkToolTypedDict,
         ToolReferenceChunkType,
         ToolReferenceChunkTypedDict,
     )
@@ -1018,6 +1029,9 @@ __all__ = [
     "AudioChunk",
     "AudioChunkType",
     "AudioChunkTypedDict",
+    "AudioEncoding",
+    "AudioFormat",
+    "AudioFormatTypedDict",
     "AudioTranscriptionRequest",
     "AudioTranscriptionRequestStream",
     "AudioTranscriptionRequestStreamTypedDict",
@@ -1036,6 +1050,8 @@ __all__ = [
     "BatchJobsOut",
     "BatchJobsOutObject",
     "BatchJobsOutTypedDict",
+    "BatchRequest",
+    "BatchRequestTypedDict",
     "BuiltInConnectors",
     "ChatClassificationRequest",
     "ChatClassificationRequestTypedDict",
@@ -1567,6 +1583,8 @@ __all__ = [
     "ToolExecutionStartedEventType",
     "ToolExecutionStartedEventTypedDict",
     "ToolFileChunk",
+    "ToolFileChunkTool",
+    "ToolFileChunkToolTypedDict",
     "ToolFileChunkType",
     "ToolFileChunkTypedDict",
     "ToolMessage",
@@ -1575,6 +1593,8 @@ __all__ = [
     "ToolMessageRole",
     "ToolMessageTypedDict",
     "ToolReferenceChunk",
+    "ToolReferenceChunkTool",
+    "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkType",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
@@ -1724,6 +1744,9 @@ _dynamic_imports: dict[str, str] = {
     "AudioChunk": ".audiochunk",
     "AudioChunkType": ".audiochunk",
     "AudioChunkTypedDict": ".audiochunk",
+    "AudioEncoding": ".audioencoding",
+    "AudioFormat": ".audioformat",
+    "AudioFormatTypedDict": ".audioformat",
     "AudioTranscriptionRequest": ".audiotranscriptionrequest",
     "AudioTranscriptionRequestTypedDict": ".audiotranscriptionrequest",
     "AudioTranscriptionRequestStream": ".audiotranscriptionrequeststream",
@@ -1742,6 +1765,8 @@ _dynamic_imports: dict[str, str] = {
     "BatchJobsOutObject": ".batchjobsout",
     "BatchJobsOutTypedDict": ".batchjobsout",
     "BatchJobStatus": ".batchjobstatus",
+    "BatchRequest": ".batchrequest",
+    "BatchRequestTypedDict": ".batchrequest",
     "BuiltInConnectors": ".builtinconnectors",
     "ChatClassificationRequest": ".chatclassificationrequest",
     "ChatClassificationRequestTypedDict": ".chatclassificationrequest",
@@ -2277,6 +2302,8 @@ _dynamic_imports: dict[str, str] = {
     "ToolExecutionStartedEventType": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventTypedDict": ".toolexecutionstartedevent",
     "ToolFileChunk": ".toolfilechunk",
+    "ToolFileChunkTool": ".toolfilechunk",
+    "ToolFileChunkToolTypedDict": ".toolfilechunk",
     "ToolFileChunkType": ".toolfilechunk",
     "ToolFileChunkTypedDict": ".toolfilechunk",
     "ToolMessage": ".toolmessage",
@@ -2285,6 +2312,8 @@ _dynamic_imports: dict[str, str] = {
     "ToolMessageRole": ".toolmessage",
     "ToolMessageTypedDict": ".toolmessage",
     "ToolReferenceChunk": ".toolreferencechunk",
+    "ToolReferenceChunkTool": ".toolreferencechunk",
+    "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
     "ToolReferenceChunkType": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
     "ToolTypes": ".tooltypes",

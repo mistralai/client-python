@@ -4,15 +4,22 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ToolFileChunkType = Literal["tool_file"]
 
+ToolFileChunkToolTypedDict = TypeAliasType(
+    "ToolFileChunkToolTypedDict", Union[BuiltInConnectors, str]
+)
+
+
+ToolFileChunkTool = TypeAliasType("ToolFileChunkTool", Union[BuiltInConnectors, str])
+
 
 class ToolFileChunkTypedDict(TypedDict):
-    tool: BuiltInConnectors
+    tool: ToolFileChunkToolTypedDict
     file_id: str
     type: NotRequired[ToolFileChunkType]
     file_name: NotRequired[Nullable[str]]
@@ -20,7 +27,7 @@ class ToolFileChunkTypedDict(TypedDict):
 
 
 class ToolFileChunk(BaseModel):
-    tool: BuiltInConnectors
+    tool: ToolFileChunkTool
 
     file_id: str
 
