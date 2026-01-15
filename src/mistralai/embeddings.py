@@ -6,7 +6,7 @@ from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Embeddings(BaseSDK):
@@ -19,6 +19,7 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
         encoding_format: Optional[models.EncodingFormat] = None,
@@ -33,6 +34,7 @@ class Embeddings(BaseSDK):
 
         :param model: The ID of the model to be used for embedding.
         :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param metadata:
         :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
@@ -53,6 +55,7 @@ class Embeddings(BaseSDK):
 
         request = models.EmbeddingRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
             output_dimension=output_dimension,
             output_dtype=output_dtype,
@@ -125,6 +128,7 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
         encoding_format: Optional[models.EncodingFormat] = None,
@@ -139,6 +143,7 @@ class Embeddings(BaseSDK):
 
         :param model: The ID of the model to be used for embedding.
         :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+        :param metadata:
         :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
         :param encoding_format:
@@ -159,6 +164,7 @@ class Embeddings(BaseSDK):
 
         request = models.EmbeddingRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
             output_dimension=output_dimension,
             output_dtype=output_dtype,

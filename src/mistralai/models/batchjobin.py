@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .apiendpoint import APIEndpoint
+from .batchrequest import BatchRequest, BatchRequestTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import validate_open_enum
 from pydantic import model_serializer
@@ -11,9 +12,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class BatchJobInTypedDict(TypedDict):
-    input_files: List[str]
-    r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""
     endpoint: APIEndpoint
+    input_files: NotRequired[Nullable[List[str]]]
+    r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""
+    requests: NotRequired[Nullable[List[BatchRequestTypedDict]]]
     model: NotRequired[Nullable[str]]
     r"""The model to be used for batch inference."""
     agent_id: NotRequired[Nullable[str]]
@@ -25,10 +27,12 @@ class BatchJobInTypedDict(TypedDict):
 
 
 class BatchJobIn(BaseModel):
-    input_files: List[str]
+    endpoint: Annotated[APIEndpoint, PlainValidator(validate_open_enum(False))]
+
+    input_files: OptionalNullable[List[str]] = UNSET
     r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""
 
-    endpoint: Annotated[APIEndpoint, PlainValidator(validate_open_enum(False))]
+    requests: OptionalNullable[List[BatchRequest]] = UNSET
 
     model: OptionalNullable[str] = UNSET
     r"""The model to be used for batch inference."""
@@ -44,8 +48,15 @@ class BatchJobIn(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["model", "agent_id", "metadata", "timeout_hours"]
-        nullable_fields = ["model", "agent_id", "metadata"]
+        optional_fields = [
+            "input_files",
+            "requests",
+            "model",
+            "agent_id",
+            "metadata",
+            "timeout_hours",
+        ]
+        nullable_fields = ["input_files", "requests", "model", "agent_id", "metadata"]
         null_default_fields = []
 
         serialized = handler(self)

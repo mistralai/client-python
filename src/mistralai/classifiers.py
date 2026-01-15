@@ -6,7 +6,7 @@ from mistralai._hooks import HookContext
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Classifiers(BaseSDK):
@@ -20,6 +20,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -29,6 +30,7 @@ class Classifiers(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to classify.
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -46,6 +48,7 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
         )
 
@@ -116,6 +119,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -125,6 +129,7 @@ class Classifiers(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to classify.
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -142,6 +147,7 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
         )
 
@@ -404,6 +410,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -413,6 +420,7 @@ class Classifiers(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to classify.
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -430,6 +438,7 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
         )
 
@@ -500,6 +509,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -509,6 +519,7 @@ class Classifiers(BaseSDK):
 
         :param model: ID of the model to use.
         :param inputs: Text to classify.
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -526,6 +537,7 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
+            metadata=metadata,
             inputs=inputs,
         )
 
