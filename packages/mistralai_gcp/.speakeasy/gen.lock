@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 05fc6f45406deac180ffc1df760c67f4
+  docChecksum: 885d438b6894672dca630ca045b10126
   docVersion: 1.0.0
   speakeasyVersion: 1.606.10
   generationVersion: 2.687.13
-  releaseVersion: 1.7.0
-  configChecksum: 265058aeeb734c5018a1be4c40ea6e39
+  releaseVersion: 1.7.1
+  configChecksum: 24fd9e72091f877255ba514691e89f7f
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/mistralai_gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/mistralai_gcp
@@ -218,4 +218,7 @@ examples:
           application/json: {"id": "447e3e0d457e42e98248b5d2ef52a2a3", "object": "chat.completion", "model": "codestral-2508", "usage": {"prompt_tokens": 8, "completion_tokens": 91, "total_tokens": 99}, "created": 1759496862, "choices": [{"index": 0, "message": {"content": "add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n", "tool_calls": null, "prefix": false, "role": "assistant"}, "finish_reason": "stop"}]}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `mistral_gcp.chat.complete()`: \n  *  `request` **Changed** **Breaking** :warning:\n  *  `response` **Changed**\n* `mistral_gcp.fim.complete()`:  `response` **Changed**\n"
+releaseNotes: |
+  ## SDK Changes Detected:
+  * `mistral_gcp.chat.complete()`:  `request.metadata` **Added**
+  * `mistral_gcp.fim.complete()`:  `request.metadata` **Added**

@@ -9,3 +9,13 @@ Based on:
 - [python v1.7.0] packages/mistralai_gcp
 ### Releases
 - [PyPI v1.7.0] https://pypi.org/project/mistralai-gcp/1.7.0 - packages/mistralai_gcp
+
+## 2026-01-15 16:28:49
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.606.10 (2.687.13) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v1.7.1] packages/mistralai_gcp
+### Releases
+- [PyPI v1.7.1] https://pypi.org/project/mistralai-gcp/1.7.1 - packages/mistralai_gcp
