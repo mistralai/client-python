@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.606.10
   generationVersion: 2.687.13
-  releaseVersion: 1.10.1
-  configChecksum: cfe28e4ccef517bdf74a267098925450
+  releaseVersion: 1.10.2
+  configChecksum: d979f550b7e981db94f562d0ed0068af
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
@@ -1538,4 +1538,3 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `mistral.beta.conversations.restart()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[message_output_entry].content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.start()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[message_output_entry].content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.append()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.outputs.[].[message_output_entry].content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get_history()`:  `response.entries.[]` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get_messages()`:  `response.messages.[]` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.list()`:  `request.metadata` **Changed**\n* `mistral.beta.conversations.list()`:  `request.metadata` **Changed**\n* `mistral.batch.jobs.list()`:  `response.data.[].outputs` **Added**\n* `mistral.batch.jobs.create()`: \n  *  `request` **Changed**\n  *  `response.outputs` **Added**\n* `mistral.batch.jobs.get()`: \n  *  `request.inline` **Added**\n  *  `response.outputs` **Added**\n* `mistral.batch.jobs.cancel()`:  `response.outputs` **Added**\n* `mistral.embeddings.create()`:  `request.metadata` **Added**\n* `mistral.classifiers.moderate()`:  `request.metadata` **Added**\n* `mistral.classifiers.classify()`:  `request.metadata` **Added**\n"
