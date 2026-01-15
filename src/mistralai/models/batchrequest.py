@@ -2,45 +2,25 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, List, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import Any, Dict
+from typing_extensions import NotRequired, TypedDict
 
 
-ClassificationRequestInputsTypedDict = TypeAliasType(
-    "ClassificationRequestInputsTypedDict", Union[str, List[str]]
-)
-r"""Text to classify."""
+class BatchRequestTypedDict(TypedDict):
+    body: Dict[str, Any]
+    custom_id: NotRequired[Nullable[str]]
 
 
-ClassificationRequestInputs = TypeAliasType(
-    "ClassificationRequestInputs", Union[str, List[str]]
-)
-r"""Text to classify."""
+class BatchRequest(BaseModel):
+    body: Dict[str, Any]
 
-
-class ClassificationRequestTypedDict(TypedDict):
-    model: str
-    r"""ID of the model to use."""
-    inputs: ClassificationRequestInputsTypedDict
-    r"""Text to classify."""
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
-
-
-class ClassificationRequest(BaseModel):
-    model: str
-    r"""ID of the model to use."""
-
-    inputs: Annotated[ClassificationRequestInputs, pydantic.Field(alias="input")]
-    r"""Text to classify."""
-
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    custom_id: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["metadata"]
-        nullable_fields = ["metadata"]
+        optional_fields = ["custom_id"]
+        nullable_fields = ["custom_id"]
         null_default_fields = []
 
         serialized = handler(self)
