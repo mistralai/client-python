@@ -86,8 +86,15 @@ if TYPE_CHECKING:
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
-    from .ocrrequest import Document, DocumentTypedDict, OCRRequest, OCRRequestTypedDict
+    from .ocrrequest import (
+        Document,
+        DocumentTypedDict,
+        OCRRequest,
+        OCRRequestTypedDict,
+        TableFormat,
+    )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
+    from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .referencechunk import (
@@ -191,6 +198,7 @@ __all__ = [
     "FileChunk",
     "FileChunkTypedDict",
     "FinishReason",
+    "Format",
     "Function",
     "FunctionCall",
     "FunctionCallTypedDict",
@@ -225,6 +233,8 @@ __all__ = [
     "OCRRequestTypedDict",
     "OCRResponse",
     "OCRResponseTypedDict",
+    "OCRTableObject",
+    "OCRTableObjectTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
     "Prediction",
@@ -248,6 +258,7 @@ __all__ = [
     "SystemMessageContentChunksTypedDict",
     "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
+    "TableFormat",
     "TextChunk",
     "TextChunkTypedDict",
     "ThinkChunk",
@@ -356,8 +367,12 @@ _dynamic_imports: dict[str, str] = {
     "DocumentTypedDict": ".ocrrequest",
     "OCRRequest": ".ocrrequest",
     "OCRRequestTypedDict": ".ocrrequest",
+    "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
+    "Format": ".ocrtableobject",
+    "OCRTableObject": ".ocrtableobject",
+    "OCRTableObjectTypedDict": ".ocrtableobject",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "Prediction": ".prediction",

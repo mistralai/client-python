@@ -29,6 +29,7 @@ class BatchJobOutTypedDict(TypedDict):
     agent_id: NotRequired[Nullable[str]]
     output_file: NotRequired[Nullable[str]]
     error_file: NotRequired[Nullable[str]]
+    outputs: NotRequired[Nullable[List[Dict[str, Any]]]]
     started_at: NotRequired[Nullable[int]]
     completed_at: NotRequired[Nullable[int]]
 
@@ -66,6 +67,8 @@ class BatchJobOut(BaseModel):
 
     error_file: OptionalNullable[str] = UNSET
 
+    outputs: OptionalNullable[List[Dict[str, Any]]] = UNSET
+
     started_at: OptionalNullable[int] = UNSET
 
     completed_at: OptionalNullable[int] = UNSET
@@ -79,6 +82,7 @@ class BatchJobOut(BaseModel):
             "agent_id",
             "output_file",
             "error_file",
+            "outputs",
             "started_at",
             "completed_at",
         ]
@@ -88,6 +92,7 @@ class BatchJobOut(BaseModel):
             "agent_id",
             "output_file",
             "error_file",
+            "outputs",
             "started_at",
             "completed_at",
         ]

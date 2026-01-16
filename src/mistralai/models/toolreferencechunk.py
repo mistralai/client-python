@@ -4,15 +4,25 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ToolReferenceChunkType = Literal["tool_reference",]
 
 
+ToolReferenceChunkToolTypedDict = TypeAliasType(
+    "ToolReferenceChunkToolTypedDict", Union[BuiltInConnectors, str]
+)
+
+
+ToolReferenceChunkTool = TypeAliasType(
+    "ToolReferenceChunkTool", Union[BuiltInConnectors, str]
+)
+
+
 class ToolReferenceChunkTypedDict(TypedDict):
-    tool: BuiltInConnectors
+    tool: ToolReferenceChunkToolTypedDict
     title: str
     type: NotRequired[ToolReferenceChunkType]
     url: NotRequired[Nullable[str]]
@@ -21,7 +31,7 @@ class ToolReferenceChunkTypedDict(TypedDict):
 
 
 class ToolReferenceChunk(BaseModel):
-    tool: BuiltInConnectors
+    tool: ToolReferenceChunkTool
 
     title: str
 

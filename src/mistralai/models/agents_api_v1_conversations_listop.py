@@ -29,7 +29,7 @@ class AgentsAPIV1ConversationsListRequest(BaseModel):
 
     metadata: Annotated[
         OptionalNullable[Dict[str, Any]],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+        FieldMetadata(query=QueryParamMetadata(serialization="json")),
     ] = UNSET
 
     @model_serializer(mode="wrap")

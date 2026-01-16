@@ -6,7 +6,7 @@ from mistralai_gcp._hooks import HookContext
 from mistralai_gcp.types import OptionalNullable, UNSET
 from mistralai_gcp.utils import eventstreaming
 from mistralai_gcp.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Fim(BaseSDK):
@@ -28,6 +28,7 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -47,6 +48,7 @@ class Fim(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -72,6 +74,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -159,6 +162,7 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -178,6 +182,7 @@ class Fim(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -203,6 +208,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -290,6 +296,7 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -309,6 +316,7 @@ class Fim(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -334,6 +342,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -413,6 +422,7 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -432,6 +442,7 @@ class Fim(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -457,6 +468,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
