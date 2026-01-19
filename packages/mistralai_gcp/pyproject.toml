@@ -1,6 +1,6 @@
 [project]
 name = "mistralai-gcp"
-version = "1.6.0"
+version = "1.8.0"
 description = "Python Client SDK for the Mistral AI API in GCP."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
@@ -60,6 +60,10 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "jsonpath"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "google"
 ignore_missing_imports = true
 
 [tool.pyright]
