@@ -8,7 +8,8 @@ from typing import Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolReferenceChunkType = Literal["tool_reference"]
+ToolReferenceChunkType = Literal["tool_reference",]
+
 
 ToolReferenceChunkToolTypedDict = TypeAliasType(
     "ToolReferenceChunkToolTypedDict", Union[BuiltInConnectors, str]

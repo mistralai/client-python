@@ -4,4 +4,8 @@ from __future__ import annotations
 from typing import Literal
 
 
-RequestSource = Literal["api", "playground", "agent_builder_v1"]
+RequestSource = Literal[
+    "api",
+    "playground",
+    "agent_builder_v1",
+]

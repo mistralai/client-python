@@ -5,5 +5,12 @@ from mistralai.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-EntityType = Union[Literal["User", "Workspace", "Org"], UnrecognizedStr]
+EntityType = Union[
+    Literal[
+        "User",
+        "Workspace",
+        "Org",
+    ],
+    UnrecognizedStr,
+]
 r"""The type of entity, used to share a library."""

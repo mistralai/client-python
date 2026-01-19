@@ -3,9 +3,7 @@
 from __future__ import annotations
 from .audioencoding import AudioEncoding
 from mistralai.types import BaseModel
-from mistralai.utils import validate_open_enum
-from pydantic.functional_validators import PlainValidator
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import TypedDict
 
 
 class AudioFormatTypedDict(TypedDict):
@@ -14,6 +12,6 @@ class AudioFormatTypedDict(TypedDict):
 
 
 class AudioFormat(BaseModel):
-    encoding: Annotated[AudioEncoding, PlainValidator(validate_open_enum(False))]
+    encoding: AudioEncoding
 
     sample_rate: int

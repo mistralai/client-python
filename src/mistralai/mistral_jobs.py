@@ -4,6 +4,11 @@ from .basesdk import BaseSDK
 from datetime import datetime
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    apiendpoint as models_apiendpoint,
+    batchjobstatus as models_batchjobstatus,
+    batchrequest as models_batchrequest,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -21,7 +26,7 @@ class MistralJobs(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -78,6 +83,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -94,7 +100,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_jobs",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -125,7 +131,7 @@ class MistralJobs(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -182,6 +188,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -198,7 +205,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_jobs",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -222,10 +229,13 @@ class MistralJobs(BaseSDK):
     def create(
         self,
         *,
-        endpoint: models.APIEndpoint,
+        endpoint: models_apiendpoint.APIEndpoint,
         input_files: OptionalNullable[List[str]] = UNSET,
         requests: OptionalNullable[
-            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
+            Union[
+                List[models_batchrequest.BatchRequest],
+                List[models_batchrequest.BatchRequestTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
@@ -290,6 +300,7 @@ class MistralJobs(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.BatchJobIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -306,7 +317,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_create_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -330,10 +341,13 @@ class MistralJobs(BaseSDK):
     async def create_async(
         self,
         *,
-        endpoint: models.APIEndpoint,
+        endpoint: models_apiendpoint.APIEndpoint,
         input_files: OptionalNullable[List[str]] = UNSET,
         requests: OptionalNullable[
-            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
+            Union[
+                List[models_batchrequest.BatchRequest],
+                List[models_batchrequest.BatchRequestTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
@@ -398,6 +412,7 @@ class MistralJobs(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.BatchJobIn
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -414,7 +429,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_create_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -487,6 +502,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -503,7 +519,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -576,6 +592,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -592,7 +609,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_get_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -659,6 +676,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -675,7 +693,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_cancel_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -742,6 +760,7 @@ class MistralJobs(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -758,7 +777,7 @@ class MistralJobs(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="jobs_api_routes_batch_cancel_batch_job",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

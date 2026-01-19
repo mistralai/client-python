@@ -1,5 +1,4 @@
-# Libraries
-(*beta.libraries*)
+# Beta.Libraries
 
 ## Overview
 

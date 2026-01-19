@@ -18,10 +18,9 @@ from mistralai_gcp.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai_gcp.utils import get_discriminator, validate_open_enum
+from mistralai_gcp.utils import get_discriminator
 from pydantic import Discriminator, Tag, model_serializer
-from pydantic.functional_validators import PlainValidator
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -89,6 +88,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
     tools: NotRequired[Nullable[List[ToolTypedDict]]]
@@ -134,6 +134,8 @@ class ChatCompletionRequest(BaseModel):
     random_seed: OptionalNullable[int] = UNSET
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     response_format: Optional[ResponseFormat] = None
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
@@ -158,9 +160,7 @@ class ChatCompletionRequest(BaseModel):
     parallel_tool_calls: Optional[bool] = None
     r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
 
-    prompt_mode: Annotated[
-        OptionalNullable[MistralPromptMode], PlainValidator(validate_open_enum(False))
-    ] = UNSET
+    prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     @model_serializer(mode="wrap")
@@ -172,6 +172,7 @@ class ChatCompletionRequest(BaseModel):
             "stream",
             "stop",
             "random_seed",
+            "metadata",
             "response_format",
             "tools",
             "tool_choice",
@@ -186,6 +187,7 @@ class ChatCompletionRequest(BaseModel):
             "temperature",
             "max_tokens",
             "random_seed",
+            "metadata",
             "tools",
             "n",
             "prompt_mode",

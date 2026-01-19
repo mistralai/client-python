@@ -42,7 +42,7 @@ AgentTools = Annotated[
 ]
 
 
-AgentObject = Literal["agent"]
+AgentObject = Literal["agent",]
 
 
 class AgentTypedDict(TypedDict):

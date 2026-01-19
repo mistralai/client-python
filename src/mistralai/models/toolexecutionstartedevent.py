@@ -8,7 +8,8 @@ from typing import Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolExecutionStartedEventType = Literal["tool.execution.started"]
+ToolExecutionStartedEventType = Literal["tool.execution.started",]
+
 
 ToolExecutionStartedEventNameTypedDict = TypeAliasType(
     "ToolExecutionStartedEventNameTypedDict", Union[BuiltInConnectors, str]

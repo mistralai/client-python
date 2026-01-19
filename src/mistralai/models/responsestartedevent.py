@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ResponseStartedEventType = Literal["conversation.response.started"]
+ResponseStartedEventType = Literal["conversation.response.started",]
 
 
 class ResponseStartedEventTypedDict(TypedDict):

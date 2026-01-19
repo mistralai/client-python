@@ -9,7 +9,10 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-ConversationRestartRequestHandoffExecution = Literal["client", "server"]
+ConversationRestartRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
 
 
 class ConversationRestartRequestTypedDict(TypedDict):

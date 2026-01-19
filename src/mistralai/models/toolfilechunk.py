@@ -8,7 +8,8 @@ from typing import Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ToolFileChunkType = Literal["tool_file"]
+ToolFileChunkType = Literal["tool_file",]
+
 
 ToolFileChunkToolTypedDict = TypeAliasType(
     "ToolFileChunkToolTypedDict", Union[BuiltInConnectors, str]

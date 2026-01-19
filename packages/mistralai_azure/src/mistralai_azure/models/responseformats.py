@@ -4,4 +4,8 @@ from __future__ import annotations
 from typing import Literal
 
 
-ResponseFormats = Literal["text", "json_object", "json_schema"]
+ResponseFormats = Literal[
+    "text",
+    "json_object",
+    "json_schema",
+]

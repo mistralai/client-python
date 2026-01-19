@@ -6,7 +6,7 @@ from mistralai_gcp._hooks import HookContext
 from mistralai_gcp.types import OptionalNullable, UNSET
 from mistralai_gcp.utils import eventstreaming
 from mistralai_gcp.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Union
 
 
 class Chat(BaseSDK):
@@ -23,6 +23,7 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -47,7 +48,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -60,6 +61,7 @@ class Chat(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools: A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for.
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
@@ -92,6 +94,7 @@ class Chat(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(messages, List[models.Messages]),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -126,6 +129,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -142,7 +146,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -186,6 +190,7 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[Union[models.Stop, models.StopTypedDict]] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -210,7 +215,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
         r"""Stream chat completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -223,6 +228,7 @@ class Chat(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools: A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for.
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
@@ -255,6 +261,7 @@ class Chat(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(messages, List[models.Messages]),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -289,6 +296,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -305,7 +313,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_chat",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -357,6 +365,7 @@ class Chat(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -381,7 +390,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -392,6 +401,7 @@ class Chat(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools: A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for.
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
@@ -424,6 +434,7 @@ class Chat(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionRequestMessages]
             ),
@@ -460,6 +471,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -476,7 +488,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -486,9 +498,7 @@ class Chat(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.ChatCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -522,6 +532,7 @@ class Chat(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
@@ -546,7 +557,7 @@ class Chat(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ChatCompletionResponse]:
+    ) -> models.ChatCompletionResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -557,6 +568,7 @@ class Chat(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
         :param tools: A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for.
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
@@ -589,6 +601,7 @@ class Chat(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionRequestMessages]
             ),
@@ -625,6 +638,7 @@ class Chat(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -641,7 +655,7 @@ class Chat(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_completion_v1_chat_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -651,9 +665,7 @@ class Chat(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.ChatCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

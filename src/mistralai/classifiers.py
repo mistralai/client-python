@@ -3,6 +3,11 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    chatmoderationrequest as models_chatmoderationrequest,
+    classificationrequest as models_classificationrequest,
+    inputs as models_inputs,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -17,8 +22,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models_classificationrequest.ClassificationRequestInputs,
+            models_classificationrequest.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -68,6 +73,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -84,7 +90,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -116,8 +122,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models_classificationrequest.ClassificationRequestInputs,
+            models_classificationrequest.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -167,6 +173,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -183,7 +190,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="moderations_v1_moderations_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -214,8 +221,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models.ChatModerationRequestInputs,
-            models.ChatModerationRequestInputsTypedDict,
+            models_chatmoderationrequest.ChatModerationRequestInputs,
+            models_chatmoderationrequest.ChatModerationRequestInputsTypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -263,6 +270,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatModerationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -279,7 +287,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_moderations_v1_chat_moderations_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -310,8 +318,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models.ChatModerationRequestInputs,
-            models.ChatModerationRequestInputsTypedDict,
+            models_chatmoderationrequest.ChatModerationRequestInputs,
+            models_chatmoderationrequest.ChatModerationRequestInputsTypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -359,6 +367,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatModerationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -375,7 +384,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_moderations_v1_chat_moderations_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -407,8 +416,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models_classificationrequest.ClassificationRequestInputs,
+            models_classificationrequest.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -458,6 +467,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -474,7 +484,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="classifications_v1_classifications_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -506,8 +516,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models_classificationrequest.ClassificationRequestInputs,
+            models_classificationrequest.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -557,6 +567,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -573,7 +584,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="classifications_v1_classifications_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -604,7 +615,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[models_inputs.Inputs, models_inputs.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -650,6 +661,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -666,7 +678,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_classifications_v1_chat_classifications_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -697,7 +709,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[models_inputs.Inputs, models_inputs.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -743,6 +755,7 @@ class Classifiers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.ChatClassificationRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -759,7 +772,7 @@ class Classifiers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="chat_classifications_v1_chat_classifications_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

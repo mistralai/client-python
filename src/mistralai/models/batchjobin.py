@@ -4,11 +4,9 @@ from __future__ import annotations
 from .apiendpoint import APIEndpoint
 from .batchrequest import BatchRequest, BatchRequestTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import validate_open_enum
 from pydantic import model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import Dict, List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class BatchJobInTypedDict(TypedDict):
@@ -27,7 +25,7 @@ class BatchJobInTypedDict(TypedDict):
 
 
 class BatchJobIn(BaseModel):
-    endpoint: Annotated[APIEndpoint, PlainValidator(validate_open_enum(False))]
+    endpoint: APIEndpoint
 
     input_files: OptionalNullable[List[str]] = UNSET
     r"""The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```"""

@@ -3,6 +3,10 @@
 from .basesdk import BaseSDK
 from mistralai import models, utils
 from mistralai._hooks import HookContext
+from mistralai.models import (
+    documentupdatein as models_documentupdatein,
+    file as models_file,
+)
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
 from mistralai.utils.unmarshal_json_response import unmarshal_json_response
@@ -76,6 +80,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -92,7 +97,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_list_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -183,6 +188,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -199,7 +205,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_list_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -230,7 +236,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models.File, models.FileTypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -241,7 +247,15 @@ class Documents(BaseSDK):
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
 
         :param library_id:
-        :param file: The File object (not file name) to be uploaded.  To upload a file and specify a custom file name you should format your request as such:  ```bash  file=@path/to/your/file.jsonl;filename=custom_name.jsonl  ```  Otherwise, you can just keep the original file name:  ```bash  file=@path/to/your/file.jsonl  ```
+        :param file: The File object (not file name) to be uploaded.
+            To upload a file and specify a custom file name you should format your request as such:
+            ```bash
+            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
+            ```
+            Otherwise, you can just keep the original file name:
+            ```bash
+            file=@path/to/your/file.jsonl
+            ```
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -284,6 +298,7 @@ class Documents(BaseSDK):
                 "multipart",
                 models.LibrariesDocumentsUploadV1DocumentUpload,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -300,7 +315,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_upload_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -331,7 +346,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models.File, models.FileTypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -342,7 +357,15 @@ class Documents(BaseSDK):
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
 
         :param library_id:
-        :param file: The File object (not file name) to be uploaded.  To upload a file and specify a custom file name you should format your request as such:  ```bash  file=@path/to/your/file.jsonl;filename=custom_name.jsonl  ```  Otherwise, you can just keep the original file name:  ```bash  file=@path/to/your/file.jsonl  ```
+        :param file: The File object (not file name) to be uploaded.
+            To upload a file and specify a custom file name you should format your request as such:
+            ```bash
+            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
+            ```
+            Otherwise, you can just keep the original file name:
+            ```bash
+            file=@path/to/your/file.jsonl
+            ```
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -385,6 +408,7 @@ class Documents(BaseSDK):
                 "multipart",
                 models.LibrariesDocumentsUploadV1DocumentUpload,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -401,7 +425,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_upload_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -477,6 +501,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -493,7 +518,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -569,6 +594,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -585,7 +611,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -619,7 +645,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models_documentupdatein.Attributes],
+                Dict[str, models_documentupdatein.AttributesTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -678,6 +707,7 @@ class Documents(BaseSDK):
                 "json",
                 models.DocumentUpdateIn,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -694,7 +724,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_update_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -728,7 +758,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models_documentupdatein.Attributes],
+                Dict[str, models_documentupdatein.AttributesTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -787,6 +820,7 @@ class Documents(BaseSDK):
                 "json",
                 models.DocumentUpdateIn,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -803,7 +837,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_update_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -879,6 +913,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -895,7 +930,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_delete_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -971,6 +1006,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -987,7 +1023,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_delete_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1063,6 +1099,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1079,7 +1116,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_text_content_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1155,6 +1192,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1171,7 +1209,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_text_content_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1247,6 +1285,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1263,7 +1302,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_status_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1339,6 +1378,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1355,7 +1395,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_status_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1431,6 +1471,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1447,7 +1488,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_signed_url_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1523,6 +1564,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1539,7 +1581,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_signed_url_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1615,6 +1657,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1631,7 +1674,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_extracted_text_signed_url_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1707,6 +1750,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1723,7 +1767,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_get_extracted_text_signed_url_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1799,6 +1843,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1815,7 +1860,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_reprocess_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
@@ -1891,6 +1936,7 @@ class Documents(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1907,7 +1953,7 @@ class Documents(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="libraries_documents_reprocess_v1",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),

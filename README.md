@@ -160,6 +160,7 @@ with Mistral(
 </br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -213,6 +214,7 @@ with Mistral(
 </br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -266,6 +268,7 @@ with Mistral(
 </br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -319,6 +322,7 @@ with Mistral(
 </br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -444,33 +448,24 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 <details open>
 <summary>Available methods</summary>
 
-### [agents](docs/sdks/agents/README.md)
+### [Agents](docs/sdks/agents/README.md)
 
 * [complete](docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
 
-### [audio](docs/sdks/audio/README.md)
-
-
-#### [audio.transcriptions](docs/sdks/transcriptions/README.md)
+### [Audio.Transcriptions](docs/sdks/transcriptions/README.md)
 
 * [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
 * [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
 
-### [batch](docs/sdks/batch/README.md)
-
-
-#### [batch.jobs](docs/sdks/mistraljobs/README.md)
+### [Batch.Jobs](docs/sdks/mistraljobs/README.md)
 
 * [list](docs/sdks/mistraljobs/README.md#list) - Get Batch Jobs
 * [create](docs/sdks/mistraljobs/README.md#create) - Create Batch Job
 * [get](docs/sdks/mistraljobs/README.md#get) - Get Batch Job
 * [cancel](docs/sdks/mistraljobs/README.md#cancel) - Cancel Batch Job
 
-### [beta](docs/sdks/beta/README.md)
-
-
-#### [beta.agents](docs/sdks/mistralagents/README.md)
+### [Beta.Agents](docs/sdks/mistralagents/README.md)
 
 * [create](docs/sdks/mistralagents/README.md#create) - Create a agent that can be used within a conversation.
 * [list](docs/sdks/mistralagents/README.md#list) - List agent entities.
@@ -479,7 +474,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [delete](docs/sdks/mistralagents/README.md#delete) - Delete an agent entity.
 * [update_version](docs/sdks/mistralagents/README.md#update_version) - Update an agent version.
 
-#### [beta.conversations](docs/sdks/conversations/README.md)
+### [Beta.Conversations](docs/sdks/conversations/README.md)
 
 * [start](docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
 * [list](docs/sdks/conversations/README.md#list) - List all created conversations.
@@ -493,7 +488,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [append_stream](docs/sdks/conversations/README.md#append_stream) - Append new entries to an existing conversation.
 * [restart_stream](docs/sdks/conversations/README.md#restart_stream) - Restart a conversation starting from a given entry.
 
-#### [beta.libraries](docs/sdks/libraries/README.md)
+### [Beta.Libraries](docs/sdks/libraries/README.md)
 
 * [list](docs/sdks/libraries/README.md#list) - List all libraries you have access to.
 * [create](docs/sdks/libraries/README.md#create) - Create a new Library.
@@ -501,13 +496,13 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [delete](docs/sdks/libraries/README.md#delete) - Delete a library and all of it's document.
 * [update](docs/sdks/libraries/README.md#update) - Update a library.
 
-#### [beta.libraries.accesses](docs/sdks/accesses/README.md)
+#### [Beta.Libraries.Accesses](docs/sdks/accesses/README.md)
 
 * [list](docs/sdks/accesses/README.md#list) - List all of the access to this library.
 * [update_or_create](docs/sdks/accesses/README.md#update_or_create) - Create or update an access level.
 * [delete](docs/sdks/accesses/README.md#delete) - Delete an access level.
 
-#### [beta.libraries.documents](docs/sdks/documents/README.md)
+#### [Beta.Libraries.Documents](docs/sdks/documents/README.md)
 
 * [list](docs/sdks/documents/README.md#list) - List documents in a given library.
 * [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
@@ -520,23 +515,23 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [extracted_text_signed_url](docs/sdks/documents/README.md#extracted_text_signed_url) - Retrieve the signed URL of text extracted from a given document.
 * [reprocess](docs/sdks/documents/README.md#reprocess) - Reprocess a document.
 
-### [chat](docs/sdks/chat/README.md)
+### [Chat](docs/sdks/chat/README.md)
 
 * [complete](docs/sdks/chat/README.md#complete) - Chat Completion
 * [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
 
-### [classifiers](docs/sdks/classifiers/README.md)
+### [Classifiers](docs/sdks/classifiers/README.md)
 
 * [moderate](docs/sdks/classifiers/README.md#moderate) - Moderations
 * [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Chat Moderations
 * [classify](docs/sdks/classifiers/README.md#classify) - Classifications
 * [classify_chat](docs/sdks/classifiers/README.md#classify_chat) - Chat Classifications
 
-### [embeddings](docs/sdks/embeddings/README.md)
+### [Embeddings](docs/sdks/embeddings/README.md)
 
 * [create](docs/sdks/embeddings/README.md#create) - Embeddings
 
-### [files](docs/sdks/files/README.md)
+### [Files](docs/sdks/files/README.md)
 
 * [upload](docs/sdks/files/README.md#upload) - Upload File
 * [list](docs/sdks/files/README.md#list) - List Files
@@ -545,15 +540,12 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [download](docs/sdks/files/README.md#download) - Download File
 * [get_signed_url](docs/sdks/files/README.md#get_signed_url) - Get Signed Url
 
-### [fim](docs/sdks/fim/README.md)
+### [Fim](docs/sdks/fim/README.md)
 
 * [complete](docs/sdks/fim/README.md#complete) - Fim Completion
 * [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
 
-### [fine_tuning](docs/sdks/finetuning/README.md)
-
-
-#### [fine_tuning.jobs](docs/sdks/jobs/README.md)
+### [FineTuning.Jobs](docs/sdks/jobs/README.md)
 
 * [list](docs/sdks/jobs/README.md#list) - Get Fine Tuning Jobs
 * [create](docs/sdks/jobs/README.md#create) - Create Fine Tuning Job
@@ -561,8 +553,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [cancel](docs/sdks/jobs/README.md#cancel) - Cancel Fine Tuning Job
 * [start](docs/sdks/jobs/README.md#start) - Start Fine Tuning Job
 
-
-### [models](docs/sdks/models/README.md)
+### [Models](docs/sdks/models/README.md)
 
 * [list](docs/sdks/models/README.md#list) - List Models
 * [retrieve](docs/sdks/models/README.md#retrieve) - Retrieve Model
@@ -571,7 +562,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [archive](docs/sdks/models/README.md#archive) - Archive Fine Tuned Model
 * [unarchive](docs/sdks/models/README.md#unarchive) - Unarchive Fine Tuned Model
 
-### [ocr](docs/sdks/ocr/README.md)
+### [Ocr](docs/sdks/ocr/README.md)
 
 * [process](docs/sdks/ocr/README.md#process) - OCR
 

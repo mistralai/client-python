@@ -2,10 +2,12 @@
 
 import httpx
 from typing import Optional
+from dataclasses import dataclass
 
 from mistralai_gcp.models import MistralGcpError
 
 
+@dataclass(unsafe_hash=True)
 class ResponseValidationError(MistralGcpError):
     """Error raised when there is a type mismatch between the response data and the expected Pydantic model."""
 

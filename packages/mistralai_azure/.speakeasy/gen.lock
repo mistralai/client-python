@@ -1,42 +1,726 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 3cd8710baef46375e8114574e63628e2
+  docChecksum: eb0d097e3bdb7c0784f34ca2af2ce554
   docVersion: 1.0.0
-  speakeasyVersion: 1.606.10
-  generationVersion: 2.687.13
-  releaseVersion: 1.7.0
-  configChecksum: 011849ab2544f97bfda12235028c7a00
+  speakeasyVersion: 1.685.0
+  generationVersion: 2.794.1
+  releaseVersion: 1.8.1
+  configChecksum: 0448ba634aa36625c6ac276e17e3b3b5
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/mistralai_azure
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/mistralai_azure
   published: true
+persistentEdits:
+  generation_id: 0d580549-db09-4078-890b-62de0e5fe937
+  pristine_commit_hash: b561cb140a25a721f54d0aad3c9a03d419c8fc19
+  pristine_tree_hash: d122bdae045ddf46c910e2f5da53d78da18ef009
 features:
   python:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.20.1
+    core: 5.23.18
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
     examples: 3.0.2
     flatRequests: 1.0.1
-    globalSecurity: 3.0.3
+    globalSecurity: 3.0.4
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.1
+    globalServerURLs: 3.2.0
+    includes: 3.0.0
     methodArguments: 1.0.2
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.1
+    openEnums: 1.0.2
     responseFormat: 1.0.1
-    retries: 3.0.2
-    sdkHooks: 1.1.0
-    serverEvents: 1.0.8
+    retries: 3.0.3
+    sdkHooks: 1.2.0
+    serverEvents: 1.0.11
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
-    unions: 3.0.4
+    unions: 3.1.1
+trackedFiles:
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:53134de3ada576f37c22276901e1b5b6d85cd2da
+    pristine_git_object: 4d75d59008e4d8609876d263419a9dc56c8d6f3a
+  .vscode/settings.json:
+    id: 89aa447020cd
+    last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
+    pristine_git_object: 8d79f0abb72526f1fb34a4c03e5bba612c6ba2ae
+  docs/models/arguments.md:
+    id: 7ea5e33709a7
+    last_write_checksum: sha1:09eea126210d7fd0353e60a76bf1dbed173f13ec
+    pristine_git_object: 2e54e27e0ca97bee87918b2ae38cc6c335669a79
+  docs/models/assistantmessage.md:
+    id: 7e0218023943
+    last_write_checksum: sha1:e75d407349842b2de46ee3ca6250f9f51121cf38
+    pristine_git_object: 3d0bd90b4433c1a919f917f4bcf2518927cdcd50
+  docs/models/assistantmessagecontent.md:
+    id: 9f1795bbe642
+    last_write_checksum: sha1:1ce4066623a8d62d969e5ed3a088d73a9ba26643
+    pristine_git_object: 047b7cf95f4db203bf2c501680b73ca0562a122d
+  docs/models/assistantmessagerole.md:
+    id: bb5d2a4bc72f
+    last_write_checksum: sha1:82f2c4f469426bd476c1003a91394afb89cb7c91
+    pristine_git_object: 658229e77eb6419391cf7941568164541c528387
+  docs/models/chatcompletionchoice.md:
+    id: 0d15c59ab501
+    last_write_checksum: sha1:a6274a39a4239e054816d08517bf8507cb5c4564
+    pristine_git_object: deaa0ea073e1b6c21bd466c10db31db2464066f1
+  docs/models/chatcompletionchoicefinishreason.md:
+    id: 225764da91d3
+    last_write_checksum: sha1:b894d3408cb801e072c3c302a5676ff939d59284
+    pristine_git_object: b2f15ecbe88328de95b4961ddb3940fd8a6ee64b
+  docs/models/chatcompletionrequest.md:
+    id: adffe90369d0
+    last_write_checksum: sha1:de5476eb16a5ff75942b1ece68dbe547110dbbb8
+    pristine_git_object: 104a1f96e60e1d4b86305dab2829be084b00b153
+  docs/models/chatcompletionrequestmessages.md:
+    id: ec996b350e12
+    last_write_checksum: sha1:2ecec8d12cdb48426f4eb62732066fc79fcd4ec3
+    pristine_git_object: bc7708a67f06d74e8a5bf1facb2b23fb1e08053c
+  docs/models/chatcompletionrequeststop.md:
+    id: fcaf5bbea451
+    last_write_checksum: sha1:71a25f84f0d88c7acf72e801ced6159546201851
+    pristine_git_object: 749296d420c0671d2a1d6d22483b51f577a86485
+  docs/models/chatcompletionrequesttoolchoice.md:
+    id: b97041b2f15b
+    last_write_checksum: sha1:7ad7eb133f70e07d0d6a9def36aadd08b35cf861
+    pristine_git_object: dc82a8ef91e7bfd44f1d2d9d9a4ef61b6e76cc34
+  docs/models/chatcompletionresponse.md:
+    id: 7c53b24681b9
+    last_write_checksum: sha1:a56581c0846638cfe6df26d3045fb4f874ccd931
+    pristine_git_object: a0465ffbfc5558628953e03fbc53b80bbdc8649b
+  docs/models/chatcompletionstreamrequest.md:
+    id: cf8f29558a68
+    last_write_checksum: sha1:f6bc4a0f064fc3420ae9b29c7e6fc9100ae85e4d
+    pristine_git_object: 85f237b4fc59ffc487377f150952284cc2102d85
+  docs/models/chatcompletionstreamrequesttoolchoice.md:
+    id: 210d5e5b1413
+    last_write_checksum: sha1:0543164caf3f4fb2bef3061dbd1a5e6b34b17ae9
+    pristine_git_object: 43f3ca3809bf1a2a040e2ad7c19a2b22db0b73f8
+  docs/models/completionchunk.md:
+    id: 60cb30423c60
+    last_write_checksum: sha1:61b976fe2e71236cf7941ee1635decc31bd304b2
+    pristine_git_object: 7f8ab5e631e2c6d1d9830325e591a7e434b83a35
+  docs/models/completionevent.md:
+    id: e57cd17cb9dc
+    last_write_checksum: sha1:4f59c67af0b11c77b80d2b9c7aca36484d2be219
+    pristine_git_object: 7a66e8fee2bb0f1c58166177653893bb05b98f1d
+  docs/models/completionresponsestreamchoice.md:
+    id: d56824d615a6
+    last_write_checksum: sha1:dcf4b125b533192cb5aea1a68551866954712dc5
+    pristine_git_object: c807dacd98eb3561ee45f40db71a92cb72b0f6de
+  docs/models/content.md:
+    id: bfd859c99f86
+    last_write_checksum: sha1:6673dbd19871a701955a322348a4f7e51c38ffc8
+    pristine_git_object: a833dc2c6043e36b85131c9243b4cc02b9fcc4c6
+  docs/models/contentchunk.md:
+    id: d2d3a32080cd
+    last_write_checksum: sha1:5839a26cdc412b78caad7fb59df97bdcea57be6d
+    pristine_git_object: 22023e8b19692df969693b7a14f8cf6e0143859f
+  docs/models/deltamessage.md:
+    id: 6c5ed6b60968
+    last_write_checksum: sha1:c213149256c620715d744c89685d5b6cbdea6f58
+    pristine_git_object: 61deabbf7e37388fdd4c1789089d120cc0b937b9
+  docs/models/document.md:
+    id: cd1d2a444370
+    last_write_checksum: sha1:d00a2ac808a0ae83a7b97da87e647ecc8dca9c52
+    pristine_git_object: 509d43b733d68d462853d9eb52fc913c855dff40
+  docs/models/documenturlchunk.md:
+    id: 48437d297408
+    last_write_checksum: sha1:38c3e2ad5353a4632bd827f00419c5d8eb2def54
+    pristine_git_object: 6c9a5b4d9e6769be242b27ef0208f6af704689c0
+  docs/models/documenturlchunktype.md:
+    id: a3574c91f539
+    last_write_checksum: sha1:a0134fc0ea822d55b1204ee71140f2aa9d8dbe9c
+    pristine_git_object: 32e1fa9e975a3633fb49057b38b0ea0206b2d8ef
+  docs/models/filechunk.md:
+    id: edc076728e9d
+    last_write_checksum: sha1:07ab5db503211adba2fa099e66d12ac3c4bbf680
+    pristine_git_object: 18217114060ac4e4b45fefabace4628684f27e5c
+  docs/models/finishreason.md:
+    id: 73315c2a39b3
+    last_write_checksum: sha1:5b58c7fa9219f728b9731287e21abe1be9f11e4a
+    pristine_git_object: 45a5aedb7241cf080df3eb976a4413064d314009
+  docs/models/format_.md:
+    id: a17c22228eda
+    last_write_checksum: sha1:dad6de59fec6378d50356007602e2a0254d8d2e4
+    pristine_git_object: 97d286a4ed7cff0a4058bbfa06c4573428182876
+  docs/models/function.md:
+    id: 416a80fba031
+    last_write_checksum: sha1:a9485076d430a7753558461ce87bf42d09e34511
+    pristine_git_object: b2bdb3fe82520ea79d0cf1a10ee41c844f90b859
+  docs/models/functioncall.md:
+    id: a78cd1d7f605
+    last_write_checksum: sha1:65bf78744b8531cdefb6a288f1af5cbf9d9e2395
+    pristine_git_object: 7ccd90dca4868db9b6e178712f95d375210013c8
+  docs/models/functionname.md:
+    id: 4b3bd62c0f26
+    last_write_checksum: sha1:754fe32bdffe53c1057b302702f5516f4e551cfb
+    pristine_git_object: 87d7b4852de629015166605b273deb9341202dc0
+  docs/models/httpvalidationerror.md:
+    id: a211c095f2ac
+    last_write_checksum: sha1:277a46811144643262651853dc6176d21b33573e
+    pristine_git_object: 712a148c3e2305dca4c702851865f9f8c8e674cc
+  docs/models/imageurl.md:
+    id: e75dd23cec1d
+    last_write_checksum: sha1:30131c77dd240c3bae48d9693698358e5cc0ae63
+    pristine_git_object: 7c2bcbc36e99c3cf467d213d6a6a59d6300433d8
+  docs/models/imageurlchunk.md:
+    id: 4407097bfff3
+    last_write_checksum: sha1:7a478fd638234ece78770c7fc5e8d0adaf1c3727
+    pristine_git_object: f1b926ef8e82443aa1446b1c64c2f02e33d7c789
+  docs/models/imageurlchunkimageurl.md:
+    id: c7fae88454ce
+    last_write_checksum: sha1:5eff71b7a8be7baacb9ba8ca0be0a0f7a391a325
+    pristine_git_object: 767389082d25f06e617fec2ef0134dd9fb2d4064
+  docs/models/imageurlchunktype.md:
+    id: b9af2db9ff60
+    last_write_checksum: sha1:990546f94648a09faf9d3ae55d7f6ee66de13e85
+    pristine_git_object: 2064a0b405870313bd4b802a3b1988418ce8439e
+  docs/models/jsonschema.md:
+    id: a6b15ed6fac8
+    last_write_checksum: sha1:523465666ad3c292252b3fe60f345c7ffb29053f
+    pristine_git_object: 7ff7c070353c58290416aff5b01d1dfc43905269
+  docs/models/loc.md:
+    id: b071d5a509cc
+    last_write_checksum: sha1:09a04749333ab50ae806c3ac6adcaa90d54df0f1
+    pristine_git_object: d6094ac2c6e0326c039dad2f6b89158694ef6aa7
+  docs/models/messages.md:
+    id: 2103cd675c2f
+    last_write_checksum: sha1:f6940c9c67b98c49ae2bc2764f6c14178321f244
+    pristine_git_object: 1d394500e8ffdd140457575568fc2ce465a1cc3a
+  docs/models/mistralpromptmode.md:
+    id: d17d5db4d3b6
+    last_write_checksum: sha1:5ccd31d3804f70b6abb0e5a00bda57b9102225e3
+    pristine_git_object: 7416e2037c507d19ac02aed914da1208a2fed0a1
+  docs/models/ocrimageobject.md:
+    id: b72f3c5853b2
+    last_write_checksum: sha1:90c5158dec6a7b31c858677b6a8efa1e3cabd504
+    pristine_git_object: 3c0d5544a80499b011467f29ef83d49f53801af6
+  docs/models/ocrpagedimensions.md:
+    id: b3429f9883f5
+    last_write_checksum: sha1:6435aa56e6153b0c90a546818ed780105ae1042a
+    pristine_git_object: c93ca64d5e20319ec6ec1bcb82b28c6ce0940f29
+  docs/models/ocrpageobject.md:
+    id: 88a9e101b11e
+    last_write_checksum: sha1:091077fedf1b699d5160a21fe352056c247ef988
+    pristine_git_object: 02473d44f73485fd7b7f0031d51bfac835d4036e
+  docs/models/ocrrequest.md:
+    id: 6862a3fc2d0f
+    last_write_checksum: sha1:f32fcc5916f9eedf7adfaa60beda30a9ec42f32e
+    pristine_git_object: 76e4da925937fd4bdd42307f116a74d4dbf2bea3
+  docs/models/ocrresponse.md:
+    id: 30042328fb78
+    last_write_checksum: sha1:8e4a4ae404ea752f3e9f1108c2a5f89ed6cfb143
+    pristine_git_object: 0a309317644eedc643009b6cec3a7dbb142b1a15
+  docs/models/ocrtableobject.md:
+    id: c967796380e6
+    last_write_checksum: sha1:3b78858cc130fc8792ec3d149c8f657fd3f7a4c3
+    pristine_git_object: 4e27697c15983f86274648b2d7bacac557081630
+  docs/models/ocrusageinfo.md:
+    id: 419abbb8353a
+    last_write_checksum: sha1:6e717a3f3de3c464e8b3237f06867cdfecec339e
+    pristine_git_object: d9d79125cb02bc2b09d8dc543a5e2d4a6c55571c
+  docs/models/prediction.md:
+    id: 3c70b2262201
+    last_write_checksum: sha1:ca8a77219e6113f2358a5363e935288d90df0725
+    pristine_git_object: fae3c1ca4ba2c2ddb3b7de401ecdc8d56dcc7740
+  docs/models/referencechunk.md:
+    id: 07895f9debfd
+    last_write_checksum: sha1:97d01dd2b907e87b58bebd9c950e1bef29747c89
+    pristine_git_object: a132ca2fe6fbbaca644491cbc36d88b0c67cc6bc
+  docs/models/referencechunktype.md:
+    id: 0944b80ea9c8
+    last_write_checksum: sha1:956b270766c7f11fe99f4a9b484cc29c159e7471
+    pristine_git_object: 1e0e2fe64883ef5f3e628777b261b1224661d257
+  docs/models/responseformat.md:
+    id: 50a1e4140614
+    last_write_checksum: sha1:e877b2e81470ef5eec5675dfb91a47e74d5d3add
+    pristine_git_object: 5cab22f2bf1c412699f6a7ed18ef801ecbc3ee4b
+  docs/models/responseformats.md:
+    id: cf1f250b82db
+    last_write_checksum: sha1:105e1f9181913104b554051838cbdd0f728aa2c4
+    pristine_git_object: 2f5f1e5511b048323fee18a0ffdd506fe2b3d56f
+  docs/models/role.md:
+    id: b694540a5b1e
+    last_write_checksum: sha1:260a50c56a8bd03cc535edf98ebec06437f87f8d
+    pristine_git_object: affca78d5574cc42d8e6169f21968e5a8765e053
+  docs/models/security.md:
+    id: 452e4d4eb67a
+    last_write_checksum: sha1:ce2871b49c1632d50e22d0b1ebe4999021d52313
+    pristine_git_object: c698674c513f5b20c04f629e50154e67977275f7
+  docs/models/stop.md:
+    id: f231cc9f5041
+    last_write_checksum: sha1:86903cac5f57ad9b8ac07ecba6c454d40a53bdc8
+    pristine_git_object: ba40ca83136d6d6cb4f1ef9e5ca3104a704e4846
+  docs/models/systemmessage.md:
+    id: fdb7963e1cdf
+    last_write_checksum: sha1:97e726dff19a39b468767d5c01fc6256277ee71f
+    pristine_git_object: 0dba71c00f40c85e74b2c1967e077ffff9660f13
+  docs/models/systemmessagecontent.md:
+    id: 94a56febaeda
+    last_write_checksum: sha1:6cb10b4b860b4204df57a29c650c85c826395aeb
+    pristine_git_object: 0c87baf3c2fade64a2738a9a4b3ce19647e5dc9a
+  docs/models/systemmessagecontentchunks.md:
+    id: cea1c19e9d7a
+    last_write_checksum: sha1:986aec0f8098158515bbccd0c22e0b3d4151bb32
+    pristine_git_object: 40030c170746d9953d25b979ab7e6f522018e230
+  docs/models/tableformat.md:
+    id: d8cd08c55c3c
+    last_write_checksum: sha1:e0736ea9576466d71821aa1e67fc632cc5a85414
+    pristine_git_object: 54f029b814fdcfa2e93e2b8b0594ef9e4eab792a
+  docs/models/textchunk.md:
+    id: 6cd12e0ef110
+    last_write_checksum: sha1:6d41d1991d122805734ed0d90ee01592aa5ae6ff
+    pristine_git_object: 6daab3c381bd8c13d2935bf62578648a8470fc76
+  docs/models/thinkchunk.md:
+    id: bca24d7153f6
+    last_write_checksum: sha1:feb95a931bb9cdbfe28ab351618687e513cf830b
+    pristine_git_object: 66b2e0cde70e25e2927180d2e709503401fddeab
+  docs/models/thinkchunktype.md:
+    id: 0fbeed985341
+    last_write_checksum: sha1:790f991f95c86c26a6abb9c9c5debda8b53526f5
+    pristine_git_object: baf6f755252d027295be082b53ecf80555039414
+  docs/models/thinking.md:
+    id: 07234f8dd364
+    last_write_checksum: sha1:a5962d1615b57996730da19e59fbfaa684321442
+    pristine_git_object: c7a0d5c9811ea37aaf9e16b6e93c833ab979573f
+  docs/models/tool.md:
+    id: 8966139dbeed
+    last_write_checksum: sha1:1725bf53fc9f1ca3f332322d91de24c9d58adc6a
+    pristine_git_object: fb661f72887271d5bb470e4edf025a32b00ade17
+  docs/models/toolcall.md:
+    id: 80892ea1a051
+    last_write_checksum: sha1:cb27b9d36cfe6227978c7a7a01b1349b6bac99d9
+    pristine_git_object: 3819236b9f3eee2f6878818cfbbe2817e97f7de2
+  docs/models/toolchoice.md:
+    id: "097076343426"
+    last_write_checksum: sha1:25b33b34da02c3b46349dc8b6223f9ae18370d16
+    pristine_git_object: 373046bbbc834169293b4f4ae8b2e238f952ddde
+  docs/models/toolchoiceenum.md:
+    id: 15410de51ffc
+    last_write_checksum: sha1:ca0cf9bf128bebc8faedd9333cc6a56b30f58130
+    pristine_git_object: 0be3d6c54b13a8bf30773398a2c12e0d30d3ae58
+  docs/models/toolmessage.md:
+    id: 0553747c37a1
+    last_write_checksum: sha1:3ac87031fdd4ba8b0996e95be8e7ef1a7ff41167
+    pristine_git_object: a54f49332c2873471759b477fb4c712fa4fb61f5
+  docs/models/toolmessagecontent.md:
+    id: f0522d2d3c93
+    last_write_checksum: sha1:783769c0200baa1b6751327aa3e009fa83da72ee
+    pristine_git_object: 5c76091fbd2c8e0d768921fab19c7b761df73411
+  docs/models/toolmessagerole.md:
+    id: f333d4d1ab56
+    last_write_checksum: sha1:7e1c004bad24e928da0c286a9f053516b172d24f
+    pristine_git_object: c24e59c0c79ea886d266e38c673edd51531b9be6
+  docs/models/tooltypes.md:
+    id: adb50fe63ea2
+    last_write_checksum: sha1:f224c3d8732450b9c969b3e04027b7df7892694c
+    pristine_git_object: 84e49253c9b9bd1bd314e2a126106404cbb52f16
+  docs/models/type.md:
+    id: 98c32f09b2c8
+    last_write_checksum: sha1:8aa9ca999e9648ddc2240bf80780684e3e858ddf
+    pristine_git_object: eb0581e7174b6951d69c485a64af5244cb8687fa
+  docs/models/usageinfo.md:
+    id: ec6fe65028a9
+    last_write_checksum: sha1:cf71fb9676d870eba7c4d10a69636e1db4054adc
+    pristine_git_object: f5204ac94a4d6191839031c66c5a9bc0124a1f35
+  docs/models/usermessage.md:
+    id: ed66d7a0f80b
+    last_write_checksum: sha1:8291f7703e49ed669775dc953ea8cab6715dc7ed
+    pristine_git_object: 63b0131091cd211b3b1477c1d63b5666a26db546
+  docs/models/usermessagecontent.md:
+    id: 52c072c851e8
+    last_write_checksum: sha1:1de02bcf7082768ebe1bb912fdbebbec5a577b5a
+    pristine_git_object: 8350f9e8f8996c136093e38760990f62fd01f8cf
+  docs/models/usermessagerole.md:
+    id: 99ffa937c462
+    last_write_checksum: sha1:52014480516828b43827aa966b7319d9074f1111
+    pristine_git_object: 171124e45988e784c56a6b92a0057ba00efc0db4
+  docs/models/utils/retryconfig.md:
+    id: 4343ac43161c
+    last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
+    pristine_git_object: 69dd549ec7f5f885101d08dd502e25748183aebf
+  docs/models/validationerror.md:
+    id: 304bdf06ef8b
+    last_write_checksum: sha1:1889f608099577e6a116c14b211a6811d6b22786
+    pristine_git_object: 7a1654a1a5cfb3ab92360b361e8e962bf2db4582
+  py.typed:
+    id: 258c3ed47ae4
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  pylintrc:
+    id: 7ce8b9f946e6
+    last_write_checksum: sha1:6b615d49741eb9ae16375d3a499767783d1128a1
+    pristine_git_object: a8fcb932ba2a01c5e96e3b04c59371e930b75558
+  scripts/prepare_readme.py:
+    id: e0c5957a6035
+    last_write_checksum: sha1:2291075229aebf4e036800b5b9299b37fcb8707c
+    pristine_git_object: ff1121fda23730f356d2df2ad17c8e991b9fc605
+  scripts/publish.sh:
+    id: fe273b08f514
+    last_write_checksum: sha1:b290b25b36dca3d5eb1a2e66a2e1bcf2e7326cf3
+    pristine_git_object: c35748f360329c2bc370e9b189f49b1a360b2c48
+  src/mistralai_azure/__init__.py:
+    id: 3cd9e92c2f72
+    last_write_checksum: sha1:36306d1d404b6aeb912d27f1d9c52f098ff7bf9b
+    pristine_git_object: dd02e42e4cc509dc90e6ae70493054021faa5f9c
+  src/mistralai_azure/_hooks/__init__.py:
+    id: 66932eacf398
+    last_write_checksum: sha1:e3111289afd28ad557c21d9e2f918caabfb7037d
+    pristine_git_object: 2ee66cdd592fe41731c24ddd407c8ca31c50aec1
+  src/mistralai_azure/_hooks/sdkhooks.py:
+    id: 1184c9201c62
+    last_write_checksum: sha1:c98774db1664db2bc6d80e8a5f4f5133260f201a
+    pristine_git_object: 37ff4e9f0ebd42a58ada6300098a5b1b85a54b69
+  src/mistralai_azure/_hooks/types.py:
+    id: a32fe1943bce
+    last_write_checksum: sha1:78fc31840a38e668a73871885c779929196a8bec
+    pristine_git_object: 0c22d7ebccdd64097033454b7c698d10ee59987d
+  src/mistralai_azure/_version.py:
+    id: 7711a0bb1da3
+    last_write_checksum: sha1:9a446d67d6a86cdf9d9e3447c1c09a4f719b2c9b
+    pristine_git_object: 79277f9a358b4c851363e11e1e8f534779e9f271
+  src/mistralai_azure/basesdk.py:
+    id: 7d825dbc7d6e
+    last_write_checksum: sha1:4070786599952b3c603d1384d87d7b92bb13b974
+    pristine_git_object: 89f7dc493d7f50d5f2d3f468c0a8392a6ec5e28b
+  src/mistralai_azure/chat.py:
+    id: ebf1c99bea88
+    last_write_checksum: sha1:2d78fa9e8b3e300e18b6fb3bc116e824261efb55
+    pristine_git_object: 10bb247fb89f0f9ef110300224c95f2a7653ad2f
+  src/mistralai_azure/httpclient.py:
+    id: 808a3f534ffa
+    last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
+    pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
+  src/mistralai_azure/models/__init__.py:
+    id: e5fcf3933d2c
+    last_write_checksum: sha1:43f0ebb24f64a382fd18202da65a321d9925dbee
+    pristine_git_object: 9baa3ff1865cd8aec9e9b93d6e3c315e8c7870c5
+  src/mistralai_azure/models/assistantmessage.py:
+    id: 15f117b45380
+    last_write_checksum: sha1:3c2872d06ad465dbbbedcf8d397d1f12961e1e2e
+    pristine_git_object: 7790eb10a034d892c3c1e793c412c75ff8820e40
+  src/mistralai_azure/models/chatcompletionchoice.py:
+    id: 93cfc6cec0d2
+    last_write_checksum: sha1:f5dfcf407d8abd5ce8eb23f058c589861c71a0df
+    pristine_git_object: 7c6eb933faf09cc5c6102575d371ac280f2e242d
+  src/mistralai_azure/models/chatcompletionrequest.py:
+    id: d046a16b5e58
+    last_write_checksum: sha1:bc1e0b5c8b11bfef5a9b135436c2f3f555a11fa3
+    pristine_git_object: a7b095f34c572e1805650e44f847946280ccb3fe
+  src/mistralai_azure/models/chatcompletionresponse.py:
+    id: fc342e80f579
+    last_write_checksum: sha1:a93593ec734420bc122f0b0b8c49d630795f1d42
+    pristine_git_object: 7a66f3221a154b1a0f47c4f808ece8e580280548
+  src/mistralai_azure/models/chatcompletionstreamrequest.py:
+    id: 1052b055a791
+    last_write_checksum: sha1:18f71c5eeda25d23f2c82ddcdb710a20b44b806c
+    pristine_git_object: 96cd631b0ed74e5c82c6e2492011001021b019f8
+  src/mistralai_azure/models/completionchunk.py:
+    id: e04bc380589d
+    last_write_checksum: sha1:490c3236276ae8fdecb883744e263aecbe4c608c
+    pristine_git_object: d6cc2a86a1fda1ebce1f3c5a169ab1118705e3f0
+  src/mistralai_azure/models/completionevent.py:
+    id: e75909f919b1
+    last_write_checksum: sha1:9f5423ad56747fb7cc95a6f01e0826510571d4c1
+    pristine_git_object: 5a2039c2492bab82184b4f2469806f8b977a7246
+  src/mistralai_azure/models/completionresponsestreamchoice.py:
+    id: 24fe265a60d8
+    last_write_checksum: sha1:df52342c3458cca6396d538c5d9a42f07131796d
+    pristine_git_object: 0e890aacf79f8f220f585d914c6fbe8863232036
+  src/mistralai_azure/models/contentchunk.py:
+    id: 9e6b90acdf54
+    last_write_checksum: sha1:e93c57ef87654a06d8849030f65db3d279f8f7ad
+    pristine_git_object: e6a3e24a8857ea1661874197eec967f0ac99e31d
+  src/mistralai_azure/models/deltamessage.py:
+    id: 593eaaeda97b
+    last_write_checksum: sha1:9c2f6e52c81d2f5bf71f520861158dc5eae6eab7
+    pristine_git_object: 7fa3c3f216153ebc0a2d31e590793698e95a8be8
+  src/mistralai_azure/models/documenturlchunk.py:
+    id: bff69bfa8014
+    last_write_checksum: sha1:5c515c4c85b78d8f4cf147faab9cf01c3501e0b9
+    pristine_git_object: ea8d5625a6d1579dd60f2e4a067f455c82334986
+  src/mistralai_azure/models/filechunk.py:
+    id: 0de687fe41c1
+    last_write_checksum: sha1:56a1765b46702d24ee9c00ab3a06ccdbffdd63f9
+    pristine_git_object: 2c3edc078b5e781b4d7163ab01e02a3347c81e2f
+  src/mistralai_azure/models/function.py:
+    id: 16111a6101f2
+    last_write_checksum: sha1:456d34df457592f1975b0d1e158207d4446a6c41
+    pristine_git_object: a4642f92a0cf614b458591c220a83ae1c422ce25
+  src/mistralai_azure/models/functioncall.py:
+    id: e383b31a7f16
+    last_write_checksum: sha1:cec288f925fa58842bb7d9e688f6122a01973d4b
+    pristine_git_object: dd93c4629c3bd81dd6fb305474ce0cd5443e1bdb
+  src/mistralai_azure/models/functionname.py:
+    id: ebc3e07e4b6f
+    last_write_checksum: sha1:743cec4c3f586d67d1ab2816d8d76170f46a3ca1
+    pristine_git_object: b55c82af3f29efe38698bc776a8532c647dccc36
+  src/mistralai_azure/models/httpvalidationerror.py:
+    id: da4825943f94
+    last_write_checksum: sha1:dce58ead8f7f901514250e1ae5965ba039b1da14
+    pristine_git_object: 56607d9437ce39097deac134d4f622ea523cbda7
+  src/mistralai_azure/models/imageurl.py:
+    id: 80cc0df94e9d
+    last_write_checksum: sha1:a1a416ae5bf9c559219cff5f008a90f251a52477
+    pristine_git_object: a5a66360b017cbdc342775241aa4aa2322534c6a
+  src/mistralai_azure/models/imageurlchunk.py:
+    id: c5c6dd2f1782
+    last_write_checksum: sha1:11634325be12aa567b42227f2117e9b8c854a51c
+    pristine_git_object: a40e451c60caca688a9379dcb20d545e9e6b76e2
+  src/mistralai_azure/models/jsonschema.py:
+    id: 8c635811dd6b
+    last_write_checksum: sha1:a99a6de224e51eb6cf85fa6de8cf37266ab5fe6d
+    pristine_git_object: 0f7563fc17bf172d527d09507294b4ef5646c22c
+  src/mistralai_azure/models/mistralazureerror.py:
+    id: a919897c4ea9
+    last_write_checksum: sha1:25f4411c7411faad753d46118edf74828b1c9f7c
+    pristine_git_object: c5bf17528c7cf25bac8f8874f58692c601fcdd76
+  src/mistralai_azure/models/mistralpromptmode.py:
+    id: f62a521bcdae
+    last_write_checksum: sha1:fcb16c10986bd6946f79b9e330a4be9f26f7e724
+    pristine_git_object: 22fb643896688b68af238f6ac75cf41a00b0511b
+  src/mistralai_azure/models/no_response_error.py:
+    id: 54523e14f29b
+    last_write_checksum: sha1:7f326424a7d5ae1bcd5c89a0d6b3dbda9138942f
+    pristine_git_object: 1deab64bc43e1e65bf3c412d326a4032ce342366
+  src/mistralai_azure/models/ocrimageobject.py:
+    id: 6c349909fb0c
+    last_write_checksum: sha1:0fed6abf8172f6ee40e703ef86ee9d902c6e5d7e
+    pristine_git_object: 9d0dd01dbb5be095e234aa3ec9469fface68c3d2
+  src/mistralai_azure/models/ocrpagedimensions.py:
+    id: f33f598001b2
+    last_write_checksum: sha1:5281879ef3d737a17a539cefda9f222302ead7da
+    pristine_git_object: efb62a58f22ad62c730b3af93bff151586105957
+  src/mistralai_azure/models/ocrpageobject.py:
+    id: 99f20768c4d6
+    last_write_checksum: sha1:c7479b83b0eb619e6b0f82344e81bc691f0b3a46
+    pristine_git_object: e95718001e07bb89ba2fc9094f88b894572148bb
+  src/mistralai_azure/models/ocrrequest.py:
+    id: 4e574d5fb9be
+    last_write_checksum: sha1:6ca937598dd92c6c6ab7b8d59363595a3e8760e9
+    pristine_git_object: 565a0a30a7f9fae374c14fb5fcb0f19385cf05e4
+  src/mistralai_azure/models/ocrresponse.py:
+    id: 326a4d9fab25
+    last_write_checksum: sha1:cf597498a5841a56bbd1aeb8478bd57a01d93cb1
+    pristine_git_object: 3e43fa8eb7b80fafbd9344ad5a98c0ead98c54cb
+  src/mistralai_azure/models/ocrtableobject.py:
+    id: 3ba1292c343a
+    last_write_checksum: sha1:2d1d05902a9ed6bccdb41ccac6782f015450cf2e
+    pristine_git_object: 189f059eaa8a32cc32a5320ea9fe33d779e8ef1c
+  src/mistralai_azure/models/ocrusageinfo.py:
+    id: 0de4eae62e4b
+    last_write_checksum: sha1:85e5a850bd2f847e4a02b0731b0327ca0a02f643
+    pristine_git_object: 1f5c9f1bc2cf2d728dec06b0930602852474a29e
+  src/mistralai_azure/models/prediction.py:
+    id: 9e8a0a7a3ca7
+    last_write_checksum: sha1:e78af600f109a7489a5bcce80b48adf29cc0c4c3
+    pristine_git_object: b23a935c00cd7ce4e7b7bd6fe8f2da87f8aaca92
+  src/mistralai_azure/models/referencechunk.py:
+    id: 420a12dfec3b
+    last_write_checksum: sha1:f49da7a4541f55b283e9391e6397a9e4286570bd
+    pristine_git_object: 32d2ca68e67be3f03e14f74fd7e7692fa05b70f5
+  src/mistralai_azure/models/responseformat.py:
+    id: aa7acbc1bda7
+    last_write_checksum: sha1:70e7960bb4ec5db5f133c4cc8f6e813e39f8c671
+    pristine_git_object: c989f3a4467c21416ea59b33fbc734a1477a6eb3
+  src/mistralai_azure/models/responseformats.py:
+    id: 780a7aa0e87e
+    last_write_checksum: sha1:a212e85d286b5b49219f57d071a2232ff8b5263b
+    pristine_git_object: cbf83ce7b54ff8634f741334831807bfb5c98991
+  src/mistralai_azure/models/responsevalidationerror.py:
+    id: 1952c765e2ec
+    last_write_checksum: sha1:d516c0c88210dd28b65747daa2fa1b63f432fe89
+    pristine_git_object: a33954ccead3a8df87bdcc30a090efbb0ebecb94
+  src/mistralai_azure/models/sdkerror.py:
+    id: bd8616367442
+    last_write_checksum: sha1:41c259fac1bd50d33f1a2fd64d1ed17fd8d0d075
+    pristine_git_object: 216d7f8fca986ac29162a1a7cba8c18b7f73d012
+  src/mistralai_azure/models/security.py:
+    id: 7b3bcb55164e
+    last_write_checksum: sha1:9cacce270a27809ded4ee91aecac4a681154f5f0
+    pristine_git_object: c1ae83138b09eab742f755a0f11428cf8c0fd60d
+  src/mistralai_azure/models/systemmessage.py:
+    id: 2e15bb043753
+    last_write_checksum: sha1:8ec96bfc0533414a698d92387021cac116eadade
+    pristine_git_object: f99bf4ffb112b068159a3b95bc99ec7ce91b3f7d
+  src/mistralai_azure/models/systemmessagecontentchunks.py:
+    id: b6d9a4838359
+    last_write_checksum: sha1:1e3f4688317d10f207dd42ef39cf2ac8f6042e54
+    pristine_git_object: 4615a16cf39496dffc4982c6f0552d8bf353e280
+  src/mistralai_azure/models/textchunk.py:
+    id: c169e3f0ffc9
+    last_write_checksum: sha1:6cb623bafd4005e527dca9b908bb9f4b371342da
+    pristine_git_object: 5845456e5ca3089bcb551112408a0de84c597a91
+  src/mistralai_azure/models/thinkchunk.py:
+    id: b1b9aeee4dcf
+    last_write_checksum: sha1:d15b39ef3e12195183664c32854233b9410d565b
+    pristine_git_object: f53a9f1ad2e6f124a36c9fb9be65bc09dbfbff4b
+  src/mistralai_azure/models/tool.py:
+    id: 99c8106f5428
+    last_write_checksum: sha1:6142383805723bbc2b22f1bfcc660288378d1e42
+    pristine_git_object: c91deec28488062a0220af41492fdfb34330e7a4
+  src/mistralai_azure/models/toolcall.py:
+    id: 3643db1054cd
+    last_write_checksum: sha1:9b095f1efe1ea554cfacbc4a8e0c59b1c57d7f32
+    pristine_git_object: 44fe8ec86b8f31ad8ee9591ae49036e8caa9ac41
+  src/mistralai_azure/models/toolchoice.py:
+    id: 669768b7cbda
+    last_write_checksum: sha1:1217d8186e64d16f4c369079c62e3ac466726c60
+    pristine_git_object: 93b4b7fe72f05a2ece9fed08a83139f4510b2574
+  src/mistralai_azure/models/toolchoiceenum.py:
+    id: 5f7df8457771
+    last_write_checksum: sha1:3dbba9a58c5569aafe115f3f7713a52b01ad8620
+    pristine_git_object: 01f6f677b379f9e3c99db9d1ad248cb0033a2804
+  src/mistralai_azure/models/toolmessage.py:
+    id: 1d9845bf98b3
+    last_write_checksum: sha1:52bd15280bcae27ec7ba6a1c64b15648de5b0868
+    pristine_git_object: 4bc5c9a9b509fdb89a4cf5ce81231189bf46bab4
+  src/mistralai_azure/models/tooltypes.py:
+    id: 34c499f03e21
+    last_write_checksum: sha1:f060bd3aebf7d42c1066c543c47cfa020e61eb27
+    pristine_git_object: 638890c589ee642fd0a43e00337505e53ea3ec3a
+  src/mistralai_azure/models/usageinfo.py:
+    id: 59a5033672bf
+    last_write_checksum: sha1:7d0e7a483331077309b78e035cab9d65e87d3f65
+    pristine_git_object: bbe5cdfaae260df81e93da11d05a1ba55ecbe329
+  src/mistralai_azure/models/usermessage.py:
+    id: c54119314021
+    last_write_checksum: sha1:b45f38755a96b07100baf5149631f366009e701f
+    pristine_git_object: 85fedb4bd1bcf64f69e4ead5310cf3fb354a6e3c
+  src/mistralai_azure/models/validationerror.py:
+    id: 83cd7bfd6d92
+    last_write_checksum: sha1:250ed57498dabd11c0e2b6d255969e0285bb4214
+    pristine_git_object: 4caff4a6b74aeb322bf42cd2070b7bd576ca834a
+  src/mistralai_azure/ocr.py:
+    id: 77e2e0f594ad
+    last_write_checksum: sha1:a455095c62c2dfad071d70682c2f57e7d64934db
+    pristine_git_object: da823f816dda9d462a795e9b946d5634ff6d48e2
+  src/mistralai_azure/py.typed:
+    id: 98df238e554c
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  src/mistralai_azure/sdkconfiguration.py:
+    id: 476a4f9e2f3e
+    last_write_checksum: sha1:6b117889b46a546be6e949c1bf843834ceff7417
+    pristine_git_object: 51289cf05559ba32dd17e45fab78df4a8697063f
+  src/mistralai_azure/types/__init__.py:
+    id: d761bb7a67a5
+    last_write_checksum: sha1:140ebdd01a46f92ffc710c52c958c4eba3cf68ed
+    pristine_git_object: fc76fe0c5505e29859b5d2bb707d48fd27661b8c
+  src/mistralai_azure/types/basemodel.py:
+    id: 68c97875efb7
+    last_write_checksum: sha1:10d84aedeb9d35edfdadf2c3020caa1d24d8b584
+    pristine_git_object: a9a640a1a7048736383f96c67c6290c86bf536ee
+  src/mistralai_azure/utils/__init__.py:
+    id: 3c68abef839b
+    last_write_checksum: sha1:887f56a717845fab7445cc368d2a17d850c3565a
+    pristine_git_object: 05f26ade57efb8c54a774fbcb939fb1a7dc655ce
+  src/mistralai_azure/utils/annotations.py:
+    id: 476ee839718f
+    last_write_checksum: sha1:a4824ad65f730303e4e1e3ec1febf87b4eb46dbc
+    pristine_git_object: 12e0aa4f1151bb52474cc02e88397329b90703f6
+  src/mistralai_azure/utils/datetimes.py:
+    id: e9faf3b28c48
+    last_write_checksum: sha1:c721e4123000e7dc61ec52b28a739439d9e17341
+    pristine_git_object: a6c52cd61bbe2d459046c940ce5e8c469f2f0664
+  src/mistralai_azure/utils/enums.py:
+    id: 4d10693bf655
+    last_write_checksum: sha1:bc8c3c1285ae09ba8a094ee5c3d9c7f41fa1284d
+    pristine_git_object: 3324e1bc2668c54c4d5f5a1a845675319757a828
+  src/mistralai_azure/utils/eventstreaming.py:
+    id: 5f5e90529fd7
+    last_write_checksum: sha1:bababae5d54b7efc360db701daa49e18a92c2f3b
+    pristine_git_object: 0969899bfc491e5e408d05643525f347ea95e4fc
+  src/mistralai_azure/utils/forms.py:
+    id: 91c3fe9ba311
+    last_write_checksum: sha1:15fa7e9ab1611e062a9984cf06cb20969713d295
+    pristine_git_object: f961e76beaf0a8b1fe0dda44754a74eebd3608e7
+  src/mistralai_azure/utils/headers.py:
+    id: d37ef2f03e41
+    last_write_checksum: sha1:7c6df233ee006332b566a8afa9ce9a245941d935
+    pristine_git_object: 37864cbbbc40d1a47112bbfdd3ba79568fc8818a
+  src/mistralai_azure/utils/logger.py:
+    id: 9122a46617cc
+    last_write_checksum: sha1:f3fdb154a3f09b8cc43d74c7e9c02f899f8086e4
+    pristine_git_object: b661aff65d38b77d035149699aea09b2785d2fc6
+  src/mistralai_azure/utils/metadata.py:
+    id: 2d93fa8523eb
+    last_write_checksum: sha1:c6a560bd0c63ab158582f34dadb69433ea73b3d4
+    pristine_git_object: 173b3e5ce658675c2f504222a56b3daaaa68107d
+  src/mistralai_azure/utils/queryparams.py:
+    id: dfd31ba97c2b
+    last_write_checksum: sha1:b94c3f314fd3da0d1d215afc2731f48748e2aa59
+    pristine_git_object: c04e0db82b68eca041f2cb2614d748fbac80fd41
+  src/mistralai_azure/utils/requestbodies.py:
+    id: c91db641d5b9
+    last_write_checksum: sha1:41e2d2d2d3ecc394c8122ca4d4b85e1c3e03f054
+    pristine_git_object: 1de32b6d26f46590232f398fdba6ce0072f1659c
+  src/mistralai_azure/utils/retries.py:
+    id: 6f0cd9f6169d
+    last_write_checksum: sha1:5b97ac4f59357d70c2529975d50364c88bcad607
+    pristine_git_object: 88a91b10cd2076b4a2c6cff2ac6bfaa5e3c5ad13
+  src/mistralai_azure/utils/security.py:
+    id: "270040388028"
+    last_write_checksum: sha1:a17130ace2c0db6394f38dd941ad2b700cc755c8
+    pristine_git_object: 295a3f40031dbb40073ad227fd4a355660f97ab2
+  src/mistralai_azure/utils/serializers.py:
+    id: 595ddab03803
+    last_write_checksum: sha1:ce1d8d7f500a9ccba0aeca5057cee9c271f4dfd7
+    pristine_git_object: 14321eb479de81d0d9580ec8291e0ff91bf29e57
+  src/mistralai_azure/utils/unmarshal_json_response.py:
+    id: bde89a892417
+    last_write_checksum: sha1:d2ce9e3478b38e54e4bb3a43610ee0bab00c2e27
+    pristine_git_object: f5813119b559442ee85c0b310765db3866bfa09d
+  src/mistralai_azure/utils/url.py:
+    id: 080c62716b06
+    last_write_checksum: sha1:6479961baa90432ca25626f8e40a7bbc32e73b41
+    pristine_git_object: c78ccbae426ce6d385709d97ce0b1c2813ea2418
+  src/mistralai_azure/utils/values.py:
+    id: 640889083cda
+    last_write_checksum: sha1:acaa178a7c41ddd000f58cc691e4632d925b2553
+    pristine_git_object: dae01a44384ac3bc13ae07453a053bf6c898ebe3
+examples:
+  stream_chat:
+    speakeasy-default-stream-chat:
+      requestBody:
+        application/json: {"model": "azureai", "stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
+      responses:
+        "422":
+          application/json: {}
+  chat_completion_v1_chat_completions_post:
+    speakeasy-default-chat-completion-v1-chat-completions-post:
+      requestBody:
+        application/json: {"model": "azureai", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
+      responses:
+        "200":
+          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
+        "422":
+          application/json: {}
+  ocr_v1_ocr_post:
+    speakeasy-default-ocr-v1-ocr-post:
+      requestBody:
+        application/json: {"model": "CX-9", "document": {"document_url": "https://upset-labourer.net/", "type": "document_url"}}
+      responses:
+        "200":
+          application/json: {"pages": [], "model": "Golf", "usage_info": {"pages_processed": 944919}}
+        "422":
+          application/json: {}
+    userExample:
+      requestBody:
+        application/json: {"model": "CX-9", "document": {"document_url": "https://upset-labourer.net/", "type": "document_url"}, "bbox_annotation_format": {"type": "text"}, "document_annotation_format": {"type": "text"}}
+      responses:
+        "200":
+          application/json: {"pages": [{"index": 1, "markdown": "# LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE\nSaurabh Garg*<br> Carnegie Mellon University<br> sgarg2@andrew.cmu.edu<br> Sivaraman Balakrishnan<br> Carnegie Mellon University<br> sbalakri@andrew.cmu.edu<br> Zachary C. Lipton<br> Carnegie Mellon University<br> zlipton@andrew.cmu.edu\n## Behnam Neyshabur\nGoogle Research, Blueshift team<br> neyshabur@google.com\nHanie Sedghi<br> Google Research, Brain team<br> hsedghi@google.com\n#### Abstract\nReal-world machine learning deployments are characterized by mismatches between the source (training) and target (test) distributions that may cause performance drops. In this work, we investigate methods for predicting the target domain accuracy using only labeled source data and unlabeled target data. We propose Average Thresholded Confidence (ATC), a practical method that learns a threshold on the model's confidence, predicting accuracy as the fraction of unlabeled examples for which model confidence exceeds that threshold. ATC outperforms previous methods across several model architectures, types of distribution shifts (e.g., due to synthetic corruptions, dataset reproduction, or novel subpopulations), and datasets (WILDS, ImageNet, BREEDS, CIFAR, and MNIST). In our experiments, ATC estimates target performance $2-4 \\times$ more accurately than prior methods. We also explore the theoretical foundations of the problem, proving that, in general, identifying the accuracy is just as hard as identifying the optimal predictor and thus, the efficacy of any method rests upon (perhaps unstated) assumptions on the nature of the shift. Finally, analyzing our method on some toy distributions, we provide insights concerning when it works ${ }^{1}$.\n## 1 INTRODUCTION\nMachine learning models deployed in the real world typically encounter examples from previously unseen distributions. While the IID assumption enables us to evaluate models using held-out data from the source distribution (from which training data is sampled), this estimate is no longer valid in presence of a distribution shift. Moreover, under such shifts, model accuracy tends to degrade (Szegedy et al., 2014; Recht et al., 2019; Koh et al., 2021). Commonly, the only data available to the practitioner are a labeled training set (source) and unlabeled deployment-time data which makes the problem more difficult. In this setting, detecting shifts in the distribution of covariates is known to be possible (but difficult) in theory (Ramdas et al., 2015), and in practice (Rabanser et al., 2018). However, producing an optimal predictor using only labeled source and unlabeled target data is well-known to be impossible absent further assumptions (Ben-David et al., 2010; Lipton et al., 2018).\nTwo vital questions that remain are: (i) the precise conditions under which we can estimate a classifier's target-domain accuracy; and (ii) which methods are most practically useful. To begin, the straightforward way to assess the performance of a model under distribution shift would be to collect labeled (target domain) examples and then to evaluate the model on that data. However, collecting fresh labeled data from the target distribution is prohibitively expensive and time-consuming, especially if the target distribution is non-stationary. Hence, instead of using labeled data, we aim to use unlabeled data from the target distribution, that is comparatively abundant, to predict model performance. Note that in this work, our focus is not to improve performance on the target but, rather, to estimate the accuracy on the target for a given classifier.\n[^0]: Work done in part while Saurabh Garg was interning at Google ${ }^{1}$ Code is available at [https://github.com/saurabhgarg1996/ATC_code](https://github.com/saurabhgarg1996/ATC_code).\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 2, "markdown": "![img-0.jpeg](img-0.jpeg)\nFigure 1: Illustration of our proposed method ATC. Left: using source domain validation data, we identify a threshold on a score (e.g. negative entropy) computed on model confidence such that fraction of examples above the threshold matches the validation set accuracy. ATC estimates accuracy on unlabeled target data as the fraction of examples with the score above the threshold. Interestingly, this threshold yields accurate estimates on a wide set of target distributions resulting from natural and synthetic shifts. Right: Efficacy of ATC over previously proposed approaches on our testbed with a post-hoc calibrated model. To obtain errors on the same scale, we rescale all errors with Average Confidence (AC) error. Lower estimation error is better. See Table 1 for exact numbers and comparison on various types of distribution shift. See Sec. 5 for details on our testbed.\nRecently, numerous methods have been proposed for this purpose (Deng & Zheng, 2021; Chen et al., 2021b; Jiang et al., 2021; Deng et al., 2021; Guillory et al., 2021). These methods either require calibration on the target domain to yield consistent estimates (Jiang et al., 2021; Guillory et al., 2021) or additional labeled data from several target domains to learn a linear regression function on a distributional distance that then predicts model performance (Deng et al., 2021; Deng & Zheng, 2021; Guillory et al., 2021). However, methods that require calibration on the target domain typically yield poor estimates since deep models trained and calibrated on source data are not, in general, calibrated on a (previously unseen) target domain (Ovadia et al., 2019). Besides, methods that leverage labeled data from target domains rely on the fact that unseen target domains exhibit strong linear correlation with seen target domains on the underlying distance measure and, hence, can be rendered ineffective when such target domains with labeled data are unavailable (in Sec. 5.1 we demonstrate such a failure on a real-world distribution shift problem). Therefore, throughout the paper, we assume access to labeled source data and only unlabeled data from target domain(s).\nIn this work, we first show that absent assumptions on the source classifier or the nature of the shift, no method of estimating accuracy will work generally (even in non-contrived settings). To estimate accuracy on target domain perfectly, we highlight that even given perfect knowledge of the labeled source distribution (i.e., $p_{s}(x, y)$ ) and unlabeled target distribution (i.e., $p_{t}(x)$ ), we need restrictions on the nature of the shift such that we can uniquely identify the target conditional $p_{t}(y \\mid x)$. Thus, in general, identifying the accuracy of the classifier is as hard as identifying the optimal predictor.\nSecond, motivated by the superiority of methods that use maximum softmax probability (or logit) of a model for Out-Of-Distribution (OOD) detection (Hendrycks & Gimpel, 2016; Hendrycks et al., 2019), we propose a simple method that leverages softmax probability to predict model performance. Our method, Average Thresholded Confidence (ATC), learns a threshold on a score (e.g., maximum confidence or negative entropy) of model confidence on validation source data and predicts target domain accuracy as the fraction of unlabeled target points that receive a score above that threshold. ATC selects a threshold on validation source data such that the fraction of source examples that receive the score above the threshold match the accuracy of those examples. Our primary contribution in ATC is the proposal of obtaining the threshold and observing its efficacy on (practical) accuracy estimation. Importantly, our work takes a step forward in positively answering the question raised in Deng & Zheng (2021); Deng et al. (2021) about a practical strategy to select a threshold that enables accuracy prediction with thresholded model confidence.\n", "images": [{"id": "img-0.jpeg", "top_left_x": 292, "top_left_y": 217, "bottom_right_x": 1405, "bottom_right_y": 649, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 3, "markdown": "<value>", "images": [], "dimensions": {"dpi": 539192, "height": 944919, "width": 247256}}, {"index": 27, "markdown": "![img-8.jpeg](img-8.jpeg)\nFigure 9: Scatter plot of predicted accuracy versus (true) OOD accuracy for vision datasets except MNIST with a ResNet50 model. Results reported by aggregating MAE numbers over 4 different seeds.\n", "images": [{"id": "img-8.jpeg", "top_left_x": 290, "top_left_y": 226, "bottom_right_x": 1405, "bottom_right_y": 1834, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 28, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 6.60 | 5.74 | 9.88 | 6.89 | 7.25 | 6.07 | 4.77 | 3.21 | 3.02 | 2.99 | 2.85 | |  |  | (0.35) | (0.30) | (0.16) | (0.13) | (0.15) | (0.16) | (0.13) | (0.49) | (0.40) | (0.37) | (0.29) | |  | Synthetic | 12.33 | 10.20 | 16.50 | 11.91 | 13.87 | 11.08 | 6.55 | 4.65 | 4.25 | 4.21 | 3.87 | |  |  | (0.51) | (0.48) | (0.26) | (0.17) | (0.18) | (0.17) | (0.35) | (0.55) | (0.55) | (0.55) | (0.75) | | CIFAR100 | Synthetic | 13.69 | 11.51 | 23.61 | 13.10 | 14.60 | 10.14 | 9.85 | 5.50 | 4.75 | 4.72 | 4.94 | |  |  | (0.55) | (0.41) | (1.16) | (0.80) | (0.77) | (0.64) | (0.57) | (0.70) | (0.73) | (0.74) | (0.74) | | ImageNet200 | Natural | 12.37 | 8.19 | 22.07 | 8.61 | 15.17 | 7.81 | 5.13 | 4.37 | 2.04 | 3.79 | 1.45 | |  |  | (0.25) | (0.33) | (0.08) | (0.25) | (0.11) | (0.29) | (0.08) | (0.39) | (0.24) | (0.30) | (0.27) | |  | Synthetic | 19.86 | 12.94 | 32.44 | 13.35 | 25.02 | 12.38 | 5.41 | 5.93 | 3.09 | 5.00 | 2.68 | |  |  | (1.38) | (1.81) | (1.00) | (1.30) | (1.10) | (1.38) | (0.89) | (1.38) | (0.87) | (1.28) | (0.45) | | ImageNet | Natural | 7.77 | 6.50 | 18.13 | 6.02 | 8.13 | 5.76 | 6.23 | 3.88 | 2.17 | 2.06 | 0.80 | |  |  | (0.27) | (0.33) | (0.23) | (0.34) | (0.27) | (0.37) | (0.41) | (0.53) | (0.62) | (0.54) | (0.44) | |  | Synthetic | 13.39 | 10.12 | 24.62 | 8.51 | 13.55 | 7.90 | 6.32 | 3.34 | 2.53 | 2.61 | 4.89 | |  |  | (0.53) | (0.63) | (0.64) | (0.71) | (0.61) | (0.72) | (0.33) | (0.53) | (0.36) | (0.33) | (0.83) | | FMoW-WILDS | Natural | 5.53 | 4.31 | 33.53 | 12.84 | 5.94 | 4.45 | 5.74 | 3.06 | 2.70 | 3.02 | 2.72 | |  |  | (0.33) | (0.63) | (0.13) | (12.06) | (0.36) | (0.77) | (0.55) | (0.36) | (0.54) | (0.35) | (0.44) | | RxRx1-WILDS | Natural | 5.80 | 5.72 | 7.90 | 4.84 | 5.98 | 5.98 | 6.03 | 4.66 | 4.56 | 4.41 | 4.47 | |  |  | (0.17) | (0.15) | (0.24) | (0.09) | (0.15) | (0.13) | (0.08) | (0.38) | (0.38) | (0.31) | (0.26) | | Amazon-WILDS | Natural | 2.40 | 2.29 | 8.01 | 2.38 | 2.40 | 2.28 | 17.87 | 1.65 | 1.62 | 1.60 | 1.59 | |  |  | (0.08) | (0.09) | (0.53) | (0.17) | (0.09) | (0.09) | (0.18) | (0.06) | (0.05) | (0.14) | (0.15) | | CivilCom.-WILDS | Natural | 12.64 | 10.80 | 16.76 | 11.03 | 13.31 | 10.99 | 16.65 |  | 7.14 |  |  | |  |  | (0.52) | (0.48) | (0.53) | (0.49) | (0.52) | (0.49) | (0.25) |  | (0.41) |  |  | | MNIST | Natural | 18.48 | 15.99 | 21.17 | 14.81 | 20.19 | 14.56 | 24.42 | 5.02 | 2.40 | 3.14 | 3.50 | |  |  | (0.45) | (1.53) | (0.24) | (3.89) | (0.23) | (3.47) | (0.41) | (0.44) | (1.83) | (0.49) | (0.17) | | ENTITY-13 | Same | 16.23 | 11.14 | 24.97 | 10.88 | 19.08 | 10.47 | 10.71 | 5.39 | 3.88 | 4.58 | 4.19 | |  |  | (0.77) | (0.65) | (0.70) | (0.77) | (0.65) | (0.72) | (0.74) | (0.92) | (0.61) | (0.85) | (0.16) | |  | Novel | 28.53 | 22.02 | 38.33 | 21.64 | 32.43 | 21.22 | 20.61 | 13.58 | 10.28 | 12.25 | 6.63 | |  |  | (0.82) | (0.68) | (0.75) | (0.86) | (0.69) | (0.80) | (0.60) | (1.15) | (1.34) | (1.21) | (0.93) | | ENTITY-30 | Same | 18.59 | 14.46 | 28.82 | 14.30 | 21.63 | 13.46 | 12.92 | 9.12 | 7.75 | 8.15 | 7.64 | |  |  | (0.51) | (0.52) | (0.43) | (0.71) | (0.37) | (0.59) | (0.14) | (0.62) | (0.72) | (0.68) | (0.88) | |  | Novel | 32.34 | 26.85 | 44.02 | 26.27 | 36.82 | 25.42 | 23.16 | 17.75 | 14.30 | 15.60 | 10.57 | |  |  | (0.60) | (0.58) | (0.56) | (0.79) | (0.47) | (0.68) | (0.12) | (0.76) | (0.85) | (0.86) | (0.86) | | NONLIVING-26 | Same | 18.66 | 17.17 | 26.39 | 16.14 | 19.86 | 15.58 | 16.63 | 10.87 | 10.24 | 10.07 | 10.26 | |  |  | (0.76) | (0.74) | (0.82) | (0.81) | (0.67) | (0.76) | (0.45) | (0.98) | (0.83) | (0.92) | (1.18) | |  | Novel | 33.43 | 31.53 | 41.66 | 29.87 | 35.13 | 29.31 | 29.56 | 21.70 | 20.12 | 19.08 | 18.26 | |  |  | (0.67) | (0.65) | (0.67) | (0.71) | (0.54) | (0.64) | (0.21) | (0.86) | (0.75) | (0.82) | (1.12) | | LIVING-17 | Same | 12.63 | 11.05 | 18.32 | 10.46 | 14.43 | 10.14 | 9.87 | 4.57 | 3.95 | 3.81 | 4.21 | |  |  | (1.25) | (1.20) | (1.01) | (1.12) | (1.11) | (1.16) | (0.61) | (0.71) | (0.48) | (0.22) | (0.53) | |  | Novel | 29.03 | 26.96 | 35.67 | 26.11 | 31.73 | 25.73 | 23.53 | 16.15 | 14.49 | 12.97 | 11.39 | |  |  | (1.44) | (1.38) | (1.09) | (1.27) | (1.19) | (1.35) | (0.52) | (1.36) | (1.46) | (1.52) | (1.72) |\nTable 3: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. For language datasets, we use DistilBERT-base-uncased, for vision dataset we report results with DenseNet model with the exception of MNIST where we use FCN. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 29, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 7.14 | 6.20 | 10.25 | 7.06 | 7.68 | 6.35 | 5.74 | 4.02 | 3.85 | 3.76 | 3.38 | |  |  | (0.14) | (0.11) | (0.31) | (0.33) | (0.28) | (0.27) | (0.25) | (0.38) | (0.30) | (0.33) | (0.32) | |  | Synthetic | 12.62 | 10.75 | 16.50 | 11.91 | 13.93 | 11.20 | 7.97 | 5.66 | 5.03 | 4.87 | 3.63 | |  |  | (0.76) | (0.71) | (0.28) | (0.24) | (0.29) | (0.28) | (0.13) | (0.64) | (0.71) | (0.71) | (0.62) | | CIFAR100 | Synthetic | 12.77 | 12.34 | 16.89 | 12.73 | 11.18 | 9.63 | 12.00 | 5.61 | 5.55 | 5.65 | 5.76 | |  |  | (0.43) | (0.68) | (0.20) | (2.59) | (0.35) | (1.25) | (0.48) | (0.51) | (0.55) | (0.35) | (0.27) | | ImageNet200 | Natural | 12.63 | 7.99 | 23.08 | 7.22 | 15.40 | 6.33 | 5.00 | 4.60 | 1.80 | 4.06 | 1.38 | |  |  | (0.59) | (0.47) | (0.31) | (0.22) | (0.42) | (0.24) | (0.36) | (0.63) | (0.17) | (0.69) | (0.29) | |  | Synthetic | 20.17 | 11.74 | 33.69 | 9.51 | 25.49 | 8.61 | 4.19 | 5.37 | 2.78 | 4.53 | 3.58 | |  |  | (0.74) | (0.80) | (0.73) | (0.51) | (0.66) | (0.50) | (0.14) | (0.88) | (0.23) | (0.79) | (0.33) | | ImageNet | Natural | 8.09 | 6.42 | 21.66 | 5.91 | 8.53 | 5.21 | 5.90 | 3.93 | 1.89 | 2.45 | 0.73 | |  |  | (0.25) | (0.28) | (0.38) | (0.22) | (0.26) | (0.25) | (0.44) | (0.26) | (0.21) | (0.16) | (0.10) | |  | Synthetic | 13.93 | 9.90 | 28.05 | 7.56 | 13.82 | 6.19 | 6.70 | 3.33 | 2.55 | 2.12 | 5.06 | |  |  | (0.14) | (0.23) | (0.39) | (0.13) | (0.31) | (0.07) | (0.52) | (0.25) | (0.25) | (0.31) | (0.27) | | FMoW-WILDS | Natural | 5.15 | 3.55 | 34.64 | 5.03 | 5.58 | 3.46 | 5.08 | 2.59 | 2.33 | 2.52 | 2.22 | |  |  | (0.19) | (0.41) | (0.22) | (0.29) | (0.17) | (0.37) | (0.46) | (0.32) | (0.28) | (0.25) | (0.30) | | RxRx1-WILDS | Natural | 6.17 | 6.11 | 21.05 | 5.21 | 6.54 | 6.27 | 6.82 | 5.30 | 5.20 | 5.19 | 5.63 | |  |  | (0.20) | (0.24) | (0.31) | (0.18) | (0.21) | (0.20) | (0.31) | (0.30) | (0.44) | (0.43) | (0.55) | | Entity-13 | Same | 18.32 | 14.38 | 27.79 | 13.56 | 20.50 | 13.22 | 16.09 | 9.35 | 7.50 | 7.80 | 6.94 | |  |  | (0.29) | (0.53) | (1.18) | (0.58) | (0.47) | (0.58) | (0.84) | (0.79) | (0.65) | (0.62) | (0.71) | |  | Novel | 28.82 | 24.03 | 38.97 | 22.96 | 31.66 | 22.61 | 25.26 | 17.11 | 13.96 | 14.75 | 9.94 | |  |  | (0.30) | (0.55) | (1.32) | (0.59) | (0.54) | (0.58) | (1.08) | (0.93) | (0.64) | (0.78) |  | | Entity-30 | Same | 16.91 | 14.61 | 26.84 | 14.37 | 18.60 | 13.11 | 13.74 | 8.54 | 7.94 | 7.77 | 8.04 | |  |  | (1.33) | (1.11) | (2.15) | (1.34) | (1.69) | (1.30) | (1.07) | (1.47) | (1.38) | (1.44) | (1.51) | |  | Novel | 28.66 | 25.83 | 39.21 | 25.03 | 30.95 | 23.73 | 23.15 | 15.57 | 13.24 | 12.44 | 11.05 | |  |  | (1.16) | (0.88) | (2.03) | (1.11) | (1.64) | (1.11) | (0.51) | (1.44) | (1.15) | (1.26) | (1.13) | | NonLIVING-26 | Same | 17.43 | 15.95 | 27.70 | 15.40 | 18.06 | 14.58 | 16.99 | 10.79 | 10.13 | 10.05 | 10.29 | |  |  | (0.90) | (0.86) | (0.90) | (0.69) | (1.00) | (0.78) | (1.25) | (0.62) | (0.32) | (0.46) | (0.79) | |  | Novel | 29.51 | 27.75 | 40.02 | 26.77 | 30.36 | 25.93 | 27.70 | 19.64 | 17.75 | 16.90 | 15.69 | |  |  | (0.86) | (0.82) | (0.76) | (0.82) | (0.95) | (0.80) | (1.42) | (0.68) | (0.53) | (0.60) | (0.83) | | LIVING-17 | Same | 14.28 | 12.21 | 23.46 | 11.16 | 15.22 | 10.78 | 10.49 | 4.92 | 4.23 | 4.19 | 4.73 | |  |  | (0.96) | (0.93) | (1.16) | (0.90) | (0.96) | (0.99) | (0.97) | (0.57) | (0.42) | (0.35) | (0.24) | |  | Novel | 28.91 | 26.35 | 38.62 | 24.91 | 30.32 | 24.52 | 22.49 | 15.42 | 13.02 | 12.29 | 10.34 | |  |  | (0.66) | (0.73) | (1.01) | (0.61) | (0.59) | (0.74) | (0.85) | (0.59) | (0.53) | (0.73) | (0.62) |\nTable 4: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift for ResNet model. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}], "model": "mistral-ocr-2503-completion", "usage_info": {"pages_processed": 29, "doc_size_bytes": null}}
+examplesVersion: 1.0.2
+generatedTests: {}
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
@@ -195,38 +879,3 @@ generatedFiles:
   - src/mistralai_azure/utils/unmarshal_json_response.py
   - src/mistralai_azure/utils/url.py
   - src/mistralai_azure/utils/values.py
-examples:
-  stream_chat:
-    speakeasy-default-stream-chat:
-      requestBody:
-        application/json: {"model": "azureai", "stream": true, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
-      responses:
-        "422":
-          application/json: {}
-  chat_completion_v1_chat_completions_post:
-    speakeasy-default-chat-completion-v1-chat-completions-post:
-      requestBody:
-        application/json: {"model": "azureai", "stream": false, "messages": [{"content": "Who is the best French painter? Answer in one short sentence.", "role": "user"}], "response_format": {"type": "text"}}
-      responses:
-        "200":
-          application/json: {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
-        "422":
-          application/json: {}
-  ocr_v1_ocr_post:
-    speakeasy-default-ocr-v1-ocr-post:
-      requestBody:
-        application/json: {"model": "CX-9", "document": {"document_url": "https://upset-labourer.net/", "type": "document_url"}}
-      responses:
-        "200":
-          application/json: {"pages": [], "model": "Golf", "usage_info": {"pages_processed": 944919}}
-        "422":
-          application/json: {}
-    userExample:
-      requestBody:
-        application/json: {"model": "CX-9", "document": {"document_url": "https://upset-labourer.net/", "type": "document_url"}, "bbox_annotation_format": {"type": "text"}, "document_annotation_format": {"type": "text"}}
-      responses:
-        "200":
-          application/json: {"pages": [{"index": 1, "markdown": "# LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE\nSaurabh Garg*<br> Carnegie Mellon University<br> sgarg2@andrew.cmu.edu<br> Sivaraman Balakrishnan<br> Carnegie Mellon University<br> sbalakri@andrew.cmu.edu<br> Zachary C. Lipton<br> Carnegie Mellon University<br> zlipton@andrew.cmu.edu\n## Behnam Neyshabur\nGoogle Research, Blueshift team<br> neyshabur@google.com\nHanie Sedghi<br> Google Research, Brain team<br> hsedghi@google.com\n#### Abstract\nReal-world machine learning deployments are characterized by mismatches between the source (training) and target (test) distributions that may cause performance drops. In this work, we investigate methods for predicting the target domain accuracy using only labeled source data and unlabeled target data. We propose Average Thresholded Confidence (ATC), a practical method that learns a threshold on the model's confidence, predicting accuracy as the fraction of unlabeled examples for which model confidence exceeds that threshold. ATC outperforms previous methods across several model architectures, types of distribution shifts (e.g., due to synthetic corruptions, dataset reproduction, or novel subpopulations), and datasets (WILDS, ImageNet, BREEDS, CIFAR, and MNIST). In our experiments, ATC estimates target performance $2-4 \\times$ more accurately than prior methods. We also explore the theoretical foundations of the problem, proving that, in general, identifying the accuracy is just as hard as identifying the optimal predictor and thus, the efficacy of any method rests upon (perhaps unstated) assumptions on the nature of the shift. Finally, analyzing our method on some toy distributions, we provide insights concerning when it works ${ }^{1}$.\n## 1 INTRODUCTION\nMachine learning models deployed in the real world typically encounter examples from previously unseen distributions. While the IID assumption enables us to evaluate models using held-out data from the source distribution (from which training data is sampled), this estimate is no longer valid in presence of a distribution shift. Moreover, under such shifts, model accuracy tends to degrade (Szegedy et al., 2014; Recht et al., 2019; Koh et al., 2021). Commonly, the only data available to the practitioner are a labeled training set (source) and unlabeled deployment-time data which makes the problem more difficult. In this setting, detecting shifts in the distribution of covariates is known to be possible (but difficult) in theory (Ramdas et al., 2015), and in practice (Rabanser et al., 2018). However, producing an optimal predictor using only labeled source and unlabeled target data is well-known to be impossible absent further assumptions (Ben-David et al., 2010; Lipton et al., 2018).\nTwo vital questions that remain are: (i) the precise conditions under which we can estimate a classifier's target-domain accuracy; and (ii) which methods are most practically useful. To begin, the straightforward way to assess the performance of a model under distribution shift would be to collect labeled (target domain) examples and then to evaluate the model on that data. However, collecting fresh labeled data from the target distribution is prohibitively expensive and time-consuming, especially if the target distribution is non-stationary. Hence, instead of using labeled data, we aim to use unlabeled data from the target distribution, that is comparatively abundant, to predict model performance. Note that in this work, our focus is not to improve performance on the target but, rather, to estimate the accuracy on the target for a given classifier.\n[^0]: Work done in part while Saurabh Garg was interning at Google ${ }^{1}$ Code is available at [https://github.com/saurabhgarg1996/ATC_code](https://github.com/saurabhgarg1996/ATC_code).\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 2, "markdown": "![img-0.jpeg](img-0.jpeg)\nFigure 1: Illustration of our proposed method ATC. Left: using source domain validation data, we identify a threshold on a score (e.g. negative entropy) computed on model confidence such that fraction of examples above the threshold matches the validation set accuracy. ATC estimates accuracy on unlabeled target data as the fraction of examples with the score above the threshold. Interestingly, this threshold yields accurate estimates on a wide set of target distributions resulting from natural and synthetic shifts. Right: Efficacy of ATC over previously proposed approaches on our testbed with a post-hoc calibrated model. To obtain errors on the same scale, we rescale all errors with Average Confidence (AC) error. Lower estimation error is better. See Table 1 for exact numbers and comparison on various types of distribution shift. See Sec. 5 for details on our testbed.\nRecently, numerous methods have been proposed for this purpose (Deng & Zheng, 2021; Chen et al., 2021b; Jiang et al., 2021; Deng et al., 2021; Guillory et al., 2021). These methods either require calibration on the target domain to yield consistent estimates (Jiang et al., 2021; Guillory et al., 2021) or additional labeled data from several target domains to learn a linear regression function on a distributional distance that then predicts model performance (Deng et al., 2021; Deng & Zheng, 2021; Guillory et al., 2021). However, methods that require calibration on the target domain typically yield poor estimates since deep models trained and calibrated on source data are not, in general, calibrated on a (previously unseen) target domain (Ovadia et al., 2019). Besides, methods that leverage labeled data from target domains rely on the fact that unseen target domains exhibit strong linear correlation with seen target domains on the underlying distance measure and, hence, can be rendered ineffective when such target domains with labeled data are unavailable (in Sec. 5.1 we demonstrate such a failure on a real-world distribution shift problem). Therefore, throughout the paper, we assume access to labeled source data and only unlabeled data from target domain(s).\nIn this work, we first show that absent assumptions on the source classifier or the nature of the shift, no method of estimating accuracy will work generally (even in non-contrived settings). To estimate accuracy on target domain perfectly, we highlight that even given perfect knowledge of the labeled source distribution (i.e., $p_{s}(x, y)$ ) and unlabeled target distribution (i.e., $p_{t}(x)$ ), we need restrictions on the nature of the shift such that we can uniquely identify the target conditional $p_{t}(y \\mid x)$. Thus, in general, identifying the accuracy of the classifier is as hard as identifying the optimal predictor.\nSecond, motivated by the superiority of methods that use maximum softmax probability (or logit) of a model for Out-Of-Distribution (OOD) detection (Hendrycks & Gimpel, 2016; Hendrycks et al., 2019), we propose a simple method that leverages softmax probability to predict model performance. Our method, Average Thresholded Confidence (ATC), learns a threshold on a score (e.g., maximum confidence or negative entropy) of model confidence on validation source data and predicts target domain accuracy as the fraction of unlabeled target points that receive a score above that threshold. ATC selects a threshold on validation source data such that the fraction of source examples that receive the score above the threshold match the accuracy of those examples. Our primary contribution in ATC is the proposal of obtaining the threshold and observing its efficacy on (practical) accuracy estimation. Importantly, our work takes a step forward in positively answering the question raised in Deng & Zheng (2021); Deng et al. (2021) about a practical strategy to select a threshold that enables accuracy prediction with thresholded model confidence.\n", "images": [{"id": "img-0.jpeg", "top_left_x": 292, "top_left_y": 217, "bottom_right_x": 1405, "bottom_right_y": 649, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 3, "markdown": "<value>", "images": [], "dimensions": {"dpi": 539192, "height": 944919, "width": 247256}}, {"index": 27, "markdown": "![img-8.jpeg](img-8.jpeg)\nFigure 9: Scatter plot of predicted accuracy versus (true) OOD accuracy for vision datasets except MNIST with a ResNet50 model. Results reported by aggregating MAE numbers over 4 different seeds.\n", "images": [{"id": "img-8.jpeg", "top_left_x": 290, "top_left_y": 226, "bottom_right_x": 1405, "bottom_right_y": 1834, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 28, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 6.60 | 5.74 | 9.88 | 6.89 | 7.25 | 6.07 | 4.77 | 3.21 | 3.02 | 2.99 | 2.85 | |  |  | (0.35) | (0.30) | (0.16) | (0.13) | (0.15) | (0.16) | (0.13) | (0.49) | (0.40) | (0.37) | (0.29) | |  | Synthetic | 12.33 | 10.20 | 16.50 | 11.91 | 13.87 | 11.08 | 6.55 | 4.65 | 4.25 | 4.21 | 3.87 | |  |  | (0.51) | (0.48) | (0.26) | (0.17) | (0.18) | (0.17) | (0.35) | (0.55) | (0.55) | (0.55) | (0.75) | | CIFAR100 | Synthetic | 13.69 | 11.51 | 23.61 | 13.10 | 14.60 | 10.14 | 9.85 | 5.50 | 4.75 | 4.72 | 4.94 | |  |  | (0.55) | (0.41) | (1.16) | (0.80) | (0.77) | (0.64) | (0.57) | (0.70) | (0.73) | (0.74) | (0.74) | | ImageNet200 | Natural | 12.37 | 8.19 | 22.07 | 8.61 | 15.17 | 7.81 | 5.13 | 4.37 | 2.04 | 3.79 | 1.45 | |  |  | (0.25) | (0.33) | (0.08) | (0.25) | (0.11) | (0.29) | (0.08) | (0.39) | (0.24) | (0.30) | (0.27) | |  | Synthetic | 19.86 | 12.94 | 32.44 | 13.35 | 25.02 | 12.38 | 5.41 | 5.93 | 3.09 | 5.00 | 2.68 | |  |  | (1.38) | (1.81) | (1.00) | (1.30) | (1.10) | (1.38) | (0.89) | (1.38) | (0.87) | (1.28) | (0.45) | | ImageNet | Natural | 7.77 | 6.50 | 18.13 | 6.02 | 8.13 | 5.76 | 6.23 | 3.88 | 2.17 | 2.06 | 0.80 | |  |  | (0.27) | (0.33) | (0.23) | (0.34) | (0.27) | (0.37) | (0.41) | (0.53) | (0.62) | (0.54) | (0.44) | |  | Synthetic | 13.39 | 10.12 | 24.62 | 8.51 | 13.55 | 7.90 | 6.32 | 3.34 | 2.53 | 2.61 | 4.89 | |  |  | (0.53) | (0.63) | (0.64) | (0.71) | (0.61) | (0.72) | (0.33) | (0.53) | (0.36) | (0.33) | (0.83) | | FMoW-WILDS | Natural | 5.53 | 4.31 | 33.53 | 12.84 | 5.94 | 4.45 | 5.74 | 3.06 | 2.70 | 3.02 | 2.72 | |  |  | (0.33) | (0.63) | (0.13) | (12.06) | (0.36) | (0.77) | (0.55) | (0.36) | (0.54) | (0.35) | (0.44) | | RxRx1-WILDS | Natural | 5.80 | 5.72 | 7.90 | 4.84 | 5.98 | 5.98 | 6.03 | 4.66 | 4.56 | 4.41 | 4.47 | |  |  | (0.17) | (0.15) | (0.24) | (0.09) | (0.15) | (0.13) | (0.08) | (0.38) | (0.38) | (0.31) | (0.26) | | Amazon-WILDS | Natural | 2.40 | 2.29 | 8.01 | 2.38 | 2.40 | 2.28 | 17.87 | 1.65 | 1.62 | 1.60 | 1.59 | |  |  | (0.08) | (0.09) | (0.53) | (0.17) | (0.09) | (0.09) | (0.18) | (0.06) | (0.05) | (0.14) | (0.15) | | CivilCom.-WILDS | Natural | 12.64 | 10.80 | 16.76 | 11.03 | 13.31 | 10.99 | 16.65 |  | 7.14 |  |  | |  |  | (0.52) | (0.48) | (0.53) | (0.49) | (0.52) | (0.49) | (0.25) |  | (0.41) |  |  | | MNIST | Natural | 18.48 | 15.99 | 21.17 | 14.81 | 20.19 | 14.56 | 24.42 | 5.02 | 2.40 | 3.14 | 3.50 | |  |  | (0.45) | (1.53) | (0.24) | (3.89) | (0.23) | (3.47) | (0.41) | (0.44) | (1.83) | (0.49) | (0.17) | | ENTITY-13 | Same | 16.23 | 11.14 | 24.97 | 10.88 | 19.08 | 10.47 | 10.71 | 5.39 | 3.88 | 4.58 | 4.19 | |  |  | (0.77) | (0.65) | (0.70) | (0.77) | (0.65) | (0.72) | (0.74) | (0.92) | (0.61) | (0.85) | (0.16) | |  | Novel | 28.53 | 22.02 | 38.33 | 21.64 | 32.43 | 21.22 | 20.61 | 13.58 | 10.28 | 12.25 | 6.63 | |  |  | (0.82) | (0.68) | (0.75) | (0.86) | (0.69) | (0.80) | (0.60) | (1.15) | (1.34) | (1.21) | (0.93) | | ENTITY-30 | Same | 18.59 | 14.46 | 28.82 | 14.30 | 21.63 | 13.46 | 12.92 | 9.12 | 7.75 | 8.15 | 7.64 | |  |  | (0.51) | (0.52) | (0.43) | (0.71) | (0.37) | (0.59) | (0.14) | (0.62) | (0.72) | (0.68) | (0.88) | |  | Novel | 32.34 | 26.85 | 44.02 | 26.27 | 36.82 | 25.42 | 23.16 | 17.75 | 14.30 | 15.60 | 10.57 | |  |  | (0.60) | (0.58) | (0.56) | (0.79) | (0.47) | (0.68) | (0.12) | (0.76) | (0.85) | (0.86) | (0.86) | | NONLIVING-26 | Same | 18.66 | 17.17 | 26.39 | 16.14 | 19.86 | 15.58 | 16.63 | 10.87 | 10.24 | 10.07 | 10.26 | |  |  | (0.76) | (0.74) | (0.82) | (0.81) | (0.67) | (0.76) | (0.45) | (0.98) | (0.83) | (0.92) | (1.18) | |  | Novel | 33.43 | 31.53 | 41.66 | 29.87 | 35.13 | 29.31 | 29.56 | 21.70 | 20.12 | 19.08 | 18.26 | |  |  | (0.67) | (0.65) | (0.67) | (0.71) | (0.54) | (0.64) | (0.21) | (0.86) | (0.75) | (0.82) | (1.12) | | LIVING-17 | Same | 12.63 | 11.05 | 18.32 | 10.46 | 14.43 | 10.14 | 9.87 | 4.57 | 3.95 | 3.81 | 4.21 | |  |  | (1.25) | (1.20) | (1.01) | (1.12) | (1.11) | (1.16) | (0.61) | (0.71) | (0.48) | (0.22) | (0.53) | |  | Novel | 29.03 | 26.96 | 35.67 | 26.11 | 31.73 | 25.73 | 23.53 | 16.15 | 14.49 | 12.97 | 11.39 | |  |  | (1.44) | (1.38) | (1.09) | (1.27) | (1.19) | (1.35) | (0.52) | (1.36) | (1.46) | (1.52) | (1.72) |\nTable 3: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. For language datasets, we use DistilBERT-base-uncased, for vision dataset we report results with DenseNet model with the exception of MNIST where we use FCN. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 29, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 7.14 | 6.20 | 10.25 | 7.06 | 7.68 | 6.35 | 5.74 | 4.02 | 3.85 | 3.76 | 3.38 | |  |  | (0.14) | (0.11) | (0.31) | (0.33) | (0.28) | (0.27) | (0.25) | (0.38) | (0.30) | (0.33) | (0.32) | |  | Synthetic | 12.62 | 10.75 | 16.50 | 11.91 | 13.93 | 11.20 | 7.97 | 5.66 | 5.03 | 4.87 | 3.63 | |  |  | (0.76) | (0.71) | (0.28) | (0.24) | (0.29) | (0.28) | (0.13) | (0.64) | (0.71) | (0.71) | (0.62) | | CIFAR100 | Synthetic | 12.77 | 12.34 | 16.89 | 12.73 | 11.18 | 9.63 | 12.00 | 5.61 | 5.55 | 5.65 | 5.76 | |  |  | (0.43) | (0.68) | (0.20) | (2.59) | (0.35) | (1.25) | (0.48) | (0.51) | (0.55) | (0.35) | (0.27) | | ImageNet200 | Natural | 12.63 | 7.99 | 23.08 | 7.22 | 15.40 | 6.33 | 5.00 | 4.60 | 1.80 | 4.06 | 1.38 | |  |  | (0.59) | (0.47) | (0.31) | (0.22) | (0.42) | (0.24) | (0.36) | (0.63) | (0.17) | (0.69) | (0.29) | |  | Synthetic | 20.17 | 11.74 | 33.69 | 9.51 | 25.49 | 8.61 | 4.19 | 5.37 | 2.78 | 4.53 | 3.58 | |  |  | (0.74) | (0.80) | (0.73) | (0.51) | (0.66) | (0.50) | (0.14) | (0.88) | (0.23) | (0.79) | (0.33) | | ImageNet | Natural | 8.09 | 6.42 | 21.66 | 5.91 | 8.53 | 5.21 | 5.90 | 3.93 | 1.89 | 2.45 | 0.73 | |  |  | (0.25) | (0.28) | (0.38) | (0.22) | (0.26) | (0.25) | (0.44) | (0.26) | (0.21) | (0.16) | (0.10) | |  | Synthetic | 13.93 | 9.90 | 28.05 | 7.56 | 13.82 | 6.19 | 6.70 | 3.33 | 2.55 | 2.12 | 5.06 | |  |  | (0.14) | (0.23) | (0.39) | (0.13) | (0.31) | (0.07) | (0.52) | (0.25) | (0.25) | (0.31) | (0.27) | | FMoW-WILDS | Natural | 5.15 | 3.55 | 34.64 | 5.03 | 5.58 | 3.46 | 5.08 | 2.59 | 2.33 | 2.52 | 2.22 | |  |  | (0.19) | (0.41) | (0.22) | (0.29) | (0.17) | (0.37) | (0.46) | (0.32) | (0.28) | (0.25) | (0.30) | | RxRx1-WILDS | Natural | 6.17 | 6.11 | 21.05 | 5.21 | 6.54 | 6.27 | 6.82 | 5.30 | 5.20 | 5.19 | 5.63 | |  |  | (0.20) | (0.24) | (0.31) | (0.18) | (0.21) | (0.20) | (0.31) | (0.30) | (0.44) | (0.43) | (0.55) | | Entity-13 | Same | 18.32 | 14.38 | 27.79 | 13.56 | 20.50 | 13.22 | 16.09 | 9.35 | 7.50 | 7.80 | 6.94 | |  |  | (0.29) | (0.53) | (1.18) | (0.58) | (0.47) | (0.58) | (0.84) | (0.79) | (0.65) | (0.62) | (0.71) | |  | Novel | 28.82 | 24.03 | 38.97 | 22.96 | 31.66 | 22.61 | 25.26 | 17.11 | 13.96 | 14.75 | 9.94 | |  |  | (0.30) | (0.55) | (1.32) | (0.59) | (0.54) | (0.58) | (1.08) | (0.93) | (0.64) | (0.78) |  | | Entity-30 | Same | 16.91 | 14.61 | 26.84 | 14.37 | 18.60 | 13.11 | 13.74 | 8.54 | 7.94 | 7.77 | 8.04 | |  |  | (1.33) | (1.11) | (2.15) | (1.34) | (1.69) | (1.30) | (1.07) | (1.47) | (1.38) | (1.44) | (1.51) | |  | Novel | 28.66 | 25.83 | 39.21 | 25.03 | 30.95 | 23.73 | 23.15 | 15.57 | 13.24 | 12.44 | 11.05 | |  |  | (1.16) | (0.88) | (2.03) | (1.11) | (1.64) | (1.11) | (0.51) | (1.44) | (1.15) | (1.26) | (1.13) | | NonLIVING-26 | Same | 17.43 | 15.95 | 27.70 | 15.40 | 18.06 | 14.58 | 16.99 | 10.79 | 10.13 | 10.05 | 10.29 | |  |  | (0.90) | (0.86) | (0.90) | (0.69) | (1.00) | (0.78) | (1.25) | (0.62) | (0.32) | (0.46) | (0.79) | |  | Novel | 29.51 | 27.75 | 40.02 | 26.77 | 30.36 | 25.93 | 27.70 | 19.64 | 17.75 | 16.90 | 15.69 | |  |  | (0.86) | (0.82) | (0.76) | (0.82) | (0.95) | (0.80) | (1.42) | (0.68) | (0.53) | (0.60) | (0.83) | | LIVING-17 | Same | 14.28 | 12.21 | 23.46 | 11.16 | 15.22 | 10.78 | 10.49 | 4.92 | 4.23 | 4.19 | 4.73 | |  |  | (0.96) | (0.93) | (1.16) | (0.90) | (0.96) | (0.99) | (0.97) | (0.57) | (0.42) | (0.35) | (0.24) | |  | Novel | 28.91 | 26.35 | 38.62 | 24.91 | 30.32 | 24.52 | 22.49 | 15.42 | 13.02 | 12.29 | 10.34 | |  |  | (0.66) | (0.73) | (1.01) | (0.61) | (0.59) | (0.74) | (0.85) | (0.59) | (0.53) | (0.73) | (0.62) |\nTable 4: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift for ResNet model. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}], "model": "mistral-ocr-2503-completion", "usage_info": {"pages_processed": 29, "doc_size_bytes": null}}
-examplesVersion: 1.0.2
-generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `mistral_azure.chat.complete()`: \n  *  `request.messages.[].[assistant].content.[array]` **Changed** **Breaking** :warning:\n"

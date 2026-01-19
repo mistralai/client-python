@@ -6,7 +6,7 @@ from mistralai_gcp._hooks import HookContext
 from mistralai_gcp.types import OptionalNullable, UNSET
 from mistralai_gcp.utils import eventstreaming
 from mistralai_gcp.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Fim(BaseSDK):
@@ -28,13 +28,14 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStream[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
         r"""Stream fim completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -47,6 +48,7 @@ class Fim(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -72,6 +74,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -93,6 +96,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -109,7 +113,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_fim",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -158,13 +162,14 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[eventstreaming.EventStreamAsync[models.CompletionEvent]]:
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
         r"""Stream fim completion
 
         Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
@@ -177,6 +182,7 @@ class Fim(BaseSDK):
         :param stream:
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -202,6 +208,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -223,6 +230,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionStreamRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -239,7 +247,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="stream_fim",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -288,13 +296,14 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FIMCompletionResponse]:
+    ) -> models.FIMCompletionResponse:
         r"""Fim Completion
 
         FIM completion.
@@ -307,6 +316,7 @@ class Fim(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -332,6 +342,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -353,6 +364,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -369,7 +381,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -379,9 +391,7 @@ class Fim(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.FIMCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.FIMCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -412,13 +422,14 @@ class Fim(BaseSDK):
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.FIMCompletionResponse]:
+    ) -> models.FIMCompletionResponse:
         r"""Fim Completion
 
         FIM completion.
@@ -431,6 +442,7 @@ class Fim(BaseSDK):
         :param stream: Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
         :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
+        :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
         :param retries: Override the default retry configuration for this method
@@ -456,6 +468,7 @@ class Fim(BaseSDK):
             stream=stream,
             stop=stop,
             random_seed=random_seed,
+            metadata=metadata,
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -477,6 +490,7 @@ class Fim(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.FIMCompletionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -493,7 +507,7 @@ class Fim(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="fim_completion_v1_fim_completions_post",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -503,9 +517,7 @@ class Fim(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.FIMCompletionResponse], http_res
-            )
+            return unmarshal_json_response(models.FIMCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

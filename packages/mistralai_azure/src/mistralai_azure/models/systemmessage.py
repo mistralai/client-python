@@ -21,7 +21,7 @@ SystemMessageContent = TypeAliasType(
 )
 
 
-Role = Literal["system"]
+Role = Literal["system",]
 
 
 class SystemMessageTypedDict(TypedDict):
