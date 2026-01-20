@@ -59,7 +59,7 @@ default-groups = [
 ]
 
 [tool.setuptools.package-data]
-"*" = ["py.typed", "src/mistralai/py.typed"]
+"*" = ["py.typed", "src/mistralai/sdk/py.typed"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -70,7 +70,7 @@ include = [
 
 [tool.hatch.build.targets.sdist.force-include]
 "py.typed" = "py.typed"
-"src/mistralai/py.typed" = "src/mistralai/py.typed"
+"src/mistralai/sdk/py.typed" = "src/mistralai/sdk/py.typed"
 
 [tool.hatch.build.targets.wheel]
 include = [
