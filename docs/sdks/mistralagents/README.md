@@ -21,7 +21,7 @@ Create a new agent giving it instructions, tools, description. The agent is then
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create" method="post" path="/v1/agents" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -73,7 +73,7 @@ Retrieve a list of agent entities sorted by creation time.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list" method="get" path="/v1/agents" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -120,7 +120,7 @@ Given an agent retrieve an agent entity with its attributes.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get" method="get" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -162,7 +162,7 @@ Update an agent attributes and create a new version.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update" method="patch" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -216,7 +216,7 @@ Delete an agent entity.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_delete" method="delete" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -252,7 +252,7 @@ Switch the version of an agent.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update_version" method="patch" path="/v1/agents/{agent_id}/version" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

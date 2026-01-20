@@ -16,7 +16,7 @@ OCR
 
 <!-- UsageSnippet language="python" operationID="ocr_v1_ocr_post" method="post" path="/v1/ocr" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

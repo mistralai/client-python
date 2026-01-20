@@ -11,7 +11,7 @@ from mcp.types import (  # pyright: ignore[reportMissingImports]
 )
 
 from mistralai.extra.exceptions import MCPException
-from mistralai.models import (
+from mistralai.sdk.models import (
     FunctionTool,
     Function,
     SystemMessageTypedDict,

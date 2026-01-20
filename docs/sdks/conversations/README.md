@@ -26,7 +26,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start" method="post" path="/v1/conversations" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -83,7 +83,7 @@ Retrieve a list of conversation entities sorted by creation time.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_list" method="get" path="/v1/conversations" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -126,7 +126,7 @@ Given a conversation_id retrieve a conversation entity with its attributes.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_get" method="get" path="/v1/conversations/{conversation_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -167,7 +167,7 @@ Delete a conversation given a conversation_id.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_delete" method="delete" path="/v1/conversations/{conversation_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -203,7 +203,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append" method="post" path="/v1/conversations/{conversation_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -253,7 +253,7 @@ Given a conversation_id retrieve all the entries belonging to that conversation.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_history" method="get" path="/v1/conversations/{conversation_id}/history" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -294,7 +294,7 @@ Given a conversation_id retrieve all the messages belonging to that conversation
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_messages" method="get" path="/v1/conversations/{conversation_id}/messages" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -335,7 +335,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart" method="post" path="/v1/conversations/{conversation_id}/restart" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -388,7 +388,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start_stream" method="post" path="/v1/conversations#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -454,7 +454,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append_stream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -506,7 +506,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart_stream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

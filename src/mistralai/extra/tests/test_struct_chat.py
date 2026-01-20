@@ -5,7 +5,7 @@ from ..struct_chat import (
     ParsedChatCompletionChoice,
     ParsedAssistantMessage,
 )
-from ...models import (
+from mistralai.sdk.models import (
     ChatCompletionResponse,
     UsageInfo,
     ChatCompletionChoice,

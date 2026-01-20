@@ -1,4 +1,4 @@
-speakeasyVersion: 1.685.0
+speakeasyVersion: 1.690.0
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
@@ -38,8 +38,6 @@ targets:
         sourceNamespace: mistral-openapi
         sourceRevisionDigest: sha256:ebe60088ce4a3780c57a08de7bc73f973f529822a05db12c5d9c6084e9a934e0
         sourceBlobDigest: sha256:c93947af3495a5129cb6aecfe0546463917fbe1f66f2cf8f5a0accb36c035501
-        codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:14b511ab3d9f6f3d9ee0c81c32c6fa2dd6be9b6a1047298cf9f1162328045b4f
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.685.0
