@@ -198,7 +198,8 @@ class Conversations(BaseSDK):
                         run_result.conversation_id = event.data.conversation_id
                         run_ctx.conversation_id = event.data.conversation_id
                         logger.info(
-                            "Started Run with conversation with id %s", run_ctx.conversation_id
+                            "Started Run with conversation with id %s",
+                            run_ctx.conversation_id,
                         )
                     if (
                         output_index := getattr(event.data, "output_index", None)
