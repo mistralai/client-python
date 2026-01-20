@@ -7,7 +7,7 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, Discriminator, Tag
 
 from mistralai.extra.utils.response_format import pydantic_model_from_json
-from mistralai.models import (
+from mistralai.sdk.models import (
     FunctionResultEntry,
     FunctionCallEntry,
     MessageOutputEntry,
@@ -34,7 +34,7 @@ from mistralai.models import (
     ToolReferenceChunk,
     FunctionCallEntryArguments,
 )
-from mistralai.utils import get_discriminator
+from mistralai.sdk.utils import get_discriminator
 
 RunOutputEntries = (
     MessageOutputEntry

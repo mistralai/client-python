@@ -17,7 +17,7 @@ Create Transcription
 
 <!-- UsageSnippet language="python" operationID="audio_api_v1_transcriptions_post" method="post" path="/v1/audio/transcriptions" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -63,7 +63,7 @@ Create Streaming Transcription (SSE)
 
 <!-- UsageSnippet language="python" operationID="audio_api_v1_transcriptions_post_stream" method="post" path="/v1/audio/transcriptions#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

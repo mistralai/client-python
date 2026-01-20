@@ -25,7 +25,7 @@ Please contact us if you need to increase these storage limits.
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_upload_file" method="post" path="/v1/files" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -69,7 +69,7 @@ Returns a list of files that belong to the user's organization.
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_list_files" method="get" path="/v1/files" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -115,7 +115,7 @@ Returns information about a specific file.
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_retrieve_file" method="get" path="/v1/files/{file_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -155,7 +155,7 @@ Delete a file.
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_delete_file" method="delete" path="/v1/files/{file_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -195,7 +195,7 @@ Download a file
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_download_file" method="get" path="/v1/files/{file_id}/content" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -235,7 +235,7 @@ Get Signed Url
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_get_signed_url" method="get" path="/v1/files/{file_id}/url" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

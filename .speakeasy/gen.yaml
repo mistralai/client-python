@@ -13,6 +13,7 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
+    sharedNestedComponentsJan2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
@@ -63,7 +64,6 @@ python:
   license: ""
   maxMethodParams: 15
   methodArguments: infer-optional-args
-  # PEP 420 implicit namespace package - enables mistralai.workflows as separate package
   moduleName: mistralai.sdk
   multipartArrayFormat: legacy
   outputModelSuffix: output
@@ -75,3 +75,4 @@ python:
   responseFormat: flat
   sseFlatResponse: false
   templateVersion: v2
+  useAsyncHooks: false

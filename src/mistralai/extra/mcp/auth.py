@@ -4,7 +4,7 @@ import httpx
 from authlib.integrations.httpx_client import AsyncOAuth2Client as AsyncOAuth2ClientBase
 from authlib.oauth2.rfc8414 import AuthorizationServerMetadata
 
-from mistralai.types import BaseModel
+from mistralai.sdk.types import BaseModel
 
 logger = logging.getLogger(__name__)
 

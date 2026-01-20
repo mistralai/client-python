@@ -18,7 +18,7 @@ Get a list of fine-tuning jobs for your organization and user.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_get_fine_tuning_jobs" method="get" path="/v1/fine_tuning/jobs" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -67,7 +67,7 @@ Create a new fine-tuning job, it will be queued for processing.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_create_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -119,7 +119,7 @@ Get a fine-tuned job details by its UUID.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_get_fine_tuning_job" method="get" path="/v1/fine_tuning/jobs/{job_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -159,7 +159,7 @@ Request the cancellation of a fine tuning job.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_cancel_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs/{job_id}/cancel" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -199,7 +199,7 @@ Request the start of a validated fine tuning job.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_start_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs/{job_id}/start" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 

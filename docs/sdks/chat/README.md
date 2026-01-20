@@ -17,7 +17,7 @@ Chat Completion
 
 <!-- UsageSnippet language="python" operationID="chat_completion_v1_chat_completions_post" method="post" path="/v1/chat/completions" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
@@ -83,7 +83,7 @@ Mistral AI provides the ability to stream responses back to a client in order to
 
 <!-- UsageSnippet language="python" operationID="stream_chat" method="post" path="/v1/chat/completions#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.sdk import Mistral
 import os
 
 
