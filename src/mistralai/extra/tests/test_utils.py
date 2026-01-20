@@ -5,8 +5,8 @@ from ..utils.response_format import (
 )
 from pydantic import BaseModel, ValidationError
 
-from ...models import ResponseFormat, JSONSchema
-from ...types.basemodel import Unset
+from mistralai.sdk.models import ResponseFormat, JSONSchema
+from mistralai.sdk.types.basemodel import Unset
 
 import unittest
 
