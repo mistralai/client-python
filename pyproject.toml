@@ -93,6 +93,9 @@ pythonpath = ["src"]
 
 [tool.mypy]
 disable_error_code = "misc"
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "typing_inspect"
