@@ -75,6 +75,7 @@ class Conversations(BaseSDK):
         """Run a conversation with the given inputs and context.
 
         The execution of a run will only stop when no required local execution can be done."""
+        # pylint: disable=import-outside-toplevel
         from mistralai.sdk.beta import Beta
         from mistralai.extra.run.context import _validate_run
         from mistralai.extra.run.tools import get_function_calls
@@ -105,7 +106,7 @@ class Conversations(BaseSDK):
                     run_result.conversation_id = res.conversation_id
                     run_ctx.conversation_id = res.conversation_id
                     logger.info(
-                        f"Started Run with conversation with id {res.conversation_id}"
+                        "Started Run with conversation with id %s", res.conversation_id
                     )
                 else:
                     res = await self.append_async(
@@ -121,10 +122,9 @@ class Conversations(BaseSDK):
                 if not fcalls:
                     logger.debug("No more function calls to execute")
                     break
-                else:
-                    fresults = await run_ctx.execute_function_calls(fcalls)
-                    run_result.output_entries.extend(fresults)
-                    input_entries = typing.cast(list[InputEntries], fresults)
+                fresults = await run_ctx.execute_function_calls(fcalls)
+                run_result.output_entries.extend(fresults)
+                input_entries = typing.cast(list[InputEntries], fresults)
         return run_result
 
     @run_requirements
@@ -149,6 +149,7 @@ class Conversations(BaseSDK):
         """Similar to `run_async` but returns a generator which streams events.
 
         The last streamed object is the RunResult object which summarises what happened in the run."""
+        # pylint: disable=import-outside-toplevel
         from mistralai.sdk.beta import Beta
         from mistralai.extra.run.context import _validate_run
         from mistralai.extra.run.tools import get_function_calls
@@ -197,7 +198,7 @@ class Conversations(BaseSDK):
                         run_result.conversation_id = event.data.conversation_id
                         run_ctx.conversation_id = event.data.conversation_id
                         logger.info(
-                            f"Started Run with conversation with id {run_ctx.conversation_id}"
+                            "Started Run with conversation with id %s", run_ctx.conversation_id
                         )
                     if (
                         output_index := getattr(event.data, "output_index", None)
@@ -211,19 +212,18 @@ class Conversations(BaseSDK):
                 if not fcalls:
                     logger.debug("No more function calls to execute")
                     break
-                else:
-                    fresults = await run_ctx.execute_function_calls(fcalls)
-                    run_result.output_entries.extend(fresults)
-                    for fresult in fresults:
-                        yield RunResultEvents(
-                            event="function.result",
-                            data=FunctionResultEvent(
-                                type="function.result",
-                                result=fresult.result,
-                                tool_call_id=fresult.tool_call_id,
-                            ),
-                        )
-                    current_entries = typing.cast(list[InputEntries], fresults)
+                fresults = await run_ctx.execute_function_calls(fcalls)
+                run_result.output_entries.extend(fresults)
+                for fresult in fresults:
+                    yield RunResultEvents(
+                        event="function.result",
+                        data=FunctionResultEvent(
+                            type="function.result",
+                            result=fresult.result,
+                            tool_call_id=fresult.tool_call_id,
+                        ),
+                    )
+                current_entries = typing.cast(list[InputEntries], fresults)
             yield run_result
 
         return run_generator()
