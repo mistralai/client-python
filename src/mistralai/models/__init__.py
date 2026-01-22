@@ -45,9 +45,17 @@ if TYPE_CHECKING:
         AgentsAPIV1AgentsDeleteRequest,
         AgentsAPIV1AgentsDeleteRequestTypedDict,
     )
+    from .agents_api_v1_agents_get_versionop import (
+        AgentsAPIV1AgentsGetVersionRequest,
+        AgentsAPIV1AgentsGetVersionRequestTypedDict,
+    )
     from .agents_api_v1_agents_getop import (
         AgentsAPIV1AgentsGetRequest,
         AgentsAPIV1AgentsGetRequestTypedDict,
+    )
+    from .agents_api_v1_agents_list_versionsop import (
+        AgentsAPIV1AgentsListVersionsRequest,
+        AgentsAPIV1AgentsListVersionsRequestTypedDict,
     )
     from .agents_api_v1_agents_listop import (
         AgentsAPIV1AgentsListRequest,
@@ -972,8 +980,12 @@ __all__ = [
     "AgentsAPIV1AgentsDeleteRequestTypedDict",
     "AgentsAPIV1AgentsGetRequest",
     "AgentsAPIV1AgentsGetRequestTypedDict",
+    "AgentsAPIV1AgentsGetVersionRequest",
+    "AgentsAPIV1AgentsGetVersionRequestTypedDict",
     "AgentsAPIV1AgentsListRequest",
     "AgentsAPIV1AgentsListRequestTypedDict",
+    "AgentsAPIV1AgentsListVersionsRequest",
+    "AgentsAPIV1AgentsListVersionsRequestTypedDict",
     "AgentsAPIV1AgentsUpdateRequest",
     "AgentsAPIV1AgentsUpdateRequestTypedDict",
     "AgentsAPIV1AgentsUpdateVersionRequest",
@@ -1682,8 +1694,12 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
     "AgentsAPIV1AgentsDeleteRequest": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsDeleteRequestTypedDict": ".agents_api_v1_agents_deleteop",
+    "AgentsAPIV1AgentsGetVersionRequest": ".agents_api_v1_agents_get_versionop",
+    "AgentsAPIV1AgentsGetVersionRequestTypedDict": ".agents_api_v1_agents_get_versionop",
     "AgentsAPIV1AgentsGetRequest": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsGetRequestTypedDict": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsListVersionsRequest": ".agents_api_v1_agents_list_versionsop",
+    "AgentsAPIV1AgentsListVersionsRequestTypedDict": ".agents_api_v1_agents_list_versionsop",
     "AgentsAPIV1AgentsListRequest": ".agents_api_v1_agents_listop",
     "AgentsAPIV1AgentsListRequestTypedDict": ".agents_api_v1_agents_listop",
     "AgentsAPIV1AgentsUpdateVersionRequest": ".agents_api_v1_agents_update_versionop",
