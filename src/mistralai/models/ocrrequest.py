@@ -45,6 +45,8 @@ class OCRRequestTypedDict(TypedDict):
     r"""Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field"""
     document_annotation_format: NotRequired[Nullable[ResponseFormatTypedDict]]
     r"""Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field"""
+    document_annotation_prompt: NotRequired[Nullable[str]]
+    r"""Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided."""
     table_format: NotRequired[Nullable[TableFormat]]
     extract_header: NotRequired[bool]
     extract_footer: NotRequired[bool]
@@ -76,6 +78,9 @@ class OCRRequest(BaseModel):
     document_annotation_format: OptionalNullable[ResponseFormat] = UNSET
     r"""Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field"""
 
+    document_annotation_prompt: OptionalNullable[str] = UNSET
+    r"""Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided."""
+
     table_format: OptionalNullable[TableFormat] = UNSET
 
     extract_header: Optional[bool] = None
@@ -92,6 +97,7 @@ class OCRRequest(BaseModel):
             "image_min_size",
             "bbox_annotation_format",
             "document_annotation_format",
+            "document_annotation_prompt",
             "table_format",
             "extract_header",
             "extract_footer",
@@ -104,6 +110,7 @@ class OCRRequest(BaseModel):
             "image_min_size",
             "bbox_annotation_format",
             "document_annotation_format",
+            "document_annotation_prompt",
             "table_format",
         ]
         null_default_fields = []

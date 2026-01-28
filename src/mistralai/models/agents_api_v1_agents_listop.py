@@ -11,7 +11,9 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class AgentsAPIV1AgentsListRequestTypedDict(TypedDict):
     page: NotRequired[int]
+    r"""Page number (0-indexed)"""
     page_size: NotRequired[int]
+    r"""Number of agents per page"""
     deployment_chat: NotRequired[Nullable[bool]]
     sources: NotRequired[Nullable[List[RequestSource]]]
     name: NotRequired[Nullable[str]]
@@ -24,11 +26,13 @@ class AgentsAPIV1AgentsListRequest(BaseModel):
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 0
+    r"""Page number (0-indexed)"""
 
     page_size: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 20
+    r"""Number of agents per page"""
 
     deployment_chat: Annotated[
         OptionalNullable[bool],

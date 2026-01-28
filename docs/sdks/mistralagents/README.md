@@ -12,6 +12,8 @@
 * [update](#update) - Update an agent entity.
 * [delete](#delete) - Delete an agent entity.
 * [update_version](#update_version) - Update an agent version.
+* [list_versions](#list_versions) - List all versions of an agent.
+* [get_version](#get_version) - Retrieve a specific version of an agent.
 
 ## create
 
@@ -92,8 +94,8 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Page number (0-indexed)                                             |
+| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of agents per page                                           |
 | `deployment_chat`                                                   | *OptionalNullable[bool]*                                            | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sources`                                                           | List[[models.RequestSource](../../models/requestsource.md)]         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `name`                                                              | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
@@ -261,6 +263,91 @@ with Mistral(
 ) as mistral:
 
     res = mistral.beta.agents.update_version(agent_id="<id>", version=157995)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Agent](../../models/agent.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## list_versions
+
+Retrieve all versions for a specific agent with full agent context. Supports pagination.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list_versions" method="get" path="/v1/agents/{agent_id}/versions" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.agents.list_versions(agent_id="<id>", page=0, page_size=20)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Page number (0-indexed)                                             |
+| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of versions per page                                         |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[List[models.Agent]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_version
+
+Get a specific agent version by version number.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get_version" method="get" path="/v1/agents/{agent_id}/version/{version}" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.agents.get_version(agent_id="<id>", version=788393)
 
     # Handle response
     print(res)
