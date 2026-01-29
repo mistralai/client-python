@@ -6,7 +6,7 @@ def rec_strict_json_schema(schema_node: Any) -> Any:
     Recursively set the additionalProperties property to False for all objects in the JSON Schema.
     This makes the JSON Schema strict (i.e. no additional properties are allowed).
     """
-    if isinstance(schema_node, (str, bool)) or schema_node is None:
+    if isinstance(schema_node, (str, bool, int, float)) or schema_node is None:
         return schema_node
     if isinstance(schema_node, dict):
         if "type" in schema_node and schema_node["type"] == "object":
