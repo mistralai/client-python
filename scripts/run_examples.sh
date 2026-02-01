@@ -40,6 +40,9 @@ exclude_files=(
  "examples/mistral/agents/async_conversation_run_stream.py"
  "examples/mistral/agents/async_conversation_run_mcp.py"
   "examples/mistral/agents/async_conversation_run_mcp_remote.py"
+ "examples/mistral/audio/async_realtime_transcription_microphone.py"
+ "examples/mistral/audio/async_realtime_transcription_stream.py"
+ "examples/mistral/audio/transcription_diarize_async.py"
 )
 
 # Check if the no-extra-dep flag is set
