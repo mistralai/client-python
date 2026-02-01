@@ -19,6 +19,7 @@ class FilesAPIRoutesListFilesRequestTypedDict(TypedDict):
     source: NotRequired[Nullable[List[Source]]]
     search: NotRequired[Nullable[str]]
     purpose: NotRequired[Nullable[FilePurpose]]
+    mimetypes: NotRequired[Nullable[List[str]]]
 
 
 class FilesAPIRoutesListFilesRequest(BaseModel):
@@ -57,6 +58,11 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    mimetypes: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -67,8 +73,9 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
             "source",
             "search",
             "purpose",
+            "mimetypes",
         ]
-        nullable_fields = ["sample_type", "source", "search", "purpose"]
+        nullable_fields = ["sample_type", "source", "search", "purpose", "mimetypes"]
         null_default_fields = []
 
         serialized = handler(self)

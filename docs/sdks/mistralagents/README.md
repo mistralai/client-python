@@ -14,6 +14,8 @@
 * [update_version](#update_version) - Update an agent version.
 * [list_versions](#list_versions) - List all versions of an agent.
 * [get_version](#get_version) - Retrieve a specific version of an agent.
+* [create_version_alias](#create_version_alias) - Create or update an agent version alias.
+* [list_version_aliases](#list_version_aliases) - List all aliases for an agent.
 
 ## create
 
@@ -116,7 +118,7 @@ with Mistral(
 
 ## get
 
-Given an agent retrieve an agent entity with its attributes.
+Given an agent, retrieve an agent entity with its attributes. The agent_version parameter can be an integer version number or a string alias.
 
 ### Example Usage
 
@@ -139,11 +141,11 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `agent_version`                                                     | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `agent_id`                                                                                | *str*                                                                                     | :heavy_check_mark:                                                                        | N/A                                                                                       |
+| `agent_version`                                                                           | [OptionalNullable[models.QueryParamAgentVersion]](../../models/queryparamagentversion.md) | :heavy_minus_sign:                                                                        | N/A                                                                                       |
+| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
 
 ### Response
 
@@ -337,7 +339,7 @@ Get a specific agent version by version number.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get_version" method="get" path="/v1/agents/{agent_id}/version/{version}" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get_version" method="get" path="/v1/agents/{agent_id}/versions/{version}" -->
 ```python
 from mistralai import Mistral
 import os
@@ -347,7 +349,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.agents.get_version(agent_id="<id>", version=788393)
+    res = mistral.beta.agents.get_version(agent_id="<id>", version="788393")
 
     # Handle response
     print(res)
@@ -359,12 +361,96 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `version`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
 **[models.Agent](../../models/agent.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## create_version_alias
+
+Create a new alias or update an existing alias to point to a specific version. Aliases are unique per agent and can be reassigned to different versions.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create_or_update_alias" method="put" path="/v1/agents/{agent_id}/aliases" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.agents.create_version_alias(agent_id="<id>", alias="<value>", version=595141)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `alias`                                                             | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.AgentAliasResponse](../../models/agentaliasresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## list_version_aliases
+
+Retrieve all version aliases for a specific agent.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list_version_aliases" method="get" path="/v1/agents/{agent_id}/aliases" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.agents.list_version_aliases(agent_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[List[models.AgentAliasResponse]](../../models/.md)**
 
 ### Errors
 

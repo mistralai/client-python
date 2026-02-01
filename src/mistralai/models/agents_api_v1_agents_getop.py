@@ -4,12 +4,21 @@ from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+QueryParamAgentVersionTypedDict = TypeAliasType(
+    "QueryParamAgentVersionTypedDict", Union[int, str]
+)
+
+
+QueryParamAgentVersion = TypeAliasType("QueryParamAgentVersion", Union[int, str])
 
 
 class AgentsAPIV1AgentsGetRequestTypedDict(TypedDict):
     agent_id: str
-    agent_version: NotRequired[Nullable[int]]
+    agent_version: NotRequired[Nullable[QueryParamAgentVersionTypedDict]]
 
 
 class AgentsAPIV1AgentsGetRequest(BaseModel):
@@ -18,7 +27,7 @@ class AgentsAPIV1AgentsGetRequest(BaseModel):
     ]
 
     agent_version: Annotated[
-        OptionalNullable[int],
+        OptionalNullable[QueryParamAgentVersion],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 

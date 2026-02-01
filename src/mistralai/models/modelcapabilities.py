@@ -16,6 +16,7 @@ class ModelCapabilitiesTypedDict(TypedDict):
     classification: NotRequired[bool]
     moderation: NotRequired[bool]
     audio: NotRequired[bool]
+    audio_transcription: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
@@ -36,3 +37,5 @@ class ModelCapabilities(BaseModel):
     moderation: Optional[bool] = False
 
     audio: Optional[bool] = False
+
+    audio_transcription: Optional[bool] = False

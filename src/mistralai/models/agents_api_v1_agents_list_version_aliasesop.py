@@ -6,16 +6,11 @@ from mistralai.utils import FieldMetadata, PathParamMetadata
 from typing_extensions import Annotated, TypedDict
 
 
-class AgentsAPIV1AgentsGetVersionRequestTypedDict(TypedDict):
+class AgentsAPIV1AgentsListVersionAliasesRequestTypedDict(TypedDict):
     agent_id: str
-    version: str
 
 
-class AgentsAPIV1AgentsGetVersionRequest(BaseModel):
+class AgentsAPIV1AgentsListVersionAliasesRequest(BaseModel):
     agent_id: Annotated[
-        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
-    ]
-
-    version: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]

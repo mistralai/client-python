@@ -241,6 +241,7 @@ class Files(BaseSDK):
         source: OptionalNullable[List[models_source.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -257,6 +258,7 @@ class Files(BaseSDK):
         :param source:
         :param search:
         :param purpose:
+        :param mimetypes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -280,6 +282,7 @@ class Files(BaseSDK):
             source=source,
             search=search,
             purpose=purpose,
+            mimetypes=mimetypes,
         )
 
         req = self._build_request(
@@ -343,6 +346,7 @@ class Files(BaseSDK):
         source: OptionalNullable[List[models_source.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -359,6 +363,7 @@ class Files(BaseSDK):
         :param source:
         :param search:
         :param purpose:
+        :param mimetypes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -382,6 +387,7 @@ class Files(BaseSDK):
             source=source,
             search=search,
             purpose=purpose,
+            mimetypes=mimetypes,
         )
 
         req = self._build_request_async(

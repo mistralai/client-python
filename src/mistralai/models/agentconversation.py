@@ -4,11 +4,21 @@ from __future__ import annotations
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Any, Dict, Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 AgentConversationObject = Literal["conversation",]
+
+
+AgentConversationAgentVersionTypedDict = TypeAliasType(
+    "AgentConversationAgentVersionTypedDict", Union[str, int]
+)
+
+
+AgentConversationAgentVersion = TypeAliasType(
+    "AgentConversationAgentVersion", Union[str, int]
+)
 
 
 class AgentConversationTypedDict(TypedDict):
@@ -23,7 +33,7 @@ class AgentConversationTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
     object: NotRequired[AgentConversationObject]
-    agent_version: NotRequired[Nullable[int]]
+    agent_version: NotRequired[Nullable[AgentConversationAgentVersionTypedDict]]
 
 
 class AgentConversation(BaseModel):
@@ -46,7 +56,7 @@ class AgentConversation(BaseModel):
 
     object: Optional[AgentConversationObject] = "conversation"
 
-    agent_version: OptionalNullable[int] = UNSET
+    agent_version: OptionalNullable[AgentConversationAgentVersion] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

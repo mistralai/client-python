@@ -259,7 +259,12 @@ class Conversations(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrequest.AgentVersion,
+                models_conversationrequest.AgentVersionTypedDict,
+            ]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -405,7 +410,12 @@ class Conversations(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrequest.AgentVersion,
+                models_conversationrequest.AgentVersionTypedDict,
+            ]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1711,7 +1721,12 @@ class Conversations(BaseSDK):
             ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrestartrequest.ConversationRestartRequestAgentVersion,
+                models_conversationrestartrequest.ConversationRestartRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1846,7 +1861,12 @@ class Conversations(BaseSDK):
             ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrestartrequest.ConversationRestartRequestAgentVersion,
+                models_conversationrestartrequest.ConversationRestartRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1991,7 +2011,12 @@ class Conversations(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationstreamrequest.ConversationStreamRequestAgentVersion,
+                models_conversationstreamrequest.ConversationStreamRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2148,7 +2173,12 @@ class Conversations(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationstreamrequest.ConversationStreamRequestAgentVersion,
+                models_conversationstreamrequest.ConversationStreamRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2561,7 +2591,12 @@ class Conversations(BaseSDK):
             ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersion,
+                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2703,7 +2738,12 @@ class Conversations(BaseSDK):
             ]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[int] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersion,
+                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

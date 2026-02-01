@@ -48,6 +48,16 @@ ConversationStreamRequestTools = Annotated[
 ]
 
 
+ConversationStreamRequestAgentVersionTypedDict = TypeAliasType(
+    "ConversationStreamRequestAgentVersionTypedDict", Union[str, int]
+)
+
+
+ConversationStreamRequestAgentVersion = TypeAliasType(
+    "ConversationStreamRequestAgentVersion", Union[str, int]
+)
+
+
 class ConversationStreamRequestTypedDict(TypedDict):
     inputs: ConversationInputsTypedDict
     stream: NotRequired[bool]
@@ -61,7 +71,7 @@ class ConversationStreamRequestTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     agent_id: NotRequired[Nullable[str]]
-    agent_version: NotRequired[Nullable[int]]
+    agent_version: NotRequired[Nullable[ConversationStreamRequestAgentVersionTypedDict]]
     model: NotRequired[Nullable[str]]
 
 
@@ -91,7 +101,7 @@ class ConversationStreamRequest(BaseModel):
 
     agent_id: OptionalNullable[str] = UNSET
 
-    agent_version: OptionalNullable[int] = UNSET
+    agent_version: OptionalNullable[ConversationStreamRequestAgentVersion] = UNSET
 
     model: OptionalNullable[str] = UNSET
 
