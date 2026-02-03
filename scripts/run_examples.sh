@@ -6,12 +6,8 @@ RETRY_COUNT=3
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --no-extra-dep)
-            NO_EXTRA_DEP=true
-            shift
-            ;;
         --retry-count)
-            RETRY_COUNT="$2"
+            RETRY_COUNT="$1"
             shift 2
             ;;
         --help)
@@ -43,16 +39,6 @@ exclude_files=(
  "examples/mistral/audio/async_realtime_transcription_microphone.py"
  "examples/mistral/audio/async_realtime_transcription_stream.py"
 )
-
-# Check if the no-extra-dep flag is set
-if [ "$NO_EXTRA_DEP" = true ]; then
-    # Add more files to the exclude list
-    exclude_files+=(
-      "examples/mistral/agents/async_conversation_run_stream.py"
-      "examples/mistral/agents/async_conversation_run.py"
-      "examples/mistral/agents/async_multi_turn_conversation.py"
-    )
-fi
 
 failed=0
 
