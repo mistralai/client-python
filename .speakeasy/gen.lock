@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: cc385dce976ac06e6d062e992f0ee380
+  docChecksum: e4b3b07fe28f4666261325e923d6c5d9
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
@@ -11,9 +11,9 @@ management:
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 8b0735b6-5924-48f1-ade2-47cb374c76bc
-  pristine_commit_hash: a9971b936f50486e2e4ceef95d0b2c4708633219
-  pristine_tree_hash: 51b8a57de0bf62da607fe0023eec1124458ebee9
+  generation_id: 00cab5ea-60fa-456d-ad3f-1ae32427d619
+  pristine_commit_hash: b6e4b5c0cd6a42df18b2e7aa44ac696d48576d06
+  pristine_tree_hash: b358b046bcef8a5f9b8898d98a4d9fbf82b52e6e
 features:
   python:
     additionalDependencies: 1.0.0
@@ -293,12 +293,12 @@ trackedFiles:
     pristine_git_object: d174ab9959cadde659f76db94ed87c743e0f6783
   docs/models/audiotranscriptionrequest.md:
     id: ebf59641bc84
-    last_write_checksum: sha1:b76d6e7ee3f1a0ca96e1064db61896e287027711
-    pristine_git_object: f2e17dd35eda24a48b0c105ecce63a73d754e051
+    last_write_checksum: sha1:c55c97a06726812323a031897beffbb160021c05
+    pristine_git_object: d7f5bd51b1289f0eb481d86a71bb483ee50bbc40
   docs/models/audiotranscriptionrequeststream.md:
     id: 79b5f721b753
-    last_write_checksum: sha1:e8fc60f874bb7e8ee03c4e05bdf88b2db1afbfaf
-    pristine_git_object: 975e437a299efb27c069812f424a0107999de640
+    last_write_checksum: sha1:df6825c05b5a02dcf904ebaa40fb97e9186248cc
+    pristine_git_object: 5d64964d1a635da912f2553c306fb8654ebfca2e
   docs/models/basemodelcard.md:
     id: 2f62bfbd650e
     last_write_checksum: sha1:7ee94bd9ceb6af84024863aa8183540bee7ffcce
@@ -1533,8 +1533,8 @@ trackedFiles:
     pristine_git_object: c7a0d5c9811ea37aaf9e16b6e93c833ab979573f
   docs/models/timestampgranularity.md:
     id: eb4d5a8e6f08
-    last_write_checksum: sha1:c2134d9f1f96d4eef48cedfe2b93eb061d5ea47f
-    pristine_git_object: 0d2a8054590463a167f69c36c00b8f2fc3c7906d
+    last_write_checksum: sha1:e256a5e8c6010d500841295b89d88d0eface3b88
+    pristine_git_object: d20012ea9925446c16c9162304642ba48391d34d
   docs/models/tool.md:
     id: 8966139dbeed
     last_write_checksum: sha1:1725bf53fc9f1ca3f332322d91de24c9d58adc6a
@@ -1653,8 +1653,8 @@ trackedFiles:
     pristine_git_object: 1bc0189c5d1833c946a71c9773346e21b08d2404
   docs/models/transcriptionsegmentchunk.md:
     id: f09db8b2273e
-    last_write_checksum: sha1:c94ef1aa3dc2568ec77d186fa9061598f0ebccf1
-    pristine_git_object: bebc9f72f521cf9cbd1818d53239cd632a025a31
+    last_write_checksum: sha1:b89ee132a3c63e56806f3f395c98a9e7e5e9c7d0
+    pristine_git_object: f620b96a75a0b9c6e015ae1f460dcccb80d113ee
   docs/models/transcriptionstreamdone.md:
     id: 2253923d93cf
     last_write_checksum: sha1:043ebcd284007f8c8536f2726ec5f525abffeb6b
@@ -1685,8 +1685,8 @@ trackedFiles:
     pristine_git_object: e93521e10d43299676f44c8297608cc94c6106e6
   docs/models/transcriptionstreamsegmentdelta.md:
     id: f59c3fb696f2
-    last_write_checksum: sha1:d44b6c1359c0ed504f97edb46b3acf0145967fe7
-    pristine_git_object: 3deeedf067c833cae8df1ab366a2e54b3f9e9186
+    last_write_checksum: sha1:4d03e881a4ad9c3bed6075bb8e25d00af391652c
+    pristine_git_object: 2ab32f9783f6645bba7603279c03db4465c70fff
   docs/models/transcriptionstreamsegmentdeltatype.md:
     id: 03ee222a3afd
     last_write_checksum: sha1:d02b5f92cf2d8182aeaa8dd3428b988ab4fc0fad
@@ -1841,8 +1841,8 @@ trackedFiles:
     pristine_git_object: efcb99314c7d07a3dc556c297333046fc5d9e097
   docs/sdks/transcriptions/README.md:
     id: 089cf94ecf47
-    last_write_checksum: sha1:fdf785e4cbab20aec41122735435a38f582f7f29
-    pristine_git_object: 3243258c4debd94e10c98c2b18dcc47838143a5b
+    last_write_checksum: sha1:01e68371b7a94cb35d6435efd3ef9247e8c27a94
+    pristine_git_object: dabab00e85a3f480c8dc3dd7b792e68420ae08b6
   py.typed:
     id: 258c3ed47ae4
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -1881,8 +1881,8 @@ trackedFiles:
     pristine_git_object: 73e4ee3c885f7c3472a9dc5c0546c02d4e19a1c4
   src/mistralai/audio.py:
     id: c398f6a11e24
-    last_write_checksum: sha1:11f9713b4f970509cffe0e6122c61f9aeafc9e73
-    pristine_git_object: 5687abdb5676903661a33a3bee115f289f5fe9df
+    last_write_checksum: sha1:aa75fa00e00d8059121d8de60844d70d50203661
+    pristine_git_object: 3de29053f34654907c423ca6600f216f6b0dcbe0
   src/mistralai/basesdk.py:
     id: 3127264590ce
     last_write_checksum: sha1:5340f1c5976fd87d3b17b285535b63bbbe7db120
@@ -2089,12 +2089,12 @@ trackedFiles:
     pristine_git_object: 48ab648c3525fcc9fe1c722b7beee0f649e30e7a
   src/mistralai/models/audiotranscriptionrequest.py:
     id: 4c6a6fee484a
-    last_write_checksum: sha1:d8fb192581056b4ae053f9e6919874850462cb03
-    pristine_git_object: 308e2599f4ba8878b0fc20ee2660289b55ae7c9a
+    last_write_checksum: sha1:8dd41335ffd46dd1099bdb20baac32d043c5936c
+    pristine_git_object: 86417b4235292de3ab1d2b46116ce0ba94010087
   src/mistralai/models/audiotranscriptionrequeststream.py:
     id: 863eca721e72
-    last_write_checksum: sha1:a7ec74e5e05a705f2d61d1fe8a635178bcea3cd6
-    pristine_git_object: 04374503f931f3964851d09def70535276bdf194
+    last_write_checksum: sha1:010618236f3da1c99d63d334266622cf84e6b09f
+    pristine_git_object: 1f4087e8d33c8a3560d5ce58f2a1a7bc4627556b
   src/mistralai/models/basemodelcard.py:
     id: 5554644ee6f2
     last_write_checksum: sha1:aa5af32cda04d45bcdf2c8fb380529c4fbc828aa
@@ -2869,8 +2869,8 @@ trackedFiles:
     pristine_git_object: 627ae4883698696774b7a285a73326a4509c6828
   src/mistralai/models/timestampgranularity.py:
     id: e0cb6c4efa2a
-    last_write_checksum: sha1:2b554048013632407c391444d972e29362751468
-    pristine_git_object: 02816df67dd326a17d27dc815c49c6e1172693b8
+    last_write_checksum: sha1:68ea11a4e27f23b2fcc976d0a8eeb95f6f28ba85
+    pristine_git_object: 5bda890f500228ba0c3dc234edf09906b88cb522
   src/mistralai/models/tool.py:
     id: c0a9b60b6cf1
     last_write_checksum: sha1:805030012b6cf4d6159c1515b44e1c999ea2349a
@@ -2929,8 +2929,8 @@ trackedFiles:
     pristine_git_object: 54a98a5ba7b83a6b7f6a39046b400a61e9889898
   src/mistralai/models/transcriptionsegmentchunk.py:
     id: ccd6d5675b49
-    last_write_checksum: sha1:367abd8a8182d9db9f2b19540aed2b974ad7bbe2
-    pristine_git_object: aa30f053a624b25c7fd1739c05f406a81873ff60
+    last_write_checksum: sha1:01b1c1c52a1e324c8f874586cdd0349fed35443c
+    pristine_git_object: 40ad20b3abc2f0b2c0d2d695ba89237f66cc0b2b
   src/mistralai/models/transcriptionstreamdone.py:
     id: 42177659bf0f
     last_write_checksum: sha1:5fda2b766b2af41749006835e45c95f708eddb28
@@ -2949,8 +2949,8 @@ trackedFiles:
     pristine_git_object: 15b7514415e536bb04fd1a69ccea20615b5b1fcf
   src/mistralai/models/transcriptionstreamsegmentdelta.py:
     id: 83d02b065099
-    last_write_checksum: sha1:1f48714d450fff004f9cf24b81749848240fe722
-    pristine_git_object: d779ed837913c8c13a4599a06a2ed75afa827a48
+    last_write_checksum: sha1:3f70d4d58d8fedb784d056425662e7dc2f9ed244
+    pristine_git_object: 550c83e7073bc99fdac6a0d59c5c30daa9d35f43
   src/mistralai/models/transcriptionstreamtextdelta.py:
     id: ce0861d8affd
     last_write_checksum: sha1:84a3b6c6d84a896e59e2874de59d812d3db657a5
@@ -3017,8 +3017,8 @@ trackedFiles:
     pristine_git_object: 7e77925ddc9aa01c4e5f8ba2ca52aa7f32e89859
   src/mistralai/transcriptions.py:
     id: ba6b040274f2
-    last_write_checksum: sha1:079bcd1c4a6b1d74e97cc6d77bccf4eea1232cd7
-    pristine_git_object: bdbeb1ccbb938c825e5c3371a0f761a90a6e17b8
+    last_write_checksum: sha1:0cd336f14cccb581ff955feaf8bc6f7df185f27b
+    pristine_git_object: 90f2e58a3677e922cb5c8aac4b30d5e697ef2f05
   src/mistralai/types/__init__.py:
     id: b89b8375c971
     last_write_checksum: sha1:140ebdd01a46f92ffc710c52c958c4eba3cf68ed
@@ -3824,14 +3824,14 @@ examples:
           application/json: {"model": "Beetle", "text": "<value>", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "language": "<value>"}
     userExample:
       requestBody:
-        multipart/form-data: {"model": "voxtral-mini-latest", "stream": false}
+        multipart/form-data: {"model": "voxtral-mini-latest", "stream": false, "diarize": false}
       responses:
         "200":
           application/json: {"model": "voxtral-mini-2507", "text": "This week, I traveled to Chicago to deliver my final farewell address to the nation, following in the tradition of presidents before me. It was an opportunity to say thank you. Whether we've seen eye to eye or rarely agreed at all, my conversations with you, the American people, in living rooms, in schools, at farms and on factory floors, at diners and on distant military outposts, All these conversations are what have kept me honest, kept me inspired, and kept me going. Every day, I learned from you. You made me a better President, and you made me a better man.\nOver the course of these eight years, I've seen the goodness, the resilience, and the hope of the American people. I've seen neighbors looking out for each other as we rescued our economy from the worst crisis of our lifetimes. I've hugged cancer survivors who finally know the security of affordable health care. I've seen communities like Joplin rebuild from disaster, and cities like Boston show the world that no terrorist will ever break the American spirit. I've seen the hopeful faces of young graduates and our newest military officers. I've mourned with grieving families searching for answers. And I found grace in a Charleston church. I've seen our scientists help a paralyzed man regain his sense of touch, and our wounded warriors walk again. I've seen our doctors and volunteers rebuild after earthquakes and stop pandemics in their tracks. I've learned from students who are building robots and curing diseases, and who will change the world in ways we can't even imagine. I've seen the youngest of children remind us of our obligations to care for our refugees, to work in peace, and above all, to look out for each other.\nThat's what's possible when we come together in the slow, hard, sometimes frustrating, but always vital work of self-government. But we can't take our democracy for granted. All of us, regardless of party, should throw ourselves into the work of citizenship. Not just when there is an election. Not just when our own narrow interest is at stake. But over the full span of a lifetime. If you're tired of arguing with strangers on the Internet, try to talk with one in real life. If something needs fixing, lace up your shoes and do some organizing. If you're disappointed by your elected officials, then grab a clipboard, get some signatures, and run for office yourself.\nOur success depends on our participation, regardless of which way the pendulum of power swings. It falls on each of us to be guardians of our democracy, to embrace the joyous task we've been given to continually try to improve this great nation of ours. Because for all our outward differences, we all share the same proud title – citizen.\nIt has been the honor of my life to serve you as President. Eight years later, I am even more optimistic about our country's promise. And I look forward to working along your side as a citizen for all my days that remain.\nThanks, everybody. God bless you. And God bless the United States of America.\n", "segments": [], "usage": {"prompt_tokens": 4, "completion_tokens": 635, "total_tokens": 3264, "prompt_audio_seconds": 203}, "language": "en"}
   audio_api_v1_transcriptions_post_stream:
     speakeasy-default-audio-api-v1-transcriptions-post-stream:
       requestBody:
-        multipart/form-data: {"model": "Camry", "stream": true}
+        multipart/form-data: {"model": "Camry", "stream": true, "diarize": false}
   agents_api_v1_conversations_delete:
     speakeasy-default-agents-api-v1-conversations-delete:
       parameters:
@@ -3897,21 +3897,6 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `mistral.beta.conversations.restart_stream()`:  `request.agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.conversations.start()`:  `request.agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.conversations.list()`:  `response.[].[agent_conversation].agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.conversations.get()`:  `response.[agent_conversation].agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.conversations.restart()`:  `request.agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.conversations.start_stream()`:  `request.agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.agents.get()`:  `request.agent_version` **Changed** **Breaking** :warning:
-  * `mistral.beta.agents.get_version()`:  `request.version` **Changed** **Breaking** :warning:
-  * `mistral.beta.agents.list_version_aliases()`: **Added**
-  * `mistral.models.list()`:  `response.data.[].[fine-tuned].capabilities.audio_transcription` **Added**
-  * `mistral.models.retrieve()`:  `response.[base].capabilities.audio_transcription` **Added**
-  * `mistral.beta.agents.create_version_alias()`: **Added**
-  * `mistral.files.list()`:  `request.mimetypes` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

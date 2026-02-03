@@ -605,6 +605,7 @@ dev = [
     { name = "types-authlib" },
     { name = "types-python-dateutil" },
     { name = "types-pyyaml" },
+    { name = "websockets" },
 ]
 lint = [
     { name = "mypy" },
@@ -646,6 +647,7 @@ dev = [
     { name = "types-authlib", specifier = ">=1.5.0.20250516,<2" },
     { name = "types-python-dateutil", specifier = ">=2.9.0.20240316,<3" },
     { name = "types-pyyaml", specifier = ">=6.0.12.20250516,<7" },
+    { name = "websockets", specifier = ">=13.0" },
 ]
 lint = [
     { name = "mypy", specifier = "==1.15.0" },

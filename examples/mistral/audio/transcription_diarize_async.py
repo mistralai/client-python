@@ -2,15 +2,17 @@
 
 import os
 import asyncio
+import pathlib
 from mistralai import Mistral, File
 
+fixture_dir = pathlib.Path(__file__).parents[2] / "fixtures"
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
     model = "voxtral-mini-2602"
 
     client = Mistral(api_key=api_key)
-    with open("examples/fixtures/bcn_weather.mp3", "rb") as f:
+    with open(fixture_dir / "bcn_weather.mp3", "rb") as f:
         response = await client.audio.transcriptions.complete_async(
             model=model,
             file=File(content=f, file_name=f.name),

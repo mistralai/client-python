@@ -6,3 +6,4 @@
 | Name      | Value     |
 | --------- | --------- |
 | `SEGMENT` | segment   |
+| `WORD`    | word      |
