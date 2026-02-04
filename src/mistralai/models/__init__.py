@@ -14,8 +14,11 @@ if TYPE_CHECKING:
         AgentToolsTypedDict,
         AgentTypedDict,
     )
+    from .agentaliasresponse import AgentAliasResponse, AgentAliasResponseTypedDict
     from .agentconversation import (
         AgentConversation,
+        AgentConversationAgentVersion,
+        AgentConversationAgentVersionTypedDict,
         AgentConversationObject,
         AgentConversationTypedDict,
     )
@@ -41,6 +44,10 @@ if TYPE_CHECKING:
         AgentHandoffStartedEventType,
         AgentHandoffStartedEventTypedDict,
     )
+    from .agents_api_v1_agents_create_or_update_aliasop import (
+        AgentsAPIV1AgentsCreateOrUpdateAliasRequest,
+        AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict,
+    )
     from .agents_api_v1_agents_deleteop import (
         AgentsAPIV1AgentsDeleteRequest,
         AgentsAPIV1AgentsDeleteRequestTypedDict,
@@ -52,6 +59,12 @@ if TYPE_CHECKING:
     from .agents_api_v1_agents_getop import (
         AgentsAPIV1AgentsGetRequest,
         AgentsAPIV1AgentsGetRequestTypedDict,
+        QueryParamAgentVersion,
+        QueryParamAgentVersionTypedDict,
+    )
+    from .agents_api_v1_agents_list_version_aliasesop import (
+        AgentsAPIV1AgentsListVersionAliasesRequest,
+        AgentsAPIV1AgentsListVersionAliasesRequestTypedDict,
     )
     from .agents_api_v1_agents_list_versionsop import (
         AgentsAPIV1AgentsListVersionsRequest,
@@ -340,6 +353,8 @@ if TYPE_CHECKING:
         ConversationMessagesTypedDict,
     )
     from .conversationrequest import (
+        AgentVersion,
+        AgentVersionTypedDict,
         ConversationRequest,
         ConversationRequestTypedDict,
         HandoffExecution,
@@ -355,16 +370,22 @@ if TYPE_CHECKING:
     )
     from .conversationrestartrequest import (
         ConversationRestartRequest,
+        ConversationRestartRequestAgentVersion,
+        ConversationRestartRequestAgentVersionTypedDict,
         ConversationRestartRequestHandoffExecution,
         ConversationRestartRequestTypedDict,
     )
     from .conversationrestartstreamrequest import (
         ConversationRestartStreamRequest,
+        ConversationRestartStreamRequestAgentVersion,
+        ConversationRestartStreamRequestAgentVersionTypedDict,
         ConversationRestartStreamRequestHandoffExecution,
         ConversationRestartStreamRequestTypedDict,
     )
     from .conversationstreamrequest import (
         ConversationStreamRequest,
+        ConversationStreamRequestAgentVersion,
+        ConversationStreamRequestAgentVersionTypedDict,
         ConversationStreamRequestHandoffExecution,
         ConversationStreamRequestTools,
         ConversationStreamRequestToolsTypedDict,
@@ -758,6 +779,28 @@ if TYPE_CHECKING:
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatusout import ProcessingStatusOut, ProcessingStatusOutTypedDict
+    from .realtimetranscriptionerror import (
+        RealtimeTranscriptionError,
+        RealtimeTranscriptionErrorTypedDict,
+    )
+    from .realtimetranscriptionerrordetail import (
+        Message,
+        MessageTypedDict,
+        RealtimeTranscriptionErrorDetail,
+        RealtimeTranscriptionErrorDetailTypedDict,
+    )
+    from .realtimetranscriptionsession import (
+        RealtimeTranscriptionSession,
+        RealtimeTranscriptionSessionTypedDict,
+    )
+    from .realtimetranscriptionsessioncreated import (
+        RealtimeTranscriptionSessionCreated,
+        RealtimeTranscriptionSessionCreatedTypedDict,
+    )
+    from .realtimetranscriptionsessionupdated import (
+        RealtimeTranscriptionSessionUpdated,
+        RealtimeTranscriptionSessionUpdatedTypedDict,
+    )
     from .referencechunk import (
         ReferenceChunk,
         ReferenceChunkType,
@@ -951,7 +994,11 @@ if TYPE_CHECKING:
 __all__ = [
     "APIEndpoint",
     "Agent",
+    "AgentAliasResponse",
+    "AgentAliasResponseTypedDict",
     "AgentConversation",
+    "AgentConversationAgentVersion",
+    "AgentConversationAgentVersionTypedDict",
     "AgentConversationObject",
     "AgentConversationTypedDict",
     "AgentCreationRequest",
@@ -976,6 +1023,10 @@ __all__ = [
     "AgentUpdateRequestTools",
     "AgentUpdateRequestToolsTypedDict",
     "AgentUpdateRequestTypedDict",
+    "AgentVersion",
+    "AgentVersionTypedDict",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequest",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict",
     "AgentsAPIV1AgentsDeleteRequest",
     "AgentsAPIV1AgentsDeleteRequestTypedDict",
     "AgentsAPIV1AgentsGetRequest",
@@ -984,6 +1035,8 @@ __all__ = [
     "AgentsAPIV1AgentsGetVersionRequestTypedDict",
     "AgentsAPIV1AgentsListRequest",
     "AgentsAPIV1AgentsListRequestTypedDict",
+    "AgentsAPIV1AgentsListVersionAliasesRequest",
+    "AgentsAPIV1AgentsListVersionAliasesRequestTypedDict",
     "AgentsAPIV1AgentsListVersionsRequest",
     "AgentsAPIV1AgentsListVersionsRequestTypedDict",
     "AgentsAPIV1AgentsUpdateRequest",
@@ -1184,12 +1237,18 @@ __all__ = [
     "ConversationResponseObject",
     "ConversationResponseTypedDict",
     "ConversationRestartRequest",
+    "ConversationRestartRequestAgentVersion",
+    "ConversationRestartRequestAgentVersionTypedDict",
     "ConversationRestartRequestHandoffExecution",
     "ConversationRestartRequestTypedDict",
     "ConversationRestartStreamRequest",
+    "ConversationRestartStreamRequestAgentVersion",
+    "ConversationRestartStreamRequestAgentVersionTypedDict",
     "ConversationRestartStreamRequestHandoffExecution",
     "ConversationRestartStreamRequestTypedDict",
     "ConversationStreamRequest",
+    "ConversationStreamRequestAgentVersion",
+    "ConversationStreamRequestAgentVersionTypedDict",
     "ConversationStreamRequestHandoffExecution",
     "ConversationStreamRequestTools",
     "ConversationStreamRequestToolsTypedDict",
@@ -1431,6 +1490,7 @@ __all__ = [
     "ListSharingOutTypedDict",
     "Loc",
     "LocTypedDict",
+    "Message",
     "MessageEntries",
     "MessageEntriesTypedDict",
     "MessageInputContentChunks",
@@ -1456,6 +1516,7 @@ __all__ = [
     "MessageOutputEventRole",
     "MessageOutputEventType",
     "MessageOutputEventTypedDict",
+    "MessageTypedDict",
     "Messages",
     "MessagesTypedDict",
     "MetricOut",
@@ -1506,7 +1567,19 @@ __all__ = [
     "PredictionTypedDict",
     "ProcessingStatusOut",
     "ProcessingStatusOutTypedDict",
+    "QueryParamAgentVersion",
+    "QueryParamAgentVersionTypedDict",
     "QueryParamStatus",
+    "RealtimeTranscriptionError",
+    "RealtimeTranscriptionErrorDetail",
+    "RealtimeTranscriptionErrorDetailTypedDict",
+    "RealtimeTranscriptionErrorTypedDict",
+    "RealtimeTranscriptionSession",
+    "RealtimeTranscriptionSessionCreated",
+    "RealtimeTranscriptionSessionCreatedTypedDict",
+    "RealtimeTranscriptionSessionTypedDict",
+    "RealtimeTranscriptionSessionUpdated",
+    "RealtimeTranscriptionSessionUpdatedTypedDict",
     "ReferenceChunk",
     "ReferenceChunkType",
     "ReferenceChunkTypedDict",
@@ -1675,7 +1748,11 @@ _dynamic_imports: dict[str, str] = {
     "AgentTools": ".agent",
     "AgentToolsTypedDict": ".agent",
     "AgentTypedDict": ".agent",
+    "AgentAliasResponse": ".agentaliasresponse",
+    "AgentAliasResponseTypedDict": ".agentaliasresponse",
     "AgentConversation": ".agentconversation",
+    "AgentConversationAgentVersion": ".agentconversation",
+    "AgentConversationAgentVersionTypedDict": ".agentconversation",
     "AgentConversationObject": ".agentconversation",
     "AgentConversationTypedDict": ".agentconversation",
     "AgentCreationRequest": ".agentcreationrequest",
@@ -1692,12 +1769,18 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventType": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequest": ".agents_api_v1_agents_create_or_update_aliasop",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict": ".agents_api_v1_agents_create_or_update_aliasop",
     "AgentsAPIV1AgentsDeleteRequest": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsDeleteRequestTypedDict": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsGetVersionRequest": ".agents_api_v1_agents_get_versionop",
     "AgentsAPIV1AgentsGetVersionRequestTypedDict": ".agents_api_v1_agents_get_versionop",
     "AgentsAPIV1AgentsGetRequest": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsGetRequestTypedDict": ".agents_api_v1_agents_getop",
+    "QueryParamAgentVersion": ".agents_api_v1_agents_getop",
+    "QueryParamAgentVersionTypedDict": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsListVersionAliasesRequest": ".agents_api_v1_agents_list_version_aliasesop",
+    "AgentsAPIV1AgentsListVersionAliasesRequestTypedDict": ".agents_api_v1_agents_list_version_aliasesop",
     "AgentsAPIV1AgentsListVersionsRequest": ".agents_api_v1_agents_list_versionsop",
     "AgentsAPIV1AgentsListVersionsRequestTypedDict": ".agents_api_v1_agents_list_versionsop",
     "AgentsAPIV1AgentsListRequest": ".agents_api_v1_agents_listop",
@@ -1913,6 +1996,8 @@ _dynamic_imports: dict[str, str] = {
     "ConversationMessages": ".conversationmessages",
     "ConversationMessagesObject": ".conversationmessages",
     "ConversationMessagesTypedDict": ".conversationmessages",
+    "AgentVersion": ".conversationrequest",
+    "AgentVersionTypedDict": ".conversationrequest",
     "ConversationRequest": ".conversationrequest",
     "ConversationRequestTypedDict": ".conversationrequest",
     "HandoffExecution": ".conversationrequest",
@@ -1924,12 +2009,18 @@ _dynamic_imports: dict[str, str] = {
     "Outputs": ".conversationresponse",
     "OutputsTypedDict": ".conversationresponse",
     "ConversationRestartRequest": ".conversationrestartrequest",
+    "ConversationRestartRequestAgentVersion": ".conversationrestartrequest",
+    "ConversationRestartRequestAgentVersionTypedDict": ".conversationrestartrequest",
     "ConversationRestartRequestHandoffExecution": ".conversationrestartrequest",
     "ConversationRestartRequestTypedDict": ".conversationrestartrequest",
     "ConversationRestartStreamRequest": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestAgentVersion": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestAgentVersionTypedDict": ".conversationrestartstreamrequest",
     "ConversationRestartStreamRequestHandoffExecution": ".conversationrestartstreamrequest",
     "ConversationRestartStreamRequestTypedDict": ".conversationrestartstreamrequest",
     "ConversationStreamRequest": ".conversationstreamrequest",
+    "ConversationStreamRequestAgentVersion": ".conversationstreamrequest",
+    "ConversationStreamRequestAgentVersionTypedDict": ".conversationstreamrequest",
     "ConversationStreamRequestHandoffExecution": ".conversationstreamrequest",
     "ConversationStreamRequestTools": ".conversationstreamrequest",
     "ConversationStreamRequestToolsTypedDict": ".conversationstreamrequest",
@@ -2237,6 +2328,18 @@ _dynamic_imports: dict[str, str] = {
     "PredictionTypedDict": ".prediction",
     "ProcessingStatusOut": ".processingstatusout",
     "ProcessingStatusOutTypedDict": ".processingstatusout",
+    "RealtimeTranscriptionError": ".realtimetranscriptionerror",
+    "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
+    "Message": ".realtimetranscriptionerrordetail",
+    "MessageTypedDict": ".realtimetranscriptionerrordetail",
+    "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
+    "RealtimeTranscriptionErrorDetailTypedDict": ".realtimetranscriptionerrordetail",
+    "RealtimeTranscriptionSession": ".realtimetranscriptionsession",
+    "RealtimeTranscriptionSessionTypedDict": ".realtimetranscriptionsession",
+    "RealtimeTranscriptionSessionCreated": ".realtimetranscriptionsessioncreated",
+    "RealtimeTranscriptionSessionCreatedTypedDict": ".realtimetranscriptionsessioncreated",
+    "RealtimeTranscriptionSessionUpdated": ".realtimetranscriptionsessionupdated",
+    "RealtimeTranscriptionSessionUpdatedTypedDict": ".realtimetranscriptionsessionupdated",
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkType": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",

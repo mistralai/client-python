@@ -95,6 +95,7 @@ with Mistral(
 | `source`                                                            | List[[models.Source](../../models/source.md)]                       | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `purpose`                                                           | [OptionalNullable[models.FilePurpose]](../../models/filepurpose.md) | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `mimetypes`                                                         | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

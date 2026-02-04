@@ -23,6 +23,8 @@ class AudioTranscriptionRequestStreamTypedDict(TypedDict):
     r"""Language of the audio, e.g. 'en'. Providing the language can boost accuracy."""
     temperature: NotRequired[Nullable[float]]
     stream: Literal[True]
+    diarize: NotRequired[bool]
+    context_bias: NotRequired[List[str]]
     timestamp_granularities: NotRequired[List[TimestampGranularity]]
     r"""Granularities of timestamps to include in the response."""
 
@@ -53,6 +55,10 @@ class AudioTranscriptionRequestStream(BaseModel):
         FieldMetadata(multipart=True),
     ] = True
 
+    diarize: Annotated[Optional[bool], FieldMetadata(multipart=True)] = False
+
+    context_bias: Annotated[Optional[List[str]], FieldMetadata(multipart=True)] = None
+
     timestamp_granularities: Annotated[
         Optional[List[TimestampGranularity]], FieldMetadata(multipart=True)
     ] = None
@@ -67,6 +73,8 @@ class AudioTranscriptionRequestStream(BaseModel):
             "language",
             "temperature",
             "stream",
+            "diarize",
+            "context_bias",
             "timestamp_granularities",
         ]
         nullable_fields = ["file_url", "file_id", "language", "temperature"]

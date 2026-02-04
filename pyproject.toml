@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "1.11.1"
+version = "1.12.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
@@ -29,6 +29,9 @@ agents = [
     "griffe >=1.7.3,<2.0",
     "authlib >=1.5.2,<2.0",
 ]
+realtime = [
+    "websockets >=13.0",
+]
 
 [project.urls]
 Repository = "https://github.com/mistralai/client-python.git"
@@ -45,6 +48,7 @@ dev = [
     "mcp>=1.0,<2",
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
+    "websockets >=13.0",
 ]
 lint = [
     "ruff>=0.11.10,<0.12",
@@ -103,6 +107,7 @@ module = [
     "jsonpath.*",
     "typing_inspect.*",
     "authlib.*",
+    "websockets.*",
     "mcp.*",
     "griffe.*"
 ]

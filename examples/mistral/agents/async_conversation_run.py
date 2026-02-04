@@ -6,7 +6,7 @@ from mistralai import Mistral
 from mistralai.extra.run.context import RunContext
 from mistralai.types import BaseModel
 
-MODEL = "mistral-medium-latest"
+MODEL = "mistral-medium-2505"
 
 
 def math_question_generator(question_num: int):

@@ -5,14 +5,26 @@ from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Any, Dict, Literal, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ConversationRestartRequestHandoffExecution = Literal[
     "client",
     "server",
 ]
+
+
+ConversationRestartRequestAgentVersionTypedDict = TypeAliasType(
+    "ConversationRestartRequestAgentVersionTypedDict", Union[str, int]
+)
+r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
+
+
+ConversationRestartRequestAgentVersion = TypeAliasType(
+    "ConversationRestartRequestAgentVersion", Union[str, int]
+)
+r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
 
 
 class ConversationRestartRequestTypedDict(TypedDict):
@@ -28,7 +40,9 @@ class ConversationRestartRequestTypedDict(TypedDict):
     r"""White-listed arguments from the completion API"""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    agent_version: NotRequired[Nullable[int]]
+    agent_version: NotRequired[
+        Nullable[ConversationRestartRequestAgentVersionTypedDict]
+    ]
     r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
 
 
@@ -52,7 +66,7 @@ class ConversationRestartRequest(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    agent_version: OptionalNullable[int] = UNSET
+    agent_version: OptionalNullable[ConversationRestartRequestAgentVersion] = UNSET
     r"""Specific version of the agent to use when restarting. If not provided, uses the current version."""
 
     @model_serializer(mode="wrap")

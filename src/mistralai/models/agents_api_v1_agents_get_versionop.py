@@ -8,7 +8,7 @@ from typing_extensions import Annotated, TypedDict
 
 class AgentsAPIV1AgentsGetVersionRequestTypedDict(TypedDict):
     agent_id: str
-    version: int
+    version: str
 
 
 class AgentsAPIV1AgentsGetVersionRequest(BaseModel):
@@ -17,5 +17,5 @@ class AgentsAPIV1AgentsGetVersionRequest(BaseModel):
     ]
 
     version: Annotated[
-        int, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
