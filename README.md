@@ -982,6 +982,10 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 
 # Development
 
+# DeepWiki
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/mistralai/client-python)
+
 ## Contributions
 
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
