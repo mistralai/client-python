@@ -36,8 +36,10 @@ class JSONSchema(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            # Try alias first, then field name as fallback to handle both by_alias=True and by_alias=False
+            val = serialized.get(k) or serialized.get(n)
             serialized.pop(k, None)
+            serialized.pop(n, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
             is_set = (
