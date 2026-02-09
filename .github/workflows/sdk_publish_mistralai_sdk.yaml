@@ -6,14 +6,23 @@ permissions:
   statuses: write
 "on":
   workflow_dispatch:
+    inputs:
+      confirm_publish:
+        description: 'Type "publish" to confirm deployment from main branch'
+        required: false
+        type: string
   push:
     branches:
-      - main
+      - v1
     paths:
       - RELEASES.md
       - "*/RELEASES.md"
 jobs:
   publish:
+    # Auto-publish from v1 branch; require manual confirmation from main
+    if: |
+      github.ref == 'refs/heads/v1' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
