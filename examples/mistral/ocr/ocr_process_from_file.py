@@ -1,4 +1,4 @@
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 import json
 from pathlib import Path

@@ -2,7 +2,7 @@
 import asyncio
 import os
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 MODEL = "mistral-medium-latest"
 

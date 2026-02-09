@@ -5,7 +5,7 @@ import os
 import threading
 import webbrowser
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra.run.context import RunContext
 
 from mistralai.extra.mcp.sse import (

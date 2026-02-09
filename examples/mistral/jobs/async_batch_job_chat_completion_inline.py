@@ -1,4 +1,4 @@
-from mistralai import Mistral, BatchRequest, UserMessage
+from mistralai.client import Mistral, BatchRequest, UserMessage
 import os
 import asyncio
 

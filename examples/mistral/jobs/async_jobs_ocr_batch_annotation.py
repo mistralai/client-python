@@ -7,9 +7,9 @@ from typing import List
 import httpx
 from pydantic import BaseModel, Field
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra import response_format_from_pydantic_model
-from mistralai.models import File
+from mistralai.client.models import File
 
 SAMPLE_PDF_URL = "https://arxiv.org/pdf/2401.04088"
 

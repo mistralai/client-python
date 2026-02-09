@@ -2,9 +2,9 @@
 import asyncio
 import os
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra.run.context import RunContext
-from mistralai.types import BaseModel
+from mistralai.client.types import BaseModel
 
 MODEL = "mistral-medium-2505"
 
