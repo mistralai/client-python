@@ -26,7 +26,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.12.0
+  version: 2.0.0a1
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -63,7 +63,7 @@ python:
   license: ""
   maxMethodParams: 15
   methodArguments: infer-optional-args
-  moduleName: ""
+  moduleName: mistralai.client
   multipartArrayFormat: legacy
   outputModelSuffix: output
   packageManager: uv
