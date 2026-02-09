@@ -17,7 +17,7 @@ Agents Completion
 
 <!-- UsageSnippet language="python" operationID="agents_completion_v1_agents_completions_post" method="post" path="/v1/agents/completions" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -80,7 +80,7 @@ Mistral AI provides the ability to stream responses back to a client in order to
 
 <!-- UsageSnippet language="python" operationID="stream_agents" method="post" path="/v1/agents/completions#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

@@ -18,7 +18,7 @@ Given a library, list all of the Entity that have access and to what level.
 
 <!-- UsageSnippet language="python" operationID="libraries_share_list_v1" method="get" path="/v1/libraries/{library_id}/share" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -59,7 +59,7 @@ Given a library id, you can create or update the access level of an entity. You 
 
 <!-- UsageSnippet language="python" operationID="libraries_share_create_v1" method="put" path="/v1/libraries/{library_id}/share" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -104,7 +104,7 @@ Given a library id, you can delete the access level of an entity. An owner canno
 
 <!-- UsageSnippet language="python" operationID="libraries_share_delete_v1" method="delete" path="/v1/libraries/{library_id}/share" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

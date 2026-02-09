@@ -16,7 +16,7 @@ Embeddings
 
 <!-- UsageSnippet language="python" operationID="embeddings_v1_embeddings_post" method="post" path="/v1/embeddings" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

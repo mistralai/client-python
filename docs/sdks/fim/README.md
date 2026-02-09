@@ -17,7 +17,7 @@ FIM completion.
 
 <!-- UsageSnippet language="python" operationID="fim_completion_v1_fim_completions_post" method="post" path="/v1/fim/completions" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -68,7 +68,7 @@ Mistral AI provides the ability to stream responses back to a client in order to
 
 <!-- UsageSnippet language="python" operationID="stream_fim" method="post" path="/v1/fim/completions#stream" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

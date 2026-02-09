@@ -25,7 +25,7 @@ Create a new agent giving it instructions, tools, description. The agent is then
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create" method="post" path="/v1/agents" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -77,7 +77,7 @@ Retrieve a list of agent entities sorted by creation time.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list" method="get" path="/v1/agents" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -124,7 +124,7 @@ Given an agent, retrieve an agent entity with its attributes. The agent_version 
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get" method="get" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -166,7 +166,7 @@ Update an agent attributes and create a new version.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update" method="patch" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -220,7 +220,7 @@ Delete an agent entity.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_delete" method="delete" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -256,7 +256,7 @@ Switch the version of an agent.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update_version" method="patch" path="/v1/agents/{agent_id}/version" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -298,7 +298,7 @@ Retrieve all versions for a specific agent with full agent context. Supports pag
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list_versions" method="get" path="/v1/agents/{agent_id}/versions" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -341,7 +341,7 @@ Get a specific agent version by version number.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_get_version" method="get" path="/v1/agents/{agent_id}/versions/{version}" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -383,7 +383,7 @@ Create a new alias or update an existing alias to point to a specific version. A
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create_or_update_alias" method="put" path="/v1/agents/{agent_id}/aliases" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -426,7 +426,7 @@ Retrieve all version aliases for a specific agent.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list_version_aliases" method="get" path="/v1/agents/{agent_id}/aliases" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
