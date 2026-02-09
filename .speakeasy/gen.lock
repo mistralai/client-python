@@ -11,9 +11,9 @@ management:
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: edcb81a1-4bcb-439e-bfcb-f30eaac48c6a
-  pristine_commit_hash: b192b65dd75820612c5c672593ed322d420d2c73
-  pristine_tree_hash: 869c5c810e502634a018e5792d4c2efe2686dbad
+  generation_id: b2306c28-6200-44c1-a856-ddd318359c15
+  pristine_commit_hash: dc36861e5d8b9f4c91221be8f09dc13254755c9a
+  pristine_tree_hash: 640358903b623a1b0d7deabbb43f39e82676a1a1
 features:
   python:
     additionalDependencies: 1.0.0
@@ -1882,8 +1882,8 @@ trackedFiles:
     pristine_git_object: c04abd21b5b7cb9b8ddfdb52ec67fffa7d21759a
   src/mistralai/client/audio.py:
     id: 7a8ed2e90d61
-    last_write_checksum: sha1:9ecd271eedf02703b45e6bc4280df10ed2edbbc8
-    pristine_git_object: 28ccda1b533b4cef31844bddae2289268b459a24
+    last_write_checksum: sha1:941d0466d9ff5d07c30a6e41cf4434857518963a
+    pristine_git_object: 2834ade22ab137b7620bfd4318fba4bdd9ef087f
   src/mistralai/client/basesdk.py:
     id: 7518c67b81ea
     last_write_checksum: sha1:c10ba4619b8c70ff876304a93b432d4466cb7112
@@ -1898,16 +1898,16 @@ trackedFiles:
     pristine_git_object: b30003eae52be5e79838fe994cda8474068a43dc
   src/mistralai/client/chat.py:
     id: 7eba0f088d47
-    last_write_checksum: sha1:46321214352946f2077a0f60c4c903c354a42da1
-    pristine_git_object: 9c50bce81c264c70256b2ff8716e88216a78535f
+    last_write_checksum: sha1:53558e4f3e5ecc8d2cea51d2462aa3432d8c156e
+    pristine_git_object: 6fa210bb01b193e1bd034431923a3d4dc8c8a16c
   src/mistralai/client/classifiers.py:
     id: 26e773725732
     last_write_checksum: sha1:b3bed5a404f8837cc12e516f3fb85f47fd37518a
     pristine_git_object: 537e2438afcb570a3e436ab4dd8b7d604b35b627
   src/mistralai/client/conversations.py:
     id: 40692a878064
-    last_write_checksum: sha1:fc75dc4099891c8cbfbcc72284bf8e7dbbb834a5
-    pristine_git_object: 9caf42214daf262b15bac5b36467700ee17cd7d1
+    last_write_checksum: sha1:fedcc53385d833f18fdd393591cb156bc5e5f3d1
+    pristine_git_object: 285beddbd175fee210b697d4714c28196c1fa7a2
   src/mistralai/client/documents.py:
     id: bcc17286c31c
     last_write_checksum: sha1:82287ef513f2f5ee1acb9ffe8323f2dad0fc86f4
