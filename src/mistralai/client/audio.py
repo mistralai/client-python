@@ -3,15 +3,31 @@
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client.transcriptions import Transcriptions
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
+
+# region imports
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from mistralai.extra.realtime import RealtimeTranscription
+# endregion imports
 
 
 class Audio(BaseSDK):
     transcriptions: Transcriptions
     r"""API for audio transcription."""
+
+    def __init__(
+        self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
+    ) -> None:
+        BaseSDK.__init__(self, sdk_config, parent_ref=parent_ref)
+        self.sdk_configuration = sdk_config
+        self._init_sdks()
+
+    def _init_sdks(self):
+        self.transcriptions = Transcriptions(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
 
     # region sdk-class-body
     @property
@@ -25,15 +41,3 @@ class Audio(BaseSDK):
         return self._realtime
 
     # endregion sdk-class-body
-
-    def __init__(
-        self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
-    ) -> None:
-        BaseSDK.__init__(self, sdk_config, parent_ref=parent_ref)
-        self.sdk_configuration = sdk_config
-        self._init_sdks()
-
-    def _init_sdks(self):
-        self.transcriptions = Transcriptions(
-            self.sdk_configuration, parent_ref=self.parent_ref
-        )

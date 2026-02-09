@@ -14,7 +14,10 @@ from mistralai.client.models import (
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Type, Union
+from typing import Any, Dict, List, Mapping, Optional, Union
+
+# region imports
+from typing import Type
 
 from mistralai.extra.struct_chat import (
     ParsedChatCompletionResponse,
@@ -24,6 +27,7 @@ from mistralai.extra.utils.response_format import (
     CustomPydanticModel,
     response_format_from_pydantic_model,
 )
+# endregion imports
 
 
 class Chat(BaseSDK):
