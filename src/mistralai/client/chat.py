@@ -14,11 +14,92 @@ from mistralai.client.models import (
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Type, Union
+
+from mistralai.extra.struct_chat import (
+    ParsedChatCompletionResponse,
+    convert_to_parsed_chat_completion_response,
+)
+from mistralai.extra.utils.response_format import (
+    CustomPydanticModel,
+    response_format_from_pydantic_model,
+)
 
 
 class Chat(BaseSDK):
     r"""Chat Completion API."""
+
+    # region sdk-class-body
+    # Custom .parse methods for the Structure Outputs Feature.
+
+    def parse(
+        self, response_format: Type[CustomPydanticModel], **kwargs: Any
+    ) -> ParsedChatCompletionResponse[CustomPydanticModel]:
+        """
+        Parse the response using the provided response format.
+        :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
+        :param Any **kwargs Additional keyword arguments to pass to the .complete method
+        :return: The parsed response
+        """
+        # Convert the input Pydantic Model to a strict JSON ready to be passed to chat.complete
+        json_response_format = response_format_from_pydantic_model(response_format)
+        # Run the inference
+        response = self.complete(**kwargs, response_format=json_response_format)
+        # Parse response back to the input pydantic model
+        parsed_response = convert_to_parsed_chat_completion_response(
+            response, response_format
+        )
+        return parsed_response
+
+    async def parse_async(
+        self, response_format: Type[CustomPydanticModel], **kwargs
+    ) -> ParsedChatCompletionResponse[CustomPydanticModel]:
+        """
+        Asynchronously parse the response using the provided response format.
+        :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
+        :param Any **kwargs Additional keyword arguments to pass to the .complete method
+        :return: The parsed response
+        """
+        json_response_format = response_format_from_pydantic_model(response_format)
+        response = await self.complete_async(  # pylint: disable=E1125
+            **kwargs, response_format=json_response_format
+        )
+        parsed_response = convert_to_parsed_chat_completion_response(
+            response, response_format
+        )
+        return parsed_response
+
+    def parse_stream(
+        self, response_format: Type[CustomPydanticModel], **kwargs
+    ) -> eventstreaming.EventStream[models.CompletionEvent]:
+        """
+        Parse the response using the provided response format.
+        For now the response will be in JSON format not in the input Pydantic model.
+        :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
+        :param Any **kwargs Additional keyword arguments to pass to the .stream method
+        :return: The JSON parsed response
+        """
+        json_response_format = response_format_from_pydantic_model(response_format)
+        response = self.stream(**kwargs, response_format=json_response_format)
+        return response
+
+    async def parse_stream_async(
+        self, response_format: Type[CustomPydanticModel], **kwargs
+    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
+        """
+        Asynchronously parse the response using the provided response format.
+        For now the response will be in JSON format not in the input Pydantic model.
+        :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
+        :param Any **kwargs Additional keyword arguments to pass to the .stream method
+        :return: The JSON parsed response
+        """
+        json_response_format = response_format_from_pydantic_model(response_format)
+        response = await self.stream_async(  # pylint: disable=E1125
+            **kwargs, response_format=json_response_format
+        )
+        return response
+
+    # endregion sdk-class-body
 
     def complete(
         self,

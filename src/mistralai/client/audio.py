@@ -3,12 +3,28 @@
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client.transcriptions import Transcriptions
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from mistralai.extra.realtime import RealtimeTranscription
 
 
 class Audio(BaseSDK):
     transcriptions: Transcriptions
     r"""API for audio transcription."""
+
+    # region sdk-class-body
+    @property
+    def realtime(self) -> "RealtimeTranscription":
+        """Returns a client for real-time audio transcription via WebSocket."""
+        if not hasattr(self, "_realtime"):
+            from mistralai.extra.realtime import RealtimeTranscription  # pylint: disable=import-outside-toplevel
+
+            self._realtime = RealtimeTranscription(self.sdk_configuration)  # pylint: disable=attribute-defined-outside-init
+
+        return self._realtime
+
+    # endregion sdk-class-body
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
