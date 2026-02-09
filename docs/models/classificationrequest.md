@@ -1,0 +1,10 @@
+# ClassificationRequest
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `model`                                                                        | *str*                                                                          | :heavy_check_mark:                                                             | ID of the model to use.                                                        | mistral-moderation-latest                                                      |
+| `metadata`                                                                     | Dict[str, *Any*]                                                               | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |
+| `inputs`                                                                       | [models.ClassificationRequestInputs](../models/classificationrequestinputs.md) | :heavy_check_mark:                                                             | Text to classify.                                                              |                                                                                |
