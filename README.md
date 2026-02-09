@@ -1,8 +1,8 @@
 # Mistral Python Client
 
 ## Migration warning
- 
-This documentation is for Mistral AI SDK v1. You can find more details on how to migrate from v0 to v1 [here](MIGRATION.md)
+
+This documentation is for Mistral AI SDK v2. You can find more details on how to migrate from v1 to v2 [here](MIGRATION.md)
 
 ## API Key Setup
 
