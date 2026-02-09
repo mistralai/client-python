@@ -1,7 +1,7 @@
 import json
 from typing import Generic
 
-from ..models import AssistantMessage, ChatCompletionChoice, ChatCompletionResponse
+from mistralai.client.models import AssistantMessage, ChatCompletionChoice, ChatCompletionResponse
 from .utils.response_format import CustomPydanticModel, pydantic_model_from_json
 
 

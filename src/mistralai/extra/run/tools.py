@@ -21,7 +21,7 @@ from mistralai.extra.exceptions import RunException
 from mistralai.extra.mcp.base import MCPClientProtocol
 from mistralai.extra.observability.otel import GenAISpanEnum, MistralAIAttributes, set_available_attributes
 from mistralai.extra.run.result import RunOutputEntries
-from mistralai.models import (
+from mistralai.client.models import (
     FunctionResultEntry,
     FunctionTool,
     Function,

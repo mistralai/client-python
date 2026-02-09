@@ -16,7 +16,7 @@ from mistralai.extra.mcp.base import (
 )
 from mistralai.extra.mcp.auth import OAuthParams, AsyncOAuth2Client
 
-from mistralai.types import BaseModel
+from mistralai.client.types import BaseModel
 
 logger = logging.getLogger(__name__)
 

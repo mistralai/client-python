@@ -21,7 +21,7 @@ from mistralai.extra.run.tools import (
     create_function_result,
     create_tool_call,
 )
-from mistralai.models import (
+from mistralai.client.models import (
     CompletionArgs,
     CompletionArgsTypedDict,
     ConversationInputs,
@@ -35,10 +35,10 @@ from mistralai.models import (
     Tools,
     ToolsTypedDict,
 )
-from mistralai.types.basemodel import BaseModel, OptionalNullable, UNSET
+from mistralai.client.types.basemodel import BaseModel, OptionalNullable, UNSET
 
 if typing.TYPE_CHECKING:
-    from mistralai import Beta, OptionalNullable
+    from mistralai.client import Beta, OptionalNullable
 
 logger = getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
-from ...models import JSONSchema, ResponseFormat
+from mistralai.client.models import JSONSchema, ResponseFormat
 from ._pydantic_helper import rec_strict_json_schema
 
 CustomPydanticModel = TypeVar("CustomPydanticModel", bound=BaseModel)

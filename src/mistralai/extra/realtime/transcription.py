@@ -17,15 +17,15 @@ except ImportError as exc:
         "Install with: pip install 'mistralai[realtime]'"
     ) from exc
 
-from mistralai import models, utils
-from mistralai.models import (
+from mistralai.client import models, utils
+from mistralai.client.models import (
     AudioFormat,
     RealtimeTranscriptionError,
     RealtimeTranscriptionSession,
     RealtimeTranscriptionSessionCreated,
 )
-from mistralai.sdkconfiguration import SDKConfiguration
-from mistralai.utils import generate_url, get_security, get_security_from_env
+from mistralai.client.sdkconfiguration import SDKConfiguration
+from mistralai.client.utils import generate_url, get_security, get_security_from_env
 
 from ..exceptions import RealtimeTranscriptionException, RealtimeTranscriptionWSError
 from .connection import (

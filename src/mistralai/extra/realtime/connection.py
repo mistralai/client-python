@@ -16,7 +16,7 @@ except ImportError as exc:
         "Install with: pip install 'mistralai[realtime]'"
     ) from exc
 
-from mistralai.models import (
+from mistralai.client.models import (
     AudioFormat,
     RealtimeTranscriptionError,
     RealtimeTranscriptionSession,
