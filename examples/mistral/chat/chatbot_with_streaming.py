@@ -7,6 +7,7 @@ import logging
 import os
 import readline
 import sys
+from typing import Any
 
 from mistralai.client import Mistral
 from mistralai.client.models import AssistantMessage, SystemMessage, UserMessage
@@ -21,7 +22,7 @@ DEFAULT_MODEL = "mistral-small-latest"
 DEFAULT_TEMPERATURE = 0.7
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 # A dictionary of all commands and their arguments, used for tab completion.
-COMMAND_LIST = {
+COMMAND_LIST: dict[str, Any] = {
     "/new": {},
     "/help": {},
     "/model": {model: {} for model in MODEL_LIST},  # Nested completions for models

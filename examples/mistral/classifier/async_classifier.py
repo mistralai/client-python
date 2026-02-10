@@ -3,6 +3,7 @@
 from pprint import pprint
 import asyncio
 from mistralai.client import Mistral, TrainingFile, ClassifierTrainingParametersIn
+from mistralai.client.models import ClassifierJobOut
 
 import os
 
@@ -26,7 +27,7 @@ async def upload_files(client: Mistral, file_names: list[str]) -> list[str]:
     return file_ids
 
 
-async def train_classifier(client: Mistral,training_file_ids: list[str]) -> str:
+async def train_classifier(client: Mistral, training_file_ids: list[str]) -> str | None:
     print("Creating job...")
     job = await client.fine_tuning.jobs.create_async(
         model="ministral-3b-latest",
@@ -40,6 +41,9 @@ async def train_classifier(client: Mistral,training_file_ids: list[str]) -> str:
         ),
         auto_start=True,
     )
+    if not isinstance(job, ClassifierJobOut):
+        print("Unexpected job type returned")
+        return None
 
     print(f"Job created ({job.id})")
 
@@ -62,6 +66,9 @@ async def train_classifier(client: Mistral,training_file_ids: list[str]) -> str:
         print("Training failed")
         raise Exception(f"Job failed {detailed_job.status}")
 
+    if not detailed_job.fine_tuned_model:
+        print("No fine-tuned model returned")
+        return None
     print(f"Training succeed: {detailed_job.fine_tuned_model}")
 
     return detailed_job.fine_tuned_model

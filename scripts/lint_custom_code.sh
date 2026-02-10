@@ -11,8 +11,9 @@ else
 fi
 
 echo "Running mypy..."
-# TODO: Uncomment once the examples are fixed
-# uv run mypy examples/ || ERRORS=1
+echo "-> running on examples"
+uv run mypy examples/ \
+  --exclude 'audio/' || ERRORS=1
 echo "-> running on extra"
 uv run mypy src/mistralai/extra/ || ERRORS=1
 echo "-> running on hooks"
