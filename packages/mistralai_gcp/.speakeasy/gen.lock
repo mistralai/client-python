@@ -1,20 +1,20 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: a7d9a161ca71328c62514af87c72bd88
+  docChecksum: cd98e63252e8d40a0793f292ac77766d
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
-  releaseVersion: 1.8.0
-  configChecksum: 42a1e5752a774fcdb0a5949bd6535933
+  releaseVersion: 1.8.1
+  configChecksum: 5d5778d84d2ffd375bd55db65515df4d
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/mistralai_gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/mistralai_gcp
   published: true
 persistentEdits:
-  generation_id: 749d4ba0-3c79-459a-a407-b84537a057da
-  pristine_commit_hash: ae909165077818f36014ef4d28edaa3572c8cc64
-  pristine_tree_hash: f04041c3f961a8702dfa1eaa1185b1b605875f82
+  generation_id: 498bd941-cc21-4104-89c0-107653a9b55a
+  pristine_commit_hash: dcb2f729c689de44d9801e29aed9d7d57241dec9
+  pristine_tree_hash: 94f12d5c1756cdf8a3abdf2dd076b4d3ec763540
 features:
   python:
     additionalDependencies: 1.0.0
@@ -197,8 +197,8 @@ trackedFiles:
     pristine_git_object: 1d394500e8ffdd140457575568fc2ce465a1cc3a
   docs/models/mistralpromptmode.md:
     id: d17d5db4d3b6
-    last_write_checksum: sha1:5ccd31d3804f70b6abb0e5a00bda57b9102225e3
-    pristine_git_object: 7416e2037c507d19ac02aed914da1208a2fed0a1
+    last_write_checksum: sha1:abcb7205c5086169c7d9449d15ac142448a7d258
+    pristine_git_object: c3409d03b9646e21a3793372d06dcae6fef95463
   docs/models/prediction.md:
     id: 3c70b2262201
     last_write_checksum: sha1:ca8a77219e6113f2358a5363e935288d90df0725
@@ -353,8 +353,8 @@ trackedFiles:
     pristine_git_object: f8088f4c26d3ae27202c716c80c391d4daed4156
   src/mistralai_gcp/_version.py:
     id: 4e2b8c406f49
-    last_write_checksum: sha1:18c7db41065d76e733dc84c997f2a7808892a7c7
-    pristine_git_object: a170f0ab6d229979b9077477809b10f2774a0144
+    last_write_checksum: sha1:ba34db91bfd04a4fbc34f567796e7a9d0871717f
+    pristine_git_object: 74a7b261dc76572304e54d404b09b09c232664e7
   src/mistralai_gcp/basesdk.py:
     id: b84fa6111b69
     last_write_checksum: sha1:41381dd799bd5e1f8a15bb65a0672dc6cc4796c4
@@ -461,8 +461,8 @@ trackedFiles:
     pristine_git_object: fec729a590b2ea981e01f4af99d8b36ba52b4664
   src/mistralai_gcp/models/mistralpromptmode.py:
     id: d2ba58ed5184
-    last_write_checksum: sha1:8518548e80dcd8798ee72c2557c473327ba9289b
-    pristine_git_object: 1440f6ea9d18139ce5f10eb38d951b0995f74a20
+    last_write_checksum: sha1:6fb8323de88682846a2a09e68550f3508a29f1f5
+    pristine_git_object: a5cc534f8c53bc87b8451aac1b2a79e695530e71
   src/mistralai_gcp/models/no_response_error.py:
     id: 7a773ba0687f
     last_write_checksum: sha1:7f326424a7d5ae1bcd5c89a0d6b3dbda9138942f
