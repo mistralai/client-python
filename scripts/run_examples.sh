@@ -33,6 +33,7 @@ exclude_files=(
  "examples/mistral/classifier/async_classifier.py"
  "examples/mistral/mcp_servers/sse_server.py"
  "examples/mistral/mcp_servers/stdio_server.py"
+ "examples/mistral/agents/async_conversation_run_code_interpreter.py"
  "examples/mistral/agents/async_conversation_run_stream.py"
  "examples/mistral/agents/async_conversation_run_mcp.py"
  "examples/mistral/agents/async_conversation_run_mcp_remote.py"
