@@ -3,7 +3,7 @@ from ..utils.response_format import (
     response_format_from_pydantic_model,
     rec_strict_json_schema,
 )
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, ValidationError, conlist
 
 from mistralai.client.models import ResponseFormat, JSONSchema
 from mistralai.client.types.basemodel import Unset
@@ -24,6 +24,11 @@ class Explanation(BaseModel):
 class MathDemonstration(BaseModel):
     steps: list[Explanation]
     final_answer: str
+
+
+class ConlistModel(BaseModel):
+    """Model with constrained list to test numeric values in schema"""
+    words: conlist(str, min_length=3, max_length=5)  # type: ignore
 
 
 mathdemo_schema = {
@@ -149,13 +154,26 @@ class TestResponseFormat(unittest.TestCase):
         )
 
     def test_rec_strict_json_schema(self):
-        invalid_schema = mathdemo_schema | {"wrong_value": 1}
+        # Test that numeric values (like constraints) are now handled correctly
+        schema_with_numeric = mathdemo_schema | {"numeric_value": 42, "float_value": 3.14}
         self.assertEqual(
             rec_strict_json_schema(mathdemo_schema), mathdemo_strict_schema
         )
 
-        with self.assertRaises(ValueError):
-            rec_strict_json_schema(invalid_schema)
+        # Numeric values should now be accepted as valid schema values
+        result = rec_strict_json_schema(schema_with_numeric)
+        self.assertEqual(result["numeric_value"], 42)
+        self.assertEqual(result["float_value"], 3.14)
+
+    def test_conlist_schema(self):
+        """Test that Pydantic models with conlist work correctly (issue #279)"""
+        # This should not raise a ValueError
+        response_format = response_format_from_pydantic_model(ConlistModel)
+
+        # Verify the response format was created successfully
+        self.assertIsNotNone(response_format)
+        self.assertEqual(response_format.json_schema.name, "ConlistModel")
+        self.assertTrue(response_format.json_schema.strict)
 
 
 if __name__ == "__main__":
