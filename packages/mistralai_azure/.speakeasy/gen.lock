@@ -5,7 +5,7 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
-  releaseVersion: 1.8.2
+  releaseVersion: 1.8.1
   configChecksum: c5f5d0f264b3bb27cada85a3cb49fbf1
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/mistralai_azure
