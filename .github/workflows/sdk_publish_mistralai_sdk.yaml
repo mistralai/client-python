@@ -8,7 +8,7 @@ permissions:
   workflow_dispatch:
     inputs:
       confirm_publish:
-        description: 'Type "publish" to confirm deployment from main branch'
+        description: 'WARNING: This will publish v2 SDK (mistralai.client namespace) which is still WIP/alpha. To publish v1 (mistralai namespace), use the v1 branch instead. Type "publish" to confirm.'
         required: false
         type: string
   push:
