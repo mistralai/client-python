@@ -6,23 +6,27 @@ from typing import Any, Dict, Union
 from typing_extensions import TypeAliasType, TypedDict
 
 
-MessageTypedDict = TypeAliasType("MessageTypedDict", Union[str, Dict[str, Any]])
+RealtimeTranscriptionErrorDetailMessageTypedDict = TypeAliasType(
+    "RealtimeTranscriptionErrorDetailMessageTypedDict", Union[str, Dict[str, Any]]
+)
 r"""Human-readable error message."""
 
 
-Message = TypeAliasType("Message", Union[str, Dict[str, Any]])
+RealtimeTranscriptionErrorDetailMessage = TypeAliasType(
+    "RealtimeTranscriptionErrorDetailMessage", Union[str, Dict[str, Any]]
+)
 r"""Human-readable error message."""
 
 
 class RealtimeTranscriptionErrorDetailTypedDict(TypedDict):
-    message: MessageTypedDict
+    message: RealtimeTranscriptionErrorDetailMessageTypedDict
     r"""Human-readable error message."""
     code: int
     r"""Internal error code for debugging."""
 
 
 class RealtimeTranscriptionErrorDetail(BaseModel):
-    message: Message
+    message: RealtimeTranscriptionErrorDetailMessage
     r"""Human-readable error message."""
 
     code: int

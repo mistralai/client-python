@@ -9,7 +9,7 @@ from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
+class MultiPartBodyParamsTypedDict(TypedDict):
     file: FileTypedDict
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
@@ -24,7 +24,7 @@ class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
     purpose: NotRequired[FilePurpose]
 
 
-class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
+class MultiPartBodyParams(BaseModel):
     file: Annotated[File, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:

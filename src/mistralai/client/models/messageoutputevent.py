@@ -10,12 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-MessageOutputEventType = Literal["message.output.delta",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 MessageOutputEventRole = Literal["assistant",]
@@ -34,7 +34,7 @@ MessageOutputEventContent = TypeAliasType(
 class MessageOutputEventTypedDict(TypedDict):
     id: str
     content: MessageOutputEventContentTypedDict
-    type: NotRequired[MessageOutputEventType]
+    type: Literal["message.output.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
     content_index: NotRequired[int]
@@ -48,7 +48,13 @@ class MessageOutputEvent(BaseModel):
 
     content: MessageOutputEventContent
 
-    type: Optional[MessageOutputEventType] = "message.output.delta"
+    TYPE: Annotated[
+        Annotated[
+            Literal["message.output.delta"],
+            AfterValidator(validate_const("message.output.delta")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "message.output.delta"
 
     created_at: Optional[datetime] = None
 
@@ -65,7 +71,6 @@ class MessageOutputEvent(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
-            "type",
             "created_at",
             "output_index",
             "content_index",

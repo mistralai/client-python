@@ -8,12 +8,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-WandbIntegrationType = Literal["wandb",]
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WandbIntegrationTypedDict(TypedDict):
@@ -21,7 +21,7 @@ class WandbIntegrationTypedDict(TypedDict):
     r"""The name of the project that the new run will be created under."""
     api_key: str
     r"""The WandB API key to use for authentication."""
-    type: NotRequired[WandbIntegrationType]
+    type: Literal["wandb"]
     name: NotRequired[Nullable[str]]
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
     run_name: NotRequired[Nullable[str]]
@@ -34,7 +34,10 @@ class WandbIntegration(BaseModel):
     api_key: str
     r"""The WandB API key to use for authentication."""
 
-    type: Optional[WandbIntegrationType] = "wandb"
+    TYPE: Annotated[
+        Annotated[Literal["wandb"], AfterValidator(validate_const("wandb"))],
+        pydantic.Field(alias="type"),
+    ] = "wandb"
 
     name: OptionalNullable[str] = UNSET
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
@@ -43,7 +46,7 @@ class WandbIntegration(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "name", "run_name"]
+        optional_fields = ["name", "run_name"]
         nullable_fields = ["name", "run_name"]
         null_default_fields = []
 

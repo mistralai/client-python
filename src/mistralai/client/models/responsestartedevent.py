@@ -3,22 +3,28 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ResponseStartedEventType = Literal["conversation.response.started",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ResponseStartedEventTypedDict(TypedDict):
     conversation_id: str
-    type: NotRequired[ResponseStartedEventType]
+    type: Literal["conversation.response.started"]
     created_at: NotRequired[datetime]
 
 
 class ResponseStartedEvent(BaseModel):
     conversation_id: str
 
-    type: Optional[ResponseStartedEventType] = "conversation.response.started"
+    TYPE: Annotated[
+        Annotated[
+            Literal["conversation.response.started"],
+            AfterValidator(validate_const("conversation.response.started")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "conversation.response.started"
 
     created_at: Optional[datetime] = None

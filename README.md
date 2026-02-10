@@ -458,25 +458,25 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
 * [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
 
-### [Batch.Jobs](docs/sdks/mistraljobs/README.md)
+### [Batch.Jobs](docs/sdks/batchjobs/README.md)
 
-* [list](docs/sdks/mistraljobs/README.md#list) - Get Batch Jobs
-* [create](docs/sdks/mistraljobs/README.md#create) - Create Batch Job
-* [get](docs/sdks/mistraljobs/README.md#get) - Get Batch Job
-* [cancel](docs/sdks/mistraljobs/README.md#cancel) - Cancel Batch Job
+* [list](docs/sdks/batchjobs/README.md#list) - Get Batch Jobs
+* [create](docs/sdks/batchjobs/README.md#create) - Create Batch Job
+* [get](docs/sdks/batchjobs/README.md#get) - Get Batch Job
+* [cancel](docs/sdks/batchjobs/README.md#cancel) - Cancel Batch Job
 
-### [Beta.Agents](docs/sdks/mistralagents/README.md)
+### [Beta.Agents](docs/sdks/betaagents/README.md)
 
-* [create](docs/sdks/mistralagents/README.md#create) - Create a agent that can be used within a conversation.
-* [list](docs/sdks/mistralagents/README.md#list) - List agent entities.
-* [get](docs/sdks/mistralagents/README.md#get) - Retrieve an agent entity.
-* [update](docs/sdks/mistralagents/README.md#update) - Update an agent entity.
-* [delete](docs/sdks/mistralagents/README.md#delete) - Delete an agent entity.
-* [update_version](docs/sdks/mistralagents/README.md#update_version) - Update an agent version.
-* [list_versions](docs/sdks/mistralagents/README.md#list_versions) - List all versions of an agent.
-* [get_version](docs/sdks/mistralagents/README.md#get_version) - Retrieve a specific version of an agent.
-* [create_version_alias](docs/sdks/mistralagents/README.md#create_version_alias) - Create or update an agent version alias.
-* [list_version_aliases](docs/sdks/mistralagents/README.md#list_version_aliases) - List all aliases for an agent.
+* [create](docs/sdks/betaagents/README.md#create) - Create a agent that can be used within a conversation.
+* [list](docs/sdks/betaagents/README.md#list) - List agent entities.
+* [get](docs/sdks/betaagents/README.md#get) - Retrieve an agent entity.
+* [update](docs/sdks/betaagents/README.md#update) - Update an agent entity.
+* [delete](docs/sdks/betaagents/README.md#delete) - Delete an agent entity.
+* [update_version](docs/sdks/betaagents/README.md#update_version) - Update an agent version.
+* [list_versions](docs/sdks/betaagents/README.md#list_versions) - List all versions of an agent.
+* [get_version](docs/sdks/betaagents/README.md#get_version) - Retrieve a specific version of an agent.
+* [create_version_alias](docs/sdks/betaagents/README.md#create_version_alias) - Create or update an agent version alias.
+* [list_version_aliases](docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
 
 ### [Beta.Conversations](docs/sdks/conversations/README.md)
 
@@ -549,13 +549,13 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [complete](docs/sdks/fim/README.md#complete) - Fim Completion
 * [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
 
-### [FineTuning.Jobs](docs/sdks/jobs/README.md)
+### [FineTuning.Jobs](docs/sdks/finetuningjobs/README.md)
 
-* [list](docs/sdks/jobs/README.md#list) - Get Fine Tuning Jobs
-* [create](docs/sdks/jobs/README.md#create) - Create Fine Tuning Job
-* [get](docs/sdks/jobs/README.md#get) - Get Fine Tuning Job
-* [cancel](docs/sdks/jobs/README.md#cancel) - Cancel Fine Tuning Job
-* [start](docs/sdks/jobs/README.md#start) - Start Fine Tuning Job
+* [list](docs/sdks/finetuningjobs/README.md#list) - Get Fine Tuning Jobs
+* [create](docs/sdks/finetuningjobs/README.md#create) - Create Fine Tuning Job
+* [get](docs/sdks/finetuningjobs/README.md#get) - Get Fine Tuning Job
+* [cancel](docs/sdks/finetuningjobs/README.md#cancel) - Cancel Fine Tuning Job
+* [start](docs/sdks/finetuningjobs/README.md#start) - Start Fine Tuning Job
 
 ### [Models](docs/sdks/models/README.md)
 

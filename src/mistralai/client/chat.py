@@ -110,8 +110,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionrequest.Messages],
-            List[models_chatcompletionrequest.MessagesTypedDict],
+            List[models_chatcompletionrequest.ChatCompletionRequestMessage],
+            List[models_chatcompletionrequest.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -119,8 +119,8 @@ class Chat(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_chatcompletionrequest.Stop,
-                models_chatcompletionrequest.StopTypedDict,
+                models_chatcompletionrequest.ChatCompletionRequestStop,
+                models_chatcompletionrequest.ChatCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -201,7 +201,9 @@ class Chat(BaseSDK):
             stop=stop,
             random_seed=random_seed,
             metadata=metadata,
-            messages=utils.get_pydantic_model(messages, List[models.Messages]),
+            messages=utils.get_pydantic_model(
+                messages, List[models.ChatCompletionRequestMessage]
+            ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
@@ -285,8 +287,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionrequest.Messages],
-            List[models_chatcompletionrequest.MessagesTypedDict],
+            List[models_chatcompletionrequest.ChatCompletionRequestMessage],
+            List[models_chatcompletionrequest.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -294,8 +296,8 @@ class Chat(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_chatcompletionrequest.Stop,
-                models_chatcompletionrequest.StopTypedDict,
+                models_chatcompletionrequest.ChatCompletionRequestStop,
+                models_chatcompletionrequest.ChatCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -376,7 +378,9 @@ class Chat(BaseSDK):
             stop=stop,
             random_seed=random_seed,
             metadata=metadata,
-            messages=utils.get_pydantic_model(messages, List[models.Messages]),
+            messages=utils.get_pydantic_model(
+                messages, List[models.ChatCompletionRequestMessage]
+            ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
@@ -460,11 +464,9 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
+            List[models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessage],
             List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessages
-            ],
-            List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessagesTypedDict
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessageTypedDict
             ],
         ],
         temperature: OptionalNullable[float] = UNSET,
@@ -558,7 +560,7 @@ class Chat(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.ChatCompletionStreamRequestMessages]
+                messages, List[models.ChatCompletionStreamRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -651,11 +653,9 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
+            List[models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessage],
             List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessages
-            ],
-            List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessagesTypedDict
+                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessageTypedDict
             ],
         ],
         temperature: OptionalNullable[float] = UNSET,
@@ -749,7 +749,7 @@ class Chat(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.ChatCompletionStreamRequestMessages]
+                messages, List[models.ChatCompletionStreamRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]

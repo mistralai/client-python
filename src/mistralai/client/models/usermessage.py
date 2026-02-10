@@ -3,9 +3,12 @@
 from __future__ import annotations
 from .contentchunk import ContentChunk, ContentChunkTypedDict
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 UserMessageContentTypedDict = TypeAliasType(
@@ -16,22 +19,22 @@ UserMessageContentTypedDict = TypeAliasType(
 UserMessageContent = TypeAliasType("UserMessageContent", Union[str, List[ContentChunk]])
 
 
-UserMessageRole = Literal["user",]
-
-
 class UserMessageTypedDict(TypedDict):
     content: Nullable[UserMessageContentTypedDict]
-    role: NotRequired[UserMessageRole]
+    role: Literal["user"]
 
 
 class UserMessage(BaseModel):
     content: Nullable[UserMessageContent]
 
-    role: Optional[UserMessageRole] = "user"
+    ROLE: Annotated[
+        Annotated[Literal["user"], AfterValidator(validate_const("user"))],
+        pydantic.Field(alias="role"),
+    ] = "user"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["role"]
+        optional_fields = []
         nullable_fields = ["content"]
         null_default_fields = []
 

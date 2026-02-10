@@ -16,36 +16,40 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-ClassifierDetailedJobOutStatus = Literal[
-    "QUEUED",
-    "STARTED",
-    "VALIDATING",
-    "VALIDATED",
-    "RUNNING",
-    "FAILED_VALIDATION",
-    "FAILED",
-    "SUCCESS",
-    "CANCELLED",
-    "CANCELLATION_REQUESTED",
+ClassifierDetailedJobOutStatus = Union[
+    Literal[
+        "QUEUED",
+        "STARTED",
+        "VALIDATING",
+        "VALIDATED",
+        "RUNNING",
+        "FAILED_VALIDATION",
+        "FAILED",
+        "SUCCESS",
+        "CANCELLED",
+        "CANCELLATION_REQUESTED",
+    ],
+    UnrecognizedStr,
 ]
 
 
 ClassifierDetailedJobOutObject = Literal["job",]
 
 
-ClassifierDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
+ClassifierDetailedJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
-ClassifierDetailedJobOutIntegrations = WandbIntegrationOut
-
-
-ClassifierDetailedJobOutJobType = Literal["classifier",]
+ClassifierDetailedJobOutIntegration = WandbIntegrationOut
 
 
 class ClassifierDetailedJobOutTypedDict(TypedDict):
@@ -64,11 +68,11 @@ class ClassifierDetailedJobOutTypedDict(TypedDict):
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
-        Nullable[List[ClassifierDetailedJobOutIntegrationsTypedDict]]
+        Nullable[List[ClassifierDetailedJobOutIntegrationTypedDict]]
     ]
     trained_tokens: NotRequired[Nullable[int]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[ClassifierDetailedJobOutJobType]
+    job_type: Literal["classifier"]
     events: NotRequired[List[EventOutTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
     checkpoints: NotRequired[List[CheckpointOutTypedDict]]
@@ -102,13 +106,16 @@ class ClassifierDetailedJobOut(BaseModel):
 
     suffix: OptionalNullable[str] = UNSET
 
-    integrations: OptionalNullable[List[ClassifierDetailedJobOutIntegrations]] = UNSET
+    integrations: OptionalNullable[List[ClassifierDetailedJobOutIntegration]] = UNSET
 
     trained_tokens: OptionalNullable[int] = UNSET
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[ClassifierDetailedJobOutJobType] = "classifier"
+    JOB_TYPE: Annotated[
+        Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],
+        pydantic.Field(alias="job_type"),
+    ] = "classifier"
 
     events: Optional[List[EventOut]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
@@ -125,7 +132,6 @@ class ClassifierDetailedJobOut(BaseModel):
             "integrations",
             "trained_tokens",
             "metadata",
-            "job_type",
             "events",
             "checkpoints",
         ]

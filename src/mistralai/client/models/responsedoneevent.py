@@ -4,22 +4,28 @@ from __future__ import annotations
 from .conversationusageinfo import ConversationUsageInfo, ConversationUsageInfoTypedDict
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ResponseDoneEventType = Literal["conversation.response.done",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ResponseDoneEventTypedDict(TypedDict):
     usage: ConversationUsageInfoTypedDict
-    type: NotRequired[ResponseDoneEventType]
+    type: Literal["conversation.response.done"]
     created_at: NotRequired[datetime]
 
 
 class ResponseDoneEvent(BaseModel):
     usage: ConversationUsageInfo
 
-    type: Optional[ResponseDoneEventType] = "conversation.response.done"
+    TYPE: Annotated[
+        Annotated[
+            Literal["conversation.response.done"],
+            AfterValidator(validate_const("conversation.response.done")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "conversation.response.done"
 
     created_at: Optional[datetime] = None

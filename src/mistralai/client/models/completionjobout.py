@@ -14,23 +14,30 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-Status = Literal[
-    "QUEUED",
-    "STARTED",
-    "VALIDATING",
-    "VALIDATED",
-    "RUNNING",
-    "FAILED_VALIDATION",
-    "FAILED",
-    "SUCCESS",
-    "CANCELLED",
-    "CANCELLATION_REQUESTED",
+CompletionJobOutStatus = Union[
+    Literal[
+        "QUEUED",
+        "STARTED",
+        "VALIDATING",
+        "VALIDATED",
+        "RUNNING",
+        "FAILED_VALIDATION",
+        "FAILED",
+        "SUCCESS",
+        "CANCELLED",
+        "CANCELLATION_REQUESTED",
+    ],
+    UnrecognizedStr,
 ]
 r"""The current status of the fine-tuning job."""
 
@@ -39,20 +46,16 @@ CompletionJobOutObject = Literal["job",]
 r"""The object type of the fine-tuning job."""
 
 
-IntegrationsTypedDict = WandbIntegrationOutTypedDict
+CompletionJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
-Integrations = WandbIntegrationOut
+CompletionJobOutIntegration = WandbIntegrationOut
 
 
-JobType = Literal["completion",]
-r"""The type of job (`FT` for fine-tuning)."""
+CompletionJobOutRepositoryTypedDict = GithubRepositoryOutTypedDict
 
 
-RepositoriesTypedDict = GithubRepositoryOutTypedDict
-
-
-Repositories = GithubRepositoryOut
+CompletionJobOutRepository = GithubRepositoryOut
 
 
 class CompletionJobOutTypedDict(TypedDict):
@@ -61,7 +64,7 @@ class CompletionJobOutTypedDict(TypedDict):
     auto_start: bool
     model: str
     r"""The name of the model to fine-tune."""
-    status: Status
+    status: CompletionJobOutStatus
     r"""The current status of the fine-tuning job."""
     created_at: int
     r"""The UNIX timestamp (in seconds) for when the fine-tuning job was created."""
@@ -78,14 +81,14 @@ class CompletionJobOutTypedDict(TypedDict):
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
-    integrations: NotRequired[Nullable[List[IntegrationsTypedDict]]]
+    integrations: NotRequired[Nullable[List[CompletionJobOutIntegrationTypedDict]]]
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[JobType]
+    job_type: Literal["completion"]
     r"""The type of job (`FT` for fine-tuning)."""
-    repositories: NotRequired[List[RepositoriesTypedDict]]
+    repositories: NotRequired[List[CompletionJobOutRepositoryTypedDict]]
 
 
 class CompletionJobOut(BaseModel):
@@ -97,7 +100,7 @@ class CompletionJobOut(BaseModel):
     model: str
     r"""The name of the model to fine-tune."""
 
-    status: Status
+    status: CompletionJobOutStatus
     r"""The current status of the fine-tuning job."""
 
     created_at: int
@@ -123,7 +126,7 @@ class CompletionJobOut(BaseModel):
     suffix: OptionalNullable[str] = UNSET
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
 
-    integrations: OptionalNullable[List[Integrations]] = UNSET
+    integrations: OptionalNullable[List[CompletionJobOutIntegration]] = UNSET
     r"""A list of integrations enabled for your fine-tuning job."""
 
     trained_tokens: OptionalNullable[int] = UNSET
@@ -131,10 +134,13 @@ class CompletionJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[JobType] = "completion"
+    JOB_TYPE: Annotated[
+        Annotated[Literal["completion"], AfterValidator(validate_const("completion"))],
+        pydantic.Field(alias="job_type"),
+    ] = "completion"
     r"""The type of job (`FT` for fine-tuning)."""
 
-    repositories: Optional[List[Repositories]] = None
+    repositories: Optional[List[CompletionJobOutRepository]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -146,7 +152,6 @@ class CompletionJobOut(BaseModel):
             "integrations",
             "trained_tokens",
             "metadata",
-            "job_type",
             "repositories",
         ]
         nullable_fields = [

@@ -13,23 +13,30 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-ClassifierJobOutStatus = Literal[
-    "QUEUED",
-    "STARTED",
-    "VALIDATING",
-    "VALIDATED",
-    "RUNNING",
-    "FAILED_VALIDATION",
-    "FAILED",
-    "SUCCESS",
-    "CANCELLED",
-    "CANCELLATION_REQUESTED",
+ClassifierJobOutStatus = Union[
+    Literal[
+        "QUEUED",
+        "STARTED",
+        "VALIDATING",
+        "VALIDATED",
+        "RUNNING",
+        "FAILED_VALIDATION",
+        "FAILED",
+        "SUCCESS",
+        "CANCELLED",
+        "CANCELLATION_REQUESTED",
+    ],
+    UnrecognizedStr,
 ]
 r"""The current status of the fine-tuning job."""
 
@@ -38,14 +45,10 @@ ClassifierJobOutObject = Literal["job",]
 r"""The object type of the fine-tuning job."""
 
 
-ClassifierJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
+ClassifierJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
-ClassifierJobOutIntegrations = WandbIntegrationOut
-
-
-ClassifierJobOutJobType = Literal["classifier",]
-r"""The type of job (`FT` for fine-tuning)."""
+ClassifierJobOutIntegration = WandbIntegrationOut
 
 
 class ClassifierJobOutTypedDict(TypedDict):
@@ -71,12 +74,12 @@ class ClassifierJobOutTypedDict(TypedDict):
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
-    integrations: NotRequired[Nullable[List[ClassifierJobOutIntegrationsTypedDict]]]
+    integrations: NotRequired[Nullable[List[ClassifierJobOutIntegrationTypedDict]]]
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[ClassifierJobOutJobType]
+    job_type: Literal["classifier"]
     r"""The type of job (`FT` for fine-tuning)."""
 
 
@@ -115,7 +118,7 @@ class ClassifierJobOut(BaseModel):
     suffix: OptionalNullable[str] = UNSET
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
 
-    integrations: OptionalNullable[List[ClassifierJobOutIntegrations]] = UNSET
+    integrations: OptionalNullable[List[ClassifierJobOutIntegration]] = UNSET
     r"""A list of integrations enabled for your fine-tuning job."""
 
     trained_tokens: OptionalNullable[int] = UNSET
@@ -123,7 +126,10 @@ class ClassifierJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[ClassifierJobOutJobType] = "classifier"
+    JOB_TYPE: Annotated[
+        Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],
+        pydantic.Field(alias="job_type"),
+    ] = "classifier"
     r"""The type of job (`FT` for fine-tuning)."""
 
     @model_serializer(mode="wrap")
@@ -136,7 +142,6 @@ class ClassifierJobOut(BaseModel):
             "integrations",
             "trained_tokens",
             "metadata",
-            "job_type",
         ]
         nullable_fields = [
             "validation_files",

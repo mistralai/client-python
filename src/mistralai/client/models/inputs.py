@@ -13,8 +13,8 @@ from typing import List, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-InstructRequestInputsMessagesTypedDict = TypeAliasType(
-    "InstructRequestInputsMessagesTypedDict",
+InputsMessageTypedDict = TypeAliasType(
+    "InputsMessageTypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -24,7 +24,7 @@ InstructRequestInputsMessagesTypedDict = TypeAliasType(
 )
 
 
-InstructRequestInputsMessages = Annotated[
+InputsMessage = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -36,11 +36,11 @@ InstructRequestInputsMessages = Annotated[
 
 
 class InstructRequestInputsTypedDict(TypedDict):
-    messages: List[InstructRequestInputsMessagesTypedDict]
+    messages: List[InputsMessageTypedDict]
 
 
 class InstructRequestInputs(BaseModel):
-    messages: List[InstructRequestInputsMessages]
+    messages: List[InputsMessage]
 
 
 InputsTypedDict = TypeAliasType(

@@ -60,7 +60,7 @@ class Conversations(BaseSDK):
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         instructions: OptionalNullable[str] = UNSET,
         tools: OptionalNullable[
-            Union[List[models.Tools], List[models.ToolsTypedDict]]
+            Union[List[models.ConversationRequestTool], List[models.ConversationRequestToolTypedDict]]
         ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -133,7 +133,7 @@ class Conversations(BaseSDK):
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         instructions: OptionalNullable[str] = UNSET,
         tools: OptionalNullable[
-            Union[List[models.Tools], List[models.ToolsTypedDict]]
+            Union[List[models.ConversationRequestTool], List[models.ConversationRequestToolTypedDict]]
         ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -238,13 +238,13 @@ class Conversations(BaseSDK):
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationrequest.HandoffExecution
+            models_conversationrequest.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationrequest.Tools],
-                List[models_conversationrequest.ToolsTypedDict],
+                List[models_conversationrequest.ConversationRequestTool],
+                List[models_conversationrequest.ConversationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
@@ -259,8 +259,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrequest.AgentVersion,
-                models_conversationrequest.AgentVersionTypedDict,
+                models_conversationrequest.ConversationRequestAgentVersion,
+                models_conversationrequest.ConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -307,7 +307,9 @@ class Conversations(BaseSDK):
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
-            tools=utils.get_pydantic_model(tools, Optional[List[models.Tools]]),
+            tools=utils.get_pydantic_model(
+                tools, Optional[List[models.ConversationRequestTool]]
+            ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
@@ -389,13 +391,13 @@ class Conversations(BaseSDK):
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationrequest.HandoffExecution
+            models_conversationrequest.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationrequest.Tools],
-                List[models_conversationrequest.ToolsTypedDict],
+                List[models_conversationrequest.ConversationRequestTool],
+                List[models_conversationrequest.ConversationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
@@ -410,8 +412,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrequest.AgentVersion,
-                models_conversationrequest.AgentVersionTypedDict,
+                models_conversationrequest.ConversationRequestAgentVersion,
+                models_conversationrequest.ConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -458,7 +460,9 @@ class Conversations(BaseSDK):
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
-            tools=utils.get_pydantic_model(tools, Optional[List[models.Tools]]),
+            tools=utils.get_pydantic_model(
+                tools, Optional[List[models.ConversationRequestTool]]
+            ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
@@ -540,7 +544,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.ResponseBody]:
+    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -611,7 +615,9 @@ class Conversations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(List[models.ResponseBody], http_res)
+            return unmarshal_json_response(
+                List[models.AgentsAPIV1ConversationsListResponse], http_res
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -636,7 +642,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.ResponseBody]:
+    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -707,7 +713,9 @@ class Conversations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(List[models.ResponseBody], http_res)
+            return unmarshal_json_response(
+                List[models.AgentsAPIV1ConversationsListResponse], http_res
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -730,7 +738,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.AgentsAPIV1ConversationsGetResponseV1ConversationsGet:
+    ) -> models.ResponseV1ConversationsGet:
         r"""Retrieve a conversation information.
 
         Given a conversation_id retrieve a conversation entity with its attributes.
@@ -797,9 +805,7 @@ class Conversations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.AgentsAPIV1ConversationsGetResponseV1ConversationsGet, http_res
-            )
+            return unmarshal_json_response(models.ResponseV1ConversationsGet, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -822,7 +828,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.AgentsAPIV1ConversationsGetResponseV1ConversationsGet:
+    ) -> models.ResponseV1ConversationsGet:
         r"""Retrieve a conversation information.
 
         Given a conversation_id retrieve a conversation entity with its attributes.
@@ -889,9 +895,7 @@ class Conversations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.AgentsAPIV1ConversationsGetResponseV1ConversationsGet, http_res
-            )
+            return unmarshal_json_response(models.ResponseV1ConversationsGet, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -1993,9 +1997,9 @@ class Conversations(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationstreamrequest.ConversationStreamRequestTools],
+                List[models_conversationstreamrequest.ConversationStreamRequestTool],
                 List[
-                    models_conversationstreamrequest.ConversationStreamRequestToolsTypedDict
+                    models_conversationstreamrequest.ConversationStreamRequestToolTypedDict
                 ],
             ]
         ] = None,
@@ -2060,7 +2064,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTools]]
+                tools, Optional[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
@@ -2155,9 +2159,9 @@ class Conversations(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationstreamrequest.ConversationStreamRequestTools],
+                List[models_conversationstreamrequest.ConversationStreamRequestTool],
                 List[
-                    models_conversationstreamrequest.ConversationStreamRequestToolsTypedDict
+                    models_conversationstreamrequest.ConversationStreamRequestToolTypedDict
                 ],
             ]
         ] = None,
@@ -2222,7 +2226,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTools]]
+                tools, Optional[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]

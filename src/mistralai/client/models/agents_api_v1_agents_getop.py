@@ -14,17 +14,19 @@ from typing import Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-QueryParamAgentVersionTypedDict = TypeAliasType(
-    "QueryParamAgentVersionTypedDict", Union[int, str]
+AgentsAPIV1AgentsGetAgentVersionTypedDict = TypeAliasType(
+    "AgentsAPIV1AgentsGetAgentVersionTypedDict", Union[int, str]
 )
 
 
-QueryParamAgentVersion = TypeAliasType("QueryParamAgentVersion", Union[int, str])
+AgentsAPIV1AgentsGetAgentVersion = TypeAliasType(
+    "AgentsAPIV1AgentsGetAgentVersion", Union[int, str]
+)
 
 
 class AgentsAPIV1AgentsGetRequestTypedDict(TypedDict):
     agent_id: str
-    agent_version: NotRequired[Nullable[QueryParamAgentVersionTypedDict]]
+    agent_version: NotRequired[Nullable[AgentsAPIV1AgentsGetAgentVersionTypedDict]]
 
 
 class AgentsAPIV1AgentsGetRequest(BaseModel):
@@ -33,7 +35,7 @@ class AgentsAPIV1AgentsGetRequest(BaseModel):
     ]
 
     agent_version: Annotated[
-        OptionalNullable[QueryParamAgentVersion],
+        OptionalNullable[AgentsAPIV1AgentsGetAgentVersion],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 

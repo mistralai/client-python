@@ -15,8 +15,8 @@ from typing_extensions import NotRequired, TypeAliasType, TypedDict
 ConversationHistoryObject = Literal["conversation.history",]
 
 
-EntriesTypedDict = TypeAliasType(
-    "EntriesTypedDict",
+EntryTypedDict = TypeAliasType(
+    "EntryTypedDict",
     Union[
         FunctionResultEntryTypedDict,
         MessageInputEntryTypedDict,
@@ -28,8 +28,8 @@ EntriesTypedDict = TypeAliasType(
 )
 
 
-Entries = TypeAliasType(
-    "Entries",
+Entry = TypeAliasType(
+    "Entry",
     Union[
         FunctionResultEntry,
         MessageInputEntry,
@@ -45,7 +45,7 @@ class ConversationHistoryTypedDict(TypedDict):
     r"""Retrieve all entries in a conversation."""
 
     conversation_id: str
-    entries: List[EntriesTypedDict]
+    entries: List[EntryTypedDict]
     object: NotRequired[ConversationHistoryObject]
 
 
@@ -54,6 +54,6 @@ class ConversationHistory(BaseModel):
 
     conversation_id: str
 
-    entries: List[Entries]
+    entries: List[Entry]
 
     object: Optional[ConversationHistoryObject] = "conversation.history"

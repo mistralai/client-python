@@ -15,7 +15,7 @@ from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-QueryParamStatus = Literal[
+JobsAPIRoutesFineTuningGetFineTuningJobsStatus = Literal[
     "QUEUED",
     "STARTED",
     "VALIDATING",
@@ -42,7 +42,7 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict(TypedDict):
     created_before: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
     r"""When set, only return results for jobs created by the API caller. Other results are not displayed."""
-    status: NotRequired[Nullable[QueryParamStatus]]
+    status: NotRequired[Nullable[JobsAPIRoutesFineTuningGetFineTuningJobsStatus]]
     r"""The current job state to filter on. When set, the other results are not displayed."""
     wandb_project: NotRequired[Nullable[str]]
     r"""The Weights and Biases project to filter on. When set, the other results are not displayed."""
@@ -89,7 +89,7 @@ class JobsAPIRoutesFineTuningGetFineTuningJobsRequest(BaseModel):
     r"""When set, only return results for jobs created by the API caller. Other results are not displayed."""
 
     status: Annotated[
-        OptionalNullable[QueryParamStatus],
+        OptionalNullable[JobsAPIRoutesFineTuningGetFineTuningJobsStatus],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""The current job state to filter on. When set, the other results are not displayed."""

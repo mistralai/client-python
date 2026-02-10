@@ -14,8 +14,8 @@ from typing_extensions import NotRequired, TypeAliasType, TypedDict
 ConversationResponseObject = Literal["conversation.response",]
 
 
-OutputsTypedDict = TypeAliasType(
-    "OutputsTypedDict",
+OutputTypedDict = TypeAliasType(
+    "OutputTypedDict",
     Union[
         ToolExecutionEntryTypedDict,
         FunctionCallEntryTypedDict,
@@ -25,8 +25,8 @@ OutputsTypedDict = TypeAliasType(
 )
 
 
-Outputs = TypeAliasType(
-    "Outputs",
+Output = TypeAliasType(
+    "Output",
     Union[ToolExecutionEntry, FunctionCallEntry, MessageOutputEntry, AgentHandoffEntry],
 )
 
@@ -35,7 +35,7 @@ class ConversationResponseTypedDict(TypedDict):
     r"""The response after appending new entries to the conversation."""
 
     conversation_id: str
-    outputs: List[OutputsTypedDict]
+    outputs: List[OutputTypedDict]
     usage: ConversationUsageInfoTypedDict
     object: NotRequired[ConversationResponseObject]
 
@@ -45,7 +45,7 @@ class ConversationResponse(BaseModel):
 
     conversation_id: str
 
-    outputs: List[Outputs]
+    outputs: List[Output]
 
     usage: ConversationUsageInfo
 

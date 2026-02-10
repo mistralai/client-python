@@ -36,8 +36,8 @@ AgentsCompletionStreamRequestStop = TypeAliasType(
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-AgentsCompletionStreamRequestMessagesTypedDict = TypeAliasType(
-    "AgentsCompletionStreamRequestMessagesTypedDict",
+AgentsCompletionStreamRequestMessageTypedDict = TypeAliasType(
+    "AgentsCompletionStreamRequestMessageTypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -47,7 +47,7 @@ AgentsCompletionStreamRequestMessagesTypedDict = TypeAliasType(
 )
 
 
-AgentsCompletionStreamRequestMessages = Annotated[
+AgentsCompletionStreamRequestMessage = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -70,7 +70,7 @@ AgentsCompletionStreamRequestToolChoice = TypeAliasType(
 
 
 class AgentsCompletionStreamRequestTypedDict(TypedDict):
-    messages: List[AgentsCompletionStreamRequestMessagesTypedDict]
+    messages: List[AgentsCompletionStreamRequestMessageTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     agent_id: str
     r"""The ID of the agent to use for this completion."""
@@ -100,7 +100,7 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
 
 
 class AgentsCompletionStreamRequest(BaseModel):
-    messages: List[AgentsCompletionStreamRequestMessages]
+    messages: List[AgentsCompletionStreamRequestMessage]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
 
     agent_id: str

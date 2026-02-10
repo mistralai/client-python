@@ -221,8 +221,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models_chatmoderationrequest.ChatModerationRequestInputs,
-            models_chatmoderationrequest.ChatModerationRequestInputsTypedDict,
+            models_chatmoderationrequest.ChatModerationRequestInputs3,
+            models_chatmoderationrequest.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -250,7 +250,9 @@ class Classifiers(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatModerationRequest(
-            inputs=utils.get_pydantic_model(inputs, models.ChatModerationRequestInputs),
+            inputs=utils.get_pydantic_model(
+                inputs, models.ChatModerationRequestInputs3
+            ),
             model=model,
         )
 
@@ -318,8 +320,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models_chatmoderationrequest.ChatModerationRequestInputs,
-            models_chatmoderationrequest.ChatModerationRequestInputsTypedDict,
+            models_chatmoderationrequest.ChatModerationRequestInputs3,
+            models_chatmoderationrequest.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -347,7 +349,9 @@ class Classifiers(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ChatModerationRequest(
-            inputs=utils.get_pydantic_model(inputs, models.ChatModerationRequestInputs),
+            inputs=utils.get_pydantic_model(
+                inputs, models.ChatModerationRequestInputs3
+            ),
             model=model,
         )
 

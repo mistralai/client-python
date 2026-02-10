@@ -24,16 +24,20 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-StopTypedDict = TypeAliasType("StopTypedDict", Union[str, List[str]])
+ChatCompletionRequestStopTypedDict = TypeAliasType(
+    "ChatCompletionRequestStopTypedDict", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-Stop = TypeAliasType("Stop", Union[str, List[str]])
+ChatCompletionRequestStop = TypeAliasType(
+    "ChatCompletionRequestStop", Union[str, List[str]]
+)
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-MessagesTypedDict = TypeAliasType(
-    "MessagesTypedDict",
+ChatCompletionRequestMessageTypedDict = TypeAliasType(
+    "ChatCompletionRequestMessageTypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -43,7 +47,7 @@ MessagesTypedDict = TypeAliasType(
 )
 
 
-Messages = Annotated[
+ChatCompletionRequestMessage = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -70,7 +74,7 @@ r"""Controls which (if any) tool is called by the model. `none` means the model 
 class ChatCompletionRequestTypedDict(TypedDict):
     model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
-    messages: List[MessagesTypedDict]
+    messages: List[ChatCompletionRequestMessageTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     temperature: NotRequired[Nullable[float]]
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
@@ -80,7 +84,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
-    stop: NotRequired[StopTypedDict]
+    stop: NotRequired[ChatCompletionRequestStopTypedDict]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
@@ -111,7 +115,7 @@ class ChatCompletionRequest(BaseModel):
     model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
 
-    messages: List[Messages]
+    messages: List[ChatCompletionRequestMessage]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
 
     temperature: OptionalNullable[float] = UNSET
@@ -126,7 +130,7 @@ class ChatCompletionRequest(BaseModel):
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
 
-    stop: Optional[Stop] = None
+    stop: Optional[ChatCompletionRequestStop] = None
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
     random_seed: OptionalNullable[int] = UNSET

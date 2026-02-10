@@ -4,31 +4,27 @@ from __future__ import annotations
 from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
+from pydantic import Field
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-DataTypedDict = TypeAliasType(
-    "DataTypedDict", Union[BaseModelCardTypedDict, FTModelCardTypedDict]
+ModelListDataTypedDict = TypeAliasType(
+    "ModelListDataTypedDict", Union[BaseModelCardTypedDict, FTModelCardTypedDict]
 )
 
 
-Data = Annotated[
-    Union[
-        Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]
-    ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+ModelListData = Annotated[
+    Union[BaseModelCard, FTModelCard], Field(discriminator="TYPE")
 ]
 
 
 class ModelListTypedDict(TypedDict):
     object: NotRequired[str]
-    data: NotRequired[List[DataTypedDict]]
+    data: NotRequired[List[ModelListDataTypedDict]]
 
 
 class ModelList(BaseModel):
     object: Optional[str] = "list"
 
-    data: Optional[List[Data]] = None
+    data: Optional[List[ModelListData]] = None

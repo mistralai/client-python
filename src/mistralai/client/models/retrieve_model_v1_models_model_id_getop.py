@@ -4,8 +4,8 @@ from __future__ import annotations
 from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, get_discriminator
-from pydantic import Discriminator, Tag
+from mistralai.client.utils import FieldMetadata, PathParamMetadata
+from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
@@ -22,17 +22,14 @@ class RetrieveModelV1ModelsModelIDGetRequest(BaseModel):
     r"""The ID of the model to retrieve."""
 
 
-RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict = TypeAliasType(
-    "RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGetTypedDict",
+ResponseRetrieveModelV1ModelsModelIDGetTypedDict = TypeAliasType(
+    "ResponseRetrieveModelV1ModelsModelIDGetTypedDict",
     Union[BaseModelCardTypedDict, FTModelCardTypedDict],
 )
 r"""Successful Response"""
 
 
-RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet = Annotated[
-    Union[
-        Annotated[BaseModelCard, Tag("base")], Annotated[FTModelCard, Tag("fine-tuned")]
-    ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+ResponseRetrieveModelV1ModelsModelIDGet = Annotated[
+    Union[BaseModelCard, FTModelCard], Field(discriminator="TYPE")
 ]
 r"""Successful Response"""

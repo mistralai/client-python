@@ -25,8 +25,7 @@ from .toolexecutionstartedevent import (
     ToolExecutionStartedEventTypedDict,
 )
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
+from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
@@ -50,18 +49,18 @@ ConversationEventsDataTypedDict = TypeAliasType(
 
 ConversationEventsData = Annotated[
     Union[
-        Annotated[AgentHandoffDoneEvent, Tag("agent.handoff.done")],
-        Annotated[AgentHandoffStartedEvent, Tag("agent.handoff.started")],
-        Annotated[ResponseDoneEvent, Tag("conversation.response.done")],
-        Annotated[ResponseErrorEvent, Tag("conversation.response.error")],
-        Annotated[ResponseStartedEvent, Tag("conversation.response.started")],
-        Annotated[FunctionCallEvent, Tag("function.call.delta")],
-        Annotated[MessageOutputEvent, Tag("message.output.delta")],
-        Annotated[ToolExecutionDeltaEvent, Tag("tool.execution.delta")],
-        Annotated[ToolExecutionDoneEvent, Tag("tool.execution.done")],
-        Annotated[ToolExecutionStartedEvent, Tag("tool.execution.started")],
+        AgentHandoffDoneEvent,
+        AgentHandoffStartedEvent,
+        ResponseDoneEvent,
+        ResponseErrorEvent,
+        ResponseStartedEvent,
+        FunctionCallEvent,
+        MessageOutputEvent,
+        ToolExecutionDeltaEvent,
+        ToolExecutionDoneEvent,
+        ToolExecutionStartedEvent,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 

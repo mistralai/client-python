@@ -18,9 +18,6 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-BaseModelCardType = Literal["base",]
-
-
 class BaseModelCardTypedDict(TypedDict):
     id: str
     capabilities: ModelCapabilitiesTypedDict
@@ -34,7 +31,7 @@ class BaseModelCardTypedDict(TypedDict):
     deprecation: NotRequired[Nullable[datetime]]
     deprecation_replacement_model: NotRequired[Nullable[str]]
     default_model_temperature: NotRequired[Nullable[float]]
-    type: BaseModelCardType
+    type: Literal["base"]
 
 
 class BaseModelCard(BaseModel):
@@ -63,7 +60,7 @@ class BaseModelCard(BaseModel):
     default_model_temperature: OptionalNullable[float] = UNSET
 
     TYPE: Annotated[
-        Annotated[Optional[BaseModelCardType], AfterValidator(validate_const("base"))],
+        Annotated[Literal["base"], AfterValidator(validate_const("base"))],
         pydantic.Field(alias="type"),
     ] = "base"
 
@@ -80,7 +77,6 @@ class BaseModelCard(BaseModel):
             "deprecation",
             "deprecation_replacement_model",
             "default_model_temperature",
-            "type",
         ]
         nullable_fields = [
             "name",

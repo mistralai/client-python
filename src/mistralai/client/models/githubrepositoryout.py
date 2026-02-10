@@ -8,19 +8,19 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-GithubRepositoryOutType = Literal["github",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GithubRepositoryOutTypedDict(TypedDict):
     name: str
     owner: str
     commit_id: str
-    type: NotRequired[GithubRepositoryOutType]
+    type: Literal["github"]
     ref: NotRequired[Nullable[str]]
     weight: NotRequired[float]
 
@@ -32,7 +32,10 @@ class GithubRepositoryOut(BaseModel):
 
     commit_id: str
 
-    type: Optional[GithubRepositoryOutType] = "github"
+    TYPE: Annotated[
+        Annotated[Literal["github"], AfterValidator(validate_const("github"))],
+        pydantic.Field(alias="type"),
+    ] = "github"
 
     ref: OptionalNullable[str] = UNSET
 
@@ -40,7 +43,7 @@ class GithubRepositoryOut(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "ref", "weight"]
+        optional_fields = ["ref", "weight"]
         nullable_fields = ["ref"]
         null_default_fields = []
 

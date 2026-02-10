@@ -24,9 +24,9 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models_agentscompletionrequest.AgentsCompletionRequestMessages],
+            List[models_agentscompletionrequest.AgentsCompletionRequestMessage],
             List[
-                models_agentscompletionrequest.AgentsCompletionRequestMessagesTypedDict
+                models_agentscompletionrequest.AgentsCompletionRequestMessageTypedDict
             ],
         ],
         agent_id: str,
@@ -110,7 +110,7 @@ class Agents(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionRequestMessages]
+                messages, List[models.AgentsCompletionRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -194,9 +194,9 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models_agentscompletionrequest.AgentsCompletionRequestMessages],
+            List[models_agentscompletionrequest.AgentsCompletionRequestMessage],
             List[
-                models_agentscompletionrequest.AgentsCompletionRequestMessagesTypedDict
+                models_agentscompletionrequest.AgentsCompletionRequestMessageTypedDict
             ],
         ],
         agent_id: str,
@@ -280,7 +280,7 @@ class Agents(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionRequestMessages]
+                messages, List[models.AgentsCompletionRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -365,10 +365,10 @@ class Agents(BaseSDK):
         *,
         messages: Union[
             List[
-                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessages
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessage
             ],
             List[
-                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessagesTypedDict
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessageTypedDict
             ],
         ],
         agent_id: str,
@@ -454,7 +454,7 @@ class Agents(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionStreamRequestMessages]
+                messages, List[models.AgentsCompletionStreamRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
@@ -547,10 +547,10 @@ class Agents(BaseSDK):
         *,
         messages: Union[
             List[
-                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessages
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessage
             ],
             List[
-                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessagesTypedDict
+                models_agentscompletionstreamrequest.AgentsCompletionStreamRequestMessageTypedDict
             ],
         ],
         agent_id: str,
@@ -636,7 +636,7 @@ class Agents(BaseSDK):
             random_seed=random_seed,
             metadata=metadata,
             messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionStreamRequestMessages]
+                messages, List[models.AgentsCompletionStreamRequestMessage]
             ),
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]

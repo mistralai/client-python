@@ -2,16 +2,19 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-WebSearchToolType = Literal["web_search",]
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class WebSearchToolTypedDict(TypedDict):
-    type: NotRequired[WebSearchToolType]
+    type: Literal["web_search"]
 
 
 class WebSearchTool(BaseModel):
-    type: Optional[WebSearchToolType] = "web_search"
+    TYPE: Annotated[
+        Annotated[Literal["web_search"], AfterValidator(validate_const("web_search"))],
+        pydantic.Field(alias="type"),
+    ] = "web_search"

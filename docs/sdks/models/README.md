@@ -84,7 +84,7 @@ with Mistral(
 
 ### Response
 
-**[models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet](../../models/retrievemodelv1modelsmodelidgetresponseretrievemodelv1modelsmodelidget.md)**
+**[models.ResponseRetrieveModelV1ModelsModelIDGet](../../models/responseretrievemodelv1modelsmodelidget.md)**
 
 ### Errors
 

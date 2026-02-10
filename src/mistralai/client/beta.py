@@ -2,16 +2,16 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
+from mistralai.client.beta_agents import BetaAgents
 from mistralai.client.conversations import Conversations
 from mistralai.client.libraries import Libraries
-from mistralai.client.mistral_agents import MistralAgents
 from typing import Optional
 
 
 class Beta(BaseSDK):
     conversations: Conversations
     r"""(beta) Conversations API"""
-    agents: MistralAgents
+    agents: BetaAgents
     r"""(beta) Agents API"""
     libraries: Libraries
     r"""(beta) Libraries API to create and manage libraries - index your documents to enhance agent capabilities."""
@@ -27,5 +27,5 @@ class Beta(BaseSDK):
         self.conversations = Conversations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
-        self.agents = MistralAgents(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.agents = BetaAgents(self.sdk_configuration, parent_ref=self.parent_ref)
         self.libraries = Libraries(self.sdk_configuration, parent_ref=self.parent_ref)

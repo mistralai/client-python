@@ -15,14 +15,13 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-AgentUpdateRequestToolsTypedDict = TypeAliasType(
-    "AgentUpdateRequestToolsTypedDict",
+AgentUpdateRequestToolTypedDict = TypeAliasType(
+    "AgentUpdateRequestToolTypedDict",
     Union[
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
@@ -34,23 +33,23 @@ AgentUpdateRequestToolsTypedDict = TypeAliasType(
 )
 
 
-AgentUpdateRequestTools = Annotated[
+AgentUpdateRequestTool = Annotated[
     Union[
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[FunctionTool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        CodeInterpreterTool,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 
 class AgentUpdateRequestTypedDict(TypedDict):
     instructions: NotRequired[Nullable[str]]
     r"""Instruction prompt the model will follow during the conversation."""
-    tools: NotRequired[List[AgentUpdateRequestToolsTypedDict]]
+    tools: NotRequired[List[AgentUpdateRequestToolTypedDict]]
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
@@ -66,7 +65,7 @@ class AgentUpdateRequest(BaseModel):
     instructions: OptionalNullable[str] = UNSET
     r"""Instruction prompt the model will follow during the conversation."""
 
-    tools: Optional[List[AgentUpdateRequestTools]] = None
+    tools: Optional[List[AgentUpdateRequestTool]] = None
     r"""List of tools which are available to the model during the conversation."""
 
     completion_args: Optional[CompletionArgs] = None

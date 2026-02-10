@@ -273,7 +273,7 @@ class Documents(BaseSDK):
 
         request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
-            request_body=models.LibrariesDocumentsUploadV1DocumentUpload(
+            request_body=models.DocumentUpload(
                 file=utils.get_pydantic_model(file, models.File),
             ),
         )
@@ -292,11 +292,7 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "multipart",
-                models.LibrariesDocumentsUploadV1DocumentUpload,
+                request.request_body, False, False, "multipart", models.DocumentUpload
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -383,7 +379,7 @@ class Documents(BaseSDK):
 
         request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
-            request_body=models.LibrariesDocumentsUploadV1DocumentUpload(
+            request_body=models.DocumentUpload(
                 file=utils.get_pydantic_model(file, models.File),
             ),
         )
@@ -402,11 +398,7 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "multipart",
-                models.LibrariesDocumentsUploadV1DocumentUpload,
+                request.request_body, False, False, "multipart", models.DocumentUpload
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

@@ -16,20 +16,19 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-HandoffExecution = Literal[
+ConversationRequestHandoffExecution = Literal[
     "client",
     "server",
 ]
 
 
-ToolsTypedDict = TypeAliasType(
-    "ToolsTypedDict",
+ConversationRequestToolTypedDict = TypeAliasType(
+    "ConversationRequestToolTypedDict",
     Union[
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
@@ -41,39 +40,43 @@ ToolsTypedDict = TypeAliasType(
 )
 
 
-Tools = Annotated[
+ConversationRequestTool = Annotated[
     Union[
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[FunctionTool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        CodeInterpreterTool,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 
-AgentVersionTypedDict = TypeAliasType("AgentVersionTypedDict", Union[str, int])
+ConversationRequestAgentVersionTypedDict = TypeAliasType(
+    "ConversationRequestAgentVersionTypedDict", Union[str, int]
+)
 
 
-AgentVersion = TypeAliasType("AgentVersion", Union[str, int])
+ConversationRequestAgentVersion = TypeAliasType(
+    "ConversationRequestAgentVersion", Union[str, int]
+)
 
 
 class ConversationRequestTypedDict(TypedDict):
     inputs: ConversationInputsTypedDict
     stream: NotRequired[bool]
     store: NotRequired[Nullable[bool]]
-    handoff_execution: NotRequired[Nullable[HandoffExecution]]
+    handoff_execution: NotRequired[Nullable[ConversationRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[List[ToolsTypedDict]]
+    tools: NotRequired[List[ConversationRequestToolTypedDict]]
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     agent_id: NotRequired[Nullable[str]]
-    agent_version: NotRequired[Nullable[AgentVersionTypedDict]]
+    agent_version: NotRequired[Nullable[ConversationRequestAgentVersionTypedDict]]
     model: NotRequired[Nullable[str]]
 
 
@@ -84,11 +87,11 @@ class ConversationRequest(BaseModel):
 
     store: OptionalNullable[bool] = UNSET
 
-    handoff_execution: OptionalNullable[HandoffExecution] = UNSET
+    handoff_execution: OptionalNullable[ConversationRequestHandoffExecution] = UNSET
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: Optional[List[Tools]] = None
+    tools: Optional[List[ConversationRequestTool]] = None
     r"""List of tools which are available to the model during the conversation."""
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
@@ -101,7 +104,7 @@ class ConversationRequest(BaseModel):
 
     agent_id: OptionalNullable[str] = UNSET
 
-    agent_version: OptionalNullable[AgentVersion] = UNSET
+    agent_version: OptionalNullable[ConversationRequestAgentVersion] = UNSET
 
     model: OptionalNullable[str] = UNSET
 

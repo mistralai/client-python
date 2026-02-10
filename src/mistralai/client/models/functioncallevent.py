@@ -3,11 +3,11 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-FunctionCallEventType = Literal["function.call.delta",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class FunctionCallEventTypedDict(TypedDict):
@@ -15,7 +15,7 @@ class FunctionCallEventTypedDict(TypedDict):
     name: str
     tool_call_id: str
     arguments: str
-    type: NotRequired[FunctionCallEventType]
+    type: Literal["function.call.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
 
@@ -29,7 +29,13 @@ class FunctionCallEvent(BaseModel):
 
     arguments: str
 
-    type: Optional[FunctionCallEventType] = "function.call.delta"
+    TYPE: Annotated[
+        Annotated[
+            Literal["function.call.delta"],
+            AfterValidator(validate_const("function.call.delta")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "function.call.delta"
 
     created_at: Optional[datetime] = None
 
