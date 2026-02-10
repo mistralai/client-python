@@ -8,11 +8,13 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
-    nameResolutionFeb2025: false
+    nameResolutionFeb2025: true
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
-    securityFeb2025: false
-    sharedErrorComponentsApr2025: false
+    securityFeb2025: true
+    sharedErrorComponentsApr2025: true
+    methodSignaturesApr2024: true
+    sharedNestedComponentsJan2026: true
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
@@ -26,7 +28,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.0.0a1
+  version: 2.0.0a2
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -47,9 +49,12 @@ python:
   envVarPrefix: MISTRAL
   fixFlags:
     responseRequiredSep2024: true
+  flatAdditionalProperties: true
   flattenGlobalSecurity: true
   flattenRequests: true
   flatteningOrder: parameters-first
+  forwardCompatibleEnumsByDefault: true
+  forwardCompatibleUnionsByDefault: tagged-only
   imports:
     option: openapi
     paths:
@@ -68,7 +73,7 @@ python:
   outputModelSuffix: output
   packageManager: uv
   packageName: mistralai
-  preApplyUnionDiscriminators: false
+  preApplyUnionDiscriminators: true
   pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
