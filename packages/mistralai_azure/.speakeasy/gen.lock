@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: eb0d097e3bdb7c0784f34ca2af2ce554
+  docChecksum: ade191d4634cb219a41d38f7e9078630
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
@@ -12,9 +12,9 @@ management:
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/mistralai_azure
   published: true
 persistentEdits:
-  generation_id: 0d580549-db09-4078-890b-62de0e5fe937
-  pristine_commit_hash: b561cb140a25a721f54d0aad3c9a03d419c8fc19
-  pristine_tree_hash: d122bdae045ddf46c910e2f5da53d78da18ef009
+  generation_id: 7de9be19-b27f-4222-afb1-35e11deb09f7
+  pristine_commit_hash: 60113d2c49489b846001fc39393d643b2709bb25
+  pristine_tree_hash: 50ed42d2e4b3d4ecd639935cd1511220354a41d7
 features:
   python:
     additionalDependencies: 1.0.0
@@ -197,8 +197,8 @@ trackedFiles:
     pristine_git_object: 1d394500e8ffdd140457575568fc2ce465a1cc3a
   docs/models/mistralpromptmode.md:
     id: d17d5db4d3b6
-    last_write_checksum: sha1:5ccd31d3804f70b6abb0e5a00bda57b9102225e3
-    pristine_git_object: 7416e2037c507d19ac02aed914da1208a2fed0a1
+    last_write_checksum: sha1:abcb7205c5086169c7d9449d15ac142448a7d258
+    pristine_git_object: c3409d03b9646e21a3793372d06dcae6fef95463
   docs/models/ocrimageobject.md:
     id: b72f3c5853b2
     last_write_checksum: sha1:90c5158dec6a7b31c858677b6a8efa1e3cabd504
@@ -213,8 +213,8 @@ trackedFiles:
     pristine_git_object: 02473d44f73485fd7b7f0031d51bfac835d4036e
   docs/models/ocrrequest.md:
     id: 6862a3fc2d0f
-    last_write_checksum: sha1:f32fcc5916f9eedf7adfaa60beda30a9ec42f32e
-    pristine_git_object: 76e4da925937fd4bdd42307f116a74d4dbf2bea3
+    last_write_checksum: sha1:9311e2c87f8f4512c35a717d3b063f2861f878d4
+    pristine_git_object: 87929e53f8a74823b82ecce56d15f22228134fa6
   docs/models/ocrresponse.md:
     id: 30042328fb78
     last_write_checksum: sha1:8e4a4ae404ea752f3e9f1108c2a5f89ed6cfb143
@@ -485,8 +485,8 @@ trackedFiles:
     pristine_git_object: c5bf17528c7cf25bac8f8874f58692c601fcdd76
   src/mistralai_azure/models/mistralpromptmode.py:
     id: f62a521bcdae
-    last_write_checksum: sha1:fcb16c10986bd6946f79b9e330a4be9f26f7e724
-    pristine_git_object: 22fb643896688b68af238f6ac75cf41a00b0511b
+    last_write_checksum: sha1:82190bc14d2e51440723176cb8108791485c1180
+    pristine_git_object: 77230b7e5e61cc662fdc52c72e8b817a15e183c3
   src/mistralai_azure/models/no_response_error.py:
     id: 54523e14f29b
     last_write_checksum: sha1:7f326424a7d5ae1bcd5c89a0d6b3dbda9138942f
@@ -505,8 +505,8 @@ trackedFiles:
     pristine_git_object: e95718001e07bb89ba2fc9094f88b894572148bb
   src/mistralai_azure/models/ocrrequest.py:
     id: 4e574d5fb9be
-    last_write_checksum: sha1:6ca937598dd92c6c6ab7b8d59363595a3e8760e9
-    pristine_git_object: 565a0a30a7f9fae374c14fb5fcb0f19385cf05e4
+    last_write_checksum: sha1:1b03dc8b392069f6b142228e74179c8341b09ffa
+    pristine_git_object: e9c23afcdd7440660f17c7819406d7e603eabbec
   src/mistralai_azure/models/ocrresponse.py:
     id: 326a4d9fab25
     last_write_checksum: sha1:cf597498a5841a56bbd1aeb8478bd57a01d93cb1
@@ -601,8 +601,8 @@ trackedFiles:
     pristine_git_object: 4caff4a6b74aeb322bf42cd2070b7bd576ca834a
   src/mistralai_azure/ocr.py:
     id: 77e2e0f594ad
-    last_write_checksum: sha1:a455095c62c2dfad071d70682c2f57e7d64934db
-    pristine_git_object: da823f816dda9d462a795e9b946d5634ff6d48e2
+    last_write_checksum: sha1:7daae9b0c14093d6d0bc0258b0bce008cb845a1e
+    pristine_git_object: 31e27f6eaa6dcc2b8450656d4a59dd4a7a50a29a
   src/mistralai_azure/py.typed:
     id: 98df238e554c
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60

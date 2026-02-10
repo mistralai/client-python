@@ -25,6 +25,7 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        document_annotation_prompt: OptionalNullable[str] = UNSET,
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
@@ -44,6 +45,7 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param document_annotation_prompt: Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided.
         :param table_format:
         :param extract_header:
         :param extract_footer:
@@ -76,6 +78,7 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            document_annotation_prompt=document_annotation_prompt,
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
@@ -155,6 +158,7 @@ class Ocr(BaseSDK):
         document_annotation_format: OptionalNullable[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
+        document_annotation_prompt: OptionalNullable[str] = UNSET,
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
@@ -174,6 +178,7 @@ class Ocr(BaseSDK):
         :param image_min_size: Minimum height and width of image to extract
         :param bbox_annotation_format: Structured output class for extracting useful information from each extracted bounding box / image from document. Only json_schema is valid for this field
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
+        :param document_annotation_prompt: Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided.
         :param table_format:
         :param extract_header:
         :param extract_footer:
@@ -206,6 +211,7 @@ class Ocr(BaseSDK):
             document_annotation_format=utils.get_pydantic_model(
                 document_annotation_format, OptionalNullable[models.ResponseFormat]
             ),
+            document_annotation_prompt=document_annotation_prompt,
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
