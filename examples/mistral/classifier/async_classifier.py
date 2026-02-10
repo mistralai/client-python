@@ -2,7 +2,7 @@
 
 from pprint import pprint
 import asyncio
-from mistralai import Mistral, TrainingFile, ClassifierTrainingParametersIn
+from mistralai.client import Mistral, TrainingFile, ClassifierTrainingParametersIn
 
 import os
 

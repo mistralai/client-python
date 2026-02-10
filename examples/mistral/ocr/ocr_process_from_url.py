@@ -1,7 +1,7 @@
 import json
 import os
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 MISTRAL_7B_PDF_URL = "https://arxiv.org/pdf/2310.06825.pdf"
 

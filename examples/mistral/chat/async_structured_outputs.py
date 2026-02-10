@@ -4,7 +4,7 @@ import asyncio
 import os
 from pydantic import BaseModel
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 
 async def main():

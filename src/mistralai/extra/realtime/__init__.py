@@ -1,4 +1,4 @@
-from mistralai.models import (
+from mistralai.client.models import (
     AudioEncoding,
     AudioFormat,
     RealtimeTranscriptionError,

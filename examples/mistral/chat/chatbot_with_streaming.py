@@ -8,8 +8,8 @@ import os
 import readline
 import sys
 
-from mistralai import Mistral
-from mistralai.models import AssistantMessage, SystemMessage, UserMessage
+from mistralai.client import Mistral
+from mistralai.client.models import AssistantMessage, SystemMessage, UserMessage
 
 MODEL_LIST = [
     "mistral-small-latest",

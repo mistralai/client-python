@@ -2,8 +2,8 @@
 
 import os
 
-from mistralai import Mistral, File
-from mistralai.models import UserMessage
+from mistralai.client import Mistral, File
+from mistralai.client.models import UserMessage
 
 
 def main():

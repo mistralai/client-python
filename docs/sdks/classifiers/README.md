@@ -19,7 +19,7 @@ Moderations
 
 <!-- UsageSnippet language="python" operationID="moderations_v1_moderations_post" method="post" path="/v1/moderations" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -65,7 +65,7 @@ Chat Moderations
 
 <!-- UsageSnippet language="python" operationID="chat_moderations_v1_chat_moderations_post" method="post" path="/v1/chat/moderations" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -112,7 +112,7 @@ Classifications
 
 <!-- UsageSnippet language="python" operationID="classifications_v1_classifications_post" method="post" path="/v1/classifications" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -157,7 +157,7 @@ Chat Classifications
 
 <!-- UsageSnippet language="python" operationID="chat_classifications_v1_chat_classifications_post" method="post" path="/v1/chat/classifications" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

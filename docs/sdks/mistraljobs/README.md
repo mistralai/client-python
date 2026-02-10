@@ -17,7 +17,7 @@ Get a list of batch jobs for your organization and user.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_jobs" method="get" path="/v1/batch/jobs" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -64,7 +64,7 @@ Create a new batch job, it will be queued for processing.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_create_batch_job" method="post" path="/v1/batch/jobs" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -113,7 +113,7 @@ Args:
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_job" method="get" path="/v1/batch/jobs/{job_id}" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 
@@ -154,7 +154,7 @@ Request the cancellation of a batch job.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_cancel_batch_job" method="post" path="/v1/batch/jobs/{job_id}/cancel" -->
 ```python
-from mistralai import Mistral
+from mistralai.client import Mistral
 import os
 
 

@@ -9,9 +9,9 @@ import tempfile
 from pathlib import Path
 from typing import AsyncIterator
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra.realtime.connection import UnknownRealtimeEvent
-from mistralai.models import (
+from mistralai.client.models import (
     AudioFormat,
     RealtimeTranscriptionError,
     TranscriptionStreamDone,

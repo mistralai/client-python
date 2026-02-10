@@ -1,5 +1,5 @@
 import os
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 from mistralai.extra.run.context import RunContext
 import logging

@@ -3,11 +3,11 @@ import json
 import os
 from typing import Dict, List
 
-from mistralai import Mistral
-from mistralai.models.assistantmessage import AssistantMessage
-from mistralai.models.function import Function
-from mistralai.models.toolmessage import ToolMessage
-from mistralai.models.usermessage import UserMessage
+from mistralai.client import Mistral
+from mistralai.client.models.assistantmessage import AssistantMessage
+from mistralai.client.models.function import Function
+from mistralai.client.models.toolmessage import ToolMessage
+from mistralai.client.models.usermessage import UserMessage
 
 # Assuming we have the following data
 data = {

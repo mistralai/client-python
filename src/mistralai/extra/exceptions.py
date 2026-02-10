@@ -1,7 +1,7 @@
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mistralai.models import RealtimeTranscriptionError
+    from mistralai.client.models import RealtimeTranscriptionError
 
 
 class MistralClientException(Exception):

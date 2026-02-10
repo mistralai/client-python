@@ -5,8 +5,8 @@ import os
 import random
 from pathlib import Path
 
-from mistralai import Mistral
-from mistralai.models import (
+from mistralai.client import Mistral
+from mistralai.client.models import (
     File,
     CompletionTrainingParametersIn,
 )

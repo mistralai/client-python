@@ -1,242 +1,167 @@
+# Migration Guide
 
-# Migration Guide for MistralAI Client from 0.\*.\* to 1.0.0
+This guide covers migrating between major versions of the Mistral Python SDK.
 
-We have made significant changes to the `mistralai` library to improve its usability and consistency. This guide will help you migrate your code from the old client to the new one.
+---
 
-## Major Changes
+## Migrating from v1.x to v2.x
 
-1. **Unified Client Class**:
-   - The `MistralClient` and `MistralAsyncClient` classes have been consolidated into a single `Mistral` class.
-   - This simplifies the API by providing a single entry point for both synchronous and asynchronous operations.
+Version 2.0 updates the import paths from `mistralai` to `mistralai.client`.
 
-2. **Method Names and Structure**:
-   - The method names and structure have been updated for better clarity and consistency.
-   - For example:
-      - `client.chat` is now `client.chat.complete` for non-streaming calls
-      - `client.chat_stream` is now `client.chat.stream` for streaming calls
-      - Async `client.chat` is now `client.chat.complete_async` for async non-streaming calls
-      - Async `client.chat_stream` is now `client.chat.stream_async` for async streaming calls
+### Import Changes
 
+All imports move from `mistralai` to `mistralai.client`:
 
-## Method changes
+```python
+# v1
+from mistralai import Mistral
+from mistralai.models import UserMessage, AssistantMessage
+from mistralai.types import BaseModel
 
-### Sync
+# v2
+from mistralai.client import Mistral
+from mistralai.client.models import UserMessage, AssistantMessage
+from mistralai.client.types import BaseModel
+```
 
-| Old Methods                | New Methods                      |
-| -------------------------- | -------------------------------- |
-| `MistralCLient`            | `Mistral`                        |
-| `client.chat`              | `client.chat.complete`           |
-| `client.chat_stream`       | `client.chat.stream`             |
-| `client.completions`       | `client.fim.complete`            |
-| `client.completions_stream`| `client.fim.stream`              |
-| `client.embeddings`        | `client.embeddings.create`       |
-| `client.list_models`       | `client.models.list`             |
-| `client.delete_model`      | `client.models.delete`           |
-| `client.files.create`      | `client.files.upload`            |
-| `client.files.list`        | `client.files.list`              |
-| `client.files.retrieve`    | `client.files.retrieve`          |
-| `client.files.delete`      | `client.files.delete`            |
-| `client.jobs.create`       | `client.fine_tuning.jobs.create` |
-| `client.jobs.list`         | `client.fine_tuning.jobs.list`   |
-| `client.jobs.retrieve`     | `client.fine_tuning.jobs.get`    |
-| `client.jobs.cancel`       | `client.fine_tuning.jobs.cancel` |
+### Quick Reference
 
-### Async
+| v1 | v2 |
+|---|---|
+| `from mistralai import Mistral` | `from mistralai.client import Mistral` |
+| `from mistralai.models import ...` | `from mistralai.client.models import ...` |
+| `from mistralai.types import ...` | `from mistralai.client.types import ...` |
+| `from mistralai.utils import ...` | `from mistralai.client.utils import ...` |
 
-| Old Methods                      | New Methods                            |
-| -------------------------------- | -------------------------------------- |
-| `MistralAsyncClient`             | `Mistral`                              |
-| `async_client.chat`              | `client.chat.complete_async`           |
-| `async_client.chat_stream`       | `client.chat.stream_async`             |
-| `async_client.completions`       | `client.fim.complete_async`            |
-| `async_client.completions_stream`| `client.fim.stream_async`              |
-| `async_client.embeddings`        | `client.embeddings.create_async`       |
-| `async_client.list_models`       | `client.models.list_async`             |
-| `async_client.delete_model`      | `client.models.delete_async`           |
-| `async_client.files.create`      | `client.files.upload_async`            |
-| `async_client.files.list`        | `client.files.list_async`              |
-| `async_client.files.retrieve`    | `client.files.retrieve_async`          |
-| `async_client.files.delete`      | `client.files.delete_async`            |
-| `async_client.jobs.create`       | `client.fine_tuning.jobs.create_async` |
-| `async_client.jobs.list`         | `client.fine_tuning.jobs.list_async`   |
-| `async_client.jobs.retrieve`     | `client.fine_tuning.jobs.get_async`    |
-| `async_client.jobs.cancel`       | `client.fine_tuning.jobs.cancel_async` |
+### What Stays the Same
 
-### Message Changes
+- All method names and signatures remain identical
+- The `Mistral` client API is unchanged
+- All models (`UserMessage`, `AssistantMessage`, etc.) work the same way
 
-The `ChatMessage` class has been replaced with a more flexible system. You can now use the `SystemMessage`, `UserMessage`, `AssistantMessage`, and `ToolMessage` classes to create messages.
+---
 
-The return object of the stream call methods have been modified to `chunk.data.choices[0].delta.content` from `chunk.choices[0].delta.content`. 
+## Migrating from v0.x to v1.x
 
-## Example Migrations
+Version 1.0 introduced significant changes to improve usability and consistency.
 
-### Example 1: Non-Streaming Chat
+### Major Changes
 
-**Old:**
+1. **Unified Client Class**: `MistralClient` and `MistralAsyncClient` consolidated into a single `Mistral` class
+2. **Method Structure**: Methods reorganized into resource-based groups (e.g., `client.chat.complete()`)
+3. **Message Classes**: `ChatMessage` replaced with typed classes (`UserMessage`, `AssistantMessage`, etc.)
+4. **Streaming Response**: Stream chunks now accessed via `chunk.data.choices[0].delta.content`
+
+### Method Mapping
+
+#### Sync Methods
+
+| v0.x | v1.x |
+|---|---|
+| `MistralClient` | `Mistral` |
+| `client.chat` | `client.chat.complete` |
+| `client.chat_stream` | `client.chat.stream` |
+| `client.completions` | `client.fim.complete` |
+| `client.completions_stream` | `client.fim.stream` |
+| `client.embeddings` | `client.embeddings.create` |
+| `client.list_models` | `client.models.list` |
+| `client.delete_model` | `client.models.delete` |
+| `client.files.create` | `client.files.upload` |
+| `client.jobs.create` | `client.fine_tuning.jobs.create` |
+| `client.jobs.list` | `client.fine_tuning.jobs.list` |
+| `client.jobs.retrieve` | `client.fine_tuning.jobs.get` |
+| `client.jobs.cancel` | `client.fine_tuning.jobs.cancel` |
+
+#### Async Methods
+
+| v0.x | v1.x |
+|---|---|
+| `MistralAsyncClient` | `Mistral` |
+| `async_client.chat` | `client.chat.complete_async` |
+| `async_client.chat_stream` | `client.chat.stream_async` |
+| `async_client.completions` | `client.fim.complete_async` |
+| `async_client.completions_stream` | `client.fim.stream_async` |
+| `async_client.embeddings` | `client.embeddings.create_async` |
+| `async_client.list_models` | `client.models.list_async` |
+| `async_client.files.create` | `client.files.upload_async` |
+| `async_client.jobs.create` | `client.fine_tuning.jobs.create_async` |
+| `async_client.jobs.list` | `client.fine_tuning.jobs.list_async` |
+| `async_client.jobs.retrieve` | `client.fine_tuning.jobs.get_async` |
+| `async_client.jobs.cancel` | `client.fine_tuning.jobs.cancel_async` |
+
+### Example: Non-Streaming Chat
+
+**v0.x:**
 ```python
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
-
 client = MistralClient(api_key=api_key)
 
-messages = [
-    ChatMessage(role="user", content="What is the best French cheese?")
-]
+messages = [ChatMessage(role="user", content="What is the best French cheese?")]
+response = client.chat(model="mistral-large-latest", messages=messages)
 
-# No streaming
-chat_response = client.chat(
-    model=model,
-    messages=messages,
-)
-
-print(chat_response.choices[0].message.content)
+print(response.choices[0].message.content)
 ```
 
-**New:**
-
+**v1.x:**
 ```python
-import os
-
 from mistralai import Mistral, UserMessage
-
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
 
 client = Mistral(api_key=api_key)
 
-messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
-]
-# Or using the new message classes
-# messages = [
-#     UserMessage(content="What is the best French cheese?"),
-# ]
+messages = [UserMessage(content="What is the best French cheese?")]
+response = client.chat.complete(model="mistral-large-latest", messages=messages)
 
-chat_response = client.chat.complete(
-    model=model,
-    messages=messages,
-)
-
-print(chat_response.choices[0].message.content)
+print(response.choices[0].message.content)
 ```
 
-### Example 2: Streaming Chat
+### Example: Streaming Chat
 
-**Old:**
-
+**v0.x:**
 ```python
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
-
 client = MistralClient(api_key=api_key)
+messages = [ChatMessage(role="user", content="What is the best French cheese?")]
 
-messages = [
-    ChatMessage(role="user", content="What is the best French cheese?")
-]
-
-# With streaming
-stream_response = client.chat_stream(model=model, messages=messages)
-
-for chunk in stream_response:
+for chunk in client.chat_stream(model="mistral-large-latest", messages=messages):
     print(chunk.choices[0].delta.content)
 ```
-**New:**
-```python
-import os
 
+**v1.x:**
+```python
 from mistralai import Mistral, UserMessage
 
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
-
 client = Mistral(api_key=api_key)
+messages = [UserMessage(content="What is the best French cheese?")]
 
-messages = [
-    {
-        "role": "user",
-        "content": "What is the best French cheese?",
-    },
-]
-# Or using the new message classes
-# messages = [
-#     UserMessage(content="What is the best French cheese?"),
-# ]
-
-stream_response = client.chat.stream(
-    model=model,
-    messages=messages,
-)
-
-for chunk in stream_response:
-    print(chunk.data.choices[0].delta.content)
-
+for chunk in client.chat.stream(model="mistral-large-latest", messages=messages):
+    print(chunk.data.choices[0].delta.content)  # Note: chunk.data
 ```
 
-### Example 3: Async
+### Example: Async Streaming
 
-**Old:**
+**v0.x:**
 ```python
 from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 
-api_key = os.environ["MISTRAL_API_KEY"]
-model = "mistral-large-latest"
-
 client = MistralAsyncClient(api_key=api_key)
+messages = [ChatMessage(role="user", content="What is the best French cheese?")]
 
-messages = [
-    ChatMessage(role="user", content="What is the best French cheese?")
-]
-
-# With async
-async_response = client.chat_stream(model=model, messages=messages)
-
-async for chunk in async_response:
+async for chunk in client.chat_stream(model="mistral-large-latest", messages=messages):
     print(chunk.choices[0].delta.content)
 ```
 
-**New:**
+**v1.x:**
 ```python
-import asyncio
-import os
-
 from mistralai import Mistral, UserMessage
 
+client = Mistral(api_key=api_key)
+messages = [UserMessage(content="What is the best French cheese?")]
 
-async def main():
-    client = Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
-    )
-
-    messages = [
-        {
-            "role": "user",
-            "content": "What is the best French cheese?",
-        },
-    ]
-    # Or using the new message classes
-    # messages = [
-    #     UserMessage(
-    #         content="What is the best French cheese?",
-    #     ),
-    # ]
-    async_response = await client.chat.stream_async(
-        messages=messages,
-        model="mistral-large-latest",
-    )
-
-    async for chunk in async_response:
-        print(chunk.data.choices[0].delta.content)
-
-
-asyncio.run(main())
+async for chunk in await client.chat.stream_async(model="mistral-large-latest", messages=messages):
+    print(chunk.data.choices[0].delta.content)
 ```

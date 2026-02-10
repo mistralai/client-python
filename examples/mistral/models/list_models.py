@@ -2,7 +2,7 @@
 
 import os
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 
 def main():

@@ -23,9 +23,9 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra.realtime import UnknownRealtimeEvent
-from mistralai.models import (
+from mistralai.client.models import (
     AudioFormat,
     RealtimeTranscriptionError,
     RealtimeTranscriptionSessionCreated,

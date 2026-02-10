@@ -1,4 +1,4 @@
-from mistralai import Mistral, BatchRequest, UserMessage
+from mistralai.client import Mistral, BatchRequest, UserMessage
 import os
 import asyncio
 
@@ -26,14 +26,23 @@ async def main():
 
     print(f"Created job with ID: {job.id}")
 
-    while job.status not in ["SUCCESS", "FAILED"]:
+    max_wait = 60  # 1 minute timeout for CI
+    elapsed = 0
+    while job.status not in ["SUCCESS", "FAILED", "CANCELLED"]:
         await asyncio.sleep(1)
+        elapsed += 1
+        if elapsed >= max_wait:
+            print(f"Timeout after {max_wait}s, job still {job.status}")
+            return
         job = await client.batch.jobs.get_async(job_id=job.id)
         print(f"Job status: {job.status}")
 
     print(f"Job is done, status {job.status}")
-    for res in job.outputs:
-        print(res["response"]["body"])
+    if job.outputs:
+        for res in job.outputs:
+            print(res["response"]["body"])
+    else:
+        print(f"No outputs (succeeded: {job.succeeded_requests}, failed: {job.failed_requests})")
 
 if __name__ == "__main__":
     asyncio.run(main())

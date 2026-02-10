@@ -3,7 +3,7 @@ import asyncio
 import os
 import random
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from mistralai.extra.run.context import RunContext
 from mcp import StdioServerParameters
 from mistralai.extra.mcp.stdio import (
@@ -11,7 +11,7 @@ from mistralai.extra.mcp.stdio import (
 )
 from pathlib import Path
 
-from mistralai.types import BaseModel
+from mistralai.client.types import BaseModel
 
 cwd = Path(__file__).parent
 MODEL = "mistral-medium-latest"

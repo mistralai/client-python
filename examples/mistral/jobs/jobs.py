@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 
-from mistralai import Mistral
-from mistralai.models import File, CompletionTrainingParametersIn
+from mistralai.client import Mistral
+from mistralai.client.models import File, CompletionTrainingParametersIn
 
 
 def main():
