@@ -168,7 +168,6 @@ def create_tool_call(func: Callable) -> FunctionTool:
     type_hints = get_type_hints(func, include_extras=True, localns=None, globalns=None)
 
     return FunctionTool(
-        type="function",
         function=Function(
             name=name,
             description=_get_function_description(docstring_sections),

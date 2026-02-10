@@ -35,9 +35,21 @@ from mistralai.client.types import BaseModel
 
 ### What Stays the Same
 
-- All method names and signatures remain identical
 - The `Mistral` client API is unchanged
 - All models (`UserMessage`, `AssistantMessage`, etc.) work the same way
+
+### Type Name Changes
+
+Some type names have been updated for clarity and consistency:
+
+| Old Name | New Name |
+|---|---|
+| `Tools` | `ConversationRequestTool` |
+| `ToolsTypedDict` | `ConversationRequestToolTypedDict` |
+| `HandoffExecution` | `ConversationRequestHandoffExecution` |
+| `AgentVersion` | `ConversationRequestAgentVersion` |
+
+Enums now accept unknown values for forward compatibility with API changes.
 
 ---
 
