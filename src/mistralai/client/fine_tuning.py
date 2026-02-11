@@ -2,12 +2,12 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
-from mistralai.client.jobs import Jobs
+from mistralai.client.fine_tuning_jobs import FineTuningJobs
 from typing import Optional
 
 
 class FineTuning(BaseSDK):
-    jobs: Jobs
+    jobs: FineTuningJobs
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -17,4 +17,4 @@ class FineTuning(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.jobs = Jobs(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.jobs = FineTuningJobs(self.sdk_configuration, parent_ref=self.parent_ref)

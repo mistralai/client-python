@@ -16,42 +16,46 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-CompletionDetailedJobOutStatus = Literal[
-    "QUEUED",
-    "STARTED",
-    "VALIDATING",
-    "VALIDATED",
-    "RUNNING",
-    "FAILED_VALIDATION",
-    "FAILED",
-    "SUCCESS",
-    "CANCELLED",
-    "CANCELLATION_REQUESTED",
+CompletionDetailedJobOutStatus = Union[
+    Literal[
+        "QUEUED",
+        "STARTED",
+        "VALIDATING",
+        "VALIDATED",
+        "RUNNING",
+        "FAILED_VALIDATION",
+        "FAILED",
+        "SUCCESS",
+        "CANCELLED",
+        "CANCELLATION_REQUESTED",
+    ],
+    UnrecognizedStr,
 ]
 
 
 CompletionDetailedJobOutObject = Literal["job",]
 
 
-CompletionDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
+CompletionDetailedJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
-CompletionDetailedJobOutIntegrations = WandbIntegrationOut
+CompletionDetailedJobOutIntegration = WandbIntegrationOut
 
 
-CompletionDetailedJobOutJobType = Literal["completion",]
+CompletionDetailedJobOutRepositoryTypedDict = GithubRepositoryOutTypedDict
 
 
-CompletionDetailedJobOutRepositoriesTypedDict = GithubRepositoryOutTypedDict
-
-
-CompletionDetailedJobOutRepositories = GithubRepositoryOut
+CompletionDetailedJobOutRepository = GithubRepositoryOut
 
 
 class CompletionDetailedJobOutTypedDict(TypedDict):
@@ -69,12 +73,12 @@ class CompletionDetailedJobOutTypedDict(TypedDict):
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
-        Nullable[List[CompletionDetailedJobOutIntegrationsTypedDict]]
+        Nullable[List[CompletionDetailedJobOutIntegrationTypedDict]]
     ]
     trained_tokens: NotRequired[Nullable[int]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[CompletionDetailedJobOutJobType]
-    repositories: NotRequired[List[CompletionDetailedJobOutRepositoriesTypedDict]]
+    job_type: Literal["completion"]
+    repositories: NotRequired[List[CompletionDetailedJobOutRepositoryTypedDict]]
     events: NotRequired[List[EventOutTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
     checkpoints: NotRequired[List[CheckpointOutTypedDict]]
@@ -106,15 +110,18 @@ class CompletionDetailedJobOut(BaseModel):
 
     suffix: OptionalNullable[str] = UNSET
 
-    integrations: OptionalNullable[List[CompletionDetailedJobOutIntegrations]] = UNSET
+    integrations: OptionalNullable[List[CompletionDetailedJobOutIntegration]] = UNSET
 
     trained_tokens: OptionalNullable[int] = UNSET
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[CompletionDetailedJobOutJobType] = "completion"
+    JOB_TYPE: Annotated[
+        Annotated[Literal["completion"], AfterValidator(validate_const("completion"))],
+        pydantic.Field(alias="job_type"),
+    ] = "completion"
 
-    repositories: Optional[List[CompletionDetailedJobOutRepositories]] = None
+    repositories: Optional[List[CompletionDetailedJobOutRepository]] = None
 
     events: Optional[List[EventOut]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
@@ -131,7 +138,6 @@ class CompletionDetailedJobOut(BaseModel):
             "integrations",
             "trained_tokens",
             "metadata",
-            "job_type",
             "repositories",
             "events",
             "checkpoints",

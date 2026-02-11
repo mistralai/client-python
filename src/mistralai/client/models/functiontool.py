@@ -3,19 +3,22 @@
 from __future__ import annotations
 from .function import Function, FunctionTypedDict
 from mistralai.client.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-FunctionToolType = Literal["function",]
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class FunctionToolTypedDict(TypedDict):
     function: FunctionTypedDict
-    type: NotRequired[FunctionToolType]
+    type: Literal["function"]
 
 
 class FunctionTool(BaseModel):
     function: Function
 
-    type: Optional[FunctionToolType] = "function"
+    TYPE: Annotated[
+        Annotated[Literal["function"], AfterValidator(validate_const("function"))],
+        pydantic.Field(alias="type"),
+    ] = "function"

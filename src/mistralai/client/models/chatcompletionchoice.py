@@ -7,7 +7,7 @@ from typing import Literal, Union
 from typing_extensions import TypedDict
 
 
-FinishReason = Union[
+ChatCompletionChoiceFinishReason = Union[
     Literal[
         "stop",
         "length",
@@ -22,7 +22,7 @@ FinishReason = Union[
 class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
     message: AssistantMessageTypedDict
-    finish_reason: FinishReason
+    finish_reason: ChatCompletionChoiceFinishReason
 
 
 class ChatCompletionChoice(BaseModel):
@@ -30,4 +30,4 @@ class ChatCompletionChoice(BaseModel):
 
     message: AssistantMessage
 
-    finish_reason: FinishReason
+    finish_reason: ChatCompletionChoiceFinishReason

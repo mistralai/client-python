@@ -2,21 +2,27 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-DocumentLibraryToolType = Literal["document_library",]
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class DocumentLibraryToolTypedDict(TypedDict):
     library_ids: List[str]
     r"""Ids of the library in which to search."""
-    type: NotRequired[DocumentLibraryToolType]
+    type: Literal["document_library"]
 
 
 class DocumentLibraryTool(BaseModel):
     library_ids: List[str]
     r"""Ids of the library in which to search."""
 
-    type: Optional[DocumentLibraryToolType] = "document_library"
+    TYPE: Annotated[
+        Annotated[
+            Literal["document_library"],
+            AfterValidator(validate_const("document_library")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "document_library"

@@ -3,17 +3,17 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ResponseErrorEventType = Literal["conversation.response.error",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ResponseErrorEventTypedDict(TypedDict):
     message: str
     code: int
-    type: NotRequired[ResponseErrorEventType]
+    type: Literal["conversation.response.error"]
     created_at: NotRequired[datetime]
 
 
@@ -22,6 +22,12 @@ class ResponseErrorEvent(BaseModel):
 
     code: int
 
-    type: Optional[ResponseErrorEventType] = "conversation.response.error"
+    TYPE: Annotated[
+        Annotated[
+            Literal["conversation.response.error"],
+            AfterValidator(validate_const("conversation.response.error")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "conversation.response.error"
 
     created_at: Optional[datetime] = None

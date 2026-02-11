@@ -5,10 +5,10 @@ OK
 
 ## Supported Types
 
-### `models.Response1`
+### `models.Response`
 
 ```python
-value: models.Response1 = /* values here */
+value: models.Response = /* values here */
 ```
 
 ### `models.LegacyJobMetadataOut`

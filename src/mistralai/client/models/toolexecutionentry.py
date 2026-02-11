@@ -21,14 +21,18 @@ ToolExecutionEntryObject = Literal["entry",]
 ToolExecutionEntryType = Literal["tool.execution",]
 
 
-NameTypedDict = TypeAliasType("NameTypedDict", Union[BuiltInConnectors, str])
+ToolExecutionEntryNameTypedDict = TypeAliasType(
+    "ToolExecutionEntryNameTypedDict", Union[BuiltInConnectors, str]
+)
 
 
-Name = TypeAliasType("Name", Union[BuiltInConnectors, str])
+ToolExecutionEntryName = TypeAliasType(
+    "ToolExecutionEntryName", Union[BuiltInConnectors, str]
+)
 
 
 class ToolExecutionEntryTypedDict(TypedDict):
-    name: NameTypedDict
+    name: ToolExecutionEntryNameTypedDict
     arguments: str
     object: NotRequired[ToolExecutionEntryObject]
     type: NotRequired[ToolExecutionEntryType]
@@ -39,7 +43,7 @@ class ToolExecutionEntryTypedDict(TypedDict):
 
 
 class ToolExecutionEntry(BaseModel):
-    name: Name
+    name: ToolExecutionEntryName
 
     arguments: str
 

@@ -4,11 +4,11 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolExecutionStartedEventType = Literal["tool.execution.started",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionStartedEventNameTypedDict = TypeAliasType(
@@ -25,7 +25,7 @@ class ToolExecutionStartedEventTypedDict(TypedDict):
     id: str
     name: ToolExecutionStartedEventNameTypedDict
     arguments: str
-    type: NotRequired[ToolExecutionStartedEventType]
+    type: Literal["tool.execution.started"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
 
@@ -37,7 +37,13 @@ class ToolExecutionStartedEvent(BaseModel):
 
     arguments: str
 
-    type: Optional[ToolExecutionStartedEventType] = "tool.execution.started"
+    TYPE: Annotated[
+        Annotated[
+            Literal["tool.execution.started"],
+            AfterValidator(validate_const("tool.execution.started")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool.execution.started"
 
     created_at: Optional[datetime] = None
 

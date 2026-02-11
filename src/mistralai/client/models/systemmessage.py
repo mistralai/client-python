@@ -6,8 +6,11 @@ from .systemmessagecontentchunks import (
     SystemMessageContentChunksTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 SystemMessageContentTypedDict = TypeAliasType(
@@ -21,15 +24,15 @@ SystemMessageContent = TypeAliasType(
 )
 
 
-Role = Literal["system",]
-
-
 class SystemMessageTypedDict(TypedDict):
     content: SystemMessageContentTypedDict
-    role: NotRequired[Role]
+    role: Literal["system"]
 
 
 class SystemMessage(BaseModel):
     content: SystemMessageContent
 
-    role: Optional[Role] = "system"
+    ROLE: Annotated[
+        Annotated[Literal["system"], AfterValidator(validate_const("system"))],
+        pydantic.Field(alias="role"),
+    ] = "system"

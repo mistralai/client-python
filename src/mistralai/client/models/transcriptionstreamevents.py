@@ -19,8 +19,7 @@ from .transcriptionstreamtextdelta import (
     TranscriptionStreamTextDeltaTypedDict,
 )
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
+from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
@@ -38,12 +37,12 @@ TranscriptionStreamEventsDataTypedDict = TypeAliasType(
 
 TranscriptionStreamEventsData = Annotated[
     Union[
-        Annotated[TranscriptionStreamDone, Tag("transcription.done")],
-        Annotated[TranscriptionStreamLanguage, Tag("transcription.language")],
-        Annotated[TranscriptionStreamSegmentDelta, Tag("transcription.segment")],
-        Annotated[TranscriptionStreamTextDelta, Tag("transcription.text.delta")],
+        TranscriptionStreamDone,
+        TranscriptionStreamLanguage,
+        TranscriptionStreamSegmentDelta,
+        TranscriptionStreamTextDelta,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 

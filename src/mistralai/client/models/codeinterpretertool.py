@@ -2,16 +2,22 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-CodeInterpreterToolType = Literal["code_interpreter",]
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class CodeInterpreterToolTypedDict(TypedDict):
-    type: NotRequired[CodeInterpreterToolType]
+    type: Literal["code_interpreter"]
 
 
 class CodeInterpreterTool(BaseModel):
-    type: Optional[CodeInterpreterToolType] = "code_interpreter"
+    TYPE: Annotated[
+        Annotated[
+            Literal["code_interpreter"],
+            AfterValidator(validate_const("code_interpreter")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "code_interpreter"

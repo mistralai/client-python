@@ -5,13 +5,8 @@ from .classifierftmodelout import ClassifierFTModelOut, ClassifierFTModelOutType
 from .completionftmodelout import CompletionFTModelOut, CompletionFTModelOutTypedDict
 from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import (
-    FieldMetadata,
-    PathParamMetadata,
-    RequestMetadata,
-    get_discriminator,
-)
-from pydantic import Discriminator, Tag
+from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
@@ -42,10 +37,6 @@ r"""OK"""
 
 
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponse = Annotated[
-    Union[
-        Annotated[ClassifierFTModelOut, Tag("classifier")],
-        Annotated[CompletionFTModelOut, Tag("completion")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "model_type", "model_type")),
+    Union[ClassifierFTModelOut, CompletionFTModelOut], Field(discriminator="MODEL_TYPE")
 ]
 r"""OK"""

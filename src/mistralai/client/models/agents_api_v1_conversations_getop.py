@@ -21,15 +21,14 @@ class AgentsAPIV1ConversationsGetRequest(BaseModel):
     r"""ID of the conversation from which we are fetching metadata."""
 
 
-AgentsAPIV1ConversationsGetResponseV1ConversationsGetTypedDict = TypeAliasType(
-    "AgentsAPIV1ConversationsGetResponseV1ConversationsGetTypedDict",
+ResponseV1ConversationsGetTypedDict = TypeAliasType(
+    "ResponseV1ConversationsGetTypedDict",
     Union[AgentConversationTypedDict, ModelConversationTypedDict],
 )
 r"""Successful Response"""
 
 
-AgentsAPIV1ConversationsGetResponseV1ConversationsGet = TypeAliasType(
-    "AgentsAPIV1ConversationsGetResponseV1ConversationsGet",
-    Union[AgentConversation, ModelConversation],
+ResponseV1ConversationsGet = TypeAliasType(
+    "ResponseV1ConversationsGet", Union[AgentConversation, ModelConversation]
 )
 r"""Successful Response"""

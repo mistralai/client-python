@@ -2,16 +2,22 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ImageGenerationToolType = Literal["image_generation",]
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class ImageGenerationToolTypedDict(TypedDict):
-    type: NotRequired[ImageGenerationToolType]
+    type: Literal["image_generation"]
 
 
 class ImageGenerationTool(BaseModel):
-    type: Optional[ImageGenerationToolType] = "image_generation"
+    TYPE: Annotated[
+        Annotated[
+            Literal["image_generation"],
+            AfterValidator(validate_const("image_generation")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "image_generation"

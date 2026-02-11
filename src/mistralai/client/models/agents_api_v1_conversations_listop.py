@@ -69,12 +69,12 @@ class AgentsAPIV1ConversationsListRequest(BaseModel):
         return m
 
 
-ResponseBodyTypedDict = TypeAliasType(
-    "ResponseBodyTypedDict",
+AgentsAPIV1ConversationsListResponseTypedDict = TypeAliasType(
+    "AgentsAPIV1ConversationsListResponseTypedDict",
     Union[AgentConversationTypedDict, ModelConversationTypedDict],
 )
 
 
-ResponseBody = TypeAliasType(
-    "ResponseBody", Union[AgentConversation, ModelConversation]
+AgentsAPIV1ConversationsListResponse = TypeAliasType(
+    "AgentsAPIV1ConversationsListResponse", Union[AgentConversation, ModelConversation]
 )

@@ -8,18 +8,18 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-WandbIntegrationOutType = Literal["wandb",]
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WandbIntegrationOutTypedDict(TypedDict):
     project: str
     r"""The name of the project that the new run will be created under."""
-    type: NotRequired[WandbIntegrationOutType]
+    type: Literal["wandb"]
     name: NotRequired[Nullable[str]]
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
     run_name: NotRequired[Nullable[str]]
@@ -30,7 +30,10 @@ class WandbIntegrationOut(BaseModel):
     project: str
     r"""The name of the project that the new run will be created under."""
 
-    type: Optional[WandbIntegrationOutType] = "wandb"
+    TYPE: Annotated[
+        Annotated[Literal["wandb"], AfterValidator(validate_const("wandb"))],
+        pydantic.Field(alias="type"),
+    ] = "wandb"
 
     name: OptionalNullable[str] = UNSET
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
@@ -41,7 +44,7 @@ class WandbIntegrationOut(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "name", "run_name", "url"]
+        optional_fields = ["name", "run_name", "url"]
         nullable_fields = ["name", "run_name", "url"]
         null_default_fields = []
 

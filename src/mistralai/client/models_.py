@@ -174,7 +174,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
+    ) -> models.ResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
         Retrieve information about a model.
@@ -242,8 +242,7 @@ class Models(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
-                http_res,
+                models.ResponseRetrieveModelV1ModelsModelIDGet, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -267,7 +266,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet:
+    ) -> models.ResponseRetrieveModelV1ModelsModelIDGet:
         r"""Retrieve Model
 
         Retrieve information about a model.
@@ -335,8 +334,7 @@ class Models(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.RetrieveModelV1ModelsModelIDGetResponseRetrieveModelV1ModelsModelIDGet,
-                http_res,
+                models.ResponseRetrieveModelV1ModelsModelIDGet, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(

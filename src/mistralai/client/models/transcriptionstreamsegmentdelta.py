@@ -8,13 +8,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-TranscriptionStreamSegmentDeltaType = Literal["transcription.segment",]
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):
@@ -22,7 +21,7 @@ class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):
     start: float
     end: float
     speaker_id: NotRequired[Nullable[str]]
-    type: NotRequired[TranscriptionStreamSegmentDeltaType]
+    type: Literal["transcription.segment"]
 
 
 class TranscriptionStreamSegmentDelta(BaseModel):
@@ -39,7 +38,13 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     speaker_id: OptionalNullable[str] = UNSET
 
-    type: Optional[TranscriptionStreamSegmentDeltaType] = "transcription.segment"
+    TYPE: Annotated[
+        Annotated[
+            Literal["transcription.segment"],
+            AfterValidator(validate_const("transcription.segment")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "transcription.segment"
 
     @property
     def additional_properties(self):
@@ -51,7 +56,7 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["speaker_id", "type"]
+        optional_fields = ["speaker_id"]
         nullable_fields = ["speaker_id"]
         null_default_fields = []
 

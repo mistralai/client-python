@@ -4,11 +4,11 @@ from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolExecutionDeltaEventType = Literal["tool.execution.delta",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionDeltaEventNameTypedDict = TypeAliasType(
@@ -25,7 +25,7 @@ class ToolExecutionDeltaEventTypedDict(TypedDict):
     id: str
     name: ToolExecutionDeltaEventNameTypedDict
     arguments: str
-    type: NotRequired[ToolExecutionDeltaEventType]
+    type: Literal["tool.execution.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
 
@@ -37,7 +37,13 @@ class ToolExecutionDeltaEvent(BaseModel):
 
     arguments: str
 
-    type: Optional[ToolExecutionDeltaEventType] = "tool.execution.delta"
+    TYPE: Annotated[
+        Annotated[
+            Literal["tool.execution.delta"],
+            AfterValidator(validate_const("tool.execution.delta")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool.execution.delta"
 
     created_at: Optional[datetime] = None
 

@@ -3,18 +3,18 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-AgentHandoffStartedEventType = Literal["agent.handoff.started",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AgentHandoffStartedEventTypedDict(TypedDict):
     id: str
     previous_agent_id: str
     previous_agent_name: str
-    type: NotRequired[AgentHandoffStartedEventType]
+    type: Literal["agent.handoff.started"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
 
@@ -26,7 +26,13 @@ class AgentHandoffStartedEvent(BaseModel):
 
     previous_agent_name: str
 
-    type: Optional[AgentHandoffStartedEventType] = "agent.handoff.started"
+    TYPE: Annotated[
+        Annotated[
+            Literal["agent.handoff.started"],
+            AfterValidator(validate_const("agent.handoff.started")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "agent.handoff.started"
 
     created_at: Optional[datetime] = None
 

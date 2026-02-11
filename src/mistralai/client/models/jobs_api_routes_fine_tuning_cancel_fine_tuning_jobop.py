@@ -10,8 +10,8 @@ from .completiondetailedjobout import (
     CompletionDetailedJobOutTypedDict,
 )
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, get_discriminator
-from pydantic import Discriminator, Tag
+from mistralai.client.utils import FieldMetadata, PathParamMetadata
+from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
@@ -36,10 +36,7 @@ r"""OK"""
 
 
 JobsAPIRoutesFineTuningCancelFineTuningJobResponse = Annotated[
-    Union[
-        Annotated[ClassifierDetailedJobOut, Tag("classifier")],
-        Annotated[CompletionDetailedJobOut, Tag("completion")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "job_type", "job_type")),
+    Union[ClassifierDetailedJobOut, CompletionDetailedJobOut],
+    Field(discriminator="JOB_TYPE"),
 ]
 r"""OK"""

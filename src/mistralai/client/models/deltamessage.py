@@ -15,24 +15,26 @@ from typing import List, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ContentTypedDict = TypeAliasType(
-    "ContentTypedDict", Union[str, List[ContentChunkTypedDict]]
+DeltaMessageContentTypedDict = TypeAliasType(
+    "DeltaMessageContentTypedDict", Union[str, List[ContentChunkTypedDict]]
 )
 
 
-Content = TypeAliasType("Content", Union[str, List[ContentChunk]])
+DeltaMessageContent = TypeAliasType(
+    "DeltaMessageContent", Union[str, List[ContentChunk]]
+)
 
 
 class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[Nullable[str]]
-    content: NotRequired[Nullable[ContentTypedDict]]
+    content: NotRequired[Nullable[DeltaMessageContentTypedDict]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
 
 
 class DeltaMessage(BaseModel):
     role: OptionalNullable[str] = UNSET
 
-    content: OptionalNullable[Content] = UNSET
+    content: OptionalNullable[DeltaMessageContent] = UNSET
 
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
 

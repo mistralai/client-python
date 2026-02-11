@@ -13,8 +13,8 @@ from typing import List, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-TwoTypedDict = TypeAliasType(
-    "TwoTypedDict",
+ChatModerationRequestInputs2TypedDict = TypeAliasType(
+    "ChatModerationRequestInputs2TypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -24,7 +24,7 @@ TwoTypedDict = TypeAliasType(
 )
 
 
-Two = Annotated[
+ChatModerationRequestInputs2 = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -35,8 +35,8 @@ Two = Annotated[
 ]
 
 
-OneTypedDict = TypeAliasType(
-    "OneTypedDict",
+ChatModerationRequestInputs1TypedDict = TypeAliasType(
+    "ChatModerationRequestInputs1TypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -46,7 +46,7 @@ OneTypedDict = TypeAliasType(
 )
 
 
-One = Annotated[
+ChatModerationRequestInputs1 = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -57,27 +57,31 @@ One = Annotated[
 ]
 
 
-ChatModerationRequestInputsTypedDict = TypeAliasType(
-    "ChatModerationRequestInputsTypedDict",
-    Union[List[OneTypedDict], List[List[TwoTypedDict]]],
+ChatModerationRequestInputs3TypedDict = TypeAliasType(
+    "ChatModerationRequestInputs3TypedDict",
+    Union[
+        List[ChatModerationRequestInputs1TypedDict],
+        List[List[ChatModerationRequestInputs2TypedDict]],
+    ],
 )
 r"""Chat to classify"""
 
 
-ChatModerationRequestInputs = TypeAliasType(
-    "ChatModerationRequestInputs", Union[List[One], List[List[Two]]]
+ChatModerationRequestInputs3 = TypeAliasType(
+    "ChatModerationRequestInputs3",
+    Union[List[ChatModerationRequestInputs1], List[List[ChatModerationRequestInputs2]]],
 )
 r"""Chat to classify"""
 
 
 class ChatModerationRequestTypedDict(TypedDict):
-    inputs: ChatModerationRequestInputsTypedDict
+    inputs: ChatModerationRequestInputs3TypedDict
     r"""Chat to classify"""
     model: str
 
 
 class ChatModerationRequest(BaseModel):
-    inputs: Annotated[ChatModerationRequestInputs, pydantic.Field(alias="input")]
+    inputs: Annotated[ChatModerationRequestInputs3, pydantic.Field(alias="input")]
     r"""Chat to classify"""
 
     model: str

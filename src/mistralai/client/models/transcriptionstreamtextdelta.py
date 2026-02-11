@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-TranscriptionStreamTextDeltaType = Literal["transcription.text.delta",]
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class TranscriptionStreamTextDeltaTypedDict(TypedDict):
     text: str
-    type: NotRequired[TranscriptionStreamTextDeltaType]
+    type: Literal["transcription.text.delta"]
 
 
 class TranscriptionStreamTextDelta(BaseModel):
@@ -24,7 +23,13 @@ class TranscriptionStreamTextDelta(BaseModel):
 
     text: str
 
-    type: Optional[TranscriptionStreamTextDeltaType] = "transcription.text.delta"
+    TYPE: Annotated[
+        Annotated[
+            Literal["transcription.text.delta"],
+            AfterValidator(validate_const("transcription.text.delta")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "transcription.text.delta"
 
     @property
     def additional_properties(self):

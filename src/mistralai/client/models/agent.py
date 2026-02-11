@@ -16,14 +16,13 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-AgentToolsTypedDict = TypeAliasType(
-    "AgentToolsTypedDict",
+AgentToolTypedDict = TypeAliasType(
+    "AgentToolTypedDict",
     Union[
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
@@ -35,16 +34,16 @@ AgentToolsTypedDict = TypeAliasType(
 )
 
 
-AgentTools = Annotated[
+AgentTool = Annotated[
     Union[
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[FunctionTool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        CodeInterpreterTool,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 
@@ -63,7 +62,7 @@ class AgentTypedDict(TypedDict):
     source: str
     instructions: NotRequired[Nullable[str]]
     r"""Instruction prompt the model will follow during the conversation."""
-    tools: NotRequired[List[AgentToolsTypedDict]]
+    tools: NotRequired[List[AgentToolTypedDict]]
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
@@ -95,7 +94,7 @@ class Agent(BaseModel):
     instructions: OptionalNullable[str] = UNSET
     r"""Instruction prompt the model will follow during the conversation."""
 
-    tools: Optional[List[AgentTools]] = None
+    tools: Optional[List[AgentTool]] = None
     r"""List of tools which are available to the model during the conversation."""
 
     completion_args: Optional[CompletionArgs] = None

@@ -16,8 +16,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -28,8 +27,8 @@ ConversationStreamRequestHandoffExecution = Literal[
 ]
 
 
-ConversationStreamRequestToolsTypedDict = TypeAliasType(
-    "ConversationStreamRequestToolsTypedDict",
+ConversationStreamRequestToolTypedDict = TypeAliasType(
+    "ConversationStreamRequestToolTypedDict",
     Union[
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
@@ -41,16 +40,16 @@ ConversationStreamRequestToolsTypedDict = TypeAliasType(
 )
 
 
-ConversationStreamRequestTools = Annotated[
+ConversationStreamRequestTool = Annotated[
     Union[
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[FunctionTool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        CodeInterpreterTool,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="TYPE"),
 ]
 
 
@@ -70,7 +69,7 @@ class ConversationStreamRequestTypedDict(TypedDict):
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationStreamRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[List[ConversationStreamRequestToolsTypedDict]]
+    tools: NotRequired[List[ConversationStreamRequestToolTypedDict]]
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
     name: NotRequired[Nullable[str]]
@@ -94,7 +93,7 @@ class ConversationStreamRequest(BaseModel):
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: Optional[List[ConversationStreamRequestTools]] = None
+    tools: Optional[List[ConversationStreamRequestTool]] = None
     r"""List of tools which are available to the model during the conversation."""
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET

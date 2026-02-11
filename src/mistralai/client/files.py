@@ -62,7 +62,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
+        request = models.MultiPartBodyParams(
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -81,11 +81,7 @@ class Files(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "multipart",
-                models.FilesAPIRoutesUploadFileMultiPartBodyParams,
+                request, False, False, "multipart", models.MultiPartBodyParams
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -168,7 +164,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.FilesAPIRoutesUploadFileMultiPartBodyParams(
+        request = models.MultiPartBodyParams(
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -187,11 +183,7 @@ class Files(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "multipart",
-                models.FilesAPIRoutesUploadFileMultiPartBodyParams,
+                request, False, False, "multipart", models.MultiPartBodyParams
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

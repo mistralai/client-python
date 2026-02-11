@@ -2,12 +2,12 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
-from mistralai.client.mistral_jobs import MistralJobs
+from mistralai.client.batch_jobs import BatchJobs
 from typing import Optional
 
 
 class Batch(BaseSDK):
-    jobs: MistralJobs
+    jobs: BatchJobs
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -17,4 +17,4 @@ class Batch(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.jobs = MistralJobs(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.jobs = BatchJobs(self.sdk_configuration, parent_ref=self.parent_ref)

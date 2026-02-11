@@ -12,7 +12,7 @@ from mistralai.client.utils import (
 from typing_extensions import Annotated, TypedDict
 
 
-class LibrariesDocumentsUploadV1DocumentUploadTypedDict(TypedDict):
+class DocumentUploadTypedDict(TypedDict):
     file: FileTypedDict
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
@@ -26,7 +26,7 @@ class LibrariesDocumentsUploadV1DocumentUploadTypedDict(TypedDict):
     """
 
 
-class LibrariesDocumentsUploadV1DocumentUpload(BaseModel):
+class DocumentUpload(BaseModel):
     file: Annotated[File, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
@@ -42,7 +42,7 @@ class LibrariesDocumentsUploadV1DocumentUpload(BaseModel):
 
 class LibrariesDocumentsUploadV1RequestTypedDict(TypedDict):
     library_id: str
-    request_body: LibrariesDocumentsUploadV1DocumentUploadTypedDict
+    request_body: DocumentUploadTypedDict
 
 
 class LibrariesDocumentsUploadV1Request(BaseModel):
@@ -51,6 +51,6 @@ class LibrariesDocumentsUploadV1Request(BaseModel):
     ]
 
     request_body: Annotated[
-        LibrariesDocumentsUploadV1DocumentUpload,
+        DocumentUpload,
         FieldMetadata(request=RequestMetadata(media_type="multipart/form-data")),
     ]

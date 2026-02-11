@@ -4,8 +4,7 @@ from __future__ import annotations
 from .classifierjobout import ClassifierJobOut, ClassifierJobOutTypedDict
 from .completionjobout import CompletionJobOut, CompletionJobOutTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
+from pydantic import Field
 from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -16,11 +15,7 @@ JobsOutDataTypedDict = TypeAliasType(
 
 
 JobsOutData = Annotated[
-    Union[
-        Annotated[ClassifierJobOut, Tag("classifier")],
-        Annotated[CompletionJobOut, Tag("completion")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "job_type", "job_type")),
+    Union[ClassifierJobOut, CompletionJobOut], Field(discriminator="JOB_TYPE")
 ]
 
 

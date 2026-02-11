@@ -26,10 +26,10 @@ from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-JobInIntegrationsTypedDict = WandbIntegrationTypedDict
+JobInIntegrationTypedDict = WandbIntegrationTypedDict
 
 
-JobInIntegrations = WandbIntegration
+JobInIntegration = WandbIntegration
 
 
 HyperparametersTypedDict = TypeAliasType(
@@ -46,10 +46,10 @@ Hyperparameters = TypeAliasType(
 )
 
 
-JobInRepositoriesTypedDict = GithubRepositoryInTypedDict
+JobInRepositoryTypedDict = GithubRepositoryInTypedDict
 
 
-JobInRepositories = GithubRepositoryIn
+JobInRepository = GithubRepositoryIn
 
 
 class JobInTypedDict(TypedDict):
@@ -61,13 +61,13 @@ class JobInTypedDict(TypedDict):
     r"""A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files."""
     suffix: NotRequired[Nullable[str]]
     r"""A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`"""
-    integrations: NotRequired[Nullable[List[JobInIntegrationsTypedDict]]]
+    integrations: NotRequired[Nullable[List[JobInIntegrationTypedDict]]]
     r"""A list of integrations to enable for your fine-tuning job."""
     auto_start: NotRequired[bool]
     r"""This field will be required in a future release."""
     invalid_sample_skip_percentage: NotRequired[float]
     job_type: NotRequired[Nullable[FineTuneableModelType]]
-    repositories: NotRequired[Nullable[List[JobInRepositoriesTypedDict]]]
+    repositories: NotRequired[Nullable[List[JobInRepositoryTypedDict]]]
     classifier_targets: NotRequired[Nullable[List[ClassifierTargetInTypedDict]]]
 
 
@@ -85,7 +85,7 @@ class JobIn(BaseModel):
     suffix: OptionalNullable[str] = UNSET
     r"""A string that will be added to your fine-tuning model name. For example, a suffix of \"my-great-model\" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`"""
 
-    integrations: OptionalNullable[List[JobInIntegrations]] = UNSET
+    integrations: OptionalNullable[List[JobInIntegration]] = UNSET
     r"""A list of integrations to enable for your fine-tuning job."""
 
     auto_start: Optional[bool] = None
@@ -95,7 +95,7 @@ class JobIn(BaseModel):
 
     job_type: OptionalNullable[FineTuneableModelType] = UNSET
 
-    repositories: OptionalNullable[List[JobInRepositories]] = UNSET
+    repositories: OptionalNullable[List[JobInRepository]] = UNSET
 
     classifier_targets: OptionalNullable[List[ClassifierTargetIn]] = UNSET
 

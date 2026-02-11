@@ -12,21 +12,25 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-Object = Literal["entry",]
+MessageInputEntryObject = Literal["entry",]
 
 
 MessageInputEntryType = Literal["message.input",]
 
 
-MessageInputEntryRole = Literal[
-    "assistant",
-    "user",
+MessageInputEntryRole = Union[
+    Literal[
+        "assistant",
+        "user",
+    ],
+    UnrecognizedStr,
 ]
 
 
@@ -46,7 +50,7 @@ class MessageInputEntryTypedDict(TypedDict):
 
     role: MessageInputEntryRole
     content: MessageInputEntryContentTypedDict
-    object: NotRequired[Object]
+    object: NotRequired[MessageInputEntryObject]
     type: NotRequired[MessageInputEntryType]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
@@ -61,7 +65,7 @@ class MessageInputEntry(BaseModel):
 
     content: MessageInputEntryContent
 
-    object: Optional[Object] = "entry"
+    object: Optional[MessageInputEntryObject] = "entry"
 
     type: Optional[MessageInputEntryType] = "message.input"
 

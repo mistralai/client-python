@@ -36,8 +36,8 @@ ChatCompletionStreamRequestStop = TypeAliasType(
 r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
 
-ChatCompletionStreamRequestMessagesTypedDict = TypeAliasType(
-    "ChatCompletionStreamRequestMessagesTypedDict",
+ChatCompletionStreamRequestMessageTypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestMessageTypedDict",
     Union[
         SystemMessageTypedDict,
         UserMessageTypedDict,
@@ -47,7 +47,7 @@ ChatCompletionStreamRequestMessagesTypedDict = TypeAliasType(
 )
 
 
-ChatCompletionStreamRequestMessages = Annotated[
+ChatCompletionStreamRequestMessage = Annotated[
     Union[
         Annotated[AssistantMessage, Tag("assistant")],
         Annotated[SystemMessage, Tag("system")],
@@ -74,7 +74,7 @@ r"""Controls which (if any) tool is called by the model. `none` means the model 
 class ChatCompletionStreamRequestTypedDict(TypedDict):
     model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
-    messages: List[ChatCompletionStreamRequestMessagesTypedDict]
+    messages: List[ChatCompletionStreamRequestMessageTypedDict]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     temperature: NotRequired[Nullable[float]]
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
@@ -114,7 +114,7 @@ class ChatCompletionStreamRequest(BaseModel):
     model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
 
-    messages: List[ChatCompletionStreamRequestMessages]
+    messages: List[ChatCompletionStreamRequestMessage]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
 
     temperature: OptionalNullable[float] = UNSET

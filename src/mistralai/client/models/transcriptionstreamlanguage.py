@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-TranscriptionStreamLanguageType = Literal["transcription.language",]
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class TranscriptionStreamLanguageTypedDict(TypedDict):
     audio_language: str
-    type: NotRequired[TranscriptionStreamLanguageType]
+    type: Literal["transcription.language"]
 
 
 class TranscriptionStreamLanguage(BaseModel):
@@ -24,7 +23,13 @@ class TranscriptionStreamLanguage(BaseModel):
 
     audio_language: str
 
-    type: Optional[TranscriptionStreamLanguageType] = "transcription.language"
+    TYPE: Annotated[
+        Annotated[
+            Literal["transcription.language"],
+            AfterValidator(validate_const("transcription.language")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "transcription.language"
 
     @property
     def additional_properties(self):

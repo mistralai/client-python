@@ -14,7 +14,7 @@ from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-Type = Literal["transcription_segment",]
+TranscriptionSegmentChunkType = Literal["transcription_segment",]
 
 
 class TranscriptionSegmentChunkTypedDict(TypedDict):
@@ -23,7 +23,7 @@ class TranscriptionSegmentChunkTypedDict(TypedDict):
     end: float
     score: NotRequired[Nullable[float]]
     speaker_id: NotRequired[Nullable[str]]
-    type: NotRequired[Type]
+    type: NotRequired[TranscriptionSegmentChunkType]
 
 
 class TranscriptionSegmentChunk(BaseModel):
@@ -42,7 +42,7 @@ class TranscriptionSegmentChunk(BaseModel):
 
     speaker_id: OptionalNullable[str] = UNSET
 
-    type: Optional[Type] = "transcription_segment"
+    type: Optional[TranscriptionSegmentChunkType] = "transcription_segment"
 
     @property
     def additional_properties(self):
