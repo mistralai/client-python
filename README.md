@@ -118,7 +118,7 @@ Once that is saved to a file, you can run it with `uv run script.py` where
 
 ### Agents extra dependencies
 
-When using the agents related feature it is required to add the `agents` extra dependencies. This can be added when 
+When using the agents related feature it is required to add the `agents` extra dependencies. This can be added when
 installing the package:
 
 ```bash
@@ -126,6 +126,14 @@ pip install "mistralai[agents]"
 ```
 
 > Note: These features require Python 3.10+ (the SDK minimum).
+
+### Additional packages
+
+Additional `mistralai-*` packages (e.g. `mistralai-workflows`) can be installed separately and are available under the `mistralai` namespace:
+
+```bash
+pip install mistralai-workflows
+```
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
@@ -410,7 +418,7 @@ gcloud auth application-default login
 Install the extras dependencies specific to Google Cloud:
 
 ```bash
-pip install mistralai[gcp]
+pip install "mistralai[gcp]"
 ```
 
 **Step 2: Example Usage**
