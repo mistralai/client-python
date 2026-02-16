@@ -87,7 +87,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_list_v1",
+                operation_id="ListLibraries",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -164,7 +164,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_list_v1",
+                operation_id="ListLibraries",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -257,7 +257,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_create_v1",
+                operation_id="CreateLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -356,7 +356,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_create_v1",
+                operation_id="CreateLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -413,7 +413,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesGetV1Request(
+        request = models.GetLibraryRequest(
             library_id=library_id,
         )
 
@@ -446,7 +446,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_get_v1",
+                operation_id="GetLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -503,7 +503,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesGetV1Request(
+        request = models.GetLibraryRequest(
             library_id=library_id,
         )
 
@@ -536,7 +536,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_get_v1",
+                operation_id="GetLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -593,7 +593,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesDeleteV1Request(
+        request = models.DeleteLibraryRequest(
             library_id=library_id,
         )
 
@@ -626,7 +626,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_delete_v1",
+                operation_id="DeleteLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -683,7 +683,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesDeleteV1Request(
+        request = models.DeleteLibraryRequest(
             library_id=library_id,
         )
 
@@ -716,7 +716,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_delete_v1",
+                operation_id="DeleteLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -777,7 +777,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesUpdateV1Request(
+        request = models.UpdateLibraryRequest(
             library_id=library_id,
             library_in_update=models.LibraryInUpdate(
                 name=name,
@@ -817,7 +817,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_update_v1",
+                operation_id="UpdateLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -878,7 +878,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibrariesUpdateV1Request(
+        request = models.UpdateLibraryRequest(
             library_id=library_id,
             library_in_update=models.LibraryInUpdate(
                 name=name,
@@ -918,7 +918,7 @@ class Libraries(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="libraries_update_v1",
+                operation_id="UpdateLibrary",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

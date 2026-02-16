@@ -21,9 +21,6 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-CompletionFTModelOutObject = Literal["model",]
-
-
 class CompletionFTModelOutTypedDict(TypedDict):
     id: str
     created: int
@@ -34,7 +31,7 @@ class CompletionFTModelOutTypedDict(TypedDict):
     archived: bool
     capabilities: FTModelCapabilitiesOutTypedDict
     job: str
-    object: NotRequired[CompletionFTModelOutObject]
+    object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
@@ -61,7 +58,10 @@ class CompletionFTModelOut(BaseModel):
 
     job: str
 
-    object: Optional[CompletionFTModelOutObject] = "model"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
+        pydantic.Field(alias="object"),
+    ] = "model"
 
     name: OptionalNullable[str] = UNSET
 

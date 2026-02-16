@@ -22,9 +22,6 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-ClassifierFTModelOutObject = Literal["model",]
-
-
 class ClassifierFTModelOutTypedDict(TypedDict):
     id: str
     created: int
@@ -36,7 +33,7 @@ class ClassifierFTModelOutTypedDict(TypedDict):
     capabilities: FTModelCapabilitiesOutTypedDict
     job: str
     classifier_targets: List[ClassifierTargetOutTypedDict]
-    object: NotRequired[ClassifierFTModelOutObject]
+    object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
@@ -65,7 +62,10 @@ class ClassifierFTModelOut(BaseModel):
 
     classifier_targets: List[ClassifierTargetOut]
 
-    object: Optional[ClassifierFTModelOutObject] = "model"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
+        pydantic.Field(alias="object"),
+    ] = "model"
 
     name: OptionalNullable[str] = UNSET
 

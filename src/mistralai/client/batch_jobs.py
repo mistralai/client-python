@@ -9,6 +9,7 @@ from mistralai.client.models import (
     apiendpoint as models_apiendpoint,
     batchjobstatus as models_batchjobstatus,
     batchrequest as models_batchrequest,
+    listbatchjobsop as models_listbatchjobsop,
 )
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
@@ -28,6 +29,7 @@ class BatchJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
+        order_by: Optional[models_listbatchjobsop.OrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -45,6 +47,7 @@ class BatchJobs(BaseSDK):
         :param created_after:
         :param created_by_me:
         :param status:
+        :param order_by:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -60,7 +63,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
+        request = models.ListBatchJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -69,6 +72,7 @@ class BatchJobs(BaseSDK):
             created_after=created_after,
             created_by_me=created_by_me,
             status=status,
+            order_by=order_by,
         )
 
         req = self._build_request(
@@ -100,7 +104,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_get_batch_jobs",
+                operation_id="ListBatchJobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -133,6 +137,7 @@ class BatchJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
+        order_by: Optional[models_listbatchjobsop.OrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -150,6 +155,7 @@ class BatchJobs(BaseSDK):
         :param created_after:
         :param created_by_me:
         :param status:
+        :param order_by:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -165,7 +171,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
+        request = models.ListBatchJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -174,6 +180,7 @@ class BatchJobs(BaseSDK):
             created_after=created_after,
             created_by_me=created_by_me,
             status=status,
+            order_by=order_by,
         )
 
         req = self._build_request_async(
@@ -205,7 +212,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_get_batch_jobs",
+                operation_id="ListBatchJobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -317,7 +324,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_create_batch_job",
+                operation_id="CreateBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -429,7 +436,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_create_batch_job",
+                operation_id="CreateBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -485,7 +492,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchGetBatchJobRequest(
+        request = models.GetBatchJobRequest(
             job_id=job_id,
             inline=inline,
         )
@@ -519,7 +526,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_get_batch_job",
+                operation_id="GetBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -575,7 +582,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchGetBatchJobRequest(
+        request = models.GetBatchJobRequest(
             job_id=job_id,
             inline=inline,
         )
@@ -609,7 +616,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_get_batch_job",
+                operation_id="GetBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -660,7 +667,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
+        request = models.CancelBatchJobRequest(
             job_id=job_id,
         )
 
@@ -693,7 +700,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_cancel_batch_job",
+                operation_id="CancelBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -744,7 +751,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
+        request = models.CancelBatchJobRequest(
             job_id=job_id,
         )
 
@@ -777,7 +784,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_batch_cancel_batch_job",
+                operation_id="CancelBatchJob",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

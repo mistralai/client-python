@@ -31,7 +31,10 @@ if TYPE_CHECKING:
 
 
 class Mistral(BaseSDK):
-    r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
+    r"""Mistral AI API: Dora OpenAPI schema
+
+    Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
+    """
 
     models: "Models"
     r"""Model Management API"""

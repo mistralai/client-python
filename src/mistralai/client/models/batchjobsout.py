@@ -4,17 +4,17 @@
 from __future__ import annotations
 from .batchjobout import BatchJobOut, BatchJobOutTypedDict
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-BatchJobsOutObject = Literal["list",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class BatchJobsOutTypedDict(TypedDict):
     total: int
     data: NotRequired[List[BatchJobOutTypedDict]]
-    object: NotRequired[BatchJobsOutObject]
+    object: Literal["list"]
 
 
 class BatchJobsOut(BaseModel):
@@ -22,4 +22,7 @@ class BatchJobsOut(BaseModel):
 
     data: Optional[List[BatchJobOut]] = None
 
-    object: Optional[BatchJobsOutObject] = "list"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["list"]], AfterValidator(validate_const("list"))],
+        pydantic.Field(alias="object"),
+    ] = "list"

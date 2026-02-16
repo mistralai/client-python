@@ -44,9 +44,6 @@ ClassifierDetailedJobOutStatus = Union[
 ]
 
 
-ClassifierDetailedJobOutObject = Literal["job",]
-
-
 ClassifierDetailedJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
@@ -57,7 +54,6 @@ class ClassifierDetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: ClassifierDetailedJobOutStatus
     created_at: int
     modified_at: int
@@ -65,7 +61,7 @@ class ClassifierDetailedJobOutTypedDict(TypedDict):
     hyperparameters: ClassifierTrainingParametersTypedDict
     classifier_targets: List[ClassifierTargetOutTypedDict]
     validation_files: NotRequired[Nullable[List[str]]]
-    object: NotRequired[ClassifierDetailedJobOutObject]
+    object: Literal["job"]
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
@@ -85,7 +81,6 @@ class ClassifierDetailedJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: ClassifierDetailedJobOutStatus
 
@@ -101,7 +96,10 @@ class ClassifierDetailedJobOut(BaseModel):
 
     validation_files: OptionalNullable[List[str]] = UNSET
 
-    object: Optional[ClassifierDetailedJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
 
     fine_tuned_model: OptionalNullable[str] = UNSET
 

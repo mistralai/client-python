@@ -360,7 +360,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start",
+                operation_id="StartConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -513,7 +513,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start",
+                operation_id="StartConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -551,7 +551,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
+    ) -> List[models.ListConversationsResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -574,7 +574,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsListRequest(
+        request = models.ListConversationsRequest(
             page=page,
             page_size=page_size,
             metadata=metadata,
@@ -609,7 +609,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_list",
+                operation_id="ListConversations",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -623,7 +623,7 @@ class Conversations(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[models.AgentsAPIV1ConversationsListResponse], http_res
+                List[models.ListConversationsResponse], http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -649,7 +649,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
+    ) -> List[models.ListConversationsResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -672,7 +672,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsListRequest(
+        request = models.ListConversationsRequest(
             page=page,
             page_size=page_size,
             metadata=metadata,
@@ -707,7 +707,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_list",
+                operation_id="ListConversations",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -721,7 +721,7 @@ class Conversations(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[models.AgentsAPIV1ConversationsListResponse], http_res
+                List[models.ListConversationsResponse], http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -766,7 +766,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsGetRequest(
+        request = models.GetConversationRequest(
             conversation_id=conversation_id,
         )
 
@@ -799,7 +799,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_get",
+                operation_id="GetConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -856,7 +856,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsGetRequest(
+        request = models.GetConversationRequest(
             conversation_id=conversation_id,
         )
 
@@ -889,7 +889,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_get",
+                operation_id="GetConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -946,7 +946,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsDeleteRequest(
+        request = models.DeleteConversationRequest(
             conversation_id=conversation_id,
         )
 
@@ -979,7 +979,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_delete",
+                operation_id="DeleteConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1036,7 +1036,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsDeleteRequest(
+        request = models.DeleteConversationRequest(
             conversation_id=conversation_id,
         )
 
@@ -1069,7 +1069,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_delete",
+                operation_id="DeleteConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1146,7 +1146,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsAppendRequest(
+        request = models.AppendConversationRequest(
             conversation_id=conversation_id,
             conversation_append_request=models.ConversationAppendRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -1195,7 +1195,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append",
+                operation_id="AppendConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1272,7 +1272,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsAppendRequest(
+        request = models.AppendConversationRequest(
             conversation_id=conversation_id,
             conversation_append_request=models.ConversationAppendRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -1321,7 +1321,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append",
+                operation_id="AppendConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1378,7 +1378,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsHistoryRequest(
+        request = models.GetConversationHistoryRequest(
             conversation_id=conversation_id,
         )
 
@@ -1411,7 +1411,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_history",
+                operation_id="GetConversationHistory",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1468,7 +1468,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsHistoryRequest(
+        request = models.GetConversationHistoryRequest(
             conversation_id=conversation_id,
         )
 
@@ -1501,7 +1501,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_history",
+                operation_id="GetConversationHistory",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1558,7 +1558,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsMessagesRequest(
+        request = models.GetConversationMessagesRequest(
             conversation_id=conversation_id,
         )
 
@@ -1591,7 +1591,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_messages",
+                operation_id="GetConversationMessages",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1648,7 +1648,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsMessagesRequest(
+        request = models.GetConversationMessagesRequest(
             conversation_id=conversation_id,
         )
 
@@ -1681,7 +1681,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_messages",
+                operation_id="GetConversationMessages",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1769,7 +1769,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsRestartRequest(
+        request = models.RestartConversationRequest(
             conversation_id=conversation_id,
             conversation_restart_request=models.ConversationRestartRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -1821,7 +1821,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart",
+                operation_id="RestartConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1909,7 +1909,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsRestartRequest(
+        request = models.RestartConversationRequest(
             conversation_id=conversation_id,
             conversation_restart_request=models.ConversationRestartRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -1961,7 +1961,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart",
+                operation_id="RestartConversation",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2116,7 +2116,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start_stream",
+                operation_id="StartConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2278,7 +2278,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start_stream",
+                operation_id="StartConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2362,7 +2362,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
+        request = models.AppendConversationStreamRequest(
             conversation_id=conversation_id,
             conversation_append_stream_request=models.ConversationAppendStreamRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -2411,7 +2411,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append_stream",
+                operation_id="AppendConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2495,7 +2495,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
+        request = models.AppendConversationStreamRequest(
             conversation_id=conversation_id,
             conversation_append_stream_request=models.ConversationAppendStreamRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -2544,7 +2544,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append_stream",
+                operation_id="AppendConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2639,7 +2639,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
+        request = models.RestartConversationStreamRequest(
             conversation_id=conversation_id,
             conversation_restart_stream_request=models.ConversationRestartStreamRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -2691,7 +2691,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart_stream",
+                operation_id="RestartConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2786,7 +2786,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
+        request = models.RestartConversationStreamRequest(
             conversation_id=conversation_id,
             conversation_restart_stream_request=models.ConversationRestartStreamRequest(
                 inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
@@ -2838,7 +2838,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart_stream",
+                operation_id="RestartConversationStream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

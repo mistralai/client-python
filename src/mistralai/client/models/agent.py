@@ -71,6 +71,7 @@ class AgentTypedDict(TypedDict):
     handoffs: NotRequired[Nullable[List[str]]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     object: NotRequired[AgentObject]
+    version_message: NotRequired[Nullable[str]]
 
 
 class Agent(BaseModel):
@@ -109,6 +110,8 @@ class Agent(BaseModel):
 
     object: Optional[AgentObject] = "agent"
 
+    version_message: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -119,8 +122,15 @@ class Agent(BaseModel):
             "handoffs",
             "metadata",
             "object",
+            "version_message",
         ]
-        nullable_fields = ["instructions", "description", "handoffs", "metadata"]
+        nullable_fields = [
+            "instructions",
+            "description",
+            "handoffs",
+            "metadata",
+            "version_message",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

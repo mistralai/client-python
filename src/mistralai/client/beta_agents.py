@@ -6,9 +6,9 @@ from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     agentcreationrequest as models_agentcreationrequest,
-    agents_api_v1_agents_getop as models_agents_api_v1_agents_getop,
     agentupdaterequest as models_agentupdaterequest,
     completionargs as models_completionargs,
+    getagentop as models_getagentop,
     requestsource as models_requestsource,
 )
 from mistralai.client.types import OptionalNullable, UNSET
@@ -41,6 +41,7 @@ class BetaAgents(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -58,6 +59,7 @@ class BetaAgents(BaseSDK):
         :param description:
         :param handoffs:
         :param metadata:
+        :param version_message:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -86,6 +88,7 @@ class BetaAgents(BaseSDK):
             description=description,
             handoffs=handoffs,
             metadata=metadata,
+            version_message=version_message,
         )
 
         req = self._build_request(
@@ -120,7 +123,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_create",
+                operation_id="CreateAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -169,6 +172,7 @@ class BetaAgents(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -186,6 +190,7 @@ class BetaAgents(BaseSDK):
         :param description:
         :param handoffs:
         :param metadata:
+        :param version_message:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -214,6 +219,7 @@ class BetaAgents(BaseSDK):
             description=description,
             handoffs=handoffs,
             metadata=metadata,
+            version_message=version_message,
         )
 
         req = self._build_request_async(
@@ -248,7 +254,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_create",
+                operation_id="CreateAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -284,6 +290,7 @@ class BetaAgents(BaseSDK):
         deployment_chat: OptionalNullable[bool] = UNSET,
         sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -299,7 +306,8 @@ class BetaAgents(BaseSDK):
         :param page_size: Number of agents per page
         :param deployment_chat:
         :param sources:
-        :param name:
+        :param name: Filter by agent name
+        :param search: Search agents by name or ID
         :param id:
         :param metadata:
         :param retries: Override the default retry configuration for this method
@@ -317,12 +325,13 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListRequest(
+        request = models.ListAgentsRequest(
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
             sources=sources,
             name=name,
+            search=search,
             id=id,
             metadata=metadata,
         )
@@ -356,7 +365,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list",
+                operation_id="ListAgents",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -392,6 +401,7 @@ class BetaAgents(BaseSDK):
         deployment_chat: OptionalNullable[bool] = UNSET,
         sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -407,7 +417,8 @@ class BetaAgents(BaseSDK):
         :param page_size: Number of agents per page
         :param deployment_chat:
         :param sources:
-        :param name:
+        :param name: Filter by agent name
+        :param search: Search agents by name or ID
         :param id:
         :param metadata:
         :param retries: Override the default retry configuration for this method
@@ -425,12 +436,13 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListRequest(
+        request = models.ListAgentsRequest(
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
             sources=sources,
             name=name,
+            search=search,
             id=id,
             metadata=metadata,
         )
@@ -464,7 +476,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list",
+                operation_id="ListAgents",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -498,8 +510,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models_getagentop.GetAgentAgentVersion,
+                models_getagentop.GetAgentAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -528,7 +540,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsGetRequest(
+        request = models.GetAgentRequest(
             agent_id=agent_id,
             agent_version=agent_version,
         )
@@ -562,7 +574,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_get",
+                operation_id="GetAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -596,8 +608,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models_getagentop.GetAgentAgentVersion,
+                models_getagentop.GetAgentAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -626,7 +638,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsGetRequest(
+        request = models.GetAgentRequest(
             agent_id=agent_id,
             agent_version=agent_version,
         )
@@ -660,7 +672,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_get",
+                operation_id="GetAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -711,6 +723,7 @@ class BetaAgents(BaseSDK):
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -730,6 +743,7 @@ class BetaAgents(BaseSDK):
         :param handoffs:
         :param deployment_chat:
         :param metadata:
+        :param version_message:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -745,7 +759,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsUpdateRequest(
+        request = models.UpdateAgentRequest(
             agent_id=agent_id,
             agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
@@ -761,6 +775,7 @@ class BetaAgents(BaseSDK):
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
                 metadata=metadata,
+                version_message=version_message,
             ),
         )
 
@@ -800,7 +815,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_update",
+                operation_id="UpdateAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -851,6 +866,7 @@ class BetaAgents(BaseSDK):
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -870,6 +886,7 @@ class BetaAgents(BaseSDK):
         :param handoffs:
         :param deployment_chat:
         :param metadata:
+        :param version_message:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -885,7 +902,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsUpdateRequest(
+        request = models.UpdateAgentRequest(
             agent_id=agent_id,
             agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
@@ -901,6 +918,7 @@ class BetaAgents(BaseSDK):
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
                 metadata=metadata,
+                version_message=version_message,
             ),
         )
 
@@ -940,7 +958,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_update",
+                operation_id="UpdateAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -995,7 +1013,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsDeleteRequest(
+        request = models.DeleteAgentRequest(
             agent_id=agent_id,
         )
 
@@ -1028,7 +1046,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_delete",
+                operation_id="DeleteAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1083,7 +1101,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsDeleteRequest(
+        request = models.DeleteAgentRequest(
             agent_id=agent_id,
         )
 
@@ -1116,7 +1134,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_delete",
+                operation_id="DeleteAgent",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1175,7 +1193,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsUpdateVersionRequest(
+        request = models.UpdateAgentVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1209,7 +1227,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_update_version",
+                operation_id="UpdateAgentVersion",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1268,7 +1286,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsUpdateVersionRequest(
+        request = models.UpdateAgentVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1302,7 +1320,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_update_version",
+                operation_id="UpdateAgentVersion",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1363,7 +1381,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListVersionsRequest(
+        request = models.ListAgentVersionsRequest(
             agent_id=agent_id,
             page=page,
             page_size=page_size,
@@ -1398,7 +1416,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list_versions",
+                operation_id="ListAgentVersions",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1459,7 +1477,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListVersionsRequest(
+        request = models.ListAgentVersionsRequest(
             agent_id=agent_id,
             page=page,
             page_size=page_size,
@@ -1494,7 +1512,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list_versions",
+                operation_id="ListAgentVersions",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1553,7 +1571,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsGetVersionRequest(
+        request = models.GetAgentVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1587,7 +1605,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_get_version",
+                operation_id="GetAgentVersion",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1646,7 +1664,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsGetVersionRequest(
+        request = models.GetAgentVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1680,7 +1698,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_get_version",
+                operation_id="GetAgentVersion",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1741,7 +1759,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsCreateOrUpdateAliasRequest(
+        request = models.CreateOrUpdateAgentAliasRequest(
             agent_id=agent_id,
             alias=alias,
             version=version,
@@ -1776,7 +1794,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_create_or_update_alias",
+                operation_id="CreateOrUpdateAgentAlias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1837,7 +1855,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsCreateOrUpdateAliasRequest(
+        request = models.CreateOrUpdateAgentAliasRequest(
             agent_id=agent_id,
             alias=alias,
             version=version,
@@ -1872,7 +1890,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_create_or_update_alias",
+                operation_id="CreateOrUpdateAgentAlias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1929,7 +1947,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListVersionAliasesRequest(
+        request = models.ListAgentAliasesRequest(
             agent_id=agent_id,
         )
 
@@ -1962,7 +1980,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list_version_aliases",
+                operation_id="ListAgentAliases",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2019,7 +2037,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AgentsAPIV1AgentsListVersionAliasesRequest(
+        request = models.ListAgentAliasesRequest(
             agent_id=agent_id,
         )
 
@@ -2052,7 +2070,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="agents_api_v1_agents_list_version_aliases",
+                operation_id="ListAgentAliases",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2066,6 +2084,192 @@ class BetaAgents(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(List[models.AgentAliasResponse], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
+            )
+            raise models.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def delete_version_alias(
+        self,
+        *,
+        agent_id: str,
+        alias: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ):
+        r"""Delete an agent version alias.
+
+        Delete an existing alias for an agent.
+
+        :param agent_id:
+        :param alias:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.DeleteAgentAliasRequest(
+            agent_id=agent_id,
+            alias=alias,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/v1/agents/{agent_id}/aliases",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="DeleteAgentAlias",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "204", "*"):
+            return
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                models.HTTPValidationErrorData, http_res
+            )
+            raise models.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def delete_version_alias_async(
+        self,
+        *,
+        agent_id: str,
+        alias: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ):
+        r"""Delete an agent version alias.
+
+        Delete an existing alias for an agent.
+
+        :param agent_id:
+        :param alias:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.DeleteAgentAliasRequest(
+            agent_id=agent_id,
+            alias=alias,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/v1/agents/{agent_id}/aliases",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="DeleteAgentAlias",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "204", "*"):
+            return
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

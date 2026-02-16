@@ -43,10 +43,6 @@ CompletionJobOutStatus = Union[
 r"""The current status of the fine-tuning job."""
 
 
-CompletionJobOutObject = Literal["job",]
-r"""The object type of the fine-tuning job."""
-
-
 CompletionJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
@@ -64,7 +60,6 @@ class CompletionJobOutTypedDict(TypedDict):
     r"""The ID of the job."""
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: CompletionJobOutStatus
     r"""The current status of the fine-tuning job."""
     created_at: int
@@ -76,7 +71,7 @@ class CompletionJobOutTypedDict(TypedDict):
     hyperparameters: CompletionTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
     r"""A list containing the IDs of uploaded files that contain validation data."""
-    object: NotRequired[CompletionJobOutObject]
+    object: Literal["job"]
     r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
@@ -99,7 +94,6 @@ class CompletionJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: CompletionJobOutStatus
     r"""The current status of the fine-tuning job."""
@@ -118,7 +112,10 @@ class CompletionJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    object: Optional[CompletionJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
     r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET

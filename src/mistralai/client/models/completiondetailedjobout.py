@@ -44,9 +44,6 @@ CompletionDetailedJobOutStatus = Union[
 ]
 
 
-CompletionDetailedJobOutObject = Literal["job",]
-
-
 CompletionDetailedJobOutIntegrationTypedDict = WandbIntegrationOutTypedDict
 
 
@@ -63,14 +60,13 @@ class CompletionDetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: CompletionDetailedJobOutStatus
     created_at: int
     modified_at: int
     training_files: List[str]
     hyperparameters: CompletionTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
-    object: NotRequired[CompletionDetailedJobOutObject]
+    object: Literal["job"]
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
@@ -91,7 +87,6 @@ class CompletionDetailedJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: CompletionDetailedJobOutStatus
 
@@ -105,7 +100,10 @@ class CompletionDetailedJobOut(BaseModel):
 
     validation_files: OptionalNullable[List[str]] = UNSET
 
-    object: Optional[CompletionDetailedJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
 
     fine_tuned_model: OptionalNullable[str] = UNSET
 
