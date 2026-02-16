@@ -22,7 +22,9 @@ $ source ~/.zshenv
 <!-- Start Summary [summary] -->
 ## Summary
 
-Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
+Mistral AI API: Dora OpenAPI schema
+
+Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -485,6 +487,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [get_version](docs/sdks/betaagents/README.md#get_version) - Retrieve a specific version of an agent.
 * [create_version_alias](docs/sdks/betaagents/README.md#create_version_alias) - Create or update an agent version alias.
 * [list_version_aliases](docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
+* [delete_version_alias](docs/sdks/betaagents/README.md#delete_version_alias) - Delete an agent version alias.
 
 ### [Beta.Conversations](docs/sdks/conversations/README.md)
 
@@ -602,14 +605,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs=[
-        {
-            "object": "entry",
-            "type": "function.result",
-            "tool_call_id": "<id>",
-            "result": "<value>",
-        },
-    ], stream=True, completion_args={
+    res = mistral.beta.conversations.start_stream(inputs="<value>", stream=True, completion_args={
         "response_format": {
             "type": "text",
         },
@@ -646,7 +642,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
+    res = mistral.beta.libraries.documents.upload(library_id="f973c54e-979a-4464-9d36-8cc31beb21fe", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
@@ -762,7 +758,7 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/models/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 52 of 74 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 53 of 75 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
