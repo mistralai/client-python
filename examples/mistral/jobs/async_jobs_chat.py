@@ -82,7 +82,7 @@ async def main():
     )
     # Create a new job
     created_job = await client.fine_tuning.jobs.create_async(
-        model="open-mistral-7b",
+        model="mistral-small-latest",
         training_files=[{"file_id": training_file.id, "weight": 1}],
         validation_files=[validation_file.id],
         hyperparameters=CompletionTrainingParametersIn(
