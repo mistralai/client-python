@@ -3,11 +3,11 @@
 
 ## Fields
 
-| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `type`                                                                         | [Optional[models.GithubRepositoryInType]](../models/githubrepositoryintype.md) | :heavy_minus_sign:                                                             | N/A                                                                            |
-| `name`                                                                         | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
-| `owner`                                                                        | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
-| `ref`                                                                          | *OptionalNullable[str]*                                                        | :heavy_minus_sign:                                                             | N/A                                                                            |
-| `weight`                                                                       | *Optional[float]*                                                              | :heavy_minus_sign:                                                             | N/A                                                                            |
-| `token`                                                                        | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
+| Field                   | Type                    | Required                | Description             |
+| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
+| `type`                  | *Literal["github"]*     | :heavy_check_mark:      | N/A                     |
+| `name`                  | *str*                   | :heavy_check_mark:      | N/A                     |
+| `owner`                 | *str*                   | :heavy_check_mark:      | N/A                     |
+| `ref`                   | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
+| `weight`                | *Optional[float]*       | :heavy_minus_sign:      | N/A                     |
+| `token`                 | *str*                   | :heavy_check_mark:      | N/A                     |
