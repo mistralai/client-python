@@ -67,6 +67,7 @@ class RealtimeTranscription:
         self,
         model: str,
         audio_format: Optional[AudioFormat] = None,
+        target_streaming_delay_ms: Optional[int] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -122,8 +123,11 @@ class RealtimeTranscription:
                 initial_events=initial_events,
             )
 
-            if audio_format is not None:
-                await connection.update_session(audio_format)
+            if audio_format is not None or target_streaming_delay_ms is not None:
+                await connection.update_session(
+                    audio_format,
+                    target_streaming_delay_ms=target_streaming_delay_ms,
+                )
 
             return connection
 
@@ -141,6 +145,7 @@ class RealtimeTranscription:
         audio_stream: AsyncIterator[bytes],
         model: str,
         audio_format: Optional[AudioFormat] = None,
+        target_streaming_delay_ms: Optional[int] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -154,6 +159,7 @@ class RealtimeTranscription:
         async with await self.connect(
             model=model,
             audio_format=audio_format,
+            target_streaming_delay_ms=target_streaming_delay_ms,
             server_url=server_url,
             timeout_ms=timeout_ms,
             http_headers=http_headers,
