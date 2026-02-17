@@ -24,7 +24,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start" method="post" path="/v1/conversations" -->
+<!-- UsageSnippet language="python" operationID="StartConversation" method="post" path="/v1/conversations" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -47,22 +47,22 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `inputs`                                                                      | [models.ConversationInputs](../../models/conversationinputs.md)               | :heavy_check_mark:                                                            | N/A                                                                           |
-| `stream`                                                                      | *Optional[bool]*                                                              | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `store`                                                                       | *OptionalNullable[bool]*                                                      | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `handoff_execution`                                                           | [OptionalNullable[models.HandoffExecution]](../../models/handoffexecution.md) | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `instructions`                                                                | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `tools`                                                                       | List[[models.Tools](../../models/tools.md)]                                   | :heavy_minus_sign:                                                            | List of tools which are available to the model during the conversation.       |
-| `completion_args`                                                             | [OptionalNullable[models.CompletionArgs]](../../models/completionargs.md)     | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `name`                                                                        | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `metadata`                                                                    | Dict[str, *Any*]                                                              | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `agent_id`                                                                    | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `agent_version`                                                               | [OptionalNullable[models.AgentVersion]](../../models/agentversion.md)         | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `model`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
+| Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `inputs`                                                                                                            | [models.ConversationInputs](../../models/conversationinputs.md)                                                     | :heavy_check_mark:                                                                                                  | N/A                                                                                                                 |
+| `stream`                                                                                                            | *Optional[bool]*                                                                                                    | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `store`                                                                                                             | *OptionalNullable[bool]*                                                                                            | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `handoff_execution`                                                                                                 | [OptionalNullable[models.ConversationRequestHandoffExecution]](../../models/conversationrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `instructions`                                                                                                      | *OptionalNullable[str]*                                                                                             | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `tools`                                                                                                             | List[[models.ConversationRequestTool](../../models/conversationrequesttool.md)]                                     | :heavy_minus_sign:                                                                                                  | List of tools which are available to the model during the conversation.                                             |
+| `completion_args`                                                                                                   | [OptionalNullable[models.CompletionArgs]](../../models/completionargs.md)                                           | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `name`                                                                                                              | *OptionalNullable[str]*                                                                                             | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `description`                                                                                                       | *OptionalNullable[str]*                                                                                             | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `metadata`                                                                                                          | Dict[str, *Any*]                                                                                                    | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `agent_id`                                                                                                          | *OptionalNullable[str]*                                                                                             | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `agent_version`                                                                                                     | [OptionalNullable[models.ConversationRequestAgentVersion]](../../models/conversationrequestagentversion.md)         | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `model`                                                                                                             | *OptionalNullable[str]*                                                                                             | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |
+| `retries`                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                    | :heavy_minus_sign:                                                                                                  | Configuration to override the default retry behavior of the client.                                                 |
 
 ### Response
 
@@ -81,7 +81,7 @@ Retrieve a list of conversation entities sorted by creation time.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_list" method="get" path="/v1/conversations" -->
+<!-- UsageSnippet language="python" operationID="ListConversations" method="get" path="/v1/conversations" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -109,7 +109,7 @@ with Mistral(
 
 ### Response
 
-**[List[models.ResponseBody]](../../models/.md)**
+**[List[models.ListConversationsResponse]](../../models/.md)**
 
 ### Errors
 
@@ -124,7 +124,7 @@ Given a conversation_id retrieve a conversation entity with its attributes.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_get" method="get" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="GetConversation" method="get" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -150,7 +150,7 @@ with Mistral(
 
 ### Response
 
-**[models.AgentsAPIV1ConversationsGetResponseV1ConversationsGet](../../models/agentsapiv1conversationsgetresponsev1conversationsget.md)**
+**[models.ResponseV1ConversationsGet](../../models/responsev1conversationsget.md)**
 
 ### Errors
 
@@ -165,7 +165,7 @@ Delete a conversation given a conversation_id.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_delete" method="delete" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="DeleteConversation" method="delete" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -201,7 +201,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append" method="post" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="AppendConversation" method="post" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -251,7 +251,7 @@ Given a conversation_id retrieve all the entries belonging to that conversation.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_history" method="get" path="/v1/conversations/{conversation_id}/history" -->
+<!-- UsageSnippet language="python" operationID="GetConversationHistory" method="get" path="/v1/conversations/{conversation_id}/history" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -292,7 +292,7 @@ Given a conversation_id retrieve all the messages belonging to that conversation
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_messages" method="get" path="/v1/conversations/{conversation_id}/messages" -->
+<!-- UsageSnippet language="python" operationID="GetConversationMessages" method="get" path="/v1/conversations/{conversation_id}/messages" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -333,7 +333,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart" method="post" path="/v1/conversations/{conversation_id}/restart" -->
+<!-- UsageSnippet language="python" operationID="RestartConversation" method="post" path="/v1/conversations/{conversation_id}/restart" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -386,7 +386,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start_stream" method="post" path="/v1/conversations#stream" -->
+<!-- UsageSnippet language="python" operationID="StartConversationStream" method="post" path="/v1/conversations#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -396,14 +396,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs=[
-        {
-            "object": "entry",
-            "type": "function.result",
-            "tool_call_id": "<id>",
-            "result": "<value>",
-        },
-    ], stream=True, completion_args={
+    res = mistral.beta.conversations.start_stream(inputs="<value>", stream=True, completion_args={
         "response_format": {
             "type": "text",
         },
@@ -425,7 +418,7 @@ with Mistral(
 | `store`                                                                                                                         | *OptionalNullable[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `handoff_execution`                                                                                                             | [OptionalNullable[models.ConversationStreamRequestHandoffExecution]](../../models/conversationstreamrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `instructions`                                                                                                                  | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
-| `tools`                                                                                                                         | List[[models.ConversationStreamRequestTools](../../models/conversationstreamrequesttools.md)]                                   | :heavy_minus_sign:                                                                                                              | List of tools which are available to the model during the conversation.                                                         |
+| `tools`                                                                                                                         | List[[models.ConversationStreamRequestTool](../../models/conversationstreamrequesttool.md)]                                     | :heavy_minus_sign:                                                                                                              | List of tools which are available to the model during the conversation.                                                         |
 | `completion_args`                                                                                                               | [OptionalNullable[models.CompletionArgs]](../../models/completionargs.md)                                                       | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `name`                                                                                                                          | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
 | `description`                                                                                                                   | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | N/A                                                                                                                             |
@@ -452,7 +445,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append_stream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
+<!-- UsageSnippet language="python" operationID="AppendConversationStream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -504,7 +497,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart_stream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
+<!-- UsageSnippet language="python" operationID="RestartConversationStream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -514,15 +507,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", inputs=[
-        {
-            "object": "entry",
-            "type": "message.input",
-            "role": "assistant",
-            "content": "<value>",
-            "prefix": False,
-        },
-    ], from_entry_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
+    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
         "response_format": {
             "type": "text",
         },
