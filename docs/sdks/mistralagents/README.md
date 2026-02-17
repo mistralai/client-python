@@ -16,6 +16,7 @@
 * [get_version](#get_version) - Retrieve a specific version of an agent.
 * [create_version_alias](#create_version_alias) - Create or update an agent version alias.
 * [list_version_aliases](#list_version_aliases) - List all aliases for an agent.
+* [delete_version_alias](#delete_version_alias) - Delete an agent version alias.
 
 ## create
 
@@ -56,6 +57,7 @@ with Mistral(
 | `description`                                                                       | *OptionalNullable[str]*                                                             | :heavy_minus_sign:                                                                  | N/A                                                                                 |
 | `handoffs`                                                                          | List[*str*]                                                                         | :heavy_minus_sign:                                                                  | N/A                                                                                 |
 | `metadata`                                                                          | Dict[str, *Any*]                                                                    | :heavy_minus_sign:                                                                  | N/A                                                                                 |
+| `version_message`                                                                   | *OptionalNullable[str]*                                                             | :heavy_minus_sign:                                                                  | N/A                                                                                 |
 | `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
 ### Response
@@ -100,7 +102,8 @@ with Mistral(
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of agents per page                                           |
 | `deployment_chat`                                                   | *OptionalNullable[bool]*                                            | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `sources`                                                           | List[[models.RequestSource](../../models/requestsource.md)]         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `name`                                                              | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `name`                                                              | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Filter by agent name                                                |
+| `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Search agents by name or ID                                         |
 | `id`                                                                | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `metadata`                                                          | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
@@ -199,6 +202,7 @@ with Mistral(
 | `handoffs`                                                                      | List[*str*]                                                                     | :heavy_minus_sign:                                                              | N/A                                                                             |
 | `deployment_chat`                                                               | *OptionalNullable[bool]*                                                        | :heavy_minus_sign:                                                              | N/A                                                                             |
 | `metadata`                                                                      | Dict[str, *Any*]                                                                | :heavy_minus_sign:                                                              | N/A                                                                             |
+| `version_message`                                                               | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | N/A                                                                             |
 | `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |
 
 ### Response
@@ -451,6 +455,43 @@ with Mistral(
 ### Response
 
 **[List[models.AgentAliasResponse]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## delete_version_alias
+
+Delete an existing alias for an agent.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_delete_alias" method="delete" path="/v1/agents/{agent_id}/aliases" -->
+```python
+from mistralai import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    mistral.beta.agents.delete_version_alias(agent_id="<id>", alias="<value>")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `agent_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `alias`                                                             | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors
 

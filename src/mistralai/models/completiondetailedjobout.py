@@ -11,9 +11,12 @@ from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDi
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 CompletionDetailedJobOutStatus = Literal[
@@ -30,16 +33,10 @@ CompletionDetailedJobOutStatus = Literal[
 ]
 
 
-CompletionDetailedJobOutObject = Literal["job",]
-
-
 CompletionDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
 
 CompletionDetailedJobOutIntegrations = WandbIntegrationOut
-
-
-CompletionDetailedJobOutJobType = Literal["completion",]
 
 
 CompletionDetailedJobOutRepositoriesTypedDict = GithubRepositoryOutTypedDict
@@ -52,14 +49,13 @@ class CompletionDetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: CompletionDetailedJobOutStatus
     created_at: int
     modified_at: int
     training_files: List[str]
     hyperparameters: CompletionTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
-    object: NotRequired[CompletionDetailedJobOutObject]
+    object: Literal["job"]
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
@@ -67,7 +63,7 @@ class CompletionDetailedJobOutTypedDict(TypedDict):
     ]
     trained_tokens: NotRequired[Nullable[int]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[CompletionDetailedJobOutJobType]
+    job_type: Literal["completion"]
     repositories: NotRequired[List[CompletionDetailedJobOutRepositoriesTypedDict]]
     events: NotRequired[List[EventOutTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
@@ -80,7 +76,6 @@ class CompletionDetailedJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: CompletionDetailedJobOutStatus
 
@@ -94,7 +89,10 @@ class CompletionDetailedJobOut(BaseModel):
 
     validation_files: OptionalNullable[List[str]] = UNSET
 
-    object: Optional[CompletionDetailedJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
 
     fine_tuned_model: OptionalNullable[str] = UNSET
 
@@ -106,7 +104,13 @@ class CompletionDetailedJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[CompletionDetailedJobOutJobType] = "completion"
+    JOB_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["completion"]],
+            AfterValidator(validate_const("completion")),
+        ],
+        pydantic.Field(alias="job_type"),
+    ] = "completion"
 
     repositories: Optional[List[CompletionDetailedJobOutRepositories]] = None
 

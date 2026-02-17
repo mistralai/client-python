@@ -25,7 +25,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False)
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False, order_by="-created")
 
     # Handle response
     print(res)
@@ -44,6 +44,7 @@ with Mistral(
 | `created_after`                                                      | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `created_by_me`                                                      | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `status`                                                             | List[[models.BatchJobStatus](../../models/batchjobstatus.md)]        | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `order_by`                                                           | [Optional[models.OrderBy]](../../models/orderby.md)                  | :heavy_minus_sign:                                                   | N/A                                                                  |
 | `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
 
 ### Response

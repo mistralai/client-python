@@ -6,8 +6,14 @@ from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from mistralai.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+OrderBy = Literal[
+    "created",
+    "-created",
+]
 
 
 class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
@@ -19,6 +25,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
     created_after: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
     status: NotRequired[Nullable[List[BatchJobStatus]]]
+    order_by: NotRequired[OrderBy]
 
 
 class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
@@ -62,6 +69,11 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    order_by: Annotated[
+        Optional[OrderBy],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "-created"
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -73,6 +85,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
             "created_after",
             "created_by_me",
             "status",
+            "order_by",
         ]
         nullable_fields = ["model", "agent_id", "metadata", "created_after", "status"]
         null_default_fields = []

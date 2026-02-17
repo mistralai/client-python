@@ -39,8 +39,9 @@ console = Console()
 class TranscriptDisplay:
     """Manages the live transcript display."""
 
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, target_streaming_delay_ms: int | None) -> None:
         self.model = model
+        self.target_streaming_delay_ms = target_streaming_delay_ms
         self.transcript = ""
         self.status = "🔌 Connecting..."
         self.error: str | None = None
@@ -65,6 +66,10 @@ class TranscriptDisplay:
         header_text = Text()
         header_text.append("│ ", style="dim")
         header_text.append(self.model, style="dim")
+        if self.target_streaming_delay_ms is not None:
+            header_text.append(
+                f" · delay {self.target_streaming_delay_ms}ms", style="dim"
+            )
         header_text.append(" │ ", style="dim")
 
         if "Listening" in self.status:
@@ -165,6 +170,12 @@ def parse_args() -> argparse.Namespace:
         "--chunk-duration", type=int, default=10, help="Chunk duration in ms"
     )
     parser.add_argument(
+        "--target-streaming-delay-ms",
+        type=int,
+        default=None,
+        help="Target streaming delay in milliseconds",
+    )
+    parser.add_argument(
         "--api-key", default=os.environ.get("MISTRAL_API_KEY"), help="Mistral API key"
     )
     parser.add_argument(
@@ -187,7 +198,9 @@ async def main() -> int:
         sample_rate=args.sample_rate, chunk_duration_ms=args.chunk_duration
     )
 
-    display = TranscriptDisplay(model=args.model)
+    display = TranscriptDisplay(
+        model=args.model, target_streaming_delay_ms=args.target_streaming_delay_ms
+    )
 
     with Live(
         display.render(), console=console, refresh_per_second=10, screen=True
@@ -197,6 +210,7 @@ async def main() -> int:
                 audio_stream=mic_stream,
                 model=args.model,
                 audio_format=audio_format,
+                target_streaming_delay_ms=args.target_streaming_delay_ms,
             ):
                 if isinstance(event, RealtimeTranscriptionSessionCreated):
                     display.set_listening()

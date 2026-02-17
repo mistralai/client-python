@@ -140,14 +140,27 @@ class RealtimeConnection:
         }
         await self._websocket.send(json.dumps(message))
 
-    async def update_session(self, audio_format: AudioFormat) -> None:
+    async def update_session(
+        self,
+        audio_format: Optional[AudioFormat] = None,
+        *,
+        target_streaming_delay_ms: Optional[int] = None,
+    ) -> None:
         if self._closed:
             raise RuntimeError("Connection is closed")
 
-        self._audio_format = audio_format
+        if audio_format is None and target_streaming_delay_ms is None:
+            raise ValueError("At least one session field must be provided")
+
+        session_update: dict[str, object] = {}
+        if audio_format is not None:
+            self._audio_format = audio_format
+            session_update["audio_format"] = audio_format.model_dump(mode="json")
+        if target_streaming_delay_ms is not None:
+            session_update["target_streaming_delay_ms"] = target_streaming_delay_ms
         message = {
             "type": "session.update",
-            "session": {"audio_format": audio_format.model_dump(mode="json")},
+            "session": session_update,
         }
         await self._websocket.send(json.dumps(message))
 

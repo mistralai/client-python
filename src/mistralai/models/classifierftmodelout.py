@@ -7,15 +7,12 @@ from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOutTypedDict,
 )
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ClassifierFTModelOutObject = Literal["model",]
-
-
-ClassifierFTModelOutModelType = Literal["classifier",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ClassifierFTModelOutTypedDict(TypedDict):
@@ -29,12 +26,12 @@ class ClassifierFTModelOutTypedDict(TypedDict):
     capabilities: FTModelCapabilitiesOutTypedDict
     job: str
     classifier_targets: List[ClassifierTargetOutTypedDict]
-    object: NotRequired[ClassifierFTModelOutObject]
+    object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
-    model_type: NotRequired[ClassifierFTModelOutModelType]
+    model_type: Literal["classifier"]
 
 
 class ClassifierFTModelOut(BaseModel):
@@ -58,7 +55,10 @@ class ClassifierFTModelOut(BaseModel):
 
     classifier_targets: List[ClassifierTargetOut]
 
-    object: Optional[ClassifierFTModelOutObject] = "model"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
+        pydantic.Field(alias="object"),
+    ] = "model"
 
     name: OptionalNullable[str] = UNSET
 
@@ -68,7 +68,13 @@ class ClassifierFTModelOut(BaseModel):
 
     aliases: Optional[List[str]] = None
 
-    model_type: Optional[ClassifierFTModelOutModelType] = "classifier"
+    MODEL_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["classifier"]],
+            AfterValidator(validate_const("classifier")),
+        ],
+        pydantic.Field(alias="model_type"),
+    ] = "classifier"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

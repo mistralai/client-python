@@ -8,6 +8,7 @@ from mistralai.models import (
     apiendpoint as models_apiendpoint,
     batchjobstatus as models_batchjobstatus,
     batchrequest as models_batchrequest,
+    jobs_api_routes_batch_get_batch_jobsop as models_jobs_api_routes_batch_get_batch_jobsop,
 )
 from mistralai.types import OptionalNullable, UNSET
 from mistralai.utils import get_security_from_env
@@ -27,6 +28,9 @@ class MistralJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
+        order_by: Optional[
+            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
+        ] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -44,6 +48,7 @@ class MistralJobs(BaseSDK):
         :param created_after:
         :param created_by_me:
         :param status:
+        :param order_by:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -68,6 +73,7 @@ class MistralJobs(BaseSDK):
             created_after=created_after,
             created_by_me=created_by_me,
             status=status,
+            order_by=order_by,
         )
 
         req = self._build_request(
@@ -132,6 +138,9 @@ class MistralJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
+        order_by: Optional[
+            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
+        ] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -149,6 +158,7 @@ class MistralJobs(BaseSDK):
         :param created_after:
         :param created_by_me:
         :param status:
+        :param order_by:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -173,6 +183,7 @@ class MistralJobs(BaseSDK):
             created_after=created_after,
             created_by_me=created_by_me,
             status=status,
+            order_by=order_by,
         )
 
         req = self._build_request_async(
