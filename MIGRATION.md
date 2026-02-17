@@ -49,6 +49,19 @@ Some type names have been updated for clarity and consistency:
 | `HandoffExecution` | `ConversationRequestHandoffExecution` |
 | `AgentVersion` | `ConversationRequestAgentVersion` |
 
+### Shorter Request/Response Class Names
+
+Internal request and response wrapper classes now use concise names:
+
+| Old Name | New Name |
+|---|---|
+| `JobsAPIRoutesFineTuningArchiveFineTunedModelRequest` | `ArchiveModelRequest` |
+| `JobsAPIRoutesFineTuningCreateFineTuningJobResponse` | `CreateFineTuningJobResponse` |
+| `FilesAPIRoutesUploadFileRequest` | `UploadFileRequest` |
+| `AgentsAPIV1ConversationsAppendRequest` | `AppendConversationRequest` |
+
+This affects all operation-specific request/response types. Core models like `UserMessage`, `ChatCompletionRequest`, etc. are unchanged.
+
 Enums now accept unknown values for forward compatibility with API changes.
 
 ---
