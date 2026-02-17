@@ -477,6 +477,7 @@ The documentation for the GCP SDK is available [here](packages/mistralai_gcp/REA
 * [get_version](docs/sdks/mistralagents/README.md#get_version) - Retrieve a specific version of an agent.
 * [create_version_alias](docs/sdks/mistralagents/README.md#create_version_alias) - Create or update an agent version alias.
 * [list_version_aliases](docs/sdks/mistralagents/README.md#list_version_aliases) - List all aliases for an agent.
+* [delete_version_alias](docs/sdks/mistralagents/README.md#delete_version_alias) - Delete an agent version alias.
 
 ### [Beta.Conversations](docs/sdks/conversations/README.md)
 
@@ -754,7 +755,7 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/models/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 52 of 74 methods.*
+* [`HTTPValidationError`](./src/mistralai/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 53 of 75 methods.*
 * [`ResponseValidationError`](./src/mistralai/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

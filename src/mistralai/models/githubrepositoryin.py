@@ -2,19 +2,19 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-GithubRepositoryInType = Literal["github",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GithubRepositoryInTypedDict(TypedDict):
     name: str
     owner: str
     token: str
-    type: NotRequired[GithubRepositoryInType]
+    type: Literal["github"]
     ref: NotRequired[Nullable[str]]
     weight: NotRequired[float]
 
@@ -26,7 +26,12 @@ class GithubRepositoryIn(BaseModel):
 
     token: str
 
-    type: Optional[GithubRepositoryInType] = "github"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["github"]], AfterValidator(validate_const("github"))
+        ],
+        pydantic.Field(alias="type"),
+    ] = "github"
 
     ref: OptionalNullable[str] = UNSET
 

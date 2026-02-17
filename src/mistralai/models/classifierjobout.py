@@ -8,9 +8,12 @@ from .classifiertrainingparameters import (
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 ClassifierJobOutStatus = Literal[
@@ -28,18 +31,10 @@ ClassifierJobOutStatus = Literal[
 r"""The current status of the fine-tuning job."""
 
 
-ClassifierJobOutObject = Literal["job",]
-r"""The object type of the fine-tuning job."""
-
-
 ClassifierJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
 
 ClassifierJobOutIntegrations = WandbIntegrationOut
-
-
-ClassifierJobOutJobType = Literal["classifier",]
-r"""The type of job (`FT` for fine-tuning)."""
 
 
 class ClassifierJobOutTypedDict(TypedDict):
@@ -47,7 +42,6 @@ class ClassifierJobOutTypedDict(TypedDict):
     r"""The ID of the job."""
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: ClassifierJobOutStatus
     r"""The current status of the fine-tuning job."""
     created_at: int
@@ -59,7 +53,7 @@ class ClassifierJobOutTypedDict(TypedDict):
     hyperparameters: ClassifierTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
     r"""A list containing the IDs of uploaded files that contain validation data."""
-    object: NotRequired[ClassifierJobOutObject]
+    object: Literal["job"]
     r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
@@ -70,7 +64,7 @@ class ClassifierJobOutTypedDict(TypedDict):
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[ClassifierJobOutJobType]
+    job_type: Literal["classifier"]
     r"""The type of job (`FT` for fine-tuning)."""
 
 
@@ -81,7 +75,6 @@ class ClassifierJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: ClassifierJobOutStatus
     r"""The current status of the fine-tuning job."""
@@ -100,7 +93,10 @@ class ClassifierJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    object: Optional[ClassifierJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
     r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET
@@ -117,7 +113,13 @@ class ClassifierJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[ClassifierJobOutJobType] = "classifier"
+    JOB_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["classifier"]],
+            AfterValidator(validate_const("classifier")),
+        ],
+        pydantic.Field(alias="job_type"),
+    ] = "classifier"
     r"""The type of job (`FT` for fine-tuning)."""
 
     @model_serializer(mode="wrap")

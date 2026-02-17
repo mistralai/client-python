@@ -4,8 +4,10 @@ from __future__ import annotations
 from .classifierjobout import ClassifierJobOut, ClassifierJobOutTypedDict
 from .completionjobout import CompletionJobOut, CompletionJobOutTypedDict
 from mistralai.types import BaseModel
-from mistralai.utils import get_discriminator
+from mistralai.utils import get_discriminator, validate_const
+import pydantic
 from pydantic import Discriminator, Tag
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -24,13 +26,10 @@ JobsOutData = Annotated[
 ]
 
 
-JobsOutObject = Literal["list",]
-
-
 class JobsOutTypedDict(TypedDict):
     total: int
     data: NotRequired[List[JobsOutDataTypedDict]]
-    object: NotRequired[JobsOutObject]
+    object: Literal["list"]
 
 
 class JobsOut(BaseModel):
@@ -38,4 +37,7 @@ class JobsOut(BaseModel):
 
     data: Optional[List[JobsOutData]] = None
 
-    object: Optional[JobsOutObject] = "list"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["list"]], AfterValidator(validate_const("list"))],
+        pydantic.Field(alias="object"),
+    ] = "list"

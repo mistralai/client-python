@@ -48,7 +48,6 @@ JobInRepositories = GithubRepositoryIn
 
 class JobInTypedDict(TypedDict):
     model: str
-    r"""The name of the model to fine-tune."""
     hyperparameters: HyperparametersTypedDict
     training_files: NotRequired[List[TrainingFileTypedDict]]
     validation_files: NotRequired[Nullable[List[str]]]
@@ -67,7 +66,6 @@ class JobInTypedDict(TypedDict):
 
 class JobIn(BaseModel):
     model: str
-    r"""The name of the model to fine-tune."""
 
     hyperparameters: Hyperparameters
 

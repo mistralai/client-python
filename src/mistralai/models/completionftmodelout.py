@@ -6,15 +6,12 @@ from .ftmodelcapabilitiesout import (
     FTModelCapabilitiesOutTypedDict,
 )
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-CompletionFTModelOutObject = Literal["model",]
-
-
-ModelType = Literal["completion",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CompletionFTModelOutTypedDict(TypedDict):
@@ -27,12 +24,12 @@ class CompletionFTModelOutTypedDict(TypedDict):
     archived: bool
     capabilities: FTModelCapabilitiesOutTypedDict
     job: str
-    object: NotRequired[CompletionFTModelOutObject]
+    object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
-    model_type: NotRequired[ModelType]
+    model_type: Literal["completion"]
 
 
 class CompletionFTModelOut(BaseModel):
@@ -54,7 +51,10 @@ class CompletionFTModelOut(BaseModel):
 
     job: str
 
-    object: Optional[CompletionFTModelOutObject] = "model"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
+        pydantic.Field(alias="object"),
+    ] = "model"
 
     name: OptionalNullable[str] = UNSET
 
@@ -64,7 +64,13 @@ class CompletionFTModelOut(BaseModel):
 
     aliases: Optional[List[str]] = None
 
-    model_type: Optional[ModelType] = "completion"
+    MODEL_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["completion"]],
+            AfterValidator(validate_const("completion")),
+        ],
+        pydantic.Field(alias="model_type"),
+    ] = "completion"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

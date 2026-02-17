@@ -54,6 +54,7 @@ class AgentUpdateRequestTypedDict(TypedDict):
     handoffs: NotRequired[Nullable[List[str]]]
     deployment_chat: NotRequired[Nullable[bool]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
+    version_message: NotRequired[Nullable[str]]
 
 
 class AgentUpdateRequest(BaseModel):
@@ -78,6 +79,8 @@ class AgentUpdateRequest(BaseModel):
 
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
+    version_message: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -90,6 +93,7 @@ class AgentUpdateRequest(BaseModel):
             "handoffs",
             "deployment_chat",
             "metadata",
+            "version_message",
         ]
         nullable_fields = [
             "instructions",
@@ -99,6 +103,7 @@ class AgentUpdateRequest(BaseModel):
             "handoffs",
             "deployment_chat",
             "metadata",
+            "version_message",
         ]
         null_default_fields = []
 

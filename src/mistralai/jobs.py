@@ -291,7 +291,7 @@ class Jobs(BaseSDK):
 
         Create a new fine-tuning job, it will be queued for processing.
 
-        :param model: The name of the model to fine-tune.
+        :param model:
         :param hyperparameters:
         :param training_files:
         :param validation_files: A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files.
@@ -444,7 +444,7 @@ class Jobs(BaseSDK):
 
         Create a new fine-tuning job, it will be queued for processing.
 
-        :param model: The name of the model to fine-tune.
+        :param model:
         :param hyperparameters:
         :param training_files:
         :param validation_files: A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files.

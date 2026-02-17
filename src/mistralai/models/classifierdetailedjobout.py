@@ -11,9 +11,12 @@ from .eventout import EventOut, EventOutTypedDict
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 ClassifierDetailedJobOutStatus = Literal[
@@ -30,23 +33,16 @@ ClassifierDetailedJobOutStatus = Literal[
 ]
 
 
-ClassifierDetailedJobOutObject = Literal["job",]
-
-
 ClassifierDetailedJobOutIntegrationsTypedDict = WandbIntegrationOutTypedDict
 
 
 ClassifierDetailedJobOutIntegrations = WandbIntegrationOut
 
 
-ClassifierDetailedJobOutJobType = Literal["classifier",]
-
-
 class ClassifierDetailedJobOutTypedDict(TypedDict):
     id: str
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: ClassifierDetailedJobOutStatus
     created_at: int
     modified_at: int
@@ -54,7 +50,7 @@ class ClassifierDetailedJobOutTypedDict(TypedDict):
     hyperparameters: ClassifierTrainingParametersTypedDict
     classifier_targets: List[ClassifierTargetOutTypedDict]
     validation_files: NotRequired[Nullable[List[str]]]
-    object: NotRequired[ClassifierDetailedJobOutObject]
+    object: Literal["job"]
     fine_tuned_model: NotRequired[Nullable[str]]
     suffix: NotRequired[Nullable[str]]
     integrations: NotRequired[
@@ -62,7 +58,7 @@ class ClassifierDetailedJobOutTypedDict(TypedDict):
     ]
     trained_tokens: NotRequired[Nullable[int]]
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[ClassifierDetailedJobOutJobType]
+    job_type: Literal["classifier"]
     events: NotRequired[List[EventOutTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
     checkpoints: NotRequired[List[CheckpointOutTypedDict]]
@@ -74,7 +70,6 @@ class ClassifierDetailedJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: ClassifierDetailedJobOutStatus
 
@@ -90,7 +85,10 @@ class ClassifierDetailedJobOut(BaseModel):
 
     validation_files: OptionalNullable[List[str]] = UNSET
 
-    object: Optional[ClassifierDetailedJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
 
     fine_tuned_model: OptionalNullable[str] = UNSET
 
@@ -102,7 +100,13 @@ class ClassifierDetailedJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[ClassifierDetailedJobOutJobType] = "classifier"
+    JOB_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["classifier"]],
+            AfterValidator(validate_const("classifier")),
+        ],
+        pydantic.Field(alias="job_type"),
+    ] = "classifier"
 
     events: Optional[List[EventOut]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""

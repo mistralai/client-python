@@ -48,6 +48,10 @@ if TYPE_CHECKING:
         AgentsAPIV1AgentsCreateOrUpdateAliasRequest,
         AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict,
     )
+    from .agents_api_v1_agents_delete_aliasop import (
+        AgentsAPIV1AgentsDeleteAliasRequest,
+        AgentsAPIV1AgentsDeleteAliasRequestTypedDict,
+    )
     from .agents_api_v1_agents_deleteop import (
         AgentsAPIV1AgentsDeleteRequest,
         AgentsAPIV1AgentsDeleteRequestTypedDict,
@@ -149,11 +153,7 @@ if TYPE_CHECKING:
         AgentUpdateRequestTypedDict,
     )
     from .apiendpoint import APIEndpoint
-    from .archiveftmodelout import (
-        ArchiveFTModelOut,
-        ArchiveFTModelOutObject,
-        ArchiveFTModelOutTypedDict,
-    )
+    from .archiveftmodelout import ArchiveFTModelOut, ArchiveFTModelOutTypedDict
     from .assistantmessage import (
         AssistantMessage,
         AssistantMessageContent,
@@ -175,8 +175,8 @@ if TYPE_CHECKING:
     from .basemodelcard import BaseModelCard, BaseModelCardType, BaseModelCardTypedDict
     from .batcherror import BatchError, BatchErrorTypedDict
     from .batchjobin import BatchJobIn, BatchJobInTypedDict
-    from .batchjobout import BatchJobOut, BatchJobOutObject, BatchJobOutTypedDict
-    from .batchjobsout import BatchJobsOut, BatchJobsOutObject, BatchJobsOutTypedDict
+    from .batchjobout import BatchJobOut, BatchJobOutTypedDict
+    from .batchjobsout import BatchJobsOut, BatchJobsOutTypedDict
     from .batchjobstatus import BatchJobStatus
     from .batchrequest import BatchRequest, BatchRequestTypedDict
     from .builtinconnectors import BuiltInConnectors
@@ -242,23 +242,17 @@ if TYPE_CHECKING:
         ClassifierDetailedJobOut,
         ClassifierDetailedJobOutIntegrations,
         ClassifierDetailedJobOutIntegrationsTypedDict,
-        ClassifierDetailedJobOutJobType,
-        ClassifierDetailedJobOutObject,
         ClassifierDetailedJobOutStatus,
         ClassifierDetailedJobOutTypedDict,
     )
     from .classifierftmodelout import (
         ClassifierFTModelOut,
-        ClassifierFTModelOutModelType,
-        ClassifierFTModelOutObject,
         ClassifierFTModelOutTypedDict,
     )
     from .classifierjobout import (
         ClassifierJobOut,
         ClassifierJobOutIntegrations,
         ClassifierJobOutIntegrationsTypedDict,
-        ClassifierJobOutJobType,
-        ClassifierJobOutObject,
         ClassifierJobOutStatus,
         ClassifierJobOutTypedDict,
     )
@@ -284,8 +278,6 @@ if TYPE_CHECKING:
         CompletionDetailedJobOut,
         CompletionDetailedJobOutIntegrations,
         CompletionDetailedJobOutIntegrationsTypedDict,
-        CompletionDetailedJobOutJobType,
-        CompletionDetailedJobOutObject,
         CompletionDetailedJobOutRepositories,
         CompletionDetailedJobOutRepositoriesTypedDict,
         CompletionDetailedJobOutStatus,
@@ -294,17 +286,13 @@ if TYPE_CHECKING:
     from .completionevent import CompletionEvent, CompletionEventTypedDict
     from .completionftmodelout import (
         CompletionFTModelOut,
-        CompletionFTModelOutObject,
         CompletionFTModelOutTypedDict,
-        ModelType,
     )
     from .completionjobout import (
         CompletionJobOut,
-        CompletionJobOutObject,
         CompletionJobOutTypedDict,
         Integrations,
         IntegrationsTypedDict,
-        JobType,
         Repositories,
         RepositoriesTypedDict,
         Status,
@@ -522,16 +510,8 @@ if TYPE_CHECKING:
         FunctionResultEntryTypedDict,
     )
     from .functiontool import FunctionTool, FunctionToolType, FunctionToolTypedDict
-    from .githubrepositoryin import (
-        GithubRepositoryIn,
-        GithubRepositoryInType,
-        GithubRepositoryInTypedDict,
-    )
-    from .githubrepositoryout import (
-        GithubRepositoryOut,
-        GithubRepositoryOutType,
-        GithubRepositoryOutTypedDict,
-    )
+    from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
+    from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
     from .imagegenerationtool import (
         ImageGenerationTool,
@@ -583,6 +563,7 @@ if TYPE_CHECKING:
     from .jobs_api_routes_batch_get_batch_jobsop import (
         JobsAPIRoutesBatchGetBatchJobsRequest,
         JobsAPIRoutesBatchGetBatchJobsRequestTypedDict,
+        OrderBy,
     )
     from .jobs_api_routes_fine_tuning_archive_fine_tuned_modelop import (
         JobsAPIRoutesFineTuningArchiveFineTunedModelRequest,
@@ -627,17 +608,10 @@ if TYPE_CHECKING:
         JobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
         JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict,
     )
-    from .jobsout import (
-        JobsOut,
-        JobsOutData,
-        JobsOutDataTypedDict,
-        JobsOutObject,
-        JobsOutTypedDict,
-    )
+    from .jobsout import JobsOut, JobsOutData, JobsOutDataTypedDict, JobsOutTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .legacyjobmetadataout import (
         LegacyJobMetadataOut,
-        LegacyJobMetadataOutObject,
         LegacyJobMetadataOutTypedDict,
     )
     from .libraries_delete_v1op import (
@@ -953,11 +927,7 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDeltaType,
         TranscriptionStreamTextDeltaTypedDict,
     )
-    from .unarchiveftmodelout import (
-        UnarchiveFTModelOut,
-        UnarchiveFTModelOutObject,
-        UnarchiveFTModelOutTypedDict,
-    )
+    from .unarchiveftmodelout import UnarchiveFTModelOut, UnarchiveFTModelOutTypedDict
     from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
     from .uploadfileout import UploadFileOut, UploadFileOutTypedDict
     from .usageinfo import UsageInfo, UsageInfoTypedDict
@@ -974,16 +944,8 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
-    from .wandbintegration import (
-        WandbIntegration,
-        WandbIntegrationType,
-        WandbIntegrationTypedDict,
-    )
-    from .wandbintegrationout import (
-        WandbIntegrationOut,
-        WandbIntegrationOutType,
-        WandbIntegrationOutTypedDict,
-    )
+    from .wandbintegration import WandbIntegration, WandbIntegrationTypedDict
+    from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
     from .websearchpremiumtool import (
         WebSearchPremiumTool,
         WebSearchPremiumToolType,
@@ -1027,6 +989,8 @@ __all__ = [
     "AgentVersionTypedDict",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequest",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict",
+    "AgentsAPIV1AgentsDeleteAliasRequest",
+    "AgentsAPIV1AgentsDeleteAliasRequestTypedDict",
     "AgentsAPIV1AgentsDeleteRequest",
     "AgentsAPIV1AgentsDeleteRequestTypedDict",
     "AgentsAPIV1AgentsGetRequest",
@@ -1080,7 +1044,6 @@ __all__ = [
     "AgentsCompletionStreamRequestToolChoiceTypedDict",
     "AgentsCompletionStreamRequestTypedDict",
     "ArchiveFTModelOut",
-    "ArchiveFTModelOutObject",
     "ArchiveFTModelOutTypedDict",
     "Arguments",
     "ArgumentsTypedDict",
@@ -1109,11 +1072,9 @@ __all__ = [
     "BatchJobIn",
     "BatchJobInTypedDict",
     "BatchJobOut",
-    "BatchJobOutObject",
     "BatchJobOutTypedDict",
     "BatchJobStatus",
     "BatchJobsOut",
-    "BatchJobsOutObject",
     "BatchJobsOutTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
@@ -1153,19 +1114,13 @@ __all__ = [
     "ClassifierDetailedJobOut",
     "ClassifierDetailedJobOutIntegrations",
     "ClassifierDetailedJobOutIntegrationsTypedDict",
-    "ClassifierDetailedJobOutJobType",
-    "ClassifierDetailedJobOutObject",
     "ClassifierDetailedJobOutStatus",
     "ClassifierDetailedJobOutTypedDict",
     "ClassifierFTModelOut",
-    "ClassifierFTModelOutModelType",
-    "ClassifierFTModelOutObject",
     "ClassifierFTModelOutTypedDict",
     "ClassifierJobOut",
     "ClassifierJobOutIntegrations",
     "ClassifierJobOutIntegrationsTypedDict",
-    "ClassifierJobOutJobType",
-    "ClassifierJobOutObject",
     "ClassifierJobOutStatus",
     "ClassifierJobOutTypedDict",
     "ClassifierTargetIn",
@@ -1188,8 +1143,6 @@ __all__ = [
     "CompletionDetailedJobOut",
     "CompletionDetailedJobOutIntegrations",
     "CompletionDetailedJobOutIntegrationsTypedDict",
-    "CompletionDetailedJobOutJobType",
-    "CompletionDetailedJobOutObject",
     "CompletionDetailedJobOutRepositories",
     "CompletionDetailedJobOutRepositoriesTypedDict",
     "CompletionDetailedJobOutStatus",
@@ -1197,10 +1150,8 @@ __all__ = [
     "CompletionEvent",
     "CompletionEventTypedDict",
     "CompletionFTModelOut",
-    "CompletionFTModelOutObject",
     "CompletionFTModelOutTypedDict",
     "CompletionJobOut",
-    "CompletionJobOutObject",
     "CompletionJobOutTypedDict",
     "CompletionResponseStreamChoice",
     "CompletionResponseStreamChoiceFinishReason",
@@ -1357,10 +1308,8 @@ __all__ = [
     "FunctionToolTypedDict",
     "FunctionTypedDict",
     "GithubRepositoryIn",
-    "GithubRepositoryInType",
     "GithubRepositoryInTypedDict",
     "GithubRepositoryOut",
-    "GithubRepositoryOutType",
     "GithubRepositoryOutTypedDict",
     "HTTPValidationError",
     "HTTPValidationErrorData",
@@ -1401,7 +1350,6 @@ __all__ = [
     "JobInTypedDict",
     "JobMetadataOut",
     "JobMetadataOutTypedDict",
-    "JobType",
     "JobsAPIRoutesBatchCancelBatchJobRequest",
     "JobsAPIRoutesBatchCancelBatchJobRequestTypedDict",
     "JobsAPIRoutesBatchGetBatchJobRequest",
@@ -1435,10 +1383,8 @@ __all__ = [
     "JobsOut",
     "JobsOutData",
     "JobsOutDataTypedDict",
-    "JobsOutObject",
     "JobsOutTypedDict",
     "LegacyJobMetadataOut",
-    "LegacyJobMetadataOutObject",
     "LegacyJobMetadataOutTypedDict",
     "LibrariesDeleteV1Request",
     "LibrariesDeleteV1RequestTypedDict",
@@ -1532,7 +1478,6 @@ __all__ = [
     "ModelConversationTypedDict",
     "ModelList",
     "ModelListTypedDict",
-    "ModelType",
     "ModerationObject",
     "ModerationObjectTypedDict",
     "ModerationResponse",
@@ -1557,6 +1502,7 @@ __all__ = [
     "Object",
     "One",
     "OneTypedDict",
+    "OrderBy",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
     "Outputs",
@@ -1713,7 +1659,6 @@ __all__ = [
     "TwoTypedDict",
     "Type",
     "UnarchiveFTModelOut",
-    "UnarchiveFTModelOutObject",
     "UnarchiveFTModelOutTypedDict",
     "UpdateFTModelIn",
     "UpdateFTModelInTypedDict",
@@ -1730,9 +1675,7 @@ __all__ = [
     "ValidationErrorTypedDict",
     "WandbIntegration",
     "WandbIntegrationOut",
-    "WandbIntegrationOutType",
     "WandbIntegrationOutTypedDict",
-    "WandbIntegrationType",
     "WandbIntegrationTypedDict",
     "WebSearchPremiumTool",
     "WebSearchPremiumToolType",
@@ -1771,6 +1714,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequest": ".agents_api_v1_agents_create_or_update_aliasop",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict": ".agents_api_v1_agents_create_or_update_aliasop",
+    "AgentsAPIV1AgentsDeleteAliasRequest": ".agents_api_v1_agents_delete_aliasop",
+    "AgentsAPIV1AgentsDeleteAliasRequestTypedDict": ".agents_api_v1_agents_delete_aliasop",
     "AgentsAPIV1AgentsDeleteRequest": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsDeleteRequestTypedDict": ".agents_api_v1_agents_deleteop",
     "AgentsAPIV1AgentsGetVersionRequest": ".agents_api_v1_agents_get_versionop",
@@ -1833,7 +1778,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentUpdateRequestTypedDict": ".agentupdaterequest",
     "APIEndpoint": ".apiendpoint",
     "ArchiveFTModelOut": ".archiveftmodelout",
-    "ArchiveFTModelOutObject": ".archiveftmodelout",
     "ArchiveFTModelOutTypedDict": ".archiveftmodelout",
     "AssistantMessage": ".assistantmessage",
     "AssistantMessageContent": ".assistantmessage",
@@ -1858,10 +1802,8 @@ _dynamic_imports: dict[str, str] = {
     "BatchJobIn": ".batchjobin",
     "BatchJobInTypedDict": ".batchjobin",
     "BatchJobOut": ".batchjobout",
-    "BatchJobOutObject": ".batchjobout",
     "BatchJobOutTypedDict": ".batchjobout",
     "BatchJobsOut": ".batchjobsout",
-    "BatchJobsOutObject": ".batchjobsout",
     "BatchJobsOutTypedDict": ".batchjobsout",
     "BatchJobStatus": ".batchjobstatus",
     "BatchRequest": ".batchrequest",
@@ -1911,19 +1853,13 @@ _dynamic_imports: dict[str, str] = {
     "ClassifierDetailedJobOut": ".classifierdetailedjobout",
     "ClassifierDetailedJobOutIntegrations": ".classifierdetailedjobout",
     "ClassifierDetailedJobOutIntegrationsTypedDict": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutJobType": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutObject": ".classifierdetailedjobout",
     "ClassifierDetailedJobOutStatus": ".classifierdetailedjobout",
     "ClassifierDetailedJobOutTypedDict": ".classifierdetailedjobout",
     "ClassifierFTModelOut": ".classifierftmodelout",
-    "ClassifierFTModelOutModelType": ".classifierftmodelout",
-    "ClassifierFTModelOutObject": ".classifierftmodelout",
     "ClassifierFTModelOutTypedDict": ".classifierftmodelout",
     "ClassifierJobOut": ".classifierjobout",
     "ClassifierJobOutIntegrations": ".classifierjobout",
     "ClassifierJobOutIntegrationsTypedDict": ".classifierjobout",
-    "ClassifierJobOutJobType": ".classifierjobout",
-    "ClassifierJobOutObject": ".classifierjobout",
     "ClassifierJobOutStatus": ".classifierjobout",
     "ClassifierJobOutTypedDict": ".classifierjobout",
     "ClassifierTargetIn": ".classifiertargetin",
@@ -1946,8 +1882,6 @@ _dynamic_imports: dict[str, str] = {
     "CompletionDetailedJobOut": ".completiondetailedjobout",
     "CompletionDetailedJobOutIntegrations": ".completiondetailedjobout",
     "CompletionDetailedJobOutIntegrationsTypedDict": ".completiondetailedjobout",
-    "CompletionDetailedJobOutJobType": ".completiondetailedjobout",
-    "CompletionDetailedJobOutObject": ".completiondetailedjobout",
     "CompletionDetailedJobOutRepositories": ".completiondetailedjobout",
     "CompletionDetailedJobOutRepositoriesTypedDict": ".completiondetailedjobout",
     "CompletionDetailedJobOutStatus": ".completiondetailedjobout",
@@ -1955,15 +1889,11 @@ _dynamic_imports: dict[str, str] = {
     "CompletionEvent": ".completionevent",
     "CompletionEventTypedDict": ".completionevent",
     "CompletionFTModelOut": ".completionftmodelout",
-    "CompletionFTModelOutObject": ".completionftmodelout",
     "CompletionFTModelOutTypedDict": ".completionftmodelout",
-    "ModelType": ".completionftmodelout",
     "CompletionJobOut": ".completionjobout",
-    "CompletionJobOutObject": ".completionjobout",
     "CompletionJobOutTypedDict": ".completionjobout",
     "Integrations": ".completionjobout",
     "IntegrationsTypedDict": ".completionjobout",
-    "JobType": ".completionjobout",
     "Repositories": ".completionjobout",
     "RepositoriesTypedDict": ".completionjobout",
     "Status": ".completionjobout",
@@ -2127,10 +2057,8 @@ _dynamic_imports: dict[str, str] = {
     "FunctionToolType": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
     "GithubRepositoryIn": ".githubrepositoryin",
-    "GithubRepositoryInType": ".githubrepositoryin",
     "GithubRepositoryInTypedDict": ".githubrepositoryin",
     "GithubRepositoryOut": ".githubrepositoryout",
-    "GithubRepositoryOutType": ".githubrepositoryout",
     "GithubRepositoryOutTypedDict": ".githubrepositoryout",
     "HTTPValidationError": ".httpvalidationerror",
     "HTTPValidationErrorData": ".httpvalidationerror",
@@ -2172,6 +2100,7 @@ _dynamic_imports: dict[str, str] = {
     "JobsAPIRoutesBatchGetBatchJobRequestTypedDict": ".jobs_api_routes_batch_get_batch_jobop",
     "JobsAPIRoutesBatchGetBatchJobsRequest": ".jobs_api_routes_batch_get_batch_jobsop",
     "JobsAPIRoutesBatchGetBatchJobsRequestTypedDict": ".jobs_api_routes_batch_get_batch_jobsop",
+    "OrderBy": ".jobs_api_routes_batch_get_batch_jobsop",
     "JobsAPIRoutesFineTuningArchiveFineTunedModelRequest": ".jobs_api_routes_fine_tuning_archive_fine_tuned_modelop",
     "JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict": ".jobs_api_routes_fine_tuning_archive_fine_tuned_modelop",
     "JobsAPIRoutesFineTuningCancelFineTuningJobRequest": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
@@ -2202,12 +2131,10 @@ _dynamic_imports: dict[str, str] = {
     "JobsOut": ".jobsout",
     "JobsOutData": ".jobsout",
     "JobsOutDataTypedDict": ".jobsout",
-    "JobsOutObject": ".jobsout",
     "JobsOutTypedDict": ".jobsout",
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
     "LegacyJobMetadataOut": ".legacyjobmetadataout",
-    "LegacyJobMetadataOutObject": ".legacyjobmetadataout",
     "LegacyJobMetadataOutTypedDict": ".legacyjobmetadataout",
     "LibrariesDeleteV1Request": ".libraries_delete_v1op",
     "LibrariesDeleteV1RequestTypedDict": ".libraries_delete_v1op",
@@ -2461,7 +2388,6 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamTextDeltaType": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "UnarchiveFTModelOut": ".unarchiveftmodelout",
-    "UnarchiveFTModelOutObject": ".unarchiveftmodelout",
     "UnarchiveFTModelOutTypedDict": ".unarchiveftmodelout",
     "UpdateFTModelIn": ".updateftmodelin",
     "UpdateFTModelInTypedDict": ".updateftmodelin",
@@ -2479,10 +2405,8 @@ _dynamic_imports: dict[str, str] = {
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
     "WandbIntegration": ".wandbintegration",
-    "WandbIntegrationType": ".wandbintegration",
     "WandbIntegrationTypedDict": ".wandbintegration",
     "WandbIntegrationOut": ".wandbintegrationout",
-    "WandbIntegrationOutType": ".wandbintegrationout",
     "WandbIntegrationOutTypedDict": ".wandbintegrationout",
     "WebSearchPremiumTool": ".websearchpremiumtool",
     "WebSearchPremiumToolType": ".websearchpremiumtool",

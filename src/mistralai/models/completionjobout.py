@@ -9,9 +9,12 @@ from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDi
 from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
 from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 Status = Literal[
@@ -29,18 +32,10 @@ Status = Literal[
 r"""The current status of the fine-tuning job."""
 
 
-CompletionJobOutObject = Literal["job",]
-r"""The object type of the fine-tuning job."""
-
-
 IntegrationsTypedDict = WandbIntegrationOutTypedDict
 
 
 Integrations = WandbIntegrationOut
-
-
-JobType = Literal["completion",]
-r"""The type of job (`FT` for fine-tuning)."""
 
 
 RepositoriesTypedDict = GithubRepositoryOutTypedDict
@@ -54,7 +49,6 @@ class CompletionJobOutTypedDict(TypedDict):
     r"""The ID of the job."""
     auto_start: bool
     model: str
-    r"""The name of the model to fine-tune."""
     status: Status
     r"""The current status of the fine-tuning job."""
     created_at: int
@@ -66,7 +60,7 @@ class CompletionJobOutTypedDict(TypedDict):
     hyperparameters: CompletionTrainingParametersTypedDict
     validation_files: NotRequired[Nullable[List[str]]]
     r"""A list containing the IDs of uploaded files that contain validation data."""
-    object: NotRequired[CompletionJobOutObject]
+    object: Literal["job"]
     r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
@@ -77,7 +71,7 @@ class CompletionJobOutTypedDict(TypedDict):
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
     metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
-    job_type: NotRequired[JobType]
+    job_type: Literal["completion"]
     r"""The type of job (`FT` for fine-tuning)."""
     repositories: NotRequired[List[RepositoriesTypedDict]]
 
@@ -89,7 +83,6 @@ class CompletionJobOut(BaseModel):
     auto_start: bool
 
     model: str
-    r"""The name of the model to fine-tune."""
 
     status: Status
     r"""The current status of the fine-tuning job."""
@@ -108,7 +101,10 @@ class CompletionJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    object: Optional[CompletionJobOutObject] = "job"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
+        pydantic.Field(alias="object"),
+    ] = "job"
     r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET
@@ -125,7 +121,13 @@ class CompletionJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    job_type: Optional[JobType] = "completion"
+    JOB_TYPE: Annotated[
+        Annotated[
+            Optional[Literal["completion"]],
+            AfterValidator(validate_const("completion")),
+        ],
+        pydantic.Field(alias="job_type"),
+    ] = "completion"
     r"""The type of job (`FT` for fine-tuning)."""
 
     repositories: Optional[List[Repositories]] = None

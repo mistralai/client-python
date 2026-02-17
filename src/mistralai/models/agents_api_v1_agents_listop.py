@@ -17,6 +17,9 @@ class AgentsAPIV1AgentsListRequestTypedDict(TypedDict):
     deployment_chat: NotRequired[Nullable[bool]]
     sources: NotRequired[Nullable[List[RequestSource]]]
     name: NotRequired[Nullable[str]]
+    r"""Filter by agent name"""
+    search: NotRequired[Nullable[str]]
+    r"""Search agents by name or ID"""
     id: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
 
@@ -48,6 +51,13 @@ class AgentsAPIV1AgentsListRequest(BaseModel):
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
+    r"""Filter by agent name"""
+
+    search: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Search agents by name or ID"""
 
     id: Annotated[
         OptionalNullable[str],
@@ -67,10 +77,18 @@ class AgentsAPIV1AgentsListRequest(BaseModel):
             "deployment_chat",
             "sources",
             "name",
+            "search",
             "id",
             "metadata",
         ]
-        nullable_fields = ["deployment_chat", "sources", "name", "id", "metadata"]
+        nullable_fields = [
+            "deployment_chat",
+            "sources",
+            "name",
+            "search",
+            "id",
+            "metadata",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

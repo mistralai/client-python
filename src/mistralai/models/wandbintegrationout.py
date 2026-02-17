@@ -2,18 +2,18 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-WandbIntegrationOutType = Literal["wandb",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WandbIntegrationOutTypedDict(TypedDict):
     project: str
     r"""The name of the project that the new run will be created under."""
-    type: NotRequired[WandbIntegrationOutType]
+    type: Literal["wandb"]
     name: NotRequired[Nullable[str]]
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
     run_name: NotRequired[Nullable[str]]
@@ -24,7 +24,10 @@ class WandbIntegrationOut(BaseModel):
     project: str
     r"""The name of the project that the new run will be created under."""
 
-    type: Optional[WandbIntegrationOutType] = "wandb"
+    TYPE: Annotated[
+        Annotated[Optional[Literal["wandb"]], AfterValidator(validate_const("wandb"))],
+        pydantic.Field(alias="type"),
+    ] = "wandb"
 
     name: OptionalNullable[str] = UNSET
     r"""A display name to set for the run. If not set, will use the job ID as the name."""
