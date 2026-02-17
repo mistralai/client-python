@@ -35,6 +35,8 @@ from mistralai.models import (
     TranscriptionStreamTextDelta,
 )
 
+from pyaudio_utils import load_pyaudio
+
 console = Console()
 
 
@@ -188,7 +190,7 @@ async def iter_microphone(
     Yield microphone PCM chunks using PyAudio (16-bit mono).
     Encoding is always pcm_s16le.
     """
-    import pyaudio
+    pyaudio = load_pyaudio()
 
     p = pyaudio.PyAudio()
     chunk_samples = int(sample_rate * chunk_duration_ms / 1000)
@@ -373,6 +375,12 @@ async def main() -> int:
     args = parse_args()
     api_key = args.api_key or os.environ["MISTRAL_API_KEY"]
 
+    try:
+        load_pyaudio()
+    except RuntimeError as exc:
+        console.print(str(exc), style="red")
+        return 1
+
     state = DualTranscriptState()
     display = DualTranscriptDisplay(
         model=args.model,
@@ -431,6 +439,16 @@ async def main() -> int:
     try:
         while True:
             await asyncio.sleep(0.1)
+            for task in (broadcaster, fast_task, slow_task):
+                if not task.done():
+                    continue
+                exc = task.exception()
+                if exc:
+                    state.set_error(str(exc))
+                    if update_queue.empty():
+                        update_queue.put_nowait(None)
+                    stop_event.set()
+                    break
             if state.error:
                 stop_event.set()
                 break
