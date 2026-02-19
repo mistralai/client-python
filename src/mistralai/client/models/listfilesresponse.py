@@ -2,7 +2,7 @@
 # @generated-id: 85d6d24c1a19
 
 from __future__ import annotations
-from .file_2 import File2, File2TypedDict
+from .fileobject_1 import FileObject1, FileObject1TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,13 +16,13 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ListFilesResponseTypedDict(TypedDict):
-    data: List[File2TypedDict]
+    data: List[FileObject1TypedDict]
     object: str
     total: NotRequired[Nullable[int]]
 
 
 class ListFilesResponse(BaseModel):
-    data: List[File2]
+    data: List[FileObject1]
 
     object: str
 

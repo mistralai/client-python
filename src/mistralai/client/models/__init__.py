@@ -415,10 +415,10 @@ if TYPE_CHECKING:
     from .encodingformat import EncodingFormat
     from .entitytype import EntityType
     from .eventout import EventOut, EventOutTypedDict
-    from .file_1 import File1, File1TypedDict
-    from .file_2 import File2, File2TypedDict
-    from .file_3 import File3, File3TypedDict
+    from .file import File, FileTypedDict
     from .filechunk import FileChunk, FileChunkTypedDict
+    from .fileobject_1 import FileObject1, FileObject1TypedDict
+    from .fileobject_2 import FileObject2, FileObject2TypedDict
     from .filepurpose import FilePurpose
     from .files_api_routes_delete_fileop import (
         FilesAPIRoutesDeleteFileRequest,
@@ -1325,17 +1325,17 @@ __all__ = [
     "FTModelCardGetModelResponse",
     "FTModelCardGetModelResponseTypedDict",
     "FTModelCardTypedDict",
-    "File1",
-    "File1TypedDict",
-    "File2",
-    "File2TypedDict",
-    "File3",
-    "File3TypedDict",
+    "File",
     "FileChunk",
     "FileChunkTypedDict",
+    "FileObject1",
+    "FileObject1TypedDict",
+    "FileObject2",
+    "FileObject2TypedDict",
     "FilePurpose",
     "FileSignedURL",
     "FileSignedURLTypedDict",
+    "FileTypedDict",
     "FilesAPIRoutesDeleteFileRequest",
     "FilesAPIRoutesDeleteFileRequestTypedDict",
     "FilesAPIRoutesDownloadFileRequest",
@@ -2038,14 +2038,14 @@ _dynamic_imports: dict[str, str] = {
     "EntityType": ".entitytype",
     "EventOut": ".eventout",
     "EventOutTypedDict": ".eventout",
-    "File1": ".file_1",
-    "File1TypedDict": ".file_1",
-    "File2": ".file_2",
-    "File2TypedDict": ".file_2",
-    "File3": ".file_3",
-    "File3TypedDict": ".file_3",
+    "File": ".file",
+    "FileTypedDict": ".file",
     "FileChunk": ".filechunk",
     "FileChunkTypedDict": ".filechunk",
+    "FileObject1": ".fileobject_1",
+    "FileObject1TypedDict": ".fileobject_1",
+    "FileObject2": ".fileobject_2",
+    "FileObject2TypedDict": ".fileobject_2",
     "FilePurpose": ".filepurpose",
     "FilesAPIRoutesDeleteFileRequest": ".files_api_routes_delete_fileop",
     "FilesAPIRoutesDeleteFileRequestTypedDict": ".files_api_routes_delete_fileop",

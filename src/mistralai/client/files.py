@@ -6,7 +6,7 @@ import httpx
 from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
-    file_1 as models_file_1,
+    file as models_file,
     filepurpose as models_filepurpose,
     sampletype as models_sampletype,
     source as models_source,
@@ -23,13 +23,13 @@ class Files(BaseSDK):
     def upload(
         self,
         *,
-        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         purpose: Optional[models_filepurpose.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.File2:
+    ) -> models.FileObject1:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -65,7 +65,7 @@ class Files(BaseSDK):
 
         request = models.UploadFileRequest(
             purpose=purpose,
-            file=utils.get_pydantic_model(file, models.File1),
+            file=utils.get_pydantic_model(file, models.File),
         )
 
         req = self._build_request(
@@ -112,7 +112,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.File2, http_res)
+            return unmarshal_json_response(models.FileObject1, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -125,13 +125,13 @@ class Files(BaseSDK):
     async def upload_async(
         self,
         *,
-        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         purpose: Optional[models_filepurpose.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.File2:
+    ) -> models.FileObject1:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -167,7 +167,7 @@ class Files(BaseSDK):
 
         request = models.UploadFileRequest(
             purpose=purpose,
-            file=utils.get_pydantic_model(file, models.File1),
+            file=utils.get_pydantic_model(file, models.File),
         )
 
         req = self._build_request_async(
@@ -214,7 +214,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.File2, http_res)
+            return unmarshal_json_response(models.FileObject1, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -442,7 +442,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.File3:
+    ) -> models.FileObject2:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -508,7 +508,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.File3, http_res)
+            return unmarshal_json_response(models.FileObject2, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -526,7 +526,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.File3:
+    ) -> models.FileObject2:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -592,7 +592,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.File3, http_res)
+            return unmarshal_json_response(models.FileObject2, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)

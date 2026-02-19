@@ -2,7 +2,7 @@
 # @generated-id: f13b84de6fa7
 
 from __future__ import annotations
-from .file_1 import File1, File1TypedDict
+from .file import File, FileTypedDict
 from .filepurpose import FilePurpose
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, MultipartFormMetadata
@@ -11,7 +11,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UploadFileRequestTypedDict(TypedDict):
-    file: File1TypedDict
+    file: FileTypedDict
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
     ```bash
@@ -26,7 +26,7 @@ class UploadFileRequestTypedDict(TypedDict):
 
 
 class UploadFileRequest(BaseModel):
-    file: Annotated[File1, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
+    file: Annotated[File, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
     ```bash

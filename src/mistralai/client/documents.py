@@ -6,7 +6,7 @@ from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     documentupdaterequest as models_documentupdaterequest,
-    file_1 as models_file_1,
+    file as models_file,
 )
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
@@ -237,7 +237,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -275,7 +275,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
             request_body=models.UploadDocumentRequest(
-                file=utils.get_pydantic_model(file, models.File1),
+                file=utils.get_pydantic_model(file, models.File),
             ),
         )
 
@@ -347,7 +347,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
+        file: Union[models_file.File, models_file.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -385,7 +385,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
             request_body=models.UploadDocumentRequest(
-                file=utils.get_pydantic_model(file, models.File1),
+                file=utils.get_pydantic_model(file, models.File),
             ),
         )
 
