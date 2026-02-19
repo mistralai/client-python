@@ -1,4 +1,4 @@
-# FileObject2
+# FileObject
 
 
 ## Fields
@@ -16,4 +16,3 @@
 | `mimetype`                                     | *OptionalNullable[str]*                        | :heavy_minus_sign:                             | N/A                                            |                                                |
 | `source`                                       | [models.Source](../models/source.md)           | :heavy_check_mark:                             | N/A                                            |                                                |
 | `signature`                                    | *OptionalNullable[str]*                        | :heavy_minus_sign:                             | N/A                                            |                                                |
-| `deleted`                                      | *bool*                                         | :heavy_check_mark:                             | N/A                                            |                                                |
