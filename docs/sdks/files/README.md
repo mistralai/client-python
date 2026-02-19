@@ -23,7 +23,7 @@ Please contact us if you need to increase these storage limits.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UploadFile" method="post" path="/v1/files" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_upload_file" method="post" path="/v1/files" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -47,13 +47,13 @@ with Mistral(
 
 | Parameter                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `file`                                                                                                                                                                                                                                                                                                              | [models.File](../../models/file.md)                                                                                                                                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
+| `file`                                                                                                                                                                                                                                                                                                              | [models.File1](../../models/file1.md)                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
 | `purpose`                                                                                                                                                                                                                                                                                                           | [Optional[models.FilePurpose]](../../models/filepurpose.md)                                                                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
 | `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
 
 ### Response
 
-**[models.UploadFileOut](../../models/uploadfileout.md)**
+**[models.File2](../../models/file2.md)**
 
 ### Errors
 
@@ -67,7 +67,7 @@ Returns a list of files that belong to the user's organization.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListFiles" method="get" path="/v1/files" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_list_files" method="get" path="/v1/files" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -100,7 +100,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListFilesOut](../../models/listfilesout.md)**
+**[models.ListFilesResponse](../../models/listfilesresponse.md)**
 
 ### Errors
 
@@ -114,7 +114,7 @@ Returns information about a specific file.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="RetrieveFile" method="get" path="/v1/files/{file_id}" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_retrieve_file" method="get" path="/v1/files/{file_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -124,7 +124,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.retrieve(file_id="654a62d9-b7ee-49ac-835e-af4153e3c9ec")
+    res = mistral.files.retrieve(file_id="f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6")
 
     # Handle response
     print(res)
@@ -140,7 +140,7 @@ with Mistral(
 
 ### Response
 
-**[models.RetrieveFileOut](../../models/retrievefileout.md)**
+**[models.File3](../../models/file3.md)**
 
 ### Errors
 
@@ -154,7 +154,7 @@ Delete a file.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteFile" method="delete" path="/v1/files/{file_id}" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_delete_file" method="delete" path="/v1/files/{file_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -164,7 +164,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.delete(file_id="789c27a4-69de-47c6-b67f-cf6e56ce9f41")
+    res = mistral.files.delete(file_id="3b6d45eb-e30b-416f-8019-f47e2e93d930")
 
     # Handle response
     print(res)
@@ -180,7 +180,7 @@ with Mistral(
 
 ### Response
 
-**[models.DeleteFileOut](../../models/deletefileout.md)**
+**[models.DeleteFileResponse](../../models/deletefileresponse.md)**
 
 ### Errors
 
@@ -194,7 +194,7 @@ Download a file
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DownloadFile" method="get" path="/v1/files/{file_id}/content" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_download_file" method="get" path="/v1/files/{file_id}/content" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -204,7 +204,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.download(file_id="e2ba278e-eac9-4050-ae8e-ec433e124efb")
+    res = mistral.files.download(file_id="f8919994-a4a1-46b2-8b5b-06335a4300ce")
 
     # Handle response
     print(res)
@@ -234,7 +234,7 @@ Get Signed Url
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetFileSignedUrl" method="get" path="/v1/files/{file_id}/url" -->
+<!-- UsageSnippet language="python" operationID="files_api_routes_get_signed_url" method="get" path="/v1/files/{file_id}/url" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -244,7 +244,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.files.get_signed_url(file_id="7a0c108d-9e6b-4c47-990d-a20cba50b283", expiry=24)
+    res = mistral.files.get_signed_url(file_id="06a020ab-355c-49a6-b19d-304b7c01699f", expiry=24)
 
     # Handle response
     print(res)

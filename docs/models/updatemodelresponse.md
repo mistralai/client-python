@@ -5,15 +5,15 @@ OK
 
 ## Supported Types
 
-### `models.ClassifierFTModelOut`
+### `models.ClassifierFTModelOutUpdateModelResponse`
 
 ```python
-value: models.ClassifierFTModelOut = /* values here */
+value: models.ClassifierFTModelOutUpdateModelResponse = /* values here */
 ```
 
-### `models.CompletionFTModelOut`
+### `models.CompletionFTModelOutUpdateModelResponse`
 
 ```python
-value: models.CompletionFTModelOut = /* values here */
+value: models.CompletionFTModelOutUpdateModelResponse = /* values here */
 ```
 

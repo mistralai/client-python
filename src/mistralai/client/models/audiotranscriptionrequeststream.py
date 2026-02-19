@@ -2,7 +2,7 @@
 # @generated-id: 33a07317a3b3
 
 from __future__ import annotations
-from .file import File, FileTypedDict
+from .file_1 import File1, File1TypedDict
 from .timestampgranularity import TimestampGranularity
 from mistralai.client.types import (
     BaseModel,
@@ -21,7 +21,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class AudioTranscriptionRequestStreamTypedDict(TypedDict):
     model: str
-    file: NotRequired[FileTypedDict]
+    file: NotRequired[File1TypedDict]
     file_url: NotRequired[Nullable[str]]
     r"""Url of a file to be transcribed"""
     file_id: NotRequired[Nullable[str]]
@@ -40,7 +40,7 @@ class AudioTranscriptionRequestStream(BaseModel):
     model: Annotated[str, FieldMetadata(multipart=True)]
 
     file: Annotated[
-        Optional[File], FieldMetadata(multipart=MultipartFormMetadata(file=True))
+        Optional[File1], FieldMetadata(multipart=MultipartFormMetadata(file=True))
     ] = None
 
     file_url: Annotated[OptionalNullable[str], FieldMetadata(multipart=True)] = UNSET

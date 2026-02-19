@@ -25,7 +25,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListSharingOut:
+    ) -> models.ListLibraryAccessesResponse:
         r"""List all of the access to this library.
 
         Given a library, list all of the Entity that have access and to what level.
@@ -46,7 +46,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -79,7 +79,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -92,7 +92,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListSharingOut, http_res)
+            return unmarshal_json_response(models.ListLibraryAccessesResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -115,7 +115,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListSharingOut:
+    ) -> models.ListLibraryAccessesResponse:
         r"""List all of the access to this library.
 
         Given a library, list all of the Entity that have access and to what level.
@@ -136,7 +136,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -169,7 +169,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -182,7 +182,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListSharingOut, http_res)
+            return unmarshal_json_response(models.ListLibraryAccessesResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -209,7 +209,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SharingOut:
+    ) -> models.Sharing:
         r"""Create or update an access level.
 
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
@@ -234,9 +234,9 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
-            sharing_in=models.SharingIn(
+            update_or_create_library_access_request=models.UpdateOrCreateLibraryAccessRequest(
                 org_id=org_id,
                 level=level,
                 share_with_uuid=share_with_uuid,
@@ -258,7 +258,11 @@ class Accesses(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.sharing_in, False, False, "json", models.SharingIn
+                request.update_or_create_library_access_request,
+                False,
+                False,
+                "json",
+                models.UpdateOrCreateLibraryAccessRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -276,7 +280,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -289,7 +293,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SharingOut, http_res)
+            return unmarshal_json_response(models.Sharing, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -316,7 +320,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SharingOut:
+    ) -> models.Sharing:
         r"""Create or update an access level.
 
         Given a library id, you can create or update the access level of an entity. You have to be owner of the library to share a library. An owner cannot change their own role. A library cannot be shared outside of the organization.
@@ -341,9 +345,9 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
-            sharing_in=models.SharingIn(
+            update_or_create_library_access_request=models.UpdateOrCreateLibraryAccessRequest(
                 org_id=org_id,
                 level=level,
                 share_with_uuid=share_with_uuid,
@@ -365,7 +369,11 @@ class Accesses(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.sharing_in, False, False, "json", models.SharingIn
+                request.update_or_create_library_access_request,
+                False,
+                False,
+                "json",
+                models.UpdateOrCreateLibraryAccessRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -383,7 +391,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -396,7 +404,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SharingOut, http_res)
+            return unmarshal_json_response(models.Sharing, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -422,7 +430,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SharingOut:
+    ) -> models.Sharing:
         r"""Delete an access level.
 
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
@@ -446,7 +454,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -487,7 +495,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -500,7 +508,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SharingOut, http_res)
+            return unmarshal_json_response(models.Sharing, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -526,7 +534,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SharingOut:
+    ) -> models.Sharing:
         r"""Delete an access level.
 
         Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
@@ -550,7 +558,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -591,7 +599,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -604,7 +612,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SharingOut, http_res)
+            return unmarshal_json_response(models.Sharing, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

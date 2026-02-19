@@ -68,7 +68,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListModels",
+                operation_id="list_models_v1_models_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -145,7 +145,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListModels",
+                operation_id="list_models_v1_models_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -175,7 +175,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ResponseRetrieveModelV1ModelsModelIDGet:
+    ) -> models.GetModelResponse:
         r"""Retrieve Model
 
         Retrieve information about a model.
@@ -196,7 +196,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveModelRequest(
+        request = models.RetrieveModelV1ModelsModelIDGetRequest(
             model_id=model_id,
         )
 
@@ -229,7 +229,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveModel",
+                operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -242,9 +242,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ResponseRetrieveModelV1ModelsModelIDGet, http_res
-            )
+            return unmarshal_json_response(models.GetModelResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -267,7 +265,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ResponseRetrieveModelV1ModelsModelIDGet:
+    ) -> models.GetModelResponse:
         r"""Retrieve Model
 
         Retrieve information about a model.
@@ -288,7 +286,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveModelRequest(
+        request = models.RetrieveModelV1ModelsModelIDGetRequest(
             model_id=model_id,
         )
 
@@ -321,7 +319,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveModel",
+                operation_id="retrieve_model_v1_models__model_id__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -334,9 +332,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ResponseRetrieveModelV1ModelsModelIDGet, http_res
-            )
+            return unmarshal_json_response(models.GetModelResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -380,7 +376,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteModelRequest(
+        request = models.DeleteModelV1ModelsModelIDDeleteRequest(
             model_id=model_id,
         )
 
@@ -413,7 +409,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteModel",
+                operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -470,7 +466,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteModelRequest(
+        request = models.DeleteModelV1ModelsModelIDDeleteRequest(
             model_id=model_id,
         )
 
@@ -503,7 +499,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteModel",
+                operation_id="delete_model_v1_models__model_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -564,7 +560,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateModelRequest(
+        request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
             update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
@@ -604,7 +600,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateModel",
+                operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -659,7 +655,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateModelRequest(
+        request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
             update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
@@ -699,7 +695,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateModel",
+                operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -750,7 +746,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ArchiveModelRequest(
+        request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
             model_id=model_id,
         )
 
@@ -783,7 +779,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ArchiveModel",
+                operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -834,7 +830,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ArchiveModelRequest(
+        request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
             model_id=model_id,
         )
 
@@ -867,7 +863,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ArchiveModel",
+                operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -918,7 +914,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnarchiveModelRequest(
+        request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
             model_id=model_id,
         )
 
@@ -951,7 +947,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UnarchiveModel",
+                operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1002,7 +998,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnarchiveModelRequest(
+        request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
             model_id=model_id,
         )
 
@@ -1035,7 +1031,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UnarchiveModel",
+                operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

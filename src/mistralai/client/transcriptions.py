@@ -5,7 +5,7 @@ from .basesdk import BaseSDK
 from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
-    file as models_file,
+    file_1 as models_file_1,
     timestampgranularity as models_timestampgranularity,
 )
 from mistralai.client.types import OptionalNullable, UNSET
@@ -21,7 +21,7 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models_file_1.File1, models_file_1.File1TypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
@@ -64,7 +64,7 @@ class Transcriptions(BaseSDK):
 
         request = models.AudioTranscriptionRequest(
             model=model,
-            file=utils.get_pydantic_model(file, Optional[models.File]),
+            file=utils.get_pydantic_model(file, Optional[models.File1]),
             file_url=file_url,
             file_id=file_id,
             language=language,
@@ -132,7 +132,7 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models_file_1.File1, models_file_1.File1TypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
@@ -175,7 +175,7 @@ class Transcriptions(BaseSDK):
 
         request = models.AudioTranscriptionRequest(
             model=model,
-            file=utils.get_pydantic_model(file, Optional[models.File]),
+            file=utils.get_pydantic_model(file, Optional[models.File1]),
             file_url=file_url,
             file_id=file_id,
             language=language,
@@ -243,7 +243,7 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models_file_1.File1, models_file_1.File1TypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
@@ -286,7 +286,7 @@ class Transcriptions(BaseSDK):
 
         request = models.AudioTranscriptionRequestStream(
             model=model,
-            file=utils.get_pydantic_model(file, Optional[models.File]),
+            file=utils.get_pydantic_model(file, Optional[models.File1]),
             file_url=file_url,
             file_id=file_id,
             language=language,
@@ -364,7 +364,7 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models_file_1.File1, models_file_1.File1TypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
@@ -407,7 +407,7 @@ class Transcriptions(BaseSDK):
 
         request = models.AudioTranscriptionRequestStream(
             model=model,
-            file=utils.get_pydantic_model(file, Optional[models.File]),
+            file=utils.get_pydantic_model(file, Optional[models.File1]),
             file_url=file_url,
             file_id=file_id,
             language=language,

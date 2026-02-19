@@ -5,8 +5,8 @@ from .basesdk import BaseSDK
 from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
-    documentupdatein as models_documentupdatein,
-    file as models_file,
+    documentupdaterequest as models_documentupdaterequest,
+    file_1 as models_file_1,
 )
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
@@ -31,7 +31,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentOut:
+    ) -> models.ListDocumentsResponse:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -58,7 +58,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListDocumentsRequest(
+        request = models.LibrariesDocumentsListV1Request(
             library_id=library_id,
             search=search,
             page_size=page_size,
@@ -97,7 +97,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListDocuments",
+                operation_id="libraries_documents_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -110,7 +110,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentOut, http_res)
+            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -139,7 +139,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentOut:
+    ) -> models.ListDocumentsResponse:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -166,7 +166,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListDocumentsRequest(
+        request = models.LibrariesDocumentsListV1Request(
             library_id=library_id,
             search=search,
             page_size=page_size,
@@ -205,7 +205,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListDocuments",
+                operation_id="libraries_documents_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -218,7 +218,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentOut, http_res)
+            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -237,12 +237,12 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file.File, models_file.FileTypedDict],
+        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Upload a new document.
 
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
@@ -272,10 +272,10 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UploadDocumentRequest(
+        request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
-            request_body=models.DocumentUpload(
-                file=utils.get_pydantic_model(file, models.File),
+            request_body=models.UploadDocumentRequest(
+                file=utils.get_pydantic_model(file, models.File1),
             ),
         )
 
@@ -293,7 +293,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body, False, False, "multipart", models.DocumentUpload
+                request.request_body,
+                False,
+                False,
+                "multipart",
+                models.UploadDocumentRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -311,7 +315,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadDocument",
+                operation_id="libraries_documents_upload_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -324,7 +328,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, ["200", "201"], "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -343,12 +347,12 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file.File, models_file.FileTypedDict],
+        file: Union[models_file_1.File1, models_file_1.File1TypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Upload a new document.
 
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
@@ -378,10 +382,10 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UploadDocumentRequest(
+        request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
-            request_body=models.DocumentUpload(
-                file=utils.get_pydantic_model(file, models.File),
+            request_body=models.UploadDocumentRequest(
+                file=utils.get_pydantic_model(file, models.File1),
             ),
         )
 
@@ -399,7 +403,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body, False, False, "multipart", models.DocumentUpload
+                request.request_body,
+                False,
+                False,
+                "multipart",
+                models.UploadDocumentRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -417,7 +425,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadDocument",
+                operation_id="libraries_documents_upload_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -430,7 +438,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, ["200", "201"], "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -454,7 +462,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Retrieve the metadata of a specific document.
 
         Given a library and a document in this library, you can retrieve the metadata of that document.
@@ -476,7 +484,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentRequest(
+        request = models.LibrariesDocumentsGetV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -510,7 +518,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocument",
+                operation_id="libraries_documents_get_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -523,7 +531,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -547,7 +555,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Retrieve the metadata of a specific document.
 
         Given a library and a document in this library, you can retrieve the metadata of that document.
@@ -569,7 +577,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentRequest(
+        request = models.LibrariesDocumentsGetV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -603,7 +611,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocument",
+                operation_id="libraries_documents_get_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -616,7 +624,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -639,15 +647,15 @@ class Documents(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
             Union[
-                Dict[str, models_documentupdatein.Attributes],
-                Dict[str, models_documentupdatein.AttributesTypedDict],
+                Dict[str, models_documentupdaterequest.Attributes],
+                Dict[str, models_documentupdaterequest.AttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Update the metadata of a specific document.
 
         Given a library and a document in that library, update the name of that document.
@@ -671,10 +679,10 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateDocumentRequest(
+        request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            document_update_in=models.DocumentUpdateIn(
+            document_update_request=models.DocumentUpdateRequest(
                 name=name,
                 attributes=attributes,
             ),
@@ -694,11 +702,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.document_update_in,
+                request.document_update_request,
                 False,
                 False,
                 "json",
-                models.DocumentUpdateIn,
+                models.DocumentUpdateRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -716,7 +724,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateDocument",
+                operation_id="libraries_documents_update_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -729,7 +737,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -752,15 +760,15 @@ class Documents(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
             Union[
-                Dict[str, models_documentupdatein.Attributes],
-                Dict[str, models_documentupdatein.AttributesTypedDict],
+                Dict[str, models_documentupdaterequest.Attributes],
+                Dict[str, models_documentupdaterequest.AttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DocumentOut:
+    ) -> models.Document:
         r"""Update the metadata of a specific document.
 
         Given a library and a document in that library, update the name of that document.
@@ -784,10 +792,10 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateDocumentRequest(
+        request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            document_update_in=models.DocumentUpdateIn(
+            document_update_request=models.DocumentUpdateRequest(
                 name=name,
                 attributes=attributes,
             ),
@@ -807,11 +815,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.document_update_in,
+                request.document_update_request,
                 False,
                 False,
                 "json",
-                models.DocumentUpdateIn,
+                models.DocumentUpdateRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -829,7 +837,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateDocument",
+                operation_id="libraries_documents_update_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -842,7 +850,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DocumentOut, http_res)
+            return unmarshal_json_response(models.Document, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -888,7 +896,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteDocumentRequest(
+        request = models.LibrariesDocumentsDeleteV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -922,7 +930,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteDocument",
+                operation_id="libraries_documents_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -981,7 +989,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteDocumentRequest(
+        request = models.LibrariesDocumentsDeleteV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1015,7 +1023,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteDocument",
+                operation_id="libraries_documents_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1074,7 +1082,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentTextContentRequest(
+        request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1108,7 +1116,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentTextContent",
+                operation_id="libraries_documents_get_text_content_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1167,7 +1175,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentTextContentRequest(
+        request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1201,7 +1209,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentTextContent",
+                operation_id="libraries_documents_get_text_content_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1260,7 +1268,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentStatusRequest(
+        request = models.LibrariesDocumentsGetStatusV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1294,7 +1302,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentStatus",
+                operation_id="libraries_documents_get_status_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1353,7 +1361,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentStatusRequest(
+        request = models.LibrariesDocumentsGetStatusV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1387,7 +1395,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentStatus",
+                operation_id="libraries_documents_get_status_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1446,7 +1454,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentSignedURLRequest(
+        request = models.LibrariesDocumentsGetSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1480,7 +1488,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentSignedUrl",
+                operation_id="libraries_documents_get_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1539,7 +1547,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentSignedURLRequest(
+        request = models.LibrariesDocumentsGetSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1573,7 +1581,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentSignedUrl",
+                operation_id="libraries_documents_get_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1632,7 +1640,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentExtractedTextSignedURLRequest(
+        request = models.LibrariesDocumentsGetExtractedTextSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1666,7 +1674,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentExtractedTextSignedUrl",
+                operation_id="libraries_documents_get_extracted_text_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1725,7 +1733,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentExtractedTextSignedURLRequest(
+        request = models.LibrariesDocumentsGetExtractedTextSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1759,7 +1767,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentExtractedTextSignedUrl",
+                operation_id="libraries_documents_get_extracted_text_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1818,7 +1826,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReprocessDocumentRequest(
+        request = models.LibrariesDocumentsReprocessV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1852,7 +1860,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ReprocessDocument",
+                operation_id="libraries_documents_reprocess_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1911,7 +1919,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReprocessDocumentRequest(
+        request = models.LibrariesDocumentsReprocessV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1945,7 +1953,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ReprocessDocument",
+                operation_id="libraries_documents_reprocess_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

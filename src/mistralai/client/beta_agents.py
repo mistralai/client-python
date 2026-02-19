@@ -6,9 +6,9 @@ from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     agentcreationrequest as models_agentcreationrequest,
+    agents_api_v1_agents_getop as models_agents_api_v1_agents_getop,
     agentupdaterequest as models_agentupdaterequest,
     completionargs as models_completionargs,
-    getagentop as models_getagentop,
     requestsource as models_requestsource,
 )
 from mistralai.client.types import OptionalNullable, UNSET
@@ -123,7 +123,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateAgent",
+                operation_id="agents_api_v1_agents_create",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -254,7 +254,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateAgent",
+                operation_id="agents_api_v1_agents_create",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -325,7 +325,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentsRequest(
+        request = models.AgentsAPIV1AgentsListRequest(
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
@@ -365,7 +365,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgents",
+                operation_id="agents_api_v1_agents_list",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -436,7 +436,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentsRequest(
+        request = models.AgentsAPIV1AgentsListRequest(
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
@@ -476,7 +476,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgents",
+                operation_id="agents_api_v1_agents_list",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -510,8 +510,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_getagentop.GetAgentAgentVersion,
-                models_getagentop.GetAgentAgentVersionTypedDict,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -540,7 +540,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetAgentRequest(
+        request = models.AgentsAPIV1AgentsGetRequest(
             agent_id=agent_id,
             agent_version=agent_version,
         )
@@ -574,7 +574,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetAgent",
+                operation_id="agents_api_v1_agents_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -608,8 +608,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_getagentop.GetAgentAgentVersion,
-                models_getagentop.GetAgentAgentVersionTypedDict,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -638,7 +638,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetAgentRequest(
+        request = models.AgentsAPIV1AgentsGetRequest(
             agent_id=agent_id,
             agent_version=agent_version,
         )
@@ -672,7 +672,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetAgent",
+                operation_id="agents_api_v1_agents_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -759,7 +759,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateAgentRequest(
+        request = models.AgentsAPIV1AgentsUpdateRequest(
             agent_id=agent_id,
             agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
@@ -815,7 +815,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateAgent",
+                operation_id="agents_api_v1_agents_update",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -902,7 +902,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateAgentRequest(
+        request = models.AgentsAPIV1AgentsUpdateRequest(
             agent_id=agent_id,
             agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
@@ -958,7 +958,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateAgent",
+                operation_id="agents_api_v1_agents_update",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1013,7 +1013,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteAgentRequest(
+        request = models.AgentsAPIV1AgentsDeleteRequest(
             agent_id=agent_id,
         )
 
@@ -1046,7 +1046,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteAgent",
+                operation_id="agents_api_v1_agents_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1101,7 +1101,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteAgentRequest(
+        request = models.AgentsAPIV1AgentsDeleteRequest(
             agent_id=agent_id,
         )
 
@@ -1134,7 +1134,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteAgent",
+                operation_id="agents_api_v1_agents_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1193,7 +1193,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateAgentVersionRequest(
+        request = models.AgentsAPIV1AgentsUpdateVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1227,7 +1227,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateAgentVersion",
+                operation_id="agents_api_v1_agents_update_version",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1286,7 +1286,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateAgentVersionRequest(
+        request = models.AgentsAPIV1AgentsUpdateVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1320,7 +1320,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateAgentVersion",
+                operation_id="agents_api_v1_agents_update_version",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1381,7 +1381,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentVersionsRequest(
+        request = models.AgentsAPIV1AgentsListVersionsRequest(
             agent_id=agent_id,
             page=page,
             page_size=page_size,
@@ -1416,7 +1416,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgentVersions",
+                operation_id="agents_api_v1_agents_list_versions",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1477,7 +1477,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentVersionsRequest(
+        request = models.AgentsAPIV1AgentsListVersionsRequest(
             agent_id=agent_id,
             page=page,
             page_size=page_size,
@@ -1512,7 +1512,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgentVersions",
+                operation_id="agents_api_v1_agents_list_versions",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1571,7 +1571,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetAgentVersionRequest(
+        request = models.AgentsAPIV1AgentsGetVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1605,7 +1605,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetAgentVersion",
+                operation_id="agents_api_v1_agents_get_version",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1664,7 +1664,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetAgentVersionRequest(
+        request = models.AgentsAPIV1AgentsGetVersionRequest(
             agent_id=agent_id,
             version=version,
         )
@@ -1698,7 +1698,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetAgentVersion",
+                operation_id="agents_api_v1_agents_get_version",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1759,7 +1759,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateOrUpdateAgentAliasRequest(
+        request = models.AgentsAPIV1AgentsCreateOrUpdateAliasRequest(
             agent_id=agent_id,
             alias=alias,
             version=version,
@@ -1794,7 +1794,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateOrUpdateAgentAlias",
+                operation_id="agents_api_v1_agents_create_or_update_alias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1855,7 +1855,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateOrUpdateAgentAliasRequest(
+        request = models.AgentsAPIV1AgentsCreateOrUpdateAliasRequest(
             agent_id=agent_id,
             alias=alias,
             version=version,
@@ -1890,7 +1890,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateOrUpdateAgentAlias",
+                operation_id="agents_api_v1_agents_create_or_update_alias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1947,7 +1947,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentAliasesRequest(
+        request = models.AgentsAPIV1AgentsListVersionAliasesRequest(
             agent_id=agent_id,
         )
 
@@ -1980,7 +1980,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgentAliases",
+                operation_id="agents_api_v1_agents_list_version_aliases",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2037,7 +2037,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListAgentAliasesRequest(
+        request = models.AgentsAPIV1AgentsListVersionAliasesRequest(
             agent_id=agent_id,
         )
 
@@ -2070,7 +2070,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListAgentAliases",
+                operation_id="agents_api_v1_agents_list_version_aliases",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2129,7 +2129,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteAgentAliasRequest(
+        request = models.AgentsAPIV1AgentsDeleteAliasRequest(
             agent_id=agent_id,
             alias=alias,
         )
@@ -2163,7 +2163,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteAgentAlias",
+                operation_id="agents_api_v1_agents_delete_alias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2222,7 +2222,7 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteAgentAliasRequest(
+        request = models.AgentsAPIV1AgentsDeleteAliasRequest(
             agent_id=agent_id,
             alias=alias,
         )
@@ -2256,7 +2256,7 @@ class BetaAgents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteAgentAlias",
+                operation_id="agents_api_v1_agents_delete_alias",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
