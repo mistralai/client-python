@@ -23,7 +23,7 @@ Given a library, lists the document that have been uploaded to that library.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListDocuments" method="get" path="/v1/libraries/{library_id}/documents" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_list_v1" method="get" path="/v1/libraries/{library_id}/documents" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -33,7 +33,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.list(library_id="05e1bda5-99b1-4baf-bb03-905d8e094f74", page_size=100, page=0, sort_by="created_at", sort_order="desc")
+    res = mistral.beta.libraries.documents.list(library_id="5c3ca4cd-62bc-4c71-ad8a-1531ae80d078", page_size=100, page=0, sort_by="created_at", sort_order="desc")
 
     # Handle response
     print(res)
@@ -55,7 +55,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDocumentOut](../../models/listdocumentout.md)**
+**[models.ListDocumentsResponse](../../models/listdocumentsresponse.md)**
 
 ### Errors
 
@@ -70,7 +70,7 @@ Given a library, upload a new document to that library. It is queued for process
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UploadDocument" method="post" path="/v1/libraries/{library_id}/documents" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_upload_v1" method="post" path="/v1/libraries/{library_id}/documents" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -80,7 +80,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.upload(library_id="f973c54e-979a-4464-9d36-8cc31beb21fe", file={
+    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
@@ -100,7 +100,7 @@ with Mistral(
 
 ### Response
 
-**[models.DocumentOut](../../models/documentout.md)**
+**[models.Document](../../models/document.md)**
 
 ### Errors
 
@@ -115,7 +115,7 @@ Given a library and a document in this library, you can retrieve the metadata of
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetDocument" method="get" path="/v1/libraries/{library_id}/documents/{document_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -125,7 +125,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.get(library_id="f9902d0a-1ea4-4953-be48-52df6edd302a", document_id="c3e12fd9-e840-46f2-8d4a-79985ed36d24")
+    res = mistral.beta.libraries.documents.get(library_id="03d908c8-90a1-44fd-bf3a-8490fb7c9a03", document_id="90973aec-0508-4375-8b00-91d732414745")
 
     # Handle response
     print(res)
@@ -142,7 +142,7 @@ with Mistral(
 
 ### Response
 
-**[models.DocumentOut](../../models/documentout.md)**
+**[models.Document](../../models/document.md)**
 
 ### Errors
 
@@ -157,7 +157,7 @@ Given a library and a document in that library, update the name of that document
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UpdateDocument" method="put" path="/v1/libraries/{library_id}/documents/{document_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_update_v1" method="put" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -167,7 +167,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.update(library_id="3b900c67-d2b6-4637-93f2-3eff2c85f8dd", document_id="66f935fd-37ec-441f-bca5-b1129befcbca")
+    res = mistral.beta.libraries.documents.update(library_id="3ddd8d93-dca5-4a6d-980d-173226c35742", document_id="2a25e44c-b160-40ca-b5c2-b65fb2fcae34")
 
     # Handle response
     print(res)
@@ -186,7 +186,7 @@ with Mistral(
 
 ### Response
 
-**[models.DocumentOut](../../models/documentout.md)**
+**[models.Document](../../models/document.md)**
 
 ### Errors
 
@@ -201,7 +201,7 @@ Given a library and a document in that library, delete that document. The docume
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteDocument" method="delete" path="/v1/libraries/{library_id}/documents/{document_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_delete_v1" method="delete" path="/v1/libraries/{library_id}/documents/{document_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -211,7 +211,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    mistral.beta.libraries.documents.delete(library_id="c728d742-7845-462b-84ad-2aacbaf1c7cf", document_id="ed3f5797-846a-4abe-8e30-39b2fd2323e0")
+    mistral.beta.libraries.documents.delete(library_id="005daae9-d42e-407d-82d7-2261c6a1496c", document_id="edc236b0-baff-49a9-884b-4ca36a258da4")
 
     # Use the SDK ...
 
@@ -238,7 +238,7 @@ Given a library and a document in that library, you can retrieve the text conten
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetDocumentTextContent" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/text_content" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_text_content_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/text_content" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -248,7 +248,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.text_content(library_id="12689dc1-50df-4a0d-8202-2757f7a8c141", document_id="9d4057e9-d112-437c-911e-6ee031389739")
+    res = mistral.beta.libraries.documents.text_content(library_id="1d177215-3b6b-45ba-9fa9-baf773223bec", document_id="60214c91-2aba-4692-a4e6-a53365de8caf")
 
     # Handle response
     print(res)
@@ -280,7 +280,7 @@ Given a library and a document in that library, retrieve the processing status o
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetDocumentStatus" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/status" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_status_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/status" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -290,7 +290,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.status(library_id="41bb33c4-7e53-453d-bf21-398bb2862772", document_id="416b95cf-19c8-45af-84be-26aaa3ab3666")
+    res = mistral.beta.libraries.documents.status(library_id="e6906f70-368f-4155-80da-c1718f01bc43", document_id="2c904915-d831-4e9d-a345-8ce405bcef66")
 
     # Handle response
     print(res)
@@ -322,7 +322,7 @@ Given a library and a document in that library, retrieve the signed URL of a spe
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetDocumentSignedUrl" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/signed-url" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_signed_url_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/signed-url" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -332,7 +332,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.get_signed_url(library_id="2dbbe172-1374-41be-b03d-a088c733612e", document_id="b5d88764-47f1-4485-9df1-658775428344")
+    res = mistral.beta.libraries.documents.get_signed_url(library_id="23cf6904-a602-4ee8-9f5b-8efc557c336d", document_id="48598486-df71-4994-acbb-1133c72efa8c")
 
     # Handle response
     print(res)
@@ -364,7 +364,7 @@ Given a library and a document in that library, retrieve the signed URL of text 
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetDocumentExtractedTextSignedUrl" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/extracted-text-signed-url" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_get_extracted_text_signed_url_v1" method="get" path="/v1/libraries/{library_id}/documents/{document_id}/extracted-text-signed-url" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -374,7 +374,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.extracted_text_signed_url(library_id="46d040ce-ae2e-4891-a54c-cdab6a8f62d8", document_id="3eddbfe2-3fd7-47f5-984b-b378e6950e37")
+    res = mistral.beta.libraries.documents.extracted_text_signed_url(library_id="a6f15de3-1e82-4f95-af82-851499042ef8", document_id="9749d4f9-24e5-4ca2-99a3-a406863f805d")
 
     # Handle response
     print(res)
@@ -406,7 +406,7 @@ Given a library and a document in that library, reprocess that document, it will
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ReprocessDocument" method="post" path="/v1/libraries/{library_id}/documents/{document_id}/reprocess" -->
+<!-- UsageSnippet language="python" operationID="libraries_documents_reprocess_v1" method="post" path="/v1/libraries/{library_id}/documents/{document_id}/reprocess" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -416,7 +416,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    mistral.beta.libraries.documents.reprocess(library_id="76d357e4-d891-40c6-9d1e-6d6ce5056ee0", document_id="09798d2b-8f46-46c6-9765-8054a82a4bb2")
+    mistral.beta.libraries.documents.reprocess(library_id="51b29371-de8f-4ba4-932b-a0bafb3a7f64", document_id="3052422c-49ca-45ac-a918-cadb35d61fd8")
 
     # Use the SDK ...
 
