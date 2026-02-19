@@ -12,7 +12,7 @@ help:
 # For production, use GitHub Actions: .github/workflows/sdk_generation_mistralai_sdk.yaml
 # This uses the Speakeasy CLI version defined in .speakeasy/workflow.yaml
 test-generate:
-	speakeasy run --skip-versioning
+	speakeasy run --skip-versioning --target all
 
 # Update the Speakeasy CLI version (the code generator tool).
 # This modifies speakeasyVersion in .speakeasy/workflow.yaml and regenerates the SDK.
