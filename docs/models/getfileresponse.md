@@ -1,4 +1,4 @@
-# RetrieveFileOut
+# GetFileResponse
 
 
 ## Fields

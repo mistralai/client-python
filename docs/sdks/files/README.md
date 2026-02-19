@@ -53,7 +53,7 @@ with Mistral(
 
 ### Response
 
-**[models.UploadFileOut](../../models/uploadfileout.md)**
+**[models.UploadFileResponse](../../models/uploadfileresponse.md)**
 
 ### Errors
 
@@ -140,7 +140,7 @@ with Mistral(
 
 ### Response
 
-**[models.RetrieveFileOut](../../models/retrievefileout.md)**
+**[models.GetFileResponse](../../models/getfileresponse.md)**
 
 ### Errors
 

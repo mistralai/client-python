@@ -493,6 +493,7 @@ if TYPE_CHECKING:
         FunctionResultEntryTypedDict,
     )
     from .functiontool import FunctionTool, FunctionToolTypedDict
+    from .getfileresponse import GetFileResponse, GetFileResponseTypedDict
     from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
     from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
@@ -840,7 +841,6 @@ if TYPE_CHECKING:
         RetrieveModelV1ModelsModelIDGetRequest,
         RetrieveModelV1ModelsModelIDGetRequestTypedDict,
     )
-    from .retrievefileout import RetrieveFileOut, RetrieveFileOutTypedDict
     from .sampletype import SampleType
     from .sdkerror import SDKError
     from .security import Security, SecurityTypedDict
@@ -958,7 +958,7 @@ if TYPE_CHECKING:
         UpdateOrCreateLibraryAccessRequest,
         UpdateOrCreateLibraryAccessRequestTypedDict,
     )
-    from .uploadfileout import UploadFileOut, UploadFileOutTypedDict
+    from .uploadfileresponse import UploadFileResponse, UploadFileResponseTypedDict
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usermessage import (
         UserMessage,
@@ -1369,6 +1369,8 @@ __all__ = [
     "FunctionTypedDict",
     "GetConversationResponse",
     "GetConversationResponseTypedDict",
+    "GetFileResponse",
+    "GetFileResponseTypedDict",
     "GetFineTuningJobResponse",
     "GetFineTuningJobResponseTypedDict",
     "GetModelResponse",
@@ -1611,8 +1613,6 @@ __all__ = [
     "ResponseStartedEvent",
     "ResponseStartedEventTypedDict",
     "ResponseValidationError",
-    "RetrieveFileOut",
-    "RetrieveFileOutTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
     "SDKError",
@@ -1714,10 +1714,10 @@ __all__ = [
     "UpdateOrCreateLibraryAccessRequestTypedDict",
     "UploadDocumentRequest",
     "UploadDocumentRequestTypedDict",
-    "UploadFileOut",
-    "UploadFileOutTypedDict",
     "UploadFileRequest",
     "UploadFileRequestTypedDict",
+    "UploadFileResponse",
+    "UploadFileResponseTypedDict",
     "UsageInfo",
     "UsageInfoTypedDict",
     "UserMessage",
@@ -2100,6 +2100,8 @@ _dynamic_imports: dict[str, str] = {
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
+    "GetFileResponse": ".getfileresponse",
+    "GetFileResponseTypedDict": ".getfileresponse",
     "GithubRepositoryIn": ".githubrepositoryin",
     "GithubRepositoryInTypedDict": ".githubrepositoryin",
     "GithubRepositoryOut": ".githubrepositoryout",
@@ -2375,8 +2377,6 @@ _dynamic_imports: dict[str, str] = {
     "GetModelResponseTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
-    "RetrieveFileOut": ".retrievefileout",
-    "RetrieveFileOutTypedDict": ".retrievefileout",
     "SampleType": ".sampletype",
     "SDKError": ".sdkerror",
     "Security": ".security",
@@ -2469,8 +2469,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateFTModelInTypedDict": ".updateftmodelin",
     "UpdateOrCreateLibraryAccessRequest": ".updateorcreatelibraryaccessrequest",
     "UpdateOrCreateLibraryAccessRequestTypedDict": ".updateorcreatelibraryaccessrequest",
-    "UploadFileOut": ".uploadfileout",
-    "UploadFileOutTypedDict": ".uploadfileout",
+    "UploadFileResponse": ".uploadfileresponse",
+    "UploadFileResponseTypedDict": ".uploadfileresponse",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
     "UserMessage": ".usermessage",
