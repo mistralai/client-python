@@ -26,7 +26,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 1.12.3
+  version: 1.12.4
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -39,7 +39,7 @@ python:
     - Mistral
   baseErrorName: MistralError
   clientServerStatusCodesAsErrors: true
-  constFieldCasing: upper
+  constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
   enableCustomCodeRegions: true

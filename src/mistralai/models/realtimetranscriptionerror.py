@@ -21,7 +21,7 @@ class RealtimeTranscriptionErrorTypedDict(TypedDict):
 class RealtimeTranscriptionError(BaseModel):
     error: RealtimeTranscriptionErrorDetail
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Optional[Literal["error"]], AfterValidator(validate_const("error"))],
         pydantic.Field(alias="type"),
     ] = "error"

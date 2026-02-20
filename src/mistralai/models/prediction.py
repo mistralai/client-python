@@ -19,7 +19,7 @@ class PredictionTypedDict(TypedDict):
 class Prediction(BaseModel):
     r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["content"]], AfterValidator(validate_const("content"))
         ],

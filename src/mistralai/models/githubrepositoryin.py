@@ -26,7 +26,7 @@ class GithubRepositoryIn(BaseModel):
 
     token: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["github"]], AfterValidator(validate_const("github"))
         ],

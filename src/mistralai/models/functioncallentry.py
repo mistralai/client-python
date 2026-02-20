@@ -7,23 +7,20 @@ from .functioncallentryarguments import (
 )
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-FunctionCallEntryObject = Literal["entry",]
-
-
-FunctionCallEntryType = Literal["function.call",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class FunctionCallEntryTypedDict(TypedDict):
     tool_call_id: str
     name: str
     arguments: FunctionCallEntryArgumentsTypedDict
-    object: NotRequired[FunctionCallEntryObject]
-    type: NotRequired[FunctionCallEntryType]
+    object: Literal["entry"]
+    type: Literal["function.call"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -36,9 +33,18 @@ class FunctionCallEntry(BaseModel):
 
     arguments: FunctionCallEntryArguments
 
-    object: Optional[FunctionCallEntryObject] = "entry"
+    object: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[FunctionCallEntryType] = "function.call"
+    type: Annotated[
+        Annotated[
+            Optional[Literal["function.call"]],
+            AfterValidator(validate_const("function.call")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "function.call"
 
     created_at: Optional[datetime] = None
 
