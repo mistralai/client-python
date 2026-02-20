@@ -42,7 +42,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListLibraryAccessesResponse](../../models/listlibraryaccessesresponse.md)**
+**[models.ListSharingOut](../../models/listsharingout.md)**
 
 ### Errors
 

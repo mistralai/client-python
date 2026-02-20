@@ -8,13 +8,12 @@ import builtins
 import sys
 
 if TYPE_CHECKING:
-    from .agent import Agent, AgentObject, AgentTool, AgentToolTypedDict, AgentTypedDict
+    from .agent import Agent, AgentTool, AgentToolTypedDict, AgentTypedDict
     from .agentaliasresponse import AgentAliasResponse, AgentAliasResponseTypedDict
     from .agentconversation import (
         AgentConversation,
         AgentConversationAgentVersion,
         AgentConversationAgentVersionTypedDict,
-        AgentConversationObject,
         AgentConversationTypedDict,
     )
     from .agentcreationrequest import (
@@ -27,12 +26,7 @@ if TYPE_CHECKING:
         AgentHandoffDoneEvent,
         AgentHandoffDoneEventTypedDict,
     )
-    from .agenthandoffentry import (
-        AgentHandoffEntry,
-        AgentHandoffEntryObject,
-        AgentHandoffEntryType,
-        AgentHandoffEntryTypedDict,
-    )
+    from .agenthandoffentry import AgentHandoffEntry, AgentHandoffEntryTypedDict
     from .agenthandoffstartedevent import (
         AgentHandoffStartedEvent,
         AgentHandoffStartedEventTypedDict,
@@ -94,10 +88,8 @@ if TYPE_CHECKING:
     from .agents_api_v1_conversations_getop import (
         AgentConversationGetConversationResponse,
         AgentConversationGetConversationResponseTypedDict,
-        AgentsAPIV1ConversationsGetAgentConversationObject,
         AgentsAPIV1ConversationsGetAgentVersion,
         AgentsAPIV1ConversationsGetAgentVersionTypedDict,
-        AgentsAPIV1ConversationsGetModelConversationObject,
         AgentsAPIV1ConversationsGetRequest,
         AgentsAPIV1ConversationsGetRequestTypedDict,
         AgentsAPIV1ConversationsGetTool,
@@ -161,7 +153,6 @@ if TYPE_CHECKING:
         AssistantMessage,
         AssistantMessageContent,
         AssistantMessageContentTypedDict,
-        AssistantMessageRole,
         AssistantMessageTypedDict,
     )
     from .audiochunk import AudioChunk, AudioChunkTypedDict
@@ -178,6 +169,8 @@ if TYPE_CHECKING:
     from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .batcherror import BatchError, BatchErrorTypedDict
     from .batchjob import BatchJob, BatchJobTypedDict
+    from .batchjobin import BatchJobIn, BatchJobInTypedDict
+    from .batchjobsout import BatchJobsOut, BatchJobsOutTypedDict
     from .batchjobstatus import BatchJobStatus
     from .batchrequest import BatchRequest, BatchRequestTypedDict
     from .builtinconnectors import BuiltInConnectors
@@ -302,7 +295,6 @@ if TYPE_CHECKING:
     )
     from .conversationhistory import (
         ConversationHistory,
-        ConversationHistoryObject,
         ConversationHistoryTypedDict,
         Entry,
         EntryTypedDict,
@@ -310,7 +302,6 @@ if TYPE_CHECKING:
     from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
     from .conversationmessages import (
         ConversationMessages,
-        ConversationMessagesObject,
         ConversationMessagesTypedDict,
     )
     from .conversationrequest import (
@@ -324,7 +315,6 @@ if TYPE_CHECKING:
     )
     from .conversationresponse import (
         ConversationResponse,
-        ConversationResponseObject,
         ConversationResponseTypedDict,
         Output,
         OutputTypedDict,
@@ -356,29 +346,11 @@ if TYPE_CHECKING:
         ConversationUsageInfo,
         ConversationUsageInfoTypedDict,
     )
-    from .createbatchjobrequest import (
-        CreateBatchJobRequest,
-        CreateBatchJobRequestTypedDict,
-    )
-    from .createfinetuningjobrequest import (
-        CreateFineTuningJobRequest,
-        CreateFineTuningJobRequestIntegration,
-        CreateFineTuningJobRequestIntegrationTypedDict,
-        CreateFineTuningJobRequestRepository,
-        CreateFineTuningJobRequestRepositoryTypedDict,
-        CreateFineTuningJobRequestTypedDict,
-        Hyperparameters,
-        HyperparametersTypedDict,
-    )
-    from .createlibraryrequest import (
-        CreateLibraryRequest,
-        CreateLibraryRequestTypedDict,
-    )
     from .delete_model_v1_models_model_id_deleteop import (
         DeleteModelV1ModelsModelIDDeleteRequest,
         DeleteModelV1ModelsModelIDDeleteRequestTypedDict,
     )
-    from .deletefileresponse import DeleteFileResponse, DeleteFileResponseTypedDict
+    from .deletefileout import DeleteFileOut, DeleteFileOutTypedDict
     from .deletemodelout import DeleteModelOut, DeleteModelOutTypedDict
     from .deltamessage import (
         DeltaMessage,
@@ -389,17 +361,13 @@ if TYPE_CHECKING:
     from .document import Document, DocumentTypedDict
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
-    from .documentupdaterequest import (
+    from .documentupdatein import (
         Attributes,
         AttributesTypedDict,
-        DocumentUpdateRequest,
-        DocumentUpdateRequestTypedDict,
+        DocumentUpdateIn,
+        DocumentUpdateInTypedDict,
     )
-    from .documenturlchunk import (
-        DocumentURLChunk,
-        DocumentURLChunkType,
-        DocumentURLChunkTypedDict,
-    )
+    from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
     from .embeddingdtype import EmbeddingDtype
     from .embeddingrequest import (
         EmbeddingRequest,
@@ -417,7 +385,8 @@ if TYPE_CHECKING:
     from .eventout import EventOut, EventOutTypedDict
     from .file import File, FileTypedDict
     from .filechunk import FileChunk, FileChunkTypedDict
-    from .fileobject import FileObject, FileObjectTypedDict
+    from .fileobject_1 import FileObject1, FileObject1TypedDict
+    from .fileobject_2 import FileObject2, FileObject2TypedDict
     from .filepurpose import FilePurpose
     from .files_api_routes_delete_fileop import (
         FilesAPIRoutesDeleteFileRequest,
@@ -474,26 +443,15 @@ if TYPE_CHECKING:
         FunctionCall,
         FunctionCallTypedDict,
     )
-    from .functioncallentry import (
-        FunctionCallEntry,
-        FunctionCallEntryObject,
-        FunctionCallEntryType,
-        FunctionCallEntryTypedDict,
-    )
+    from .functioncallentry import FunctionCallEntry, FunctionCallEntryTypedDict
     from .functioncallentryarguments import (
         FunctionCallEntryArguments,
         FunctionCallEntryArgumentsTypedDict,
     )
     from .functioncallevent import FunctionCallEvent, FunctionCallEventTypedDict
     from .functionname import FunctionName, FunctionNameTypedDict
-    from .functionresultentry import (
-        FunctionResultEntry,
-        FunctionResultEntryObject,
-        FunctionResultEntryType,
-        FunctionResultEntryTypedDict,
-    )
+    from .functionresultentry import FunctionResultEntry, FunctionResultEntryTypedDict
     from .functiontool import FunctionTool, FunctionToolTypedDict
-    from .getfileresponse import GetFileResponse, GetFileResponseTypedDict
     from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
     from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
@@ -501,7 +459,6 @@ if TYPE_CHECKING:
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
         ImageURLChunk,
-        ImageURLChunkType,
         ImageURLChunkTypedDict,
         ImageURLUnion,
         ImageURLUnionTypedDict,
@@ -520,6 +477,16 @@ if TYPE_CHECKING:
         InstructRequestMessage,
         InstructRequestMessageTypedDict,
         InstructRequestTypedDict,
+    )
+    from .jobin import (
+        Hyperparameters,
+        HyperparametersTypedDict,
+        JobIn,
+        JobInIntegration,
+        JobInIntegrationTypedDict,
+        JobInRepository,
+        JobInRepositoryTypedDict,
+        JobInTypedDict,
     )
     from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
     from .jobs_api_routes_batch_cancel_batch_jobop import (
@@ -632,6 +599,7 @@ if TYPE_CHECKING:
         UpdateModelResponse,
         UpdateModelResponseTypedDict,
     )
+    from .jobsout import JobsOut, JobsOutData, JobsOutDataTypedDict, JobsOutTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .libraries_delete_v1op import (
         LibrariesDeleteV1Request,
@@ -700,30 +668,12 @@ if TYPE_CHECKING:
         LibrariesUpdateV1RequestTypedDict,
     )
     from .library import Library, LibraryTypedDict
+    from .libraryin import LibraryIn, LibraryInTypedDict
     from .libraryinupdate import LibraryInUpdate, LibraryInUpdateTypedDict
-    from .listbatchjobsresponse import (
-        ListBatchJobsResponse,
-        ListBatchJobsResponseTypedDict,
-    )
-    from .listdocumentsresponse import (
-        ListDocumentsResponse,
-        ListDocumentsResponseTypedDict,
-    )
-    from .listfilesresponse import ListFilesResponse, ListFilesResponseTypedDict
-    from .listfinetuningjobsresponse import (
-        ListFineTuningJobsResponse,
-        ListFineTuningJobsResponseData,
-        ListFineTuningJobsResponseDataTypedDict,
-        ListFineTuningJobsResponseTypedDict,
-    )
-    from .listlibrariesresponse import (
-        ListLibrariesResponse,
-        ListLibrariesResponseTypedDict,
-    )
-    from .listlibraryaccessesresponse import (
-        ListLibraryAccessesResponse,
-        ListLibraryAccessesResponseTypedDict,
-    )
+    from .listdocumentout import ListDocumentOut, ListDocumentOutTypedDict
+    from .listfilesout import ListFilesOut, ListFilesOutTypedDict
+    from .listlibraryout import ListLibraryOut, ListLibraryOutTypedDict
+    from .listsharingout import ListSharingOut, ListSharingOutTypedDict
     from .messageentries import MessageEntries, MessageEntriesTypedDict
     from .messageinputcontentchunks import (
         MessageInputContentChunks,
@@ -733,10 +683,8 @@ if TYPE_CHECKING:
         MessageInputEntry,
         MessageInputEntryContent,
         MessageInputEntryContentTypedDict,
-        MessageInputEntryObject,
-        MessageInputEntryRole,
-        MessageInputEntryType,
         MessageInputEntryTypedDict,
+        Role,
     )
     from .messageoutputcontentchunks import (
         MessageOutputContentChunks,
@@ -746,16 +694,12 @@ if TYPE_CHECKING:
         MessageOutputEntry,
         MessageOutputEntryContent,
         MessageOutputEntryContentTypedDict,
-        MessageOutputEntryObject,
-        MessageOutputEntryRole,
-        MessageOutputEntryType,
         MessageOutputEntryTypedDict,
     )
     from .messageoutputevent import (
         MessageOutputEvent,
         MessageOutputEventContent,
         MessageOutputEventContentTypedDict,
-        MessageOutputEventRole,
         MessageOutputEventTypedDict,
     )
     from .metricout import MetricOut, MetricOutTypedDict
@@ -763,7 +707,6 @@ if TYPE_CHECKING:
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
     from .modelconversation import (
         ModelConversation,
-        ModelConversationObject,
         ModelConversationTool,
         ModelConversationToolTypedDict,
         ModelConversationTypedDict,
@@ -794,6 +737,7 @@ if TYPE_CHECKING:
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatusout import ProcessingStatusOut, ProcessingStatusOutTypedDict
+    from .processstatus import ProcessStatus
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -816,11 +760,7 @@ if TYPE_CHECKING:
         RealtimeTranscriptionSessionUpdated,
         RealtimeTranscriptionSessionUpdatedTypedDict,
     )
-    from .referencechunk import (
-        ReferenceChunk,
-        ReferenceChunkType,
-        ReferenceChunkTypedDict,
-    )
+    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
     from .requestsource import RequestSource
     from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
     from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
@@ -847,6 +787,7 @@ if TYPE_CHECKING:
     from .shareenum import ShareEnum
     from .sharing import Sharing, SharingTypedDict
     from .sharingdelete import SharingDelete, SharingDeleteTypedDict
+    from .sharingin import SharingIn, SharingInTypedDict
     from .source import Source
     from .ssetypes import SSETypes
     from .systemmessage import (
@@ -859,14 +800,8 @@ if TYPE_CHECKING:
         SystemMessageContentChunks,
         SystemMessageContentChunksTypedDict,
     )
-    from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
-    from .thinkchunk import (
-        ThinkChunk,
-        ThinkChunkType,
-        ThinkChunkTypedDict,
-        Thinking,
-        ThinkingTypedDict,
-    )
+    from .textchunk import TextChunk, TextChunkTypedDict
+    from .thinkchunk import ThinkChunk, ThinkChunkTypedDict, Thinking, ThinkingTypedDict
     from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
     from .toolcall import ToolCall, ToolCallTypedDict
@@ -888,8 +823,6 @@ if TYPE_CHECKING:
         ToolExecutionEntry,
         ToolExecutionEntryName,
         ToolExecutionEntryNameTypedDict,
-        ToolExecutionEntryObject,
-        ToolExecutionEntryType,
         ToolExecutionEntryTypedDict,
     )
     from .toolexecutionstartedevent import (
@@ -902,7 +835,6 @@ if TYPE_CHECKING:
         ToolFileChunk,
         ToolFileChunkTool,
         ToolFileChunkToolTypedDict,
-        ToolFileChunkType,
         ToolFileChunkTypedDict,
     )
     from .toolmessage import (
@@ -915,7 +847,6 @@ if TYPE_CHECKING:
         ToolReferenceChunk,
         ToolReferenceChunkTool,
         ToolReferenceChunkToolTypedDict,
-        ToolReferenceChunkType,
         ToolReferenceChunkTypedDict,
     )
     from .tooltypes import ToolTypes
@@ -926,7 +857,6 @@ if TYPE_CHECKING:
     )
     from .transcriptionsegmentchunk import (
         TranscriptionSegmentChunk,
-        TranscriptionSegmentChunkType,
         TranscriptionSegmentChunkTypedDict,
     )
     from .transcriptionstreamdone import (
@@ -954,11 +884,6 @@ if TYPE_CHECKING:
     )
     from .unarchiveftmodelout import UnarchiveFTModelOut, UnarchiveFTModelOutTypedDict
     from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
-    from .updateorcreatelibraryaccessrequest import (
-        UpdateOrCreateLibraryAccessRequest,
-        UpdateOrCreateLibraryAccessRequestTypedDict,
-    )
-    from .uploadfileresponse import UploadFileResponse, UploadFileResponseTypedDict
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usermessage import (
         UserMessage,
@@ -990,7 +915,6 @@ __all__ = [
     "AgentConversationAgentVersionTypedDict",
     "AgentConversationGetConversationResponse",
     "AgentConversationGetConversationResponseTypedDict",
-    "AgentConversationObject",
     "AgentConversationTypedDict",
     "AgentCreationRequest",
     "AgentCreationRequestTool",
@@ -999,12 +923,9 @@ __all__ = [
     "AgentHandoffDoneEvent",
     "AgentHandoffDoneEventTypedDict",
     "AgentHandoffEntry",
-    "AgentHandoffEntryObject",
-    "AgentHandoffEntryType",
     "AgentHandoffEntryTypedDict",
     "AgentHandoffStartedEvent",
     "AgentHandoffStartedEventTypedDict",
-    "AgentObject",
     "AgentTool",
     "AgentToolTypedDict",
     "AgentTypedDict",
@@ -1040,10 +961,8 @@ __all__ = [
     "AgentsAPIV1ConversationsAppendStreamRequestTypedDict",
     "AgentsAPIV1ConversationsDeleteRequest",
     "AgentsAPIV1ConversationsDeleteRequestTypedDict",
-    "AgentsAPIV1ConversationsGetAgentConversationObject",
     "AgentsAPIV1ConversationsGetAgentVersion",
     "AgentsAPIV1ConversationsGetAgentVersionTypedDict",
-    "AgentsAPIV1ConversationsGetModelConversationObject",
     "AgentsAPIV1ConversationsGetRequest",
     "AgentsAPIV1ConversationsGetRequestTypedDict",
     "AgentsAPIV1ConversationsGetTool",
@@ -1083,7 +1002,6 @@ __all__ = [
     "AssistantMessage",
     "AssistantMessageContent",
     "AssistantMessageContentTypedDict",
-    "AssistantMessageRole",
     "AssistantMessageTypedDict",
     "Attributes",
     "AttributesTypedDict",
@@ -1103,8 +1021,12 @@ __all__ = [
     "BatchError",
     "BatchErrorTypedDict",
     "BatchJob",
+    "BatchJobIn",
+    "BatchJobInTypedDict",
     "BatchJobStatus",
     "BatchJobTypedDict",
+    "BatchJobsOut",
+    "BatchJobsOutTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
     "BuiltInConnectors",
@@ -1221,12 +1143,10 @@ __all__ = [
     "ConversationEventsDataTypedDict",
     "ConversationEventsTypedDict",
     "ConversationHistory",
-    "ConversationHistoryObject",
     "ConversationHistoryTypedDict",
     "ConversationInputs",
     "ConversationInputsTypedDict",
     "ConversationMessages",
-    "ConversationMessagesObject",
     "ConversationMessagesTypedDict",
     "ConversationRequest",
     "ConversationRequestAgentVersion",
@@ -1236,7 +1156,6 @@ __all__ = [
     "ConversationRequestToolTypedDict",
     "ConversationRequestTypedDict",
     "ConversationResponse",
-    "ConversationResponseObject",
     "ConversationResponseTypedDict",
     "ConversationRestartRequest",
     "ConversationRestartRequestAgentVersion",
@@ -1257,22 +1176,12 @@ __all__ = [
     "ConversationStreamRequestTypedDict",
     "ConversationUsageInfo",
     "ConversationUsageInfoTypedDict",
-    "CreateBatchJobRequest",
-    "CreateBatchJobRequestTypedDict",
-    "CreateFineTuningJobRequest",
-    "CreateFineTuningJobRequestIntegration",
-    "CreateFineTuningJobRequestIntegrationTypedDict",
-    "CreateFineTuningJobRequestRepository",
-    "CreateFineTuningJobRequestRepositoryTypedDict",
-    "CreateFineTuningJobRequestTypedDict",
     "CreateFineTuningJobResponseUnion1",
     "CreateFineTuningJobResponseUnion1TypedDict",
     "CreateFineTuningJobResponseUnion2",
     "CreateFineTuningJobResponseUnion2TypedDict",
-    "CreateLibraryRequest",
-    "CreateLibraryRequestTypedDict",
-    "DeleteFileResponse",
-    "DeleteFileResponseTypedDict",
+    "DeleteFileOut",
+    "DeleteFileOutTypedDict",
     "DeleteModelOut",
     "DeleteModelOutTypedDict",
     "DeleteModelV1ModelsModelIDDeleteRequest",
@@ -1288,12 +1197,11 @@ __all__ = [
     "DocumentTextContentTypedDict",
     "DocumentTypedDict",
     "DocumentURLChunk",
-    "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
     "DocumentUnion",
     "DocumentUnionTypedDict",
-    "DocumentUpdateRequest",
-    "DocumentUpdateRequestTypedDict",
+    "DocumentUpdateIn",
+    "DocumentUpdateInTypedDict",
     "EmbeddingDtype",
     "EmbeddingRequest",
     "EmbeddingRequestInputs",
@@ -1329,8 +1237,10 @@ __all__ = [
     "File",
     "FileChunk",
     "FileChunkTypedDict",
-    "FileObject",
-    "FileObjectTypedDict",
+    "FileObject1",
+    "FileObject1TypedDict",
+    "FileObject2",
+    "FileObject2TypedDict",
     "FilePurpose",
     "FileSignedURL",
     "FileSignedURLTypedDict",
@@ -1352,8 +1262,6 @@ __all__ = [
     "FunctionCallEntry",
     "FunctionCallEntryArguments",
     "FunctionCallEntryArgumentsTypedDict",
-    "FunctionCallEntryObject",
-    "FunctionCallEntryType",
     "FunctionCallEntryTypedDict",
     "FunctionCallEvent",
     "FunctionCallEventTypedDict",
@@ -1361,16 +1269,12 @@ __all__ = [
     "FunctionName",
     "FunctionNameTypedDict",
     "FunctionResultEntry",
-    "FunctionResultEntryObject",
-    "FunctionResultEntryType",
     "FunctionResultEntryTypedDict",
     "FunctionTool",
     "FunctionToolTypedDict",
     "FunctionTypedDict",
     "GetConversationResponse",
     "GetConversationResponseTypedDict",
-    "GetFileResponse",
-    "GetFileResponseTypedDict",
     "GetFineTuningJobResponse",
     "GetFineTuningJobResponseTypedDict",
     "GetModelResponse",
@@ -1387,7 +1291,6 @@ __all__ = [
     "ImageGenerationToolTypedDict",
     "ImageURL",
     "ImageURLChunk",
-    "ImageURLChunkType",
     "ImageURLChunkTypedDict",
     "ImageURLTypedDict",
     "ImageURLUnion",
@@ -1406,6 +1309,12 @@ __all__ = [
     "InstructRequestTypedDict",
     "JSONSchema",
     "JSONSchemaTypedDict",
+    "JobIn",
+    "JobInIntegration",
+    "JobInIntegrationTypedDict",
+    "JobInRepository",
+    "JobInRepositoryTypedDict",
+    "JobInTypedDict",
     "JobMetadataOut",
     "JobMetadataOutTypedDict",
     "JobsAPIRoutesBatchCancelBatchJobRequest",
@@ -1461,6 +1370,10 @@ __all__ = [
     "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequest",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict",
+    "JobsOut",
+    "JobsOutData",
+    "JobsOutDataTypedDict",
+    "JobsOutTypedDict",
     "LegacyJobMetadataOutCreateFineTuningJobResponse",
     "LegacyJobMetadataOutCreateFineTuningJobResponseTypedDict",
     "LibrariesDeleteV1Request",
@@ -1496,23 +1409,19 @@ __all__ = [
     "LibrariesUpdateV1Request",
     "LibrariesUpdateV1RequestTypedDict",
     "Library",
+    "LibraryIn",
+    "LibraryInTypedDict",
     "LibraryInUpdate",
     "LibraryInUpdateTypedDict",
     "LibraryTypedDict",
-    "ListBatchJobsResponse",
-    "ListBatchJobsResponseTypedDict",
-    "ListDocumentsResponse",
-    "ListDocumentsResponseTypedDict",
-    "ListFilesResponse",
-    "ListFilesResponseTypedDict",
-    "ListFineTuningJobsResponse",
-    "ListFineTuningJobsResponseData",
-    "ListFineTuningJobsResponseDataTypedDict",
-    "ListFineTuningJobsResponseTypedDict",
-    "ListLibrariesResponse",
-    "ListLibrariesResponseTypedDict",
-    "ListLibraryAccessesResponse",
-    "ListLibraryAccessesResponseTypedDict",
+    "ListDocumentOut",
+    "ListDocumentOutTypedDict",
+    "ListFilesOut",
+    "ListFilesOutTypedDict",
+    "ListLibraryOut",
+    "ListLibraryOutTypedDict",
+    "ListSharingOut",
+    "ListSharingOutTypedDict",
     "Loc",
     "LocTypedDict",
     "MessageEntries",
@@ -1522,23 +1431,16 @@ __all__ = [
     "MessageInputEntry",
     "MessageInputEntryContent",
     "MessageInputEntryContentTypedDict",
-    "MessageInputEntryObject",
-    "MessageInputEntryRole",
-    "MessageInputEntryType",
     "MessageInputEntryTypedDict",
     "MessageOutputContentChunks",
     "MessageOutputContentChunksTypedDict",
     "MessageOutputEntry",
     "MessageOutputEntryContent",
     "MessageOutputEntryContentTypedDict",
-    "MessageOutputEntryObject",
-    "MessageOutputEntryRole",
-    "MessageOutputEntryType",
     "MessageOutputEntryTypedDict",
     "MessageOutputEvent",
     "MessageOutputEventContent",
     "MessageOutputEventContentTypedDict",
-    "MessageOutputEventRole",
     "MessageOutputEventTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
@@ -1549,7 +1451,6 @@ __all__ = [
     "ModelConversation",
     "ModelConversationGetConversationResponse",
     "ModelConversationGetConversationResponseTypedDict",
-    "ModelConversationObject",
     "ModelConversationTool",
     "ModelConversationToolTypedDict",
     "ModelConversationTypedDict",
@@ -1585,6 +1486,7 @@ __all__ = [
     "PaginationInfoTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ProcessStatus",
     "ProcessingStatusOut",
     "ProcessingStatusOutTypedDict",
     "RealtimeTranscriptionError",
@@ -1600,7 +1502,6 @@ __all__ = [
     "RealtimeTranscriptionSessionUpdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict",
     "ReferenceChunk",
-    "ReferenceChunkType",
     "ReferenceChunkTypedDict",
     "RequestSource",
     "ResponseDoneEvent",
@@ -1615,6 +1516,7 @@ __all__ = [
     "ResponseValidationError",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
+    "Role",
     "SDKError",
     "SSETypes",
     "SampleType",
@@ -1624,6 +1526,8 @@ __all__ = [
     "Sharing",
     "SharingDelete",
     "SharingDeleteTypedDict",
+    "SharingIn",
+    "SharingInTypedDict",
     "SharingTypedDict",
     "Source",
     "StartFineTuningJobResponse",
@@ -1636,10 +1540,8 @@ __all__ = [
     "SystemMessageTypedDict",
     "TableFormat",
     "TextChunk",
-    "TextChunkType",
     "TextChunkTypedDict",
     "ThinkChunk",
-    "ThinkChunkType",
     "ThinkChunkTypedDict",
     "Thinking",
     "ThinkingTypedDict",
@@ -1661,8 +1563,6 @@ __all__ = [
     "ToolExecutionEntry",
     "ToolExecutionEntryName",
     "ToolExecutionEntryNameTypedDict",
-    "ToolExecutionEntryObject",
-    "ToolExecutionEntryType",
     "ToolExecutionEntryTypedDict",
     "ToolExecutionStartedEvent",
     "ToolExecutionStartedEventName",
@@ -1671,7 +1571,6 @@ __all__ = [
     "ToolFileChunk",
     "ToolFileChunkTool",
     "ToolFileChunkToolTypedDict",
-    "ToolFileChunkType",
     "ToolFileChunkTypedDict",
     "ToolMessage",
     "ToolMessageContent",
@@ -1680,7 +1579,6 @@ __all__ = [
     "ToolReferenceChunk",
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
-    "ToolReferenceChunkType",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
     "ToolTypes",
@@ -1689,7 +1587,6 @@ __all__ = [
     "TranscriptionResponse",
     "TranscriptionResponseTypedDict",
     "TranscriptionSegmentChunk",
-    "TranscriptionSegmentChunkType",
     "TranscriptionSegmentChunkTypedDict",
     "TranscriptionStreamDone",
     "TranscriptionStreamDoneTypedDict",
@@ -1710,14 +1607,10 @@ __all__ = [
     "UpdateFTModelInTypedDict",
     "UpdateModelResponse",
     "UpdateModelResponseTypedDict",
-    "UpdateOrCreateLibraryAccessRequest",
-    "UpdateOrCreateLibraryAccessRequestTypedDict",
     "UploadDocumentRequest",
     "UploadDocumentRequestTypedDict",
     "UploadFileRequest",
     "UploadFileRequestTypedDict",
-    "UploadFileResponse",
-    "UploadFileResponseTypedDict",
     "UsageInfo",
     "UsageInfoTypedDict",
     "UserMessage",
@@ -1738,7 +1631,6 @@ __all__ = [
 
 _dynamic_imports: dict[str, str] = {
     "Agent": ".agent",
-    "AgentObject": ".agent",
     "AgentTool": ".agent",
     "AgentToolTypedDict": ".agent",
     "AgentTypedDict": ".agent",
@@ -1747,7 +1639,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentConversation": ".agentconversation",
     "AgentConversationAgentVersion": ".agentconversation",
     "AgentConversationAgentVersionTypedDict": ".agentconversation",
-    "AgentConversationObject": ".agentconversation",
     "AgentConversationTypedDict": ".agentconversation",
     "AgentCreationRequest": ".agentcreationrequest",
     "AgentCreationRequestTool": ".agentcreationrequest",
@@ -1756,8 +1647,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffDoneEvent": ".agenthandoffdoneevent",
     "AgentHandoffDoneEventTypedDict": ".agenthandoffdoneevent",
     "AgentHandoffEntry": ".agenthandoffentry",
-    "AgentHandoffEntryObject": ".agenthandoffentry",
-    "AgentHandoffEntryType": ".agenthandoffentry",
     "AgentHandoffEntryTypedDict": ".agenthandoffentry",
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
@@ -1791,10 +1680,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentsAPIV1ConversationsDeleteRequestTypedDict": ".agents_api_v1_conversations_deleteop",
     "AgentConversationGetConversationResponse": ".agents_api_v1_conversations_getop",
     "AgentConversationGetConversationResponseTypedDict": ".agents_api_v1_conversations_getop",
-    "AgentsAPIV1ConversationsGetAgentConversationObject": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetAgentVersion": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetAgentVersionTypedDict": ".agents_api_v1_conversations_getop",
-    "AgentsAPIV1ConversationsGetModelConversationObject": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetRequest": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetRequestTypedDict": ".agents_api_v1_conversations_getop",
     "AgentsAPIV1ConversationsGetTool": ".agents_api_v1_conversations_getop",
@@ -1841,7 +1728,6 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessage": ".assistantmessage",
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
-    "AssistantMessageRole": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
     "AudioChunk": ".audiochunk",
     "AudioChunkTypedDict": ".audiochunk",
@@ -1858,6 +1744,10 @@ _dynamic_imports: dict[str, str] = {
     "BatchErrorTypedDict": ".batcherror",
     "BatchJob": ".batchjob",
     "BatchJobTypedDict": ".batchjob",
+    "BatchJobIn": ".batchjobin",
+    "BatchJobInTypedDict": ".batchjobin",
+    "BatchJobsOut": ".batchjobsout",
+    "BatchJobsOutTypedDict": ".batchjobsout",
     "BatchJobStatus": ".batchjobstatus",
     "BatchRequest": ".batchrequest",
     "BatchRequestTypedDict": ".batchrequest",
@@ -1953,14 +1843,12 @@ _dynamic_imports: dict[str, str] = {
     "ConversationEventsDataTypedDict": ".conversationevents",
     "ConversationEventsTypedDict": ".conversationevents",
     "ConversationHistory": ".conversationhistory",
-    "ConversationHistoryObject": ".conversationhistory",
     "ConversationHistoryTypedDict": ".conversationhistory",
     "Entry": ".conversationhistory",
     "EntryTypedDict": ".conversationhistory",
     "ConversationInputs": ".conversationinputs",
     "ConversationInputsTypedDict": ".conversationinputs",
     "ConversationMessages": ".conversationmessages",
-    "ConversationMessagesObject": ".conversationmessages",
     "ConversationMessagesTypedDict": ".conversationmessages",
     "ConversationRequest": ".conversationrequest",
     "ConversationRequestAgentVersion": ".conversationrequest",
@@ -1970,7 +1858,6 @@ _dynamic_imports: dict[str, str] = {
     "ConversationRequestToolTypedDict": ".conversationrequest",
     "ConversationRequestTypedDict": ".conversationrequest",
     "ConversationResponse": ".conversationresponse",
-    "ConversationResponseObject": ".conversationresponse",
     "ConversationResponseTypedDict": ".conversationresponse",
     "Output": ".conversationresponse",
     "OutputTypedDict": ".conversationresponse",
@@ -1993,22 +1880,10 @@ _dynamic_imports: dict[str, str] = {
     "ConversationStreamRequestTypedDict": ".conversationstreamrequest",
     "ConversationUsageInfo": ".conversationusageinfo",
     "ConversationUsageInfoTypedDict": ".conversationusageinfo",
-    "CreateBatchJobRequest": ".createbatchjobrequest",
-    "CreateBatchJobRequestTypedDict": ".createbatchjobrequest",
-    "CreateFineTuningJobRequest": ".createfinetuningjobrequest",
-    "CreateFineTuningJobRequestIntegration": ".createfinetuningjobrequest",
-    "CreateFineTuningJobRequestIntegrationTypedDict": ".createfinetuningjobrequest",
-    "CreateFineTuningJobRequestRepository": ".createfinetuningjobrequest",
-    "CreateFineTuningJobRequestRepositoryTypedDict": ".createfinetuningjobrequest",
-    "CreateFineTuningJobRequestTypedDict": ".createfinetuningjobrequest",
-    "Hyperparameters": ".createfinetuningjobrequest",
-    "HyperparametersTypedDict": ".createfinetuningjobrequest",
-    "CreateLibraryRequest": ".createlibraryrequest",
-    "CreateLibraryRequestTypedDict": ".createlibraryrequest",
     "DeleteModelV1ModelsModelIDDeleteRequest": ".delete_model_v1_models_model_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequestTypedDict": ".delete_model_v1_models_model_id_deleteop",
-    "DeleteFileResponse": ".deletefileresponse",
-    "DeleteFileResponseTypedDict": ".deletefileresponse",
+    "DeleteFileOut": ".deletefileout",
+    "DeleteFileOutTypedDict": ".deletefileout",
     "DeleteModelOut": ".deletemodelout",
     "DeleteModelOutTypedDict": ".deletemodelout",
     "DeltaMessage": ".deltamessage",
@@ -2021,12 +1896,11 @@ _dynamic_imports: dict[str, str] = {
     "DocumentLibraryToolTypedDict": ".documentlibrarytool",
     "DocumentTextContent": ".documenttextcontent",
     "DocumentTextContentTypedDict": ".documenttextcontent",
-    "Attributes": ".documentupdaterequest",
-    "AttributesTypedDict": ".documentupdaterequest",
-    "DocumentUpdateRequest": ".documentupdaterequest",
-    "DocumentUpdateRequestTypedDict": ".documentupdaterequest",
+    "Attributes": ".documentupdatein",
+    "AttributesTypedDict": ".documentupdatein",
+    "DocumentUpdateIn": ".documentupdatein",
+    "DocumentUpdateInTypedDict": ".documentupdatein",
     "DocumentURLChunk": ".documenturlchunk",
-    "DocumentURLChunkType": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
     "EmbeddingDtype": ".embeddingdtype",
     "EmbeddingRequest": ".embeddingrequest",
@@ -2045,8 +1919,10 @@ _dynamic_imports: dict[str, str] = {
     "FileTypedDict": ".file",
     "FileChunk": ".filechunk",
     "FileChunkTypedDict": ".filechunk",
-    "FileObject": ".fileobject",
-    "FileObjectTypedDict": ".fileobject",
+    "FileObject1": ".fileobject_1",
+    "FileObject1TypedDict": ".fileobject_1",
+    "FileObject2": ".fileobject_2",
+    "FileObject2TypedDict": ".fileobject_2",
     "FilePurpose": ".filepurpose",
     "FilesAPIRoutesDeleteFileRequest": ".files_api_routes_delete_fileop",
     "FilesAPIRoutesDeleteFileRequestTypedDict": ".files_api_routes_delete_fileop",
@@ -2085,8 +1961,6 @@ _dynamic_imports: dict[str, str] = {
     "FunctionCall": ".functioncall",
     "FunctionCallTypedDict": ".functioncall",
     "FunctionCallEntry": ".functioncallentry",
-    "FunctionCallEntryObject": ".functioncallentry",
-    "FunctionCallEntryType": ".functioncallentry",
     "FunctionCallEntryTypedDict": ".functioncallentry",
     "FunctionCallEntryArguments": ".functioncallentryarguments",
     "FunctionCallEntryArgumentsTypedDict": ".functioncallentryarguments",
@@ -2095,13 +1969,9 @@ _dynamic_imports: dict[str, str] = {
     "FunctionName": ".functionname",
     "FunctionNameTypedDict": ".functionname",
     "FunctionResultEntry": ".functionresultentry",
-    "FunctionResultEntryObject": ".functionresultentry",
-    "FunctionResultEntryType": ".functionresultentry",
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
-    "GetFileResponse": ".getfileresponse",
-    "GetFileResponseTypedDict": ".getfileresponse",
     "GithubRepositoryIn": ".githubrepositoryin",
     "GithubRepositoryInTypedDict": ".githubrepositoryin",
     "GithubRepositoryOut": ".githubrepositoryout",
@@ -2113,7 +1983,6 @@ _dynamic_imports: dict[str, str] = {
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
     "ImageURLChunk": ".imageurlchunk",
-    "ImageURLChunkType": ".imageurlchunk",
     "ImageURLChunkTypedDict": ".imageurlchunk",
     "ImageURLUnion": ".imageurlchunk",
     "ImageURLUnionTypedDict": ".imageurlchunk",
@@ -2129,6 +1998,14 @@ _dynamic_imports: dict[str, str] = {
     "InstructRequestMessage": ".instructrequest",
     "InstructRequestMessageTypedDict": ".instructrequest",
     "InstructRequestTypedDict": ".instructrequest",
+    "Hyperparameters": ".jobin",
+    "HyperparametersTypedDict": ".jobin",
+    "JobIn": ".jobin",
+    "JobInIntegration": ".jobin",
+    "JobInIntegrationTypedDict": ".jobin",
+    "JobInRepository": ".jobin",
+    "JobInRepositoryTypedDict": ".jobin",
+    "JobInTypedDict": ".jobin",
     "JobMetadataOut": ".jobmetadataout",
     "JobMetadataOutTypedDict": ".jobmetadataout",
     "JobsAPIRoutesBatchCancelBatchJobRequest": ".jobs_api_routes_batch_cancel_batch_jobop",
@@ -2219,6 +2096,10 @@ _dynamic_imports: dict[str, str] = {
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "UpdateModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "UpdateModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "JobsOut": ".jobsout",
+    "JobsOutData": ".jobsout",
+    "JobsOutDataTypedDict": ".jobsout",
+    "JobsOutTypedDict": ".jobsout",
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
     "LibrariesDeleteV1Request": ".libraries_delete_v1op",
@@ -2257,22 +2138,18 @@ _dynamic_imports: dict[str, str] = {
     "LibrariesUpdateV1RequestTypedDict": ".libraries_update_v1op",
     "Library": ".library",
     "LibraryTypedDict": ".library",
+    "LibraryIn": ".libraryin",
+    "LibraryInTypedDict": ".libraryin",
     "LibraryInUpdate": ".libraryinupdate",
     "LibraryInUpdateTypedDict": ".libraryinupdate",
-    "ListBatchJobsResponse": ".listbatchjobsresponse",
-    "ListBatchJobsResponseTypedDict": ".listbatchjobsresponse",
-    "ListDocumentsResponse": ".listdocumentsresponse",
-    "ListDocumentsResponseTypedDict": ".listdocumentsresponse",
-    "ListFilesResponse": ".listfilesresponse",
-    "ListFilesResponseTypedDict": ".listfilesresponse",
-    "ListFineTuningJobsResponse": ".listfinetuningjobsresponse",
-    "ListFineTuningJobsResponseData": ".listfinetuningjobsresponse",
-    "ListFineTuningJobsResponseDataTypedDict": ".listfinetuningjobsresponse",
-    "ListFineTuningJobsResponseTypedDict": ".listfinetuningjobsresponse",
-    "ListLibrariesResponse": ".listlibrariesresponse",
-    "ListLibrariesResponseTypedDict": ".listlibrariesresponse",
-    "ListLibraryAccessesResponse": ".listlibraryaccessesresponse",
-    "ListLibraryAccessesResponseTypedDict": ".listlibraryaccessesresponse",
+    "ListDocumentOut": ".listdocumentout",
+    "ListDocumentOutTypedDict": ".listdocumentout",
+    "ListFilesOut": ".listfilesout",
+    "ListFilesOutTypedDict": ".listfilesout",
+    "ListLibraryOut": ".listlibraryout",
+    "ListLibraryOutTypedDict": ".listlibraryout",
+    "ListSharingOut": ".listsharingout",
+    "ListSharingOutTypedDict": ".listsharingout",
     "MessageEntries": ".messageentries",
     "MessageEntriesTypedDict": ".messageentries",
     "MessageInputContentChunks": ".messageinputcontentchunks",
@@ -2280,23 +2157,17 @@ _dynamic_imports: dict[str, str] = {
     "MessageInputEntry": ".messageinputentry",
     "MessageInputEntryContent": ".messageinputentry",
     "MessageInputEntryContentTypedDict": ".messageinputentry",
-    "MessageInputEntryObject": ".messageinputentry",
-    "MessageInputEntryRole": ".messageinputentry",
-    "MessageInputEntryType": ".messageinputentry",
     "MessageInputEntryTypedDict": ".messageinputentry",
+    "Role": ".messageinputentry",
     "MessageOutputContentChunks": ".messageoutputcontentchunks",
     "MessageOutputContentChunksTypedDict": ".messageoutputcontentchunks",
     "MessageOutputEntry": ".messageoutputentry",
     "MessageOutputEntryContent": ".messageoutputentry",
     "MessageOutputEntryContentTypedDict": ".messageoutputentry",
-    "MessageOutputEntryObject": ".messageoutputentry",
-    "MessageOutputEntryRole": ".messageoutputentry",
-    "MessageOutputEntryType": ".messageoutputentry",
     "MessageOutputEntryTypedDict": ".messageoutputentry",
     "MessageOutputEvent": ".messageoutputevent",
     "MessageOutputEventContent": ".messageoutputevent",
     "MessageOutputEventContentTypedDict": ".messageoutputevent",
-    "MessageOutputEventRole": ".messageoutputevent",
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MetricOut": ".metricout",
     "MetricOutTypedDict": ".metricout",
@@ -2304,7 +2175,6 @@ _dynamic_imports: dict[str, str] = {
     "ModelCapabilities": ".modelcapabilities",
     "ModelCapabilitiesTypedDict": ".modelcapabilities",
     "ModelConversation": ".modelconversation",
-    "ModelConversationObject": ".modelconversation",
     "ModelConversationTool": ".modelconversation",
     "ModelConversationToolTypedDict": ".modelconversation",
     "ModelConversationTypedDict": ".modelconversation",
@@ -2343,6 +2213,7 @@ _dynamic_imports: dict[str, str] = {
     "PredictionTypedDict": ".prediction",
     "ProcessingStatusOut": ".processingstatusout",
     "ProcessingStatusOutTypedDict": ".processingstatusout",
+    "ProcessStatus": ".processstatus",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
@@ -2356,7 +2227,6 @@ _dynamic_imports: dict[str, str] = {
     "RealtimeTranscriptionSessionUpdated": ".realtimetranscriptionsessionupdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict": ".realtimetranscriptionsessionupdated",
     "ReferenceChunk": ".referencechunk",
-    "ReferenceChunkType": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
     "RequestSource": ".requestsource",
     "ResponseDoneEvent": ".responsedoneevent",
@@ -2386,6 +2256,8 @@ _dynamic_imports: dict[str, str] = {
     "SharingTypedDict": ".sharing",
     "SharingDelete": ".sharingdelete",
     "SharingDeleteTypedDict": ".sharingdelete",
+    "SharingIn": ".sharingin",
+    "SharingInTypedDict": ".sharingin",
     "Source": ".source",
     "SSETypes": ".ssetypes",
     "SystemMessage": ".systemmessage",
@@ -2395,10 +2267,8 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageContentChunks": ".systemmessagecontentchunks",
     "SystemMessageContentChunksTypedDict": ".systemmessagecontentchunks",
     "TextChunk": ".textchunk",
-    "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",
     "ThinkChunk": ".thinkchunk",
-    "ThinkChunkType": ".thinkchunk",
     "ThinkChunkTypedDict": ".thinkchunk",
     "Thinking": ".thinkchunk",
     "ThinkingTypedDict": ".thinkchunk",
@@ -2421,8 +2291,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolExecutionEntry": ".toolexecutionentry",
     "ToolExecutionEntryName": ".toolexecutionentry",
     "ToolExecutionEntryNameTypedDict": ".toolexecutionentry",
-    "ToolExecutionEntryObject": ".toolexecutionentry",
-    "ToolExecutionEntryType": ".toolexecutionentry",
     "ToolExecutionEntryTypedDict": ".toolexecutionentry",
     "ToolExecutionStartedEvent": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventName": ".toolexecutionstartedevent",
@@ -2431,7 +2299,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolFileChunk": ".toolfilechunk",
     "ToolFileChunkTool": ".toolfilechunk",
     "ToolFileChunkToolTypedDict": ".toolfilechunk",
-    "ToolFileChunkType": ".toolfilechunk",
     "ToolFileChunkTypedDict": ".toolfilechunk",
     "ToolMessage": ".toolmessage",
     "ToolMessageContent": ".toolmessage",
@@ -2440,7 +2307,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolReferenceChunk": ".toolreferencechunk",
     "ToolReferenceChunkTool": ".toolreferencechunk",
     "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
-    "ToolReferenceChunkType": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
     "ToolTypes": ".tooltypes",
     "TrainingFile": ".trainingfile",
@@ -2448,7 +2314,6 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionResponse": ".transcriptionresponse",
     "TranscriptionResponseTypedDict": ".transcriptionresponse",
     "TranscriptionSegmentChunk": ".transcriptionsegmentchunk",
-    "TranscriptionSegmentChunkType": ".transcriptionsegmentchunk",
     "TranscriptionSegmentChunkTypedDict": ".transcriptionsegmentchunk",
     "TranscriptionStreamDone": ".transcriptionstreamdone",
     "TranscriptionStreamDoneTypedDict": ".transcriptionstreamdone",
@@ -2467,10 +2332,6 @@ _dynamic_imports: dict[str, str] = {
     "UnarchiveFTModelOutTypedDict": ".unarchiveftmodelout",
     "UpdateFTModelIn": ".updateftmodelin",
     "UpdateFTModelInTypedDict": ".updateftmodelin",
-    "UpdateOrCreateLibraryAccessRequest": ".updateorcreatelibraryaccessrequest",
-    "UpdateOrCreateLibraryAccessRequestTypedDict": ".updateorcreatelibraryaccessrequest",
-    "UploadFileResponse": ".uploadfileresponse",
-    "UploadFileResponseTypedDict": ".uploadfileresponse",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
     "UserMessage": ".usermessage",

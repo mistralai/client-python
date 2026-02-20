@@ -25,7 +25,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibraryAccessesResponse:
+    ) -> models.ListSharingOut:
         r"""List all of the access to this library.
 
         Given a library, list all of the Entity that have access and to what level.
@@ -92,7 +92,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibraryAccessesResponse, http_res)
+            return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -115,7 +115,7 @@ class Accesses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibraryAccessesResponse:
+    ) -> models.ListSharingOut:
         r"""List all of the access to this library.
 
         Given a library, list all of the Entity that have access and to what level.
@@ -182,7 +182,7 @@ class Accesses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibraryAccessesResponse, http_res)
+            return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -236,7 +236,7 @@ class Accesses(BaseSDK):
 
         request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
-            update_or_create_library_access_request=models.UpdateOrCreateLibraryAccessRequest(
+            sharing_in=models.SharingIn(
                 org_id=org_id,
                 level=level,
                 share_with_uuid=share_with_uuid,
@@ -258,11 +258,7 @@ class Accesses(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_or_create_library_access_request,
-                False,
-                False,
-                "json",
-                models.UpdateOrCreateLibraryAccessRequest,
+                request.sharing_in, False, False, "json", models.SharingIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -347,7 +343,7 @@ class Accesses(BaseSDK):
 
         request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
-            update_or_create_library_access_request=models.UpdateOrCreateLibraryAccessRequest(
+            sharing_in=models.SharingIn(
                 org_id=org_id,
                 level=level,
                 share_with_uuid=share_with_uuid,
@@ -369,11 +365,7 @@ class Accesses(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_or_create_library_access_request,
-                False,
-                False,
-                "json",
-                models.UpdateOrCreateLibraryAccessRequest,
+                request.sharing_in, False, False, "json", models.SharingIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

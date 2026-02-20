@@ -39,7 +39,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibrariesResponse:
+    ) -> models.ListLibraryOut:
         r"""List all libraries you have access to.
 
         List all libraries that you have created or have been shared with you.
@@ -99,7 +99,7 @@ class Libraries(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibrariesResponse, http_res)
+            return unmarshal_json_response(models.ListLibraryOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -116,7 +116,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibrariesResponse:
+    ) -> models.ListLibraryOut:
         r"""List all libraries you have access to.
 
         List all libraries that you have created or have been shared with you.
@@ -176,7 +176,7 @@ class Libraries(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibrariesResponse, http_res)
+            return unmarshal_json_response(models.ListLibraryOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -219,7 +219,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateLibraryRequest(
+        request = models.LibraryIn(
             name=name,
             description=description,
             chunk_size=chunk_size,
@@ -239,7 +239,7 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateLibraryRequest
+                request, False, False, "json", models.LibraryIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -318,7 +318,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateLibraryRequest(
+        request = models.LibraryIn(
             name=name,
             description=description,
             chunk_size=chunk_size,
@@ -338,7 +338,7 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateLibraryRequest
+                request, False, False, "json", models.LibraryIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

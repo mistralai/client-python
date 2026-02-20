@@ -55,7 +55,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDocumentsResponse](../../models/listdocumentsresponse.md)**
+**[models.ListDocumentOut](../../models/listdocumentout.md)**
 
 ### Errors
 

@@ -17,8 +17,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import FieldMetadata, PathParamMetadata
+from mistralai.client.utils import FieldMetadata, PathParamMetadata, validate_const
+import pydantic
 from pydantic import Field, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -33,9 +35,6 @@ class AgentsAPIV1ConversationsGetRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
     r"""ID of the conversation from which we are fetching metadata."""
-
-
-AgentsAPIV1ConversationsGetAgentConversationObject = Literal["conversation",]
 
 
 AgentsAPIV1ConversationsGetAgentVersionTypedDict = TypeAliasType(
@@ -59,7 +58,7 @@ class AgentConversationGetConversationResponseTypedDict(TypedDict):
     r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    object: NotRequired[AgentsAPIV1ConversationsGetAgentConversationObject]
+    object: Literal["conversation"]
     agent_version: NotRequired[
         Nullable[AgentsAPIV1ConversationsGetAgentVersionTypedDict]
     ]
@@ -83,9 +82,13 @@ class AgentConversationGetConversationResponse(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    object: Optional[AgentsAPIV1ConversationsGetAgentConversationObject] = (
-        "conversation"
-    )
+    OBJECT: Annotated[
+        Annotated[
+            Optional[Literal["conversation"]],
+            AfterValidator(validate_const("conversation")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation"
 
     agent_version: OptionalNullable[AgentsAPIV1ConversationsGetAgentVersion] = UNSET
 
@@ -146,9 +149,6 @@ AgentsAPIV1ConversationsGetTool = Annotated[
 ]
 
 
-AgentsAPIV1ConversationsGetModelConversationObject = Literal["conversation",]
-
-
 class ModelConversationGetConversationResponseTypedDict(TypedDict):
     id: str
     created_at: datetime
@@ -166,7 +166,7 @@ class ModelConversationGetConversationResponseTypedDict(TypedDict):
     r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    object: NotRequired[AgentsAPIV1ConversationsGetModelConversationObject]
+    object: Literal["conversation"]
 
 
 class ModelConversationGetConversationResponse(BaseModel):
@@ -196,9 +196,13 @@ class ModelConversationGetConversationResponse(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    object: Optional[AgentsAPIV1ConversationsGetModelConversationObject] = (
-        "conversation"
-    )
+    OBJECT: Annotated[
+        Annotated[
+            Optional[Literal["conversation"]],
+            AfterValidator(validate_const("conversation")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

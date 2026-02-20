@@ -4,8 +4,11 @@
 from __future__ import annotations
 from .imageurl import ImageURL, ImageURLTypedDict
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 ImageURLUnionTypedDict = TypeAliasType(
@@ -16,14 +19,11 @@ ImageURLUnionTypedDict = TypeAliasType(
 ImageURLUnion = TypeAliasType("ImageURLUnion", Union[ImageURL, str])
 
 
-ImageURLChunkType = Literal["image_url",]
-
-
 class ImageURLChunkTypedDict(TypedDict):
     r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
 
     image_url: ImageURLUnionTypedDict
-    type: NotRequired[ImageURLChunkType]
+    type: Literal["image_url"]
 
 
 class ImageURLChunk(BaseModel):
@@ -31,4 +31,9 @@ class ImageURLChunk(BaseModel):
 
     image_url: ImageURLUnion
 
-    type: Optional[ImageURLChunkType] = "image_url"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["image_url"]], AfterValidator(validate_const("image_url"))
+        ],
+        pydantic.Field(alias="type"),
+    ] = "image_url"

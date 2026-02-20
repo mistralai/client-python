@@ -43,7 +43,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListLibrariesResponse](../../models/listlibrariesresponse.md)**
+**[models.ListLibraryOut](../../models/listlibraryout.md)**
 
 ### Errors
 

@@ -49,7 +49,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListBatchJobsResponse](../../models/listbatchjobsresponse.md)**
+**[models.BatchJobsOut](../../models/batchjobsout.md)**
 
 ### Errors
 

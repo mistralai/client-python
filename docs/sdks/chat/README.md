@@ -27,8 +27,8 @@ with Mistral(
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
         "type": "text",
@@ -93,8 +93,8 @@ with Mistral(
 
     res = mistral.chat.stream(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=True, response_format={
         "type": "text",

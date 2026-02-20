@@ -5,7 +5,7 @@ from .basesdk import BaseSDK
 from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
-    documentupdaterequest as models_documentupdaterequest,
+    documentupdatein as models_documentupdatein,
     file as models_file,
 )
 from mistralai.client.types import OptionalNullable, UNSET
@@ -31,7 +31,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentsResponse:
+    ) -> models.ListDocumentOut:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -110,7 +110,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
+            return unmarshal_json_response(models.ListDocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -139,7 +139,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentsResponse:
+    ) -> models.ListDocumentOut:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -218,7 +218,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
+            return unmarshal_json_response(models.ListDocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -647,8 +647,8 @@ class Documents(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
             Union[
-                Dict[str, models_documentupdaterequest.Attributes],
-                Dict[str, models_documentupdaterequest.AttributesTypedDict],
+                Dict[str, models_documentupdatein.Attributes],
+                Dict[str, models_documentupdatein.AttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -682,7 +682,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            document_update_request=models.DocumentUpdateRequest(
+            document_update_in=models.DocumentUpdateIn(
                 name=name,
                 attributes=attributes,
             ),
@@ -702,11 +702,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.document_update_request,
+                request.document_update_in,
                 False,
                 False,
                 "json",
-                models.DocumentUpdateRequest,
+                models.DocumentUpdateIn,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -760,8 +760,8 @@ class Documents(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
             Union[
-                Dict[str, models_documentupdaterequest.Attributes],
-                Dict[str, models_documentupdaterequest.AttributesTypedDict],
+                Dict[str, models_documentupdatein.Attributes],
+                Dict[str, models_documentupdatein.AttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -795,7 +795,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            document_update_request=models.DocumentUpdateRequest(
+            document_update_in=models.DocumentUpdateIn(
                 name=name,
                 attributes=attributes,
             ),
@@ -815,11 +815,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.document_update_request,
+                request.document_update_in,
                 False,
                 False,
                 "json",
-                models.DocumentUpdateRequest,
+                models.DocumentUpdateIn,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
