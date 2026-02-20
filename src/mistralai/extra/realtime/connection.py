@@ -18,10 +18,15 @@ except ImportError as exc:
 
 from mistralai.models import (
     AudioFormat,
+    RealtimeTranscriptionInputAudioAppend,
+    RealtimeTranscriptionInputAudioEnd,
+    RealtimeTranscriptionInputAudioFlush,
     RealtimeTranscriptionError,
     RealtimeTranscriptionSession,
     RealtimeTranscriptionSessionCreated,
     RealtimeTranscriptionSessionUpdated,
+    RealtimeTranscriptionSessionUpdateMessage,
+    RealtimeTranscriptionSessionUpdatePayload,
     TranscriptionStreamDone,
     TranscriptionStreamLanguage,
     TranscriptionStreamSegmentDelta,
@@ -134,11 +139,17 @@ class RealtimeConnection:
         if self._closed:
             raise RuntimeError("Connection is closed")
 
-        message = {
-            "type": "input_audio.append",
-            "audio": base64.b64encode(bytes(audio_bytes)).decode("ascii"),
-        }
-        await self._websocket.send(json.dumps(message))
+        message = RealtimeTranscriptionInputAudioAppend(
+            audio=base64.b64encode(bytes(audio_bytes)).decode("ascii")
+        )
+        await self._websocket.send(message.model_dump_json())
+
+    async def flush_audio(self) -> None:
+        if self._closed:
+            raise RuntimeError("Connection is closed")
+        await self._websocket.send(
+            RealtimeTranscriptionInputAudioFlush().model_dump_json()
+        )
 
     async def update_session(
         self,
@@ -152,22 +163,25 @@ class RealtimeConnection:
         if audio_format is None and target_streaming_delay_ms is None:
             raise ValueError("At least one session field must be provided")
 
-        session_update: dict[str, object] = {}
+        session_update_data: dict[str, object] = {}
         if audio_format is not None:
             self._audio_format = audio_format
-            session_update["audio_format"] = audio_format.model_dump(mode="json")
+            session_update_data["audio_format"] = audio_format
         if target_streaming_delay_ms is not None:
-            session_update["target_streaming_delay_ms"] = target_streaming_delay_ms
-        message = {
-            "type": "session.update",
-            "session": session_update,
-        }
-        await self._websocket.send(json.dumps(message))
+            session_update_data["target_streaming_delay_ms"] = (
+                target_streaming_delay_ms
+            )
+        message = RealtimeTranscriptionSessionUpdateMessage(
+            session=RealtimeTranscriptionSessionUpdatePayload(**session_update_data)
+        )
+        await self._websocket.send(message.model_dump_json())
 
     async def end_audio(self) -> None:
         if self._closed:
             return
-        await self._websocket.send(json.dumps({"type": "input_audio.end"}))
+        await self._websocket.send(
+            RealtimeTranscriptionInputAudioEnd().model_dump_json()
+        )
 
     async def close(self, *, code: int = 1000, reason: str = "") -> None:
         if self._closed:

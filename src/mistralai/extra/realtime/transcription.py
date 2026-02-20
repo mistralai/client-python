@@ -170,6 +170,7 @@ class RealtimeTranscription:
                     if connection.is_closed:
                         break
                     await connection.send_audio(chunk)
+                await connection.flush_audio()
                 await connection.end_audio()
 
             send_task = asyncio.create_task(_send())

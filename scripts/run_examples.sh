@@ -38,6 +38,9 @@ exclude_files=(
  "examples/mistral/agents/async_conversation_run_mcp_remote.py"
  "examples/mistral/audio/async_realtime_transcription_microphone.py"
  "examples/mistral/audio/async_realtime_transcription_stream.py"
+ "examples/mistral/jobs/async_jobs.py"
+ "examples/mistral/jobs/dry_run_job.py"
+ "examples/mistral/jobs/job.py"
 )
 
 failed=0
