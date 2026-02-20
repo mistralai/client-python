@@ -25,10 +25,10 @@ with Mistral(
 ) as mistral:
 
     res = mistral.ocr.process(model="CX-9", document={
+        "type": "image_url",
         "image_url": {
             "url": "https://measly-scrap.com",
         },
-        "type": "image_url",
     }, bbox_annotation_format={
         "type": "text",
     }, document_annotation_format={

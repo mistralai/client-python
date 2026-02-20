@@ -8,11 +8,11 @@ from .messageinputentry import MessageInputEntry, MessageInputEntryTypedDict
 from .messageoutputentry import MessageOutputEntry, MessageOutputEntryTypedDict
 from .toolexecutionentry import ToolExecutionEntry, ToolExecutionEntryTypedDict
 from mistralai.types import BaseModel
+from mistralai.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ConversationHistoryObject = Literal["conversation.history",]
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 EntriesTypedDict = TypeAliasType(
@@ -46,7 +46,7 @@ class ConversationHistoryTypedDict(TypedDict):
 
     conversation_id: str
     entries: List[EntriesTypedDict]
-    object: NotRequired[ConversationHistoryObject]
+    object: Literal["conversation.history"]
 
 
 class ConversationHistory(BaseModel):
@@ -56,4 +56,10 @@ class ConversationHistory(BaseModel):
 
     entries: List[Entries]
 
-    object: Optional[ConversationHistoryObject] = "conversation.history"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation.history"]],
+            AfterValidator(validate_const("conversation.history")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation.history"

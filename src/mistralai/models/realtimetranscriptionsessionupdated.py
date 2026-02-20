@@ -21,7 +21,7 @@ class RealtimeTranscriptionSessionUpdatedTypedDict(TypedDict):
 class RealtimeTranscriptionSessionUpdated(BaseModel):
     session: RealtimeTranscriptionSession
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["session.updated"]],
             AfterValidator(validate_const("session.updated")),
