@@ -1,0 +1,6 @@
+pyproject.toml
+src/mistralai/gcp/client/sdk.py
+src/mistralai/gcp/client/_hooks/registration.py
+README.md
+USAGE.md
+docs/sdks/**/README.md

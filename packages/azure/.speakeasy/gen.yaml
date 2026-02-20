@@ -1,0 +1,80 @@
+configVersion: 2.0.0
+generation:
+  sdkClassName: MistralAzure
+  maintainOpenAPIOrder: true
+  usageSnippets:
+    optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
+  useClassNamesForArrayFields: true
+  fixes:
+    nameResolutionDec2023: true
+    nameResolutionFeb2025: true
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: true
+    securityFeb2025: true
+    sharedErrorComponentsApr2025: true
+    methodSignaturesApr2024: true
+    sharedNestedComponentsJan2026: true
+  auth:
+    oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  persistentEdits: {}
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
+python:
+  version: 2.0.0a4
+  additionalDependencies:
+    dev:
+      pytest: ^8.2.2
+      pytest-asyncio: ^0.23.7
+  allowedRedefinedBuiltins:
+    - id
+    - object
+  asyncMode: both
+  authors:
+    - Mistral
+  baseErrorName: MistralAzureError
+  clientServerStatusCodesAsErrors: true
+  constFieldCasing: upper
+  defaultErrorName: SDKError
+  description: Python Client SDK for the Mistral AI API in Azure.
+  enableCustomCodeRegions: false
+  enumFormat: union
+  fixFlags:
+    responseRequiredSep2024: true
+  flatAdditionalProperties: true
+  flattenGlobalSecurity: true
+  flattenRequests: true
+  flatteningOrder: parameters-first
+  forwardCompatibleEnumsByDefault: true
+  forwardCompatibleUnionsByDefault: tagged-only
+  imports:
+    option: openapi
+    paths:
+      callbacks: ""
+      errors: ""
+      operations: ""
+      shared: ""
+      webhooks: ""
+  inferUnionDiscriminators: true
+  inputModelSuffix: input
+  license: ""
+  maxMethodParams: 15
+  methodArguments: infer-optional-args
+  moduleName: mistralai.azure.client
+  multipartArrayFormat: legacy
+  outputModelSuffix: output
+  packageManager: uv
+  packageName: mistralai-azure
+  preApplyUnionDiscriminators: true
+  pytestFilterWarnings: []
+  pytestTimeout: 0
+  responseFormat: flat
+  sseFlatResponse: false
+  templateVersion: v2

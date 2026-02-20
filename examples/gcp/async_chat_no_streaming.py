@@ -3,14 +3,14 @@
 import asyncio
 import os
 
-from mistralai_gcp import MistralGoogleCloud
-from mistralai_gcp.models.usermessage import UserMessage
+from mistralai.gcp.client import MistralGCP
+from mistralai.gcp.client.models.usermessage import UserMessage
 
 
 async def main():
     model = "mistral-large-2407"
 
-    client = MistralGoogleCloud(project_id=os.environ["GCP_PROJECT_ID"])
+    client = MistralGCP(api_key=os.environ["GCP_API_KEY"])
 
     chat_response = await client.chat.complete_async(
         model=model,

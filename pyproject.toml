@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "2.0.0a3"
+version = "2.0.0a4"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
@@ -8,7 +8,7 @@ readme = "README.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "httpx >=0.28.1",
-    "pydantic >=2.10.3",
+    "pydantic >=2.11.2",
     "python-dateutil >=2.8.2",
     "typing-inspection >=0.4.0",
     "pyyaml (>=6.0.2,<7.0.0)",
@@ -65,11 +65,18 @@ default-groups = [
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai/client/py.typed"]
 
+[tool.hatch.build]
+dev-mode-dirs = [
+    "src",
+    "packages/azure/src",
+    "packages/gcp/src",
+]
+
 [tool.hatch.build.targets.sdist]
 include = [
     "src/mistralai",
-    "packages/mistralai_azure/src/mistralai_azure",
-    "packages/mistralai_gcp/src/mistralai_gcp",
+    "packages/azure/src/mistralai",
+    "packages/gcp/src/mistralai",
 ]
 
 [tool.hatch.build.targets.sdist.force-include]
@@ -79,14 +86,14 @@ include = [
 [tool.hatch.build.targets.wheel]
 include = [
     "src/mistralai",
-    "packages/mistralai_azure/src/mistralai_azure",
-    "packages/mistralai_gcp/src/mistralai_gcp",
+    "packages/azure/src/mistralai",
+    "packages/gcp/src/mistralai",
 ]
 
 [tool.hatch.build.targets.wheel.sources]
 "src/mistralai" = "mistralai"
-"packages/mistralai_azure/src/mistralai_azure" = "mistralai_azure"
-"packages/mistralai_gcp/src/mistralai_gcp" = "mistralai_gcp"
+"packages/azure/src/mistralai/azure" = "mistralai/azure"
+"packages/gcp/src/mistralai/gcp" = "mistralai/gcp"
 
 [build-system]
 requires = ["hatchling"]

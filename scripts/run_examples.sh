@@ -29,8 +29,8 @@ done
 exclude_files=(
  "examples/mistral/chat/chatbot_with_streaming.py"
  "examples/mistral/agents/async_conversation_run_mcp_remote_auth.py"
- "examples/mistral/jobs/async_fine_tuning_chat.py"
  "examples/mistral/jobs/async_fine_tuning.py"
+ "examples/mistral/jobs/async_fine_tuning_chat.py"
  "examples/mistral/jobs/fine_tuning.py"
  "examples/mistral/jobs/fine_tuning_dry_run.py"
  "examples/mistral/classifier/async_classifier.py"

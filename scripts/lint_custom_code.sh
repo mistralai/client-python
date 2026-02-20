@@ -7,7 +7,19 @@ if [ -f src/mistralai/__init__.py ]; then
   echo "ERROR: PEP 420 violation - src/mistralai/__init__.py must not exist"
   ERRORS=1
 else
-  echo "-> PEP 420 namespace OK"
+  echo "-> PEP 420 namespace OK (core)"
+fi
+if [ -f packages/azure/src/mistralai/__init__.py ]; then
+  echo "ERROR: PEP 420 violation - packages/azure/src/mistralai/__init__.py must not exist"
+  ERRORS=1
+else
+  echo "-> PEP 420 namespace OK (azure)"
+fi
+if [ -f packages/gcp/src/mistralai/__init__.py ]; then
+  echo "ERROR: PEP 420 violation - packages/gcp/src/mistralai/__init__.py must not exist"
+  ERRORS=1
+else
+  echo "-> PEP 420 namespace OK (gcp)"
 fi
 
 echo "Running mypy..."

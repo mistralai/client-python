@@ -372,35 +372,35 @@ You can run the examples in the `examples/` directory using `uv run`.
 Before you begin, ensure you have `AZUREAI_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
 See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.ai/deployment/cloud/azure/).
 
+**Step 1: Install**
+
+```bash
+pip install mistralai
+```
+
+**Step 2: Example Usage**
+
 Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/azure).
 
 ```python
-import asyncio
 import os
-
-from mistralai_azure import MistralAzure
+from mistralai.azure.client import MistralAzure
 
 client = MistralAzure(
-    azure_api_key=os.getenv("AZURE_API_KEY", ""),
-    azure_endpoint=os.getenv("AZURE_ENDPOINT", "")
+    api_key=os.getenv("AZURE_API_KEY", ""),
+    server_url=os.getenv("AZURE_ENDPOINT", "")
 )
 
-async def main() -> None:
-    res = await client.chat.complete_async( 
-        max_tokens= 100,
-        temperature= 0.5,
-        messages= [
-            {
-                "content": "Hello there!",
-                "role": "user"
-            }
-        ]
-    )
-    print(res)
-
-asyncio.run(main())
+res = client.chat.complete(
+    messages=[
+        {
+            "content": "Hello there!",
+            "role": "user"
+        }
+    ]
+)
+print(res.choices[0].message.content)
 ```
-The documentation for the Azure SDK is available [here](packages/mistralai_azure/README.md).
 
 ### Google Cloud
 
@@ -417,39 +417,33 @@ gcloud auth application-default login
 
 **Step 1: Install**
 
-Install the extras dependencies specific to Google Cloud:
-
 ```bash
+pip install mistralai
+# For GCP authentication support:
 pip install "mistralai[gcp]"
 ```
 
 **Step 2: Example Usage**
 
-Here's a basic example to get you started.
+Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/gcp).
 
 ```python
-import asyncio
-from mistralai_gcp import MistralGoogleCloud
+import os
+from mistralai.gcp.client import MistralGCP
 
-client = MistralGoogleCloud()
+client = MistralGCP(api_key=os.getenv("GCP_API_KEY", ""))
 
-
-async def main() -> None:
-    res = await client.chat.complete_async(
-        model= "mistral-small-2402",
-        messages= [
-            {
-                "content": "Hello there!",
-                "role": "user"
-            }
-        ]
-    )
-    print(res)
-
-asyncio.run(main())
+res = client.chat.complete(
+    model="mistral-large-2407",
+    messages=[
+        {
+            "content": "Hello there!",
+            "role": "user"
+        }
+    ]
+)
+print(res.choices[0].message.content)
 ```
-
-The documentation for the GCP SDK is available [here](packages/mistralai_gcp/README.md).
 
 
 <!-- Start Available Resources and Operations [operations] -->
