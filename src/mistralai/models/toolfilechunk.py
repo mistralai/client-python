@@ -3,12 +3,12 @@
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolFileChunkType = Literal["tool_file",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolFileChunkToolTypedDict = TypeAliasType(
@@ -22,7 +22,7 @@ ToolFileChunkTool = TypeAliasType("ToolFileChunkTool", Union[BuiltInConnectors, 
 class ToolFileChunkTypedDict(TypedDict):
     tool: ToolFileChunkToolTypedDict
     file_id: str
-    type: NotRequired[ToolFileChunkType]
+    type: Literal["tool_file"]
     file_name: NotRequired[Nullable[str]]
     file_type: NotRequired[Nullable[str]]
 
@@ -32,7 +32,12 @@ class ToolFileChunk(BaseModel):
 
     file_id: str
 
-    type: Optional[ToolFileChunkType] = "tool_file"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["tool_file"]], AfterValidator(validate_const("tool_file"))
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool_file"
 
     file_name: OptionalNullable[str] = UNSET
 

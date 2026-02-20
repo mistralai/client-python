@@ -4,15 +4,12 @@ from __future__ import annotations
 from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-MessageOutputEventType = Literal["message.output.delta",]
-
-
-MessageOutputEventRole = Literal["assistant",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 MessageOutputEventContentTypedDict = TypeAliasType(
@@ -28,13 +25,13 @@ MessageOutputEventContent = TypeAliasType(
 class MessageOutputEventTypedDict(TypedDict):
     id: str
     content: MessageOutputEventContentTypedDict
-    type: NotRequired[MessageOutputEventType]
+    type: Literal["message.output.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
     content_index: NotRequired[int]
     model: NotRequired[Nullable[str]]
     agent_id: NotRequired[Nullable[str]]
-    role: NotRequired[MessageOutputEventRole]
+    role: Literal["assistant"]
 
 
 class MessageOutputEvent(BaseModel):
@@ -42,7 +39,13 @@ class MessageOutputEvent(BaseModel):
 
     content: MessageOutputEventContent
 
-    type: Optional[MessageOutputEventType] = "message.output.delta"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["message.output.delta"]],
+            AfterValidator(validate_const("message.output.delta")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "message.output.delta"
 
     created_at: Optional[datetime] = None
 
@@ -54,7 +57,12 @@ class MessageOutputEvent(BaseModel):
 
     agent_id: OptionalNullable[str] = UNSET
 
-    role: Optional[MessageOutputEventRole] = "assistant"
+    ROLE: Annotated[
+        Annotated[
+            Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
+        ],
+        pydantic.Field(alias="role"),
+    ] = "assistant"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

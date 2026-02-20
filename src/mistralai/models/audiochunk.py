@@ -2,19 +2,25 @@
 
 from __future__ import annotations
 from mistralai.types import BaseModel
+from mistralai.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-AudioChunkType = Literal["input_audio",]
+from typing_extensions import Annotated, TypedDict
 
 
 class AudioChunkTypedDict(TypedDict):
     input_audio: str
-    type: NotRequired[AudioChunkType]
+    type: Literal["input_audio"]
 
 
 class AudioChunk(BaseModel):
     input_audio: str
 
-    type: Optional[AudioChunkType] = "input_audio"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["input_audio"]],
+            AfterValidator(validate_const("input_audio")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "input_audio"

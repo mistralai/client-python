@@ -7,13 +7,12 @@ from .transcriptionsegmentchunk import (
 )
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from mistralai.types import BaseModel, Nullable, UNSET_SENTINEL
+from mistralai.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-TranscriptionStreamDoneType = Literal["transcription.done",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class TranscriptionStreamDoneTypedDict(TypedDict):
@@ -22,7 +21,7 @@ class TranscriptionStreamDoneTypedDict(TypedDict):
     usage: UsageInfoTypedDict
     language: Nullable[str]
     segments: NotRequired[List[TranscriptionSegmentChunkTypedDict]]
-    type: NotRequired[TranscriptionStreamDoneType]
+    type: Literal["transcription.done"]
 
 
 class TranscriptionStreamDone(BaseModel):
@@ -41,7 +40,13 @@ class TranscriptionStreamDone(BaseModel):
 
     segments: Optional[List[TranscriptionSegmentChunk]] = None
 
-    type: Optional[TranscriptionStreamDoneType] = "transcription.done"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["transcription.done"]],
+            AfterValidator(validate_const("transcription.done")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "transcription.done"
 
     @property
     def additional_properties(self):

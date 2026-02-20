@@ -10,8 +10,10 @@ from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolType
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
-from mistralai.utils import get_discriminator
+from mistralai.utils import get_discriminator, validate_const
+import pydantic
 from pydantic import Discriminator, Tag, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -42,9 +44,6 @@ AgentTools = Annotated[
 ]
 
 
-AgentObject = Literal["agent",]
-
-
 class AgentTypedDict(TypedDict):
     model: str
     name: str
@@ -64,7 +63,7 @@ class AgentTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
-    object: NotRequired[AgentObject]
+    object: Literal["agent"]
     version_message: NotRequired[Nullable[str]]
 
 
@@ -102,7 +101,10 @@ class Agent(BaseModel):
 
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
-    object: Optional[AgentObject] = "agent"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["agent"]], AfterValidator(validate_const("agent"))],
+        pydantic.Field(alias="object"),
+    ] = "agent"
 
     version_message: OptionalNullable[str] = UNSET
 

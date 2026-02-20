@@ -3,15 +3,12 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-AgentHandoffEntryObject = Literal["entry",]
-
-
-AgentHandoffEntryType = Literal["agent.handoff",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AgentHandoffEntryTypedDict(TypedDict):
@@ -19,8 +16,8 @@ class AgentHandoffEntryTypedDict(TypedDict):
     previous_agent_name: str
     next_agent_id: str
     next_agent_name: str
-    object: NotRequired[AgentHandoffEntryObject]
-    type: NotRequired[AgentHandoffEntryType]
+    object: Literal["entry"]
+    type: Literal["agent.handoff"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -35,9 +32,18 @@ class AgentHandoffEntry(BaseModel):
 
     next_agent_name: str
 
-    object: Optional[AgentHandoffEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[AgentHandoffEntryType] = "agent.handoff"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["agent.handoff"]],
+            AfterValidator(validate_const("agent.handoff")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "agent.handoff"
 
     created_at: Optional[datetime] = None
 

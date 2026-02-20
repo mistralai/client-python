@@ -7,19 +7,12 @@ import builtins
 import sys
 
 if TYPE_CHECKING:
-    from .agent import (
-        Agent,
-        AgentObject,
-        AgentTools,
-        AgentToolsTypedDict,
-        AgentTypedDict,
-    )
+    from .agent import Agent, AgentTools, AgentToolsTypedDict, AgentTypedDict
     from .agentaliasresponse import AgentAliasResponse, AgentAliasResponseTypedDict
     from .agentconversation import (
         AgentConversation,
         AgentConversationAgentVersion,
         AgentConversationAgentVersionTypedDict,
-        AgentConversationObject,
         AgentConversationTypedDict,
     )
     from .agentcreationrequest import (
@@ -30,18 +23,11 @@ if TYPE_CHECKING:
     )
     from .agenthandoffdoneevent import (
         AgentHandoffDoneEvent,
-        AgentHandoffDoneEventType,
         AgentHandoffDoneEventTypedDict,
     )
-    from .agenthandoffentry import (
-        AgentHandoffEntry,
-        AgentHandoffEntryObject,
-        AgentHandoffEntryType,
-        AgentHandoffEntryTypedDict,
-    )
+    from .agenthandoffentry import AgentHandoffEntry, AgentHandoffEntryTypedDict
     from .agenthandoffstartedevent import (
         AgentHandoffStartedEvent,
-        AgentHandoffStartedEventType,
         AgentHandoffStartedEventTypedDict,
     )
     from .agents_api_v1_agents_create_or_update_aliasop import (
@@ -158,10 +144,9 @@ if TYPE_CHECKING:
         AssistantMessage,
         AssistantMessageContent,
         AssistantMessageContentTypedDict,
-        AssistantMessageRole,
         AssistantMessageTypedDict,
     )
-    from .audiochunk import AudioChunk, AudioChunkType, AudioChunkTypedDict
+    from .audiochunk import AudioChunk, AudioChunkTypedDict
     from .audioencoding import AudioEncoding
     from .audioformat import AudioFormat, AudioFormatTypedDict
     from .audiotranscriptionrequest import (
@@ -172,7 +157,7 @@ if TYPE_CHECKING:
         AudioTranscriptionRequestStream,
         AudioTranscriptionRequestStreamTypedDict,
     )
-    from .basemodelcard import BaseModelCard, BaseModelCardType, BaseModelCardTypedDict
+    from .basemodelcard import BaseModelCard, BaseModelCardTypedDict, Type
     from .batcherror import BatchError, BatchErrorTypedDict
     from .batchjobin import BatchJobIn, BatchJobInTypedDict
     from .batchjobout import BatchJobOut, BatchJobOutTypedDict
@@ -329,7 +314,6 @@ if TYPE_CHECKING:
     )
     from .conversationhistory import (
         ConversationHistory,
-        ConversationHistoryObject,
         ConversationHistoryTypedDict,
         Entries,
         EntriesTypedDict,
@@ -337,7 +321,6 @@ if TYPE_CHECKING:
     from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
     from .conversationmessages import (
         ConversationMessages,
-        ConversationMessagesObject,
         ConversationMessagesTypedDict,
     )
     from .conversationrequest import (
@@ -351,7 +334,6 @@ if TYPE_CHECKING:
     )
     from .conversationresponse import (
         ConversationResponse,
-        ConversationResponseObject,
         ConversationResponseTypedDict,
         Outputs,
         OutputsTypedDict,
@@ -408,11 +390,7 @@ if TYPE_CHECKING:
         DocumentUpdateIn,
         DocumentUpdateInTypedDict,
     )
-    from .documenturlchunk import (
-        DocumentURLChunk,
-        DocumentURLChunkType,
-        DocumentURLChunkTypedDict,
-    )
+    from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
     from .embeddingdtype import EmbeddingDtype
     from .embeddingrequest import (
         EmbeddingRequest,
@@ -487,28 +465,14 @@ if TYPE_CHECKING:
         FunctionCall,
         FunctionCallTypedDict,
     )
-    from .functioncallentry import (
-        FunctionCallEntry,
-        FunctionCallEntryObject,
-        FunctionCallEntryType,
-        FunctionCallEntryTypedDict,
-    )
+    from .functioncallentry import FunctionCallEntry, FunctionCallEntryTypedDict
     from .functioncallentryarguments import (
         FunctionCallEntryArguments,
         FunctionCallEntryArgumentsTypedDict,
     )
-    from .functioncallevent import (
-        FunctionCallEvent,
-        FunctionCallEventType,
-        FunctionCallEventTypedDict,
-    )
+    from .functioncallevent import FunctionCallEvent, FunctionCallEventTypedDict
     from .functionname import FunctionName, FunctionNameTypedDict
-    from .functionresultentry import (
-        FunctionResultEntry,
-        FunctionResultEntryObject,
-        FunctionResultEntryType,
-        FunctionResultEntryTypedDict,
-    )
+    from .functionresultentry import FunctionResultEntry, FunctionResultEntryTypedDict
     from .functiontool import FunctionTool, FunctionToolType, FunctionToolTypedDict
     from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
     from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
@@ -523,7 +487,6 @@ if TYPE_CHECKING:
         ImageURLChunk,
         ImageURLChunkImageURL,
         ImageURLChunkImageURLTypedDict,
-        ImageURLChunkType,
         ImageURLChunkTypedDict,
     )
     from .inputentries import InputEntries, InputEntriesTypedDict
@@ -696,10 +659,8 @@ if TYPE_CHECKING:
         MessageInputEntry,
         MessageInputEntryContent,
         MessageInputEntryContentTypedDict,
-        MessageInputEntryRole,
-        MessageInputEntryType,
         MessageInputEntryTypedDict,
-        Object,
+        Role,
     )
     from .messageoutputcontentchunks import (
         MessageOutputContentChunks,
@@ -709,17 +670,12 @@ if TYPE_CHECKING:
         MessageOutputEntry,
         MessageOutputEntryContent,
         MessageOutputEntryContentTypedDict,
-        MessageOutputEntryObject,
-        MessageOutputEntryRole,
-        MessageOutputEntryType,
         MessageOutputEntryTypedDict,
     )
     from .messageoutputevent import (
         MessageOutputEvent,
         MessageOutputEventContent,
         MessageOutputEventContentTypedDict,
-        MessageOutputEventRole,
-        MessageOutputEventType,
         MessageOutputEventTypedDict,
     )
     from .metricout import MetricOut, MetricOutTypedDict
@@ -727,7 +683,6 @@ if TYPE_CHECKING:
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
     from .modelconversation import (
         ModelConversation,
-        ModelConversationObject,
         ModelConversationTools,
         ModelConversationToolsTypedDict,
         ModelConversationTypedDict,
@@ -753,6 +708,7 @@ if TYPE_CHECKING:
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatusout import ProcessingStatusOut, ProcessingStatusOutTypedDict
+    from .processstatus import ProcessStatus
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -762,6 +718,18 @@ if TYPE_CHECKING:
         MessageTypedDict,
         RealtimeTranscriptionErrorDetail,
         RealtimeTranscriptionErrorDetailTypedDict,
+    )
+    from .realtimetranscriptioninputaudioappend import (
+        RealtimeTranscriptionInputAudioAppend,
+        RealtimeTranscriptionInputAudioAppendTypedDict,
+    )
+    from .realtimetranscriptioninputaudioend import (
+        RealtimeTranscriptionInputAudioEnd,
+        RealtimeTranscriptionInputAudioEndTypedDict,
+    )
+    from .realtimetranscriptioninputaudioflush import (
+        RealtimeTranscriptionInputAudioFlush,
+        RealtimeTranscriptionInputAudioFlushTypedDict,
     )
     from .realtimetranscriptionsession import (
         RealtimeTranscriptionSession,
@@ -775,27 +743,22 @@ if TYPE_CHECKING:
         RealtimeTranscriptionSessionUpdated,
         RealtimeTranscriptionSessionUpdatedTypedDict,
     )
-    from .referencechunk import (
-        ReferenceChunk,
-        ReferenceChunkType,
-        ReferenceChunkTypedDict,
+    from .realtimetranscriptionsessionupdatemessage import (
+        RealtimeTranscriptionSessionUpdateMessage,
+        RealtimeTranscriptionSessionUpdateMessageTypedDict,
     )
+    from .realtimetranscriptionsessionupdatepayload import (
+        RealtimeTranscriptionSessionUpdatePayload,
+        RealtimeTranscriptionSessionUpdatePayloadTypedDict,
+    )
+    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
     from .requestsource import RequestSource
-    from .responsedoneevent import (
-        ResponseDoneEvent,
-        ResponseDoneEventType,
-        ResponseDoneEventTypedDict,
-    )
-    from .responseerrorevent import (
-        ResponseErrorEvent,
-        ResponseErrorEventType,
-        ResponseErrorEventTypedDict,
-    )
+    from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
+    from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
     from .responseformat import ResponseFormat, ResponseFormatTypedDict
     from .responseformats import ResponseFormats
     from .responsestartedevent import (
         ResponseStartedEvent,
-        ResponseStartedEventType,
         ResponseStartedEventTypedDict,
     )
     from .responsevalidationerror import ResponseValidationError
@@ -816,7 +779,6 @@ if TYPE_CHECKING:
     from .source import Source
     from .ssetypes import SSETypes
     from .systemmessage import (
-        Role,
         SystemMessage,
         SystemMessageContent,
         SystemMessageContentTypedDict,
@@ -826,14 +788,8 @@ if TYPE_CHECKING:
         SystemMessageContentChunks,
         SystemMessageContentChunksTypedDict,
     )
-    from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
-    from .thinkchunk import (
-        ThinkChunk,
-        ThinkChunkType,
-        ThinkChunkTypedDict,
-        Thinking,
-        ThinkingTypedDict,
-    )
+    from .textchunk import TextChunk, TextChunkTypedDict
+    from .thinkchunk import ThinkChunk, ThinkChunkTypedDict, Thinking, ThinkingTypedDict
     from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
     from .toolcall import ToolCall, ToolCallTypedDict
@@ -843,50 +799,42 @@ if TYPE_CHECKING:
         ToolExecutionDeltaEvent,
         ToolExecutionDeltaEventName,
         ToolExecutionDeltaEventNameTypedDict,
-        ToolExecutionDeltaEventType,
         ToolExecutionDeltaEventTypedDict,
     )
     from .toolexecutiondoneevent import (
         ToolExecutionDoneEvent,
         ToolExecutionDoneEventName,
         ToolExecutionDoneEventNameTypedDict,
-        ToolExecutionDoneEventType,
         ToolExecutionDoneEventTypedDict,
     )
     from .toolexecutionentry import (
         Name,
         NameTypedDict,
         ToolExecutionEntry,
-        ToolExecutionEntryObject,
-        ToolExecutionEntryType,
         ToolExecutionEntryTypedDict,
     )
     from .toolexecutionstartedevent import (
         ToolExecutionStartedEvent,
         ToolExecutionStartedEventName,
         ToolExecutionStartedEventNameTypedDict,
-        ToolExecutionStartedEventType,
         ToolExecutionStartedEventTypedDict,
     )
     from .toolfilechunk import (
         ToolFileChunk,
         ToolFileChunkTool,
         ToolFileChunkToolTypedDict,
-        ToolFileChunkType,
         ToolFileChunkTypedDict,
     )
     from .toolmessage import (
         ToolMessage,
         ToolMessageContent,
         ToolMessageContentTypedDict,
-        ToolMessageRole,
         ToolMessageTypedDict,
     )
     from .toolreferencechunk import (
         ToolReferenceChunk,
         ToolReferenceChunkTool,
         ToolReferenceChunkToolTypedDict,
-        ToolReferenceChunkType,
         ToolReferenceChunkTypedDict,
     )
     from .tooltypes import ToolTypes
@@ -898,11 +846,9 @@ if TYPE_CHECKING:
     from .transcriptionsegmentchunk import (
         TranscriptionSegmentChunk,
         TranscriptionSegmentChunkTypedDict,
-        Type,
     )
     from .transcriptionstreamdone import (
         TranscriptionStreamDone,
-        TranscriptionStreamDoneType,
         TranscriptionStreamDoneTypedDict,
     )
     from .transcriptionstreamevents import (
@@ -914,17 +860,14 @@ if TYPE_CHECKING:
     from .transcriptionstreameventtypes import TranscriptionStreamEventTypes
     from .transcriptionstreamlanguage import (
         TranscriptionStreamLanguage,
-        TranscriptionStreamLanguageType,
         TranscriptionStreamLanguageTypedDict,
     )
     from .transcriptionstreamsegmentdelta import (
         TranscriptionStreamSegmentDelta,
-        TranscriptionStreamSegmentDeltaType,
         TranscriptionStreamSegmentDeltaTypedDict,
     )
     from .transcriptionstreamtextdelta import (
         TranscriptionStreamTextDelta,
-        TranscriptionStreamTextDeltaType,
         TranscriptionStreamTextDeltaTypedDict,
     )
     from .unarchiveftmodelout import UnarchiveFTModelOut, UnarchiveFTModelOutTypedDict
@@ -935,7 +878,6 @@ if TYPE_CHECKING:
         UserMessage,
         UserMessageContent,
         UserMessageContentTypedDict,
-        UserMessageRole,
         UserMessageTypedDict,
     )
     from .validationerror import (
@@ -961,23 +903,17 @@ __all__ = [
     "AgentConversation",
     "AgentConversationAgentVersion",
     "AgentConversationAgentVersionTypedDict",
-    "AgentConversationObject",
     "AgentConversationTypedDict",
     "AgentCreationRequest",
     "AgentCreationRequestTools",
     "AgentCreationRequestToolsTypedDict",
     "AgentCreationRequestTypedDict",
     "AgentHandoffDoneEvent",
-    "AgentHandoffDoneEventType",
     "AgentHandoffDoneEventTypedDict",
     "AgentHandoffEntry",
-    "AgentHandoffEntryObject",
-    "AgentHandoffEntryType",
     "AgentHandoffEntryTypedDict",
     "AgentHandoffStartedEvent",
-    "AgentHandoffStartedEventType",
     "AgentHandoffStartedEventTypedDict",
-    "AgentObject",
     "AgentTools",
     "AgentToolsTypedDict",
     "AgentTypedDict",
@@ -1050,12 +986,10 @@ __all__ = [
     "AssistantMessage",
     "AssistantMessageContent",
     "AssistantMessageContentTypedDict",
-    "AssistantMessageRole",
     "AssistantMessageTypedDict",
     "Attributes",
     "AttributesTypedDict",
     "AudioChunk",
-    "AudioChunkType",
     "AudioChunkTypedDict",
     "AudioEncoding",
     "AudioFormat",
@@ -1065,7 +999,6 @@ __all__ = [
     "AudioTranscriptionRequestStreamTypedDict",
     "AudioTranscriptionRequestTypedDict",
     "BaseModelCard",
-    "BaseModelCardType",
     "BaseModelCardTypedDict",
     "BatchError",
     "BatchErrorTypedDict",
@@ -1175,17 +1108,14 @@ __all__ = [
     "ConversationEventsDataTypedDict",
     "ConversationEventsTypedDict",
     "ConversationHistory",
-    "ConversationHistoryObject",
     "ConversationHistoryTypedDict",
     "ConversationInputs",
     "ConversationInputsTypedDict",
     "ConversationMessages",
-    "ConversationMessagesObject",
     "ConversationMessagesTypedDict",
     "ConversationRequest",
     "ConversationRequestTypedDict",
     "ConversationResponse",
-    "ConversationResponseObject",
     "ConversationResponseTypedDict",
     "ConversationRestartRequest",
     "ConversationRestartRequestAgentVersion",
@@ -1226,7 +1156,6 @@ __all__ = [
     "DocumentTextContentTypedDict",
     "DocumentTypedDict",
     "DocumentURLChunk",
-    "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
     "DocumentUpdateIn",
     "DocumentUpdateInTypedDict",
@@ -1290,18 +1219,13 @@ __all__ = [
     "FunctionCallEntry",
     "FunctionCallEntryArguments",
     "FunctionCallEntryArgumentsTypedDict",
-    "FunctionCallEntryObject",
-    "FunctionCallEntryType",
     "FunctionCallEntryTypedDict",
     "FunctionCallEvent",
-    "FunctionCallEventType",
     "FunctionCallEventTypedDict",
     "FunctionCallTypedDict",
     "FunctionName",
     "FunctionNameTypedDict",
     "FunctionResultEntry",
-    "FunctionResultEntryObject",
-    "FunctionResultEntryType",
     "FunctionResultEntryTypedDict",
     "FunctionTool",
     "FunctionToolType",
@@ -1323,7 +1247,6 @@ __all__ = [
     "ImageURLChunk",
     "ImageURLChunkImageURL",
     "ImageURLChunkImageURLTypedDict",
-    "ImageURLChunkType",
     "ImageURLChunkTypedDict",
     "ImageURLTypedDict",
     "InputEntries",
@@ -1444,23 +1367,16 @@ __all__ = [
     "MessageInputEntry",
     "MessageInputEntryContent",
     "MessageInputEntryContentTypedDict",
-    "MessageInputEntryRole",
-    "MessageInputEntryType",
     "MessageInputEntryTypedDict",
     "MessageOutputContentChunks",
     "MessageOutputContentChunksTypedDict",
     "MessageOutputEntry",
     "MessageOutputEntryContent",
     "MessageOutputEntryContentTypedDict",
-    "MessageOutputEntryObject",
-    "MessageOutputEntryRole",
-    "MessageOutputEntryType",
     "MessageOutputEntryTypedDict",
     "MessageOutputEvent",
     "MessageOutputEventContent",
     "MessageOutputEventContentTypedDict",
-    "MessageOutputEventRole",
-    "MessageOutputEventType",
     "MessageOutputEventTypedDict",
     "MessageTypedDict",
     "Messages",
@@ -1472,7 +1388,6 @@ __all__ = [
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
     "ModelConversation",
-    "ModelConversationObject",
     "ModelConversationTools",
     "ModelConversationToolsTypedDict",
     "ModelConversationTypedDict",
@@ -1499,7 +1414,6 @@ __all__ = [
     "OCRTableObjectTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
-    "Object",
     "One",
     "OneTypedDict",
     "OrderBy",
@@ -1511,6 +1425,7 @@ __all__ = [
     "PaginationInfoTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ProcessStatus",
     "ProcessingStatusOut",
     "ProcessingStatusOutTypedDict",
     "QueryParamAgentVersion",
@@ -1520,14 +1435,23 @@ __all__ = [
     "RealtimeTranscriptionErrorDetail",
     "RealtimeTranscriptionErrorDetailTypedDict",
     "RealtimeTranscriptionErrorTypedDict",
+    "RealtimeTranscriptionInputAudioAppend",
+    "RealtimeTranscriptionInputAudioAppendTypedDict",
+    "RealtimeTranscriptionInputAudioEnd",
+    "RealtimeTranscriptionInputAudioEndTypedDict",
+    "RealtimeTranscriptionInputAudioFlush",
+    "RealtimeTranscriptionInputAudioFlushTypedDict",
     "RealtimeTranscriptionSession",
     "RealtimeTranscriptionSessionCreated",
     "RealtimeTranscriptionSessionCreatedTypedDict",
     "RealtimeTranscriptionSessionTypedDict",
+    "RealtimeTranscriptionSessionUpdateMessage",
+    "RealtimeTranscriptionSessionUpdateMessageTypedDict",
+    "RealtimeTranscriptionSessionUpdatePayload",
+    "RealtimeTranscriptionSessionUpdatePayloadTypedDict",
     "RealtimeTranscriptionSessionUpdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict",
     "ReferenceChunk",
-    "ReferenceChunkType",
     "ReferenceChunkTypedDict",
     "Repositories",
     "RepositoriesTypedDict",
@@ -1537,16 +1461,13 @@ __all__ = [
     "ResponseBody",
     "ResponseBodyTypedDict",
     "ResponseDoneEvent",
-    "ResponseDoneEventType",
     "ResponseDoneEventTypedDict",
     "ResponseErrorEvent",
-    "ResponseErrorEventType",
     "ResponseErrorEventTypedDict",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
     "ResponseStartedEvent",
-    "ResponseStartedEventType",
     "ResponseStartedEventTypedDict",
     "ResponseValidationError",
     "RetrieveFileOut",
@@ -1580,10 +1501,8 @@ __all__ = [
     "SystemMessageTypedDict",
     "TableFormat",
     "TextChunk",
-    "TextChunkType",
     "TextChunkTypedDict",
     "ThinkChunk",
-    "ThinkChunkType",
     "ThinkChunkTypedDict",
     "Thinking",
     "ThinkingTypedDict",
@@ -1597,36 +1516,28 @@ __all__ = [
     "ToolExecutionDeltaEvent",
     "ToolExecutionDeltaEventName",
     "ToolExecutionDeltaEventNameTypedDict",
-    "ToolExecutionDeltaEventType",
     "ToolExecutionDeltaEventTypedDict",
     "ToolExecutionDoneEvent",
     "ToolExecutionDoneEventName",
     "ToolExecutionDoneEventNameTypedDict",
-    "ToolExecutionDoneEventType",
     "ToolExecutionDoneEventTypedDict",
     "ToolExecutionEntry",
-    "ToolExecutionEntryObject",
-    "ToolExecutionEntryType",
     "ToolExecutionEntryTypedDict",
     "ToolExecutionStartedEvent",
     "ToolExecutionStartedEventName",
     "ToolExecutionStartedEventNameTypedDict",
-    "ToolExecutionStartedEventType",
     "ToolExecutionStartedEventTypedDict",
     "ToolFileChunk",
     "ToolFileChunkTool",
     "ToolFileChunkToolTypedDict",
-    "ToolFileChunkType",
     "ToolFileChunkTypedDict",
     "ToolMessage",
     "ToolMessageContent",
     "ToolMessageContentTypedDict",
-    "ToolMessageRole",
     "ToolMessageTypedDict",
     "ToolReferenceChunk",
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
-    "ToolReferenceChunkType",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
     "ToolTypes",
@@ -1639,7 +1550,6 @@ __all__ = [
     "TranscriptionSegmentChunk",
     "TranscriptionSegmentChunkTypedDict",
     "TranscriptionStreamDone",
-    "TranscriptionStreamDoneType",
     "TranscriptionStreamDoneTypedDict",
     "TranscriptionStreamEventTypes",
     "TranscriptionStreamEvents",
@@ -1647,13 +1557,10 @@ __all__ = [
     "TranscriptionStreamEventsDataTypedDict",
     "TranscriptionStreamEventsTypedDict",
     "TranscriptionStreamLanguage",
-    "TranscriptionStreamLanguageType",
     "TranscriptionStreamLanguageTypedDict",
     "TranscriptionStreamSegmentDelta",
-    "TranscriptionStreamSegmentDeltaType",
     "TranscriptionStreamSegmentDeltaTypedDict",
     "TranscriptionStreamTextDelta",
-    "TranscriptionStreamTextDeltaType",
     "TranscriptionStreamTextDeltaTypedDict",
     "Two",
     "TwoTypedDict",
@@ -1669,7 +1576,6 @@ __all__ = [
     "UserMessage",
     "UserMessageContent",
     "UserMessageContentTypedDict",
-    "UserMessageRole",
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
@@ -1687,7 +1593,6 @@ __all__ = [
 
 _dynamic_imports: dict[str, str] = {
     "Agent": ".agent",
-    "AgentObject": ".agent",
     "AgentTools": ".agent",
     "AgentToolsTypedDict": ".agent",
     "AgentTypedDict": ".agent",
@@ -1696,21 +1601,16 @@ _dynamic_imports: dict[str, str] = {
     "AgentConversation": ".agentconversation",
     "AgentConversationAgentVersion": ".agentconversation",
     "AgentConversationAgentVersionTypedDict": ".agentconversation",
-    "AgentConversationObject": ".agentconversation",
     "AgentConversationTypedDict": ".agentconversation",
     "AgentCreationRequest": ".agentcreationrequest",
     "AgentCreationRequestTools": ".agentcreationrequest",
     "AgentCreationRequestToolsTypedDict": ".agentcreationrequest",
     "AgentCreationRequestTypedDict": ".agentcreationrequest",
     "AgentHandoffDoneEvent": ".agenthandoffdoneevent",
-    "AgentHandoffDoneEventType": ".agenthandoffdoneevent",
     "AgentHandoffDoneEventTypedDict": ".agenthandoffdoneevent",
     "AgentHandoffEntry": ".agenthandoffentry",
-    "AgentHandoffEntryObject": ".agenthandoffentry",
-    "AgentHandoffEntryType": ".agenthandoffentry",
     "AgentHandoffEntryTypedDict": ".agenthandoffentry",
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
-    "AgentHandoffStartedEventType": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequest": ".agents_api_v1_agents_create_or_update_aliasop",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict": ".agents_api_v1_agents_create_or_update_aliasop",
@@ -1782,10 +1682,8 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessage": ".assistantmessage",
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
-    "AssistantMessageRole": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
     "AudioChunk": ".audiochunk",
-    "AudioChunkType": ".audiochunk",
     "AudioChunkTypedDict": ".audiochunk",
     "AudioEncoding": ".audioencoding",
     "AudioFormat": ".audioformat",
@@ -1795,8 +1693,8 @@ _dynamic_imports: dict[str, str] = {
     "AudioTranscriptionRequestStream": ".audiotranscriptionrequeststream",
     "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "BaseModelCard": ".basemodelcard",
-    "BaseModelCardType": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
+    "Type": ".basemodelcard",
     "BatchError": ".batcherror",
     "BatchErrorTypedDict": ".batcherror",
     "BatchJobIn": ".batchjobin",
@@ -1917,14 +1815,12 @@ _dynamic_imports: dict[str, str] = {
     "ConversationEventsDataTypedDict": ".conversationevents",
     "ConversationEventsTypedDict": ".conversationevents",
     "ConversationHistory": ".conversationhistory",
-    "ConversationHistoryObject": ".conversationhistory",
     "ConversationHistoryTypedDict": ".conversationhistory",
     "Entries": ".conversationhistory",
     "EntriesTypedDict": ".conversationhistory",
     "ConversationInputs": ".conversationinputs",
     "ConversationInputsTypedDict": ".conversationinputs",
     "ConversationMessages": ".conversationmessages",
-    "ConversationMessagesObject": ".conversationmessages",
     "ConversationMessagesTypedDict": ".conversationmessages",
     "AgentVersion": ".conversationrequest",
     "AgentVersionTypedDict": ".conversationrequest",
@@ -1934,7 +1830,6 @@ _dynamic_imports: dict[str, str] = {
     "Tools": ".conversationrequest",
     "ToolsTypedDict": ".conversationrequest",
     "ConversationResponse": ".conversationresponse",
-    "ConversationResponseObject": ".conversationresponse",
     "ConversationResponseTypedDict": ".conversationresponse",
     "Outputs": ".conversationresponse",
     "OutputsTypedDict": ".conversationresponse",
@@ -1979,7 +1874,6 @@ _dynamic_imports: dict[str, str] = {
     "DocumentUpdateIn": ".documentupdatein",
     "DocumentUpdateInTypedDict": ".documentupdatein",
     "DocumentURLChunk": ".documenturlchunk",
-    "DocumentURLChunkType": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
     "EmbeddingDtype": ".embeddingdtype",
     "EmbeddingRequest": ".embeddingrequest",
@@ -2039,19 +1933,14 @@ _dynamic_imports: dict[str, str] = {
     "FunctionCall": ".functioncall",
     "FunctionCallTypedDict": ".functioncall",
     "FunctionCallEntry": ".functioncallentry",
-    "FunctionCallEntryObject": ".functioncallentry",
-    "FunctionCallEntryType": ".functioncallentry",
     "FunctionCallEntryTypedDict": ".functioncallentry",
     "FunctionCallEntryArguments": ".functioncallentryarguments",
     "FunctionCallEntryArgumentsTypedDict": ".functioncallentryarguments",
     "FunctionCallEvent": ".functioncallevent",
-    "FunctionCallEventType": ".functioncallevent",
     "FunctionCallEventTypedDict": ".functioncallevent",
     "FunctionName": ".functionname",
     "FunctionNameTypedDict": ".functionname",
     "FunctionResultEntry": ".functionresultentry",
-    "FunctionResultEntryObject": ".functionresultentry",
-    "FunctionResultEntryType": ".functionresultentry",
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolType": ".functiontool",
@@ -2070,7 +1959,6 @@ _dynamic_imports: dict[str, str] = {
     "ImageURLChunk": ".imageurlchunk",
     "ImageURLChunkImageURL": ".imageurlchunk",
     "ImageURLChunkImageURLTypedDict": ".imageurlchunk",
-    "ImageURLChunkType": ".imageurlchunk",
     "ImageURLChunkTypedDict": ".imageurlchunk",
     "InputEntries": ".inputentries",
     "InputEntriesTypedDict": ".inputentries",
@@ -2191,24 +2079,17 @@ _dynamic_imports: dict[str, str] = {
     "MessageInputEntry": ".messageinputentry",
     "MessageInputEntryContent": ".messageinputentry",
     "MessageInputEntryContentTypedDict": ".messageinputentry",
-    "MessageInputEntryRole": ".messageinputentry",
-    "MessageInputEntryType": ".messageinputentry",
     "MessageInputEntryTypedDict": ".messageinputentry",
-    "Object": ".messageinputentry",
+    "Role": ".messageinputentry",
     "MessageOutputContentChunks": ".messageoutputcontentchunks",
     "MessageOutputContentChunksTypedDict": ".messageoutputcontentchunks",
     "MessageOutputEntry": ".messageoutputentry",
     "MessageOutputEntryContent": ".messageoutputentry",
     "MessageOutputEntryContentTypedDict": ".messageoutputentry",
-    "MessageOutputEntryObject": ".messageoutputentry",
-    "MessageOutputEntryRole": ".messageoutputentry",
-    "MessageOutputEntryType": ".messageoutputentry",
     "MessageOutputEntryTypedDict": ".messageoutputentry",
     "MessageOutputEvent": ".messageoutputevent",
     "MessageOutputEventContent": ".messageoutputevent",
     "MessageOutputEventContentTypedDict": ".messageoutputevent",
-    "MessageOutputEventRole": ".messageoutputevent",
-    "MessageOutputEventType": ".messageoutputevent",
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MetricOut": ".metricout",
     "MetricOutTypedDict": ".metricout",
@@ -2216,7 +2097,6 @@ _dynamic_imports: dict[str, str] = {
     "ModelCapabilities": ".modelcapabilities",
     "ModelCapabilitiesTypedDict": ".modelcapabilities",
     "ModelConversation": ".modelconversation",
-    "ModelConversationObject": ".modelconversation",
     "ModelConversationTools": ".modelconversation",
     "ModelConversationToolsTypedDict": ".modelconversation",
     "ModelConversationTypedDict": ".modelconversation",
@@ -2255,33 +2135,40 @@ _dynamic_imports: dict[str, str] = {
     "PredictionTypedDict": ".prediction",
     "ProcessingStatusOut": ".processingstatusout",
     "ProcessingStatusOutTypedDict": ".processingstatusout",
+    "ProcessStatus": ".processstatus",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "Message": ".realtimetranscriptionerrordetail",
     "MessageTypedDict": ".realtimetranscriptionerrordetail",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
     "RealtimeTranscriptionErrorDetailTypedDict": ".realtimetranscriptionerrordetail",
+    "RealtimeTranscriptionInputAudioAppend": ".realtimetranscriptioninputaudioappend",
+    "RealtimeTranscriptionInputAudioAppendTypedDict": ".realtimetranscriptioninputaudioappend",
+    "RealtimeTranscriptionInputAudioEnd": ".realtimetranscriptioninputaudioend",
+    "RealtimeTranscriptionInputAudioEndTypedDict": ".realtimetranscriptioninputaudioend",
+    "RealtimeTranscriptionInputAudioFlush": ".realtimetranscriptioninputaudioflush",
+    "RealtimeTranscriptionInputAudioFlushTypedDict": ".realtimetranscriptioninputaudioflush",
     "RealtimeTranscriptionSession": ".realtimetranscriptionsession",
     "RealtimeTranscriptionSessionTypedDict": ".realtimetranscriptionsession",
     "RealtimeTranscriptionSessionCreated": ".realtimetranscriptionsessioncreated",
     "RealtimeTranscriptionSessionCreatedTypedDict": ".realtimetranscriptionsessioncreated",
     "RealtimeTranscriptionSessionUpdated": ".realtimetranscriptionsessionupdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict": ".realtimetranscriptionsessionupdated",
+    "RealtimeTranscriptionSessionUpdateMessage": ".realtimetranscriptionsessionupdatemessage",
+    "RealtimeTranscriptionSessionUpdateMessageTypedDict": ".realtimetranscriptionsessionupdatemessage",
+    "RealtimeTranscriptionSessionUpdatePayload": ".realtimetranscriptionsessionupdatepayload",
+    "RealtimeTranscriptionSessionUpdatePayloadTypedDict": ".realtimetranscriptionsessionupdatepayload",
     "ReferenceChunk": ".referencechunk",
-    "ReferenceChunkType": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
     "RequestSource": ".requestsource",
     "ResponseDoneEvent": ".responsedoneevent",
-    "ResponseDoneEventType": ".responsedoneevent",
     "ResponseDoneEventTypedDict": ".responsedoneevent",
     "ResponseErrorEvent": ".responseerrorevent",
-    "ResponseErrorEventType": ".responseerrorevent",
     "ResponseErrorEventTypedDict": ".responseerrorevent",
     "ResponseFormat": ".responseformat",
     "ResponseFormatTypedDict": ".responseformat",
     "ResponseFormats": ".responseformats",
     "ResponseStartedEvent": ".responsestartedevent",
-    "ResponseStartedEventType": ".responsestartedevent",
     "ResponseStartedEventTypedDict": ".responsestartedevent",
     "ResponseValidationError": ".responsevalidationerror",
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
@@ -2303,7 +2190,6 @@ _dynamic_imports: dict[str, str] = {
     "SharingOutTypedDict": ".sharingout",
     "Source": ".source",
     "SSETypes": ".ssetypes",
-    "Role": ".systemmessage",
     "SystemMessage": ".systemmessage",
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
@@ -2311,10 +2197,8 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageContentChunks": ".systemmessagecontentchunks",
     "SystemMessageContentChunksTypedDict": ".systemmessagecontentchunks",
     "TextChunk": ".textchunk",
-    "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",
     "ThinkChunk": ".thinkchunk",
-    "ThinkChunkType": ".thinkchunk",
     "ThinkChunkTypedDict": ".thinkchunk",
     "Thinking": ".thinkchunk",
     "ThinkingTypedDict": ".thinkchunk",
@@ -2329,38 +2213,30 @@ _dynamic_imports: dict[str, str] = {
     "ToolExecutionDeltaEvent": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventName": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventNameTypedDict": ".toolexecutiondeltaevent",
-    "ToolExecutionDeltaEventType": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventTypedDict": ".toolexecutiondeltaevent",
     "ToolExecutionDoneEvent": ".toolexecutiondoneevent",
     "ToolExecutionDoneEventName": ".toolexecutiondoneevent",
     "ToolExecutionDoneEventNameTypedDict": ".toolexecutiondoneevent",
-    "ToolExecutionDoneEventType": ".toolexecutiondoneevent",
     "ToolExecutionDoneEventTypedDict": ".toolexecutiondoneevent",
     "Name": ".toolexecutionentry",
     "NameTypedDict": ".toolexecutionentry",
     "ToolExecutionEntry": ".toolexecutionentry",
-    "ToolExecutionEntryObject": ".toolexecutionentry",
-    "ToolExecutionEntryType": ".toolexecutionentry",
     "ToolExecutionEntryTypedDict": ".toolexecutionentry",
     "ToolExecutionStartedEvent": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventName": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventNameTypedDict": ".toolexecutionstartedevent",
-    "ToolExecutionStartedEventType": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventTypedDict": ".toolexecutionstartedevent",
     "ToolFileChunk": ".toolfilechunk",
     "ToolFileChunkTool": ".toolfilechunk",
     "ToolFileChunkToolTypedDict": ".toolfilechunk",
-    "ToolFileChunkType": ".toolfilechunk",
     "ToolFileChunkTypedDict": ".toolfilechunk",
     "ToolMessage": ".toolmessage",
     "ToolMessageContent": ".toolmessage",
     "ToolMessageContentTypedDict": ".toolmessage",
-    "ToolMessageRole": ".toolmessage",
     "ToolMessageTypedDict": ".toolmessage",
     "ToolReferenceChunk": ".toolreferencechunk",
     "ToolReferenceChunkTool": ".toolreferencechunk",
     "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
-    "ToolReferenceChunkType": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
     "ToolTypes": ".tooltypes",
     "TrainingFile": ".trainingfile",
@@ -2369,9 +2245,7 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionResponseTypedDict": ".transcriptionresponse",
     "TranscriptionSegmentChunk": ".transcriptionsegmentchunk",
     "TranscriptionSegmentChunkTypedDict": ".transcriptionsegmentchunk",
-    "Type": ".transcriptionsegmentchunk",
     "TranscriptionStreamDone": ".transcriptionstreamdone",
-    "TranscriptionStreamDoneType": ".transcriptionstreamdone",
     "TranscriptionStreamDoneTypedDict": ".transcriptionstreamdone",
     "TranscriptionStreamEvents": ".transcriptionstreamevents",
     "TranscriptionStreamEventsData": ".transcriptionstreamevents",
@@ -2379,13 +2253,10 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamEventsTypedDict": ".transcriptionstreamevents",
     "TranscriptionStreamEventTypes": ".transcriptionstreameventtypes",
     "TranscriptionStreamLanguage": ".transcriptionstreamlanguage",
-    "TranscriptionStreamLanguageType": ".transcriptionstreamlanguage",
     "TranscriptionStreamLanguageTypedDict": ".transcriptionstreamlanguage",
     "TranscriptionStreamSegmentDelta": ".transcriptionstreamsegmentdelta",
-    "TranscriptionStreamSegmentDeltaType": ".transcriptionstreamsegmentdelta",
     "TranscriptionStreamSegmentDeltaTypedDict": ".transcriptionstreamsegmentdelta",
     "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
-    "TranscriptionStreamTextDeltaType": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "UnarchiveFTModelOut": ".unarchiveftmodelout",
     "UnarchiveFTModelOutTypedDict": ".unarchiveftmodelout",
@@ -2398,7 +2269,6 @@ _dynamic_imports: dict[str, str] = {
     "UserMessage": ".usermessage",
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
-    "UserMessageRole": ".usermessage",
     "UserMessageTypedDict": ".usermessage",
     "Loc": ".validationerror",
     "LocTypedDict": ".validationerror",

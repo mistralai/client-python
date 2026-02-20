@@ -146,8 +146,8 @@ with Mistral(
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
         "type": "text",
@@ -175,8 +175,8 @@ async def main():
 
         res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], stream=False, response_format={
             "type": "text",
@@ -254,8 +254,8 @@ with Mistral(
 
     res = mistral.agents.complete(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], agent_id="<id>", stream=False, response_format={
         "type": "text",
@@ -283,8 +283,8 @@ async def main():
 
         res = await mistral.agents.complete_async(messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], agent_id="<id>", stream=False, response_format={
             "type": "text",
