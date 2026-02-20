@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 4055a485bb4ec3ee1063e2c02e2959c7
+  docChecksum: 7a1ab9612ffa119020a6f58684519974
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
-  releaseVersion: 1.12.4
-  configChecksum: aba6e4afc3cf74f3351eca0c978b2ccc
+  releaseVersion: 1.12.5
+  configChecksum: fbcacd2d4de62cb56a04c6a2768b788c
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 3a965380-11d6-4df9-8fc1-ca16d12e3765
-  pristine_commit_hash: 4f1fb9e2c702f75f477623fd967f8c8c98ad3e4d
-  pristine_tree_hash: 61c0042215df8325fc8b2fed98191d2e906f509f
+  generation_id: 04c43939-abe8-4908-8162-d0d562ae113b
+  pristine_commit_hash: 484ef7722947c7195a3fcdefcfe151dff09a2039
+  pristine_tree_hash: 0410b4350bbcc2c14ca18b570ce5056ab0ba72e2
 features:
   python:
     additionalDependencies: 1.0.0
@@ -601,8 +601,8 @@ trackedFiles:
     pristine_git_object: ebd420f69a4ace05daa7edd82b9315b2a4354b5f
   docs/models/documentout.md:
     id: a69fd1f47711
-    last_write_checksum: sha1:eac56eee052b5b36bf2842547ea1241d4a7117ec
-    pristine_git_object: 729aee3bbd982b57991059748652070fce5cae59
+    last_write_checksum: sha1:ddba6256cbbe8f763ab0c71bc7507779ca0a7c61
+    pristine_git_object: e6399f6a141cca7df1ca17851d5c99ef00e72622
   docs/models/documenttextcontent.md:
     id: 29587399f346
     last_write_checksum: sha1:93382da0228027a02501abbcf681f247814d3d68
@@ -1173,12 +1173,8 @@ trackedFiles:
     pristine_git_object: fae3c1ca4ba2c2ddb3b7de401ecdc8d56dcc7740
   docs/models/processingstatusout.md:
     id: 83c8c59c1802
-    last_write_checksum: sha1:7dbbfe790616ab4388e532bd78ffc1a5183b332d
-    pristine_git_object: bc40d3209c4c641dd7416c925b965c1bf7b73b1b
-  docs/models/processstatus.md:
-    id: "336054835357"
-    last_write_checksum: sha1:9b87de1980428307af6c29c2086c0e1f612ebd72
-    pristine_git_object: 3a9c004e55cc31abb52d1f0bb450290465d42a1c
+    last_write_checksum: sha1:046375bb3035cc033d4484099cd7f5a4f53ce88c
+    pristine_git_object: 7b67583f4209778ac6f945631c0ee03ba1f4c663
   docs/models/queryparamagentversion.md:
     id: 49d942f63049
     last_write_checksum: sha1:42557c6bf0afc1eabde48c4b6122f801608d8f05
@@ -1625,8 +1621,8 @@ trackedFiles:
     pristine_git_object: 6d0f3e1166cb0271f89f5ba83441c88199d7a432
   src/mistralai/_version.py:
     id: 37b53ba66d7f
-    last_write_checksum: sha1:4045df6408522e7ba7ecc2c436b8ca0e253420ff
-    pristine_git_object: 5b4d5d6e124b65f61cec8bd51c9a735ac266850e
+    last_write_checksum: sha1:c74bb5a961b4adbfcd0d9d45d1dfeb82312edec2
+    pristine_git_object: 9388a7de09a6f4369c277e73d831f65797cdca85
   src/mistralai/accesses.py:
     id: 98cb4addd052
     last_write_checksum: sha1:5d9d495274d67b1343ba99d755c1c01c64c2ead1
@@ -1705,8 +1701,8 @@ trackedFiles:
     pristine_git_object: f9816701711f30e319a0135af718ca8e59c2971e
   src/mistralai/models/__init__.py:
     id: 3228134f03e5
-    last_write_checksum: sha1:1c36ff7488cec577397601255a3ab51437a085ba
-    pristine_git_object: 7d9eb5a8cd038a2b0d8c29f49bfe88eb554581f4
+    last_write_checksum: sha1:555f47ae5df6011a490156e5bd462192505ff049
+    pristine_git_object: 9640b45faf8baad8f07d61115c530ec298598302
   src/mistralai/models/agent.py:
     id: ca4162a131b1
     last_write_checksum: sha1:ab48879d7c2c731f53f7873530d7bc5521a7b036
@@ -2073,8 +2069,8 @@ trackedFiles:
     pristine_git_object: 8d4c122b0412682a792c754a06e10809bfd8c25c
   src/mistralai/models/documentout.py:
     id: 205cb7721dfa
-    last_write_checksum: sha1:e8a92d7ef535611a25ea3bfa52189c04dde2dc9e
-    pristine_git_object: 0d52a538292d8ba0bb61591b47557bb4d9c61b2e
+    last_write_checksum: sha1:e0c5b198a97a1210216d0b79d4f2ef3c0ccd5716
+    pristine_git_object: 134126868a27bbf003ffe5fd10ff063a3d9af993
   src/mistralai/models/documenttextcontent.py:
     id: 685680d8640b
     last_write_checksum: sha1:dafce4998fa5964ac6833e71f7cb4f23455c14e6
@@ -2513,12 +2509,8 @@ trackedFiles:
     pristine_git_object: 2c83633d3d21a9a5fb68ee01196abf1eb7c77a62
   src/mistralai/models/processingstatusout.py:
     id: 54d1c125ef83
-    last_write_checksum: sha1:bd72b5b5bcb64fa065f5c40c7094a917c9f875a2
-    pristine_git_object: 44ecd1af80aa4b5ff7e172f8cd5c9b7abf2a1d4a
-  src/mistralai/models/processstatus.py:
-    id: 9c61008f1c7b
-    last_write_checksum: sha1:d42842995cc7b32dc136071533f39e95864a23e2
-    pristine_git_object: 201f06d683a2500e26e391d8a2a7acc389a87907
+    last_write_checksum: sha1:475749250ada2566c5a5d769eda1d350ddd8be8f
+    pristine_git_object: e67bfa865dcf94656a67f8612a5420f8b43cc0ec
   src/mistralai/models/realtimetranscriptionerror.py:
     id: f869fd6faf74
     last_write_checksum: sha1:c178002007f2d78de3eccaf001c83a1647ffd19a
@@ -3465,7 +3457,7 @@ examples:
           sort_order: "desc"
       responses:
         "200":
-          application/json: {"pagination": {"total_items": 23246, "total_pages": 881485, "current_page": 173326, "page_size": 318395, "has_more": false}, "data": [{"id": "5106c0c7-30fb-4fd3-9083-129b77f9f509", "library_id": "71eb68a2-756e-48b0-9d2b-a04d7bf95ff5", "hash": "<value>", "mime_type": "<value>", "extension": "pdf", "size": 367159, "name": "<value>", "created_at": "2024-09-24T04:50:43.988Z", "process_status": "noop", "uploaded_by_id": "7d65f4d8-1997-479f-bfb4-535c0144b48c", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 957230}]}
+          application/json: {"pagination": {"total_items": 23246, "total_pages": 881485, "current_page": 173326, "page_size": 318395, "has_more": false}, "data": [{"id": "5106c0c7-30fb-4fd3-9083-129b77f9f509", "library_id": "71eb68a2-756e-48b0-9d2b-a04d7bf95ff5", "hash": "<value>", "mime_type": "<value>", "extension": "pdf", "size": 367159, "name": "<value>", "created_at": "2024-09-24T04:50:43.988Z", "uploaded_by_id": "7d65f4d8-1997-479f-bfb4-535c0144b48c", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 957230}]}
         "422":
           application/json: {}
   libraries_documents_upload_v1:
@@ -3477,7 +3469,7 @@ examples:
         multipart/form-data: {"file": "x-file: example.file"}
       responses:
         "200":
-          application/json: {"id": "d40f9b56-c832-405d-aa99-b3e442254dd8", "library_id": "868d7955-009a-4433-bfc6-ad7b4be4e7e4", "hash": "<value>", "mime_type": "<value>", "extension": "m2v", "size": 418415, "name": "<value>", "created_at": "2025-04-30T20:11:27.130Z", "process_status": "in_progress", "uploaded_by_id": "7db8d896-09c9-438c-b6dc-aa5c70102b3f", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 61161}
+          application/json: {"id": "d40f9b56-c832-405d-aa99-b3e442254dd8", "library_id": "868d7955-009a-4433-bfc6-ad7b4be4e7e4", "hash": "<value>", "mime_type": "<value>", "extension": "m2v", "size": 418415, "name": "<value>", "created_at": "2025-04-30T20:11:27.130Z", "uploaded_by_id": "7db8d896-09c9-438c-b6dc-aa5c70102b3f", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 61161}
         "422":
           application/json: {}
   libraries_documents_get_v1:
@@ -3488,7 +3480,7 @@ examples:
           document_id: "90973aec-0508-4375-8b00-91d732414745"
       responses:
         "200":
-          application/json: {"id": "0de60230-717d-459a-8c0f-fbb9360c01be", "library_id": "e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e", "hash": "<value>", "mime_type": "<value>", "extension": "jpe", "size": 402478, "name": "<value>", "created_at": "2023-07-29T21:43:20.750Z", "process_status": "self_managed", "uploaded_by_id": "d5eadabe-d7f2-4f87-a337-f80c192f886d", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 793889}
+          application/json: {"id": "0de60230-717d-459a-8c0f-fbb9360c01be", "library_id": "e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e", "hash": "<value>", "mime_type": "<value>", "extension": "jpe", "size": 402478, "name": "<value>", "created_at": "2023-07-29T21:43:20.750Z", "uploaded_by_id": "d5eadabe-d7f2-4f87-a337-f80c192f886d", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 793889}
         "422":
           application/json: {}
   libraries_documents_update_v1:
@@ -3501,7 +3493,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "1111e519-9ba5-42de-9301-938fbfee59fc", "library_id": "70aac5e3-23f7-439b-bbef-090e4c1dbd6d", "hash": "<value>", "mime_type": "<value>", "extension": "m1v", "size": 802305, "name": "<value>", "created_at": "2024-07-02T20:02:03.680Z", "process_status": "missing_content", "uploaded_by_id": "08471957-b27d-4437-8242-57256727dc49", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 806683}
+          application/json: {"id": "1111e519-9ba5-42de-9301-938fbfee59fc", "library_id": "70aac5e3-23f7-439b-bbef-090e4c1dbd6d", "hash": "<value>", "mime_type": "<value>", "extension": "m1v", "size": 802305, "name": "<value>", "created_at": "2024-07-02T20:02:03.680Z", "uploaded_by_id": "08471957-b27d-4437-8242-57256727dc49", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 806683}
         "422":
           application/json: {}
   libraries_documents_delete_v1:
@@ -3532,7 +3524,7 @@ examples:
           document_id: "2c904915-d831-4e9d-a345-8ce405bcef66"
       responses:
         "200":
-          application/json: {"document_id": "90473b79-1fd5-437f-bee0-6638bdf69c90", "process_status": "waiting_for_capacity", "processing_status": "<value>"}
+          application/json: {"document_id": "90473b79-1fd5-437f-bee0-6638bdf69c90", "processing_status": "<value>"}
         "422":
           application/json: {}
   libraries_documents_get_signed_url_v1:
@@ -3692,7 +3684,13 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.beta.agents.get_version()`:  `response.object` **Changed** **Breaking** :warning:\n* `mistral.fim.stream()`:  `response.[].data.choices.[].delta.content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get()`:  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.append()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get_history()`:  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.get_messages()`:  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.restart()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.start_stream()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.[].data` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.append_stream()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.[].data` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.restart_stream()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response.[].data` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.create()`:  `response.object` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.list()`:  `response.[].object` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.get()`:  `response.object` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.update()`:  `response.object` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.update_version()`:  `response.object` **Changed** **Breaking** :warning:\n* `mistral.beta.agents.list_versions()`:  `response.[].object` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.list()`:  `response.[]` **Changed** **Breaking** :warning:\n* `mistral.audio.transcriptions.stream()`:  `response.[].data` **Changed** **Breaking** :warning:\n* `mistral.beta.conversations.start()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n  *  `response` **Changed** **Breaking** :warning:\n* `mistral.audio.transcriptions.complete()`:  `response.segments.[].type` **Changed** **Breaking** :warning:\n* `mistral.ocr.process()`:  `request.document` **Changed** **Breaking** :warning:\n* `mistral.classifiers.classify_chat()`: \n  *  `request.inputs.[inputs].messages.[]` **Changed** **Breaking** :warning:\n* `mistral.chat.complete()`: \n  *  `request.messages.[]` **Changed** **Breaking** :warning:\n  *  `response.choices.[].message` **Changed** **Breaking** :warning:\n* `mistral.chat.stream()`: \n  *  `request.messages.[]` **Changed** **Breaking** :warning:\n  *  `response.[].data.choices.[].delta.content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.fim.complete()`:  `response.choices.[].message` **Changed** **Breaking** :warning:\n* `mistral.classifiers.moderate_chat()`: \n  *  `request.inputs.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.agents.complete()`: \n  *  `request.messages.[]` **Changed** **Breaking** :warning:\n  *  `response.choices.[].message` **Changed** **Breaking** :warning:\n* `mistral.agents.stream()`: \n  *  `request.messages.[]` **Changed** **Breaking** :warning:\n  *  `response.[].data.choices.[].delta.content.[array].[]` **Changed** **Breaking** :warning:\n* `mistral.beta.libraries.documents.upload()`:  `response.process_status` **Added**\n* `mistral.beta.libraries.documents.status()`:  `response.process_status` **Added**\n* `mistral.beta.libraries.documents.update()`:  `response.process_status` **Added**\n* `mistral.beta.libraries.documents.get()`:  `response.process_status` **Added**\n* `mistral.beta.libraries.documents.list()`:  `response.data.[].process_status` **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.beta.libraries.documents.list()`:  `response.data.[].process_status` **Removed** **Breaking** :warning:
+  * `mistral.beta.libraries.documents.upload()`:  `response.process_status` **Removed** **Breaking** :warning:
+  * `mistral.beta.libraries.documents.get()`:  `response.process_status` **Removed** **Breaking** :warning:
+  * `mistral.beta.libraries.documents.update()`:  `response.process_status` **Removed** **Breaking** :warning:
+  * `mistral.beta.libraries.documents.status()`:  `response.process_status` **Removed** **Breaking** :warning:
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
