@@ -2,7 +2,7 @@
 # @generated-id: 20b2516e7efa
 
 from __future__ import annotations
-from .batchjobout import BatchJobOut, BatchJobOutTypedDict
+from .batchjob import BatchJob, BatchJobTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import validate_const
 import pydantic
@@ -13,14 +13,14 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class BatchJobsOutTypedDict(TypedDict):
     total: int
-    data: NotRequired[List[BatchJobOutTypedDict]]
+    data: NotRequired[List[BatchJobTypedDict]]
     object: Literal["list"]
 
 
 class BatchJobsOut(BaseModel):
     total: int
 
-    data: Optional[List[BatchJobOut]] = None
+    data: Optional[List[BatchJob]] = None
 
     OBJECT: Annotated[
         Annotated[Optional[Literal["list"]], AfterValidator(validate_const("list"))],

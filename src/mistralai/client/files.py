@@ -29,7 +29,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UploadFileOut:
+    ) -> models.FileObject:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -63,7 +63,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.MultiPartBodyParams(
+        request = models.UploadFileRequest(
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -82,7 +82,7 @@ class Files(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "multipart", models.MultiPartBodyParams
+                request, False, False, "multipart", models.UploadFileRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -100,7 +100,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadFile",
+                operation_id="files_api_routes_upload_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -112,7 +112,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UploadFileOut, http_res)
+            return unmarshal_json_response(models.FileObject, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -131,7 +131,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UploadFileOut:
+    ) -> models.FileObject:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -165,7 +165,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.MultiPartBodyParams(
+        request = models.UploadFileRequest(
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -184,7 +184,7 @@ class Files(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "multipart", models.MultiPartBodyParams
+                request, False, False, "multipart", models.UploadFileRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -202,7 +202,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadFile",
+                operation_id="files_api_routes_upload_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -214,7 +214,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UploadFileOut, http_res)
+            return unmarshal_json_response(models.FileObject, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -267,7 +267,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFilesRequest(
+        request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
             include_total=include_total,
@@ -307,7 +307,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFiles",
+                operation_id="files_api_routes_list_files",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -372,7 +372,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFilesRequest(
+        request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
             include_total=include_total,
@@ -412,7 +412,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFiles",
+                operation_id="files_api_routes_list_files",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -442,7 +442,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveFileOut:
+    ) -> models.FileObjectDeleted:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -463,7 +463,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveFileRequest(
+        request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
         )
 
@@ -496,7 +496,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveFile",
+                operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -508,7 +508,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RetrieveFileOut, http_res)
+            return unmarshal_json_response(models.FileObjectDeleted, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -526,7 +526,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveFileOut:
+    ) -> models.FileObjectDeleted:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -547,7 +547,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveFileRequest(
+        request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
         )
 
@@ -580,7 +580,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveFile",
+                operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -592,7 +592,7 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RetrieveFileOut, http_res)
+            return unmarshal_json_response(models.FileObjectDeleted, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -631,7 +631,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteFileRequest(
+        request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
         )
 
@@ -664,7 +664,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteFile",
+                operation_id="files_api_routes_delete_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -715,7 +715,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteFileRequest(
+        request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
         )
 
@@ -748,7 +748,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteFile",
+                operation_id="files_api_routes_delete_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -799,7 +799,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DownloadFileRequest(
+        request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
         )
 
@@ -832,7 +832,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DownloadFile",
+                operation_id="files_api_routes_download_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -885,7 +885,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DownloadFileRequest(
+        request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
         )
 
@@ -918,7 +918,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DownloadFile",
+                operation_id="files_api_routes_download_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -971,7 +971,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFileSignedURLRequest(
+        request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
             expiry=expiry,
         )
@@ -1005,7 +1005,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFileSignedUrl",
+                operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1056,7 +1056,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFileSignedURLRequest(
+        request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
             expiry=expiry,
         )
@@ -1090,7 +1090,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFileSignedUrl",
+                operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

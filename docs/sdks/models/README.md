@@ -19,7 +19,7 @@ List all models available to the user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListModels" method="get" path="/v1/models" -->
+<!-- UsageSnippet language="python" operationID="list_models_v1_models_get" method="get" path="/v1/models" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -58,7 +58,7 @@ Retrieve information about a model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="RetrieveModel" method="get" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="retrieve_model_v1_models__model_id__get" method="get" path="/v1/models/{model_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -99,7 +99,7 @@ Delete a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteModel" method="delete" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="delete_model_v1_models__model_id__delete" method="delete" path="/v1/models/{model_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -140,7 +140,7 @@ Update a model name or description.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UpdateModel" method="patch" path="/v1/fine_tuning/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_update_fine_tuned_model" method="patch" path="/v1/fine_tuning/models/{model_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -168,7 +168,7 @@ with Mistral(
 
 ### Response
 
-**[models.UpdateModelResponse](../../models/updatemodelresponse.md)**
+**[models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse](../../models/jobsapiroutesfinetuningupdatefinetunedmodelresponse.md)**
 
 ### Errors
 
@@ -182,7 +182,7 @@ Archive a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ArchiveModel" method="post" path="/v1/fine_tuning/models/{model_id}/archive" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_archive_fine_tuned_model" method="post" path="/v1/fine_tuning/models/{model_id}/archive" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -222,7 +222,7 @@ Un-archive a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UnarchiveModel" method="delete" path="/v1/fine_tuning/models/{model_id}/archive" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model" method="delete" path="/v1/fine_tuning/models/{model_id}/archive" -->
 ```python
 from mistralai.client import Mistral
 import os
