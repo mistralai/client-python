@@ -385,8 +385,8 @@ if TYPE_CHECKING:
     from .eventout import EventOut, EventOutTypedDict
     from .file import File, FileTypedDict
     from .filechunk import FileChunk, FileChunkTypedDict
-    from .fileobject_1 import FileObject1, FileObject1TypedDict
-    from .fileobject_2 import FileObject2, FileObject2TypedDict
+    from .fileobject import FileObject, FileObjectTypedDict
+    from .fileobjectdeleted import FileObjectDeleted, FileObjectDeletedTypedDict
     from .filepurpose import FilePurpose
     from .files_api_routes_delete_fileop import (
         FilesAPIRoutesDeleteFileRequest,
@@ -1237,10 +1237,10 @@ __all__ = [
     "File",
     "FileChunk",
     "FileChunkTypedDict",
-    "FileObject1",
-    "FileObject1TypedDict",
-    "FileObject2",
-    "FileObject2TypedDict",
+    "FileObject",
+    "FileObjectDeleted",
+    "FileObjectDeletedTypedDict",
+    "FileObjectTypedDict",
     "FilePurpose",
     "FileSignedURL",
     "FileSignedURLTypedDict",
@@ -1919,10 +1919,10 @@ _dynamic_imports: dict[str, str] = {
     "FileTypedDict": ".file",
     "FileChunk": ".filechunk",
     "FileChunkTypedDict": ".filechunk",
-    "FileObject1": ".fileobject_1",
-    "FileObject1TypedDict": ".fileobject_1",
-    "FileObject2": ".fileobject_2",
-    "FileObject2TypedDict": ".fileobject_2",
+    "FileObject": ".fileobject",
+    "FileObjectTypedDict": ".fileobject",
+    "FileObjectDeleted": ".fileobjectdeleted",
+    "FileObjectDeletedTypedDict": ".fileobjectdeleted",
     "FilePurpose": ".filepurpose",
     "FilesAPIRoutesDeleteFileRequest": ".files_api_routes_delete_fileop",
     "FilesAPIRoutesDeleteFileRequestTypedDict": ".files_api_routes_delete_fileop",
