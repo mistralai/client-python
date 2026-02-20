@@ -41,7 +41,7 @@ exclude_files=(
  "examples/mistral/audio/async_realtime_transcription_stream.py"
  "examples/mistral/jobs/async_jobs.py"
  "examples/mistral/jobs/dry_run_job.py"
- "examples/mistral/jobs/job.py"
+ "examples/mistral/jobs/jobs.py"
 )
 
 failed=0
