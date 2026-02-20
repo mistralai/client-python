@@ -32,6 +32,7 @@ from mistralai.models import (
     TranscriptionStreamSegmentDelta,
     TranscriptionStreamTextDelta,
 )
+from mistralai.types import UNSET
 
 
 class UnknownRealtimeEvent(BaseModel):
@@ -41,6 +42,7 @@ class UnknownRealtimeEvent(BaseModel):
     - invalid JSON payload
     - schema validation failure
     """
+
     type: Optional[str]
     content: Any
     error: Optional[str] = None
@@ -60,7 +62,6 @@ RealtimeEvent = Union[
     # forward-compat fallback
     UnknownRealtimeEvent,
 ]
-
 
 _MESSAGE_MODELS: dict[str, Any] = {
     "session.created": RealtimeTranscriptionSessionCreated,
@@ -113,7 +114,6 @@ class RealtimeConnection:
     ) -> None:
         self._websocket = websocket
         self._session = session
-        self._audio_format = session.audio_format
         self._closed = False
         self._initial_events: Deque[RealtimeEvent] = deque(initial_events or [])
 
@@ -127,7 +127,7 @@ class RealtimeConnection:
 
     @property
     def audio_format(self) -> AudioFormat:
-        return self._audio_format
+        return self._session.audio_format
 
     @property
     def is_closed(self) -> bool:
@@ -163,16 +163,13 @@ class RealtimeConnection:
         if audio_format is None and target_streaming_delay_ms is None:
             raise ValueError("At least one session field must be provided")
 
-        session_update_data: dict[str, object] = {}
-        if audio_format is not None:
-            self._audio_format = audio_format
-            session_update_data["audio_format"] = audio_format
-        if target_streaming_delay_ms is not None:
-            session_update_data["target_streaming_delay_ms"] = (
-                target_streaming_delay_ms
-            )
         message = RealtimeTranscriptionSessionUpdateMessage(
-            session=RealtimeTranscriptionSessionUpdatePayload(**session_update_data)
+            session=RealtimeTranscriptionSessionUpdatePayload(
+                audio_format=audio_format if audio_format is not None else UNSET,
+                target_streaming_delay_ms=target_streaming_delay_ms
+                if target_streaming_delay_ms is not None
+                else UNSET,
+            )
         )
         await self._websocket.send(message.model_dump_json())
 
@@ -229,6 +226,7 @@ class RealtimeConnection:
             await self.close()
 
     def _apply_session_updates(self, ev: RealtimeEvent) -> None:
-        if isinstance(ev, RealtimeTranscriptionSessionCreated) or isinstance(ev, RealtimeTranscriptionSessionUpdated):
+        if isinstance(ev, RealtimeTranscriptionSessionCreated) or isinstance(
+            ev, RealtimeTranscriptionSessionUpdated
+        ):
             self._session = ev.session
-            self._audio_format = ev.session.audio_format
