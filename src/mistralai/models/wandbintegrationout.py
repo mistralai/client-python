@@ -24,7 +24,7 @@ class WandbIntegrationOut(BaseModel):
     project: str
     r"""The name of the project that the new run will be created under."""
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Optional[Literal["wandb"]], AfterValidator(validate_const("wandb"))],
         pydantic.Field(alias="type"),
     ] = "wandb"

@@ -17,7 +17,7 @@ class FileChunkTypedDict(TypedDict):
 class FileChunk(BaseModel):
     file_id: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Optional[Literal["file"]], AfterValidator(validate_const("file"))],
         pydantic.Field(alias="type"),
     ] = "file"

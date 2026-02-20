@@ -55,7 +55,7 @@ class BatchJobOut(BaseModel):
 
     failed_requests: int
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["batch"]], AfterValidator(validate_const("batch"))],
         pydantic.Field(alias="object"),
     ] = "batch"

@@ -64,7 +64,7 @@ class LegacyJobMetadataOut(BaseModel):
     training_steps: OptionalNullable[int] = UNSET
     r"""The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."""
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[
             Optional[Literal["job.metadata"]],
             AfterValidator(validate_const("job.metadata")),

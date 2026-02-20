@@ -21,7 +21,7 @@ class BatchJobsOut(BaseModel):
 
     data: Optional[List[BatchJobOut]] = None
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["list"]], AfterValidator(validate_const("list"))],
         pydantic.Field(alias="object"),
     ] = "list"

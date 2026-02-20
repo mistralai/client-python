@@ -17,9 +17,9 @@ class DocumentOutTypedDict(TypedDict):
     size: Nullable[int]
     name: str
     created_at: datetime
-    processing_status: str
     uploaded_by_id: Nullable[str]
     uploaded_by_type: str
+    processing_status: str
     tokens_processing_total: int
     summary: NotRequired[Nullable[str]]
     last_processed_at: NotRequired[Nullable[datetime]]
@@ -47,11 +47,11 @@ class DocumentOut(BaseModel):
 
     created_at: datetime
 
-    processing_status: str
-
     uploaded_by_id: Nullable[str]
 
     uploaded_by_type: str
+
+    processing_status: str
 
     tokens_processing_total: int
 

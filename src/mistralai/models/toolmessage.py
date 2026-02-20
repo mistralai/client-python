@@ -3,9 +3,12 @@
 from __future__ import annotations
 from .contentchunk import ContentChunk, ContentChunkTypedDict
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolMessageContentTypedDict = TypeAliasType(
@@ -16,28 +19,28 @@ ToolMessageContentTypedDict = TypeAliasType(
 ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[ContentChunk]])
 
 
-ToolMessageRole = Literal["tool",]
-
-
 class ToolMessageTypedDict(TypedDict):
     content: Nullable[ToolMessageContentTypedDict]
+    role: Literal["tool"]
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
-    role: NotRequired[ToolMessageRole]
 
 
 class ToolMessage(BaseModel):
     content: Nullable[ToolMessageContent]
 
+    role: Annotated[
+        Annotated[Optional[Literal["tool"]], AfterValidator(validate_const("tool"))],
+        pydantic.Field(alias="role"),
+    ] = "tool"
+
     tool_call_id: OptionalNullable[str] = UNSET
 
     name: OptionalNullable[str] = UNSET
 
-    role: Optional[ToolMessageRole] = "tool"
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["tool_call_id", "name", "role"]
+        optional_fields = ["role", "tool_call_id", "name"]
         nullable_fields = ["content", "tool_call_id", "name"]
         null_default_fields = []
 
