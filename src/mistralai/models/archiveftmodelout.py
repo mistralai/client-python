@@ -18,7 +18,7 @@ class ArchiveFTModelOutTypedDict(TypedDict):
 class ArchiveFTModelOut(BaseModel):
     id: str
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
         pydantic.Field(alias="object"),
     ] = "model"

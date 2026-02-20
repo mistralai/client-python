@@ -27,8 +27,8 @@ with Mistral(
 
     res = mistral.agents.complete(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], agent_id="<id>", stream=False, response_format={
         "type": "text",
@@ -90,8 +90,8 @@ with Mistral(
 
     res = mistral.agents.stream(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], agent_id="<id>", stream=True, response_format={
         "type": "text",

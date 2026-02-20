@@ -93,7 +93,7 @@ class ClassifierJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
         pydantic.Field(alias="object"),
     ] = "job"
@@ -113,7 +113,7 @@ class ClassifierJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    JOB_TYPE: Annotated[
+    job_type: Annotated[
         Annotated[
             Optional[Literal["classifier"]],
             AfterValidator(validate_const("classifier")),
