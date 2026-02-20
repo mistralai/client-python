@@ -16,7 +16,7 @@ Given a library, list all of the Entity that have access and to what level.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="libraries_share_list_v1" method="get" path="/v1/libraries/{library_id}/share" -->
+<!-- UsageSnippet language="python" operationID="ListLibraryAccesses" method="get" path="/v1/libraries/{library_id}/share" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -26,7 +26,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.list(library_id="d2169833-d8e2-416e-a372-76518d3d99c2")
+    res = mistral.beta.libraries.accesses.list(library_id="9eb628ef-f118-47eb-b3cc-9750c4ca5fb6")
 
     # Handle response
     print(res)
@@ -57,7 +57,7 @@ Given a library id, you can create or update the access level of an entity. You 
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="libraries_share_create_v1" method="put" path="/v1/libraries/{library_id}/share" -->
+<!-- UsageSnippet language="python" operationID="UpdateOrCreateLibraryAccess" method="put" path="/v1/libraries/{library_id}/share" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -67,7 +67,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.update_or_create(library_id="36de3a24-5b1c-4c8f-9d84-d5642205a976", level="Viewer", share_with_uuid="0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", share_with_type="User")
+    res = mistral.beta.libraries.accesses.update_or_create(library_id="88bb030c-1cb5-4231-ba13-742c56554876", level="Viewer", share_with_uuid="6a736283-c1fa-49b0-9b6d-ea9309c0a766", share_with_type="Workspace")
 
     # Handle response
     print(res)
@@ -87,7 +87,7 @@ with Mistral(
 
 ### Response
 
-**[models.Sharing](../../models/sharing.md)**
+**[models.SharingOut](../../models/sharingout.md)**
 
 ### Errors
 
@@ -102,7 +102,7 @@ Given a library id, you can delete the access level of an entity. An owner canno
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="libraries_share_delete_v1" method="delete" path="/v1/libraries/{library_id}/share" -->
+<!-- UsageSnippet language="python" operationID="DeleteLibraryAccess" method="delete" path="/v1/libraries/{library_id}/share" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -112,7 +112,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type="User")
+    res = mistral.beta.libraries.accesses.delete(library_id="fc7ab1cf-e33c-4791-a6e0-95ff1f921c43", share_with_uuid="5818ddff-3568-40f1-a9e4-39d6cb9f5c94", share_with_type="Org")
 
     # Handle response
     print(res)
@@ -131,7 +131,7 @@ with Mistral(
 
 ### Response
 
-**[models.Sharing](../../models/sharing.md)**
+**[models.SharingOut](../../models/sharingout.md)**
 
 ### Errors
 

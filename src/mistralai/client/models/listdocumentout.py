@@ -2,7 +2,7 @@
 # @generated-id: b2c96075ce00
 
 from __future__ import annotations
-from .document import Document, DocumentTypedDict
+from .documentout import DocumentOut, DocumentOutTypedDict
 from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
 from mistralai.client.types import BaseModel
 from typing import List
@@ -11,10 +11,10 @@ from typing_extensions import TypedDict
 
 class ListDocumentOutTypedDict(TypedDict):
     pagination: PaginationInfoTypedDict
-    data: List[DocumentTypedDict]
+    data: List[DocumentOutTypedDict]
 
 
 class ListDocumentOut(BaseModel):
     pagination: PaginationInfo
 
-    data: List[Document]
+    data: List[DocumentOut]

@@ -2,15 +2,15 @@
 # @generated-id: cb78c529e763
 
 from __future__ import annotations
-from .library import Library, LibraryTypedDict
+from .libraryout import LibraryOut, LibraryOutTypedDict
 from mistralai.client.types import BaseModel
 from typing import List
 from typing_extensions import TypedDict
 
 
 class ListLibraryOutTypedDict(TypedDict):
-    data: List[LibraryTypedDict]
+    data: List[LibraryOutTypedDict]
 
 
 class ListLibraryOut(BaseModel):
-    data: List[Library]
+    data: List[LibraryOut]
