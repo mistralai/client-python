@@ -16,7 +16,7 @@ Get a list of fine-tuning jobs for your organization and user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListFineTuningJobs" method="get" path="/v1/fine_tuning/jobs" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_get_fine_tuning_jobs" method="get" path="/v1/fine_tuning/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -35,19 +35,19 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `page`                                                                                             | *Optional[int]*                                                                                    | :heavy_minus_sign:                                                                                 | The page number of the results to be returned.                                                     |
-| `page_size`                                                                                        | *Optional[int]*                                                                                    | :heavy_minus_sign:                                                                                 | The number of items to return per page.                                                            |
-| `model`                                                                                            | *OptionalNullable[str]*                                                                            | :heavy_minus_sign:                                                                                 | The model name used for fine-tuning to filter on. When set, the other results are not displayed.   |
-| `created_after`                                                                                    | [date](https://docs.python.org/3/library/datetime.html#date-objects)                               | :heavy_minus_sign:                                                                                 | The date/time to filter on. When set, the results for previous creation times are not displayed.   |
-| `created_before`                                                                                   | [date](https://docs.python.org/3/library/datetime.html#date-objects)                               | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
-| `created_by_me`                                                                                    | *Optional[bool]*                                                                                   | :heavy_minus_sign:                                                                                 | When set, only return results for jobs created by the API caller. Other results are not displayed. |
-| `status`                                                                                           | [OptionalNullable[models.ListFineTuningJobsStatus]](../../models/listfinetuningjobsstatus.md)      | :heavy_minus_sign:                                                                                 | The current job state to filter on. When set, the other results are not displayed.                 |
-| `wandb_project`                                                                                    | *OptionalNullable[str]*                                                                            | :heavy_minus_sign:                                                                                 | The Weights and Biases project to filter on. When set, the other results are not displayed.        |
-| `wandb_name`                                                                                       | *OptionalNullable[str]*                                                                            | :heavy_minus_sign:                                                                                 | The Weight and Biases run name to filter on. When set, the other results are not displayed.        |
-| `suffix`                                                                                           | *OptionalNullable[str]*                                                                            | :heavy_minus_sign:                                                                                 | The model suffix to filter on. When set, the other results are not displayed.                      |
-| `retries`                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                   | :heavy_minus_sign:                                                                                 | Configuration to override the default retry behavior of the client.                                |
+| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `page`                                                                                                                                    | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | The page number of the results to be returned.                                                                                            |
+| `page_size`                                                                                                                               | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | The number of items to return per page.                                                                                                   |
+| `model`                                                                                                                                   | *OptionalNullable[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                        | The model name used for fine-tuning to filter on. When set, the other results are not displayed.                                          |
+| `created_after`                                                                                                                           | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                      | :heavy_minus_sign:                                                                                                                        | The date/time to filter on. When set, the results for previous creation times are not displayed.                                          |
+| `created_before`                                                                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                      | :heavy_minus_sign:                                                                                                                        | N/A                                                                                                                                       |
+| `created_by_me`                                                                                                                           | *Optional[bool]*                                                                                                                          | :heavy_minus_sign:                                                                                                                        | When set, only return results for jobs created by the API caller. Other results are not displayed.                                        |
+| `status`                                                                                                                                  | [OptionalNullable[models.JobsAPIRoutesFineTuningGetFineTuningJobsStatus]](../../models/jobsapiroutesfinetuninggetfinetuningjobsstatus.md) | :heavy_minus_sign:                                                                                                                        | The current job state to filter on. When set, the other results are not displayed.                                                        |
+| `wandb_project`                                                                                                                           | *OptionalNullable[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                        | The Weights and Biases project to filter on. When set, the other results are not displayed.                                               |
+| `wandb_name`                                                                                                                              | *OptionalNullable[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                        | The Weight and Biases run name to filter on. When set, the other results are not displayed.                                               |
+| `suffix`                                                                                                                                  | *OptionalNullable[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                        | The model suffix to filter on. When set, the other results are not displayed.                                                             |
+| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |
 
 ### Response
 
@@ -65,7 +65,7 @@ Create a new fine-tuning job, it will be queued for processing.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="CreateFineTuningJob" method="post" path="/v1/fine_tuning/jobs" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_create_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -75,7 +75,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.create(model="Countach", hyperparameters={
+    res = mistral.fine_tuning.jobs.create(model="Camaro", hyperparameters={
         "learning_rate": 0.0001,
     }, invalid_sample_skip_percentage=0)
 
@@ -103,7 +103,7 @@ with Mistral(
 
 ### Response
 
-**[models.CreateFineTuningJobResponse](../../models/createfinetuningjobresponse.md)**
+**[models.CreateFineTuningJobResponseUnion2](../../models/createfinetuningjobresponseunion2.md)**
 
 ### Errors
 
@@ -117,7 +117,7 @@ Get a fine-tuned job details by its UUID.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetFineTuningJob" method="get" path="/v1/fine_tuning/jobs/{job_id}" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_get_fine_tuning_job" method="get" path="/v1/fine_tuning/jobs/{job_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -127,7 +127,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.get(job_id="2855f873-414e-4cf5-a46e-e589e39ee809")
+    res = mistral.fine_tuning.jobs.get(job_id="c167a961-ffca-4bcf-93ac-6169468dd389")
 
     # Handle response
     print(res)
@@ -157,7 +157,7 @@ Request the cancellation of a fine tuning job.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="CancelFineTuningJob" method="post" path="/v1/fine_tuning/jobs/{job_id}/cancel" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_cancel_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs/{job_id}/cancel" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -167,7 +167,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.cancel(job_id="ee7d6f03-fcbb-43ca-8f17-0388c0832eb9")
+    res = mistral.fine_tuning.jobs.cancel(job_id="6188a2f6-7513-4e0f-89cc-3f8088523a49")
 
     # Handle response
     print(res)
@@ -197,7 +197,7 @@ Request the start of a validated fine tuning job.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="StartFineTuningJob" method="post" path="/v1/fine_tuning/jobs/{job_id}/start" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_start_fine_tuning_job" method="post" path="/v1/fine_tuning/jobs/{job_id}/start" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -207,7 +207,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fine_tuning.jobs.start(job_id="da371429-0ec2-4cea-b9c7-73ce3a1dd76f")
+    res = mistral.fine_tuning.jobs.start(job_id="56553e4d-0679-471e-b9ac-59a77d671103")
 
     # Handle response
     print(res)

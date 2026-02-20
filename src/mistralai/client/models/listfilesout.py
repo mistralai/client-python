@@ -2,7 +2,7 @@
 # @generated-id: ae5fa21b141c
 
 from __future__ import annotations
-from .fileschema import FileSchema, FileSchemaTypedDict
+from .fileobject import FileObject, FileObjectTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,13 +16,13 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ListFilesOutTypedDict(TypedDict):
-    data: List[FileSchemaTypedDict]
+    data: List[FileObjectTypedDict]
     object: str
     total: NotRequired[Nullable[int]]
 
 
 class ListFilesOut(BaseModel):
-    data: List[FileSchema]
+    data: List[FileObject]
 
     object: str
 

@@ -2,15 +2,15 @@
 # @generated-id: ee708a7ccdad
 
 from __future__ import annotations
-from .sharingout import SharingOut, SharingOutTypedDict
+from .sharing import Sharing, SharingTypedDict
 from mistralai.client.types import BaseModel
 from typing import List
 from typing_extensions import TypedDict
 
 
 class ListSharingOutTypedDict(TypedDict):
-    data: List[SharingOutTypedDict]
+    data: List[SharingTypedDict]
 
 
 class ListSharingOut(BaseModel):
-    data: List[SharingOut]
+    data: List[Sharing]

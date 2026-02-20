@@ -9,7 +9,7 @@ from mistralai.client.models import (
     apiendpoint as models_apiendpoint,
     batchjobstatus as models_batchjobstatus,
     batchrequest as models_batchrequest,
-    listbatchjobsop as models_listbatchjobsop,
+    jobs_api_routes_batch_get_batch_jobsop as models_jobs_api_routes_batch_get_batch_jobsop,
 )
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
@@ -29,7 +29,9 @@ class BatchJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
-        order_by: Optional[models_listbatchjobsop.OrderBy] = "-created",
+        order_by: Optional[
+            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
+        ] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -63,7 +65,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListBatchJobsRequest(
+        request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -104,7 +106,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListBatchJobs",
+                operation_id="jobs_api_routes_batch_get_batch_jobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -137,7 +139,9 @@ class BatchJobs(BaseSDK):
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
-        order_by: Optional[models_listbatchjobsop.OrderBy] = "-created",
+        order_by: Optional[
+            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
+        ] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -171,7 +175,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListBatchJobsRequest(
+        request = models.JobsAPIRoutesBatchGetBatchJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -212,7 +216,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListBatchJobs",
+                operation_id="jobs_api_routes_batch_get_batch_jobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -253,7 +257,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Create Batch Job
 
         Create a new batch job, it will be queued for processing.
@@ -324,7 +328,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateBatchJob",
+                operation_id="jobs_api_routes_batch_create_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -336,7 +340,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -365,7 +369,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Create Batch Job
 
         Create a new batch job, it will be queued for processing.
@@ -436,7 +440,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateBatchJob",
+                operation_id="jobs_api_routes_batch_create_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -448,7 +452,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -467,7 +471,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Get Batch Job
 
         Get a batch job details by its UUID.
@@ -492,7 +496,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetBatchJobRequest(
+        request = models.JobsAPIRoutesBatchGetBatchJobRequest(
             job_id=job_id,
             inline=inline,
         )
@@ -526,7 +530,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetBatchJob",
+                operation_id="jobs_api_routes_batch_get_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -538,7 +542,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -557,7 +561,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Get Batch Job
 
         Get a batch job details by its UUID.
@@ -582,7 +586,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetBatchJobRequest(
+        request = models.JobsAPIRoutesBatchGetBatchJobRequest(
             job_id=job_id,
             inline=inline,
         )
@@ -616,7 +620,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetBatchJob",
+                operation_id="jobs_api_routes_batch_get_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -628,7 +632,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -646,7 +650,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Cancel Batch Job
 
         Request the cancellation of a batch job.
@@ -667,7 +671,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CancelBatchJobRequest(
+        request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
             job_id=job_id,
         )
 
@@ -700,7 +704,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CancelBatchJob",
+                operation_id="jobs_api_routes_batch_cancel_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -712,7 +716,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -730,7 +734,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJobOut:
+    ) -> models.BatchJob:
         r"""Cancel Batch Job
 
         Request the cancellation of a batch job.
@@ -751,7 +755,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CancelBatchJobRequest(
+        request = models.JobsAPIRoutesBatchCancelBatchJobRequest(
             job_id=job_id,
         )
 
@@ -784,7 +788,7 @@ class BatchJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CancelBatchJob",
+                operation_id="jobs_api_routes_batch_cancel_batch_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -796,7 +800,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJobOut, http_res)
+            return unmarshal_json_response(models.BatchJob, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)

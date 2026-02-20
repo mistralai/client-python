@@ -8,13 +8,12 @@ import builtins
 import sys
 
 if TYPE_CHECKING:
-    from .agent import Agent, AgentObject, AgentTool, AgentToolTypedDict, AgentTypedDict
+    from .agent import Agent, AgentTool, AgentToolTypedDict, AgentTypedDict
     from .agentaliasresponse import AgentAliasResponse, AgentAliasResponseTypedDict
     from .agentconversation import (
         AgentConversation,
         AgentConversationAgentVersion,
         AgentConversationAgentVersionTypedDict,
-        AgentConversationObject,
         AgentConversationTypedDict,
     )
     from .agentcreationrequest import (
@@ -27,15 +26,100 @@ if TYPE_CHECKING:
         AgentHandoffDoneEvent,
         AgentHandoffDoneEventTypedDict,
     )
-    from .agenthandoffentry import (
-        AgentHandoffEntry,
-        AgentHandoffEntryObject,
-        AgentHandoffEntryType,
-        AgentHandoffEntryTypedDict,
-    )
+    from .agenthandoffentry import AgentHandoffEntry, AgentHandoffEntryTypedDict
     from .agenthandoffstartedevent import (
         AgentHandoffStartedEvent,
         AgentHandoffStartedEventTypedDict,
+    )
+    from .agents_api_v1_agents_create_or_update_aliasop import (
+        AgentsAPIV1AgentsCreateOrUpdateAliasRequest,
+        AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict,
+    )
+    from .agents_api_v1_agents_delete_aliasop import (
+        AgentsAPIV1AgentsDeleteAliasRequest,
+        AgentsAPIV1AgentsDeleteAliasRequestTypedDict,
+    )
+    from .agents_api_v1_agents_deleteop import (
+        AgentsAPIV1AgentsDeleteRequest,
+        AgentsAPIV1AgentsDeleteRequestTypedDict,
+    )
+    from .agents_api_v1_agents_get_versionop import (
+        AgentsAPIV1AgentsGetVersionRequest,
+        AgentsAPIV1AgentsGetVersionRequestTypedDict,
+    )
+    from .agents_api_v1_agents_getop import (
+        AgentsAPIV1AgentsGetAgentVersion,
+        AgentsAPIV1AgentsGetAgentVersionTypedDict,
+        AgentsAPIV1AgentsGetRequest,
+        AgentsAPIV1AgentsGetRequestTypedDict,
+    )
+    from .agents_api_v1_agents_list_version_aliasesop import (
+        AgentsAPIV1AgentsListVersionAliasesRequest,
+        AgentsAPIV1AgentsListVersionAliasesRequestTypedDict,
+    )
+    from .agents_api_v1_agents_list_versionsop import (
+        AgentsAPIV1AgentsListVersionsRequest,
+        AgentsAPIV1AgentsListVersionsRequestTypedDict,
+    )
+    from .agents_api_v1_agents_listop import (
+        AgentsAPIV1AgentsListRequest,
+        AgentsAPIV1AgentsListRequestTypedDict,
+    )
+    from .agents_api_v1_agents_update_versionop import (
+        AgentsAPIV1AgentsUpdateVersionRequest,
+        AgentsAPIV1AgentsUpdateVersionRequestTypedDict,
+    )
+    from .agents_api_v1_agents_updateop import (
+        AgentsAPIV1AgentsUpdateRequest,
+        AgentsAPIV1AgentsUpdateRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_append_streamop import (
+        AgentsAPIV1ConversationsAppendStreamRequest,
+        AgentsAPIV1ConversationsAppendStreamRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_appendop import (
+        AgentsAPIV1ConversationsAppendRequest,
+        AgentsAPIV1ConversationsAppendRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_deleteop import (
+        AgentsAPIV1ConversationsDeleteRequest,
+        AgentsAPIV1ConversationsDeleteRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_getop import (
+        AgentConversationGetConversationResponse,
+        AgentConversationGetConversationResponseTypedDict,
+        AgentsAPIV1ConversationsGetAgentVersion,
+        AgentsAPIV1ConversationsGetAgentVersionTypedDict,
+        AgentsAPIV1ConversationsGetRequest,
+        AgentsAPIV1ConversationsGetRequestTypedDict,
+        AgentsAPIV1ConversationsGetTool,
+        AgentsAPIV1ConversationsGetToolTypedDict,
+        GetConversationResponse,
+        GetConversationResponseTypedDict,
+        ModelConversationGetConversationResponse,
+        ModelConversationGetConversationResponseTypedDict,
+    )
+    from .agents_api_v1_conversations_historyop import (
+        AgentsAPIV1ConversationsHistoryRequest,
+        AgentsAPIV1ConversationsHistoryRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_listop import (
+        AgentsAPIV1ConversationsListRequest,
+        AgentsAPIV1ConversationsListRequestTypedDict,
+        AgentsAPIV1ConversationsListResponse,
+        AgentsAPIV1ConversationsListResponseTypedDict,
+    )
+    from .agents_api_v1_conversations_messagesop import (
+        AgentsAPIV1ConversationsMessagesRequest,
+        AgentsAPIV1ConversationsMessagesRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_restart_streamop import (
+        AgentsAPIV1ConversationsRestartStreamRequest,
+        AgentsAPIV1ConversationsRestartStreamRequestTypedDict,
+    )
+    from .agents_api_v1_conversations_restartop import (
+        AgentsAPIV1ConversationsRestartRequest,
+        AgentsAPIV1ConversationsRestartRequestTypedDict,
     )
     from .agentscompletionrequest import (
         AgentsCompletionRequest,
@@ -64,21 +148,11 @@ if TYPE_CHECKING:
         AgentUpdateRequestTypedDict,
     )
     from .apiendpoint import APIEndpoint
-    from .appendconversationop import (
-        AppendConversationRequest,
-        AppendConversationRequestTypedDict,
-    )
-    from .appendconversationstreamop import (
-        AppendConversationStreamRequest,
-        AppendConversationStreamRequestTypedDict,
-    )
     from .archiveftmodelout import ArchiveFTModelOut, ArchiveFTModelOutTypedDict
-    from .archivemodelop import ArchiveModelRequest, ArchiveModelRequestTypedDict
     from .assistantmessage import (
         AssistantMessage,
         AssistantMessageContent,
         AssistantMessageContentTypedDict,
-        AssistantMessageRole,
         AssistantMessageTypedDict,
     )
     from .audiochunk import AudioChunk, AudioChunkTypedDict
@@ -94,19 +168,12 @@ if TYPE_CHECKING:
     )
     from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .batcherror import BatchError, BatchErrorTypedDict
+    from .batchjob import BatchJob, BatchJobTypedDict
     from .batchjobin import BatchJobIn, BatchJobInTypedDict
-    from .batchjobout import BatchJobOut, BatchJobOutTypedDict
     from .batchjobsout import BatchJobsOut, BatchJobsOutTypedDict
     from .batchjobstatus import BatchJobStatus
     from .batchrequest import BatchRequest, BatchRequestTypedDict
     from .builtinconnectors import BuiltInConnectors
-    from .cancelbatchjobop import CancelBatchJobRequest, CancelBatchJobRequestTypedDict
-    from .cancelfinetuningjobop import (
-        CancelFineTuningJobRequest,
-        CancelFineTuningJobRequestTypedDict,
-        CancelFineTuningJobResponse,
-        CancelFineTuningJobResponseTypedDict,
-    )
     from .chatclassificationrequest import (
         ChatClassificationRequest,
         ChatClassificationRequestTypedDict,
@@ -165,17 +232,6 @@ if TYPE_CHECKING:
         ClassificationTargetResult,
         ClassificationTargetResultTypedDict,
     )
-    from .classifierdetailedjobout import (
-        ClassifierDetailedJobOut,
-        ClassifierDetailedJobOutIntegration,
-        ClassifierDetailedJobOutIntegrationTypedDict,
-        ClassifierDetailedJobOutStatus,
-        ClassifierDetailedJobOutTypedDict,
-    )
-    from .classifierftmodelout import (
-        ClassifierFTModelOut,
-        ClassifierFTModelOutTypedDict,
-    )
     from .classifierjobout import (
         ClassifierJobOut,
         ClassifierJobOutIntegration,
@@ -197,20 +253,7 @@ if TYPE_CHECKING:
     from .completionargs import CompletionArgs, CompletionArgsTypedDict
     from .completionargsstop import CompletionArgsStop, CompletionArgsStopTypedDict
     from .completionchunk import CompletionChunk, CompletionChunkTypedDict
-    from .completiondetailedjobout import (
-        CompletionDetailedJobOut,
-        CompletionDetailedJobOutIntegration,
-        CompletionDetailedJobOutIntegrationTypedDict,
-        CompletionDetailedJobOutRepository,
-        CompletionDetailedJobOutRepositoryTypedDict,
-        CompletionDetailedJobOutStatus,
-        CompletionDetailedJobOutTypedDict,
-    )
     from .completionevent import CompletionEvent, CompletionEventTypedDict
-    from .completionftmodelout import (
-        CompletionFTModelOut,
-        CompletionFTModelOutTypedDict,
-    )
     from .completionjobout import (
         CompletionJobOut,
         CompletionJobOutIntegration,
@@ -252,7 +295,6 @@ if TYPE_CHECKING:
     )
     from .conversationhistory import (
         ConversationHistory,
-        ConversationHistoryObject,
         ConversationHistoryTypedDict,
         Entry,
         EntryTypedDict,
@@ -260,7 +302,6 @@ if TYPE_CHECKING:
     from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
     from .conversationmessages import (
         ConversationMessages,
-        ConversationMessagesObject,
         ConversationMessagesTypedDict,
     )
     from .conversationrequest import (
@@ -274,7 +315,6 @@ if TYPE_CHECKING:
     )
     from .conversationresponse import (
         ConversationResponse,
-        ConversationResponseObject,
         ConversationResponseTypedDict,
         Output,
         OutputTypedDict,
@@ -306,34 +346,11 @@ if TYPE_CHECKING:
         ConversationUsageInfo,
         ConversationUsageInfoTypedDict,
     )
-    from .createfinetuningjobop import (
-        CreateFineTuningJobResponse,
-        CreateFineTuningJobResponseTypedDict,
-        Response,
-        ResponseTypedDict,
+    from .delete_model_v1_models_model_id_deleteop import (
+        DeleteModelV1ModelsModelIDDeleteRequest,
+        DeleteModelV1ModelsModelIDDeleteRequestTypedDict,
     )
-    from .createorupdateagentaliasop import (
-        CreateOrUpdateAgentAliasRequest,
-        CreateOrUpdateAgentAliasRequestTypedDict,
-    )
-    from .deleteagentaliasop import (
-        DeleteAgentAliasRequest,
-        DeleteAgentAliasRequestTypedDict,
-    )
-    from .deleteagentop import DeleteAgentRequest, DeleteAgentRequestTypedDict
-    from .deleteconversationop import (
-        DeleteConversationRequest,
-        DeleteConversationRequestTypedDict,
-    )
-    from .deletedocumentop import DeleteDocumentRequest, DeleteDocumentRequestTypedDict
-    from .deletefileop import DeleteFileRequest, DeleteFileRequestTypedDict
     from .deletefileout import DeleteFileOut, DeleteFileOutTypedDict
-    from .deletelibraryaccessop import (
-        DeleteLibraryAccessRequest,
-        DeleteLibraryAccessRequestTypedDict,
-    )
-    from .deletelibraryop import DeleteLibraryRequest, DeleteLibraryRequestTypedDict
-    from .deletemodelop import DeleteModelRequest, DeleteModelRequestTypedDict
     from .deletemodelout import DeleteModelOut, DeleteModelOutTypedDict
     from .deltamessage import (
         DeltaMessage,
@@ -341,8 +358,8 @@ if TYPE_CHECKING:
         DeltaMessageContentTypedDict,
         DeltaMessageTypedDict,
     )
+    from .document import Document, DocumentTypedDict
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
-    from .documentout import DocumentOut, DocumentOutTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
     from .documentupdatein import (
         Attributes,
@@ -350,12 +367,7 @@ if TYPE_CHECKING:
         DocumentUpdateIn,
         DocumentUpdateInTypedDict,
     )
-    from .documenturlchunk import (
-        DocumentURLChunk,
-        DocumentURLChunkType,
-        DocumentURLChunkTypedDict,
-    )
-    from .downloadfileop import DownloadFileRequest, DownloadFileRequestTypedDict
+    from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
     from .embeddingdtype import EmbeddingDtype
     from .embeddingrequest import (
         EmbeddingRequest,
@@ -373,8 +385,33 @@ if TYPE_CHECKING:
     from .eventout import EventOut, EventOutTypedDict
     from .file import File, FileTypedDict
     from .filechunk import FileChunk, FileChunkTypedDict
+    from .fileobject import FileObject, FileObjectTypedDict
+    from .fileobjectdeleted import FileObjectDeleted, FileObjectDeletedTypedDict
     from .filepurpose import FilePurpose
-    from .fileschema import FileSchema, FileSchemaTypedDict
+    from .files_api_routes_delete_fileop import (
+        FilesAPIRoutesDeleteFileRequest,
+        FilesAPIRoutesDeleteFileRequestTypedDict,
+    )
+    from .files_api_routes_download_fileop import (
+        FilesAPIRoutesDownloadFileRequest,
+        FilesAPIRoutesDownloadFileRequestTypedDict,
+    )
+    from .files_api_routes_get_signed_urlop import (
+        FilesAPIRoutesGetSignedURLRequest,
+        FilesAPIRoutesGetSignedURLRequestTypedDict,
+    )
+    from .files_api_routes_list_filesop import (
+        FilesAPIRoutesListFilesRequest,
+        FilesAPIRoutesListFilesRequestTypedDict,
+    )
+    from .files_api_routes_retrieve_fileop import (
+        FilesAPIRoutesRetrieveFileRequest,
+        FilesAPIRoutesRetrieveFileRequestTypedDict,
+    )
+    from .files_api_routes_upload_fileop import (
+        UploadFileRequest,
+        UploadFileRequestTypedDict,
+    )
     from .filesignedurl import FileSignedURL, FileSignedURLTypedDict
     from .fimcompletionrequest import (
         FIMCompletionRequest,
@@ -406,78 +443,15 @@ if TYPE_CHECKING:
         FunctionCall,
         FunctionCallTypedDict,
     )
-    from .functioncallentry import (
-        FunctionCallEntry,
-        FunctionCallEntryObject,
-        FunctionCallEntryType,
-        FunctionCallEntryTypedDict,
-    )
+    from .functioncallentry import FunctionCallEntry, FunctionCallEntryTypedDict
     from .functioncallentryarguments import (
         FunctionCallEntryArguments,
         FunctionCallEntryArgumentsTypedDict,
     )
     from .functioncallevent import FunctionCallEvent, FunctionCallEventTypedDict
     from .functionname import FunctionName, FunctionNameTypedDict
-    from .functionresultentry import (
-        FunctionResultEntry,
-        FunctionResultEntryObject,
-        FunctionResultEntryType,
-        FunctionResultEntryTypedDict,
-    )
+    from .functionresultentry import FunctionResultEntry, FunctionResultEntryTypedDict
     from .functiontool import FunctionTool, FunctionToolTypedDict
-    from .getagentop import (
-        GetAgentAgentVersion,
-        GetAgentAgentVersionTypedDict,
-        GetAgentRequest,
-        GetAgentRequestTypedDict,
-    )
-    from .getagentversionop import (
-        GetAgentVersionRequest,
-        GetAgentVersionRequestTypedDict,
-    )
-    from .getbatchjobop import GetBatchJobRequest, GetBatchJobRequestTypedDict
-    from .getconversationhistoryop import (
-        GetConversationHistoryRequest,
-        GetConversationHistoryRequestTypedDict,
-    )
-    from .getconversationmessagesop import (
-        GetConversationMessagesRequest,
-        GetConversationMessagesRequestTypedDict,
-    )
-    from .getconversationop import (
-        GetConversationRequest,
-        GetConversationRequestTypedDict,
-        ResponseV1ConversationsGet,
-        ResponseV1ConversationsGetTypedDict,
-    )
-    from .getdocumentextractedtextsignedurlop import (
-        GetDocumentExtractedTextSignedURLRequest,
-        GetDocumentExtractedTextSignedURLRequestTypedDict,
-    )
-    from .getdocumentop import GetDocumentRequest, GetDocumentRequestTypedDict
-    from .getdocumentsignedurlop import (
-        GetDocumentSignedURLRequest,
-        GetDocumentSignedURLRequestTypedDict,
-    )
-    from .getdocumentstatusop import (
-        GetDocumentStatusRequest,
-        GetDocumentStatusRequestTypedDict,
-    )
-    from .getdocumenttextcontentop import (
-        GetDocumentTextContentRequest,
-        GetDocumentTextContentRequestTypedDict,
-    )
-    from .getfilesignedurlop import (
-        GetFileSignedURLRequest,
-        GetFileSignedURLRequestTypedDict,
-    )
-    from .getfinetuningjobop import (
-        GetFineTuningJobRequest,
-        GetFineTuningJobRequestTypedDict,
-        GetFineTuningJobResponse,
-        GetFineTuningJobResponseTypedDict,
-    )
-    from .getlibraryop import GetLibraryRequest, GetLibraryRequestTypedDict
     from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
     from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
@@ -485,7 +459,6 @@ if TYPE_CHECKING:
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
         ImageURLChunk,
-        ImageURLChunkType,
         ImageURLChunkTypedDict,
         ImageURLUnion,
         ImageURLUnionTypedDict,
@@ -516,48 +489,189 @@ if TYPE_CHECKING:
         JobInTypedDict,
     )
     from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-    from .jobsout import JobsOut, JobsOutData, JobsOutDataTypedDict, JobsOutTypedDict
-    from .jsonschema import JSONSchema, JSONSchemaTypedDict
-    from .legacyjobmetadataout import (
-        LegacyJobMetadataOut,
-        LegacyJobMetadataOutTypedDict,
+    from .jobs_api_routes_batch_cancel_batch_jobop import (
+        JobsAPIRoutesBatchCancelBatchJobRequest,
+        JobsAPIRoutesBatchCancelBatchJobRequestTypedDict,
     )
-    from .libraryin import LibraryIn, LibraryInTypedDict
-    from .libraryinupdate import LibraryInUpdate, LibraryInUpdateTypedDict
-    from .libraryout import LibraryOut, LibraryOutTypedDict
-    from .listagentaliasesop import (
-        ListAgentAliasesRequest,
-        ListAgentAliasesRequestTypedDict,
+    from .jobs_api_routes_batch_get_batch_jobop import (
+        JobsAPIRoutesBatchGetBatchJobRequest,
+        JobsAPIRoutesBatchGetBatchJobRequestTypedDict,
     )
-    from .listagentsop import ListAgentsRequest, ListAgentsRequestTypedDict
-    from .listagentversionsop import (
-        ListAgentVersionsRequest,
-        ListAgentVersionsRequestTypedDict,
-    )
-    from .listbatchjobsop import (
-        ListBatchJobsRequest,
-        ListBatchJobsRequestTypedDict,
+    from .jobs_api_routes_batch_get_batch_jobsop import (
+        JobsAPIRoutesBatchGetBatchJobsRequest,
+        JobsAPIRoutesBatchGetBatchJobsRequestTypedDict,
         OrderBy,
     )
-    from .listconversationsop import (
-        ListConversationsRequest,
-        ListConversationsRequestTypedDict,
-        ListConversationsResponse,
-        ListConversationsResponseTypedDict,
+    from .jobs_api_routes_fine_tuning_archive_fine_tuned_modelop import (
+        JobsAPIRoutesFineTuningArchiveFineTunedModelRequest,
+        JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict,
     )
+    from .jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop import (
+        CancelFineTuningJobResponse,
+        CancelFineTuningJobResponseTypedDict,
+        ClassifierDetailedJobOutCancelFineTuningJobResponse,
+        ClassifierDetailedJobOutCancelFineTuningJobResponseTypedDict,
+        CompletionDetailedJobOutCancelFineTuningJobResponse,
+        CompletionDetailedJobOutCancelFineTuningJobResponseTypedDict,
+        JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningCancelFineTuningJobRepository,
+        JobsAPIRoutesFineTuningCancelFineTuningJobRepositoryTypedDict,
+        JobsAPIRoutesFineTuningCancelFineTuningJobRequest,
+        JobsAPIRoutesFineTuningCancelFineTuningJobRequestTypedDict,
+    )
+    from .jobs_api_routes_fine_tuning_create_fine_tuning_jobop import (
+        ClassifierJobOutCreateFineTuningJobResponse,
+        ClassifierJobOutCreateFineTuningJobResponseTypedDict,
+        CompletionJobOutCreateFineTuningJobResponse,
+        CompletionJobOutCreateFineTuningJobResponseTypedDict,
+        CreateFineTuningJobResponseUnion1,
+        CreateFineTuningJobResponseUnion1TypedDict,
+        CreateFineTuningJobResponseUnion2,
+        CreateFineTuningJobResponseUnion2TypedDict,
+        JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegration,
+        JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutStatus,
+        JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegration,
+        JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutStatus,
+        JobsAPIRoutesFineTuningCreateFineTuningJobRepository,
+        JobsAPIRoutesFineTuningCreateFineTuningJobRepositoryTypedDict,
+        LegacyJobMetadataOutCreateFineTuningJobResponse,
+        LegacyJobMetadataOutCreateFineTuningJobResponseTypedDict,
+    )
+    from .jobs_api_routes_fine_tuning_get_fine_tuning_jobop import (
+        ClassifierDetailedJobOutGetFineTuningJobResponse,
+        ClassifierDetailedJobOutGetFineTuningJobResponseTypedDict,
+        CompletionDetailedJobOutGetFineTuningJobResponse,
+        CompletionDetailedJobOutGetFineTuningJobResponseTypedDict,
+        GetFineTuningJobResponse,
+        GetFineTuningJobResponseTypedDict,
+        JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningGetFineTuningJobRepository,
+        JobsAPIRoutesFineTuningGetFineTuningJobRepositoryTypedDict,
+        JobsAPIRoutesFineTuningGetFineTuningJobRequest,
+        JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict,
+    )
+    from .jobs_api_routes_fine_tuning_get_fine_tuning_jobsop import (
+        JobsAPIRoutesFineTuningGetFineTuningJobsRequest,
+        JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict,
+        JobsAPIRoutesFineTuningGetFineTuningJobsStatus,
+    )
+    from .jobs_api_routes_fine_tuning_start_fine_tuning_jobop import (
+        ClassifierDetailedJobOutStartFineTuningJobResponse,
+        ClassifierDetailedJobOutStartFineTuningJobResponseTypedDict,
+        CompletionDetailedJobOutStartFineTuningJobResponse,
+        CompletionDetailedJobOutStartFineTuningJobResponseTypedDict,
+        JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegration,
+        JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegrationTypedDict,
+        JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutStatus,
+        JobsAPIRoutesFineTuningStartFineTuningJobRepository,
+        JobsAPIRoutesFineTuningStartFineTuningJobRepositoryTypedDict,
+        JobsAPIRoutesFineTuningStartFineTuningJobRequest,
+        JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict,
+        StartFineTuningJobResponse,
+        StartFineTuningJobResponseTypedDict,
+    )
+    from .jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop import (
+        JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest,
+        JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict,
+    )
+    from .jobs_api_routes_fine_tuning_update_fine_tuned_modelop import (
+        ClassifierFTModelOutUpdateModelResponse,
+        ClassifierFTModelOutUpdateModelResponseTypedDict,
+        CompletionFTModelOutUpdateModelResponse,
+        CompletionFTModelOutUpdateModelResponseTypedDict,
+        JobsAPIRoutesFineTuningUpdateFineTunedModelRequest,
+        JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict,
+        UpdateModelResponse,
+        UpdateModelResponseTypedDict,
+    )
+    from .jobsout import JobsOut, JobsOutData, JobsOutDataTypedDict, JobsOutTypedDict
+    from .jsonschema import JSONSchema, JSONSchemaTypedDict
+    from .libraries_delete_v1op import (
+        LibrariesDeleteV1Request,
+        LibrariesDeleteV1RequestTypedDict,
+    )
+    from .libraries_documents_delete_v1op import (
+        LibrariesDocumentsDeleteV1Request,
+        LibrariesDocumentsDeleteV1RequestTypedDict,
+    )
+    from .libraries_documents_get_extracted_text_signed_url_v1op import (
+        LibrariesDocumentsGetExtractedTextSignedURLV1Request,
+        LibrariesDocumentsGetExtractedTextSignedURLV1RequestTypedDict,
+    )
+    from .libraries_documents_get_signed_url_v1op import (
+        LibrariesDocumentsGetSignedURLV1Request,
+        LibrariesDocumentsGetSignedURLV1RequestTypedDict,
+    )
+    from .libraries_documents_get_status_v1op import (
+        LibrariesDocumentsGetStatusV1Request,
+        LibrariesDocumentsGetStatusV1RequestTypedDict,
+    )
+    from .libraries_documents_get_text_content_v1op import (
+        LibrariesDocumentsGetTextContentV1Request,
+        LibrariesDocumentsGetTextContentV1RequestTypedDict,
+    )
+    from .libraries_documents_get_v1op import (
+        LibrariesDocumentsGetV1Request,
+        LibrariesDocumentsGetV1RequestTypedDict,
+    )
+    from .libraries_documents_list_v1op import (
+        LibrariesDocumentsListV1Request,
+        LibrariesDocumentsListV1RequestTypedDict,
+    )
+    from .libraries_documents_reprocess_v1op import (
+        LibrariesDocumentsReprocessV1Request,
+        LibrariesDocumentsReprocessV1RequestTypedDict,
+    )
+    from .libraries_documents_update_v1op import (
+        LibrariesDocumentsUpdateV1Request,
+        LibrariesDocumentsUpdateV1RequestTypedDict,
+    )
+    from .libraries_documents_upload_v1op import (
+        LibrariesDocumentsUploadV1Request,
+        LibrariesDocumentsUploadV1RequestTypedDict,
+        UploadDocumentRequest,
+        UploadDocumentRequestTypedDict,
+    )
+    from .libraries_get_v1op import (
+        LibrariesGetV1Request,
+        LibrariesGetV1RequestTypedDict,
+    )
+    from .libraries_share_create_v1op import (
+        LibrariesShareCreateV1Request,
+        LibrariesShareCreateV1RequestTypedDict,
+    )
+    from .libraries_share_delete_v1op import (
+        LibrariesShareDeleteV1Request,
+        LibrariesShareDeleteV1RequestTypedDict,
+    )
+    from .libraries_share_list_v1op import (
+        LibrariesShareListV1Request,
+        LibrariesShareListV1RequestTypedDict,
+    )
+    from .libraries_update_v1op import (
+        LibrariesUpdateV1Request,
+        LibrariesUpdateV1RequestTypedDict,
+    )
+    from .library import Library, LibraryTypedDict
+    from .libraryin import LibraryIn, LibraryInTypedDict
+    from .libraryinupdate import LibraryInUpdate, LibraryInUpdateTypedDict
     from .listdocumentout import ListDocumentOut, ListDocumentOutTypedDict
-    from .listdocumentsop import ListDocumentsRequest, ListDocumentsRequestTypedDict
-    from .listfilesop import ListFilesRequest, ListFilesRequestTypedDict
     from .listfilesout import ListFilesOut, ListFilesOutTypedDict
-    from .listfinetuningjobsop import (
-        ListFineTuningJobsRequest,
-        ListFineTuningJobsRequestTypedDict,
-        ListFineTuningJobsStatus,
-    )
-    from .listlibraryaccessesop import (
-        ListLibraryAccessesRequest,
-        ListLibraryAccessesRequestTypedDict,
-    )
     from .listlibraryout import ListLibraryOut, ListLibraryOutTypedDict
     from .listsharingout import ListSharingOut, ListSharingOutTypedDict
     from .messageentries import MessageEntries, MessageEntriesTypedDict
@@ -569,10 +683,8 @@ if TYPE_CHECKING:
         MessageInputEntry,
         MessageInputEntryContent,
         MessageInputEntryContentTypedDict,
-        MessageInputEntryObject,
-        MessageInputEntryRole,
-        MessageInputEntryType,
         MessageInputEntryTypedDict,
+        Role,
     )
     from .messageoutputcontentchunks import (
         MessageOutputContentChunks,
@@ -582,16 +694,12 @@ if TYPE_CHECKING:
         MessageOutputEntry,
         MessageOutputEntryContent,
         MessageOutputEntryContentTypedDict,
-        MessageOutputEntryObject,
-        MessageOutputEntryRole,
-        MessageOutputEntryType,
         MessageOutputEntryTypedDict,
     )
     from .messageoutputevent import (
         MessageOutputEvent,
         MessageOutputEventContent,
         MessageOutputEventContentTypedDict,
-        MessageOutputEventRole,
         MessageOutputEventTypedDict,
     )
     from .metricout import MetricOut, MetricOutTypedDict
@@ -599,7 +707,6 @@ if TYPE_CHECKING:
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
     from .modelconversation import (
         ModelConversation,
-        ModelConversationObject,
         ModelConversationTool,
         ModelConversationToolTypedDict,
         ModelConversationTypedDict,
@@ -617,8 +724,8 @@ if TYPE_CHECKING:
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
     from .ocrrequest import (
-        Document,
-        DocumentTypedDict,
+        DocumentUnion,
+        DocumentUnionTypedDict,
         OCRRequest,
         OCRRequestTypedDict,
         TableFormat,
@@ -630,6 +737,7 @@ if TYPE_CHECKING:
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatusout import ProcessingStatusOut, ProcessingStatusOutTypedDict
+    from .processstatus import ProcessStatus
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -652,15 +760,7 @@ if TYPE_CHECKING:
         RealtimeTranscriptionSessionUpdated,
         RealtimeTranscriptionSessionUpdatedTypedDict,
     )
-    from .referencechunk import (
-        ReferenceChunk,
-        ReferenceChunkType,
-        ReferenceChunkTypedDict,
-    )
-    from .reprocessdocumentop import (
-        ReprocessDocumentRequest,
-        ReprocessDocumentRequestTypedDict,
-    )
+    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
     from .requestsource import RequestSource
     from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
     from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
@@ -671,37 +771,25 @@ if TYPE_CHECKING:
         ResponseStartedEventTypedDict,
     )
     from .responsevalidationerror import ResponseValidationError
-    from .restartconversationop import (
-        RestartConversationRequest,
-        RestartConversationRequestTypedDict,
-    )
-    from .restartconversationstreamop import (
-        RestartConversationStreamRequest,
-        RestartConversationStreamRequestTypedDict,
-    )
-    from .retrievefileop import RetrieveFileRequest, RetrieveFileRequestTypedDict
-    from .retrievefileout import RetrieveFileOut, RetrieveFileOutTypedDict
-    from .retrievemodelop import (
-        ResponseRetrieveModelV1ModelsModelIDGet,
-        ResponseRetrieveModelV1ModelsModelIDGetTypedDict,
-        RetrieveModelRequest,
-        RetrieveModelRequestTypedDict,
+    from .retrieve_model_v1_models_model_id_getop import (
+        BaseModelCardGetModelResponse,
+        BaseModelCardGetModelResponseTypedDict,
+        FTModelCardGetModelResponse,
+        FTModelCardGetModelResponseTypedDict,
+        GetModelResponse,
+        GetModelResponseTypedDict,
+        RetrieveModelV1ModelsModelIDGetRequest,
+        RetrieveModelV1ModelsModelIDGetRequestTypedDict,
     )
     from .sampletype import SampleType
     from .sdkerror import SDKError
     from .security import Security, SecurityTypedDict
     from .shareenum import ShareEnum
+    from .sharing import Sharing, SharingTypedDict
     from .sharingdelete import SharingDelete, SharingDeleteTypedDict
     from .sharingin import SharingIn, SharingInTypedDict
-    from .sharingout import SharingOut, SharingOutTypedDict
     from .source import Source
     from .ssetypes import SSETypes
-    from .startfinetuningjobop import (
-        StartFineTuningJobRequest,
-        StartFineTuningJobRequestTypedDict,
-        StartFineTuningJobResponse,
-        StartFineTuningJobResponseTypedDict,
-    )
     from .systemmessage import (
         SystemMessage,
         SystemMessageContent,
@@ -712,14 +800,8 @@ if TYPE_CHECKING:
         SystemMessageContentChunks,
         SystemMessageContentChunksTypedDict,
     )
-    from .textchunk import TextChunk, TextChunkType, TextChunkTypedDict
-    from .thinkchunk import (
-        ThinkChunk,
-        ThinkChunkType,
-        ThinkChunkTypedDict,
-        Thinking,
-        ThinkingTypedDict,
-    )
+    from .textchunk import TextChunk, TextChunkTypedDict
+    from .thinkchunk import ThinkChunk, ThinkChunkTypedDict, Thinking, ThinkingTypedDict
     from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
     from .toolcall import ToolCall, ToolCallTypedDict
@@ -741,8 +823,6 @@ if TYPE_CHECKING:
         ToolExecutionEntry,
         ToolExecutionEntryName,
         ToolExecutionEntryNameTypedDict,
-        ToolExecutionEntryObject,
-        ToolExecutionEntryType,
         ToolExecutionEntryTypedDict,
     )
     from .toolexecutionstartedevent import (
@@ -755,7 +835,6 @@ if TYPE_CHECKING:
         ToolFileChunk,
         ToolFileChunkTool,
         ToolFileChunkToolTypedDict,
-        ToolFileChunkType,
         ToolFileChunkTypedDict,
     )
     from .toolmessage import (
@@ -768,7 +847,6 @@ if TYPE_CHECKING:
         ToolReferenceChunk,
         ToolReferenceChunkTool,
         ToolReferenceChunkToolTypedDict,
-        ToolReferenceChunkType,
         ToolReferenceChunkTypedDict,
     )
     from .tooltypes import ToolTypes
@@ -779,7 +857,6 @@ if TYPE_CHECKING:
     )
     from .transcriptionsegmentchunk import (
         TranscriptionSegmentChunk,
-        TranscriptionSegmentChunkType,
         TranscriptionSegmentChunkTypedDict,
     )
     from .transcriptionstreamdone import (
@@ -806,33 +883,7 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDeltaTypedDict,
     )
     from .unarchiveftmodelout import UnarchiveFTModelOut, UnarchiveFTModelOutTypedDict
-    from .unarchivemodelop import UnarchiveModelRequest, UnarchiveModelRequestTypedDict
-    from .updateagentop import UpdateAgentRequest, UpdateAgentRequestTypedDict
-    from .updateagentversionop import (
-        UpdateAgentVersionRequest,
-        UpdateAgentVersionRequestTypedDict,
-    )
-    from .updatedocumentop import UpdateDocumentRequest, UpdateDocumentRequestTypedDict
     from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
-    from .updatelibraryop import UpdateLibraryRequest, UpdateLibraryRequestTypedDict
-    from .updatemodelop import (
-        UpdateModelRequest,
-        UpdateModelRequestTypedDict,
-        UpdateModelResponse,
-        UpdateModelResponseTypedDict,
-    )
-    from .updateorcreatelibraryaccessop import (
-        UpdateOrCreateLibraryAccessRequest,
-        UpdateOrCreateLibraryAccessRequestTypedDict,
-    )
-    from .uploaddocumentop import (
-        DocumentUpload,
-        DocumentUploadTypedDict,
-        UploadDocumentRequest,
-        UploadDocumentRequestTypedDict,
-    )
-    from .uploadfileop import MultiPartBodyParams, MultiPartBodyParamsTypedDict
-    from .uploadfileout import UploadFileOut, UploadFileOutTypedDict
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usermessage import (
         UserMessage,
@@ -862,7 +913,8 @@ __all__ = [
     "AgentConversation",
     "AgentConversationAgentVersion",
     "AgentConversationAgentVersionTypedDict",
-    "AgentConversationObject",
+    "AgentConversationGetConversationResponse",
+    "AgentConversationGetConversationResponseTypedDict",
     "AgentConversationTypedDict",
     "AgentCreationRequest",
     "AgentCreationRequestTool",
@@ -871,12 +923,9 @@ __all__ = [
     "AgentHandoffDoneEvent",
     "AgentHandoffDoneEventTypedDict",
     "AgentHandoffEntry",
-    "AgentHandoffEntryObject",
-    "AgentHandoffEntryType",
     "AgentHandoffEntryTypedDict",
     "AgentHandoffStartedEvent",
     "AgentHandoffStartedEventTypedDict",
-    "AgentObject",
     "AgentTool",
     "AgentToolTypedDict",
     "AgentTypedDict",
@@ -884,6 +933,52 @@ __all__ = [
     "AgentUpdateRequestTool",
     "AgentUpdateRequestToolTypedDict",
     "AgentUpdateRequestTypedDict",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequest",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict",
+    "AgentsAPIV1AgentsDeleteAliasRequest",
+    "AgentsAPIV1AgentsDeleteAliasRequestTypedDict",
+    "AgentsAPIV1AgentsDeleteRequest",
+    "AgentsAPIV1AgentsDeleteRequestTypedDict",
+    "AgentsAPIV1AgentsGetAgentVersion",
+    "AgentsAPIV1AgentsGetAgentVersionTypedDict",
+    "AgentsAPIV1AgentsGetRequest",
+    "AgentsAPIV1AgentsGetRequestTypedDict",
+    "AgentsAPIV1AgentsGetVersionRequest",
+    "AgentsAPIV1AgentsGetVersionRequestTypedDict",
+    "AgentsAPIV1AgentsListRequest",
+    "AgentsAPIV1AgentsListRequestTypedDict",
+    "AgentsAPIV1AgentsListVersionAliasesRequest",
+    "AgentsAPIV1AgentsListVersionAliasesRequestTypedDict",
+    "AgentsAPIV1AgentsListVersionsRequest",
+    "AgentsAPIV1AgentsListVersionsRequestTypedDict",
+    "AgentsAPIV1AgentsUpdateRequest",
+    "AgentsAPIV1AgentsUpdateRequestTypedDict",
+    "AgentsAPIV1AgentsUpdateVersionRequest",
+    "AgentsAPIV1AgentsUpdateVersionRequestTypedDict",
+    "AgentsAPIV1ConversationsAppendRequest",
+    "AgentsAPIV1ConversationsAppendRequestTypedDict",
+    "AgentsAPIV1ConversationsAppendStreamRequest",
+    "AgentsAPIV1ConversationsAppendStreamRequestTypedDict",
+    "AgentsAPIV1ConversationsDeleteRequest",
+    "AgentsAPIV1ConversationsDeleteRequestTypedDict",
+    "AgentsAPIV1ConversationsGetAgentVersion",
+    "AgentsAPIV1ConversationsGetAgentVersionTypedDict",
+    "AgentsAPIV1ConversationsGetRequest",
+    "AgentsAPIV1ConversationsGetRequestTypedDict",
+    "AgentsAPIV1ConversationsGetTool",
+    "AgentsAPIV1ConversationsGetToolTypedDict",
+    "AgentsAPIV1ConversationsHistoryRequest",
+    "AgentsAPIV1ConversationsHistoryRequestTypedDict",
+    "AgentsAPIV1ConversationsListRequest",
+    "AgentsAPIV1ConversationsListRequestTypedDict",
+    "AgentsAPIV1ConversationsListResponse",
+    "AgentsAPIV1ConversationsListResponseTypedDict",
+    "AgentsAPIV1ConversationsMessagesRequest",
+    "AgentsAPIV1ConversationsMessagesRequestTypedDict",
+    "AgentsAPIV1ConversationsRestartRequest",
+    "AgentsAPIV1ConversationsRestartRequestTypedDict",
+    "AgentsAPIV1ConversationsRestartStreamRequest",
+    "AgentsAPIV1ConversationsRestartStreamRequestTypedDict",
     "AgentsCompletionRequest",
     "AgentsCompletionRequestMessage",
     "AgentsCompletionRequestMessageTypedDict",
@@ -900,20 +995,13 @@ __all__ = [
     "AgentsCompletionStreamRequestToolChoice",
     "AgentsCompletionStreamRequestToolChoiceTypedDict",
     "AgentsCompletionStreamRequestTypedDict",
-    "AppendConversationRequest",
-    "AppendConversationRequestTypedDict",
-    "AppendConversationStreamRequest",
-    "AppendConversationStreamRequestTypedDict",
     "ArchiveFTModelOut",
     "ArchiveFTModelOutTypedDict",
-    "ArchiveModelRequest",
-    "ArchiveModelRequestTypedDict",
     "Arguments",
     "ArgumentsTypedDict",
     "AssistantMessage",
     "AssistantMessageContent",
     "AssistantMessageContentTypedDict",
-    "AssistantMessageRole",
     "AssistantMessageTypedDict",
     "Attributes",
     "AttributesTypedDict",
@@ -927,23 +1015,21 @@ __all__ = [
     "AudioTranscriptionRequestStreamTypedDict",
     "AudioTranscriptionRequestTypedDict",
     "BaseModelCard",
+    "BaseModelCardGetModelResponse",
+    "BaseModelCardGetModelResponseTypedDict",
     "BaseModelCardTypedDict",
     "BatchError",
     "BatchErrorTypedDict",
+    "BatchJob",
     "BatchJobIn",
     "BatchJobInTypedDict",
-    "BatchJobOut",
-    "BatchJobOutTypedDict",
     "BatchJobStatus",
+    "BatchJobTypedDict",
     "BatchJobsOut",
     "BatchJobsOutTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
     "BuiltInConnectors",
-    "CancelBatchJobRequest",
-    "CancelBatchJobRequestTypedDict",
-    "CancelFineTuningJobRequest",
-    "CancelFineTuningJobRequestTypedDict",
     "CancelFineTuningJobResponse",
     "CancelFineTuningJobResponseTypedDict",
     "ChatClassificationRequest",
@@ -987,14 +1073,17 @@ __all__ = [
     "ClassificationResponseTypedDict",
     "ClassificationTargetResult",
     "ClassificationTargetResultTypedDict",
-    "ClassifierDetailedJobOut",
-    "ClassifierDetailedJobOutIntegration",
-    "ClassifierDetailedJobOutIntegrationTypedDict",
-    "ClassifierDetailedJobOutStatus",
-    "ClassifierDetailedJobOutTypedDict",
-    "ClassifierFTModelOut",
-    "ClassifierFTModelOutTypedDict",
+    "ClassifierDetailedJobOutCancelFineTuningJobResponse",
+    "ClassifierDetailedJobOutCancelFineTuningJobResponseTypedDict",
+    "ClassifierDetailedJobOutGetFineTuningJobResponse",
+    "ClassifierDetailedJobOutGetFineTuningJobResponseTypedDict",
+    "ClassifierDetailedJobOutStartFineTuningJobResponse",
+    "ClassifierDetailedJobOutStartFineTuningJobResponseTypedDict",
+    "ClassifierFTModelOutUpdateModelResponse",
+    "ClassifierFTModelOutUpdateModelResponseTypedDict",
     "ClassifierJobOut",
+    "ClassifierJobOutCreateFineTuningJobResponse",
+    "ClassifierJobOutCreateFineTuningJobResponseTypedDict",
     "ClassifierJobOutIntegration",
     "ClassifierJobOutIntegrationTypedDict",
     "ClassifierJobOutStatus",
@@ -1015,18 +1104,19 @@ __all__ = [
     "CompletionArgsTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
-    "CompletionDetailedJobOut",
-    "CompletionDetailedJobOutIntegration",
-    "CompletionDetailedJobOutIntegrationTypedDict",
-    "CompletionDetailedJobOutRepository",
-    "CompletionDetailedJobOutRepositoryTypedDict",
-    "CompletionDetailedJobOutStatus",
-    "CompletionDetailedJobOutTypedDict",
+    "CompletionDetailedJobOutCancelFineTuningJobResponse",
+    "CompletionDetailedJobOutCancelFineTuningJobResponseTypedDict",
+    "CompletionDetailedJobOutGetFineTuningJobResponse",
+    "CompletionDetailedJobOutGetFineTuningJobResponseTypedDict",
+    "CompletionDetailedJobOutStartFineTuningJobResponse",
+    "CompletionDetailedJobOutStartFineTuningJobResponseTypedDict",
     "CompletionEvent",
     "CompletionEventTypedDict",
-    "CompletionFTModelOut",
-    "CompletionFTModelOutTypedDict",
+    "CompletionFTModelOutUpdateModelResponse",
+    "CompletionFTModelOutUpdateModelResponseTypedDict",
     "CompletionJobOut",
+    "CompletionJobOutCreateFineTuningJobResponse",
+    "CompletionJobOutCreateFineTuningJobResponseTypedDict",
     "CompletionJobOutIntegration",
     "CompletionJobOutIntegrationTypedDict",
     "CompletionJobOutRepository",
@@ -1053,12 +1143,10 @@ __all__ = [
     "ConversationEventsDataTypedDict",
     "ConversationEventsTypedDict",
     "ConversationHistory",
-    "ConversationHistoryObject",
     "ConversationHistoryTypedDict",
     "ConversationInputs",
     "ConversationInputsTypedDict",
     "ConversationMessages",
-    "ConversationMessagesObject",
     "ConversationMessagesTypedDict",
     "ConversationRequest",
     "ConversationRequestAgentVersion",
@@ -1068,7 +1156,6 @@ __all__ = [
     "ConversationRequestToolTypedDict",
     "ConversationRequestTypedDict",
     "ConversationResponse",
-    "ConversationResponseObject",
     "ConversationResponseTypedDict",
     "ConversationRestartRequest",
     "ConversationRestartRequestAgentVersion",
@@ -1089,30 +1176,16 @@ __all__ = [
     "ConversationStreamRequestTypedDict",
     "ConversationUsageInfo",
     "ConversationUsageInfoTypedDict",
-    "CreateFineTuningJobResponse",
-    "CreateFineTuningJobResponseTypedDict",
-    "CreateOrUpdateAgentAliasRequest",
-    "CreateOrUpdateAgentAliasRequestTypedDict",
-    "DeleteAgentAliasRequest",
-    "DeleteAgentAliasRequestTypedDict",
-    "DeleteAgentRequest",
-    "DeleteAgentRequestTypedDict",
-    "DeleteConversationRequest",
-    "DeleteConversationRequestTypedDict",
-    "DeleteDocumentRequest",
-    "DeleteDocumentRequestTypedDict",
+    "CreateFineTuningJobResponseUnion1",
+    "CreateFineTuningJobResponseUnion1TypedDict",
+    "CreateFineTuningJobResponseUnion2",
+    "CreateFineTuningJobResponseUnion2TypedDict",
     "DeleteFileOut",
     "DeleteFileOutTypedDict",
-    "DeleteFileRequest",
-    "DeleteFileRequestTypedDict",
-    "DeleteLibraryAccessRequest",
-    "DeleteLibraryAccessRequestTypedDict",
-    "DeleteLibraryRequest",
-    "DeleteLibraryRequestTypedDict",
     "DeleteModelOut",
     "DeleteModelOutTypedDict",
-    "DeleteModelRequest",
-    "DeleteModelRequestTypedDict",
+    "DeleteModelV1ModelsModelIDDeleteRequest",
+    "DeleteModelV1ModelsModelIDDeleteRequestTypedDict",
     "DeltaMessage",
     "DeltaMessageContent",
     "DeltaMessageContentTypedDict",
@@ -1120,20 +1193,15 @@ __all__ = [
     "Document",
     "DocumentLibraryTool",
     "DocumentLibraryToolTypedDict",
-    "DocumentOut",
-    "DocumentOutTypedDict",
     "DocumentTextContent",
     "DocumentTextContentTypedDict",
     "DocumentTypedDict",
     "DocumentURLChunk",
-    "DocumentURLChunkType",
     "DocumentURLChunkTypedDict",
+    "DocumentUnion",
+    "DocumentUnionTypedDict",
     "DocumentUpdateIn",
     "DocumentUpdateInTypedDict",
-    "DocumentUpload",
-    "DocumentUploadTypedDict",
-    "DownloadFileRequest",
-    "DownloadFileRequestTypedDict",
     "EmbeddingDtype",
     "EmbeddingRequest",
     "EmbeddingRequestInputs",
@@ -1163,16 +1231,30 @@ __all__ = [
     "FTModelCapabilitiesOut",
     "FTModelCapabilitiesOutTypedDict",
     "FTModelCard",
+    "FTModelCardGetModelResponse",
+    "FTModelCardGetModelResponseTypedDict",
     "FTModelCardTypedDict",
     "File",
     "FileChunk",
     "FileChunkTypedDict",
+    "FileObject",
+    "FileObjectDeleted",
+    "FileObjectDeletedTypedDict",
+    "FileObjectTypedDict",
     "FilePurpose",
-    "FileSchema",
-    "FileSchemaTypedDict",
     "FileSignedURL",
     "FileSignedURLTypedDict",
     "FileTypedDict",
+    "FilesAPIRoutesDeleteFileRequest",
+    "FilesAPIRoutesDeleteFileRequestTypedDict",
+    "FilesAPIRoutesDownloadFileRequest",
+    "FilesAPIRoutesDownloadFileRequestTypedDict",
+    "FilesAPIRoutesGetSignedURLRequest",
+    "FilesAPIRoutesGetSignedURLRequestTypedDict",
+    "FilesAPIRoutesListFilesRequest",
+    "FilesAPIRoutesListFilesRequestTypedDict",
+    "FilesAPIRoutesRetrieveFileRequest",
+    "FilesAPIRoutesRetrieveFileRequestTypedDict",
     "FineTuneableModelType",
     "Format",
     "Function",
@@ -1180,8 +1262,6 @@ __all__ = [
     "FunctionCallEntry",
     "FunctionCallEntryArguments",
     "FunctionCallEntryArgumentsTypedDict",
-    "FunctionCallEntryObject",
-    "FunctionCallEntryType",
     "FunctionCallEntryTypedDict",
     "FunctionCallEvent",
     "FunctionCallEventTypedDict",
@@ -1189,44 +1269,16 @@ __all__ = [
     "FunctionName",
     "FunctionNameTypedDict",
     "FunctionResultEntry",
-    "FunctionResultEntryObject",
-    "FunctionResultEntryType",
     "FunctionResultEntryTypedDict",
     "FunctionTool",
     "FunctionToolTypedDict",
     "FunctionTypedDict",
-    "GetAgentAgentVersion",
-    "GetAgentAgentVersionTypedDict",
-    "GetAgentRequest",
-    "GetAgentRequestTypedDict",
-    "GetAgentVersionRequest",
-    "GetAgentVersionRequestTypedDict",
-    "GetBatchJobRequest",
-    "GetBatchJobRequestTypedDict",
-    "GetConversationHistoryRequest",
-    "GetConversationHistoryRequestTypedDict",
-    "GetConversationMessagesRequest",
-    "GetConversationMessagesRequestTypedDict",
-    "GetConversationRequest",
-    "GetConversationRequestTypedDict",
-    "GetDocumentExtractedTextSignedURLRequest",
-    "GetDocumentExtractedTextSignedURLRequestTypedDict",
-    "GetDocumentRequest",
-    "GetDocumentRequestTypedDict",
-    "GetDocumentSignedURLRequest",
-    "GetDocumentSignedURLRequestTypedDict",
-    "GetDocumentStatusRequest",
-    "GetDocumentStatusRequestTypedDict",
-    "GetDocumentTextContentRequest",
-    "GetDocumentTextContentRequestTypedDict",
-    "GetFileSignedURLRequest",
-    "GetFileSignedURLRequestTypedDict",
-    "GetFineTuningJobRequest",
-    "GetFineTuningJobRequestTypedDict",
+    "GetConversationResponse",
+    "GetConversationResponseTypedDict",
     "GetFineTuningJobResponse",
     "GetFineTuningJobResponseTypedDict",
-    "GetLibraryRequest",
-    "GetLibraryRequestTypedDict",
+    "GetModelResponse",
+    "GetModelResponseTypedDict",
     "GithubRepositoryIn",
     "GithubRepositoryInTypedDict",
     "GithubRepositoryOut",
@@ -1239,7 +1291,6 @@ __all__ = [
     "ImageGenerationToolTypedDict",
     "ImageURL",
     "ImageURLChunk",
-    "ImageURLChunkType",
     "ImageURLChunkTypedDict",
     "ImageURLTypedDict",
     "ImageURLUnion",
@@ -1266,43 +1317,107 @@ __all__ = [
     "JobInTypedDict",
     "JobMetadataOut",
     "JobMetadataOutTypedDict",
+    "JobsAPIRoutesBatchCancelBatchJobRequest",
+    "JobsAPIRoutesBatchCancelBatchJobRequestTypedDict",
+    "JobsAPIRoutesBatchGetBatchJobRequest",
+    "JobsAPIRoutesBatchGetBatchJobRequestTypedDict",
+    "JobsAPIRoutesBatchGetBatchJobsRequest",
+    "JobsAPIRoutesBatchGetBatchJobsRequestTypedDict",
+    "JobsAPIRoutesFineTuningArchiveFineTunedModelRequest",
+    "JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRepository",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRepositoryTypedDict",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRequest",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegration",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutStatus",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegration",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutStatus",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobRepository",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobRepositoryTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRepository",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRepositoryTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRequest",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsRequest",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsStatus",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegration",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegrationTypedDict",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutStatus",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRepository",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRepositoryTypedDict",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRequest",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict",
+    "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest",
+    "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelRequest",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict",
     "JobsOut",
     "JobsOutData",
     "JobsOutDataTypedDict",
     "JobsOutTypedDict",
-    "LegacyJobMetadataOut",
-    "LegacyJobMetadataOutTypedDict",
+    "LegacyJobMetadataOutCreateFineTuningJobResponse",
+    "LegacyJobMetadataOutCreateFineTuningJobResponseTypedDict",
+    "LibrariesDeleteV1Request",
+    "LibrariesDeleteV1RequestTypedDict",
+    "LibrariesDocumentsDeleteV1Request",
+    "LibrariesDocumentsDeleteV1RequestTypedDict",
+    "LibrariesDocumentsGetExtractedTextSignedURLV1Request",
+    "LibrariesDocumentsGetExtractedTextSignedURLV1RequestTypedDict",
+    "LibrariesDocumentsGetSignedURLV1Request",
+    "LibrariesDocumentsGetSignedURLV1RequestTypedDict",
+    "LibrariesDocumentsGetStatusV1Request",
+    "LibrariesDocumentsGetStatusV1RequestTypedDict",
+    "LibrariesDocumentsGetTextContentV1Request",
+    "LibrariesDocumentsGetTextContentV1RequestTypedDict",
+    "LibrariesDocumentsGetV1Request",
+    "LibrariesDocumentsGetV1RequestTypedDict",
+    "LibrariesDocumentsListV1Request",
+    "LibrariesDocumentsListV1RequestTypedDict",
+    "LibrariesDocumentsReprocessV1Request",
+    "LibrariesDocumentsReprocessV1RequestTypedDict",
+    "LibrariesDocumentsUpdateV1Request",
+    "LibrariesDocumentsUpdateV1RequestTypedDict",
+    "LibrariesDocumentsUploadV1Request",
+    "LibrariesDocumentsUploadV1RequestTypedDict",
+    "LibrariesGetV1Request",
+    "LibrariesGetV1RequestTypedDict",
+    "LibrariesShareCreateV1Request",
+    "LibrariesShareCreateV1RequestTypedDict",
+    "LibrariesShareDeleteV1Request",
+    "LibrariesShareDeleteV1RequestTypedDict",
+    "LibrariesShareListV1Request",
+    "LibrariesShareListV1RequestTypedDict",
+    "LibrariesUpdateV1Request",
+    "LibrariesUpdateV1RequestTypedDict",
+    "Library",
     "LibraryIn",
     "LibraryInTypedDict",
     "LibraryInUpdate",
     "LibraryInUpdateTypedDict",
-    "LibraryOut",
-    "LibraryOutTypedDict",
-    "ListAgentAliasesRequest",
-    "ListAgentAliasesRequestTypedDict",
-    "ListAgentVersionsRequest",
-    "ListAgentVersionsRequestTypedDict",
-    "ListAgentsRequest",
-    "ListAgentsRequestTypedDict",
-    "ListBatchJobsRequest",
-    "ListBatchJobsRequestTypedDict",
-    "ListConversationsRequest",
-    "ListConversationsRequestTypedDict",
-    "ListConversationsResponse",
-    "ListConversationsResponseTypedDict",
+    "LibraryTypedDict",
     "ListDocumentOut",
     "ListDocumentOutTypedDict",
-    "ListDocumentsRequest",
-    "ListDocumentsRequestTypedDict",
     "ListFilesOut",
     "ListFilesOutTypedDict",
-    "ListFilesRequest",
-    "ListFilesRequestTypedDict",
-    "ListFineTuningJobsRequest",
-    "ListFineTuningJobsRequestTypedDict",
-    "ListFineTuningJobsStatus",
-    "ListLibraryAccessesRequest",
-    "ListLibraryAccessesRequestTypedDict",
     "ListLibraryOut",
     "ListLibraryOutTypedDict",
     "ListSharingOut",
@@ -1316,23 +1431,16 @@ __all__ = [
     "MessageInputEntry",
     "MessageInputEntryContent",
     "MessageInputEntryContentTypedDict",
-    "MessageInputEntryObject",
-    "MessageInputEntryRole",
-    "MessageInputEntryType",
     "MessageInputEntryTypedDict",
     "MessageOutputContentChunks",
     "MessageOutputContentChunksTypedDict",
     "MessageOutputEntry",
     "MessageOutputEntryContent",
     "MessageOutputEntryContentTypedDict",
-    "MessageOutputEntryObject",
-    "MessageOutputEntryRole",
-    "MessageOutputEntryType",
     "MessageOutputEntryTypedDict",
     "MessageOutputEvent",
     "MessageOutputEventContent",
     "MessageOutputEventContentTypedDict",
-    "MessageOutputEventRole",
     "MessageOutputEventTypedDict",
     "MetricOut",
     "MetricOutTypedDict",
@@ -1341,7 +1449,8 @@ __all__ = [
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
     "ModelConversation",
-    "ModelConversationObject",
+    "ModelConversationGetConversationResponse",
+    "ModelConversationGetConversationResponseTypedDict",
     "ModelConversationTool",
     "ModelConversationToolTypedDict",
     "ModelConversationTypedDict",
@@ -1353,8 +1462,6 @@ __all__ = [
     "ModerationObjectTypedDict",
     "ModerationResponse",
     "ModerationResponseTypedDict",
-    "MultiPartBodyParams",
-    "MultiPartBodyParamsTypedDict",
     "NoResponseError",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
@@ -1379,6 +1486,7 @@ __all__ = [
     "PaginationInfoTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ProcessStatus",
     "ProcessingStatusOut",
     "ProcessingStatusOutTypedDict",
     "RealtimeTranscriptionError",
@@ -1394,12 +1502,8 @@ __all__ = [
     "RealtimeTranscriptionSessionUpdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict",
     "ReferenceChunk",
-    "ReferenceChunkType",
     "ReferenceChunkTypedDict",
-    "ReprocessDocumentRequest",
-    "ReprocessDocumentRequestTypedDict",
     "RequestSource",
-    "Response",
     "ResponseDoneEvent",
     "ResponseDoneEventTypedDict",
     "ResponseErrorEvent",
@@ -1407,39 +1511,25 @@ __all__ = [
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
-    "ResponseRetrieveModelV1ModelsModelIDGet",
-    "ResponseRetrieveModelV1ModelsModelIDGetTypedDict",
     "ResponseStartedEvent",
     "ResponseStartedEventTypedDict",
-    "ResponseTypedDict",
-    "ResponseV1ConversationsGet",
-    "ResponseV1ConversationsGetTypedDict",
     "ResponseValidationError",
-    "RestartConversationRequest",
-    "RestartConversationRequestTypedDict",
-    "RestartConversationStreamRequest",
-    "RestartConversationStreamRequestTypedDict",
-    "RetrieveFileOut",
-    "RetrieveFileOutTypedDict",
-    "RetrieveFileRequest",
-    "RetrieveFileRequestTypedDict",
-    "RetrieveModelRequest",
-    "RetrieveModelRequestTypedDict",
+    "RetrieveModelV1ModelsModelIDGetRequest",
+    "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
+    "Role",
     "SDKError",
     "SSETypes",
     "SampleType",
     "Security",
     "SecurityTypedDict",
     "ShareEnum",
+    "Sharing",
     "SharingDelete",
     "SharingDeleteTypedDict",
     "SharingIn",
     "SharingInTypedDict",
-    "SharingOut",
-    "SharingOutTypedDict",
+    "SharingTypedDict",
     "Source",
-    "StartFineTuningJobRequest",
-    "StartFineTuningJobRequestTypedDict",
     "StartFineTuningJobResponse",
     "StartFineTuningJobResponseTypedDict",
     "SystemMessage",
@@ -1450,10 +1540,8 @@ __all__ = [
     "SystemMessageTypedDict",
     "TableFormat",
     "TextChunk",
-    "TextChunkType",
     "TextChunkTypedDict",
     "ThinkChunk",
-    "ThinkChunkType",
     "ThinkChunkTypedDict",
     "Thinking",
     "ThinkingTypedDict",
@@ -1475,8 +1563,6 @@ __all__ = [
     "ToolExecutionEntry",
     "ToolExecutionEntryName",
     "ToolExecutionEntryNameTypedDict",
-    "ToolExecutionEntryObject",
-    "ToolExecutionEntryType",
     "ToolExecutionEntryTypedDict",
     "ToolExecutionStartedEvent",
     "ToolExecutionStartedEventName",
@@ -1485,7 +1571,6 @@ __all__ = [
     "ToolFileChunk",
     "ToolFileChunkTool",
     "ToolFileChunkToolTypedDict",
-    "ToolFileChunkType",
     "ToolFileChunkTypedDict",
     "ToolMessage",
     "ToolMessageContent",
@@ -1494,7 +1579,6 @@ __all__ = [
     "ToolReferenceChunk",
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
-    "ToolReferenceChunkType",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
     "ToolTypes",
@@ -1503,7 +1587,6 @@ __all__ = [
     "TranscriptionResponse",
     "TranscriptionResponseTypedDict",
     "TranscriptionSegmentChunk",
-    "TranscriptionSegmentChunkType",
     "TranscriptionSegmentChunkTypedDict",
     "TranscriptionStreamDone",
     "TranscriptionStreamDoneTypedDict",
@@ -1520,28 +1603,14 @@ __all__ = [
     "TranscriptionStreamTextDeltaTypedDict",
     "UnarchiveFTModelOut",
     "UnarchiveFTModelOutTypedDict",
-    "UnarchiveModelRequest",
-    "UnarchiveModelRequestTypedDict",
-    "UpdateAgentRequest",
-    "UpdateAgentRequestTypedDict",
-    "UpdateAgentVersionRequest",
-    "UpdateAgentVersionRequestTypedDict",
-    "UpdateDocumentRequest",
-    "UpdateDocumentRequestTypedDict",
     "UpdateFTModelIn",
     "UpdateFTModelInTypedDict",
-    "UpdateLibraryRequest",
-    "UpdateLibraryRequestTypedDict",
-    "UpdateModelRequest",
-    "UpdateModelRequestTypedDict",
     "UpdateModelResponse",
     "UpdateModelResponseTypedDict",
-    "UpdateOrCreateLibraryAccessRequest",
-    "UpdateOrCreateLibraryAccessRequestTypedDict",
     "UploadDocumentRequest",
     "UploadDocumentRequestTypedDict",
-    "UploadFileOut",
-    "UploadFileOutTypedDict",
+    "UploadFileRequest",
+    "UploadFileRequestTypedDict",
     "UsageInfo",
     "UsageInfoTypedDict",
     "UserMessage",
@@ -1562,7 +1631,6 @@ __all__ = [
 
 _dynamic_imports: dict[str, str] = {
     "Agent": ".agent",
-    "AgentObject": ".agent",
     "AgentTool": ".agent",
     "AgentToolTypedDict": ".agent",
     "AgentTypedDict": ".agent",
@@ -1571,7 +1639,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentConversation": ".agentconversation",
     "AgentConversationAgentVersion": ".agentconversation",
     "AgentConversationAgentVersionTypedDict": ".agentconversation",
-    "AgentConversationObject": ".agentconversation",
     "AgentConversationTypedDict": ".agentconversation",
     "AgentCreationRequest": ".agentcreationrequest",
     "AgentCreationRequestTool": ".agentcreationrequest",
@@ -1580,11 +1647,61 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffDoneEvent": ".agenthandoffdoneevent",
     "AgentHandoffDoneEventTypedDict": ".agenthandoffdoneevent",
     "AgentHandoffEntry": ".agenthandoffentry",
-    "AgentHandoffEntryObject": ".agenthandoffentry",
-    "AgentHandoffEntryType": ".agenthandoffentry",
     "AgentHandoffEntryTypedDict": ".agenthandoffentry",
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequest": ".agents_api_v1_agents_create_or_update_aliasop",
+    "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict": ".agents_api_v1_agents_create_or_update_aliasop",
+    "AgentsAPIV1AgentsDeleteAliasRequest": ".agents_api_v1_agents_delete_aliasop",
+    "AgentsAPIV1AgentsDeleteAliasRequestTypedDict": ".agents_api_v1_agents_delete_aliasop",
+    "AgentsAPIV1AgentsDeleteRequest": ".agents_api_v1_agents_deleteop",
+    "AgentsAPIV1AgentsDeleteRequestTypedDict": ".agents_api_v1_agents_deleteop",
+    "AgentsAPIV1AgentsGetVersionRequest": ".agents_api_v1_agents_get_versionop",
+    "AgentsAPIV1AgentsGetVersionRequestTypedDict": ".agents_api_v1_agents_get_versionop",
+    "AgentsAPIV1AgentsGetAgentVersion": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsGetAgentVersionTypedDict": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsGetRequest": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsGetRequestTypedDict": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsListVersionAliasesRequest": ".agents_api_v1_agents_list_version_aliasesop",
+    "AgentsAPIV1AgentsListVersionAliasesRequestTypedDict": ".agents_api_v1_agents_list_version_aliasesop",
+    "AgentsAPIV1AgentsListVersionsRequest": ".agents_api_v1_agents_list_versionsop",
+    "AgentsAPIV1AgentsListVersionsRequestTypedDict": ".agents_api_v1_agents_list_versionsop",
+    "AgentsAPIV1AgentsListRequest": ".agents_api_v1_agents_listop",
+    "AgentsAPIV1AgentsListRequestTypedDict": ".agents_api_v1_agents_listop",
+    "AgentsAPIV1AgentsUpdateVersionRequest": ".agents_api_v1_agents_update_versionop",
+    "AgentsAPIV1AgentsUpdateVersionRequestTypedDict": ".agents_api_v1_agents_update_versionop",
+    "AgentsAPIV1AgentsUpdateRequest": ".agents_api_v1_agents_updateop",
+    "AgentsAPIV1AgentsUpdateRequestTypedDict": ".agents_api_v1_agents_updateop",
+    "AgentsAPIV1ConversationsAppendStreamRequest": ".agents_api_v1_conversations_append_streamop",
+    "AgentsAPIV1ConversationsAppendStreamRequestTypedDict": ".agents_api_v1_conversations_append_streamop",
+    "AgentsAPIV1ConversationsAppendRequest": ".agents_api_v1_conversations_appendop",
+    "AgentsAPIV1ConversationsAppendRequestTypedDict": ".agents_api_v1_conversations_appendop",
+    "AgentsAPIV1ConversationsDeleteRequest": ".agents_api_v1_conversations_deleteop",
+    "AgentsAPIV1ConversationsDeleteRequestTypedDict": ".agents_api_v1_conversations_deleteop",
+    "AgentConversationGetConversationResponse": ".agents_api_v1_conversations_getop",
+    "AgentConversationGetConversationResponseTypedDict": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetAgentVersion": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetAgentVersionTypedDict": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetRequest": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetRequestTypedDict": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetTool": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsGetToolTypedDict": ".agents_api_v1_conversations_getop",
+    "GetConversationResponse": ".agents_api_v1_conversations_getop",
+    "GetConversationResponseTypedDict": ".agents_api_v1_conversations_getop",
+    "ModelConversationGetConversationResponse": ".agents_api_v1_conversations_getop",
+    "ModelConversationGetConversationResponseTypedDict": ".agents_api_v1_conversations_getop",
+    "AgentsAPIV1ConversationsHistoryRequest": ".agents_api_v1_conversations_historyop",
+    "AgentsAPIV1ConversationsHistoryRequestTypedDict": ".agents_api_v1_conversations_historyop",
+    "AgentsAPIV1ConversationsListRequest": ".agents_api_v1_conversations_listop",
+    "AgentsAPIV1ConversationsListRequestTypedDict": ".agents_api_v1_conversations_listop",
+    "AgentsAPIV1ConversationsListResponse": ".agents_api_v1_conversations_listop",
+    "AgentsAPIV1ConversationsListResponseTypedDict": ".agents_api_v1_conversations_listop",
+    "AgentsAPIV1ConversationsMessagesRequest": ".agents_api_v1_conversations_messagesop",
+    "AgentsAPIV1ConversationsMessagesRequestTypedDict": ".agents_api_v1_conversations_messagesop",
+    "AgentsAPIV1ConversationsRestartStreamRequest": ".agents_api_v1_conversations_restart_streamop",
+    "AgentsAPIV1ConversationsRestartStreamRequestTypedDict": ".agents_api_v1_conversations_restart_streamop",
+    "AgentsAPIV1ConversationsRestartRequest": ".agents_api_v1_conversations_restartop",
+    "AgentsAPIV1ConversationsRestartRequestTypedDict": ".agents_api_v1_conversations_restartop",
     "AgentsCompletionRequest": ".agentscompletionrequest",
     "AgentsCompletionRequestMessage": ".agentscompletionrequest",
     "AgentsCompletionRequestMessageTypedDict": ".agentscompletionrequest",
@@ -1606,18 +1723,11 @@ _dynamic_imports: dict[str, str] = {
     "AgentUpdateRequestToolTypedDict": ".agentupdaterequest",
     "AgentUpdateRequestTypedDict": ".agentupdaterequest",
     "APIEndpoint": ".apiendpoint",
-    "AppendConversationRequest": ".appendconversationop",
-    "AppendConversationRequestTypedDict": ".appendconversationop",
-    "AppendConversationStreamRequest": ".appendconversationstreamop",
-    "AppendConversationStreamRequestTypedDict": ".appendconversationstreamop",
     "ArchiveFTModelOut": ".archiveftmodelout",
     "ArchiveFTModelOutTypedDict": ".archiveftmodelout",
-    "ArchiveModelRequest": ".archivemodelop",
-    "ArchiveModelRequestTypedDict": ".archivemodelop",
     "AssistantMessage": ".assistantmessage",
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
-    "AssistantMessageRole": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
     "AudioChunk": ".audiochunk",
     "AudioChunkTypedDict": ".audiochunk",
@@ -1632,22 +1742,16 @@ _dynamic_imports: dict[str, str] = {
     "BaseModelCardTypedDict": ".basemodelcard",
     "BatchError": ".batcherror",
     "BatchErrorTypedDict": ".batcherror",
+    "BatchJob": ".batchjob",
+    "BatchJobTypedDict": ".batchjob",
     "BatchJobIn": ".batchjobin",
     "BatchJobInTypedDict": ".batchjobin",
-    "BatchJobOut": ".batchjobout",
-    "BatchJobOutTypedDict": ".batchjobout",
     "BatchJobsOut": ".batchjobsout",
     "BatchJobsOutTypedDict": ".batchjobsout",
     "BatchJobStatus": ".batchjobstatus",
     "BatchRequest": ".batchrequest",
     "BatchRequestTypedDict": ".batchrequest",
     "BuiltInConnectors": ".builtinconnectors",
-    "CancelBatchJobRequest": ".cancelbatchjobop",
-    "CancelBatchJobRequestTypedDict": ".cancelbatchjobop",
-    "CancelFineTuningJobRequest": ".cancelfinetuningjobop",
-    "CancelFineTuningJobRequestTypedDict": ".cancelfinetuningjobop",
-    "CancelFineTuningJobResponse": ".cancelfinetuningjobop",
-    "CancelFineTuningJobResponseTypedDict": ".cancelfinetuningjobop",
     "ChatClassificationRequest": ".chatclassificationrequest",
     "ChatClassificationRequestTypedDict": ".chatclassificationrequest",
     "ChatCompletionChoice": ".chatcompletionchoice",
@@ -1689,13 +1793,6 @@ _dynamic_imports: dict[str, str] = {
     "ClassificationResponseTypedDict": ".classificationresponse",
     "ClassificationTargetResult": ".classificationtargetresult",
     "ClassificationTargetResultTypedDict": ".classificationtargetresult",
-    "ClassifierDetailedJobOut": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutIntegration": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutIntegrationTypedDict": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutStatus": ".classifierdetailedjobout",
-    "ClassifierDetailedJobOutTypedDict": ".classifierdetailedjobout",
-    "ClassifierFTModelOut": ".classifierftmodelout",
-    "ClassifierFTModelOutTypedDict": ".classifierftmodelout",
     "ClassifierJobOut": ".classifierjobout",
     "ClassifierJobOutIntegration": ".classifierjobout",
     "ClassifierJobOutIntegrationTypedDict": ".classifierjobout",
@@ -1717,17 +1814,8 @@ _dynamic_imports: dict[str, str] = {
     "CompletionArgsStopTypedDict": ".completionargsstop",
     "CompletionChunk": ".completionchunk",
     "CompletionChunkTypedDict": ".completionchunk",
-    "CompletionDetailedJobOut": ".completiondetailedjobout",
-    "CompletionDetailedJobOutIntegration": ".completiondetailedjobout",
-    "CompletionDetailedJobOutIntegrationTypedDict": ".completiondetailedjobout",
-    "CompletionDetailedJobOutRepository": ".completiondetailedjobout",
-    "CompletionDetailedJobOutRepositoryTypedDict": ".completiondetailedjobout",
-    "CompletionDetailedJobOutStatus": ".completiondetailedjobout",
-    "CompletionDetailedJobOutTypedDict": ".completiondetailedjobout",
     "CompletionEvent": ".completionevent",
     "CompletionEventTypedDict": ".completionevent",
-    "CompletionFTModelOut": ".completionftmodelout",
-    "CompletionFTModelOutTypedDict": ".completionftmodelout",
     "CompletionJobOut": ".completionjobout",
     "CompletionJobOutIntegration": ".completionjobout",
     "CompletionJobOutIntegrationTypedDict": ".completionjobout",
@@ -1755,14 +1843,12 @@ _dynamic_imports: dict[str, str] = {
     "ConversationEventsDataTypedDict": ".conversationevents",
     "ConversationEventsTypedDict": ".conversationevents",
     "ConversationHistory": ".conversationhistory",
-    "ConversationHistoryObject": ".conversationhistory",
     "ConversationHistoryTypedDict": ".conversationhistory",
     "Entry": ".conversationhistory",
     "EntryTypedDict": ".conversationhistory",
     "ConversationInputs": ".conversationinputs",
     "ConversationInputsTypedDict": ".conversationinputs",
     "ConversationMessages": ".conversationmessages",
-    "ConversationMessagesObject": ".conversationmessages",
     "ConversationMessagesTypedDict": ".conversationmessages",
     "ConversationRequest": ".conversationrequest",
     "ConversationRequestAgentVersion": ".conversationrequest",
@@ -1772,7 +1858,6 @@ _dynamic_imports: dict[str, str] = {
     "ConversationRequestToolTypedDict": ".conversationrequest",
     "ConversationRequestTypedDict": ".conversationrequest",
     "ConversationResponse": ".conversationresponse",
-    "ConversationResponseObject": ".conversationresponse",
     "ConversationResponseTypedDict": ".conversationresponse",
     "Output": ".conversationresponse",
     "OutputTypedDict": ".conversationresponse",
@@ -1795,40 +1880,20 @@ _dynamic_imports: dict[str, str] = {
     "ConversationStreamRequestTypedDict": ".conversationstreamrequest",
     "ConversationUsageInfo": ".conversationusageinfo",
     "ConversationUsageInfoTypedDict": ".conversationusageinfo",
-    "CreateFineTuningJobResponse": ".createfinetuningjobop",
-    "CreateFineTuningJobResponseTypedDict": ".createfinetuningjobop",
-    "Response": ".createfinetuningjobop",
-    "ResponseTypedDict": ".createfinetuningjobop",
-    "CreateOrUpdateAgentAliasRequest": ".createorupdateagentaliasop",
-    "CreateOrUpdateAgentAliasRequestTypedDict": ".createorupdateagentaliasop",
-    "DeleteAgentAliasRequest": ".deleteagentaliasop",
-    "DeleteAgentAliasRequestTypedDict": ".deleteagentaliasop",
-    "DeleteAgentRequest": ".deleteagentop",
-    "DeleteAgentRequestTypedDict": ".deleteagentop",
-    "DeleteConversationRequest": ".deleteconversationop",
-    "DeleteConversationRequestTypedDict": ".deleteconversationop",
-    "DeleteDocumentRequest": ".deletedocumentop",
-    "DeleteDocumentRequestTypedDict": ".deletedocumentop",
-    "DeleteFileRequest": ".deletefileop",
-    "DeleteFileRequestTypedDict": ".deletefileop",
+    "DeleteModelV1ModelsModelIDDeleteRequest": ".delete_model_v1_models_model_id_deleteop",
+    "DeleteModelV1ModelsModelIDDeleteRequestTypedDict": ".delete_model_v1_models_model_id_deleteop",
     "DeleteFileOut": ".deletefileout",
     "DeleteFileOutTypedDict": ".deletefileout",
-    "DeleteLibraryAccessRequest": ".deletelibraryaccessop",
-    "DeleteLibraryAccessRequestTypedDict": ".deletelibraryaccessop",
-    "DeleteLibraryRequest": ".deletelibraryop",
-    "DeleteLibraryRequestTypedDict": ".deletelibraryop",
-    "DeleteModelRequest": ".deletemodelop",
-    "DeleteModelRequestTypedDict": ".deletemodelop",
     "DeleteModelOut": ".deletemodelout",
     "DeleteModelOutTypedDict": ".deletemodelout",
     "DeltaMessage": ".deltamessage",
     "DeltaMessageContent": ".deltamessage",
     "DeltaMessageContentTypedDict": ".deltamessage",
     "DeltaMessageTypedDict": ".deltamessage",
+    "Document": ".document",
+    "DocumentTypedDict": ".document",
     "DocumentLibraryTool": ".documentlibrarytool",
     "DocumentLibraryToolTypedDict": ".documentlibrarytool",
-    "DocumentOut": ".documentout",
-    "DocumentOutTypedDict": ".documentout",
     "DocumentTextContent": ".documenttextcontent",
     "DocumentTextContentTypedDict": ".documenttextcontent",
     "Attributes": ".documentupdatein",
@@ -1836,10 +1901,7 @@ _dynamic_imports: dict[str, str] = {
     "DocumentUpdateIn": ".documentupdatein",
     "DocumentUpdateInTypedDict": ".documentupdatein",
     "DocumentURLChunk": ".documenturlchunk",
-    "DocumentURLChunkType": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
-    "DownloadFileRequest": ".downloadfileop",
-    "DownloadFileRequestTypedDict": ".downloadfileop",
     "EmbeddingDtype": ".embeddingdtype",
     "EmbeddingRequest": ".embeddingrequest",
     "EmbeddingRequestInputs": ".embeddingrequest",
@@ -1857,9 +1919,23 @@ _dynamic_imports: dict[str, str] = {
     "FileTypedDict": ".file",
     "FileChunk": ".filechunk",
     "FileChunkTypedDict": ".filechunk",
+    "FileObject": ".fileobject",
+    "FileObjectTypedDict": ".fileobject",
+    "FileObjectDeleted": ".fileobjectdeleted",
+    "FileObjectDeletedTypedDict": ".fileobjectdeleted",
     "FilePurpose": ".filepurpose",
-    "FileSchema": ".fileschema",
-    "FileSchemaTypedDict": ".fileschema",
+    "FilesAPIRoutesDeleteFileRequest": ".files_api_routes_delete_fileop",
+    "FilesAPIRoutesDeleteFileRequestTypedDict": ".files_api_routes_delete_fileop",
+    "FilesAPIRoutesDownloadFileRequest": ".files_api_routes_download_fileop",
+    "FilesAPIRoutesDownloadFileRequestTypedDict": ".files_api_routes_download_fileop",
+    "FilesAPIRoutesGetSignedURLRequest": ".files_api_routes_get_signed_urlop",
+    "FilesAPIRoutesGetSignedURLRequestTypedDict": ".files_api_routes_get_signed_urlop",
+    "FilesAPIRoutesListFilesRequest": ".files_api_routes_list_filesop",
+    "FilesAPIRoutesListFilesRequestTypedDict": ".files_api_routes_list_filesop",
+    "FilesAPIRoutesRetrieveFileRequest": ".files_api_routes_retrieve_fileop",
+    "FilesAPIRoutesRetrieveFileRequestTypedDict": ".files_api_routes_retrieve_fileop",
+    "UploadFileRequest": ".files_api_routes_upload_fileop",
+    "UploadFileRequestTypedDict": ".files_api_routes_upload_fileop",
     "FileSignedURL": ".filesignedurl",
     "FileSignedURLTypedDict": ".filesignedurl",
     "FIMCompletionRequest": ".fimcompletionrequest",
@@ -1885,8 +1961,6 @@ _dynamic_imports: dict[str, str] = {
     "FunctionCall": ".functioncall",
     "FunctionCallTypedDict": ".functioncall",
     "FunctionCallEntry": ".functioncallentry",
-    "FunctionCallEntryObject": ".functioncallentry",
-    "FunctionCallEntryType": ".functioncallentry",
     "FunctionCallEntryTypedDict": ".functioncallentry",
     "FunctionCallEntryArguments": ".functioncallentryarguments",
     "FunctionCallEntryArgumentsTypedDict": ".functioncallentryarguments",
@@ -1895,45 +1969,9 @@ _dynamic_imports: dict[str, str] = {
     "FunctionName": ".functionname",
     "FunctionNameTypedDict": ".functionname",
     "FunctionResultEntry": ".functionresultentry",
-    "FunctionResultEntryObject": ".functionresultentry",
-    "FunctionResultEntryType": ".functionresultentry",
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
-    "GetAgentAgentVersion": ".getagentop",
-    "GetAgentAgentVersionTypedDict": ".getagentop",
-    "GetAgentRequest": ".getagentop",
-    "GetAgentRequestTypedDict": ".getagentop",
-    "GetAgentVersionRequest": ".getagentversionop",
-    "GetAgentVersionRequestTypedDict": ".getagentversionop",
-    "GetBatchJobRequest": ".getbatchjobop",
-    "GetBatchJobRequestTypedDict": ".getbatchjobop",
-    "GetConversationHistoryRequest": ".getconversationhistoryop",
-    "GetConversationHistoryRequestTypedDict": ".getconversationhistoryop",
-    "GetConversationMessagesRequest": ".getconversationmessagesop",
-    "GetConversationMessagesRequestTypedDict": ".getconversationmessagesop",
-    "GetConversationRequest": ".getconversationop",
-    "GetConversationRequestTypedDict": ".getconversationop",
-    "ResponseV1ConversationsGet": ".getconversationop",
-    "ResponseV1ConversationsGetTypedDict": ".getconversationop",
-    "GetDocumentExtractedTextSignedURLRequest": ".getdocumentextractedtextsignedurlop",
-    "GetDocumentExtractedTextSignedURLRequestTypedDict": ".getdocumentextractedtextsignedurlop",
-    "GetDocumentRequest": ".getdocumentop",
-    "GetDocumentRequestTypedDict": ".getdocumentop",
-    "GetDocumentSignedURLRequest": ".getdocumentsignedurlop",
-    "GetDocumentSignedURLRequestTypedDict": ".getdocumentsignedurlop",
-    "GetDocumentStatusRequest": ".getdocumentstatusop",
-    "GetDocumentStatusRequestTypedDict": ".getdocumentstatusop",
-    "GetDocumentTextContentRequest": ".getdocumenttextcontentop",
-    "GetDocumentTextContentRequestTypedDict": ".getdocumenttextcontentop",
-    "GetFileSignedURLRequest": ".getfilesignedurlop",
-    "GetFileSignedURLRequestTypedDict": ".getfilesignedurlop",
-    "GetFineTuningJobRequest": ".getfinetuningjobop",
-    "GetFineTuningJobRequestTypedDict": ".getfinetuningjobop",
-    "GetFineTuningJobResponse": ".getfinetuningjobop",
-    "GetFineTuningJobResponseTypedDict": ".getfinetuningjobop",
-    "GetLibraryRequest": ".getlibraryop",
-    "GetLibraryRequestTypedDict": ".getlibraryop",
     "GithubRepositoryIn": ".githubrepositoryin",
     "GithubRepositoryInTypedDict": ".githubrepositoryin",
     "GithubRepositoryOut": ".githubrepositoryout",
@@ -1945,7 +1983,6 @@ _dynamic_imports: dict[str, str] = {
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
     "ImageURLChunk": ".imageurlchunk",
-    "ImageURLChunkType": ".imageurlchunk",
     "ImageURLChunkTypedDict": ".imageurlchunk",
     "ImageURLUnion": ".imageurlchunk",
     "ImageURLUnionTypedDict": ".imageurlchunk",
@@ -1971,46 +2008,144 @@ _dynamic_imports: dict[str, str] = {
     "JobInTypedDict": ".jobin",
     "JobMetadataOut": ".jobmetadataout",
     "JobMetadataOutTypedDict": ".jobmetadataout",
+    "JobsAPIRoutesBatchCancelBatchJobRequest": ".jobs_api_routes_batch_cancel_batch_jobop",
+    "JobsAPIRoutesBatchCancelBatchJobRequestTypedDict": ".jobs_api_routes_batch_cancel_batch_jobop",
+    "JobsAPIRoutesBatchGetBatchJobRequest": ".jobs_api_routes_batch_get_batch_jobop",
+    "JobsAPIRoutesBatchGetBatchJobRequestTypedDict": ".jobs_api_routes_batch_get_batch_jobop",
+    "JobsAPIRoutesBatchGetBatchJobsRequest": ".jobs_api_routes_batch_get_batch_jobsop",
+    "JobsAPIRoutesBatchGetBatchJobsRequestTypedDict": ".jobs_api_routes_batch_get_batch_jobsop",
+    "OrderBy": ".jobs_api_routes_batch_get_batch_jobsop",
+    "JobsAPIRoutesFineTuningArchiveFineTunedModelRequest": ".jobs_api_routes_fine_tuning_archive_fine_tuned_modelop",
+    "JobsAPIRoutesFineTuningArchiveFineTunedModelRequestTypedDict": ".jobs_api_routes_fine_tuning_archive_fine_tuned_modelop",
+    "CancelFineTuningJobResponse": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "CancelFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "ClassifierDetailedJobOutCancelFineTuningJobResponse": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "ClassifierDetailedJobOutCancelFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "CompletionDetailedJobOutCancelFineTuningJobResponse": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "CompletionDetailedJobOutCancelFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobClassifierDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobCompletionDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRepository": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRepositoryTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRequest": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCancelFineTuningJobRequestTypedDict": ".jobs_api_routes_fine_tuning_cancel_fine_tuning_jobop",
+    "ClassifierJobOutCreateFineTuningJobResponse": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "ClassifierJobOutCreateFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CompletionJobOutCreateFineTuningJobResponse": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CompletionJobOutCreateFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CreateFineTuningJobResponseUnion1": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CreateFineTuningJobResponseUnion1TypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CreateFineTuningJobResponseUnion2": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "CreateFineTuningJobResponseUnion2TypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegration": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobClassifierJobOutStatus": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegration": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobCompletionJobOutStatus": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobRepository": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningCreateFineTuningJobRepositoryTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "LegacyJobMetadataOutCreateFineTuningJobResponse": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "LegacyJobMetadataOutCreateFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_create_fine_tuning_jobop",
+    "ClassifierDetailedJobOutGetFineTuningJobResponse": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "ClassifierDetailedJobOutGetFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "CompletionDetailedJobOutGetFineTuningJobResponse": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "CompletionDetailedJobOutGetFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "GetFineTuningJobResponse": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "GetFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobClassifierDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobCompletionDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRepository": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRepositoryTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRequest": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobRequestTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsRequest": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobsop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobsop",
+    "JobsAPIRoutesFineTuningGetFineTuningJobsStatus": ".jobs_api_routes_fine_tuning_get_fine_tuning_jobsop",
+    "ClassifierDetailedJobOutStartFineTuningJobResponse": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "ClassifierDetailedJobOutStartFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "CompletionDetailedJobOutStartFineTuningJobResponse": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "CompletionDetailedJobOutStartFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobClassifierDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegration": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutIntegrationTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobCompletionDetailedJobOutStatus": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRepository": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRepositoryTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRequest": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningStartFineTuningJobRequestTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "StartFineTuningJobResponse": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "StartFineTuningJobResponseTypedDict": ".jobs_api_routes_fine_tuning_start_fine_tuning_jobop",
+    "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest": ".jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop",
+    "JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequestTypedDict": ".jobs_api_routes_fine_tuning_unarchive_fine_tuned_modelop",
+    "ClassifierFTModelOutUpdateModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "ClassifierFTModelOutUpdateModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "CompletionFTModelOutUpdateModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "CompletionFTModelOutUpdateModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelRequest": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "UpdateModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "UpdateModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "JobsOut": ".jobsout",
     "JobsOutData": ".jobsout",
     "JobsOutDataTypedDict": ".jobsout",
     "JobsOutTypedDict": ".jobsout",
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
-    "LegacyJobMetadataOut": ".legacyjobmetadataout",
-    "LegacyJobMetadataOutTypedDict": ".legacyjobmetadataout",
+    "LibrariesDeleteV1Request": ".libraries_delete_v1op",
+    "LibrariesDeleteV1RequestTypedDict": ".libraries_delete_v1op",
+    "LibrariesDocumentsDeleteV1Request": ".libraries_documents_delete_v1op",
+    "LibrariesDocumentsDeleteV1RequestTypedDict": ".libraries_documents_delete_v1op",
+    "LibrariesDocumentsGetExtractedTextSignedURLV1Request": ".libraries_documents_get_extracted_text_signed_url_v1op",
+    "LibrariesDocumentsGetExtractedTextSignedURLV1RequestTypedDict": ".libraries_documents_get_extracted_text_signed_url_v1op",
+    "LibrariesDocumentsGetSignedURLV1Request": ".libraries_documents_get_signed_url_v1op",
+    "LibrariesDocumentsGetSignedURLV1RequestTypedDict": ".libraries_documents_get_signed_url_v1op",
+    "LibrariesDocumentsGetStatusV1Request": ".libraries_documents_get_status_v1op",
+    "LibrariesDocumentsGetStatusV1RequestTypedDict": ".libraries_documents_get_status_v1op",
+    "LibrariesDocumentsGetTextContentV1Request": ".libraries_documents_get_text_content_v1op",
+    "LibrariesDocumentsGetTextContentV1RequestTypedDict": ".libraries_documents_get_text_content_v1op",
+    "LibrariesDocumentsGetV1Request": ".libraries_documents_get_v1op",
+    "LibrariesDocumentsGetV1RequestTypedDict": ".libraries_documents_get_v1op",
+    "LibrariesDocumentsListV1Request": ".libraries_documents_list_v1op",
+    "LibrariesDocumentsListV1RequestTypedDict": ".libraries_documents_list_v1op",
+    "LibrariesDocumentsReprocessV1Request": ".libraries_documents_reprocess_v1op",
+    "LibrariesDocumentsReprocessV1RequestTypedDict": ".libraries_documents_reprocess_v1op",
+    "LibrariesDocumentsUpdateV1Request": ".libraries_documents_update_v1op",
+    "LibrariesDocumentsUpdateV1RequestTypedDict": ".libraries_documents_update_v1op",
+    "LibrariesDocumentsUploadV1Request": ".libraries_documents_upload_v1op",
+    "LibrariesDocumentsUploadV1RequestTypedDict": ".libraries_documents_upload_v1op",
+    "UploadDocumentRequest": ".libraries_documents_upload_v1op",
+    "UploadDocumentRequestTypedDict": ".libraries_documents_upload_v1op",
+    "LibrariesGetV1Request": ".libraries_get_v1op",
+    "LibrariesGetV1RequestTypedDict": ".libraries_get_v1op",
+    "LibrariesShareCreateV1Request": ".libraries_share_create_v1op",
+    "LibrariesShareCreateV1RequestTypedDict": ".libraries_share_create_v1op",
+    "LibrariesShareDeleteV1Request": ".libraries_share_delete_v1op",
+    "LibrariesShareDeleteV1RequestTypedDict": ".libraries_share_delete_v1op",
+    "LibrariesShareListV1Request": ".libraries_share_list_v1op",
+    "LibrariesShareListV1RequestTypedDict": ".libraries_share_list_v1op",
+    "LibrariesUpdateV1Request": ".libraries_update_v1op",
+    "LibrariesUpdateV1RequestTypedDict": ".libraries_update_v1op",
+    "Library": ".library",
+    "LibraryTypedDict": ".library",
     "LibraryIn": ".libraryin",
     "LibraryInTypedDict": ".libraryin",
     "LibraryInUpdate": ".libraryinupdate",
     "LibraryInUpdateTypedDict": ".libraryinupdate",
-    "LibraryOut": ".libraryout",
-    "LibraryOutTypedDict": ".libraryout",
-    "ListAgentAliasesRequest": ".listagentaliasesop",
-    "ListAgentAliasesRequestTypedDict": ".listagentaliasesop",
-    "ListAgentsRequest": ".listagentsop",
-    "ListAgentsRequestTypedDict": ".listagentsop",
-    "ListAgentVersionsRequest": ".listagentversionsop",
-    "ListAgentVersionsRequestTypedDict": ".listagentversionsop",
-    "ListBatchJobsRequest": ".listbatchjobsop",
-    "ListBatchJobsRequestTypedDict": ".listbatchjobsop",
-    "OrderBy": ".listbatchjobsop",
-    "ListConversationsRequest": ".listconversationsop",
-    "ListConversationsRequestTypedDict": ".listconversationsop",
-    "ListConversationsResponse": ".listconversationsop",
-    "ListConversationsResponseTypedDict": ".listconversationsop",
     "ListDocumentOut": ".listdocumentout",
     "ListDocumentOutTypedDict": ".listdocumentout",
-    "ListDocumentsRequest": ".listdocumentsop",
-    "ListDocumentsRequestTypedDict": ".listdocumentsop",
-    "ListFilesRequest": ".listfilesop",
-    "ListFilesRequestTypedDict": ".listfilesop",
     "ListFilesOut": ".listfilesout",
     "ListFilesOutTypedDict": ".listfilesout",
-    "ListFineTuningJobsRequest": ".listfinetuningjobsop",
-    "ListFineTuningJobsRequestTypedDict": ".listfinetuningjobsop",
-    "ListFineTuningJobsStatus": ".listfinetuningjobsop",
-    "ListLibraryAccessesRequest": ".listlibraryaccessesop",
-    "ListLibraryAccessesRequestTypedDict": ".listlibraryaccessesop",
     "ListLibraryOut": ".listlibraryout",
     "ListLibraryOutTypedDict": ".listlibraryout",
     "ListSharingOut": ".listsharingout",
@@ -2022,23 +2157,17 @@ _dynamic_imports: dict[str, str] = {
     "MessageInputEntry": ".messageinputentry",
     "MessageInputEntryContent": ".messageinputentry",
     "MessageInputEntryContentTypedDict": ".messageinputentry",
-    "MessageInputEntryObject": ".messageinputentry",
-    "MessageInputEntryRole": ".messageinputentry",
-    "MessageInputEntryType": ".messageinputentry",
     "MessageInputEntryTypedDict": ".messageinputentry",
+    "Role": ".messageinputentry",
     "MessageOutputContentChunks": ".messageoutputcontentchunks",
     "MessageOutputContentChunksTypedDict": ".messageoutputcontentchunks",
     "MessageOutputEntry": ".messageoutputentry",
     "MessageOutputEntryContent": ".messageoutputentry",
     "MessageOutputEntryContentTypedDict": ".messageoutputentry",
-    "MessageOutputEntryObject": ".messageoutputentry",
-    "MessageOutputEntryRole": ".messageoutputentry",
-    "MessageOutputEntryType": ".messageoutputentry",
     "MessageOutputEntryTypedDict": ".messageoutputentry",
     "MessageOutputEvent": ".messageoutputevent",
     "MessageOutputEventContent": ".messageoutputevent",
     "MessageOutputEventContentTypedDict": ".messageoutputevent",
-    "MessageOutputEventRole": ".messageoutputevent",
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MetricOut": ".metricout",
     "MetricOutTypedDict": ".metricout",
@@ -2046,7 +2175,6 @@ _dynamic_imports: dict[str, str] = {
     "ModelCapabilities": ".modelcapabilities",
     "ModelCapabilitiesTypedDict": ".modelcapabilities",
     "ModelConversation": ".modelconversation",
-    "ModelConversationObject": ".modelconversation",
     "ModelConversationTool": ".modelconversation",
     "ModelConversationToolTypedDict": ".modelconversation",
     "ModelConversationTypedDict": ".modelconversation",
@@ -2065,8 +2193,8 @@ _dynamic_imports: dict[str, str] = {
     "OCRPageDimensionsTypedDict": ".ocrpagedimensions",
     "OCRPageObject": ".ocrpageobject",
     "OCRPageObjectTypedDict": ".ocrpageobject",
-    "Document": ".ocrrequest",
-    "DocumentTypedDict": ".ocrrequest",
+    "DocumentUnion": ".ocrrequest",
+    "DocumentUnionTypedDict": ".ocrrequest",
     "OCRRequest": ".ocrrequest",
     "OCRRequestTypedDict": ".ocrrequest",
     "TableFormat": ".ocrrequest",
@@ -2085,6 +2213,7 @@ _dynamic_imports: dict[str, str] = {
     "PredictionTypedDict": ".prediction",
     "ProcessingStatusOut": ".processingstatusout",
     "ProcessingStatusOutTypedDict": ".processingstatusout",
+    "ProcessStatus": ".processstatus",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
@@ -2098,10 +2227,7 @@ _dynamic_imports: dict[str, str] = {
     "RealtimeTranscriptionSessionUpdated": ".realtimetranscriptionsessionupdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict": ".realtimetranscriptionsessionupdated",
     "ReferenceChunk": ".referencechunk",
-    "ReferenceChunkType": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
-    "ReprocessDocumentRequest": ".reprocessdocumentop",
-    "ReprocessDocumentRequestTypedDict": ".reprocessdocumentop",
     "RequestSource": ".requestsource",
     "ResponseDoneEvent": ".responsedoneevent",
     "ResponseDoneEventTypedDict": ".responsedoneevent",
@@ -2113,35 +2239,27 @@ _dynamic_imports: dict[str, str] = {
     "ResponseStartedEvent": ".responsestartedevent",
     "ResponseStartedEventTypedDict": ".responsestartedevent",
     "ResponseValidationError": ".responsevalidationerror",
-    "RestartConversationRequest": ".restartconversationop",
-    "RestartConversationRequestTypedDict": ".restartconversationop",
-    "RestartConversationStreamRequest": ".restartconversationstreamop",
-    "RestartConversationStreamRequestTypedDict": ".restartconversationstreamop",
-    "RetrieveFileRequest": ".retrievefileop",
-    "RetrieveFileRequestTypedDict": ".retrievefileop",
-    "RetrieveFileOut": ".retrievefileout",
-    "RetrieveFileOutTypedDict": ".retrievefileout",
-    "ResponseRetrieveModelV1ModelsModelIDGet": ".retrievemodelop",
-    "ResponseRetrieveModelV1ModelsModelIDGetTypedDict": ".retrievemodelop",
-    "RetrieveModelRequest": ".retrievemodelop",
-    "RetrieveModelRequestTypedDict": ".retrievemodelop",
+    "BaseModelCardGetModelResponse": ".retrieve_model_v1_models_model_id_getop",
+    "BaseModelCardGetModelResponseTypedDict": ".retrieve_model_v1_models_model_id_getop",
+    "FTModelCardGetModelResponse": ".retrieve_model_v1_models_model_id_getop",
+    "FTModelCardGetModelResponseTypedDict": ".retrieve_model_v1_models_model_id_getop",
+    "GetModelResponse": ".retrieve_model_v1_models_model_id_getop",
+    "GetModelResponseTypedDict": ".retrieve_model_v1_models_model_id_getop",
+    "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
+    "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "SampleType": ".sampletype",
     "SDKError": ".sdkerror",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "ShareEnum": ".shareenum",
+    "Sharing": ".sharing",
+    "SharingTypedDict": ".sharing",
     "SharingDelete": ".sharingdelete",
     "SharingDeleteTypedDict": ".sharingdelete",
     "SharingIn": ".sharingin",
     "SharingInTypedDict": ".sharingin",
-    "SharingOut": ".sharingout",
-    "SharingOutTypedDict": ".sharingout",
     "Source": ".source",
     "SSETypes": ".ssetypes",
-    "StartFineTuningJobRequest": ".startfinetuningjobop",
-    "StartFineTuningJobRequestTypedDict": ".startfinetuningjobop",
-    "StartFineTuningJobResponse": ".startfinetuningjobop",
-    "StartFineTuningJobResponseTypedDict": ".startfinetuningjobop",
     "SystemMessage": ".systemmessage",
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
@@ -2149,10 +2267,8 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageContentChunks": ".systemmessagecontentchunks",
     "SystemMessageContentChunksTypedDict": ".systemmessagecontentchunks",
     "TextChunk": ".textchunk",
-    "TextChunkType": ".textchunk",
     "TextChunkTypedDict": ".textchunk",
     "ThinkChunk": ".thinkchunk",
-    "ThinkChunkType": ".thinkchunk",
     "ThinkChunkTypedDict": ".thinkchunk",
     "Thinking": ".thinkchunk",
     "ThinkingTypedDict": ".thinkchunk",
@@ -2175,8 +2291,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolExecutionEntry": ".toolexecutionentry",
     "ToolExecutionEntryName": ".toolexecutionentry",
     "ToolExecutionEntryNameTypedDict": ".toolexecutionentry",
-    "ToolExecutionEntryObject": ".toolexecutionentry",
-    "ToolExecutionEntryType": ".toolexecutionentry",
     "ToolExecutionEntryTypedDict": ".toolexecutionentry",
     "ToolExecutionStartedEvent": ".toolexecutionstartedevent",
     "ToolExecutionStartedEventName": ".toolexecutionstartedevent",
@@ -2185,7 +2299,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolFileChunk": ".toolfilechunk",
     "ToolFileChunkTool": ".toolfilechunk",
     "ToolFileChunkToolTypedDict": ".toolfilechunk",
-    "ToolFileChunkType": ".toolfilechunk",
     "ToolFileChunkTypedDict": ".toolfilechunk",
     "ToolMessage": ".toolmessage",
     "ToolMessageContent": ".toolmessage",
@@ -2194,7 +2307,6 @@ _dynamic_imports: dict[str, str] = {
     "ToolReferenceChunk": ".toolreferencechunk",
     "ToolReferenceChunkTool": ".toolreferencechunk",
     "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
-    "ToolReferenceChunkType": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
     "ToolTypes": ".tooltypes",
     "TrainingFile": ".trainingfile",
@@ -2202,7 +2314,6 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionResponse": ".transcriptionresponse",
     "TranscriptionResponseTypedDict": ".transcriptionresponse",
     "TranscriptionSegmentChunk": ".transcriptionsegmentchunk",
-    "TranscriptionSegmentChunkType": ".transcriptionsegmentchunk",
     "TranscriptionSegmentChunkTypedDict": ".transcriptionsegmentchunk",
     "TranscriptionStreamDone": ".transcriptionstreamdone",
     "TranscriptionStreamDoneTypedDict": ".transcriptionstreamdone",
@@ -2219,32 +2330,8 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "UnarchiveFTModelOut": ".unarchiveftmodelout",
     "UnarchiveFTModelOutTypedDict": ".unarchiveftmodelout",
-    "UnarchiveModelRequest": ".unarchivemodelop",
-    "UnarchiveModelRequestTypedDict": ".unarchivemodelop",
-    "UpdateAgentRequest": ".updateagentop",
-    "UpdateAgentRequestTypedDict": ".updateagentop",
-    "UpdateAgentVersionRequest": ".updateagentversionop",
-    "UpdateAgentVersionRequestTypedDict": ".updateagentversionop",
-    "UpdateDocumentRequest": ".updatedocumentop",
-    "UpdateDocumentRequestTypedDict": ".updatedocumentop",
     "UpdateFTModelIn": ".updateftmodelin",
     "UpdateFTModelInTypedDict": ".updateftmodelin",
-    "UpdateLibraryRequest": ".updatelibraryop",
-    "UpdateLibraryRequestTypedDict": ".updatelibraryop",
-    "UpdateModelRequest": ".updatemodelop",
-    "UpdateModelRequestTypedDict": ".updatemodelop",
-    "UpdateModelResponse": ".updatemodelop",
-    "UpdateModelResponseTypedDict": ".updatemodelop",
-    "UpdateOrCreateLibraryAccessRequest": ".updateorcreatelibraryaccessop",
-    "UpdateOrCreateLibraryAccessRequestTypedDict": ".updateorcreatelibraryaccessop",
-    "DocumentUpload": ".uploaddocumentop",
-    "DocumentUploadTypedDict": ".uploaddocumentop",
-    "UploadDocumentRequest": ".uploaddocumentop",
-    "UploadDocumentRequestTypedDict": ".uploaddocumentop",
-    "MultiPartBodyParams": ".uploadfileop",
-    "MultiPartBodyParamsTypedDict": ".uploadfileop",
-    "UploadFileOut": ".uploadfileout",
-    "UploadFileOutTypedDict": ".uploadfileout",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
     "UserMessage": ".usermessage",
