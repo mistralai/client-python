@@ -1,0 +1,23 @@
+# ClassifierFTModel
+
+
+## Fields
+
+| Field                                                          | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `id`                                                           | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `object`                                                       | *Optional[Literal["model"]]*                                   | :heavy_minus_sign:                                             | N/A                                                            |
+| `created`                                                      | *int*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `owned_by`                                                     | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `workspace_id`                                                 | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `root`                                                         | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `root_version`                                                 | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `archived`                                                     | *bool*                                                         | :heavy_check_mark:                                             | N/A                                                            |
+| `name`                                                         | *OptionalNullable[str]*                                        | :heavy_minus_sign:                                             | N/A                                                            |
+| `description`                                                  | *OptionalNullable[str]*                                        | :heavy_minus_sign:                                             | N/A                                                            |
+| `ft_model_capabilities`                                        | [models.FTModelCapabilities](../models/ftmodelcapabilities.md) | :heavy_check_mark:                                             | N/A                                                            |
+| `max_context_length`                                           | *Optional[int]*                                                | :heavy_minus_sign:                                             | N/A                                                            |
+| `aliases`                                                      | List[*str*]                                                    | :heavy_minus_sign:                                             | N/A                                                            |
+| `job`                                                          | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `classifier_targets`                                           | List[[models.ClassifierTarget](../models/classifiertarget.md)] | :heavy_check_mark:                                             | N/A                                                            |
+| `model_type`                                                   | *Literal["classifier"]*                                        | :heavy_check_mark:                                             | N/A                                                            |

@@ -1,0 +1,15 @@
+# ToolExecutionEntry
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `object`                                                             | *Optional[Literal["entry"]]*                                         | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `type`                                                               | *Optional[Literal["tool.execution"]]*                                | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `completed_at`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `id`                                                                 | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `name`                                                               | [models.ToolExecutionEntryName](../models/toolexecutionentryname.md) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `arguments`                                                          | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `info`                                                               | Dict[str, *Any*]                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
