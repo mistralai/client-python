@@ -101,7 +101,7 @@ class CompletionJobOut(BaseModel):
     validation_files: OptionalNullable[List[str]] = UNSET
     r"""A list containing the IDs of uploaded files that contain validation data."""
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
         pydantic.Field(alias="object"),
     ] = "job"
@@ -121,7 +121,7 @@ class CompletionJobOut(BaseModel):
 
     metadata: OptionalNullable[JobMetadataOut] = UNSET
 
-    JOB_TYPE: Annotated[
+    job_type: Annotated[
         Annotated[
             Optional[Literal["completion"]],
             AfterValidator(validate_const("completion")),

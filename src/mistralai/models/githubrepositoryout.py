@@ -26,7 +26,7 @@ class GithubRepositoryOut(BaseModel):
 
     commit_id: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["github"]], AfterValidator(validate_const("github"))
         ],

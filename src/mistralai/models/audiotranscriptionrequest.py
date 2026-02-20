@@ -51,7 +51,7 @@ class AudioTranscriptionRequest(BaseModel):
         UNSET
     )
 
-    STREAM: Annotated[
+    stream: Annotated[
         Annotated[Optional[Literal[False]], AfterValidator(validate_const(False))],
         pydantic.Field(alias="stream"),
         FieldMetadata(multipart=True),

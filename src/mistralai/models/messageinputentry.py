@@ -7,18 +7,15 @@ from .messageinputcontentchunks import (
 )
 from datetime import datetime
 from mistralai.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from mistralai.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-Object = Literal["entry",]
-
-
-MessageInputEntryType = Literal["message.input",]
-
-
-MessageInputEntryRole = Literal[
+Role = Literal[
     "assistant",
     "user",
 ]
@@ -38,10 +35,10 @@ MessageInputEntryContent = TypeAliasType(
 class MessageInputEntryTypedDict(TypedDict):
     r"""Representation of an input message inside the conversation."""
 
-    role: MessageInputEntryRole
+    role: Role
     content: MessageInputEntryContentTypedDict
-    object: NotRequired[Object]
-    type: NotRequired[MessageInputEntryType]
+    object: Literal["entry"]
+    type: Literal["message.input"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -51,13 +48,22 @@ class MessageInputEntryTypedDict(TypedDict):
 class MessageInputEntry(BaseModel):
     r"""Representation of an input message inside the conversation."""
 
-    role: MessageInputEntryRole
+    role: Role
 
     content: MessageInputEntryContent
 
-    object: Optional[Object] = "entry"
+    object: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[MessageInputEntryType] = "message.input"
+    type: Annotated[
+        Annotated[
+            Optional[Literal["message.input"]],
+            AfterValidator(validate_const("message.input")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "message.input"
 
     created_at: Optional[datetime] = None
 

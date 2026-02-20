@@ -67,7 +67,7 @@ class FTModelCard(BaseModel):
 
     default_model_temperature: OptionalNullable[float] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[FTModelCardType], AfterValidator(validate_const("fine-tuned"))
         ],

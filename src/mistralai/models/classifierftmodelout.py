@@ -55,7 +55,7 @@ class ClassifierFTModelOut(BaseModel):
 
     classifier_targets: List[ClassifierTargetOut]
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
         pydantic.Field(alias="object"),
     ] = "model"
@@ -68,7 +68,7 @@ class ClassifierFTModelOut(BaseModel):
 
     aliases: Optional[List[str]] = None
 
-    MODEL_TYPE: Annotated[
+    model_type: Annotated[
         Annotated[
             Optional[Literal["classifier"]],
             AfterValidator(validate_const("classifier")),
