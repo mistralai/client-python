@@ -109,7 +109,6 @@ def reconstitue_entries(
                     id=first_event.id,
                     agent_id=first_event.agent_id,
                     model=first_event.model,
-                    role=first_event.role,
                 )
             )
         elif isinstance(first_event, FunctionCallEvent):
@@ -160,7 +159,7 @@ class RunResult:
         return "\n".join(
             as_text(entry)
             for entry in self.output_entries
-            if entry.type == "message.output"
+            if isinstance(entry, MessageOutputEntry)
         )
 
     @property

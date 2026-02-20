@@ -37,7 +37,6 @@ mock_cc_response = ChatCompletionResponse(
                 content='{\n  "final_answer": "x = -4",\n  "steps": [\n    {\n      "explanation": "Start with the given equation.",\n      "output": "8x + 7 = -23"\n    },\n    {\n      "explanation": "Subtract 7 from both sides to isolate the term with x.",\n      "output": "8x = -23 - 7"\n    },\n    {\n      "explanation": "Simplify the right side of the equation.",\n      "output": "8x = -30"\n    },\n    {\n      "explanation": "Divide both sides by 8 to solve for x.",\n      "output": "x = -30 / 8"\n    },\n    {\n      "explanation": "Simplify the fraction to get the final answer.",\n      "output": "x = -4"\n    }\n  ]\n}',
                 tool_calls=None,
                 prefix=False,
-                role="assistant",
             ),
             finish_reason="stop",
         )
@@ -53,7 +52,6 @@ expected_response: ParsedChatCompletionResponse = ParsedChatCompletionResponse(
                 content='{\n  "final_answer": "x = -4",\n  "steps": [\n    {\n      "explanation": "Start with the given equation.",\n      "output": "8x + 7 = -23"\n    },\n    {\n      "explanation": "Subtract 7 from both sides to isolate the term with x.",\n      "output": "8x = -23 - 7"\n    },\n    {\n      "explanation": "Simplify the right side of the equation.",\n      "output": "8x = -30"\n    },\n    {\n      "explanation": "Divide both sides by 8 to solve for x.",\n      "output": "x = -30 / 8"\n    },\n    {\n      "explanation": "Simplify the fraction to get the final answer.",\n      "output": "x = -4"\n    }\n  ]\n}',
                 tool_calls=None,
                 prefix=False,
-                role="assistant",
                 parsed=MathDemonstration(
                     steps=[
                         Explanation(
