@@ -39,7 +39,7 @@ python:
     - Mistral
   baseErrorName: MistralError
   clientServerStatusCodesAsErrors: true
-  constFieldCasing: upper
+  constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
   enableCustomCodeRegions: true
