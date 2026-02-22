@@ -1,8 +1,9 @@
-# ReferenceChunkType
+# Role
 
 
 ## Values
 
 | Name        | Value       |
 | ----------- | ----------- |
-| `REFERENCE` | reference   |
+| `ASSISTANT` | assistant   |
+| `USER`      | user        |
