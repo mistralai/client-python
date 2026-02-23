@@ -19,8 +19,6 @@ def update_speakeasy(
     workflow_lock_path: str = WORKFLOW_LOCK_PATH,
     verbose: bool = False,
 ):
-    if not re.match(r'^\d+\.\d+\.\d+$', version):
-        raise ValueError(f"Invalid version format: {version}. Expected format: X.Y.Z (e.g., 1.2.3)")
     """
     Update the speakeasy version and pin the openapi specs to the current revision.
 
@@ -30,6 +28,8 @@ def update_speakeasy(
         inv update-speakeasy --version "1.580.2" --targets "mistralai-sdk" --workflow-path ".speakeasy/workflow.yaml" --workflow-lock-path ".speakeasy/workflow.lock.yaml"
         inv update-speakeasy --version "1.580.2" --targets "mistralai-sdk" --workflow-path ".speakeasy/workflow.yaml" --workflow-lock-path ".speakeasy/workflow.lock.yaml" --verbose
     """
+    if not re.match(r'^\d+\.\d+\.\d+$', version):
+        raise ValueError(f"Invalid version format: {version}. Expected format: X.Y.Z (e.g., 1.2.3)")
     for target in targets:
         try:
             SpeakeasyTargets(target)

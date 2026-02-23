@@ -26,47 +26,96 @@ pip install mistralai[gcp]
 
 This example shows how to create chat completions.
 
+> **Note:** GCP Vertex AI requires constructing the endpoint URL from your
+> project ID, region, and model. An access token is obtained via `gcloud`.
+
 ```python
 # Synchronous Example
-from mistralai.gcp.client import MistralGCP
 import os
-)
+import subprocess
+from mistralai.gcp.client import MistralGCP
 
+
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+s = MistralGCP(
+    api_key=get_token(),
+    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+)
 
 res = s.chat.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model="mistral-small-latest")
+], model=GCP_MODEL)
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 ```
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.gcp.client import MistralGCP
 import os
+import subprocess
+from mistralai.gcp.client import MistralGCP
+
+
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
 
 async def main():
     s = MistralGCP(
-        api_key=os.getenv("API_KEY", ""),
+        api_key=get_token(),
+        server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
     )
     res = await s.chat.complete_async(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], model="mistral-small-latest")
+    ], model=GCP_MODEL)
     if res is not None:
         # handle response
-        pass
+        print(res.choices[0].message.content)
 
 asyncio.run(main())
 ```
@@ -78,12 +127,12 @@ asyncio.run(main())
 ### [chat](docs/sdks/chat/README.md)
 
 * [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
-* [create](docs/sdks/chat/README.md#create) - Chat Completion
+* [complete](docs/sdks/chat/README.md#complete) - Chat Completion
 
 ### [fim](docs/sdks/fim/README.md)
 
 * [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
-* [create](docs/sdks/fim/README.md#create) - Fim Completion
+* [complete](docs/sdks/fim/README.md#complete) - Fim Completion
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Server-sent event streaming [eventstream] -->
@@ -96,18 +145,41 @@ terminate when the server no longer has any events to send and closes the
 underlying connection.
 
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+import subprocess
+from mistralai.gcp.client import MistralGCP
 
-s = MistralGCP()
 
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+s = MistralGCP(
+    api_key=get_token(),
+    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+)
 
 res = s.chat.stream(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model="mistral-small-latest")
+], model=GCP_MODEL)
 
 if res is not None:
     for event in res:
@@ -127,21 +199,44 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
+import os
+import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.utils import BackoffStrategy, RetryConfig
-import os
 
-s = MistralGCP()
 
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+s = MistralGCP(
+    api_key=get_token(),
+    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+)
 
 res = s.chat.stream(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], 
-    model="mistral-small-latest",
+    ],
+    model=GCP_MODEL,
     retries=RetryConfig(
         "backoff",
         BackoffStrategy(1, 50, 1.1, 100),
@@ -158,23 +253,45 @@ if res is not None:
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
+import os
+import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.utils import BackoffStrategy, RetryConfig
-import os
+
+
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
 
 s = MistralGCP(
+    api_key=get_token(),
+    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 )
-
 
 res = s.chat.stream(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ],
-    model="mistral-small-latest"
+    model=GCP_MODEL,
 )
 
 if res is not None:
@@ -188,7 +305,7 @@ if res is not None:
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an error. If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
 | Error Object               | Status Code | Content Type     |
 | -------------------------- | ----------- | ---------------- |
@@ -198,22 +315,46 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ### Example
 
 ```python
+import os
+import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client import models
-import os
 
-s = MistralGCP()
+
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def build_vertex_url(project_id, region, model):
+    return (
+        f"https://{region}-aiplatform.googleapis.com/v1/"
+        f"projects/{project_id}/locations/{region}/"
+        f"publishers/mistralai/models/{model}"
+    )
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+s = MistralGCP(
+    api_key=get_token(),
+    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+)
 
 res = None
 try:
     res = s.chat.complete(
         messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ],
-        model="mistral-small-latest"
+        model=GCP_MODEL,
     )
 
 except models.HTTPValidationError as e:
@@ -233,61 +374,43 @@ if res is not None:
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Name
-
-You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
-
-| Name   | Server                   | Variables |
-| ------ | ------------------------ | --------- |
-| `prod` | `https://api.mistral.ai` | None      |
-
-#### Example
-
-```python
-from mistralai.gcp.client import MistralGCP
-import os
-
-s = MistralGCP(server="prod")
-
-
-res = s.chat.stream(
-    messages=[
-        {
-            "content": "Who is the best French painter? Answer in one short sentence.",
-            "role": "user",
-        },
-    ], 
-    model="mistral-small-latest"
-)
-
-if res is not None:
-    for event in res:
-        # handle event
-        print(event)
-
-```
-
-
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+For GCP, you **must** override the default server URL with your Vertex AI endpoint:
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+import subprocess
+from mistralai.gcp.client import MistralGCP
+
+
+def get_token():
+    return subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
 
 s = MistralGCP(
-    server_url="https://api.mistral.ai",
+    api_key=get_token(),
+    server_url=(
+        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
+        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
+        f"publishers/mistralai/models/{GCP_MODEL}"
+    ),
 )
-
 
 res = s.chat.stream(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], 
-    model="mistral-small-latest"
+    ],
+    model=GCP_MODEL,
 )
 
 if res is not None:
@@ -311,11 +434,16 @@ from mistralai.gcp.client import MistralGCP
 import httpx
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
-s = MistralGCP(client=http_client)
+s = MistralGCP(
+    api_key="<your-gcloud-token>",
+    server_url="<your-vertex-ai-url>",
+    client=http_client,
+)
 ```
 
 or you could wrap the client with your own custom logic:
 ```python
+from typing import Any, Optional, Union
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.httpclient import AsyncHttpClient
 import httpx
@@ -375,7 +503,11 @@ class CustomClient(AsyncHttpClient):
             extensions=extensions,
         )
 
-s = MistralGCP(async_client=CustomClient(httpx.AsyncClient()))
+s = MistralGCP(
+    api_key="<your-gcloud-token>",
+    server_url="<your-vertex-ai-url>",
+    async_client=CustomClient(httpx.AsyncClient()),
+)
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -390,22 +522,38 @@ This SDK supports the following security scheme globally:
 | --------- | ---- | ----------- |
 | `api_key` | http | HTTP Bearer |
 
-To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
+For GCP, the `api_key` is a short-lived OAuth token obtained via `gcloud auth print-access-token`. You must also provide `server_url` pointing to your Vertex AI endpoint. For example:
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+import subprocess
+from mistralai.gcp.client import MistralGCP
 
-s = MistralGCP()
+token = subprocess.run(
+    ["gcloud", "auth", "print-access-token"],
+    capture_output=True, text=True,
+).stdout.strip()
 
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+s = MistralGCP(
+    api_key=token,
+    server_url=(
+        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
+        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
+        f"publishers/mistralai/models/{GCP_MODEL}"
+    ),
+)
 
 res = s.chat.stream(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], 
-    model="mistral-small-latest"
+    ],
+    model=GCP_MODEL,
 )
 
 if res is not None:
@@ -422,5 +570,5 @@ if res is not None:
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.

@@ -8,7 +8,10 @@ This example shows how to create chat completions.
 from mistralai.gcp.client import MistralGCP
 import os
 
-s = MistralGCP()
+s = MistralGCP(
+    api_key=os.environ["GCP_TOKEN"],
+    server_url=os.environ["GCP_ENDPOINT"],
+)
 
 
 res = s.chat.complete(messages=[
@@ -16,7 +19,7 @@ res = s.chat.complete(messages=[
         "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
     },
-], model="mistral-small-latest")
+], model=os.environ["GCP_MODEL"])
 
 if res is not None:
     # handle response
@@ -25,7 +28,7 @@ if res is not None:
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -34,14 +37,15 @@ import os
 
 async def main():
     s = MistralGCP(
-        api_key=os.getenv("API_KEY", ""),
+        api_key=os.environ["GCP_TOKEN"],
+        server_url=os.environ["GCP_ENDPOINT"],
     )
     res = await s.chat.complete_async(messages=[
         {
             "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
         },
-    ], model="mistral-small-latest")
+    ], model=os.environ["GCP_MODEL"])
     if res is not None:
         # handle response
         pass

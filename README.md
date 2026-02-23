@@ -369,7 +369,7 @@ You can run the examples in the `examples/` directory using `uv run`.
 
 **Prerequisites**
 
-Before you begin, ensure you have `AZUREAI_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
+Before you begin, ensure you have `AZURE_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
 See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.ai/deployment/cloud/azure/).
 
 **Step 1: Install**
@@ -382,22 +382,31 @@ pip install mistralai
 
 Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/azure).
 
+> **Note:** Azure requires injecting the `api-version` query parameter via a
+> custom `httpx.Client`. The SDK does not add it automatically.
+
 ```python
 import os
+import httpx
 from mistralai.azure.client import MistralAzure
 
 client = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    api_key=os.environ["AZURE_API_KEY"],
+    server_url=os.environ["AZURE_ENDPOINT"],
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": os.environ["AZURE_API_VERSION"]},
+    ),
 )
 
 res = client.chat.complete(
+    model=os.environ["AZURE_MODEL"],
     messages=[
         {
+            "role": "user",
             "content": "Hello there!",
-            "role": "user"
         }
-    ]
+    ],
 )
 print(res.choices[0].message.content)
 ```
@@ -429,18 +438,35 @@ Here's a basic example to get you started. You can also run [the example in the 
 
 ```python
 import os
+import subprocess
 from mistralai.gcp.client import MistralGCP
 
-client = MistralGCP(api_key=os.getenv("GCP_API_KEY", ""))
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
+GCP_REGION = os.environ["GCP_REGION"]
+GCP_MODEL = os.environ["GCP_MODEL"]
+
+token = subprocess.run(
+    ["gcloud", "auth", "print-access-token"],
+    capture_output=True, text=True,
+).stdout.strip()
+
+client = MistralGCP(
+    api_key=token,
+    server_url=(
+        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
+        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
+        f"publishers/mistralai/models/{GCP_MODEL}"
+    ),
+)
 
 res = client.chat.complete(
-    model="mistral-large-2407",
+    model=GCP_MODEL,
     messages=[
         {
+            "role": "user",
             "content": "Hello there!",
-            "role": "user"
         }
-    ]
+    ],
 )
 print(res.choices[0].message.content)
 ```

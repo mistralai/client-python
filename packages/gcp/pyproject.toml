@@ -53,6 +53,7 @@ pythonpath = ["src"]
 
 [tool.mypy]
 disable_error_code = "misc"
+namespace_packages = true
 explicit_package_bases = true
 mypy_path = "src"
 

@@ -14,7 +14,7 @@ uv add mistralai
 
 **Prerequisites**
 
-Before you begin, ensure you have `AZUREAI_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
+Before you begin, ensure you have `AZURE_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
 See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.ai/deployment/cloud/azure/).
 
 <!-- Start SDK Example Usage [usage] -->
@@ -24,58 +24,80 @@ See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.a
 
 This example shows how to create chat completions.
 
+> **Note:** Azure requires injecting the `api-version` query parameter via a
+> custom `httpx.Client`. The SDK does not add it automatically.
+
 ```python
 # Synchronous Example
 from mistralai.azure.client import MistralAzure
+import httpx
 import os
 
-s = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
-)
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
 
+s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": AZURE_API_VERSION},
+    ),
+)
 
 res = s.chat.complete(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], 
-    model="azureai"
+    ],
+    model=AZURE_MODEL,
 )
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 ```
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
 from mistralai.azure.client import MistralAzure
+import httpx
 import os
+
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
 
 async def main():
     s = MistralAzure(
-        api_key=os.getenv("AZURE_API_KEY", ""),
-        server_url=os.getenv("AZURE_ENDPOINT", "")
+        api_key=AZURE_API_KEY,
+        server_url=AZURE_ENDPOINT,
+        async_client=httpx.AsyncClient(
+            follow_redirects=True,
+            params={"api-version": AZURE_API_VERSION},
+        ),
     )
     res = await s.chat.complete_async(
         messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
-        ], 
-        model="azureai"
+        ],
+        model=AZURE_MODEL,
     )
     if res is not None:
         # handle response
-        pass
+        print(res.choices[0].message.content)
 
 asyncio.run(main())
 ```
@@ -87,7 +109,7 @@ asyncio.run(main())
 ### [chat](docs/sdks/chat/README.md)
 
 * [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
-* [create](docs/sdks/chat/README.md#create) - Chat Completion
+* [complete](docs/sdks/chat/README.md#complete) - Chat Completion
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Server-sent event streaming [eventstream] -->
@@ -101,22 +123,31 @@ underlying connection.
 
 ```python
 from mistralai.azure.client import MistralAzure
+import httpx
 import os
 
-s = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
-)
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
 
+s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": AZURE_API_VERSION},
+    ),
+)
 
 res = s.chat.stream(
     messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], 
-    model="azureai"
+    ],
+    model=AZURE_MODEL,
 )
 
 if res is not None:
@@ -139,21 +170,37 @@ To change the default retry strategy for a single API call, simply provide a `Re
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.utils import BackoffStrategy, RetryConfig
+import httpx
 import os
 
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+
 s = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": AZURE_API_VERSION},
+    ),
 )
 
-
-res = s.chat.stream(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai",
-    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+res = s.chat.stream(
+    messages=[
+        {
+            "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
+        },
+    ],
+    model=AZURE_MODEL,
+    retries=RetryConfig(
+        "backoff",
+        BackoffStrategy(1, 50, 1.1, 100),
+        False
+    ),
+)
 
 if res is not None:
     for event in res:
@@ -166,21 +213,33 @@ If you'd like to override the default retry strategy for all operations that sup
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.utils import BackoffStrategy, RetryConfig
+import httpx
 import os
 
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+
 s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": AZURE_API_VERSION},
+    ),
 )
 
-
-res = s.chat.stream(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai")
+res = s.chat.stream(
+    messages=[
+        {
+            "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
+        },
+    ],
+    model=AZURE_MODEL,
+)
 
 if res is not None:
     for event in res:
@@ -193,7 +252,7 @@ if res is not None:
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an error. If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
 | Error Object               | Status Code | Content Type     |
 | -------------------------- | ----------- | ---------------- |
@@ -205,21 +264,34 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client import models
+import httpx
 import os
 
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+
 s = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": AZURE_API_VERSION},
+    ),
 )
 
 res = None
 try:
-    res = s.chat.complete(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai")
+    res = s.chat.complete(
+        messages=[
+            {
+                "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
+            },
+        ],
+        model=AZURE_MODEL,
+    )
 
 except models.HTTPValidationError as e:
     # handle exception
@@ -238,62 +310,32 @@ if res is not None:
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Name
-
-You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
-
-| Name   | Server                   | Variables |
-| ------ | ------------------------ | --------- |
-| `prod` | `https://api.mistral.ai` | None      |
-
-#### Example
-
-```python
-from mistralai.azure.client import MistralAzure
-import os
-
-s = MistralAzure(
-    server="prod",
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
-)
-
-
-res = s.chat.stream(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai")
-
-if res is not None:
-    for event in res:
-        # handle event
-        print(event)
-
-```
-
-
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+For Azure, you **must** override the default server URL with your Azure AI Foundry endpoint and inject the `api-version` query parameter via a custom `httpx.Client`:
 ```python
 from mistralai.azure.client import MistralAzure
+import httpx
 import os
 
 s = MistralAzure(
-    server_url="https://api.mistral.ai",
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    api_key=os.environ["AZURE_API_KEY"],
+    server_url=os.environ["AZURE_ENDPOINT"],
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": os.environ["AZURE_API_VERSION"]},
+    ),
 )
 
-
-res = s.chat.stream(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai")
+res = s.chat.stream(
+    messages=[
+        {
+            "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
+        },
+    ],
+    model=os.environ["AZURE_MODEL"],
+)
 
 if res is not None:
     for event in res:
@@ -314,13 +356,23 @@ For example, you could specify a header for every request that this sdk makes as
 ```python
 from mistralai.azure.client import MistralAzure
 import httpx
+import os
 
-http_client = httpx.Client(headers={"x-custom-header": "someValue"})
-s = MistralAzure(client=http_client)
+http_client = httpx.Client(
+    follow_redirects=True,
+    headers={"x-custom-header": "someValue"},
+    params={"api-version": os.environ["AZURE_API_VERSION"]},
+)
+s = MistralAzure(
+    api_key=os.environ["AZURE_API_KEY"],
+    server_url=os.environ["AZURE_ENDPOINT"],
+    client=http_client,
+)
 ```
 
 or you could wrap the client with your own custom logic:
 ```python
+from typing import Any, Optional, Union
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.httpclient import AsyncHttpClient
 import httpx
@@ -380,7 +432,11 @@ class CustomClient(AsyncHttpClient):
             extensions=extensions,
         )
 
-s = MistralAzure(async_client=CustomClient(httpx.AsyncClient()))
+s = MistralAzure(
+    api_key="<your-azure-api-key>",
+    server_url="<your-azure-endpoint>",
+    async_client=CustomClient(httpx.AsyncClient()),
+)
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -395,23 +451,30 @@ This SDK supports the following security scheme globally:
 | --------- | ---- | ----------- |
 | `api_key` | http | HTTP Bearer |
 
-To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. You must also provide `server_url` pointing to your Azure AI Foundry endpoint and inject `api-version` via a custom `httpx.Client`. For example:
 ```python
 from mistralai.azure.client import MistralAzure
+import httpx
 import os
 
 s = MistralAzure(
-    api_key=os.getenv("AZURE_API_KEY", ""),
-    server_url=os.getenv("AZURE_ENDPOINT", "")
+    api_key=os.environ["AZURE_API_KEY"],
+    server_url=os.environ["AZURE_ENDPOINT"],
+    client=httpx.Client(
+        follow_redirects=True,
+        params={"api-version": os.environ["AZURE_API_VERSION"]},
+    ),
 )
 
-
-res = s.chat.stream(messages=[
-    {
-        "content": "Who is the best French painter? Answer in one short sentence.",
-        "role": "user",
-    },
-], model="azureai")
+res = s.chat.stream(
+    messages=[
+        {
+            "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
+        },
+    ],
+    model=os.environ["AZURE_MODEL"],
+)
 
 if res is not None:
     for event in res:
@@ -427,5 +490,5 @@ if res is not None:
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.

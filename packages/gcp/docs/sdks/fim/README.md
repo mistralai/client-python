@@ -8,7 +8,7 @@ Fill-in-the-middle API.
 ### Available Operations
 
 * [stream](#stream) - Stream fim completion
-* [create](#create) - Fim Completion
+* [complete](#complete) - Fim Completion
 
 ## stream
 
@@ -20,10 +20,13 @@ Mistral AI provides the ability to stream responses back to a client in order to
 from mistralai.gcp.client import MistralGCP
 import os
 
-s = MistralGCP()
+s = MistralGCP(
+    api_key=os.environ["GCP_TOKEN"],
+    server_url=os.environ["GCP_ENDPOINT"],
+)
 
 
-res = s.fim.stream(prompt="def", model="codestral-2405", suffix="return a+b")
+res = s.fim.stream(prompt="def", model=os.environ["GCP_MODEL"], suffix="return a+b")
 
 if res is not None:
     for event in res:
@@ -58,7 +61,7 @@ if res is not None:
 | --------------- | ----------- | ------------ |
 | models.SDKError | 4xx-5xx     | */*          |
 
-## create
+## complete
 
 FIM completion.
 
@@ -68,10 +71,13 @@ FIM completion.
 from mistralai.gcp.client import MistralGCP
 import os
 
-s = MistralGCP()
+s = MistralGCP(
+    api_key=os.environ["GCP_TOKEN"],
+    server_url=os.environ["GCP_ENDPOINT"],
+)
 
 
-res = s.fim.complete(prompt="def", model="codestral-2405", suffix="return a+b")
+res = s.fim.complete(prompt="def", model=os.environ["GCP_MODEL"], suffix="return a+b")
 
 if res is not None:
     # handle response

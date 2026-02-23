@@ -8,7 +8,7 @@ Chat Completion API.
 ### Available Operations
 
 * [stream](#stream) - Stream chat completion
-* [create](#create) - Chat Completion
+* [complete](#complete) - Chat Completion
 
 ## stream
 
@@ -20,7 +20,10 @@ Mistral AI provides the ability to stream responses back to a client in order to
 from mistralai.gcp.client import MistralGCP
 import os
 
-s = MistralGCP()
+s = MistralGCP(
+    api_key=os.environ["GCP_TOKEN"],
+    server_url=os.environ["GCP_ENDPOINT"],
+)
 
 
 res = s.chat.stream(messages=[
@@ -28,7 +31,7 @@ res = s.chat.stream(messages=[
         "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
     },
-], model="mistral-small-latest")
+], model=os.environ["GCP_MODEL"])
 
 if res is not None:
     for event in res:
@@ -65,7 +68,7 @@ if res is not None:
 | --------------- | ----------- | ------------ |
 | models.SDKError | 4xx-5xx     | */*          |
 
-## create
+## complete
 
 Chat Completion
 
@@ -75,7 +78,10 @@ Chat Completion
 from mistralai.gcp.client import MistralGCP
 import os
 
-s = MistralGCP()
+s = MistralGCP(
+    api_key=os.environ["GCP_TOKEN"],
+    server_url=os.environ["GCP_ENDPOINT"],
+)
 
 
 res = s.chat.complete(messages=[
@@ -83,7 +89,7 @@ res = s.chat.complete(messages=[
         "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
     },
-], model="mistral-small-latest")
+], model=os.environ["GCP_MODEL"])
 
 if res is not None:
     # handle response
