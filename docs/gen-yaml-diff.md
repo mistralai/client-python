@@ -18,9 +18,9 @@
 
 | Setting | Main | Azure | GCP |
 |---------|------|-------|-----|
-| `version` | `2.0.0a4` | `2.0.0a4` | `2.0.0a4` |
+| `version` | `2.0.0a3` | `2.0.0a4` | `2.0.0a4` |
 | `additionalDependencies.main` | *none* | *none* | *none* |
-| `baseErrorName` | `MistralError` | `MistralAzureError` | `MistralGcpError` |
+| `baseErrorName` | `MistralError` | `MistralAzureError` | `MistralGCPError` |
 | `description` | `...Mistral AI API.` | `...in Azure.` | `...in GCP.` |
 | `enableCustomCodeRegions` | `true` | `false` | `false` |
 | `envVarPrefix` | `MISTRAL` | *missing* | *missing* |
@@ -36,8 +36,9 @@
 
 All fix flags and feature flags are now aligned. The only remaining differences are expected per-target values:
 
-- **`version`** -- all at 2.0.0a4 (versions may diverge independently)
+- **`version`** -- main at 2.0.0a3, Azure/GCP at 2.0.0a4 (versions may diverge independently)
 - **`baseErrorName`** / `description` -- per-target identity
 - **`enableCustomCodeRegions`** -- `false` in Azure/GCP (they have no custom code regions)
 - **`envVarPrefix`** -- absent in Azure/GCP (only the main SDK reads `MISTRAL_*` env vars)
+- **`persistentEdits`** -- `enabled: "true"` in main, `{}` in Azure/GCP (main SDK preserves custom edits between generations)
 - **`moduleName`** / `packageName` -- per-target namespace
