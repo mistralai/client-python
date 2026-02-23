@@ -10,22 +10,19 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-FunctionResultEntryObject = Literal["entry",]
-
-
-FunctionResultEntryType = Literal["function.result",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class FunctionResultEntryTypedDict(TypedDict):
     tool_call_id: str
     result: str
-    object: NotRequired[FunctionResultEntryObject]
-    type: NotRequired[FunctionResultEntryType]
+    object: Literal["entry"]
+    type: Literal["function.result"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -36,9 +33,18 @@ class FunctionResultEntry(BaseModel):
 
     result: str
 
-    object: Optional[FunctionResultEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[FunctionResultEntryType] = "function.result"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["function.result"]],
+            AfterValidator(validate_const("function.result")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "function.result"
 
     created_at: Optional[datetime] = None
 

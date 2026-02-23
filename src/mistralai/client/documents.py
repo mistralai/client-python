@@ -58,7 +58,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListDocumentsRequest(
+        request = models.LibrariesDocumentsListV1Request(
             library_id=library_id,
             search=search,
             page_size=page_size,
@@ -97,7 +97,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListDocuments",
+                operation_id="libraries_documents_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -166,7 +166,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListDocumentsRequest(
+        request = models.LibrariesDocumentsListV1Request(
             library_id=library_id,
             search=search,
             page_size=page_size,
@@ -205,7 +205,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListDocuments",
+                operation_id="libraries_documents_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -272,7 +272,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UploadDocumentRequest(
+        request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
             request_body=models.DocumentUpload(
                 file=utils.get_pydantic_model(file, models.File),
@@ -311,7 +311,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadDocument",
+                operation_id="libraries_documents_upload_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -378,7 +378,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UploadDocumentRequest(
+        request = models.LibrariesDocumentsUploadV1Request(
             library_id=library_id,
             request_body=models.DocumentUpload(
                 file=utils.get_pydantic_model(file, models.File),
@@ -417,7 +417,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadDocument",
+                operation_id="libraries_documents_upload_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -476,7 +476,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentRequest(
+        request = models.LibrariesDocumentsGetV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -510,7 +510,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocument",
+                operation_id="libraries_documents_get_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -569,7 +569,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentRequest(
+        request = models.LibrariesDocumentsGetV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -603,7 +603,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocument",
+                operation_id="libraries_documents_get_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -671,7 +671,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateDocumentRequest(
+        request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
             document_update_in=models.DocumentUpdateIn(
@@ -716,7 +716,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateDocument",
+                operation_id="libraries_documents_update_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -784,7 +784,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateDocumentRequest(
+        request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
             document_update_in=models.DocumentUpdateIn(
@@ -829,7 +829,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateDocument",
+                operation_id="libraries_documents_update_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -888,7 +888,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteDocumentRequest(
+        request = models.LibrariesDocumentsDeleteV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -922,7 +922,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteDocument",
+                operation_id="libraries_documents_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -981,7 +981,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteDocumentRequest(
+        request = models.LibrariesDocumentsDeleteV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1015,7 +1015,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteDocument",
+                operation_id="libraries_documents_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1074,7 +1074,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentTextContentRequest(
+        request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1108,7 +1108,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentTextContent",
+                operation_id="libraries_documents_get_text_content_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1167,7 +1167,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentTextContentRequest(
+        request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1201,7 +1201,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentTextContent",
+                operation_id="libraries_documents_get_text_content_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1260,7 +1260,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentStatusRequest(
+        request = models.LibrariesDocumentsGetStatusV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1294,7 +1294,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentStatus",
+                operation_id="libraries_documents_get_status_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1353,7 +1353,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentStatusRequest(
+        request = models.LibrariesDocumentsGetStatusV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1387,7 +1387,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentStatus",
+                operation_id="libraries_documents_get_status_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1446,7 +1446,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentSignedURLRequest(
+        request = models.LibrariesDocumentsGetSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1480,7 +1480,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentSignedUrl",
+                operation_id="libraries_documents_get_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1539,7 +1539,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentSignedURLRequest(
+        request = models.LibrariesDocumentsGetSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1573,7 +1573,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentSignedUrl",
+                operation_id="libraries_documents_get_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1632,7 +1632,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentExtractedTextSignedURLRequest(
+        request = models.LibrariesDocumentsGetExtractedTextSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1666,7 +1666,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentExtractedTextSignedUrl",
+                operation_id="libraries_documents_get_extracted_text_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1725,7 +1725,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetDocumentExtractedTextSignedURLRequest(
+        request = models.LibrariesDocumentsGetExtractedTextSignedURLV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1759,7 +1759,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetDocumentExtractedTextSignedUrl",
+                operation_id="libraries_documents_get_extracted_text_signed_url_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1818,7 +1818,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReprocessDocumentRequest(
+        request = models.LibrariesDocumentsReprocessV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1852,7 +1852,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ReprocessDocument",
+                operation_id="libraries_documents_reprocess_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1911,7 +1911,7 @@ class Documents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReprocessDocumentRequest(
+        request = models.LibrariesDocumentsReprocessV1Request(
             library_id=library_id,
             document_id=document_id,
         )
@@ -1945,7 +1945,7 @@ class Documents(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ReprocessDocument",
+                operation_id="libraries_documents_reprocess_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

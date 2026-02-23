@@ -75,8 +75,8 @@ with Mistral(
 
     res = mistral.classifiers.moderate_chat(inputs=[
         {
-            "content": "<value>",
             "role": "tool",
+            "content": "<value>",
         },
     ], model="LeBaron")
 
@@ -169,8 +169,8 @@ with Mistral(
         {
             "messages": [
                 {
-                    "content": "<value>",
                     "role": "system",
+                    "content": "<value>",
                 },
             ],
         },

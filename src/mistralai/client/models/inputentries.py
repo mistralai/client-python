@@ -17,9 +17,9 @@ InputEntriesTypedDict = TypeAliasType(
     Union[
         FunctionResultEntryTypedDict,
         MessageInputEntryTypedDict,
-        FunctionCallEntryTypedDict,
         ToolExecutionEntryTypedDict,
         MessageOutputEntryTypedDict,
+        FunctionCallEntryTypedDict,
         AgentHandoffEntryTypedDict,
     ],
 )
@@ -30,9 +30,9 @@ InputEntries = TypeAliasType(
     Union[
         FunctionResultEntry,
         MessageInputEntry,
-        FunctionCallEntry,
         ToolExecutionEntry,
         MessageOutputEntry,
+        FunctionCallEntry,
         AgentHandoffEntry,
     ],
 )
