@@ -10,7 +10,7 @@ from .completionfinetuningjob import (
     CompletionFineTuningJob,
     CompletionFineTuningJobTypedDict,
 )
-from .legacyjobmetadataout import LegacyJobMetadataOut, LegacyJobMetadataOutTypedDict
+from .jobmetadata_2 import JobMetadata2, JobMetadata2TypedDict
 from pydantic import Field
 from typing import Union
 from typing_extensions import Annotated, TypeAliasType
@@ -30,13 +30,12 @@ Response = Annotated[
 
 JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = TypeAliasType(
     "JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict",
-    Union[LegacyJobMetadataOutTypedDict, ResponseTypedDict],
+    Union[JobMetadata2TypedDict, ResponseTypedDict],
 )
 r"""OK"""
 
 
 JobsAPIRoutesFineTuningCreateFineTuningJobResponse = TypeAliasType(
-    "JobsAPIRoutesFineTuningCreateFineTuningJobResponse",
-    Union[LegacyJobMetadataOut, Response],
+    "JobsAPIRoutesFineTuningCreateFineTuningJobResponse", Union[JobMetadata2, Response]
 )
 r"""OK"""

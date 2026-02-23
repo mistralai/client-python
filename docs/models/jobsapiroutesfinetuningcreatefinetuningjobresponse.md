@@ -11,9 +11,9 @@ OK
 value: models.Response = /* values here */
 ```
 
-### `models.LegacyJobMetadataOut`
+### `models.JobMetadata2`
 
 ```python
-value: models.LegacyJobMetadataOut = /* values here */
+value: models.JobMetadata2 = /* values here */
 ```
 

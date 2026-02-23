@@ -5,15 +5,15 @@ OK
 
 ## Supported Types
 
-### `models.ClassifierFTModelOut`
+### `models.ClassifierFineTunedModel`
 
 ```python
-value: models.ClassifierFTModelOut = /* values here */
+value: models.ClassifierFineTunedModel = /* values here */
 ```
 
-### `models.CompletionFTModelOut`
+### `models.CompletionFineTunedModel`
 
 ```python
-value: models.CompletionFTModelOut = /* values here */
+value: models.CompletionFineTunedModel = /* values here */
 ```
 

@@ -6,9 +6,9 @@ from .completiontrainingparameters import (
     CompletionTrainingParameters,
     CompletionTrainingParametersTypedDict,
 )
-from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
-from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
+from .githubrepository import GithubRepository, GithubRepositoryTypedDict
+from .jobmetadata_1 import JobMetadata1, JobMetadata1TypedDict
+from .wandbintegration_1 import WandbIntegration1, WandbIntegration1TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -43,16 +43,16 @@ CompletionFineTuningJobStatus = Union[
 r"""The current status of the fine-tuning job."""
 
 
-CompletionFineTuningJobIntegrationTypedDict = WandbIntegrationOutTypedDict
+CompletionFineTuningJobIntegrationTypedDict = WandbIntegration1TypedDict
 
 
-CompletionFineTuningJobIntegration = WandbIntegrationOut
+CompletionFineTuningJobIntegration = WandbIntegration1
 
 
-CompletionFineTuningJobRepositoryTypedDict = GithubRepositoryOutTypedDict
+CompletionFineTuningJobRepositoryTypedDict = GithubRepositoryTypedDict
 
 
-CompletionFineTuningJobRepository = GithubRepositoryOut
+CompletionFineTuningJobRepository = GithubRepository
 
 
 class CompletionFineTuningJobTypedDict(TypedDict):
@@ -83,7 +83,7 @@ class CompletionFineTuningJobTypedDict(TypedDict):
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
-    metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
+    metadata: NotRequired[Nullable[JobMetadata1TypedDict]]
     job_type: Literal["completion"]
     r"""The type of job (`FT` for fine-tuning)."""
     repositories: NotRequired[List[CompletionFineTuningJobRepositoryTypedDict]]
@@ -132,7 +132,7 @@ class CompletionFineTuningJob(BaseModel):
     trained_tokens: OptionalNullable[int] = UNSET
     r"""Total number of tokens trained."""
 
-    metadata: OptionalNullable[JobMetadataOut] = UNSET
+    metadata: OptionalNullable[JobMetadata1] = UNSET
 
     JOB_TYPE: Annotated[
         Annotated[Literal["completion"], AfterValidator(validate_const("completion"))],

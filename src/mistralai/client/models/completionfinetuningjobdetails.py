@@ -2,15 +2,15 @@
 # @generated-id: e8379265af48
 
 from __future__ import annotations
-from .checkpointout import CheckpointOut, CheckpointOutTypedDict
+from .checkpoint import Checkpoint, CheckpointTypedDict
 from .completiontrainingparameters import (
     CompletionTrainingParameters,
     CompletionTrainingParametersTypedDict,
 )
-from .eventout import EventOut, EventOutTypedDict
-from .githubrepositoryout import GithubRepositoryOut, GithubRepositoryOutTypedDict
-from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
+from .event import Event, EventTypedDict
+from .githubrepository import GithubRepository, GithubRepositoryTypedDict
+from .jobmetadata_1 import JobMetadata1, JobMetadata1TypedDict
+from .wandbintegration_1 import WandbIntegration1, WandbIntegration1TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -44,16 +44,16 @@ CompletionFineTuningJobDetailsStatus = Union[
 ]
 
 
-CompletionFineTuningJobDetailsIntegrationTypedDict = WandbIntegrationOutTypedDict
+CompletionFineTuningJobDetailsIntegrationTypedDict = WandbIntegration1TypedDict
 
 
-CompletionFineTuningJobDetailsIntegration = WandbIntegrationOut
+CompletionFineTuningJobDetailsIntegration = WandbIntegration1
 
 
-CompletionFineTuningJobDetailsRepositoryTypedDict = GithubRepositoryOutTypedDict
+CompletionFineTuningJobDetailsRepositoryTypedDict = GithubRepositoryTypedDict
 
 
-CompletionFineTuningJobDetailsRepository = GithubRepositoryOut
+CompletionFineTuningJobDetailsRepository = GithubRepository
 
 
 class CompletionFineTuningJobDetailsTypedDict(TypedDict):
@@ -73,12 +73,12 @@ class CompletionFineTuningJobDetailsTypedDict(TypedDict):
         Nullable[List[CompletionFineTuningJobDetailsIntegrationTypedDict]]
     ]
     trained_tokens: NotRequired[Nullable[int]]
-    metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
+    metadata: NotRequired[Nullable[JobMetadata1TypedDict]]
     job_type: Literal["completion"]
     repositories: NotRequired[List[CompletionFineTuningJobDetailsRepositoryTypedDict]]
-    events: NotRequired[List[EventOutTypedDict]]
+    events: NotRequired[List[EventTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
-    checkpoints: NotRequired[List[CheckpointOutTypedDict]]
+    checkpoints: NotRequired[List[CheckpointTypedDict]]
 
 
 class CompletionFineTuningJobDetails(BaseModel):
@@ -115,7 +115,7 @@ class CompletionFineTuningJobDetails(BaseModel):
 
     trained_tokens: OptionalNullable[int] = UNSET
 
-    metadata: OptionalNullable[JobMetadataOut] = UNSET
+    metadata: OptionalNullable[JobMetadata1] = UNSET
 
     JOB_TYPE: Annotated[
         Annotated[Literal["completion"], AfterValidator(validate_const("completion"))],
@@ -124,10 +124,10 @@ class CompletionFineTuningJobDetails(BaseModel):
 
     repositories: Optional[List[CompletionFineTuningJobDetailsRepository]] = None
 
-    events: Optional[List[EventOut]] = None
+    events: Optional[List[Event]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
 
-    checkpoints: Optional[List[CheckpointOut]] = None
+    checkpoints: Optional[List[Checkpoint]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

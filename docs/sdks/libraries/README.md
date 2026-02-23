@@ -43,7 +43,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListLibraryOut](../../models/listlibraryout.md)**
+**[models.ListLibrariesResponse](../../models/listlibrariesresponse.md)**
 
 ### Errors
 
@@ -85,7 +85,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -126,7 +126,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -167,7 +167,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -210,7 +210,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 

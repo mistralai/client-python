@@ -3,9 +3,9 @@
 
 ## Supported Types
 
-### `models.GithubRepositoryOut`
+### `models.GithubRepository`
 
 ```python
-value: models.GithubRepositoryOut = /* values here */
+value: models.GithubRepository = /* values here */
 ```
 

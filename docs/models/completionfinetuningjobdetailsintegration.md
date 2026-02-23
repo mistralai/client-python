@@ -3,9 +3,9 @@
 
 ## Supported Types
 
-### `models.WandbIntegrationOut`
+### `models.WandbIntegration1`
 
 ```python
-value: models.WandbIntegrationOut = /* values here */
+value: models.WandbIntegration1 = /* values here */
 ```
 

@@ -18,14 +18,16 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-DocumentTypedDict = TypeAliasType(
-    "DocumentTypedDict",
+DocumentUnionTypedDict = TypeAliasType(
+    "DocumentUnionTypedDict",
     Union[FileChunkTypedDict, ImageURLChunkTypedDict, DocumentURLChunkTypedDict],
 )
 r"""Document to run OCR on"""
 
 
-Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURLChunk])
+DocumentUnion = TypeAliasType(
+    "DocumentUnion", Union[FileChunk, ImageURLChunk, DocumentURLChunk]
+)
 r"""Document to run OCR on"""
 
 
@@ -37,7 +39,7 @@ TableFormat = Literal[
 
 class OCRRequestTypedDict(TypedDict):
     model: Nullable[str]
-    document: DocumentTypedDict
+    document: DocumentUnionTypedDict
     r"""Document to run OCR on"""
     id: NotRequired[str]
     pages: NotRequired[Nullable[List[int]]]
@@ -62,7 +64,7 @@ class OCRRequestTypedDict(TypedDict):
 class OCRRequest(BaseModel):
     model: Nullable[str]
 
-    document: Document
+    document: DocumentUnion
     r"""Document to run OCR on"""
 
     id: Optional[str] = None

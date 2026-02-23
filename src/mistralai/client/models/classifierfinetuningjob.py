@@ -6,8 +6,8 @@ from .classifiertrainingparameters import (
     ClassifierTrainingParameters,
     ClassifierTrainingParametersTypedDict,
 )
-from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
+from .jobmetadata_1 import JobMetadata1, JobMetadata1TypedDict
+from .wandbintegration_1 import WandbIntegration1, WandbIntegration1TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -42,10 +42,10 @@ ClassifierFineTuningJobStatus = Union[
 r"""The current status of the fine-tuning job."""
 
 
-ClassifierFineTuningJobIntegrationTypedDict = WandbIntegrationOutTypedDict
+ClassifierFineTuningJobIntegrationTypedDict = WandbIntegration1TypedDict
 
 
-ClassifierFineTuningJobIntegration = WandbIntegrationOut
+ClassifierFineTuningJobIntegration = WandbIntegration1
 
 
 class ClassifierFineTuningJobTypedDict(TypedDict):
@@ -76,7 +76,7 @@ class ClassifierFineTuningJobTypedDict(TypedDict):
     r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
     r"""Total number of tokens trained."""
-    metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
+    metadata: NotRequired[Nullable[JobMetadata1TypedDict]]
     job_type: Literal["classifier"]
     r"""The type of job (`FT` for fine-tuning)."""
 
@@ -124,7 +124,7 @@ class ClassifierFineTuningJob(BaseModel):
     trained_tokens: OptionalNullable[int] = UNSET
     r"""Total number of tokens trained."""
 
-    metadata: OptionalNullable[JobMetadataOut] = UNSET
+    metadata: OptionalNullable[JobMetadata1] = UNSET
 
     JOB_TYPE: Annotated[
         Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],

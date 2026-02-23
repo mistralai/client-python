@@ -2,15 +2,15 @@
 # @generated-id: 75c5dee8df2e
 
 from __future__ import annotations
-from .checkpointout import CheckpointOut, CheckpointOutTypedDict
-from .classifiertargetout import ClassifierTargetOut, ClassifierTargetOutTypedDict
+from .checkpoint import Checkpoint, CheckpointTypedDict
+from .classifiertarget_2 import ClassifierTarget2, ClassifierTarget2TypedDict
 from .classifiertrainingparameters import (
     ClassifierTrainingParameters,
     ClassifierTrainingParametersTypedDict,
 )
-from .eventout import EventOut, EventOutTypedDict
-from .jobmetadataout import JobMetadataOut, JobMetadataOutTypedDict
-from .wandbintegrationout import WandbIntegrationOut, WandbIntegrationOutTypedDict
+from .event import Event, EventTypedDict
+from .jobmetadata_1 import JobMetadata1, JobMetadata1TypedDict
+from .wandbintegration_1 import WandbIntegration1, WandbIntegration1TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -44,10 +44,10 @@ ClassifierFineTuningJobDetailsStatus = Union[
 ]
 
 
-ClassifierFineTuningJobDetailsIntegrationTypedDict = WandbIntegrationOutTypedDict
+ClassifierFineTuningJobDetailsIntegrationTypedDict = WandbIntegration1TypedDict
 
 
-ClassifierFineTuningJobDetailsIntegration = WandbIntegrationOut
+ClassifierFineTuningJobDetailsIntegration = WandbIntegration1
 
 
 class ClassifierFineTuningJobDetailsTypedDict(TypedDict):
@@ -59,7 +59,7 @@ class ClassifierFineTuningJobDetailsTypedDict(TypedDict):
     modified_at: int
     training_files: List[str]
     hyperparameters: ClassifierTrainingParametersTypedDict
-    classifier_targets: List[ClassifierTargetOutTypedDict]
+    classifier_targets: List[ClassifierTarget2TypedDict]
     validation_files: NotRequired[Nullable[List[str]]]
     object: Literal["job"]
     fine_tuned_model: NotRequired[Nullable[str]]
@@ -68,11 +68,11 @@ class ClassifierFineTuningJobDetailsTypedDict(TypedDict):
         Nullable[List[ClassifierFineTuningJobDetailsIntegrationTypedDict]]
     ]
     trained_tokens: NotRequired[Nullable[int]]
-    metadata: NotRequired[Nullable[JobMetadataOutTypedDict]]
+    metadata: NotRequired[Nullable[JobMetadata1TypedDict]]
     job_type: Literal["classifier"]
-    events: NotRequired[List[EventOutTypedDict]]
+    events: NotRequired[List[EventTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
-    checkpoints: NotRequired[List[CheckpointOutTypedDict]]
+    checkpoints: NotRequired[List[CheckpointTypedDict]]
 
 
 class ClassifierFineTuningJobDetails(BaseModel):
@@ -92,7 +92,7 @@ class ClassifierFineTuningJobDetails(BaseModel):
 
     hyperparameters: ClassifierTrainingParameters
 
-    classifier_targets: List[ClassifierTargetOut]
+    classifier_targets: List[ClassifierTarget2]
 
     validation_files: OptionalNullable[List[str]] = UNSET
 
@@ -111,17 +111,17 @@ class ClassifierFineTuningJobDetails(BaseModel):
 
     trained_tokens: OptionalNullable[int] = UNSET
 
-    metadata: OptionalNullable[JobMetadataOut] = UNSET
+    metadata: OptionalNullable[JobMetadata1] = UNSET
 
     JOB_TYPE: Annotated[
         Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],
         pydantic.Field(alias="job_type"),
     ] = "classifier"
 
-    events: Optional[List[EventOut]] = None
+    events: Optional[List[Event]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
 
-    checkpoints: Optional[List[CheckpointOut]] = None
+    checkpoints: Optional[List[Checkpoint]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

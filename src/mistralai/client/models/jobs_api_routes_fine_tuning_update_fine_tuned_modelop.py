@@ -2,8 +2,14 @@
 # @generated-id: 6d9dc624aafd
 
 from __future__ import annotations
-from .classifierftmodelout import ClassifierFTModelOut, ClassifierFTModelOutTypedDict
-from .completionftmodelout import CompletionFTModelOut, CompletionFTModelOutTypedDict
+from .classifierfinetunedmodel import (
+    ClassifierFineTunedModel,
+    ClassifierFineTunedModelTypedDict,
+)
+from .completionfinetunedmodel import (
+    CompletionFineTunedModel,
+    CompletionFineTunedModelTypedDict,
+)
 from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -32,12 +38,13 @@ class JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(BaseModel):
 
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict = TypeAliasType(
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict",
-    Union[CompletionFTModelOutTypedDict, ClassifierFTModelOutTypedDict],
+    Union[CompletionFineTunedModelTypedDict, ClassifierFineTunedModelTypedDict],
 )
 r"""OK"""
 
 
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponse = Annotated[
-    Union[ClassifierFTModelOut, CompletionFTModelOut], Field(discriminator="MODEL_TYPE")
+    Union[ClassifierFineTunedModel, CompletionFineTunedModel],
+    Field(discriminator="MODEL_TYPE"),
 ]
 r"""OK"""

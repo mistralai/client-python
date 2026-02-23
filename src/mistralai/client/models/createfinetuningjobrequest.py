@@ -2,19 +2,19 @@
 # @generated-id: c60d2a45d66b
 
 from __future__ import annotations
-from .classifiertargetin import ClassifierTargetIn, ClassifierTargetInTypedDict
-from .classifiertrainingparametersin import (
-    ClassifierTrainingParametersIn,
-    ClassifierTrainingParametersInTypedDict,
+from .classifiertarget_1 import ClassifierTarget1, ClassifierTarget1TypedDict
+from .classifiertrainingparameters import (
+    ClassifierTrainingParameters,
+    ClassifierTrainingParametersTypedDict,
 )
-from .completiontrainingparametersin import (
-    CompletionTrainingParametersIn,
-    CompletionTrainingParametersInTypedDict,
+from .completiontrainingparameters import (
+    CompletionTrainingParameters,
+    CompletionTrainingParametersTypedDict,
 )
 from .finetuneablemodeltype import FineTuneableModelType
 from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
 from .trainingfile import TrainingFile, TrainingFileTypedDict
-from .wandbintegration import WandbIntegration, WandbIntegrationTypedDict
+from .wandbintegration_2 import WandbIntegration2, WandbIntegration2TypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -27,23 +27,20 @@ from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-CreateFineTuningJobRequestIntegrationTypedDict = WandbIntegrationTypedDict
+CreateFineTuningJobRequestIntegrationTypedDict = WandbIntegration2TypedDict
 
 
-CreateFineTuningJobRequestIntegration = WandbIntegration
+CreateFineTuningJobRequestIntegration = WandbIntegration2
 
 
 HyperparametersTypedDict = TypeAliasType(
     "HyperparametersTypedDict",
-    Union[
-        ClassifierTrainingParametersInTypedDict, CompletionTrainingParametersInTypedDict
-    ],
+    Union[ClassifierTrainingParametersTypedDict, CompletionTrainingParametersTypedDict],
 )
 
 
 Hyperparameters = TypeAliasType(
-    "Hyperparameters",
-    Union[ClassifierTrainingParametersIn, CompletionTrainingParametersIn],
+    "Hyperparameters", Union[ClassifierTrainingParameters, CompletionTrainingParameters]
 )
 
 
@@ -72,7 +69,7 @@ class CreateFineTuningJobRequestTypedDict(TypedDict):
     repositories: NotRequired[
         Nullable[List[CreateFineTuningJobRequestRepositoryTypedDict]]
     ]
-    classifier_targets: NotRequired[Nullable[List[ClassifierTargetInTypedDict]]]
+    classifier_targets: NotRequired[Nullable[List[ClassifierTarget1TypedDict]]]
 
 
 class CreateFineTuningJobRequest(BaseModel):
@@ -100,7 +97,7 @@ class CreateFineTuningJobRequest(BaseModel):
 
     repositories: OptionalNullable[List[CreateFineTuningJobRequestRepository]] = UNSET
 
-    classifier_targets: OptionalNullable[List[ClassifierTargetIn]] = UNSET
+    classifier_targets: OptionalNullable[List[ClassifierTarget1]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

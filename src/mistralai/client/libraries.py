@@ -39,7 +39,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibraryOut:
+    ) -> models.ListLibrariesResponse:
         r"""List all libraries you have access to.
 
         List all libraries that you have created or have been shared with you.
@@ -99,7 +99,7 @@ class Libraries(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibraryOut, http_res)
+            return unmarshal_json_response(models.ListLibrariesResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -116,7 +116,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListLibraryOut:
+    ) -> models.ListLibrariesResponse:
         r"""List all libraries you have access to.
 
         List all libraries that you have created or have been shared with you.
@@ -176,7 +176,7 @@ class Libraries(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListLibraryOut, http_res)
+            return unmarshal_json_response(models.ListLibrariesResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -196,7 +196,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Create a new Library.
 
         Create a new Library, you will be marked as the owner and only you will have the possibility to share it with others. When first created this will only be accessible by you.
@@ -219,7 +219,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibraryIn(
+        request = models.CreateLibraryRequest(
             name=name,
             description=description,
             chunk_size=chunk_size,
@@ -239,7 +239,7 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.LibraryIn
+                request, False, False, "json", models.CreateLibraryRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -270,7 +270,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -295,7 +295,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Create a new Library.
 
         Create a new Library, you will be marked as the owner and only you will have the possibility to share it with others. When first created this will only be accessible by you.
@@ -318,7 +318,7 @@ class Libraries(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.LibraryIn(
+        request = models.CreateLibraryRequest(
             name=name,
             description=description,
             chunk_size=chunk_size,
@@ -338,7 +338,7 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.LibraryIn
+                request, False, False, "json", models.CreateLibraryRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -369,7 +369,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -392,7 +392,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Detailed information about a specific Library.
 
         Given a library id, details information about that Library.
@@ -459,7 +459,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -482,7 +482,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Detailed information about a specific Library.
 
         Given a library id, details information about that Library.
@@ -549,7 +549,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -572,7 +572,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Delete a library and all of it's document.
 
         Given a library id, deletes it together with all documents that have been uploaded to that library.
@@ -639,7 +639,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -662,7 +662,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Delete a library and all of it's document.
 
         Given a library id, deletes it together with all documents that have been uploaded to that library.
@@ -729,7 +729,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -754,7 +754,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Update a library.
 
         Given a library id, you can update the name and description.
@@ -779,7 +779,7 @@ class Libraries(BaseSDK):
 
         request = models.LibrariesUpdateV1Request(
             library_id=library_id,
-            library_in_update=models.LibraryInUpdate(
+            update_library_request=models.UpdateLibraryRequest(
                 name=name,
                 description=description,
             ),
@@ -799,7 +799,11 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.library_in_update, False, False, "json", models.LibraryInUpdate
+                request.update_library_request,
+                False,
+                False,
+                "json",
+                models.UpdateLibraryRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -830,7 +834,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res
@@ -855,7 +859,7 @@ class Libraries(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.LibraryOut:
+    ) -> models.Library:
         r"""Update a library.
 
         Given a library id, you can update the name and description.
@@ -880,7 +884,7 @@ class Libraries(BaseSDK):
 
         request = models.LibrariesUpdateV1Request(
             library_id=library_id,
-            library_in_update=models.LibraryInUpdate(
+            update_library_request=models.UpdateLibraryRequest(
                 name=name,
                 description=description,
             ),
@@ -900,7 +904,11 @@ class Libraries(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.library_in_update, False, False, "json", models.LibraryInUpdate
+                request.update_library_request,
+                False,
+                False,
+                "json",
+                models.UpdateLibraryRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -931,7 +939,7 @@ class Libraries(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.LibraryOut, http_res)
+            return unmarshal_json_response(models.Library, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 models.HTTPValidationErrorData, http_res

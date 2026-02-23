@@ -2,7 +2,7 @@
 # @generated-id: 92c8d4132252
 
 from __future__ import annotations
-from .libraryinupdate import LibraryInUpdate, LibraryInUpdateTypedDict
+from .updatelibraryrequest import UpdateLibraryRequest, UpdateLibraryRequestTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class LibrariesUpdateV1RequestTypedDict(TypedDict):
     library_id: str
-    library_in_update: LibraryInUpdateTypedDict
+    update_library_request: UpdateLibraryRequestTypedDict
 
 
 class LibrariesUpdateV1Request(BaseModel):
@@ -18,7 +18,7 @@ class LibrariesUpdateV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    library_in_update: Annotated[
-        LibraryInUpdate,
+    update_library_request: Annotated[
+        UpdateLibraryRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

@@ -6,7 +6,7 @@ from datetime import datetime
 from mistralai.client import models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
-    classifiertargetin as models_classifiertargetin,
+    classifiertarget_1 as models_classifiertarget_1,
     createfinetuningjobrequest as models_createfinetuningjobrequest,
     finetuneablemodeltype as models_finetuneablemodeltype,
     jobs_api_routes_fine_tuning_get_fine_tuning_jobsop as models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop,
@@ -288,8 +288,8 @@ class FineTuningJobs(BaseSDK):
         ] = UNSET,
         classifier_targets: OptionalNullable[
             Union[
-                List[models_classifiertargetin.ClassifierTargetIn],
-                List[models_classifiertargetin.ClassifierTargetInTypedDict],
+                List[models_classifiertarget_1.ClassifierTarget1],
+                List[models_classifiertarget_1.ClassifierTarget1TypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -349,7 +349,7 @@ class FineTuningJobs(BaseSDK):
                 OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTarget1]]
             ),
         )
 
@@ -452,8 +452,8 @@ class FineTuningJobs(BaseSDK):
         ] = UNSET,
         classifier_targets: OptionalNullable[
             Union[
-                List[models_classifiertargetin.ClassifierTargetIn],
-                List[models_classifiertargetin.ClassifierTargetInTypedDict],
+                List[models_classifiertarget_1.ClassifierTarget1],
+                List[models_classifiertarget_1.ClassifierTarget1TypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -513,7 +513,7 @@ class FineTuningJobs(BaseSDK):
                 OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTarget1]]
             ),
         )
 
