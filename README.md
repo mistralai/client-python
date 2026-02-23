@@ -1,5 +1,10 @@
 # Mistral Python Client
 
+> [!IMPORTANT]
+> **Looking for v1 documentation?** If you installed `mistralai` from PyPI (e.g., `pip install mistralai`), you are using **v1** of the SDK. The documentation on this branch (`main`) is for **v2**, which is not yet released on PyPI.
+>
+> **➡️ [Go to the v1 branch for v1 documentation](https://github.com/mistralai/client-python/tree/v1)**
+
 ## Migration warning
 
 This documentation is for Mistral AI SDK v2. You can find more details on how to migrate from v1 to v2 [here](MIGRATION.md)
