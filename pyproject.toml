@@ -119,7 +119,8 @@ module = [
     "authlib.*",
     "websockets.*",
     "mcp.*",
-    "griffe.*"
+    "griffe.*",
+    "google.*"
 ]
 ignore_missing_imports = true
 
