@@ -36,7 +36,7 @@ class ToolMessageTypedDict(TypedDict):
 class ToolMessage(BaseModel):
     content: Nullable[ToolMessageContent]
 
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[Literal["tool"], AfterValidator(validate_const("tool"))],
         pydantic.Field(alias="role"),
     ] = "tool"

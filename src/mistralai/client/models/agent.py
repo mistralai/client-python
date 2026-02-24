@@ -47,7 +47,7 @@ AgentTool = Annotated[
         WebSearchTool,
         WebSearchPremiumTool,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 
@@ -108,7 +108,7 @@ class Agent(BaseModel):
 
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["agent"]], AfterValidator(validate_const("agent"))],
         pydantic.Field(alias="object"),
     ] = "agent"

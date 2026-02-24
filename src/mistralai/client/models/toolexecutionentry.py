@@ -45,12 +45,12 @@ class ToolExecutionEntry(BaseModel):
 
     arguments: str
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
         pydantic.Field(alias="object"),
     ] = "entry"
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["tool.execution"]],
             AfterValidator(validate_const("tool.execution")),

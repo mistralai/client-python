@@ -16,7 +16,7 @@ ModelListDataTypedDict = TypeAliasType(
 
 
 ModelListData = Annotated[
-    Union[BaseModelCard, FTModelCard], Field(discriminator="TYPE")
+    Union[BaseModelCard, FTModelCard], Field(discriminator="type")
 ]
 
 

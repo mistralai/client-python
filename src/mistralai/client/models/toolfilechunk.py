@@ -39,7 +39,7 @@ class ToolFileChunk(BaseModel):
 
     file_id: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["tool_file"]], AfterValidator(validate_const("tool_file"))
         ],

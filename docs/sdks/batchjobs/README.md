@@ -15,7 +15,7 @@ Get a list of batch jobs for your organization and user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_jobs" method="get" path="/v1/batch/jobs" -->
+<!-- UsageSnippet language="python" operationID="ListBatchJobs" method="get" path="/v1/batch/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -49,7 +49,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListBatchJobsResponse](../../models/listbatchjobsresponse.md)**
+**[models.BatchJobsOut](../../models/batchjobsout.md)**
 
 ### Errors
 
@@ -63,7 +63,7 @@ Create a new batch job, it will be queued for processing.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_create_batch_job" method="post" path="/v1/batch/jobs" -->
+<!-- UsageSnippet language="python" operationID="CreateBatchJob" method="post" path="/v1/batch/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -73,7 +73,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.create(endpoint="/v1/moderations", model="mistral-small-latest", timeout_hours=24)
+    res = mistral.batch.jobs.create(endpoint="/v1/classifications", model="mistral-small-latest", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -95,7 +95,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 
@@ -112,7 +112,7 @@ Args:
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_job" method="get" path="/v1/batch/jobs/{job_id}" -->
+<!-- UsageSnippet language="python" operationID="GetBatchJob" method="get" path="/v1/batch/jobs/{job_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -122,7 +122,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.get(job_id="4017dc9f-b629-42f4-9700-8c681b9e7f0f")
+    res = mistral.batch.jobs.get(job_id="358c80a1-79bd-43f0-8f0e-8186713aa3ba")
 
     # Handle response
     print(res)
@@ -139,7 +139,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 
@@ -153,7 +153,7 @@ Request the cancellation of a batch job.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_cancel_batch_job" method="post" path="/v1/batch/jobs/{job_id}/cancel" -->
+<!-- UsageSnippet language="python" operationID="CancelBatchJob" method="post" path="/v1/batch/jobs/{job_id}/cancel" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -163,7 +163,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.cancel(job_id="4fb29d1c-535b-4f0a-a1cb-2167f86da569")
+    res = mistral.batch.jobs.cancel(job_id="393537d7-8b33-4931-a289-7f61f8757eda")
 
     # Handle response
     print(res)
@@ -179,7 +179,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 

@@ -37,7 +37,7 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     end: float
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.segment"],
             AfterValidator(validate_const("transcription.segment")),

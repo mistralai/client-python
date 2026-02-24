@@ -28,7 +28,7 @@ class UserMessageTypedDict(TypedDict):
 class UserMessage(BaseModel):
     content: Nullable[UserMessageContent]
 
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[Literal["user"], AfterValidator(validate_const("user"))],
         pydantic.Field(alias="role"),
     ] = "user"

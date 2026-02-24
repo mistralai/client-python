@@ -26,7 +26,7 @@ class ConversationMessages(BaseModel):
 
     messages: List[MessageEntries]
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[
             Optional[Literal["conversation.messages"]],
             AfterValidator(validate_const("conversation.messages")),

@@ -27,7 +27,7 @@ class AgentHandoffStartedEvent(BaseModel):
 
     previous_agent_name: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["agent.handoff.started"],
             AfterValidator(validate_const("agent.handoff.started")),

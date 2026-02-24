@@ -27,7 +27,7 @@ class DocumentURLChunkTypedDict(TypedDict):
 class DocumentURLChunk(BaseModel):
     document_url: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["document_url"]],
             AfterValidator(validate_const("document_url")),

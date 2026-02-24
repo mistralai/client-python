@@ -33,12 +33,12 @@ class FunctionResultEntry(BaseModel):
 
     result: str
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
         pydantic.Field(alias="object"),
     ] = "entry"
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["function.result"]],
             AfterValidator(validate_const("function.result")),

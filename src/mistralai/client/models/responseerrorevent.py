@@ -23,7 +23,7 @@ class ResponseErrorEvent(BaseModel):
 
     code: int
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["conversation.response.error"],
             AfterValidator(validate_const("conversation.response.error")),

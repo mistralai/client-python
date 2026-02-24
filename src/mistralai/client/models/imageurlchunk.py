@@ -31,7 +31,7 @@ class ImageURLChunk(BaseModel):
 
     image_url: ImageURLUnion
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["image_url"]], AfterValidator(validate_const("image_url"))
         ],

@@ -61,7 +61,7 @@ ConversationEventsData = Annotated[
         ToolExecutionDoneEvent,
         ToolExecutionStartedEvent,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 

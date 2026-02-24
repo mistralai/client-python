@@ -26,7 +26,7 @@ class WebSearchPremiumToolTypedDict(TypedDict):
 class WebSearchPremiumTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["web_search_premium"],
             AfterValidator(validate_const("web_search_premium")),

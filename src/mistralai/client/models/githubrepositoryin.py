@@ -33,7 +33,7 @@ class GithubRepositoryIn(BaseModel):
 
     token: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["github"], AfterValidator(validate_const("github"))],
         pydantic.Field(alias="type"),
     ] = "github"

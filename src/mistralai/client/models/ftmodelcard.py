@@ -71,7 +71,7 @@ class FTModelCard(BaseModel):
 
     default_model_temperature: OptionalNullable[float] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["fine-tuned"], AfterValidator(validate_const("fine-tuned"))],
         pydantic.Field(alias="type"),
     ] = "fine-tuned"

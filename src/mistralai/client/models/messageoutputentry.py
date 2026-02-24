@@ -48,12 +48,12 @@ class MessageOutputEntryTypedDict(TypedDict):
 class MessageOutputEntry(BaseModel):
     content: MessageOutputEntryContent
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
         pydantic.Field(alias="object"),
     ] = "entry"
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["message.output"]],
             AfterValidator(validate_const("message.output")),
@@ -71,7 +71,7 @@ class MessageOutputEntry(BaseModel):
 
     model: OptionalNullable[str] = UNSET
 
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[
             Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
         ],

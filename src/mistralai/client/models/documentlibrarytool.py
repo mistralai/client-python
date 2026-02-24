@@ -31,7 +31,7 @@ class DocumentLibraryTool(BaseModel):
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["document_library"],
             AfterValidator(validate_const("document_library")),

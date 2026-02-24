@@ -26,7 +26,7 @@ class ImageGenerationToolTypedDict(TypedDict):
 class ImageGenerationTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["image_generation"],
             AfterValidator(validate_const("image_generation")),

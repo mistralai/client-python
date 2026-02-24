@@ -49,7 +49,7 @@ class FunctionCallEvent(BaseModel):
 
     arguments: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["function.call.delta"],
             AfterValidator(validate_const("function.call.delta")),

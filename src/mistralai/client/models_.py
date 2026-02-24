@@ -68,7 +68,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="list_models_v1_models_get",
+                operation_id="ListModels",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -145,7 +145,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="list_models_v1_models_get",
+                operation_id="ListModels",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -196,7 +196,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveModelV1ModelsModelIDGetRequest(
+        request = models.RetrieveModelRequest(
             model_id=model_id,
         )
 
@@ -229,7 +229,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="retrieve_model_v1_models__model_id__get",
+                operation_id="RetrieveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -288,7 +288,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveModelV1ModelsModelIDGetRequest(
+        request = models.RetrieveModelRequest(
             model_id=model_id,
         )
 
@@ -321,7 +321,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="retrieve_model_v1_models__model_id__get",
+                operation_id="RetrieveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -380,7 +380,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteModelV1ModelsModelIDDeleteRequest(
+        request = models.DeleteModelRequest(
             model_id=model_id,
         )
 
@@ -413,7 +413,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_model_v1_models__model_id__delete",
+                operation_id="DeleteModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -470,7 +470,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteModelV1ModelsModelIDDeleteRequest(
+        request = models.DeleteModelRequest(
             model_id=model_id,
         )
 
@@ -503,7 +503,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_model_v1_models__model_id__delete",
+                operation_id="DeleteModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -541,7 +541,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse:
+    ) -> models.UpdateModelResponse:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -564,9 +564,9 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
+        request = models.UpdateModelRequest(
             model_id=model_id,
-            update_model_request=models.UpdateModelRequest(
+            update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
                 description=description,
             ),
@@ -586,11 +586,7 @@ class Models(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_model_request,
-                False,
-                False,
-                "json",
-                models.UpdateModelRequest,
+                request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -608,7 +604,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
+                operation_id="UpdateModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -620,9 +616,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse, http_res
-            )
+            return unmarshal_json_response(models.UpdateModelResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -642,7 +636,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse:
+    ) -> models.UpdateModelResponse:
         r"""Update Fine Tuned Model
 
         Update a model name or description.
@@ -665,9 +659,9 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
+        request = models.UpdateModelRequest(
             model_id=model_id,
-            update_model_request=models.UpdateModelRequest(
+            update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
                 description=description,
             ),
@@ -687,11 +681,7 @@ class Models(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_model_request,
-                False,
-                False,
-                "json",
-                models.UpdateModelRequest,
+                request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -709,7 +699,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_update_fine_tuned_model",
+                operation_id="UpdateModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -721,9 +711,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse, http_res
-            )
+            return unmarshal_json_response(models.UpdateModelResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -741,7 +729,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ArchiveModelResponse:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -762,7 +750,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
+        request = models.ArchiveModelRequest(
             model_id=model_id,
         )
 
@@ -795,7 +783,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
+                operation_id="ArchiveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -807,7 +795,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ArchiveModelResponse, http_res)
+            return unmarshal_json_response(models.ArchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -825,7 +813,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ArchiveModelResponse:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -846,7 +834,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningArchiveFineTunedModelRequest(
+        request = models.ArchiveModelRequest(
             model_id=model_id,
         )
 
@@ -879,7 +867,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_archive_fine_tuned_model",
+                operation_id="ArchiveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -891,7 +879,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ArchiveModelResponse, http_res)
+            return unmarshal_json_response(models.ArchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -909,7 +897,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UnarchiveModelResponse:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -930,7 +918,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
+        request = models.UnarchiveModelRequest(
             model_id=model_id,
         )
 
@@ -963,7 +951,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
+                operation_id="UnarchiveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -975,7 +963,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UnarchiveModelResponse, http_res)
+            return unmarshal_json_response(models.UnarchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -993,7 +981,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UnarchiveModelResponse:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -1014,7 +1002,7 @@ class Models(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobsAPIRoutesFineTuningUnarchiveFineTunedModelRequest(
+        request = models.UnarchiveModelRequest(
             model_id=model_id,
         )
 
@@ -1047,7 +1035,7 @@ class Models(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model",
+                operation_id="UnarchiveModel",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1059,7 +1047,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UnarchiveModelResponse, http_res)
+            return unmarshal_json_response(models.UnarchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)

@@ -15,7 +15,7 @@ class RealtimeTranscriptionInputAudioEndTypedDict(TypedDict):
 
 
 class RealtimeTranscriptionInputAudioEnd(BaseModel):
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["input_audio.end"]],
             AfterValidator(validate_const("input_audio.end")),

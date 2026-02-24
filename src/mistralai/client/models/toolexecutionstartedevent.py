@@ -38,7 +38,7 @@ class ToolExecutionStartedEvent(BaseModel):
 
     arguments: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["tool.execution.started"],
             AfterValidator(validate_const("tool.execution.started")),

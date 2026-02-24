@@ -52,12 +52,12 @@ class FunctionCallEntry(BaseModel):
 
     arguments: FunctionCallEntryArguments
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
         pydantic.Field(alias="object"),
     ] = "entry"
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["function.call"]],
             AfterValidator(validate_const("function.call")),

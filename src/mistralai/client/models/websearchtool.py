@@ -26,7 +26,7 @@ class WebSearchToolTypedDict(TypedDict):
 class WebSearchTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["web_search"], AfterValidator(validate_const("web_search"))],
         pydantic.Field(alias="type"),
     ] = "web_search"

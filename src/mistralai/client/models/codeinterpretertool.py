@@ -26,7 +26,7 @@ class CodeInterpreterToolTypedDict(TypedDict):
 class CodeInterpreterTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["code_interpreter"],
             AfterValidator(validate_const("code_interpreter")),

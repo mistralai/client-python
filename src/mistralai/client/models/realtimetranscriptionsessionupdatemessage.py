@@ -22,7 +22,7 @@ class RealtimeTranscriptionSessionUpdateMessageTypedDict(TypedDict):
 class RealtimeTranscriptionSessionUpdateMessage(BaseModel):
     session: RealtimeTranscriptionSessionUpdatePayload
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["session.update"]],
             AfterValidator(validate_const("session.update")),

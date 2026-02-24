@@ -20,7 +20,7 @@ class ResponseStartedEventTypedDict(TypedDict):
 class ResponseStartedEvent(BaseModel):
     conversation_id: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["conversation.response.started"],
             AfterValidator(validate_const("conversation.response.started")),

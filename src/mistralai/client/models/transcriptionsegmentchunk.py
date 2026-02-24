@@ -38,7 +38,7 @@ class TranscriptionSegmentChunk(BaseModel):
 
     end: float
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["transcription_segment"]],
             AfterValidator(validate_const("transcription_segment")),

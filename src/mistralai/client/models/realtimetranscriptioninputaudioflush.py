@@ -15,7 +15,7 @@ class RealtimeTranscriptionInputAudioFlushTypedDict(TypedDict):
 
 
 class RealtimeTranscriptionInputAudioFlush(BaseModel):
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["input_audio.flush"]],
             AfterValidator(validate_const("input_audio.flush")),

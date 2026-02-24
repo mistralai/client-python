@@ -50,7 +50,7 @@ class ConversationResponse(BaseModel):
 
     usage: ConversationUsageInfo
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[
             Optional[Literal["conversation.response"]],
             AfterValidator(validate_const("conversation.response")),

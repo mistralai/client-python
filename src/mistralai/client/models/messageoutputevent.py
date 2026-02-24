@@ -46,7 +46,7 @@ class MessageOutputEvent(BaseModel):
 
     content: MessageOutputEventContent
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["message.output.delta"],
             AfterValidator(validate_const("message.output.delta")),
@@ -64,7 +64,7 @@ class MessageOutputEvent(BaseModel):
 
     agent_id: OptionalNullable[str] = UNSET
 
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[
             Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
         ],

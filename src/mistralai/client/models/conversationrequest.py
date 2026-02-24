@@ -50,7 +50,7 @@ ConversationRequestTool = Annotated[
         WebSearchTool,
         WebSearchPremiumTool,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 

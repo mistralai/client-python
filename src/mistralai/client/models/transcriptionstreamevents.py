@@ -43,7 +43,7 @@ TranscriptionStreamEventsData = Annotated[
         TranscriptionStreamSegmentDelta,
         TranscriptionStreamTextDelta,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 

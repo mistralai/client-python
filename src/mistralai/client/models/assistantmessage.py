@@ -38,7 +38,7 @@ class AssistantMessageTypedDict(TypedDict):
 
 
 class AssistantMessage(BaseModel):
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[
             Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
         ],

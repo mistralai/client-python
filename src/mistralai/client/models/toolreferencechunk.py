@@ -42,7 +42,7 @@ class ToolReferenceChunk(BaseModel):
 
     title: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["tool_reference"]],
             AfterValidator(validate_const("tool_reference")),

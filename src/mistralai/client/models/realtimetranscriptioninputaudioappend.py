@@ -20,7 +20,7 @@ class RealtimeTranscriptionInputAudioAppend(BaseModel):
     audio: str
     r"""Base64-encoded raw PCM bytes matching the current audio_format. Max decoded size: 262144 bytes."""
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["input_audio.append"]],
             AfterValidator(validate_const("input_audio.append")),

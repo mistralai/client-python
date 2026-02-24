@@ -32,7 +32,7 @@ class ThinkChunkTypedDict(TypedDict):
 class ThinkChunk(BaseModel):
     thinking: List[ThinkChunkThinking]
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["thinking"], AfterValidator(validate_const("thinking"))],
         pydantic.Field(alias="type"),
     ] = "thinking"

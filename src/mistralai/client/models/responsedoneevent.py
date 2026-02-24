@@ -21,7 +21,7 @@ class ResponseDoneEventTypedDict(TypedDict):
 class ResponseDoneEvent(BaseModel):
     usage: ConversationUsageInfo
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["conversation.response.done"],
             AfterValidator(validate_const("conversation.response.done")),

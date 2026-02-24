@@ -18,7 +18,7 @@ class TextChunkTypedDict(TypedDict):
 class TextChunk(BaseModel):
     text: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Optional[Literal["text"]], AfterValidator(validate_const("text"))],
         pydantic.Field(alias="type"),
     ] = "text"

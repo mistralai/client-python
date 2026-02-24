@@ -18,7 +18,7 @@ class ReferenceChunkTypedDict(TypedDict):
 class ReferenceChunk(BaseModel):
     reference_ids: List[int]
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["reference"]], AfterValidator(validate_const("reference"))
         ],

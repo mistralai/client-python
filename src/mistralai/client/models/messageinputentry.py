@@ -63,12 +63,12 @@ class MessageInputEntry(BaseModel):
 
     content: MessageInputEntryContent
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
         pydantic.Field(alias="object"),
     ] = "entry"
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["message.input"]],
             AfterValidator(validate_const("message.input")),

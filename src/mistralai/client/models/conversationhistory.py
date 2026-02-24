@@ -57,7 +57,7 @@ class ConversationHistory(BaseModel):
 
     entries: List[Entry]
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[
             Optional[Literal["conversation.history"]],
             AfterValidator(validate_const("conversation.history")),

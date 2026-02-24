@@ -61,7 +61,7 @@ class AgentConversation(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    OBJECT: Annotated[
+    object: Annotated[
         Annotated[
             Optional[Literal["conversation"]],
             AfterValidator(validate_const("conversation")),

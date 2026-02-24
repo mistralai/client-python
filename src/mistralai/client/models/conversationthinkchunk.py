@@ -32,7 +32,7 @@ class ConversationThinkChunkTypedDict(TypedDict):
 class ConversationThinkChunk(BaseModel):
     thinking: List[ConversationThinkChunkThinking]
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["thinking"]], AfterValidator(validate_const("thinking"))
         ],
