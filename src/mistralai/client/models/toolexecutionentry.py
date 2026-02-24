@@ -11,15 +11,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolExecutionEntryObject = Literal["entry",]
-
-
-ToolExecutionEntryType = Literal["tool.execution",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionEntryNameTypedDict = TypeAliasType(
@@ -35,8 +32,8 @@ ToolExecutionEntryName = TypeAliasType(
 class ToolExecutionEntryTypedDict(TypedDict):
     name: ToolExecutionEntryNameTypedDict
     arguments: str
-    object: NotRequired[ToolExecutionEntryObject]
-    type: NotRequired[ToolExecutionEntryType]
+    object: Literal["entry"]
+    type: Literal["tool.execution"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
@@ -48,9 +45,18 @@ class ToolExecutionEntry(BaseModel):
 
     arguments: str
 
-    object: Optional[ToolExecutionEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[ToolExecutionEntryType] = "tool.execution"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["tool.execution"]],
+            AfterValidator(validate_const("tool.execution")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool.execution"
 
     created_at: Optional[datetime] = None
 

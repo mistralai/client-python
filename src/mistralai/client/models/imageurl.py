@@ -2,6 +2,7 @@
 # @generated-id: e4bbf5881fbf
 
 from __future__ import annotations
+from .imagedetail import ImageDetail
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -15,13 +16,13 @@ from typing_extensions import NotRequired, TypedDict
 
 class ImageURLTypedDict(TypedDict):
     url: str
-    detail: NotRequired[Nullable[str]]
+    detail: NotRequired[Nullable[ImageDetail]]
 
 
 class ImageURL(BaseModel):
     url: str
 
-    detail: OptionalNullable[str] = UNSET
+    detail: OptionalNullable[ImageDetail] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -9,22 +9,21 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-TranscriptionSegmentChunkType = Literal["transcription_segment",]
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class TranscriptionSegmentChunkTypedDict(TypedDict):
     text: str
     start: float
     end: float
+    type: Literal["transcription_segment"]
     score: NotRequired[Nullable[float]]
     speaker_id: NotRequired[Nullable[str]]
-    type: NotRequired[TranscriptionSegmentChunkType]
 
 
 class TranscriptionSegmentChunk(BaseModel):
@@ -39,11 +38,17 @@ class TranscriptionSegmentChunk(BaseModel):
 
     end: float
 
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["transcription_segment"]],
+            AfterValidator(validate_const("transcription_segment")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "transcription_segment"
+
     score: OptionalNullable[float] = UNSET
 
     speaker_id: OptionalNullable[str] = UNSET
-
-    type: Optional[TranscriptionSegmentChunkType] = "transcription_segment"
 
     @property
     def additional_properties(self):
@@ -55,7 +60,7 @@ class TranscriptionSegmentChunk(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["score", "speaker_id", "type"]
+        optional_fields = ["type", "score", "speaker_id"]
         nullable_fields = ["score", "speaker_id"]
         null_default_fields = []
 

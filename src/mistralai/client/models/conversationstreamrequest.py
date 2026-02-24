@@ -31,11 +31,11 @@ ConversationStreamRequestHandoffExecution = Literal[
 ConversationStreamRequestToolTypedDict = TypeAliasType(
     "ConversationStreamRequestToolTypedDict",
     Union[
+        FunctionToolTypedDict,
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
-        FunctionToolTypedDict,
         DocumentLibraryToolTypedDict,
     ],
 )
