@@ -3,32 +3,35 @@
 
 This example shows how to create chat completions.
 
+The SDK automatically injects the `api-version` query parameter.
+
 ```python
 # Synchronous Example
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
-s = MistralAzure(
-    api_key=os.environ["AZURE_API_KEY"],
-    server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
-)
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
+s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    api_version=AZURE_API_VERSION,
+)
 
 res = s.chat.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=os.environ["AZURE_MODEL"])
+], model=AZURE_MODEL)
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 ```
 
 </br>
@@ -37,28 +40,30 @@ The same SDK client can also be used to make asynchronous requests by importing 
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.azure.client import MistralAzure
-import httpx
 import os
+from mistralai.azure.client import MistralAzure
+
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
 async def main():
+    # The SDK automatically injects api-version as a query parameter
     s = MistralAzure(
-        api_key=os.environ["AZURE_API_KEY"],
-        server_url=os.environ["AZURE_ENDPOINT"],
-        async_client=httpx.AsyncClient(
-            follow_redirects=True,
-            params={"api-version": os.environ["AZURE_API_VERSION"]},
-        ),
+        api_key=AZURE_API_KEY,
+        server_url=AZURE_ENDPOINT,
+        api_version=AZURE_API_VERSION,
     )
     res = await s.chat.complete_async(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], model=os.environ["AZURE_MODEL"])
+    ], model=AZURE_MODEL)
     if res is not None:
         # handle response
-        pass
+        print(res.choices[0].message.content)
 
 asyncio.run(main())
 ```

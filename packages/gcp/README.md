@@ -26,38 +26,20 @@ pip install mistralai[gcp]
 
 This example shows how to create chat completions.
 
-> **Note:** GCP Vertex AI requires constructing the endpoint URL from your
-> project ID, region, and model. An access token is obtained via `gcloud`.
+The SDK automatically:
+- Detects credentials via `google.auth.default()`
+- Auto-refreshes tokens when they expire
+- Builds the Vertex AI URL from `project_id` and `region`
 
 ```python
 # Synchronous Example
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = s.chat.complete(messages=[
@@ -65,7 +47,7 @@ res = s.chat.complete(messages=[
         "role": "user",
         "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=GCP_MODEL)
+], model="mistral-small-2503")
 
 if res is not None:
     # handle response
@@ -79,40 +61,20 @@ The same SDK client can also be used to make asynchronous requests by importing 
 # Asynchronous Example
 import asyncio
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
 async def main():
+    # The SDK auto-detects credentials and builds the Vertex AI URL
     s = MistralGCP(
-        api_key=get_token(),
-        server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+        project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected
+        region=os.environ.get("GCP_REGION", "us-central1"),
     )
     res = await s.chat.complete_async(messages=[
         {
             "role": "user",
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
-    ], model=GCP_MODEL)
+    ], model="mistral-small-2503")
     if res is not None:
         # handle response
         print(res.choices[0].message.content)
@@ -146,32 +108,12 @@ underlying connection.
 
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = s.chat.stream(messages=[
@@ -179,7 +121,7 @@ res = s.chat.stream(messages=[
         "role": "user",
         "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=GCP_MODEL)
+], model="mistral-small-2503")
 
 if res is not None:
     for event in res:
@@ -200,33 +142,13 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.utils import BackoffStrategy, RetryConfig
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = s.chat.stream(
@@ -236,7 +158,7 @@ res = s.chat.stream(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ],
-    model=GCP_MODEL,
+    model="mistral-small-2503",
     retries=RetryConfig(
         "backoff",
         BackoffStrategy(1, 50, 1.1, 100),
@@ -254,33 +176,13 @@ if res is not None:
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.utils import BackoffStrategy, RetryConfig
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+    project_id=os.environ.get("GCP_PROJECT_ID"),
+    region=os.environ.get("GCP_REGION", "us-central1"),
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 )
 
@@ -291,7 +193,7 @@ res = s.chat.stream(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ],
-    model=GCP_MODEL,
+    model="mistral-small-2503",
 )
 
 if res is not None:
@@ -316,33 +218,13 @@ Handling errors in this SDK should largely match your expectations. All operatio
 
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client import models
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-def build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+    project_id=os.environ.get("GCP_PROJECT_ID"),
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = None
@@ -354,7 +236,7 @@ try:
                 "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ],
-        model=GCP_MODEL,
+        model="mistral-small-2503",
     )
 
 except models.HTTPValidationError as e:
@@ -376,31 +258,15 @@ if res is not None:
 
 ### Override Server URL Per-Client
 
-For GCP, you **must** override the default server URL with your Vertex AI endpoint:
+The SDK automatically constructs the Vertex AI endpoint from `project_id` and `region`:
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-
-def get_token():
-    return subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=get_token(),
-    server_url=(
-        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
-        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
-        f"publishers/mistralai/models/{GCP_MODEL}"
-    ),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = s.chat.stream(
@@ -410,7 +276,7 @@ res = s.chat.stream(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ],
-    model=GCP_MODEL,
+    model="mistral-small-2503",
 )
 
 if res is not None:
@@ -430,13 +296,14 @@ This allows you to wrap the client with your own custom logic, such as adding cu
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
+import os
 from mistralai.gcp.client import MistralGCP
 import httpx
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
 s = MistralGCP(
-    api_key="<your-gcloud-token>",
-    server_url="<your-vertex-ai-url>",
+    project_id=os.environ.get("GCP_PROJECT_ID"),
+    region="us-central1",
     client=http_client,
 )
 ```
@@ -504,8 +371,8 @@ class CustomClient(AsyncHttpClient):
         )
 
 s = MistralGCP(
-    api_key="<your-gcloud-token>",
-    server_url="<your-vertex-ai-url>",
+    project_id="<your-project-id>",
+    region="us-central1",
     async_client=CustomClient(httpx.AsyncClient()),
 )
 ```
@@ -522,28 +389,15 @@ This SDK supports the following security scheme globally:
 | --------- | ---- | ----------- |
 | `api_key` | http | HTTP Bearer |
 
-For GCP, the `api_key` is a short-lived OAuth token obtained via `gcloud auth print-access-token`. You must also provide `server_url` pointing to your Vertex AI endpoint. For example:
+The SDK automatically handles GCP authentication via `google.auth.default()`. Tokens are auto-refreshed when they expire. For example:
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-token = subprocess.run(
-    ["gcloud", "auth", "print-access-token"],
-    capture_output=True, text=True,
-).stdout.strip()
-
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=token,
-    server_url=(
-        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
-        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
-        f"publishers/mistralai/models/{GCP_MODEL}"
-    ),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
 res = s.chat.stream(
@@ -553,7 +407,7 @@ res = s.chat.stream(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ],
-    model=GCP_MODEL,
+    model="mistral-small-2503",
 )
 
 if res is not None:

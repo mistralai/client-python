@@ -1,38 +1,39 @@
 #!/usr/bin/env python
+"""
+Example: Async chat completion with GCP Vertex AI.
+
+The SDK automatically:
+- Detects credentials via google.auth.default()
+- Auto-refreshes tokens when they expire
+- Builds the Vertex AI URL from project_id and region
+
+Prerequisites:
+    gcloud auth application-default login
+
+Usage:
+    GCP_PROJECT_ID=your-project GCP_REGION=us-central1 GCP_MODEL=mistral-small-2503 python async_chat_no_streaming.py
+"""
 
 import asyncio
 import os
-import subprocess
 
 from mistralai.gcp.client import MistralGCP
 from mistralai.gcp.client.models.usermessage import UserMessage
 
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
-
-def _get_token():
-    result = subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout.strip()
-
-
-def _build_vertex_url(project_id, region, model):
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
+# Configuration from environment variables
+GCP_PROJECT_ID = os.environ.get("GCP_PROJECT_ID")  # Optional: auto-detected from credentials
+GCP_REGION = os.environ.get("GCP_REGION", "us-central1")
+GCP_MODEL = os.environ.get("GCP_MODEL", "mistral-small-2503")
 
 
 async def main():
+    # The SDK automatically handles:
+    # - Credential detection via google.auth.default()
+    # - Token refresh when expired
+    # - Vertex AI URL construction
     client = MistralGCP(
-        api_key=_get_token(),
-        server_url=_build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL),
+        project_id=GCP_PROJECT_ID,
+        region=GCP_REGION,
     )
 
     chat_response = await client.chat.complete_async(

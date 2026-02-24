@@ -5,13 +5,17 @@ from .httpclient import AsyncHttpClient, ClientOwner, HttpClient, close_clients
 from .sdkconfiguration import SDKConfiguration
 from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
+import google.auth
+import google.auth.credentials
+import google.auth.transport.requests
 import httpx
 import importlib
 from mistralai.gcp.client import models, utils
 from mistralai.gcp.client._hooks import SDKHooks
+from mistralai.gcp.client._hooks.registration import GCPVertexAIPathHook
 from mistralai.gcp.client.types import OptionalNullable, UNSET
 import sys
-from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
+from typing import Callable, Dict, Optional, TYPE_CHECKING, cast
 import weakref
 
 if TYPE_CHECKING:
@@ -36,7 +40,9 @@ class MistralGCP(BaseSDK):
 
     def __init__(
         self,
-        api_key: Union[str, Callable[[], str]],
+        project_id: Optional[str] = None,
+        region: str = "europe-west4",
+        access_token: Optional[str] = None,
         server: Optional[str] = None,
         server_url: Optional[str] = None,
         url_params: Optional[Dict[str, str]] = None,
@@ -48,7 +54,9 @@ class MistralGCP(BaseSDK):
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
-        :param api_key: The api_key required for authentication
+        :param project_id: GCP project ID (auto-detected from credentials if not provided)
+        :param region: GCP region for Vertex AI (default: europe-west4)
+        :param access_token: Fixed access token for testing (skips google.auth)
         :param server: The server by name to use for all methods
         :param server_url: The server URL to use for all methods
         :param url_params: Parameters to optionally template the server URL with
@@ -57,6 +65,44 @@ class MistralGCP(BaseSDK):
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
+        credentials: Optional[google.auth.credentials.Credentials] = None
+        if access_token is None:
+            creds, detected_project_id = google.auth.default(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"],
+            )
+            if creds is None:
+                raise ValueError("Failed to obtain GCP credentials")
+            # Cast to Credentials base class which has refresh() and token
+            creds = cast(google.auth.credentials.Credentials, creds)
+            creds.refresh(google.auth.transport.requests.Request())
+            credentials = creds
+            project_id = project_id or detected_project_id
+
+        if project_id is None:
+            raise ValueError(
+                "project_id must be provided or available from default credentials"
+            )
+
+        self._credentials = credentials
+        self._project_id = project_id
+        self._region = region
+        self._fixed_access_token = access_token
+
+        def get_auth_token() -> str:
+            if self._fixed_access_token:
+                return self._fixed_access_token
+            creds = self._credentials
+            if creds is None:
+                raise ValueError("No credentials available")
+            creds.refresh(google.auth.transport.requests.Request())
+            token = creds.token
+            if token is None:
+                raise ValueError("Failed to obtain access token")
+            return token
+
+        if server_url is None:
+            server_url = f"https://{region}-aiplatform.googleapis.com"
+
         client_supplied = True
         if client is None:
             client = httpx.Client(follow_redirects=True)
@@ -78,16 +124,13 @@ class MistralGCP(BaseSDK):
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
 
-        security: Any = None
-        if callable(api_key):
-            # pylint: disable=unnecessary-lambda-assignment
-            security = lambda: models.Security(api_key=api_key())
-        else:
-            security = models.Security(api_key=api_key)
+        def get_security() -> models.Security:
+            return models.Security(api_key=get_auth_token())
 
-        if server_url is not None:
-            if url_params is not None:
-                server_url = utils.template_url(server_url, url_params)
+        security: Callable[[], models.Security] = get_security
+
+        if url_params is not None:
+            server_url = utils.template_url(server_url, url_params)
 
         BaseSDK.__init__(
             self,
@@ -107,9 +150,10 @@ class MistralGCP(BaseSDK):
         )
 
         hooks = SDKHooks()
-
-        # pylint: disable=protected-access
         self.sdk_configuration.__dict__["_hooks"] = hooks
+
+        # Register hook that builds Vertex AI URL path
+        hooks.register_before_request_hook(GCPVertexAIPathHook(project_id, region))
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
@@ -172,7 +216,7 @@ class MistralGCP(BaseSDK):
     async def __aenter__(self):
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, _exc_type, _exc_val, _exc_tb):
         if (
             self.sdk_configuration.client is not None
             and not self.sdk_configuration.client_supplied
@@ -180,7 +224,7 @@ class MistralGCP(BaseSDK):
             self.sdk_configuration.client.close()
         self.sdk_configuration.client = None
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, _exc_type, _exc_val, _exc_tb):
         if (
             self.sdk_configuration.async_client is not None
             and not self.sdk_configuration.async_client_supplied

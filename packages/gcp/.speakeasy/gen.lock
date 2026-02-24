@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 9594c5b1f8b00d641a6ff9fe47796331
+  docChecksum: bc4a0ba9c38418d84a6a8a76b503977b
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
@@ -12,9 +12,9 @@ management:
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/gcp
   published: true
 persistentEdits:
-  generation_id: 2815a95b-4223-417a-9e29-8183faa24193
-  pristine_commit_hash: 8fe2243e1f88aba66f47b144c6eeca70d930c059
-  pristine_tree_hash: c151bcbea517886a35e9885d8643944d5963c7da
+  generation_id: 5f09b925-b801-4bf0-bda9-6f9a3212c588
+  pristine_commit_hash: 20c7ce96f6a097f98d3367b89a7bea09ba0ded7c
+  pristine_tree_hash: c30d519719cc0cd17d7bf53ae2c13b1d8b125c5e
 features:
   python:
     additionalDependencies: 1.0.0
@@ -172,10 +172,14 @@ trackedFiles:
     id: a211c095f2ac
     last_write_checksum: sha1:277a46811144643262651853dc6176d21b33573e
     pristine_git_object: 712a148c3e2305dca4c702851865f9f8c8e674cc
+  docs/models/imagedetail.md:
+    id: f8217529b496
+    last_write_checksum: sha1:fdf19ac9459f64616240955cb81a84ef03e775c8
+    pristine_git_object: 1e5ba3fd405a14e5e2872cc85504584dca19b726
   docs/models/imageurl.md:
     id: e75dd23cec1d
-    last_write_checksum: sha1:30131c77dd240c3bae48d9693698358e5cc0ae63
-    pristine_git_object: 7c2bcbc36e99c3cf467d213d6a6a59d6300433d8
+    last_write_checksum: sha1:a5cf621ce58a9cc7c96afa7de53367eac7b4cb0b
+    pristine_git_object: 6358e0acb2dea4816203413842243704ca955783
   docs/models/imageurlchunk.md:
     id: 4407097bfff3
     last_write_checksum: sha1:30b72826963e22cadf76ac0b7604288dbc4fb943
@@ -342,8 +346,8 @@ trackedFiles:
     pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
   src/mistralai/gcp/client/models/__init__.py:
     id: d9e976d01972
-    last_write_checksum: sha1:5e5ee4c5a73ad0732e7f8c4fce43e62f760b5e62
-    pristine_git_object: 275af8eca983ce49f609a162cd7e9613f0411c4c
+    last_write_checksum: sha1:f0554ff6b81286615330ffea947e619bc508bf19
+    pristine_git_object: fb446c259f4ca1cc97ec64aac197f52b8224a096
   src/mistralai/gcp/client/models/assistantmessage.py:
     id: d39c4bdd289e
     last_write_checksum: sha1:08fa98315561d5bb2c094bf57e7d66639b86e3ee
@@ -412,10 +416,14 @@ trackedFiles:
     id: bdb67f678798
     last_write_checksum: sha1:58b6b7a2b2f8e4f66fc14c38540a26cfd2541a1e
     pristine_git_object: 57df72607adc980b061d092f77140c6dbd36ecec
+  src/mistralai/gcp/client/models/imagedetail.py:
+    id: a28b2f3e2cb5
+    last_write_checksum: sha1:a4874529961952019eaa86a2fa0989626f537a4c
+    pristine_git_object: 68ed76080716eb1424b13f182479f57e51a4fabf
   src/mistralai/gcp/client/models/imageurl.py:
     id: 4e330f3eae74
-    last_write_checksum: sha1:a64daae7e0ef71f8024a6381e7f4da465a13f427
-    pristine_git_object: e66d77ec412bc27c0c44a94a1da5525438dd7338
+    last_write_checksum: sha1:3c5d70c0698b1b4b9c99087241227bab3dc0cdbf
+    pristine_git_object: d4f298f12d8095590cded5714091596b505c59b1
   src/mistralai/gcp/client/models/imageurlchunk.py:
     id: e68a4a393e9b
     last_write_checksum: sha1:2eb2c8a205e5f8b320e2f597075cad9e5e27475b

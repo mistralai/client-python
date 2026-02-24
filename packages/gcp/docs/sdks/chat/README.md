@@ -17,21 +17,21 @@ Mistral AI provides the ability to stream responses back to a client in order to
 ### Example Usage
 
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+from mistralai.gcp.client import MistralGCP
 
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=os.environ["GCP_TOKEN"],
-    server_url=os.environ["GCP_ENDPOINT"],
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
-
 
 res = s.chat.stream(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=os.environ["GCP_MODEL"])
+], model="mistral-small-2503")
 
 if res is not None:
     for event in res:
@@ -75,25 +75,25 @@ Chat Completion
 ### Example Usage
 
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+from mistralai.gcp.client import MistralGCP
 
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=os.environ["GCP_TOKEN"],
-    server_url=os.environ["GCP_ENDPOINT"],
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
-
 
 res = s.chat.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=os.environ["GCP_MODEL"])
+], model="mistral-small-2503")
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 
 ```
 

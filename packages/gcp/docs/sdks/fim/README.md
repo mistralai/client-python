@@ -17,16 +17,16 @@ Mistral AI provides the ability to stream responses back to a client in order to
 ### Example Usage
 
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+from mistralai.gcp.client import MistralGCP
 
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=os.environ["GCP_TOKEN"],
-    server_url=os.environ["GCP_ENDPOINT"],
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
-
-res = s.fim.stream(prompt="def", model=os.environ["GCP_MODEL"], suffix="return a+b")
+res = s.fim.stream(prompt="def", model="codestral-2", suffix="return a+b")
 
 if res is not None:
     for event in res:
@@ -68,20 +68,20 @@ FIM completion.
 ### Example Usage
 
 ```python
-from mistralai.gcp.client import MistralGCP
 import os
+from mistralai.gcp.client import MistralGCP
 
+# The SDK auto-detects credentials and builds the Vertex AI URL
 s = MistralGCP(
-    api_key=os.environ["GCP_TOKEN"],
-    server_url=os.environ["GCP_ENDPOINT"],
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region=os.environ.get("GCP_REGION", "us-central1"),
 )
 
-
-res = s.fim.complete(prompt="def", model=os.environ["GCP_MODEL"], suffix="return a+b")
+res = s.fim.complete(prompt="def", model="codestral-2", suffix="return a+b")
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 
 ```
 

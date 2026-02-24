@@ -18,25 +18,26 @@ Mistral AI provides the ability to stream responses back to a client in order to
 
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
-s = MistralAzure(
-    api_key=os.environ["AZURE_API_KEY"],
-    server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
-)
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
+s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    api_version=AZURE_API_VERSION,
+)
 
 res = s.chat.stream(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=os.environ["AZURE_MODEL"])
+], model=AZURE_MODEL)
 
 if res is not None:
     for event in res:
@@ -82,29 +83,30 @@ Chat Completion
 
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
-s = MistralAzure(
-    api_key=os.environ["AZURE_API_KEY"],
-    server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
-)
+AZURE_API_KEY = os.environ["AZURE_API_KEY"]
+AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
+AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
+s = MistralAzure(
+    api_key=AZURE_API_KEY,
+    server_url=AZURE_ENDPOINT,
+    api_version=AZURE_API_VERSION,
+)
 
 res = s.chat.complete(messages=[
     {
-        "content": "Who is the best French painter? Answer in one short sentence.",
         "role": "user",
+        "content": "Who is the best French painter? Answer in one short sentence.",
     },
-], model=os.environ["AZURE_MODEL"])
+], model=AZURE_MODEL)
 
 if res is not None:
     # handle response
-    pass
+    print(res.choices[0].message.content)
 
 ```
 

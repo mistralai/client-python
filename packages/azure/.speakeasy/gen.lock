@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: dc40fa48-2c4d-46ad-ac8b-270749770f34
 management:
-  docChecksum: 26d52f4a0646d5cd88e8b57194f73435
+  docChecksum: 571037b8485712afcef86703debb7f15
   docVersion: 1.0.0
   speakeasyVersion: 1.685.0
   generationVersion: 2.794.1
@@ -12,9 +12,9 @@ management:
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/azure
   published: true
 persistentEdits:
-  generation_id: 1c480e26-ffc8-4736-a8c9-c5a4928c32c5
-  pristine_commit_hash: 2f99325ab9c57ed8b7caa24774261b300286939e
-  pristine_tree_hash: 08b1d09db4d7949c3dea052f9b68fb6402442bf8
+  generation_id: b0dbfbbb-4028-4834-9980-a1d2dba52a8d
+  pristine_commit_hash: 6cab3cf0757d3c7dd58ee1eabec66dd63a8c9a03
+  pristine_tree_hash: abf5c6e4b603142b1a6aac936d7c3be574611256
 features:
   python:
     additionalDependencies: 1.0.0
@@ -168,10 +168,14 @@ trackedFiles:
     id: a211c095f2ac
     last_write_checksum: sha1:277a46811144643262651853dc6176d21b33573e
     pristine_git_object: 712a148c3e2305dca4c702851865f9f8c8e674cc
+  docs/models/imagedetail.md:
+    id: f8217529b496
+    last_write_checksum: sha1:fdf19ac9459f64616240955cb81a84ef03e775c8
+    pristine_git_object: 1e5ba3fd405a14e5e2872cc85504584dca19b726
   docs/models/imageurl.md:
     id: e75dd23cec1d
-    last_write_checksum: sha1:30131c77dd240c3bae48d9693698358e5cc0ae63
-    pristine_git_object: 7c2bcbc36e99c3cf467d213d6a6a59d6300433d8
+    last_write_checksum: sha1:a5cf621ce58a9cc7c96afa7de53367eac7b4cb0b
+    pristine_git_object: 6358e0acb2dea4816203413842243704ca955783
   docs/models/imageurlchunk.md:
     id: 4407097bfff3
     last_write_checksum: sha1:da7a792f7b649f311062338dfbf3d25ff55fe6c5
@@ -366,8 +370,8 @@ trackedFiles:
     pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
   src/mistralai/azure/client/models/__init__.py:
     id: "335011330e21"
-    last_write_checksum: sha1:8547985d1a082544fd1b09c515d8a404ed6623c2
-    pristine_git_object: dbcaca247ed52252a656430fcfca94cd2727fe64
+    last_write_checksum: sha1:9afe0f0fb324a2b3c60ec98ce78b1ff6f908db39
+    pristine_git_object: 51db6a383ddbab2d946b00c41934359a7eb50448
   src/mistralai/azure/client/models/assistantmessage.py:
     id: 353ed9110f97
     last_write_checksum: sha1:e444c76e27b9b745b9238894bdf2b6a40bba6e6e
@@ -432,10 +436,14 @@ trackedFiles:
     id: ca155413681b
     last_write_checksum: sha1:9dea33d9c74bbdf842ee9d157e4aaa05c36ae34a
     pristine_git_object: 40bccddc4d0c0e761d70af713387561101e20b60
+  src/mistralai/azure/client/models/imagedetail.py:
+    id: de211988043d
+    last_write_checksum: sha1:812f2ec4fc0d8d13db643ed49192384d5a841aa4
+    pristine_git_object: 2d074cee614e1c49b69ee4073c3aaaa7a5a2c9e2
   src/mistralai/azure/client/models/imageurl.py:
     id: c8882341c798
-    last_write_checksum: sha1:12e8b9bfb4442197406d88c012165f145b0a562e
-    pristine_git_object: 08c954faa8e422fe36b5fb02762de322b2b14b22
+    last_write_checksum: sha1:443ee3739b3801928b4f3d4256531078fc4045e8
+    pristine_git_object: b3c705e3f261ebd59f40e46785577694d80f98bf
   src/mistralai/azure/client/models/imageurlchunk.py:
     id: b6f0abb574d7
     last_write_checksum: sha1:4651f12f779bc86874c8516f06e39b882e414c92

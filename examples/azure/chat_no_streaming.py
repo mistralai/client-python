@@ -1,22 +1,18 @@
 import os
 
-import httpx
-
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.models import ChatCompletionRequestMessage, UserMessage
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
 client = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
+    api_version=AZURE_API_VERSION,
 )
 
 messages: list[ChatCompletionRequestMessage] = [

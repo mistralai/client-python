@@ -11,7 +11,7 @@ from mistralai.azure.client import models, utils
 from mistralai.azure.client._hooks import SDKHooks
 from mistralai.azure.client.types import OptionalNullable, UNSET
 import sys
-from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
+from typing import Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
 
 if TYPE_CHECKING:
@@ -44,6 +44,7 @@ class MistralAzure(BaseSDK):
         retry_config: OptionalNullable[RetryConfig] = UNSET,
         timeout_ms: Optional[int] = None,
         debug_logger: Optional[Logger] = None,
+        api_version: str = "2024-05-01-preview",
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -55,10 +56,14 @@ class MistralAzure(BaseSDK):
         :param async_client: The Async HTTP client to use for all asynchronous methods
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
+        :param api_version: Azure API version to use (injected as query param)
         """
         client_supplied = True
         if client is None:
-            client = httpx.Client(follow_redirects=True)
+            client = httpx.Client(
+                follow_redirects=True,
+                params={"api-version": api_version},
+            )
             client_supplied = False
 
         assert issubclass(
@@ -67,7 +72,10 @@ class MistralAzure(BaseSDK):
 
         async_client_supplied = True
         if async_client is None:
-            async_client = httpx.AsyncClient(follow_redirects=True)
+            async_client = httpx.AsyncClient(
+                follow_redirects=True,
+                params={"api-version": api_version},
+            )
             async_client_supplied = False
 
         if debug_logger is None:
@@ -77,10 +85,13 @@ class MistralAzure(BaseSDK):
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
 
-        security: Any = None
+        security: Union[models.Security, Callable[[], models.Security]]
         if callable(api_key):
-            # pylint: disable=unnecessary-lambda-assignment
-            security = lambda: models.Security(api_key=api_key())
+
+            def get_security() -> models.Security:
+                return models.Security(api_key=api_key())
+
+            security = get_security
         else:
             security = models.Security(api_key=api_key)
 
@@ -106,8 +117,6 @@ class MistralAzure(BaseSDK):
         )
 
         hooks = SDKHooks()
-
-        # pylint: disable=protected-access
         self.sdk_configuration.__dict__["_hooks"] = hooks
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
@@ -171,7 +180,7 @@ class MistralAzure(BaseSDK):
     async def __aenter__(self):
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, _exc_type, _exc_val, _exc_tb):
         if (
             self.sdk_configuration.client is not None
             and not self.sdk_configuration.client_supplied
@@ -179,7 +188,7 @@ class MistralAzure(BaseSDK):
             self.sdk_configuration.client.close()
         self.sdk_configuration.client = None
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, _exc_type, _exc_val, _exc_tb):
         if (
             self.sdk_configuration.async_client is not None
             and not self.sdk_configuration.async_client_supplied

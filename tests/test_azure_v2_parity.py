@@ -43,6 +43,7 @@ CONSTRUCTOR_PARAMS = [
     ("retry_config", UNSET),
     ("timeout_ms", None),
     ("debug_logger", None),
+    ("api_version", "2024-05-01-preview"),
 ]
 
 CHAT_COMPLETE_PARAMS = [

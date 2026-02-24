@@ -15,11 +15,11 @@ Environment variables:
     AZURE_API_KEY: API key (required)
     AZURE_ENDPOINT: Base URL (default: https://maas-qa-aifoundry.services.ai.azure.com/models)
     AZURE_MODEL: Model name (default: maas-qa-ministral-3b)
-    AZURE_API_VERSION: API version query param (default: 2024-05-01-preview)
+    AZURE_API_VERSION: API version (default: 2024-05-01-preview)
 
 Note: AZURE_ENDPOINT should be the base URL without path suffixes.
-The SDK appends /chat/completions to this URL. The api-version query
-parameter is injected via httpx.Client params.
+The SDK appends /chat/completions to this URL. The api_version parameter
+is automatically injected as a query parameter by the SDK.
 
 Available models:
     Chat: maas-qa-ministral-3b, maas-qa-mistral-large-3, maas-qa-mistral-medium-2505
@@ -29,7 +29,6 @@ Available models:
 import json
 import os
 
-import httpx
 import pytest
 
 # Configuration from env vars
@@ -65,16 +64,13 @@ WEATHER_TOOL = {
 
 @pytest.fixture
 def azure_client():
-    """Create an Azure client with api-version query param."""
+    """Create an Azure client with api_version parameter."""
     from mistralai.azure.client import MistralAzure
-    client = httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    )
+    assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
     return MistralAzure(
         api_key=AZURE_API_KEY,
         server_url=AZURE_ENDPOINT,
-        client=client,
+        api_version=AZURE_API_VERSION,
     )
 
 
@@ -402,14 +398,11 @@ class TestAzureContextManager:
     def test_sync_context_manager(self):
         """Test that MistralAzure works as a sync context manager."""
         from mistralai.azure.client import MistralAzure
-        http_client = httpx.Client(
-            follow_redirects=True,
-            params={"api-version": AZURE_API_VERSION},
-        )
+        assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
         with MistralAzure(
             api_key=AZURE_API_KEY,
             server_url=AZURE_ENDPOINT,
-            client=http_client,
+            api_version=AZURE_API_VERSION,
         ) as client:
             res = client.chat.complete(
                 model=AZURE_MODEL,
@@ -424,9 +417,11 @@ class TestAzureContextManager:
     async def test_async_context_manager(self):
         """Test that MistralAzure works as an async context manager."""
         from mistralai.azure.client import MistralAzure
+        assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
         async with MistralAzure(
             api_key=AZURE_API_KEY,
             server_url=AZURE_ENDPOINT,
+            api_version=AZURE_API_VERSION,
         ) as client:
             res = await client.chat.complete_async(
                 model=AZURE_MODEL,

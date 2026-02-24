@@ -7,10 +7,11 @@ Skip if GCP_PROJECT_ID env var is not set.
 Prerequisites:
     1. Authenticate with GCP: gcloud auth application-default login
     2. Have "Vertex AI User" role on the project (e.g. model-garden-420509)
-    3. gcloud CLI installed and authenticated
 
-The Vertex AI URL is auto-constructed from project ID, region, and model:
-    https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/mistralai/models/{model}
+The SDK automatically:
+    - Detects credentials via google.auth.default()
+    - Auto-refreshes tokens when they expire
+    - Builds the Vertex AI URL from project_id and region
 
 Available models:
     - Chat: mistral-small-2503, mistral-large-2501, ...
@@ -21,7 +22,7 @@ Usage:
     GCP_PROJECT_ID=model-garden-420509 pytest tests/test_gcp_integration.py -v
 
 Environment variables:
-    GCP_PROJECT_ID: GCP project ID (required)
+    GCP_PROJECT_ID: GCP project ID (required, or auto-detected from credentials)
     GCP_REGION: Vertex AI region (default: us-central1)
     GCP_MODEL: Model name for chat (default: mistral-small-2503)
     GCP_FIM_MODEL: Model name for FIM (default: codestral-2)
@@ -29,7 +30,6 @@ Environment variables:
 """
 import json
 import os
-import subprocess
 
 import pytest
 
@@ -61,33 +61,19 @@ WEATHER_TOOL = {
 }
 
 
-def build_vertex_url(project_id, region, model):
-    """Construct the Vertex AI endpoint URL for a given model."""
-    return (
-        f"https://{region}-aiplatform.googleapis.com/v1/"
-        f"projects/{project_id}/locations/{region}/"
-        f"publishers/mistralai/models/{model}"
-    )
-
-
-def get_fresh_token():
-    """Get fresh GCP token via gcloud CLI."""
-    result = subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True, text=True
-    )
-    return result.stdout.strip()
-
-
 @pytest.fixture
 def gcp_client():
-    """Create a GCP client for chat tests."""
+    """Create a GCP client for chat tests.
+
+    The SDK automatically:
+    - Detects credentials via google.auth.default()
+    - Auto-refreshes tokens when they expire
+    - Builds the Vertex AI URL from project_id and region
+    """
     from mistralai.gcp.client import MistralGCP
-    token = get_fresh_token()
-    server_url = build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL)
     return MistralGCP(
-        api_key=token,
-        server_url=server_url,
+        project_id=GCP_PROJECT_ID,
+        region=GCP_REGION,
     )
 
 
@@ -401,11 +387,9 @@ class TestGCPContextManager:
     def test_sync_context_manager(self):
         """Test that MistralGCP works as a sync context manager."""
         from mistralai.gcp.client import MistralGCP
-        token = get_fresh_token()
-        server_url = build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL)
         with MistralGCP(
-            api_key=token,
-            server_url=server_url,
+            project_id=GCP_PROJECT_ID,
+            region=GCP_REGION,
         ) as client:
             res = client.chat.complete(
                 model=GCP_MODEL,
@@ -420,11 +404,9 @@ class TestGCPContextManager:
     async def test_async_context_manager(self):
         """Test that MistralGCP works as an async context manager."""
         from mistralai.gcp.client import MistralGCP
-        token = get_fresh_token()
-        server_url = build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_MODEL)
         async with MistralGCP(
-            api_key=token,
-            server_url=server_url,
+            project_id=GCP_PROJECT_ID,
+            region=GCP_REGION,
         ) as client:
             res = await client.chat.complete_async(
                 model=GCP_MODEL,
@@ -442,9 +424,7 @@ class TestGCPFIM:
     def _make_fim_client(self):
         """Create a GCP client configured for FIM model."""
         from mistralai.gcp.client import MistralGCP
-        token = get_fresh_token()
-        server_url = build_vertex_url(GCP_PROJECT_ID, GCP_REGION, GCP_FIM_MODEL)
-        return MistralGCP(api_key=token, server_url=server_url)
+        return MistralGCP(project_id=GCP_PROJECT_ID, region=GCP_REGION)
 
     def test_fim_complete(self):
         """Test FIM completion returns a response."""
@@ -475,7 +455,9 @@ class TestGCPFIM:
         content = ""
         for chunk in chunks:
             if chunk.data.choices and chunk.data.choices[0].delta.content:
-                content += chunk.data.choices[0].delta.content
+                delta_content = chunk.data.choices[0].delta.content
+                if isinstance(delta_content, str):
+                    content += delta_content
         assert len(content) > 0
 
     def test_fim_with_max_tokens(self):

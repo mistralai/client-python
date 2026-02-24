@@ -24,27 +24,23 @@ See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.a
 
 This example shows how to create chat completions.
 
-> **Note:** Azure requires injecting the `api-version` query parameter via a
-> custom `httpx.Client`. The SDK does not add it automatically.
+The SDK automatically injects the `api-version` query parameter.
 
 ```python
 # Synchronous Example
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
 s = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
+    api_version=AZURE_API_VERSION,
 )
 
 res = s.chat.complete(
@@ -68,23 +64,20 @@ The same SDK client can also be used to make asynchronous requests by importing 
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.azure.client import MistralAzure
-import httpx
 import os
+from mistralai.azure.client import MistralAzure
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
 async def main():
+    # The SDK automatically injects api-version as a query parameter
     s = MistralAzure(
         api_key=AZURE_API_KEY,
         server_url=AZURE_ENDPOINT,
-        async_client=httpx.AsyncClient(
-            follow_redirects=True,
-            params={"api-version": AZURE_API_VERSION},
-        ),
+        api_version=AZURE_API_VERSION,
     )
     res = await s.chat.complete_async(
         messages=[
@@ -123,21 +116,18 @@ underlying connection.
 
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
 s = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
+    api_version=AZURE_API_VERSION,
 )
 
 res = s.chat.stream(
@@ -170,21 +160,18 @@ To change the default retry strategy for a single API call, simply provide a `Re
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.utils import BackoffStrategy, RetryConfig
-import httpx
 import os
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
 s = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
+    api_version=AZURE_API_VERSION,
 )
 
 res = s.chat.stream(
@@ -213,7 +200,6 @@ If you'd like to override the default retry strategy for all operations that sup
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.utils import BackoffStrategy, RetryConfig
-import httpx
 import os
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
@@ -221,14 +207,12 @@ AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
 AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
 
+# The SDK automatically injects api-version as a query parameter
 s = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
+    api_version=AZURE_API_VERSION,
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
 )
 
 res = s.chat.stream(
@@ -264,21 +248,18 @@ Handling errors in this SDK should largely match your expectations. All operatio
 ```python
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client import models
-import httpx
 import os
 
 AZURE_API_KEY = os.environ["AZURE_API_KEY"]
 AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
 AZURE_MODEL = os.environ["AZURE_MODEL"]
-AZURE_API_VERSION = os.environ["AZURE_API_VERSION"]
+AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
+# The SDK automatically injects api-version as a query parameter
 s = MistralAzure(
     api_key=AZURE_API_KEY,
     server_url=AZURE_ENDPOINT,
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": AZURE_API_VERSION},
-    ),
+    api_version=AZURE_API_VERSION,
 )
 
 res = None
@@ -312,19 +293,15 @@ if res is not None:
 
 ### Override Server URL Per-Client
 
-For Azure, you **must** override the default server URL with your Azure AI Foundry endpoint and inject the `api-version` query parameter via a custom `httpx.Client`:
+For Azure, you must provide your Azure AI Foundry endpoint via `server_url`. The SDK automatically injects the `api-version` query parameter:
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
 s = MistralAzure(
     api_key=os.environ["AZURE_API_KEY"],
     server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
+    api_version=os.environ.get("AZURE_API_VERSION", "2024-05-01-preview"),
 )
 
 res = s.chat.stream(
@@ -358,14 +335,11 @@ from mistralai.azure.client import MistralAzure
 import httpx
 import os
 
-http_client = httpx.Client(
-    follow_redirects=True,
-    headers={"x-custom-header": "someValue"},
-    params={"api-version": os.environ["AZURE_API_VERSION"]},
-)
+http_client = httpx.Client(headers={"x-custom-header": "someValue"})
 s = MistralAzure(
     api_key=os.environ["AZURE_API_KEY"],
     server_url=os.environ["AZURE_ENDPOINT"],
+    api_version=os.environ.get("AZURE_API_VERSION", "2024-05-01-preview"),
     client=http_client,
 )
 ```
@@ -451,19 +425,15 @@ This SDK supports the following security scheme globally:
 | --------- | ---- | ----------- |
 | `api_key` | http | HTTP Bearer |
 
-To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. You must also provide `server_url` pointing to your Azure AI Foundry endpoint and inject `api-version` via a custom `httpx.Client`. For example:
+To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. You must also provide `server_url` pointing to your Azure AI Foundry endpoint. The SDK automatically injects the `api-version` query parameter:
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
 import os
 
 s = MistralAzure(
     api_key=os.environ["AZURE_API_KEY"],
     server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
+    api_version=os.environ.get("AZURE_API_VERSION", "2024-05-01-preview"),
 )
 
 res = s.chat.stream(

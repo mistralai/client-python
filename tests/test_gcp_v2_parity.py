@@ -34,7 +34,9 @@ def mark_tested(resource: str, method: str) -> None:
 # ---------------------------------------------------------------------------
 
 CONSTRUCTOR_PARAMS = [
-    ("api_key", _EMPTY),
+    ("project_id", None),
+    ("region", "europe-west4"),
+    ("access_token", None),
     ("server", None),
     ("server_url", None),
     ("url_params", None),

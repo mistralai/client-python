@@ -382,21 +382,15 @@ pip install mistralai
 
 Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/azure).
 
-> **Note:** Azure requires injecting the `api-version` query parameter via a
-> custom `httpx.Client`. The SDK does not add it automatically.
-
 ```python
 import os
-import httpx
 from mistralai.azure.client import MistralAzure
 
+# The SDK automatically injects api-version as a query parameter
 client = MistralAzure(
     api_key=os.environ["AZURE_API_KEY"],
     server_url=os.environ["AZURE_ENDPOINT"],
-    client=httpx.Client(
-        follow_redirects=True,
-        params={"api-version": os.environ["AZURE_API_VERSION"]},
-    ),
+    api_version="2024-05-01-preview",  # Optional, this is the default
 )
 
 res = client.chat.complete(
@@ -428,7 +422,7 @@ gcloud auth application-default login
 
 ```bash
 pip install mistralai
-# For GCP authentication support:
+# For GCP authentication support (required):
 pip install "mistralai[gcp]"
 ```
 
@@ -436,31 +430,23 @@ pip install "mistralai[gcp]"
 
 Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/gcp).
 
+The SDK automatically:
+- Detects credentials via `google.auth.default()`
+- Auto-refreshes tokens when they expire
+- Builds the Vertex AI URL from `project_id` and `region`
+
 ```python
 import os
-import subprocess
 from mistralai.gcp.client import MistralGCP
 
-GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]
-GCP_REGION = os.environ["GCP_REGION"]
-GCP_MODEL = os.environ["GCP_MODEL"]
-
-token = subprocess.run(
-    ["gcloud", "auth", "print-access-token"],
-    capture_output=True, text=True,
-).stdout.strip()
-
+# The SDK auto-detects credentials and builds the Vertex AI URL
 client = MistralGCP(
-    api_key=token,
-    server_url=(
-        f"https://{GCP_REGION}-aiplatform.googleapis.com/v1/"
-        f"projects/{GCP_PROJECT_ID}/locations/{GCP_REGION}/"
-        f"publishers/mistralai/models/{GCP_MODEL}"
-    ),
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region="us-central1",  # Default: europe-west4
 )
 
 res = client.chat.complete(
-    model=GCP_MODEL,
+    model="mistral-small-2503",
     messages=[
         {
             "role": "user",

@@ -67,6 +67,7 @@ if TYPE_CHECKING:
     )
     from .functionname import FunctionName, FunctionNameTypedDict
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
+    from .imagedetail import ImageDetail
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
         ImageURLChunk,
@@ -190,6 +191,7 @@ __all__ = [
     "FunctionTypedDict",
     "HTTPValidationError",
     "HTTPValidationErrorData",
+    "ImageDetail",
     "ImageURL",
     "ImageURLChunk",
     "ImageURLChunkTypedDict",
@@ -316,6 +318,7 @@ _dynamic_imports: dict[str, str] = {
     "FunctionNameTypedDict": ".functionname",
     "HTTPValidationError": ".httpvalidationerror",
     "HTTPValidationErrorData": ".httpvalidationerror",
+    "ImageDetail": ".imagedetail",
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
     "ImageURLChunk": ".imageurlchunk",
