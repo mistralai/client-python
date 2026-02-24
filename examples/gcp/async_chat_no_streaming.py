@@ -18,7 +18,7 @@ import asyncio
 import os
 
 from mistralai.gcp.client import MistralGCP
-from mistralai.gcp.client.models.usermessage import UserMessage
+from mistralai.gcp.client.models import UserMessage
 
 # Configuration from environment variables
 GCP_PROJECT_ID = os.environ.get("GCP_PROJECT_ID")  # Optional: auto-detected from credentials

@@ -7,12 +7,16 @@ from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
 import importlib
+import logging
 from mistralai.azure.client import models, utils
 from mistralai.azure.client._hooks import SDKHooks
 from mistralai.azure.client.types import OptionalNullable, UNSET
 import sys
 from typing import Callable, Dict, Optional, TYPE_CHECKING, Union, cast
+import warnings
 import weakref
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from mistralai.azure.client.chat import Chat
@@ -65,6 +69,12 @@ class MistralAzure(BaseSDK):
                 params={"api-version": api_version},
             )
             client_supplied = False
+        elif api_version != "2024-05-01-preview":
+            warnings.warn(
+                "api_version is ignored when a custom client is provided. "
+                "Set the api-version query parameter on your httpx.Client directly.",
+                stacklevel=2,
+            )
 
         assert issubclass(
             type(client), HttpClient
@@ -77,6 +87,12 @@ class MistralAzure(BaseSDK):
                 params={"api-version": api_version},
             )
             async_client_supplied = False
+        elif api_version != "2024-05-01-preview":
+            warnings.warn(
+                "api_version is ignored when a custom async_client is provided. "
+                "Set the api-version query parameter on your httpx.AsyncClient directly.",
+                stacklevel=2,
+            )
 
         if debug_logger is None:
             debug_logger = get_default_logger()
@@ -137,15 +153,19 @@ class MistralAzure(BaseSDK):
         )
 
     def dynamic_import(self, modname, retries=3):
+        last_exc: Optional[Exception] = None
         for attempt in range(retries):
             try:
                 return importlib.import_module(modname)
-            except KeyError:
+            except (KeyError, ImportError, ModuleNotFoundError) as e:
+                last_exc = e
                 # Clear any half-initialized module and retry
                 sys.modules.pop(modname, None)
                 if attempt == retries - 1:
                     break
-        raise KeyError(f"Failed to import module '{modname}' after {retries} attempts")
+        raise ImportError(
+            f"Failed to import module '{modname}' after {retries} attempts"
+        ) from last_exc
 
     def __getattr__(self, name: str):
         if name in self._sub_sdk_map:

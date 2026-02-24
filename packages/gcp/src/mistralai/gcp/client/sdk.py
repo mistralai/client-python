@@ -94,7 +94,13 @@ class MistralGCP(BaseSDK):
             creds = self._credentials
             if creds is None:
                 raise ValueError("No credentials available")
-            creds.refresh(google.auth.transport.requests.Request())
+            # Only refresh when the token is expired or missing.
+            # This avoids a blocking HTTP round-trip on every request and
+            # minimises event-loop blocking when called from async paths
+            # (the Speakeasy-generated basesdk always calls security
+            # callables synchronously).
+            if not creds.valid:
+                creds.refresh(google.auth.transport.requests.Request())
             token = creds.token
             if token is None:
                 raise ValueError("Failed to obtain access token")
@@ -173,15 +179,19 @@ class MistralGCP(BaseSDK):
         )
 
     def dynamic_import(self, modname, retries=3):
+        last_exc: Optional[Exception] = None
         for attempt in range(retries):
             try:
                 return importlib.import_module(modname)
-            except KeyError:
+            except (KeyError, ImportError, ModuleNotFoundError) as e:
+                last_exc = e
                 # Clear any half-initialized module and retry
                 sys.modules.pop(modname, None)
                 if attempt == retries - 1:
                     break
-        raise KeyError(f"Failed to import module '{modname}' after {retries} attempts")
+        raise ImportError(
+            f"Failed to import module '{modname}' after {retries} attempts"
+        ) from last_exc
 
     def __getattr__(self, name: str):
         if name in self._sub_sdk_map:

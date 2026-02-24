@@ -3,9 +3,9 @@ import os
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.models import ChatCompletionRequestMessage, UserMessage
 
-AZURE_API_KEY = os.environ["AZURE_API_KEY"]
-AZURE_ENDPOINT = os.environ["AZURE_ENDPOINT"]
-AZURE_MODEL = os.environ["AZURE_MODEL"]
+AZURE_API_KEY = os.environ.get("AZURE_API_KEY", "")
+AZURE_ENDPOINT = os.environ.get("AZURE_ENDPOINT", "")
+AZURE_MODEL = os.environ.get("AZURE_MODEL", "mistral-small-2503")
 AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
 # The SDK automatically injects api-version as a query parameter

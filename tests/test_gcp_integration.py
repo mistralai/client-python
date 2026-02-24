@@ -472,3 +472,41 @@ class TestGCPFIM:
         )
         assert res is not None
         assert res.choices[0].finish_reason in ("length", "stop")
+
+    @pytest.mark.asyncio
+    async def test_fim_complete_async(self):
+        """Test async FIM completion returns a response."""
+        client = self._make_fim_client()
+        res = await client.fim.complete_async(
+            model=GCP_FIM_MODEL,
+            prompt="def fib():",
+            suffix="    return result",
+            timeout_ms=10000,
+        )
+        assert res is not None
+        assert res.choices is not None
+        assert len(res.choices) > 0
+        assert res.choices[0].message.content is not None
+
+    @pytest.mark.asyncio
+    async def test_fim_stream_async(self):
+        """Test async FIM streaming returns chunks."""
+        client = self._make_fim_client()
+        stream = await client.fim.stream_async(
+            model=GCP_FIM_MODEL,
+            prompt="def hello():",
+            suffix="    return greeting",
+            timeout_ms=10000,
+        )
+        chunks = []
+        async for chunk in stream:
+            chunks.append(chunk)
+        assert len(chunks) > 0
+
+        content = ""
+        for chunk in chunks:
+            if chunk.data.choices and chunk.data.choices[0].delta.content:
+                delta_content = chunk.data.choices[0].delta.content
+                if isinstance(delta_content, str):
+                    content += delta_content
+        assert len(content) > 0

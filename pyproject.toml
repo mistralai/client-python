@@ -100,13 +100,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "packages/azure/src", "packages/gcp/src"]
 
 [tool.mypy]
 disable_error_code = "misc"
 namespace_packages = true
 explicit_package_bases = true
-mypy_path = "src"
+mypy_path = "src:packages/azure/src:packages/gcp/src"
 
 [[tool.mypy.overrides]]
 module = "typing_inspect"

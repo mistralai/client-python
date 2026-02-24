@@ -99,7 +99,7 @@ It's also possible to write a standalone Python script without needing to set up
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.9"
+# requires-python = ">=3.10"
 # dependencies = [
 #     "mistralai",
 # ]
@@ -675,8 +675,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(,
-        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+    res = mistral.models.list(
+        retries=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
     print(res)

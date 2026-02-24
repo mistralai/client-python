@@ -1,6 +1,9 @@
 import json
+import logging
 from .types import BeforeRequestHook, BeforeRequestContext, Hooks
 import httpx
+
+logger = logging.getLogger(__name__)
 
 
 # This file is only ever generated once on the first generation and then is free to be modified.
@@ -24,9 +27,20 @@ class GCPVertexAIPathHook(BeforeRequestHook):
         if not request.content:
             return request
 
-        body = json.loads(request.content.decode("utf-8"))
+        try:
+            body = json.loads(request.content.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            # Non-JSON body (e.g. multipart upload) — pass through unmodified
+            return request
+
         model = body.get("model")
         if not model:
+            logger.warning(
+                "GCPVertexAIPathHook: request body has no 'model' field; "
+                "Vertex AI path will not be constructed. "
+                "Operation: %s",
+                hook_ctx.operation_id,
+            )
             return request
 
         is_streaming = "stream" in hook_ctx.operation_id.lower()
