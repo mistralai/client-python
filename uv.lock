@@ -563,7 +563,7 @@ wheels = [
 
 [[package]]
 name = "mistralai"
-version = "2.0.0a2"
+version = "2.0.0a4"
 source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },
@@ -626,7 +626,7 @@ requires-dist = [
     { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.37.0,<2.0.0" },
     { name = "opentelemetry-sdk", specifier = ">=1.33.1,<2.0.0" },
     { name = "opentelemetry-semantic-conventions", specifier = ">=0.59b0,<0.61" },
-    { name = "pydantic", specifier = ">=2.10.3" },
+    { name = "pydantic", specifier = ">=2.11.2" },
     { name = "python-dateutil", specifier = ">=2.8.2" },
     { name = "pyyaml", specifier = ">=6.0.2,<7.0.0" },
     { name = "requests", marker = "extra == 'gcp'", specifier = ">=2.32.3" },

@@ -14,7 +14,7 @@ targets:
     mistralai-azure-sdk:
         target: python
         source: mistral-azure-source
-        output: ./packages/mistralai_azure
+        output: ./packages/azure
         publish:
             pypi:
                 token: $pypi_token
@@ -25,7 +25,7 @@ targets:
     mistralai-gcp-sdk:
         target: python
         source: mistral-google-cloud-source
-        output: ./packages/mistralai_gcp
+        output: ./packages/gcp
         publish:
             pypi:
                 token: $pypi_token

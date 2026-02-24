@@ -104,7 +104,7 @@ It's also possible to write a standalone Python script without needing to set up
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.9"
+# requires-python = ">=3.10"
 # dependencies = [
 #     "mistralai",
 # ]
@@ -374,38 +374,41 @@ You can run the examples in the `examples/` directory using `uv run`.
 
 **Prerequisites**
 
-Before you begin, ensure you have `AZUREAI_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
+Before you begin, ensure you have `AZURE_ENDPOINT` and an `AZURE_API_KEY`. To obtain these, you will need to deploy Mistral on Azure AI.
 See [instructions for deploying Mistral on Azure AI here](https://docs.mistral.ai/deployment/cloud/azure/).
+
+**Step 1: Install**
+
+```bash
+pip install mistralai
+```
+
+**Step 2: Example Usage**
 
 Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/azure).
 
 ```python
-import asyncio
 import os
+from mistralai.azure.client import MistralAzure
 
-from mistralai_azure import MistralAzure
-
+# The SDK automatically injects api-version as a query parameter
 client = MistralAzure(
-    azure_api_key=os.getenv("AZURE_API_KEY", ""),
-    azure_endpoint=os.getenv("AZURE_ENDPOINT", "")
+    api_key=os.environ["AZURE_API_KEY"],
+    server_url=os.environ["AZURE_ENDPOINT"],
+    api_version="2024-05-01-preview",  # Optional, this is the default
 )
 
-async def main() -> None:
-    res = await client.chat.complete_async( 
-        max_tokens= 100,
-        temperature= 0.5,
-        messages= [
-            {
-                "content": "Hello there!",
-                "role": "user"
-            }
-        ]
-    )
-    print(res)
-
-asyncio.run(main())
+res = client.chat.complete(
+    model=os.environ["AZURE_MODEL"],
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello there!",
+        }
+    ],
+)
+print(res.choices[0].message.content)
 ```
-The documentation for the Azure SDK is available [here](packages/mistralai_azure/README.md).
 
 ### Google Cloud
 
@@ -422,39 +425,42 @@ gcloud auth application-default login
 
 **Step 1: Install**
 
-Install the extras dependencies specific to Google Cloud:
-
 ```bash
+pip install mistralai
+# For GCP authentication support (required):
 pip install "mistralai[gcp]"
 ```
 
 **Step 2: Example Usage**
 
-Here's a basic example to get you started.
+Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/gcp).
+
+The SDK automatically:
+- Detects credentials via `google.auth.default()`
+- Auto-refreshes tokens when they expire
+- Builds the Vertex AI URL from `project_id` and `region`
 
 ```python
-import asyncio
-from mistralai_gcp import MistralGoogleCloud
+import os
+from mistralai.gcp.client import MistralGCP
 
-client = MistralGoogleCloud()
+# The SDK auto-detects credentials and builds the Vertex AI URL
+client = MistralGCP(
+    project_id=os.environ.get("GCP_PROJECT_ID"),  # Optional: auto-detected from credentials
+    region="us-central1",  # Default: europe-west4
+)
 
-
-async def main() -> None:
-    res = await client.chat.complete_async(
-        model= "mistral-small-2402",
-        messages= [
-            {
-                "content": "Hello there!",
-                "role": "user"
-            }
-        ]
-    )
-    print(res)
-
-asyncio.run(main())
+res = client.chat.complete(
+    model="mistral-small-2503",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello there!",
+        }
+    ],
+)
+print(res.choices[0].message.content)
 ```
-
-The documentation for the GCP SDK is available [here](packages/mistralai_gcp/README.md).
 
 
 <!-- Start Available Resources and Operations [operations] -->
@@ -674,8 +680,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(,
-        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+    res = mistral.models.list(
+        retries=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
     print(res)

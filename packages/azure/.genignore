@@ -1,0 +1,6 @@
+pyproject.toml
+src/mistralai/azure/client/sdk.py
+src/mistralai/azure/client/_hooks/registration.py
+README.md
+USAGE.md
+docs/sdks/**/README.md

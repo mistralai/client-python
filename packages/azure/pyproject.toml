@@ -1,0 +1,65 @@
+[project]
+name = "mistralai-azure"
+version = "2.0.0a4"
+description = "Python Client SDK for the Mistral AI API in Azure."
+authors = [{ name = "Mistral" }]
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = [
+    "httpcore >=1.0.9",
+    "httpx >=0.28.1",
+    "pydantic >=2.11.2",
+]
+
+[dependency-groups]
+dev = [
+    "mypy==1.15.0",
+    "pylint==3.2.3",
+    "pyright>=1.1.401,<2",
+    "pytest>=8.2.2,<9",
+    "pytest-asyncio>=0.23.7,<0.24",
+]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed", "src/mistralai/azure/client/py.typed"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/mistralai"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"py.typed" = "py.typed"
+"src/mistralai/azure/client/py.typed" = "src/mistralai/azure/client/py.typed"
+
+[tool.hatch.build.targets.wheel]
+include = ["src/mistralai"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src" = ""
+
+[virtualenvs]
+in-project = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.mypy]
+disable_error_code = "misc"
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = "typing_inspect"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "jsonpath"
+ignore_missing_imports = true
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"

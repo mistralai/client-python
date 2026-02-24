@@ -33,6 +33,26 @@ from mistralai.client.types import BaseModel
 | `from mistralai.types import ...` | `from mistralai.client.types import ...` |
 | `from mistralai.utils import ...` | `from mistralai.client.utils import ...` |
 
+### Azure & GCP Import Changes
+
+Azure and GCP SDKs now live under the `mistralai` namespace as separate distributions:
+
+| v1 | v2 |
+|---|---|
+| `from mistralai_azure import MistralAzure` | `from mistralai.azure.client import MistralAzure` |
+| `from mistralai_azure.models import ...` | `from mistralai.azure.client.models import ...` |
+| `from mistralai_gcp import MistralGoogleCloud` | `from mistralai.gcp.client import MistralGCP` |
+| `from mistralai_gcp.models import ...` | `from mistralai.gcp.client.models import ...` |
+
+#### Installation Changes
+
+| v1 | v2 |
+|---|---|
+| `pip install mistralai` | `pip install mistralai` (includes Azure and GCP) |
+| `pip install mistralai[gcp]` (for GCP auth) | `pip install "mistralai[gcp]"` (for GCP auth dependencies) |
+
+Azure and GCP are now standalone distributions that can be installed independently of the core SDK. The `mistralai[azure]` and `mistralai[gcp]` extras are syntactic sugar that pull in the respective distributions.
+
 ### What Stays the Same
 
 - The `Mistral` client API is unchanged

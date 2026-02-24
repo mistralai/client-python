@@ -1,6 +1,6 @@
 pyproject.toml
 examples/*
 /utils/*
-src/mistral/extra/*
+src/mistralai/extra/*
 pylintrc
 scripts/prepare_readme.py
