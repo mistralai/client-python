@@ -1,18 +1,13 @@
 #!/bin/bash
 
-# Defaults
+# Default retry count
 RETRY_COUNT=3
-NO_EXTRA_DEP=false
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --no-extra-dep)
-            NO_EXTRA_DEP=true
-            shift
-            ;;
         --retry-count)
-            RETRY_COUNT="$2"
+            RETRY_COUNT="$1"
             shift 2
             ;;
         --help)
@@ -30,12 +25,12 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# List of files to always exclude
+# List of files to exclude
 exclude_files=(
  "examples/mistral/chat/chatbot_with_streaming.py"
  "examples/mistral/agents/async_conversation_run_mcp_remote_auth.py"
- "examples/mistral/jobs/async_fine_tuning.py"
  "examples/mistral/jobs/async_fine_tuning_chat.py"
+ "examples/mistral/jobs/async_fine_tuning.py"
  "examples/mistral/jobs/fine_tuning.py"
  "examples/mistral/jobs/fine_tuning_dry_run.py"
  "examples/mistral/classifier/async_classifier.py"
@@ -48,21 +43,6 @@ exclude_files=(
  "examples/mistral/audio/async_realtime_transcription_microphone.py"
  "examples/mistral/audio/async_realtime_transcription_stream.py"
 )
-
-# Files that require extra dependencies (agents, mcp, audio, etc.)
-extra_dep_files=(
- "examples/mistral/agents/"
- "examples/mistral/mcp_servers/"
- "examples/mistral/audio/"
-)
-
-if [ "$NO_EXTRA_DEP" = true ]; then
-    for pattern in "${extra_dep_files[@]}"; do
-        for f in ${pattern}*.py; do
-            [ -f "$f" ] && exclude_files+=("$f")
-        done
-    done
-fi
 
 failed=0
 
