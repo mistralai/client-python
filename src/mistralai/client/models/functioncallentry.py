@@ -13,27 +13,36 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-FunctionCallEntryObject = Literal["entry",]
-
-
-FunctionCallEntryType = Literal["function.call",]
+FunctionCallEntryConfirmationStatus = Union[
+    Literal[
+        "pending",
+        "allowed",
+        "denied",
+    ],
+    UnrecognizedStr,
+]
 
 
 class FunctionCallEntryTypedDict(TypedDict):
     tool_call_id: str
     name: str
     arguments: FunctionCallEntryArgumentsTypedDict
-    object: NotRequired[FunctionCallEntryObject]
-    type: NotRequired[FunctionCallEntryType]
+    object: Literal["entry"]
+    type: Literal["function.call"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
     id: NotRequired[str]
+    confirmation_status: NotRequired[Nullable[FunctionCallEntryConfirmationStatus]]
 
 
 class FunctionCallEntry(BaseModel):
@@ -43,9 +52,18 @@ class FunctionCallEntry(BaseModel):
 
     arguments: FunctionCallEntryArguments
 
-    object: Optional[FunctionCallEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[FunctionCallEntryType] = "function.call"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["function.call"]],
+            AfterValidator(validate_const("function.call")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "function.call"
 
     created_at: Optional[datetime] = None
 
@@ -53,10 +71,19 @@ class FunctionCallEntry(BaseModel):
 
     id: Optional[str] = None
 
+    confirmation_status: OptionalNullable[FunctionCallEntryConfirmationStatus] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "type", "created_at", "completed_at", "id"]
-        nullable_fields = ["completed_at"]
+        optional_fields = [
+            "object",
+            "type",
+            "created_at",
+            "completed_at",
+            "id",
+            "confirmation_status",
+        ]
+        nullable_fields = ["completed_at", "confirmation_status"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -46,7 +46,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -79,7 +79,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -136,7 +136,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -169,7 +169,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -234,7 +234,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
             sharing_in=models.SharingIn(
                 org_id=org_id,
@@ -276,7 +276,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -341,7 +341,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
             sharing_in=models.SharingIn(
                 org_id=org_id,
@@ -383,7 +383,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -446,7 +446,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -487,7 +487,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -550,7 +550,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -591,7 +591,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

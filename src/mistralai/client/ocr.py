@@ -22,7 +22,7 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
         ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
@@ -83,7 +83,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -165,7 +165,7 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
         ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
@@ -226,7 +226,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
