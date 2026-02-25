@@ -4,13 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    agents_api_v1_agents_getop as models_agents_api_v1_agents_getop,
-    completionargs as models_completionargs,
-    createagentrequest as models_createagentrequest,
-    requestsource as models_requestsource,
-    updateagentrequest as models_updateagentrequest,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -28,15 +21,12 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_createagentrequest.CreateAgentRequestTool],
-                List[models_createagentrequest.CreateAgentRequestToolTypedDict],
+                List[models.CreateAgentRequestTool],
+                List[models.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -159,15 +149,12 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_createagentrequest.CreateAgentRequestTool],
-                List[models_createagentrequest.CreateAgentRequestToolTypedDict],
+                List[models.CreateAgentRequestTool],
+                List[models.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -288,7 +275,7 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
@@ -399,7 +386,7 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
@@ -510,8 +497,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models.AgentsAPIV1AgentsGetAgentVersion,
+                models.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -608,8 +595,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
-                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models.AgentsAPIV1AgentsGetAgentVersion,
+                models.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -707,15 +694,12 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_updateagentrequest.UpdateAgentRequestTool],
-                List[models_updateagentrequest.UpdateAgentRequestToolTypedDict],
+                List[models.UpdateAgentRequestTool],
+                List[models.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
@@ -850,15 +834,12 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_updateagentrequest.UpdateAgentRequestTool],
-                List[models_updateagentrequest.UpdateAgentRequestToolTypedDict],
+                List[models.UpdateAgentRequestTool],
+                List[models.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,

@@ -4,12 +4,11 @@
 from __future__ import annotations
 from .metric import Metric, MetricTypedDict
 from mistralai.client.types import BaseModel
-import pydantic
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import TypedDict
 
 
 class CheckpointTypedDict(TypedDict):
-    metric: MetricTypedDict
+    metrics: MetricTypedDict
     r"""Metrics at the step number during the fine-tuning job. Use these metrics to assess if the training is going smoothly (loss should decrease, token accuracy should increase)."""
     step_number: int
     r"""The step number that the checkpoint was created at."""
@@ -18,7 +17,7 @@ class CheckpointTypedDict(TypedDict):
 
 
 class Checkpoint(BaseModel):
-    metric: Annotated[Metric, pydantic.Field(alias="metrics")]
+    metrics: Metric
     r"""Metrics at the step number during the fine-tuning job. Use these metrics to assess if the training is going smoothly (loss should decrease, token accuracy should increase)."""
 
     step_number: int

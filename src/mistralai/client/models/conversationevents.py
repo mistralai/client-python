@@ -25,9 +25,12 @@ from .toolexecutionstartedevent import (
     ToolExecutionStartedEvent,
     ToolExecutionStartedEventTypedDict,
 )
+from functools import partial
 from mistralai.client.types import BaseModel
-from pydantic import Field
-from typing import Union
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -48,6 +51,30 @@ ConversationEventsDataTypedDict = TypeAliasType(
 )
 
 
+class UnknownConversationEventsData(BaseModel):
+    r"""A ConversationEventsData variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_CONVERSATION_EVENTS_DATA_VARIANTS: dict[str, Any] = {
+    "agent.handoff.done": AgentHandoffDoneEvent,
+    "agent.handoff.started": AgentHandoffStartedEvent,
+    "conversation.response.done": ResponseDoneEvent,
+    "conversation.response.error": ResponseErrorEvent,
+    "conversation.response.started": ResponseStartedEvent,
+    "function.call.delta": FunctionCallEvent,
+    "message.output.delta": MessageOutputEvent,
+    "tool.execution.delta": ToolExecutionDeltaEvent,
+    "tool.execution.done": ToolExecutionDoneEvent,
+    "tool.execution.started": ToolExecutionStartedEvent,
+}
+
+
 ConversationEventsData = Annotated[
     Union[
         AgentHandoffDoneEvent,
@@ -60,8 +87,17 @@ ConversationEventsData = Annotated[
         ToolExecutionDeltaEvent,
         ToolExecutionDoneEvent,
         ToolExecutionStartedEvent,
+        UnknownConversationEventsData,
     ],
-    Field(discriminator="type"),
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_CONVERSATION_EVENTS_DATA_VARIANTS,
+            unknown_cls=UnknownConversationEventsData,
+            union_name="ConversationEventsData",
+        )
+    ),
 ]
 
 

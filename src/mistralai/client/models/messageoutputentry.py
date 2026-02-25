@@ -80,39 +80,42 @@ class MessageOutputEntry(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "object",
-            "type",
-            "created_at",
-            "completed_at",
-            "agent_id",
-            "model",
-            "id",
-            "role",
-        ]
-        nullable_fields = ["completed_at", "agent_id", "model"]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "object",
+                "type",
+                "created_at",
+                "completed_at",
+                "agent_id",
+                "model",
+                "id",
+                "role",
+            ]
+        )
+        nullable_fields = set(["completed_at", "agent_id", "model"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
+
+
+try:
+    MessageOutputEntry.model_rebuild()
+except NameError:
+    pass

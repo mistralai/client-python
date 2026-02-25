@@ -4,10 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    ocrrequest as models_ocrrequest,
-    responseformat as models_responseformat,
-)
 from mistralai.client.types import Nullable, OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -21,28 +17,20 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[
-            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
-        ],
+        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_prompt: OptionalNullable[str] = UNSET,
-        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -164,28 +152,20 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[
-            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
-        ],
+        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_prompt: OptionalNullable[str] = UNSET,
-        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,

@@ -5,12 +5,6 @@ from .basesdk import BaseSDK
 from datetime import datetime
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    apiendpoint as models_apiendpoint,
-    batchjobstatus as models_batchjobstatus,
-    batchrequest as models_batchrequest,
-    jobs_api_routes_batch_get_batch_jobsop as models_jobs_api_routes_batch_get_batch_jobsop,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -28,10 +22,8 @@ class BatchJobs(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
-        order_by: Optional[
-            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
-        ] = "-created",
+        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        order_by: Optional[models.OrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -138,10 +130,8 @@ class BatchJobs(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models_batchjobstatus.BatchJobStatus]] = UNSET,
-        order_by: Optional[
-            models_jobs_api_routes_batch_get_batch_jobsop.OrderBy
-        ] = "-created",
+        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        order_by: Optional[models.OrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -241,13 +231,10 @@ class BatchJobs(BaseSDK):
     def create(
         self,
         *,
-        endpoint: models_apiendpoint.APIEndpoint,
+        endpoint: models.APIEndpoint,
         input_files: OptionalNullable[List[str]] = UNSET,
         requests: OptionalNullable[
-            Union[
-                List[models_batchrequest.BatchRequest],
-                List[models_batchrequest.BatchRequestTypedDict],
-            ]
+            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
@@ -353,13 +340,10 @@ class BatchJobs(BaseSDK):
     async def create_async(
         self,
         *,
-        endpoint: models_apiendpoint.APIEndpoint,
+        endpoint: models.APIEndpoint,
         input_files: OptionalNullable[List[str]] = UNSET,
         requests: OptionalNullable[
-            Union[
-                List[models_batchrequest.BatchRequest],
-                List[models_batchrequest.BatchRequestTypedDict],
-            ]
+            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,

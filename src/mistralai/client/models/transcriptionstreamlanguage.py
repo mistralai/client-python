@@ -39,3 +39,9 @@ class TranscriptionStreamLanguage(BaseModel):
     @additional_properties.setter
     def additional_properties(self, value):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+
+try:
+    TranscriptionStreamLanguage.model_rebuild()
+except NameError:
+    pass

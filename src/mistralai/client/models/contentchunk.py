@@ -9,9 +9,12 @@ from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from .thinkchunk import ThinkChunk, ThinkChunkTypedDict
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
-from typing import Union
+from functools import partial
+from mistralai.client.types import BaseModel
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType
 
 
@@ -29,15 +32,45 @@ ContentChunkTypedDict = TypeAliasType(
 )
 
 
+class UnknownContentChunk(BaseModel):
+    r"""A ContentChunk variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_CONTENT_CHUNK_VARIANTS: dict[str, Any] = {
+    "image_url": ImageURLChunk,
+    "document_url": DocumentURLChunk,
+    "text": TextChunk,
+    "reference": ReferenceChunk,
+    "file": FileChunk,
+    "thinking": ThinkChunk,
+    "input_audio": AudioChunk,
+}
+
+
 ContentChunk = Annotated[
     Union[
-        Annotated[ImageURLChunk, Tag("image_url")],
-        Annotated[DocumentURLChunk, Tag("document_url")],
-        Annotated[TextChunk, Tag("text")],
-        Annotated[ReferenceChunk, Tag("reference")],
-        Annotated[FileChunk, Tag("file")],
-        Annotated[ThinkChunk, Tag("thinking")],
-        Annotated[AudioChunk, Tag("input_audio")],
+        ImageURLChunk,
+        DocumentURLChunk,
+        TextChunk,
+        ReferenceChunk,
+        FileChunk,
+        ThinkChunk,
+        AudioChunk,
+        UnknownContentChunk,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_CONTENT_CHUNK_VARIANTS,
+            unknown_cls=UnknownContentChunk,
+            union_name="ContentChunk",
+        )
+    ),
 ]

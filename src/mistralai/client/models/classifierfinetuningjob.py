@@ -21,9 +21,9 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
+from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -46,6 +46,21 @@ r"""The current status of the fine-tuning job."""
 
 
 ClassifierFineTuningJobIntegrationTypedDict = WandbIntegrationResultTypedDict
+
+
+class UnknownClassifierFineTuningJobIntegration(BaseModel):
+    r"""A ClassifierFineTuningJobIntegration variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_CLASSIFIER_FINE_TUNING_JOB_INTEGRATION_VARIANTS: dict[str, Any] = {
+    "wandb": WandbIntegrationResult,
+}
 
 
 ClassifierFineTuningJobIntegration = WandbIntegrationResult
@@ -137,45 +152,50 @@ class ClassifierFineTuningJob(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "validation_files",
-            "object",
-            "fine_tuned_model",
-            "suffix",
-            "integrations",
-            "trained_tokens",
-            "metadata",
-        ]
-        nullable_fields = [
-            "validation_files",
-            "fine_tuned_model",
-            "suffix",
-            "integrations",
-            "trained_tokens",
-            "metadata",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "validation_files",
+                "object",
+                "fine_tuned_model",
+                "suffix",
+                "integrations",
+                "trained_tokens",
+                "metadata",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "validation_files",
+                "fine_tuned_model",
+                "suffix",
+                "integrations",
+                "trained_tokens",
+                "metadata",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
+
+
+try:
+    ClassifierFineTuningJob.model_rebuild()
+except NameError:
+    pass

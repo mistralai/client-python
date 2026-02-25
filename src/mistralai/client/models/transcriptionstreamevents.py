@@ -19,9 +19,12 @@ from .transcriptionstreamtextdelta import (
     TranscriptionStreamTextDelta,
     TranscriptionStreamTextDeltaTypedDict,
 )
+from functools import partial
 from mistralai.client.types import BaseModel
-from pydantic import Field
-from typing import Union
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -36,14 +39,41 @@ TranscriptionStreamEventsDataTypedDict = TypeAliasType(
 )
 
 
+class UnknownTranscriptionStreamEventsData(BaseModel):
+    r"""A TranscriptionStreamEventsData variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_TRANSCRIPTION_STREAM_EVENTS_DATA_VARIANTS: dict[str, Any] = {
+    "transcription.done": TranscriptionStreamDone,
+    "transcription.language": TranscriptionStreamLanguage,
+    "transcription.segment": TranscriptionStreamSegmentDelta,
+    "transcription.text.delta": TranscriptionStreamTextDelta,
+}
+
+
 TranscriptionStreamEventsData = Annotated[
     Union[
         TranscriptionStreamDone,
         TranscriptionStreamLanguage,
         TranscriptionStreamSegmentDelta,
         TranscriptionStreamTextDelta,
+        UnknownTranscriptionStreamEventsData,
     ],
-    Field(discriminator="type"),
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_TRANSCRIPTION_STREAM_EVENTS_DATA_VARIANTS,
+            unknown_cls=UnknownTranscriptionStreamEventsData,
+            union_name="TranscriptionStreamEventsData",
+        )
+    ),
 ]
 
 

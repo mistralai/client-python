@@ -15,7 +15,7 @@ FIM completion.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="fim_completion_v1_fim_completions_post" method="post" path="/v1/fim/completions" -->
+<!-- UsageSnippet language="python" operationID="fim_completion_v1_fim_completions_post" method="post" path="/v1/fim/completions" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -25,7 +25,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.fim.complete(model="codestral-2405", prompt="def", top_p=1, stream=False, suffix="return a+b")
+    res = mistral.fim.complete(model="codestral-latest", prompt="def", top_p=1, stream=False, suffix="return a+b")
 
     # Handle response
     print(res)

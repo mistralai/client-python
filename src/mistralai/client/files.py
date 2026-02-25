@@ -5,12 +5,6 @@ from .basesdk import BaseSDK
 import httpx
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    file as models_file,
-    filepurpose as models_filepurpose,
-    sampletype as models_sampletype,
-    source as models_source,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,8 +17,8 @@ class Files(BaseSDK):
     def upload(
         self,
         *,
-        file: Union[models_file.File, models_file.FileTypedDict],
-        purpose: Optional[models_filepurpose.FilePurpose] = None,
+        file: Union[models.File, models.FileTypedDict],
+        purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -125,8 +119,8 @@ class Files(BaseSDK):
     async def upload_async(
         self,
         *,
-        file: Union[models_file.File, models_file.FileTypedDict],
-        purpose: Optional[models_filepurpose.FilePurpose] = None,
+        file: Union[models.File, models.FileTypedDict],
+        purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -230,10 +224,10 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models_sampletype.SampleType]] = UNSET,
-        source: OptionalNullable[List[models_source.Source]] = UNSET,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
-        purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -335,10 +329,10 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models_sampletype.SampleType]] = UNSET,
-        source: OptionalNullable[List[models_source.Source]] = UNSET,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
-        purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

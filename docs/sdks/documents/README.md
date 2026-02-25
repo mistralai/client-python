@@ -349,7 +349,7 @@ with Mistral(
 
 ### Response
 
-**[str](../../models/.md)**
+**[str](../../models/responselibrariesdocumentsgetsignedurlv1.md)**
 
 ### Errors
 
@@ -391,7 +391,7 @@ with Mistral(
 
 ### Response
 
-**[str](../../models/.md)**
+**[str](../../models/responselibrariesdocumentsgetextractedtextsignedurlv1.md)**
 
 ### Errors
 

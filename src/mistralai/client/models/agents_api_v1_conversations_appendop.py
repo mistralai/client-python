@@ -2,9 +2,9 @@
 # @generated-id: 39c6125e850c
 
 from __future__ import annotations
-from .appendconversationrequest import (
-    AppendConversationRequest,
-    AppendConversationRequestTypedDict,
+from .conversationappendrequest import (
+    ConversationAppendRequest,
+    ConversationAppendRequestTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -14,7 +14,7 @@ from typing_extensions import Annotated, TypedDict
 class AgentsAPIV1ConversationsAppendRequestTypedDict(TypedDict):
     conversation_id: str
     r"""ID of the conversation to which we append entries."""
-    append_conversation_request: AppendConversationRequestTypedDict
+    conversation_append_request: ConversationAppendRequestTypedDict
 
 
 class AgentsAPIV1ConversationsAppendRequest(BaseModel):
@@ -23,7 +23,7 @@ class AgentsAPIV1ConversationsAppendRequest(BaseModel):
     ]
     r"""ID of the conversation to which we append entries."""
 
-    append_conversation_request: Annotated[
-        AppendConversationRequest,
+    conversation_append_request: Annotated[
+        ConversationAppendRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

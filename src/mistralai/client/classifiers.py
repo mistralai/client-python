@@ -4,11 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    chatmoderationrequest as models_chatmoderationrequest,
-    classificationrequest as models_classificationrequest,
-    inputs as models_inputs,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,8 +18,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_classificationrequest.ClassificationRequestInputs,
-            models_classificationrequest.ClassificationRequestInputsTypedDict,
+            models.ClassificationRequestInputs,
+            models.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -123,8 +118,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_classificationrequest.ClassificationRequestInputs,
-            models_classificationrequest.ClassificationRequestInputsTypedDict,
+            models.ClassificationRequestInputs,
+            models.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -222,8 +217,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models_chatmoderationrequest.ChatModerationRequestInputs3,
-            models_chatmoderationrequest.ChatModerationRequestInputs3TypedDict,
+            models.ChatModerationRequestInputs3,
+            models.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -321,8 +316,8 @@ class Classifiers(BaseSDK):
         self,
         *,
         inputs: Union[
-            models_chatmoderationrequest.ChatModerationRequestInputs3,
-            models_chatmoderationrequest.ChatModerationRequestInputs3TypedDict,
+            models.ChatModerationRequestInputs3,
+            models.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -421,8 +416,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_classificationrequest.ClassificationRequestInputs,
-            models_classificationrequest.ClassificationRequestInputsTypedDict,
+            models.ClassificationRequestInputs,
+            models.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -521,8 +516,8 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_classificationrequest.ClassificationRequestInputs,
-            models_classificationrequest.ClassificationRequestInputsTypedDict,
+            models.ClassificationRequestInputs,
+            models.ClassificationRequestInputsTypedDict,
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -620,7 +615,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models_inputs.Inputs, models_inputs.InputsTypedDict],
+        input: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -629,7 +624,7 @@ class Classifiers(BaseSDK):
         r"""Chat Classifications
 
         :param model:
-        :param inputs: Chat to classify
+        :param input: Chat to classify
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -647,7 +642,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            inputs=utils.get_pydantic_model(inputs, models.Inputs),
+            input=utils.get_pydantic_model(input, models.Inputs),
         )
 
         req = self._build_request(
@@ -714,7 +709,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        inputs: Union[models_inputs.Inputs, models_inputs.InputsTypedDict],
+        input: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -723,7 +718,7 @@ class Classifiers(BaseSDK):
         r"""Chat Classifications
 
         :param model:
-        :param inputs: Chat to classify
+        :param input: Chat to classify
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -741,7 +736,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            inputs=utils.get_pydantic_model(inputs, models.Inputs),
+            input=utils.get_pydantic_model(input, models.Inputs),
         )
 
         req = self._build_request_async(

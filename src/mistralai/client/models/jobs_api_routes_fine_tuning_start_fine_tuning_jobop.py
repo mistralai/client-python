@@ -10,10 +10,13 @@ from .completionfinetuningjobdetails import (
     CompletionFineTuningJobDetails,
     CompletionFineTuningJobDetailsTypedDict,
 )
+from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from pydantic import Field
-from typing import Union
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -36,8 +39,36 @@ JobsAPIRoutesFineTuningStartFineTuningJobResponseTypedDict = TypeAliasType(
 r"""OK"""
 
 
+class UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse(BaseModel):
+    r"""A JobsAPIRoutesFineTuningStartFineTuningJobResponse variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    job_type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_JOBS_API_ROUTES_FINE_TUNING_START_FINE_TUNING_JOB_RESPONSE_VARIANTS: dict[str, Any] = {
+    "classifier": ClassifierFineTuningJobDetails,
+    "completion": CompletionFineTuningJobDetails,
+}
+
+
 JobsAPIRoutesFineTuningStartFineTuningJobResponse = Annotated[
-    Union[ClassifierFineTuningJobDetails, CompletionFineTuningJobDetails],
-    Field(discriminator="job_type"),
+    Union[
+        ClassifierFineTuningJobDetails,
+        CompletionFineTuningJobDetails,
+        UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse,
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="job_type",
+            variants=_JOBS_API_ROUTES_FINE_TUNING_START_FINE_TUNING_JOB_RESPONSE_VARIANTS,
+            unknown_cls=UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse,
+            union_name="JobsAPIRoutesFineTuningStartFineTuningJobResponse",
+        )
+    ),
 ]
 r"""OK"""

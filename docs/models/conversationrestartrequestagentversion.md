@@ -1,4 +1,4 @@
-# RestartConversationRequestAgentVersion
+# ConversationRestartRequestAgentVersion
 
 Specific version of the agent to use when restarting. If not provided, uses the current version.
 

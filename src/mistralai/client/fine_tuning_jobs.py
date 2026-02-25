@@ -5,13 +5,6 @@ from .basesdk import BaseSDK
 from datetime import datetime
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    classifiertarget as models_classifiertarget,
-    createfinetuningjobrequest as models_createfinetuningjobrequest,
-    finetuneablemodeltype as models_finetuneablemodeltype,
-    jobs_api_routes_fine_tuning_get_fine_tuning_jobsop as models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop,
-    trainingfile as models_trainingfile,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -29,7 +22,7 @@ class FineTuningJobs(BaseSDK):
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[
-            models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
+            models.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
         ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
@@ -142,7 +135,7 @@ class FineTuningJobs(BaseSDK):
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[
-            models_jobs_api_routes_fine_tuning_get_fine_tuning_jobsop.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
+            models.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
         ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
@@ -249,48 +242,29 @@ class FineTuningJobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models_createfinetuningjobrequest.Hyperparameters,
-            models_createfinetuningjobrequest.HyperparametersTypedDict,
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
-            Union[
-                List[models_trainingfile.TrainingFile],
-                List[models_trainingfile.TrainingFileTypedDict],
-            ]
+            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestIntegration
-                ],
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestIntegrationTypedDict
-                ],
+                List[models.CreateFineTuningJobRequestIntegration],
+                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[
-            models_finetuneablemodeltype.FineTuneableModelType
-        ] = UNSET,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestRepository
-                ],
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestRepositoryTypedDict
-                ],
+                List[models.CreateFineTuningJobRequestRepository],
+                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[
-                List[models_classifiertarget.ClassifierTarget],
-                List[models_classifiertarget.ClassifierTargetTypedDict],
-            ]
+            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -413,48 +387,29 @@ class FineTuningJobs(BaseSDK):
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models_createfinetuningjobrequest.Hyperparameters,
-            models_createfinetuningjobrequest.HyperparametersTypedDict,
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
-            Union[
-                List[models_trainingfile.TrainingFile],
-                List[models_trainingfile.TrainingFileTypedDict],
-            ]
+            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestIntegration
-                ],
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestIntegrationTypedDict
-                ],
+                List[models.CreateFineTuningJobRequestIntegration],
+                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[
-            models_finetuneablemodeltype.FineTuneableModelType
-        ] = UNSET,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestRepository
-                ],
-                List[
-                    models_createfinetuningjobrequest.CreateFineTuningJobRequestRepositoryTypedDict
-                ],
+                List[models.CreateFineTuningJobRequestRepository],
+                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[
-                List[models_classifiertarget.ClassifierTarget],
-                List[models_classifiertarget.ClassifierTargetTypedDict],
-            ]
+            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

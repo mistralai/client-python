@@ -4,11 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    embeddingdtype as models_embeddingdtype,
-    embeddingrequest as models_embeddingrequest,
-    encodingformat as models_encodingformat,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,13 +18,12 @@ class Embeddings(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_embeddingrequest.EmbeddingRequestInputs,
-            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
-        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -134,13 +128,12 @@ class Embeddings(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_embeddingrequest.EmbeddingRequestInputs,
-            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
-        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

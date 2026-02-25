@@ -39,3 +39,9 @@ class TranscriptionStreamTextDelta(BaseModel):
     @additional_properties.setter
     def additional_properties(self, value):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+
+try:
+    TranscriptionStreamTextDelta.model_rebuild()
+except NameError:
+    pass

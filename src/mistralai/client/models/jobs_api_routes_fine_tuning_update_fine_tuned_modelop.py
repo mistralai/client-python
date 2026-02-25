@@ -11,10 +11,13 @@ from .completionfinetunedmodel import (
     CompletionFineTunedModelTypedDict,
 )
 from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
+from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from pydantic import Field
-from typing import Union
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -43,8 +46,38 @@ JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict = TypeAliasType(
 r"""OK"""
 
 
+class UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse(BaseModel):
+    r"""A JobsAPIRoutesFineTuningUpdateFineTunedModelResponse variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    model_type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_JOBS_API_ROUTES_FINE_TUNING_UPDATE_FINE_TUNED_MODEL_RESPONSE_VARIANTS: dict[
+    str, Any
+] = {
+    "classifier": ClassifierFineTunedModel,
+    "completion": CompletionFineTunedModel,
+}
+
+
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponse = Annotated[
-    Union[ClassifierFineTunedModel, CompletionFineTunedModel],
-    Field(discriminator="model_type"),
+    Union[
+        ClassifierFineTunedModel,
+        CompletionFineTunedModel,
+        UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="model_type",
+            variants=_JOBS_API_ROUTES_FINE_TUNING_UPDATE_FINE_TUNED_MODEL_RESPONSE_VARIANTS,
+            unknown_cls=UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
+            union_name="JobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
+        )
+    ),
 ]
 r"""OK"""

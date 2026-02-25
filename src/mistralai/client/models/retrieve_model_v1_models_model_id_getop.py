@@ -4,10 +4,13 @@
 from __future__ import annotations
 from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .ftmodelcard import FTModelCard, FTModelCardTypedDict
+from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from pydantic import Field
-from typing import Union
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -30,7 +33,32 @@ ResponseRetrieveModelV1ModelsModelIDGetTypedDict = TypeAliasType(
 r"""Successful Response"""
 
 
+class UnknownResponseRetrieveModelV1ModelsModelIDGet(BaseModel):
+    r"""A ResponseRetrieveModelV1ModelsModelIDGet variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_RESPONSE_RETRIEVE_MODEL_V1_MODELS_MODEL_ID_GET_VARIANTS: dict[str, Any] = {
+    "base": BaseModelCard,
+    "fine-tuned": FTModelCard,
+}
+
+
 ResponseRetrieveModelV1ModelsModelIDGet = Annotated[
-    Union[BaseModelCard, FTModelCard], Field(discriminator="type")
+    Union[BaseModelCard, FTModelCard, UnknownResponseRetrieveModelV1ModelsModelIDGet],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_RESPONSE_RETRIEVE_MODEL_V1_MODELS_MODEL_ID_GET_VARIANTS,
+            unknown_cls=UnknownResponseRetrieveModelV1ModelsModelIDGet,
+            union_name="ResponseRetrieveModelV1ModelsModelIDGet",
+        )
+    ),
 ]
 r"""Successful Response"""

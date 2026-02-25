@@ -10,12 +10,14 @@ from .completionfinetuningjob import (
     CompletionFineTuningJob,
     CompletionFineTuningJobTypedDict,
 )
-from mistralai.client.types import BaseModel
+from functools import partial
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
+from mistralai.client.utils.unions import parse_open_union
 import pydantic
-from pydantic import Field
-from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional, Union
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import AfterValidator, BeforeValidator
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -25,9 +27,37 @@ ListFineTuningJobsResponseDataTypedDict = TypeAliasType(
 )
 
 
+class UnknownListFineTuningJobsResponseData(BaseModel):
+    r"""A ListFineTuningJobsResponseData variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    job_type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_LIST_FINE_TUNING_JOBS_RESPONSE_DATA_VARIANTS: dict[str, Any] = {
+    "classifier": ClassifierFineTuningJob,
+    "completion": CompletionFineTuningJob,
+}
+
+
 ListFineTuningJobsResponseData = Annotated[
-    Union[ClassifierFineTuningJob, CompletionFineTuningJob],
-    Field(discriminator="job_type"),
+    Union[
+        ClassifierFineTuningJob,
+        CompletionFineTuningJob,
+        UnknownListFineTuningJobsResponseData,
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="job_type",
+            variants=_LIST_FINE_TUNING_JOBS_RESPONSE_DATA_VARIANTS,
+            unknown_cls=UnknownListFineTuningJobsResponseData,
+            union_name="ListFineTuningJobsResponseData",
+        )
+    ),
 ]
 
 
@@ -46,3 +76,25 @@ class ListFineTuningJobsResponse(BaseModel):
         Annotated[Optional[Literal["list"]], AfterValidator(validate_const("list"))],
         pydantic.Field(alias="object"),
     ] = "list"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["data", "object"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ListFineTuningJobsResponse.model_rebuild()
+except NameError:
+    pass

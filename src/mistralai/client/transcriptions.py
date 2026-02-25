@@ -4,10 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    file as models_file,
-    timestampgranularity as models_timestampgranularity,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -21,16 +17,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models.File, models.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[
-            List[models_timestampgranularity.TimestampGranularity]
-        ] = None,
+        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -132,16 +126,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models.File, models.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[
-            List[models_timestampgranularity.TimestampGranularity]
-        ] = None,
+        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -243,16 +235,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models.File, models.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[
-            List[models_timestampgranularity.TimestampGranularity]
-        ] = None,
+        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -364,16 +354,14 @@ class Transcriptions(BaseSDK):
         self,
         *,
         model: str,
-        file: Optional[Union[models_file.File, models_file.FileTypedDict]] = None,
+        file: Optional[Union[models.File, models.FileTypedDict]] = None,
         file_url: OptionalNullable[str] = UNSET,
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[
-            List[models_timestampgranularity.TimestampGranularity]
-        ] = None,
+        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

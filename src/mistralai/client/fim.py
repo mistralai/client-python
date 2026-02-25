@@ -4,10 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    fimcompletionrequest as models_fimcompletionrequest,
-    fimcompletionstreamrequest as models_fimcompletionstreamrequest,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -28,8 +24,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_fimcompletionrequest.FIMCompletionRequestStop,
-                models_fimcompletionrequest.FIMCompletionRequestStopTypedDict,
+                models.FIMCompletionRequestStop,
+                models.FIMCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -156,8 +152,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_fimcompletionrequest.FIMCompletionRequestStop,
-                models_fimcompletionrequest.FIMCompletionRequestStopTypedDict,
+                models.FIMCompletionRequestStop,
+                models.FIMCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -284,8 +280,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStop,
-                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStopTypedDict,
+                models.FIMCompletionStreamRequestStop,
+                models.FIMCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
@@ -420,8 +416,8 @@ class Fim(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStop,
-                models_fimcompletionstreamrequest.FIMCompletionStreamRequestStopTypedDict,
+                models.FIMCompletionStreamRequestStop,
+                models.FIMCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,

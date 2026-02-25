@@ -2,9 +2,10 @@
 # @generated-id: 9c96fb86a9ab
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
 from typing_extensions import Annotated, TypedDict
@@ -22,3 +23,25 @@ class TextChunk(BaseModel):
         Annotated[Optional[Literal["text"]], AfterValidator(validate_const("text"))],
         pydantic.Field(alias="type"),
     ] = "text"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["type"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    TextChunk.model_rebuild()
+except NameError:
+    pass

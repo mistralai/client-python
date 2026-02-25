@@ -4,10 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    entitytype as models_entitytype,
-    shareenum as models_shareenum,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -201,9 +197,9 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        level: models_shareenum.ShareEnum,
+        level: models.ShareEnum,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -308,9 +304,9 @@ class Accesses(BaseSDK):
         self,
         *,
         library_id: str,
-        level: models_shareenum.ShareEnum,
+        level: models.ShareEnum,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -416,7 +412,7 @@ class Accesses(BaseSDK):
         *,
         library_id: str,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -520,7 +516,7 @@ class Accesses(BaseSDK):
         *,
         library_id: str,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

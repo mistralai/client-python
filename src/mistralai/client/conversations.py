@@ -4,15 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    appendconversationrequest as models_appendconversationrequest,
-    completionargs as models_completionargs,
-    conversationinputs as models_conversationinputs,
-    conversationrequest as models_conversationrequest,
-    conversationstreamrequest as models_conversationstreamrequest,
-    restartconversationrequest as models_restartconversationrequest,
-    toolcallconfirmation as models_toolcallconfirmation,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -237,27 +228,21 @@ class Conversations(BaseSDK):
     def start(
         self,
         *,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationrequest.ConversationRequestHandoffExecution
+            models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationrequest.ConversationRequestTool],
-                List[models_conversationrequest.ConversationRequestToolTypedDict],
+                List[models.ConversationRequestTool],
+                List[models.ConversationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -265,8 +250,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrequest.ConversationRequestAgentVersion,
-                models_conversationrequest.ConversationRequestAgentVersionTypedDict,
+                models.ConversationRequestAgentVersion,
+                models.ConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -390,27 +375,21 @@ class Conversations(BaseSDK):
     async def start_async(
         self,
         *,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationrequest.ConversationRequestHandoffExecution
+            models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationrequest.ConversationRequestTool],
-                List[models_conversationrequest.ConversationRequestToolTypedDict],
+                List[models.ConversationRequestTool],
+                List[models.ConversationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -418,8 +397,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrequest.ConversationRequestAgentVersion,
-                models_conversationrequest.ConversationRequestAgentVersionTypedDict,
+                models.ConversationRequestAgentVersion,
+                models.ConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -1101,26 +1080,20 @@ class Conversations(BaseSDK):
         *,
         conversation_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_appendconversationrequest.AppendConversationRequestHandoffExecution
+            models.ConversationAppendRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         tool_confirmations: OptionalNullable[
             Union[
-                List[models_toolcallconfirmation.ToolCallConfirmation],
-                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+                List[models.ToolCallConfirmation],
+                List[models.ToolCallConfirmationTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1156,7 +1129,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            append_conversation_request=models.AppendConversationRequest(
+            conversation_append_request=models.ConversationAppendRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -1187,11 +1160,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.append_conversation_request,
+                request.conversation_append_request,
                 False,
                 False,
                 "json",
-                models.AppendConversationRequest,
+                models.ConversationAppendRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1242,26 +1215,20 @@ class Conversations(BaseSDK):
         *,
         conversation_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_appendconversationrequest.AppendConversationRequestHandoffExecution
+            models.ConversationAppendRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         tool_confirmations: OptionalNullable[
             Union[
-                List[models_toolcallconfirmation.ToolCallConfirmation],
-                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+                List[models.ToolCallConfirmation],
+                List[models.ToolCallConfirmationTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1297,7 +1264,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            append_conversation_request=models.AppendConversationRequest(
+            conversation_append_request=models.ConversationAppendRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -1328,11 +1295,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.append_conversation_request,
+                request.conversation_append_request,
                 False,
                 False,
                 "json",
-                models.AppendConversationRequest,
+                models.ConversationAppendRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1744,27 +1711,21 @@ class Conversations(BaseSDK):
         conversation_id: str,
         from_entry_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_restartconversationrequest.RestartConversationRequestHandoffExecution
+            models.ConversationRestartRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_restartconversationrequest.RestartConversationRequestAgentVersion,
-                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
+                models.ConversationRestartRequestAgentVersion,
+                models.ConversationRestartRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1802,7 +1763,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            restart_conversation_request=models.RestartConversationRequest(
+            conversation_restart_request=models.ConversationRestartRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -1832,11 +1793,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.restart_conversation_request,
+                request.conversation_restart_request,
                 False,
                 False,
                 "json",
-                models.RestartConversationRequest,
+                models.ConversationRestartRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1888,27 +1849,21 @@ class Conversations(BaseSDK):
         conversation_id: str,
         from_entry_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_restartconversationrequest.RestartConversationRequestHandoffExecution
+            models.ConversationRestartRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_restartconversationrequest.RestartConversationRequestAgentVersion,
-                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
+                models.ConversationRestartRequestAgentVersion,
+                models.ConversationRestartRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1946,7 +1901,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            restart_conversation_request=models.RestartConversationRequest(
+            conversation_restart_request=models.ConversationRestartRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -1976,11 +1931,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.restart_conversation_request,
+                request.conversation_restart_request,
                 False,
                 False,
                 "json",
-                models.RestartConversationRequest,
+                models.ConversationRestartRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2029,29 +1984,21 @@ class Conversations(BaseSDK):
     def start_stream(
         self,
         *,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationstreamrequest.ConversationStreamRequestHandoffExecution
+            models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationstreamrequest.ConversationStreamRequestTool],
-                List[
-                    models_conversationstreamrequest.ConversationStreamRequestToolTypedDict
-                ],
+                List[models.ConversationStreamRequestTool],
+                List[models.ConversationStreamRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -2059,8 +2006,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationstreamrequest.ConversationStreamRequestAgentVersion,
-                models_conversationstreamrequest.ConversationStreamRequestAgentVersionTypedDict,
+                models.ConversationStreamRequestAgentVersion,
+                models.ConversationStreamRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -2191,29 +2138,21 @@ class Conversations(BaseSDK):
     async def start_stream_async(
         self,
         *,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
         stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
-            models_conversationstreamrequest.ConversationStreamRequestHandoffExecution
+            models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models_conversationstreamrequest.ConversationStreamRequestTool],
-                List[
-                    models_conversationstreamrequest.ConversationStreamRequestToolTypedDict
-                ],
+                List[models.ConversationStreamRequestTool],
+                List[models.ConversationStreamRequestToolTypedDict],
             ]
         ] = None,
         completion_args: OptionalNullable[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -2221,8 +2160,8 @@ class Conversations(BaseSDK):
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationstreamrequest.ConversationStreamRequestAgentVersion,
-                models_conversationstreamrequest.ConversationStreamRequestAgentVersionTypedDict,
+                models.ConversationStreamRequestAgentVersion,
+                models.ConversationStreamRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
@@ -2355,26 +2294,20 @@ class Conversations(BaseSDK):
         *,
         conversation_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
-        stream: Optional[bool] = False,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_appendconversationrequest.AppendConversationRequestHandoffExecution
+            models.ConversationAppendStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         tool_confirmations: OptionalNullable[
             Union[
-                List[models_toolcallconfirmation.ToolCallConfirmation],
-                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+                List[models.ToolCallConfirmation],
+                List[models.ToolCallConfirmationTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2410,7 +2343,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            append_conversation_request=models.AppendConversationRequest(
+            conversation_append_stream_request=models.ConversationAppendStreamRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -2441,11 +2374,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.append_conversation_request,
+                request.conversation_append_stream_request,
                 False,
                 False,
                 "json",
-                models.AppendConversationRequest,
+                models.ConversationAppendStreamRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2503,26 +2436,20 @@ class Conversations(BaseSDK):
         *,
         conversation_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
-        stream: Optional[bool] = False,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_appendconversationrequest.AppendConversationRequestHandoffExecution
+            models.ConversationAppendStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         tool_confirmations: OptionalNullable[
             Union[
-                List[models_toolcallconfirmation.ToolCallConfirmation],
-                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+                List[models.ToolCallConfirmation],
+                List[models.ToolCallConfirmationTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2558,7 +2485,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            append_conversation_request=models.AppendConversationRequest(
+            conversation_append_stream_request=models.ConversationAppendStreamRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -2589,11 +2516,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.append_conversation_request,
+                request.conversation_append_stream_request,
                 False,
                 False,
                 "json",
-                models.AppendConversationRequest,
+                models.ConversationAppendStreamRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2652,27 +2579,21 @@ class Conversations(BaseSDK):
         conversation_id: str,
         from_entry_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
-        stream: Optional[bool] = False,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_restartconversationrequest.RestartConversationRequestHandoffExecution
+            models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_restartconversationrequest.RestartConversationRequestAgentVersion,
-                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
+                models.ConversationRestartStreamRequestAgentVersion,
+                models.ConversationRestartStreamRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2710,7 +2631,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            restart_conversation_request=models.RestartConversationRequest(
+            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -2740,11 +2661,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.restart_conversation_request,
+                request.conversation_restart_stream_request,
                 False,
                 False,
                 "json",
-                models.RestartConversationRequest,
+                models.ConversationRestartStreamRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2803,27 +2724,21 @@ class Conversations(BaseSDK):
         conversation_id: str,
         from_entry_id: str,
         inputs: Optional[
-            Union[
-                models_conversationinputs.ConversationInputs,
-                models_conversationinputs.ConversationInputsTypedDict,
-            ]
+            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
-        stream: Optional[bool] = False,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_restartconversationrequest.RestartConversationRequestHandoffExecution
+            models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
-            Union[
-                models_completionargs.CompletionArgs,
-                models_completionargs.CompletionArgsTypedDict,
-            ]
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_restartconversationrequest.RestartConversationRequestAgentVersion,
-                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
+                models.ConversationRestartStreamRequestAgentVersion,
+                models.ConversationRestartStreamRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2861,7 +2776,7 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            restart_conversation_request=models.RestartConversationRequest(
+            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
@@ -2891,11 +2806,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.restart_conversation_request,
+                request.conversation_restart_stream_request,
                 False,
                 False,
                 "json",
-                models.RestartConversationRequest,
+                models.ConversationRestartStreamRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

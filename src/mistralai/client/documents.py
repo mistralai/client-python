@@ -4,10 +4,6 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    file as models_file,
-    updatedocumentrequest as models_updatedocumentrequest,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -237,7 +233,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file.File, models_file.FileTypedDict],
+        file: Union[models.File, models.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -343,7 +339,7 @@ class Documents(BaseSDK):
         self,
         *,
         library_id: str,
-        file: Union[models_file.File, models_file.FileTypedDict],
+        file: Union[models.File, models.FileTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -638,10 +634,7 @@ class Documents(BaseSDK):
         document_id: str,
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
-            Union[
-                Dict[str, models_updatedocumentrequest.Attributes],
-                Dict[str, models_updatedocumentrequest.AttributesTypedDict],
-            ]
+            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -751,10 +744,7 @@ class Documents(BaseSDK):
         document_id: str,
         name: OptionalNullable[str] = UNSET,
         attributes: OptionalNullable[
-            Union[
-                Dict[str, models_updatedocumentrequest.Attributes],
-                Dict[str, models_updatedocumentrequest.AttributesTypedDict],
-            ]
+            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

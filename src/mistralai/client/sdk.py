@@ -8,7 +8,7 @@ from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
 import importlib
-from mistralai.client import models, utils
+from mistralai.client import models as models_, utils
 from mistralai.client._hooks import SDKHooks
 from mistralai.client.types import OptionalNullable, UNSET
 import sys
@@ -115,9 +115,9 @@ class Mistral(BaseSDK):
         security: Any = None
         if callable(api_key):
             # pylint: disable=unnecessary-lambda-assignment
-            security = lambda: models.Security(api_key=api_key())
+            security = lambda: models_.Security(api_key=api_key())
         else:
-            security = models.Security(api_key=api_key)
+            security = models_.Security(api_key=api_key)
 
         if server_url is not None:
             if url_params is not None:

@@ -11,8 +11,12 @@ from .completionfinetuningjob import (
     CompletionFineTuningJobTypedDict,
 )
 from .legacyjobmetadata import LegacyJobMetadata, LegacyJobMetadataTypedDict
-from pydantic import Field
-from typing import Union
+from functools import partial
+from mistralai.client.types import BaseModel
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType
 
 
@@ -22,9 +26,33 @@ ResponseTypedDict = TypeAliasType(
 )
 
 
+class UnknownResponse(BaseModel):
+    r"""A Response variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    job_type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_RESPONSE_VARIANTS: dict[str, Any] = {
+    "classifier": ClassifierFineTuningJob,
+    "completion": CompletionFineTuningJob,
+}
+
+
 Response = Annotated[
-    Union[ClassifierFineTuningJob, CompletionFineTuningJob],
-    Field(discriminator="job_type"),
+    Union[ClassifierFineTuningJob, CompletionFineTuningJob, UnknownResponse],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="job_type",
+            variants=_RESPONSE_VARIANTS,
+            unknown_cls=UnknownResponse,
+            union_name="Response",
+        )
+    ),
 ]
 
 

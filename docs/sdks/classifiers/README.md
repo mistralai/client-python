@@ -17,7 +17,7 @@ Moderations
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="moderations_v1_moderations_post" method="post" path="/v1/moderations" -->
+<!-- UsageSnippet language="python" operationID="moderations_v1_moderations_post" method="post" path="/v1/moderations" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -27,10 +27,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.moderate(model="Durango", inputs=[
-        "<value 1>",
-        "<value 2>",
-    ])
+    res = mistral.classifiers.moderate(model="mistral-moderation-latest", inputs="<value>")
 
     # Handle response
     print(res)
@@ -63,7 +60,7 @@ Chat Moderations
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="chat_moderations_v1_chat_moderations_post" method="post" path="/v1/chat/moderations" -->
+<!-- UsageSnippet language="python" operationID="chat_moderations_v1_chat_moderations_post" method="post" path="/v1/chat/moderations" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -165,7 +162,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.classifiers.classify_chat(model="Camry", inputs=[
+    res = mistral.classifiers.classify_chat(model="Camry", input=[
         {
             "messages": [
                 {
@@ -186,7 +183,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `model`                                                             | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `inputs`                                                            | [models.Inputs](../../models/inputs.md)                             | :heavy_check_mark:                                                  | Chat to classify                                                    |
+| `input`                                                             | [models.Inputs](../../models/inputs.md)                             | :heavy_check_mark:                                                  | Chat to classify                                                    |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

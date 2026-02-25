@@ -19,7 +19,7 @@ List all models available to the user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="list_models_v1_models_get" method="get" path="/v1/models" -->
+<!-- UsageSnippet language="python" operationID="list_models_v1_models_get" method="get" path="/v1/models" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -58,7 +58,7 @@ Retrieve information about a model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="retrieve_model_v1_models__model_id__get" method="get" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="retrieve_model_v1_models__model_id__get" method="get" path="/v1/models/{model_id}" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -99,7 +99,7 @@ Delete a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="delete_model_v1_models__model_id__delete" method="delete" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="delete_model_v1_models__model_id__delete" method="delete" path="/v1/models/{model_id}" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os

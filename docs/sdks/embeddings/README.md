@@ -14,7 +14,7 @@ Embeddings
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="embeddings_v1_embeddings_post" method="post" path="/v1/embeddings" -->
+<!-- UsageSnippet language="python" operationID="embeddings_v1_embeddings_post" method="post" path="/v1/embeddings" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
