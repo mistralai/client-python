@@ -10,12 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolReferenceChunkType = Literal["tool_reference",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolReferenceChunkToolTypedDict = TypeAliasType(
@@ -31,7 +31,7 @@ ToolReferenceChunkTool = TypeAliasType(
 class ToolReferenceChunkTypedDict(TypedDict):
     tool: ToolReferenceChunkToolTypedDict
     title: str
-    type: NotRequired[ToolReferenceChunkType]
+    type: Literal["tool_reference"]
     url: NotRequired[Nullable[str]]
     favicon: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
@@ -42,7 +42,13 @@ class ToolReferenceChunk(BaseModel):
 
     title: str
 
-    type: Optional[ToolReferenceChunkType] = "tool_reference"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["tool_reference"]],
+            AfterValidator(validate_const("tool_reference")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool_reference"
 
     url: OptionalNullable[str] = UNSET
 
@@ -52,30 +58,31 @@ class ToolReferenceChunk(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["type", "url", "favicon", "description"]
-        nullable_fields = ["url", "favicon", "description"]
-        null_default_fields = []
-
+        optional_fields = set(["type", "url", "favicon", "description"])
+        nullable_fields = set(["url", "favicon", "description"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
+
+
+try:
+    ToolReferenceChunk.model_rebuild()
+except NameError:
+    pass

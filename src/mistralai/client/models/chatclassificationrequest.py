@@ -19,3 +19,9 @@ class ChatClassificationRequest(BaseModel):
 
     inputs: Annotated[Inputs, pydantic.Field(alias="input")]
     r"""Chat to classify"""
+
+
+try:
+    ChatClassificationRequest.model_rebuild()
+except NameError:
+    pass

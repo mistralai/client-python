@@ -23,3 +23,9 @@ class FunctionTool(BaseModel):
         Annotated[Literal["function"], AfterValidator(validate_const("function"))],
         pydantic.Field(alias="type"),
     ] = "function"
+
+
+try:
+    FunctionTool.model_rebuild()
+except NameError:
+    pass

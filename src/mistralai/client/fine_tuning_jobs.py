@@ -3,15 +3,8 @@
 
 from .basesdk import BaseSDK
 from datetime import datetime
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    classifiertargetin as models_classifiertargetin,
-    finetuneablemodeltype as models_finetuneablemodeltype,
-    jobin as models_jobin,
-    listfinetuningjobsop as models_listfinetuningjobsop,
-    trainingfile as models_trainingfile,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -29,7 +22,7 @@ class FineTuningJobs(BaseSDK):
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[
-            models_listfinetuningjobsop.ListFineTuningJobsStatus
+            models.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
         ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
@@ -38,7 +31,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.JobsOut:
+    ) -> models.ListFineTuningJobsResponse:
         r"""Get Fine Tuning Jobs
 
         Get a list of fine-tuning jobs for your organization and user.
@@ -68,7 +61,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFineTuningJobsRequest(
+        request = models.JobsAPIRoutesFineTuningGetFineTuningJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -110,7 +103,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFineTuningJobs",
+                operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -122,15 +115,15 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.JobsOut, http_res)
+            return unmarshal_json_response(models.ListFineTuningJobsResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -142,7 +135,7 @@ class FineTuningJobs(BaseSDK):
         created_before: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
         status: OptionalNullable[
-            models_listfinetuningjobsop.ListFineTuningJobsStatus
+            models.JobsAPIRoutesFineTuningGetFineTuningJobsStatus
         ] = UNSET,
         wandb_project: OptionalNullable[str] = UNSET,
         wandb_name: OptionalNullable[str] = UNSET,
@@ -151,7 +144,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.JobsOut:
+    ) -> models.ListFineTuningJobsResponse:
         r"""Get Fine Tuning Jobs
 
         Get a list of fine-tuning jobs for your organization and user.
@@ -181,7 +174,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFineTuningJobsRequest(
+        request = models.JobsAPIRoutesFineTuningGetFineTuningJobsRequest(
             page=page,
             page_size=page_size,
             model=model,
@@ -223,7 +216,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFineTuningJobs",
+                operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_jobs",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -235,59 +228,49 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.JobsOut, http_res)
+            return unmarshal_json_response(models.ListFineTuningJobsResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models_jobin.Hyperparameters, models_jobin.HyperparametersTypedDict
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
-            Union[
-                List[models_trainingfile.TrainingFile],
-                List[models_trainingfile.TrainingFileTypedDict],
-            ]
+            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[models_jobin.JobInIntegration],
-                List[models_jobin.JobInIntegrationTypedDict],
+                List[models.CreateFineTuningJobRequestIntegration],
+                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[
-            models_finetuneablemodeltype.FineTuneableModelType
-        ] = UNSET,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[models_jobin.JobInRepository],
-                List[models_jobin.JobInRepositoryTypedDict],
+                List[models.CreateFineTuningJobRequestRepository],
+                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[
-                List[models_classifiertargetin.ClassifierTargetIn],
-                List[models_classifiertargetin.ClassifierTargetInTypedDict],
-            ]
+            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningCreateFineTuningJobResponse:
         r"""Create Fine Tuning Job
 
         Create a new fine-tuning job, it will be queued for processing.
@@ -318,7 +301,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobIn(
+        request = models.CreateFineTuningJobRequest(
             model=model,
             training_files=utils.get_pydantic_model(
                 training_files, Optional[List[models.TrainingFile]]
@@ -326,7 +309,8 @@ class FineTuningJobs(BaseSDK):
             validation_files=validation_files,
             suffix=suffix,
             integrations=utils.get_pydantic_model(
-                integrations, OptionalNullable[List[models.JobInIntegration]]
+                integrations,
+                OptionalNullable[List[models.CreateFineTuningJobRequestIntegration]],
             ),
             auto_start=auto_start,
             invalid_sample_skip_percentage=invalid_sample_skip_percentage,
@@ -335,10 +319,11 @@ class FineTuningJobs(BaseSDK):
                 hyperparameters, models.Hyperparameters
             ),
             repositories=utils.get_pydantic_model(
-                repositories, OptionalNullable[List[models.JobInRepository]]
+                repositories,
+                OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTarget]]
             ),
         )
 
@@ -356,7 +341,7 @@ class FineTuningJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.JobIn
+                request, False, False, "json", models.CreateFineTuningJobRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -374,7 +359,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -386,59 +371,51 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CreateFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningCreateFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
         *,
         model: str,
-        hyperparameters: Union[
-            models_jobin.Hyperparameters, models_jobin.HyperparametersTypedDict
-        ],
+        hyperparameters: Union[models.Hyperparameters, models.HyperparametersTypedDict],
         training_files: Optional[
-            Union[
-                List[models_trainingfile.TrainingFile],
-                List[models_trainingfile.TrainingFileTypedDict],
-            ]
+            Union[List[models.TrainingFile], List[models.TrainingFileTypedDict]]
         ] = None,
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
             Union[
-                List[models_jobin.JobInIntegration],
-                List[models_jobin.JobInIntegrationTypedDict],
+                List[models.CreateFineTuningJobRequestIntegration],
+                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
             ]
         ] = UNSET,
         auto_start: Optional[bool] = None,
         invalid_sample_skip_percentage: Optional[float] = 0,
-        job_type: OptionalNullable[
-            models_finetuneablemodeltype.FineTuneableModelType
-        ] = UNSET,
+        job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
             Union[
-                List[models_jobin.JobInRepository],
-                List[models_jobin.JobInRepositoryTypedDict],
+                List[models.CreateFineTuningJobRequestRepository],
+                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
             ]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[
-                List[models_classifiertargetin.ClassifierTargetIn],
-                List[models_classifiertargetin.ClassifierTargetInTypedDict],
-            ]
+            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningCreateFineTuningJobResponse:
         r"""Create Fine Tuning Job
 
         Create a new fine-tuning job, it will be queued for processing.
@@ -469,7 +446,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.JobIn(
+        request = models.CreateFineTuningJobRequest(
             model=model,
             training_files=utils.get_pydantic_model(
                 training_files, Optional[List[models.TrainingFile]]
@@ -477,7 +454,8 @@ class FineTuningJobs(BaseSDK):
             validation_files=validation_files,
             suffix=suffix,
             integrations=utils.get_pydantic_model(
-                integrations, OptionalNullable[List[models.JobInIntegration]]
+                integrations,
+                OptionalNullable[List[models.CreateFineTuningJobRequestIntegration]],
             ),
             auto_start=auto_start,
             invalid_sample_skip_percentage=invalid_sample_skip_percentage,
@@ -486,10 +464,11 @@ class FineTuningJobs(BaseSDK):
                 hyperparameters, models.Hyperparameters
             ),
             repositories=utils.get_pydantic_model(
-                repositories, OptionalNullable[List[models.JobInRepository]]
+                repositories,
+                OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTarget]]
             ),
         )
 
@@ -507,7 +486,7 @@ class FineTuningJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.JobIn
+                request, False, False, "json", models.CreateFineTuningJobRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -525,7 +504,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_create_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -537,15 +516,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CreateFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningCreateFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -555,7 +536,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningGetFineTuningJobResponse:
         r"""Get Fine Tuning Job
 
         Get a fine-tuned job details by its UUID.
@@ -576,7 +557,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningGetFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -609,7 +590,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -621,15 +602,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.GetFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningGetFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -639,7 +622,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningGetFineTuningJobResponse:
         r"""Get Fine Tuning Job
 
         Get a fine-tuned job details by its UUID.
@@ -660,7 +643,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningGetFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -693,7 +676,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_get_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -705,15 +688,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.GetFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningGetFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def cancel(
         self,
@@ -723,7 +708,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CancelFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse:
         r"""Cancel Fine Tuning Job
 
         Request the cancellation of a fine tuning job.
@@ -744,7 +729,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CancelFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningCancelFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -777,7 +762,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CancelFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -789,15 +774,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CancelFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def cancel_async(
         self,
@@ -807,7 +794,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CancelFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse:
         r"""Cancel Fine Tuning Job
 
         Request the cancellation of a fine tuning job.
@@ -828,7 +815,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CancelFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningCancelFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -861,7 +848,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CancelFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_cancel_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -873,15 +860,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CancelFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningCancelFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def start(
         self,
@@ -891,7 +880,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.StartFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningStartFineTuningJobResponse:
         r"""Start Fine Tuning Job
 
         Request the start of a validated fine tuning job.
@@ -912,7 +901,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.StartFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningStartFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -945,7 +934,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -957,15 +946,17 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.StartFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningStartFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def start_async(
         self,
@@ -975,7 +966,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.StartFineTuningJobResponse:
+    ) -> models.JobsAPIRoutesFineTuningStartFineTuningJobResponse:
         r"""Start Fine Tuning Job
 
         Request the start of a validated fine tuning job.
@@ -996,7 +987,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.StartFineTuningJobRequest(
+        request = models.JobsAPIRoutesFineTuningStartFineTuningJobRequest(
             job_id=job_id,
         )
 
@@ -1029,7 +1020,7 @@ class FineTuningJobs(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartFineTuningJob",
+                operation_id="jobs_api_routes_fine_tuning_start_fine_tuning_job",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1041,12 +1032,14 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.StartFineTuningJobResponse, http_res)
+            return unmarshal_json_response(
+                models.JobsAPIRoutesFineTuningStartFineTuningJobResponse, http_res
+            )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

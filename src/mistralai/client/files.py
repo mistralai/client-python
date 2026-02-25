@@ -3,14 +3,8 @@
 
 from .basesdk import BaseSDK
 import httpx
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    file as models_file,
-    filepurpose as models_filepurpose,
-    sampletype as models_sampletype,
-    source as models_source,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,13 +17,13 @@ class Files(BaseSDK):
     def upload(
         self,
         *,
-        file: Union[models_file.File, models_file.FileTypedDict],
-        purpose: Optional[models_filepurpose.FilePurpose] = None,
+        file: Union[models.File, models.FileTypedDict],
+        purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UploadFileOut:
+    ) -> models.CreateFileResponse:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -100,7 +94,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadFile",
+                operation_id="files_api_routes_upload_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -112,26 +106,26 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UploadFileOut, http_res)
+            return unmarshal_json_response(models.CreateFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def upload_async(
         self,
         *,
-        file: Union[models_file.File, models_file.FileTypedDict],
-        purpose: Optional[models_filepurpose.FilePurpose] = None,
+        file: Union[models.File, models.FileTypedDict],
+        purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UploadFileOut:
+    ) -> models.CreateFileResponse:
         r"""Upload File
 
         Upload a file that can be used across various endpoints.
@@ -202,7 +196,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UploadFile",
+                operation_id="files_api_routes_upload_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -214,15 +208,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UploadFileOut, http_res)
+            return unmarshal_json_response(models.CreateFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def list(
         self,
@@ -230,16 +224,16 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models_sampletype.SampleType]] = UNSET,
-        source: OptionalNullable[List[models_source.Source]] = UNSET,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
-        purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListFilesOut:
+    ) -> models.ListFilesResponse:
         r"""List Files
 
         Returns a list of files that belong to the user's organization.
@@ -267,7 +261,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFilesRequest(
+        request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
             include_total=include_total,
@@ -307,7 +301,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFiles",
+                operation_id="files_api_routes_list_files",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -319,15 +313,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListFilesOut, http_res)
+            return unmarshal_json_response(models.ListFilesResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -335,16 +329,16 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models_sampletype.SampleType]] = UNSET,
-        source: OptionalNullable[List[models_source.Source]] = UNSET,
+        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
+        source: OptionalNullable[List[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
-        purpose: OptionalNullable[models_filepurpose.FilePurpose] = UNSET,
+        purpose: OptionalNullable[models.FilePurpose] = UNSET,
         mimetypes: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListFilesOut:
+    ) -> models.ListFilesResponse:
         r"""List Files
 
         Returns a list of files that belong to the user's organization.
@@ -372,7 +366,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListFilesRequest(
+        request = models.FilesAPIRoutesListFilesRequest(
             page=page,
             page_size=page_size,
             include_total=include_total,
@@ -412,7 +406,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListFiles",
+                operation_id="files_api_routes_list_files",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -424,15 +418,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListFilesOut, http_res)
+            return unmarshal_json_response(models.ListFilesResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def retrieve(
         self,
@@ -442,7 +436,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveFileOut:
+    ) -> models.GetFileResponse:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -463,7 +457,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveFileRequest(
+        request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
         )
 
@@ -496,7 +490,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveFile",
+                operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -508,15 +502,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RetrieveFileOut, http_res)
+            return unmarshal_json_response(models.GetFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def retrieve_async(
         self,
@@ -526,7 +520,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RetrieveFileOut:
+    ) -> models.GetFileResponse:
         r"""Retrieve File
 
         Returns information about a specific file.
@@ -547,7 +541,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RetrieveFileRequest(
+        request = models.FilesAPIRoutesRetrieveFileRequest(
             file_id=file_id,
         )
 
@@ -580,7 +574,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RetrieveFile",
+                operation_id="files_api_routes_retrieve_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -592,15 +586,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RetrieveFileOut, http_res)
+            return unmarshal_json_response(models.GetFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
@@ -610,7 +604,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteFileOut:
+    ) -> models.DeleteFileResponse:
         r"""Delete File
 
         Delete a file.
@@ -631,7 +625,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteFileRequest(
+        request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
         )
 
@@ -664,7 +658,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteFile",
+                operation_id="files_api_routes_delete_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -676,15 +670,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteFileOut, http_res)
+            return unmarshal_json_response(models.DeleteFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
@@ -694,7 +688,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteFileOut:
+    ) -> models.DeleteFileResponse:
         r"""Delete File
 
         Delete a file.
@@ -715,7 +709,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteFileRequest(
+        request = models.FilesAPIRoutesDeleteFileRequest(
             file_id=file_id,
         )
 
@@ -748,7 +742,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteFile",
+                operation_id="files_api_routes_delete_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -760,15 +754,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteFileOut, http_res)
+            return unmarshal_json_response(models.DeleteFileResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def download(
         self,
@@ -799,7 +793,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DownloadFileRequest(
+        request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
         )
 
@@ -832,7 +826,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DownloadFile",
+                operation_id="files_api_routes_download_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -848,13 +842,13 @@ class Files(BaseSDK):
             return http_res
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def download_async(
         self,
@@ -885,7 +879,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DownloadFileRequest(
+        request = models.FilesAPIRoutesDownloadFileRequest(
             file_id=file_id,
         )
 
@@ -918,7 +912,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DownloadFile",
+                operation_id="files_api_routes_download_file",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -934,13 +928,13 @@ class Files(BaseSDK):
             return http_res
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def get_signed_url(
         self,
@@ -951,7 +945,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FileSignedURL:
+    ) -> models.GetSignedURLResponse:
         r"""Get Signed Url
 
         :param file_id:
@@ -971,7 +965,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFileSignedURLRequest(
+        request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
             expiry=expiry,
         )
@@ -1005,7 +999,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFileSignedUrl",
+                operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1017,15 +1011,15 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.FileSignedURL, http_res)
+            return unmarshal_json_response(models.GetSignedURLResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_signed_url_async(
         self,
@@ -1036,7 +1030,7 @@ class Files(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FileSignedURL:
+    ) -> models.GetSignedURLResponse:
         r"""Get Signed Url
 
         :param file_id:
@@ -1056,7 +1050,7 @@ class Files(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetFileSignedURLRequest(
+        request = models.FilesAPIRoutesGetSignedURLRequest(
             file_id=file_id,
             expiry=expiry,
         )
@@ -1090,7 +1084,7 @@ class Files(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetFileSignedUrl",
+                operation_id="files_api_routes_get_signed_url",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1102,12 +1096,12 @@ class Files(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.FileSignedURL, http_res)
+            return unmarshal_json_response(models.GetSignedURLResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

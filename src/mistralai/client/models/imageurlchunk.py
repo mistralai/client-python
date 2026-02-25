@@ -3,9 +3,13 @@
 
 from __future__ import annotations
 from .imageurl import ImageURL, ImageURLTypedDict
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 ImageURLUnionTypedDict = TypeAliasType(
@@ -16,14 +20,11 @@ ImageURLUnionTypedDict = TypeAliasType(
 ImageURLUnion = TypeAliasType("ImageURLUnion", Union[ImageURL, str])
 
 
-ImageURLChunkType = Literal["image_url",]
-
-
 class ImageURLChunkTypedDict(TypedDict):
     r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
 
     image_url: ImageURLUnionTypedDict
-    type: NotRequired[ImageURLChunkType]
+    type: Literal["image_url"]
 
 
 class ImageURLChunk(BaseModel):
@@ -31,4 +32,31 @@ class ImageURLChunk(BaseModel):
 
     image_url: ImageURLUnion
 
-    type: Optional[ImageURLChunkType] = "image_url"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["image_url"]], AfterValidator(validate_const("image_url"))
+        ],
+        pydantic.Field(alias="type"),
+    ] = "image_url"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["type"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ImageURLChunk.model_rebuild()
+except NameError:
+    pass

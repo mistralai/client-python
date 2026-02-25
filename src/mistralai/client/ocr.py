@@ -2,12 +2,8 @@
 # @generated-id: 2f804a12fc62
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    ocrrequest as models_ocrrequest,
-    responseformat as models_responseformat,
-)
 from mistralai.client.types import Nullable, OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -21,28 +17,20 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
-        ],
+        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_prompt: OptionalNullable[str] = UNSET,
-        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -83,7 +71,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -148,44 +136,36 @@ class Ocr(BaseSDK):
             return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def process_async(
         self,
         *,
         model: Nullable[str],
-        document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
-        ],
+        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
         bbox_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_format: OptionalNullable[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = UNSET,
         document_annotation_prompt: OptionalNullable[str] = UNSET,
-        table_format: OptionalNullable[models_ocrrequest.TableFormat] = UNSET,
+        table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -226,7 +206,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -291,14 +271,14 @@ class Ocr(BaseSDK):
             return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

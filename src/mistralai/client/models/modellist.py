@@ -4,9 +4,12 @@
 from __future__ import annotations
 from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .ftmodelcard import FTModelCard, FTModelCardTypedDict
-from mistralai.client.types import BaseModel
-from pydantic import Field
-from typing import List, Optional, Union
+from functools import partial
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -15,8 +18,33 @@ ModelListDataTypedDict = TypeAliasType(
 )
 
 
+class UnknownModelListData(BaseModel):
+    r"""A ModelListData variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_MODEL_LIST_DATA_VARIANTS: dict[str, Any] = {
+    "base": BaseModelCard,
+    "fine-tuned": FTModelCard,
+}
+
+
 ModelListData = Annotated[
-    Union[BaseModelCard, FTModelCard], Field(discriminator="TYPE")
+    Union[BaseModelCard, FTModelCard, UnknownModelListData],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_MODEL_LIST_DATA_VARIANTS,
+            unknown_cls=UnknownModelListData,
+            union_name="ModelListData",
+        )
+    ),
 ]
 
 
@@ -29,3 +57,19 @@ class ModelList(BaseModel):
     object: Optional[str] = "list"
 
     data: Optional[List[ModelListData]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["object", "data"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
