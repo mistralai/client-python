@@ -2,7 +2,8 @@
 
 import os
 
-from mistralai.client import Mistral, File
+from mistralai.client import Mistral
+from mistralai.client.models import File
 from mistralai.client.models import UserMessage
 
 

@@ -2,8 +2,8 @@
 
 from pprint import pprint
 import asyncio
-from mistralai.client import Mistral, TrainingFile, ClassifierTrainingParametersIn
-from mistralai.client.models import ClassifierJobOut
+from mistralai.client import Mistral
+from mistralai.client.models import ClassifierFineTuningJob, ClassifierFineTuningJobDetails, ClassifierTrainingParameters, TrainingFile
 
 import os
 
@@ -36,12 +36,12 @@ async def train_classifier(client: Mistral, training_file_ids: list[str]) -> str
             TrainingFile(file_id=training_file_id)
             for training_file_id in training_file_ids
         ],
-        hyperparameters=ClassifierTrainingParametersIn(
+        hyperparameters=ClassifierTrainingParameters(
             learning_rate=0.0001,
         ),
         auto_start=True,
     )
-    if not isinstance(job, ClassifierJobOut):
+    if not isinstance(job, ClassifierFineTuningJob):
         print("Unexpected job type returned")
         return None
 
@@ -51,6 +51,8 @@ async def train_classifier(client: Mistral, training_file_ids: list[str]) -> str
     while True:
         await asyncio.sleep(10)
         detailed_job = await client.fine_tuning.jobs.get_async(job_id=job.id)
+        if not isinstance(detailed_job, ClassifierFineTuningJobDetails):
+            raise Exception(f"Unexpected job type: {type(detailed_job)}")
         if detailed_job.status not in [
             "QUEUED",
             "STARTED",

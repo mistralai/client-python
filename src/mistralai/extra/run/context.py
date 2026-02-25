@@ -22,7 +22,6 @@ from mistralai.extra.run.tools import (
     create_tool_call,
 )
 from mistralai.client.models import (
-    AgentTool,
     CompletionArgs,
     CompletionArgsTypedDict,
     ConversationInputs,
@@ -35,6 +34,8 @@ from mistralai.client.models import (
     InputEntries,
     MessageInputEntry,
     ResponseFormat,
+    UnknownAgentTool,
+    UpdateAgentRequestTool,
 )
 from mistralai.client.types.basemodel import BaseModel, OptionalNullable, UNSET
 
@@ -187,8 +188,11 @@ class RunContext:
             )
         agent = await beta_client.agents.get_async(agent_id=self.agent_id)
         agent_tools = agent.tools or []
-        updated_tools: list[AgentTool] = []
+        updated_tools: list[UpdateAgentRequestTool] = []
         for tool in agent_tools:
+            if isinstance(tool, UnknownAgentTool):
+                # Skip unknown tools - can't include them in update request
+                continue
             if not isinstance(tool, FunctionTool):
                 updated_tools.append(tool)
             elif tool.function.name in self._callable_tools:
