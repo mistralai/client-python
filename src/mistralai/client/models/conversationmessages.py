@@ -3,12 +3,13 @@
 
 from __future__ import annotations
 from .messageentries import MessageEntries, MessageEntriesTypedDict
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ConversationMessagesObject = Literal["conversation.messages",]
+from typing_extensions import Annotated, TypedDict
 
 
 class ConversationMessagesTypedDict(TypedDict):
@@ -16,7 +17,7 @@ class ConversationMessagesTypedDict(TypedDict):
 
     conversation_id: str
     messages: List[MessageEntriesTypedDict]
-    object: NotRequired[ConversationMessagesObject]
+    object: Literal["conversation.messages"]
 
 
 class ConversationMessages(BaseModel):
@@ -26,4 +27,32 @@ class ConversationMessages(BaseModel):
 
     messages: List[MessageEntries]
 
-    object: Optional[ConversationMessagesObject] = "conversation.messages"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation.messages"]],
+            AfterValidator(validate_const("conversation.messages")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation.messages"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["object"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ConversationMessages.model_rebuild()
+except NameError:
+    pass

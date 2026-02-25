@@ -14,7 +14,7 @@ Embeddings
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="embeddings_v1_embeddings_post" method="post" path="/v1/embeddings" -->
+<!-- UsageSnippet language="python" operationID="embeddings_v1_embeddings_post" method="post" path="/v1/embeddings" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -54,5 +54,5 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

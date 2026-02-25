@@ -4,33 +4,61 @@
 from __future__ import annotations
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ThinkingTypedDict = TypeAliasType(
-    "ThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
+ThinkChunkThinkingTypedDict = TypeAliasType(
+    "ThinkChunkThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
 )
 
 
-Thinking = TypeAliasType("Thinking", Union[ReferenceChunk, TextChunk])
-
-
-ThinkChunkType = Literal["thinking",]
+ThinkChunkThinking = TypeAliasType(
+    "ThinkChunkThinking", Union[ReferenceChunk, TextChunk]
+)
 
 
 class ThinkChunkTypedDict(TypedDict):
-    thinking: List[ThinkingTypedDict]
+    thinking: List[ThinkChunkThinkingTypedDict]
+    type: Literal["thinking"]
     closed: NotRequired[bool]
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
-    type: NotRequired[ThinkChunkType]
 
 
 class ThinkChunk(BaseModel):
-    thinking: List[Thinking]
+    thinking: List[ThinkChunkThinking]
+
+    type: Annotated[
+        Annotated[Literal["thinking"], AfterValidator(validate_const("thinking"))],
+        pydantic.Field(alias="type"),
+    ] = "thinking"
 
     closed: Optional[bool] = None
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
 
-    type: Optional[ThinkChunkType] = "thinking"
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["closed"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ThinkChunk.model_rebuild()
+except NameError:
+    pass

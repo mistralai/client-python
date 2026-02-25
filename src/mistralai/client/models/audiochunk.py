@@ -18,9 +18,15 @@ class AudioChunkTypedDict(TypedDict):
 class AudioChunk(BaseModel):
     input_audio: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["input_audio"], AfterValidator(validate_const("input_audio"))
         ],
         pydantic.Field(alias="type"),
     ] = "input_audio"
+
+
+try:
+    AudioChunk.model_rebuild()
+except NameError:
+    pass

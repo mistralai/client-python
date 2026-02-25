@@ -8,7 +8,7 @@ from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
 import importlib
-from mistralai.client import models, utils
+from mistralai.client import models as models_, utils
 from mistralai.client._hooks import SDKHooks
 from mistralai.client.types import OptionalNullable, UNSET
 import sys
@@ -31,10 +31,7 @@ if TYPE_CHECKING:
 
 
 class Mistral(BaseSDK):
-    r"""Mistral AI API: Dora OpenAPI schema
-
-    Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
-    """
+    r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
     models: "Models"
     r"""Model Management API"""
@@ -118,9 +115,9 @@ class Mistral(BaseSDK):
         security: Any = None
         if callable(api_key):
             # pylint: disable=unnecessary-lambda-assignment
-            security = lambda: models.Security(api_key=api_key())
+            security = lambda: models_.Security(api_key=api_key())
         else:
-            security = models.Security(api_key=api_key)
+            security = models_.Security(api_key=api_key)
 
         if server_url is not None:
             if url_params is not None:

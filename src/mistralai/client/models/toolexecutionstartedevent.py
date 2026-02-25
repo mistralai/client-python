@@ -4,9 +4,16 @@
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
-from mistralai.client.types import BaseModel
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -29,6 +36,8 @@ class ToolExecutionStartedEventTypedDict(TypedDict):
     type: Literal["tool.execution.started"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
+    model: NotRequired[Nullable[str]]
+    agent_id: NotRequired[Nullable[str]]
 
 
 class ToolExecutionStartedEvent(BaseModel):
@@ -38,7 +47,7 @@ class ToolExecutionStartedEvent(BaseModel):
 
     arguments: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["tool.execution.started"],
             AfterValidator(validate_const("tool.execution.started")),
@@ -49,3 +58,38 @@ class ToolExecutionStartedEvent(BaseModel):
     created_at: Optional[datetime] = None
 
     output_index: Optional[int] = 0
+
+    model: OptionalNullable[str] = UNSET
+
+    agent_id: OptionalNullable[str] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["created_at", "output_index", "model", "agent_id"])
+        nullable_fields = set(["model", "agent_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
+try:
+    ToolExecutionStartedEvent.model_rebuild()
+except NameError:
+    pass

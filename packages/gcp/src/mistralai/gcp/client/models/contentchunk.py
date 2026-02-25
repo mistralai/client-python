@@ -4,9 +4,12 @@ from __future__ import annotations
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
-from mistralai.gcp.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
-from typing import Union
+from functools import partial
+from mistralai.gcp.client.types import BaseModel
+from mistralai.gcp.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType
 
 
@@ -16,11 +19,32 @@ ContentChunkTypedDict = TypeAliasType(
 )
 
 
+class UnknownContentChunk(BaseModel):
+    r"""A ContentChunk variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_CONTENT_CHUNK_VARIANTS: dict[str, Any] = {
+    "image_url": ImageURLChunk,
+    "text": TextChunk,
+    "reference": ReferenceChunk,
+}
+
+
 ContentChunk = Annotated[
-    Union[
-        Annotated[ImageURLChunk, Tag("image_url")],
-        Annotated[TextChunk, Tag("text")],
-        Annotated[ReferenceChunk, Tag("reference")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Union[ImageURLChunk, TextChunk, ReferenceChunk, UnknownContentChunk],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_CONTENT_CHUNK_VARIANTS,
+            unknown_cls=UnknownContentChunk,
+            union_name="ContentChunk",
+        )
+    ),
 ]

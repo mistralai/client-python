@@ -27,9 +27,7 @@ $ source ~/.zshenv
 <!-- Start Summary [summary] -->
 ## Summary
 
-Mistral AI API: Dora OpenAPI schema
-
-Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
+Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -161,8 +159,8 @@ with Mistral(
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
         "type": "text",
@@ -190,8 +188,8 @@ async def main():
 
         res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], stream=False, response_format={
             "type": "text",
@@ -269,8 +267,8 @@ with Mistral(
 
     res = mistral.agents.complete(messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], agent_id="<id>", stream=False, response_format={
         "type": "text",
@@ -298,8 +296,8 @@ async def main():
 
         res = await mistral.agents.complete_async(messages=[
             {
-                "content": "Who is the best French painter? Answer in one short sentence.",
                 "role": "user",
+                "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], agent_id="<id>", stream=False, response_format={
             "type": "text",
@@ -616,7 +614,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs="<value>", stream=True, completion_args={
+    res = mistral.beta.conversations.start_stream(inputs=[
+        {
+            "object": "entry",
+            "type": "function.result",
+            "tool_call_id": "<id>",
+            "result": "<value>",
+        },
+    ], stream=True, completion_args={
         "response_format": {
             "type": "text",
         },
@@ -653,7 +658,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.upload(library_id="f973c54e-979a-4464-9d36-8cc31beb21fe", file={
+    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
     })
@@ -680,8 +685,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(
-        retries=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+    res = mistral.models.list(,
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
     print(res)
@@ -711,7 +716,7 @@ with Mistral(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`MistralError`](./src/mistralai/client/models/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
+[`MistralError`](./src/mistralai/client/errors/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
 
 | Property           | Type             | Description                                                                             |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
@@ -724,8 +729,7 @@ with Mistral(
 
 ### Example
 ```python
-import mistralai.client
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral, errors
 import os
 
 
@@ -741,7 +745,7 @@ with Mistral(
         print(res)
 
 
-    except models.MistralError as e:
+    except errors.MistralError as e:
         # The base class for HTTP error responses
         print(e.message)
         print(e.status_code)
@@ -750,13 +754,13 @@ with Mistral(
         print(e.raw_response)
 
         # Depending on the method different errors may be thrown
-        if isinstance(e, models.HTTPValidationError):
-            print(e.data.detail)  # Optional[List[mistralai.client.ValidationError]]
+        if isinstance(e, errors.HTTPValidationError):
+            print(e.data.detail)  # Optional[List[models.ValidationError]]
 ```
 
 ### Error Classes
 **Primary error:**
-* [`MistralError`](./src/mistralai/client/models/mistralerror.py): The base class for HTTP error responses.
+* [`MistralError`](./src/mistralai/client/errors/mistralerror.py): The base class for HTTP error responses.
 
 <details><summary>Less common errors (6)</summary>
 
@@ -768,9 +772,9 @@ with Mistral(
     * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
 
-**Inherit from [`MistralError`](./src/mistralai/client/models/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/models/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 53 of 75 methods.*
-* [`ResponseValidationError`](./src/mistralai/client/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+**Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 53 of 75 methods.*
+* [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
 

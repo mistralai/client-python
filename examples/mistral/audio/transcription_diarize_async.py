@@ -3,7 +3,8 @@
 import os
 import asyncio
 import pathlib
-from mistralai.client import Mistral, File
+from mistralai.client import Mistral
+from mistralai.client.models import File
 
 fixture_dir = pathlib.Path(__file__).parents[2] / "fixtures"
 

@@ -4,8 +4,16 @@
 from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
-from mistralai.client.types import BaseModel
-from typing import Literal, Optional
+from .toolcallconfirmation import ToolCallConfirmation, ToolCallConfirmationTypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
+from pydantic import model_serializer
+from typing import List, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -16,17 +24,18 @@ ConversationAppendRequestHandoffExecution = Literal[
 
 
 class ConversationAppendRequestTypedDict(TypedDict):
-    inputs: ConversationInputsTypedDict
+    inputs: NotRequired[ConversationInputsTypedDict]
     stream: NotRequired[bool]
     store: NotRequired[bool]
     r"""Whether to store the results into our servers or not."""
     handoff_execution: NotRequired[ConversationAppendRequestHandoffExecution]
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
+    tool_confirmations: NotRequired[Nullable[List[ToolCallConfirmationTypedDict]]]
 
 
 class ConversationAppendRequest(BaseModel):
-    inputs: ConversationInputs
+    inputs: Optional[ConversationInputs] = None
 
     stream: Optional[bool] = False
 
@@ -37,3 +46,39 @@ class ConversationAppendRequest(BaseModel):
 
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
+
+    tool_confirmations: OptionalNullable[List[ToolCallConfirmation]] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "inputs",
+                "stream",
+                "store",
+                "handoff_execution",
+                "completion_args",
+                "tool_confirmations",
+            ]
+        )
+        nullable_fields = set(["tool_confirmations"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m

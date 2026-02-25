@@ -2,54 +2,16 @@
 # @generated-id: 84a8007518c7
 
 from __future__ import annotations
-from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
 from .instructrequest import InstructRequest, InstructRequestTypedDict
-from .systemmessage import SystemMessage, SystemMessageTypedDict
-from .toolmessage import ToolMessage, ToolMessageTypedDict
-from .usermessage import UserMessage, UserMessageTypedDict
-from mistralai.client.types import BaseModel
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag
 from typing import List, Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
-
-
-InputsMessageTypedDict = TypeAliasType(
-    "InputsMessageTypedDict",
-    Union[
-        SystemMessageTypedDict,
-        UserMessageTypedDict,
-        AssistantMessageTypedDict,
-        ToolMessageTypedDict,
-    ],
-)
-
-
-InputsMessage = Annotated[
-    Union[
-        Annotated[AssistantMessage, Tag("assistant")],
-        Annotated[SystemMessage, Tag("system")],
-        Annotated[ToolMessage, Tag("tool")],
-        Annotated[UserMessage, Tag("user")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "role", "role")),
-]
-
-
-class InstructRequestInputsTypedDict(TypedDict):
-    messages: List[InputsMessageTypedDict]
-
-
-class InstructRequestInputs(BaseModel):
-    messages: List[InputsMessage]
+from typing_extensions import TypeAliasType
 
 
 InputsTypedDict = TypeAliasType(
-    "InputsTypedDict",
-    Union[InstructRequestInputsTypedDict, List[InstructRequestTypedDict]],
+    "InputsTypedDict", Union[InstructRequestTypedDict, List[InstructRequestTypedDict]]
 )
 r"""Chat to classify"""
 
 
-Inputs = TypeAliasType("Inputs", Union[InstructRequestInputs, List[InstructRequest]])
+Inputs = TypeAliasType("Inputs", Union[InstructRequest, List[InstructRequest]])
 r"""Chat to classify"""

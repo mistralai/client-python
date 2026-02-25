@@ -2,12 +2,8 @@
 # @generated-id: 76fc53bfcf59
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    entitytype as models_entitytype,
-    shareenum as models_shareenum,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -46,7 +42,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -79,7 +75,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -95,17 +91,17 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -136,7 +132,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListLibraryAccessesRequest(
+        request = models.LibrariesShareListV1Request(
             library_id=library_id,
         )
 
@@ -169,7 +165,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListLibraryAccesses",
+                operation_id="libraries_share_list_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -185,25 +181,25 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.ListSharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update_or_create(
         self,
         *,
         library_id: str,
-        level: models_shareenum.ShareEnum,
+        level: models.ShareEnum,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -234,7 +230,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
             sharing_in=models.SharingIn(
                 org_id=org_id,
@@ -276,7 +272,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -292,25 +288,25 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_or_create_async(
         self,
         *,
         library_id: str,
-        level: models_shareenum.ShareEnum,
+        level: models.ShareEnum,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -341,7 +337,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateOrCreateLibraryAccessRequest(
+        request = models.LibrariesShareCreateV1Request(
             library_id=library_id,
             sharing_in=models.SharingIn(
                 org_id=org_id,
@@ -383,7 +379,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateOrCreateLibraryAccess",
+                operation_id="libraries_share_create_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -399,24 +395,24 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
         *,
         library_id: str,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -446,7 +442,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -487,7 +483,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -503,24 +499,24 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
         *,
         library_id: str,
         share_with_uuid: str,
-        share_with_type: models_entitytype.EntityType,
+        share_with_type: models.EntityType,
         org_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -550,7 +546,7 @@ class Accesses(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteLibraryAccessRequest(
+        request = models.LibrariesShareDeleteV1Request(
             library_id=library_id,
             sharing_delete=models.SharingDelete(
                 org_id=org_id,
@@ -591,7 +587,7 @@ class Accesses(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteLibraryAccess",
+                operation_id="libraries_share_delete_v1",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -607,14 +603,14 @@ class Accesses(BaseSDK):
             return unmarshal_json_response(models.SharingOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

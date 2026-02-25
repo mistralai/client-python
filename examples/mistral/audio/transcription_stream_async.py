@@ -2,7 +2,8 @@
 import asyncio
 import os
 
-from mistralai.client import Mistral, File
+from mistralai.client import Mistral
+from mistralai.client.models import File
 
 
 async def main():

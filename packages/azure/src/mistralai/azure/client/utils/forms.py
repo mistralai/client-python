@@ -142,7 +142,7 @@ def serialize_multipart_form(
         if field_metadata.file:
             if isinstance(val, List):
                 # Handle array of files
-                array_field_name = f_name + "[]"
+                array_field_name = f_name
                 for file_obj in val:
                     if not _is_set(file_obj):
                         continue
@@ -185,7 +185,7 @@ def serialize_multipart_form(
                         continue
                     values.append(_val_to_string(value))
 
-                array_field_name = f_name + "[]"
+                array_field_name = f_name
                 form[array_field_name] = values
             else:
                 form[f_name] = _val_to_string(val)
