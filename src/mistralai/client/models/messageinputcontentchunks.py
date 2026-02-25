@@ -2,10 +2,13 @@
 # @generated-id: 01025c12866a
 
 from __future__ import annotations
+from .conversationthinkchunk import (
+    ConversationThinkChunk,
+    ConversationThinkChunkTypedDict,
+)
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
-from .thinkchunk import ThinkChunk, ThinkChunkTypedDict
 from .toolfilechunk import ToolFileChunk, ToolFileChunkTypedDict
 from typing import Union
 from typing_extensions import TypeAliasType
@@ -17,7 +20,7 @@ MessageInputContentChunksTypedDict = TypeAliasType(
         TextChunkTypedDict,
         ImageURLChunkTypedDict,
         DocumentURLChunkTypedDict,
-        ThinkChunkTypedDict,
+        ConversationThinkChunkTypedDict,
         ToolFileChunkTypedDict,
     ],
 )
@@ -25,5 +28,11 @@ MessageInputContentChunksTypedDict = TypeAliasType(
 
 MessageInputContentChunks = TypeAliasType(
     "MessageInputContentChunks",
-    Union[TextChunk, ImageURLChunk, DocumentURLChunk, ThinkChunk, ToolFileChunk],
+    Union[
+        TextChunk,
+        ImageURLChunk,
+        DocumentURLChunk,
+        ConversationThinkChunk,
+        ToolFileChunk,
+    ],
 )

@@ -10,12 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-AgentConversationObject = Literal["conversation",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 AgentConversationAgentVersionTypedDict = TypeAliasType(
@@ -39,7 +39,7 @@ class AgentConversationTypedDict(TypedDict):
     r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    object: NotRequired[AgentConversationObject]
+    object: Literal["conversation"]
     agent_version: NotRequired[Nullable[AgentConversationAgentVersionTypedDict]]
 
 
@@ -61,7 +61,13 @@ class AgentConversation(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    object: Optional[AgentConversationObject] = "conversation"
+    OBJECT: Annotated[
+        Annotated[
+            Optional[Literal["conversation"]],
+            AfterValidator(validate_const("conversation")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation"
 
     agent_version: OptionalNullable[AgentConversationAgentVersion] = UNSET
 

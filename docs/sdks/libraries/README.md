@@ -18,7 +18,7 @@ List all libraries that you have created or have been shared with you.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListLibraries" method="get" path="/v1/libraries" -->
+<!-- UsageSnippet language="python" operationID="libraries_list_v1" method="get" path="/v1/libraries" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -43,7 +43,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListLibraryOut](../../models/listlibraryout.md)**
+**[models.ListLibrariesResponse](../../models/listlibrariesresponse.md)**
 
 ### Errors
 
@@ -57,7 +57,7 @@ Create a new Library, you will be marked as the owner and only you will have the
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="CreateLibrary" method="post" path="/v1/libraries" -->
+<!-- UsageSnippet language="python" operationID="libraries_create_v1" method="post" path="/v1/libraries" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -85,7 +85,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -100,7 +100,7 @@ Given a library id, details information about that Library.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetLibrary" method="get" path="/v1/libraries/{library_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_get_v1" method="get" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -110,7 +110,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.get(library_id="44e385d6-783e-4b21-8fae-5181e6817bc4")
+    res = mistral.beta.libraries.get(library_id="d0d23a1e-bfe5-45e7-b7bb-22a4ea78d47f")
 
     # Handle response
     print(res)
@@ -126,7 +126,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -141,7 +141,7 @@ Given a library id, deletes it together with all documents that have been upload
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteLibrary" method="delete" path="/v1/libraries/{library_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_delete_v1" method="delete" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -151,7 +151,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.delete(library_id="441ba08a-3d1f-4700-8d6f-f32eeed49dff")
+    res = mistral.beta.libraries.delete(library_id="6cad0b6e-fd2e-4d11-a48b-21d30fb7c17a")
 
     # Handle response
     print(res)
@@ -167,7 +167,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 
@@ -182,7 +182,7 @@ Given a library id, you can update the name and description.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UpdateLibrary" method="put" path="/v1/libraries/{library_id}" -->
+<!-- UsageSnippet language="python" operationID="libraries_update_v1" method="put" path="/v1/libraries/{library_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -192,7 +192,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.update(library_id="27049553-3425-49ce-b965-fcb3a7ab03a3")
+    res = mistral.beta.libraries.update(library_id="e01880c3-d0b5-4a29-8b1b-abdb8ce917e4")
 
     # Handle response
     print(res)
@@ -210,7 +210,7 @@ with Mistral(
 
 ### Response
 
-**[models.LibraryOut](../../models/libraryout.md)**
+**[models.Library](../../models/library.md)**
 
 ### Errors
 

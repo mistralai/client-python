@@ -1,0 +1,9 @@
+# RealtimeTranscriptionSessionUpdateMessage
+
+
+## Fields
+
+| Field                                                                                                      | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `type`                                                                                                     | *Optional[Literal["session.update"]]*                                                                      | :heavy_minus_sign:                                                                                         | N/A                                                                                                        |
+| `session`                                                                                                  | [models.RealtimeTranscriptionSessionUpdatePayload](../models/realtimetranscriptionsessionupdatepayload.md) | :heavy_check_mark:                                                                                         | N/A                                                                                                        |

@@ -3,8 +3,7 @@
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `library_id`                                             | *str*                                                    | :heavy_check_mark:                                       | N/A                                                      |
-| `document_id`                                            | *str*                                                    | :heavy_check_mark:                                       | N/A                                                      |
-| `document_update_in`                                     | [models.DocumentUpdateIn](../models/documentupdatein.md) | :heavy_check_mark:                                       | N/A                                                      |
+| Field                                                   | Type                                                    | Required                                                | Description                                             |
+| ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| `name`                                                  | *OptionalNullable[str]*                                 | :heavy_minus_sign:                                      | N/A                                                     |
+| `attributes`                                            | Dict[str, [models.Attributes](../models/attributes.md)] | :heavy_minus_sign:                                      | N/A                                                     |

@@ -11,15 +11,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolExecutionEntryObject = Literal["entry",]
-
-
-ToolExecutionEntryType = Literal["tool.execution",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolExecutionEntryNameTypedDict = TypeAliasType(
@@ -35,10 +32,12 @@ ToolExecutionEntryName = TypeAliasType(
 class ToolExecutionEntryTypedDict(TypedDict):
     name: ToolExecutionEntryNameTypedDict
     arguments: str
-    object: NotRequired[ToolExecutionEntryObject]
-    type: NotRequired[ToolExecutionEntryType]
+    object: Literal["entry"]
+    type: Literal["tool.execution"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
+    agent_id: NotRequired[Nullable[str]]
+    model: NotRequired[Nullable[str]]
     id: NotRequired[str]
     info: NotRequired[Dict[str, Any]]
 
@@ -48,13 +47,26 @@ class ToolExecutionEntry(BaseModel):
 
     arguments: str
 
-    object: Optional[ToolExecutionEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[ToolExecutionEntryType] = "tool.execution"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["tool.execution"]],
+            AfterValidator(validate_const("tool.execution")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool.execution"
 
     created_at: Optional[datetime] = None
 
     completed_at: OptionalNullable[datetime] = UNSET
+
+    agent_id: OptionalNullable[str] = UNSET
+
+    model: OptionalNullable[str] = UNSET
 
     id: Optional[str] = None
 
@@ -62,8 +74,17 @@ class ToolExecutionEntry(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "type", "created_at", "completed_at", "id", "info"]
-        nullable_fields = ["completed_at"]
+        optional_fields = [
+            "object",
+            "type",
+            "created_at",
+            "completed_at",
+            "agent_id",
+            "model",
+            "id",
+            "info",
+        ]
+        nullable_fields = ["completed_at", "agent_id", "model"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -5,7 +5,7 @@
 
 ## Fields
 
-| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `image_url`                                                          | [models.ImageURLUnion](../models/imageurlunion.md)                   | :heavy_check_mark:                                                   | N/A                                                                  |
-| `type`                                                               | [Optional[models.ImageURLChunkType]](../models/imageurlchunktype.md) | :heavy_minus_sign:                                                   | N/A                                                                  |
+| Field                                              | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `type`                                             | *Optional[Literal["image_url"]]*                   | :heavy_minus_sign:                                 | N/A                                                |
+| `image_url`                                        | [models.ImageURLUnion](../models/imageurlunion.md) | :heavy_check_mark:                                 | N/A                                                |

@@ -1,0 +1,9 @@
+# RealtimeTranscriptionInputAudioAppend
+
+
+## Fields
+
+| Field                                                                                           | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `type`                                                                                          | *Optional[Literal["input_audio.append"]]*                                                       | :heavy_minus_sign:                                                                              | N/A                                                                                             |
+| `audio`                                                                                         | *str*                                                                                           | :heavy_check_mark:                                                                              | Base64-encoded raw PCM bytes matching the current audio_format. Max decoded size: 262144 bytes. |

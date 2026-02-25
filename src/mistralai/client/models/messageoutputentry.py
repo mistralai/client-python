@@ -14,18 +14,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-MessageOutputEntryObject = Literal["entry",]
-
-
-MessageOutputEntryType = Literal["message.output",]
-
-
-MessageOutputEntryRole = Literal["assistant",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 MessageOutputEntryContentTypedDict = TypeAliasType(
@@ -41,34 +35,48 @@ MessageOutputEntryContent = TypeAliasType(
 
 class MessageOutputEntryTypedDict(TypedDict):
     content: MessageOutputEntryContentTypedDict
-    object: NotRequired[MessageOutputEntryObject]
-    type: NotRequired[MessageOutputEntryType]
+    object: Literal["entry"]
+    type: Literal["message.output"]
     created_at: NotRequired[datetime]
     completed_at: NotRequired[Nullable[datetime]]
-    id: NotRequired[str]
     agent_id: NotRequired[Nullable[str]]
     model: NotRequired[Nullable[str]]
-    role: NotRequired[MessageOutputEntryRole]
+    id: NotRequired[str]
+    role: Literal["assistant"]
 
 
 class MessageOutputEntry(BaseModel):
     content: MessageOutputEntryContent
 
-    object: Optional[MessageOutputEntryObject] = "entry"
+    OBJECT: Annotated[
+        Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],
+        pydantic.Field(alias="object"),
+    ] = "entry"
 
-    type: Optional[MessageOutputEntryType] = "message.output"
+    TYPE: Annotated[
+        Annotated[
+            Optional[Literal["message.output"]],
+            AfterValidator(validate_const("message.output")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "message.output"
 
     created_at: Optional[datetime] = None
 
     completed_at: OptionalNullable[datetime] = UNSET
 
-    id: Optional[str] = None
-
     agent_id: OptionalNullable[str] = UNSET
 
     model: OptionalNullable[str] = UNSET
 
-    role: Optional[MessageOutputEntryRole] = "assistant"
+    id: Optional[str] = None
+
+    ROLE: Annotated[
+        Annotated[
+            Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
+        ],
+        pydantic.Field(alias="role"),
+    ] = "assistant"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -77,9 +85,9 @@ class MessageOutputEntry(BaseModel):
             "type",
             "created_at",
             "completed_at",
-            "id",
             "agent_id",
             "model",
+            "id",
             "role",
         ]
         nullable_fields = ["completed_at", "agent_id", "model"]
