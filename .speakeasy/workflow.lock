@@ -12,6 +12,7 @@ sources:
         sourceBlobDigest: sha256:5a558d5ea7a936723c7a5540db5a1fba63d85d25b453372e1cf16395b30c98d3
         tags:
             - latest
+            - speakeasy-sdk-regen-1772041030
     mistral-openapi:
         sourceNamespace: mistral-openapi
         sourceRevisionDigest: sha256:4f8e25101b35a66b9c93089fe3d491990268bdbefb70a349740e01ba9c8e28f8
@@ -32,7 +33,7 @@ targets:
         sourceRevisionDigest: sha256:4d9938ab74c4d41d62cd24234c8b8109e286c4aeec093e21d369259a43173113
         sourceBlobDigest: sha256:5a558d5ea7a936723c7a5540db5a1fba63d85d25b453372e1cf16395b30c98d3
         codeSamplesNamespace: mistral-openapi-google-cloud-code-samples
-        codeSamplesRevisionDigest: sha256:f6c4dc988e9b7be6f8d8087d14b2269be601bb9bff2227b07e1018efe88e1556
+        codeSamplesRevisionDigest: sha256:35f30ba8ce4bd70f58b6abc5222d0bbf82eecc3109b09ca99df4406e363e21a0
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
