@@ -2,13 +2,8 @@
 # @generated-id: f9c17258207e
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    embeddingdtype as models_embeddingdtype,
-    embeddingrequest as models_embeddingrequest,
-    encodingformat as models_encodingformat,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -23,13 +18,12 @@ class Embeddings(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models_embeddingrequest.EmbeddingRequestInputs,
-            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
-        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -117,30 +111,29 @@ class Embeddings(BaseSDK):
             return unmarshal_json_response(models.EmbeddingResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
         *,
         model: str,
         inputs: Union[
-            models_embeddingrequest.EmbeddingRequestInputs,
-            models_embeddingrequest.EmbeddingRequestInputsTypedDict,
+            models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
-        output_dtype: Optional[models_embeddingdtype.EmbeddingDtype] = None,
-        encoding_format: Optional[models_encodingformat.EncodingFormat] = None,
+        output_dtype: Optional[models.EmbeddingDtype] = None,
+        encoding_format: Optional[models.EncodingFormat] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -228,14 +221,14 @@ class Embeddings(BaseSDK):
             return unmarshal_json_response(models.EmbeddingResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

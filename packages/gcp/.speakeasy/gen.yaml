@@ -23,17 +23,19 @@ generation:
   schemas:
     allOfMergeStrategy: shallowMerge
   requestBodyFieldName: ""
+  versioningStrategy: automatic
   persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.0.0a4
+  version: 2.0.0-a4.1
   additionalDependencies:
     dev:
       pytest: ^8.2.2
       pytest-asyncio: ^0.23.7
+    main: {}
   allowedRedefinedBuiltins:
     - id
     - object
@@ -63,7 +65,7 @@ python:
     option: openapi
     paths:
       callbacks: ""
-      errors: "errors"
+      errors: errors
       operations: ""
       shared: ""
       webhooks: ""
@@ -83,3 +85,4 @@ python:
   responseFormat: flat
   sseFlatResponse: false
   templateVersion: v2
+  useAsyncHooks: false

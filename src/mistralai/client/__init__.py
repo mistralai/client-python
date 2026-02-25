@@ -10,7 +10,6 @@ from ._version import (
 )
 from .sdk import *
 from .sdkconfiguration import *
-from .models import *
 
 
 VERSION: str = __version__

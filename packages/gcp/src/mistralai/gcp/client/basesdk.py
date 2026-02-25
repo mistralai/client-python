@@ -2,7 +2,7 @@
 
 from .sdkconfiguration import SDKConfiguration
 import httpx
-from mistralai.gcp.client import models, utils
+from mistralai.gcp.client import errors, utils
 from mistralai.gcp.client._hooks import (
     AfterErrorContext,
     AfterSuccessContext,
@@ -12,6 +12,7 @@ from mistralai.gcp.client.utils import (
     RetryConfig,
     SerializedRequestBody,
     get_body_content,
+    run_sync_in_thread,
 )
 from typing import Callable, List, Mapping, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
@@ -264,7 +265,7 @@ class BaseSDK:
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise models.NoResponseError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -285,7 +286,7 @@ class BaseSDK:
                     http_res = result
                 else:
                     logger.debug("Raising unexpected SDK error")
-                    raise models.SDKError("Unexpected error occurred", http_res)
+                    raise errors.SDKError("Unexpected error occurred", http_res)
 
             return http_res
 
@@ -315,7 +316,10 @@ class BaseSDK:
         async def do():
             http_res = None
             try:
-                req = hooks.before_request(BeforeRequestContext(hook_ctx), request)
+                req = await run_sync_in_thread(
+                    hooks.before_request, BeforeRequestContext(hook_ctx), request
+                )
+
                 logger.debug(
                     "Request:\nMethod: %s\nURL: %s\nHeaders: %s\nBody: %s",
                     req.method,
@@ -329,14 +333,17 @@ class BaseSDK:
 
                 http_res = await client.send(req, stream=stream)
             except Exception as e:
-                _, e = hooks.after_error(AfterErrorContext(hook_ctx), None, e)
+                _, e = await run_sync_in_thread(
+                    hooks.after_error, AfterErrorContext(hook_ctx), None, e
+                )
+
                 if e is not None:
                     logger.debug("Request Exception", exc_info=True)
                     raise e
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise models.NoResponseError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -347,9 +354,10 @@ class BaseSDK:
             )
 
             if utils.match_status_codes(error_status_codes, http_res.status_code):
-                result, err = hooks.after_error(
-                    AfterErrorContext(hook_ctx), http_res, None
+                result, err = await run_sync_in_thread(
+                    hooks.after_error, AfterErrorContext(hook_ctx), http_res, None
                 )
+
                 if err is not None:
                     logger.debug("Request Exception", exc_info=True)
                     raise err
@@ -357,7 +365,7 @@ class BaseSDK:
                     http_res = result
                 else:
                     logger.debug("Raising unexpected SDK error")
-                    raise models.SDKError("Unexpected error occurred", http_res)
+                    raise errors.SDKError("Unexpected error occurred", http_res)
 
             return http_res
 
@@ -369,6 +377,8 @@ class BaseSDK:
             http_res = await do()
 
         if not utils.match_status_codes(error_status_codes, http_res.status_code):
-            http_res = hooks.after_success(AfterSuccessContext(hook_ctx), http_res)
+            http_res = await run_sync_in_thread(
+                hooks.after_success, AfterSuccessContext(hook_ctx), http_res
+            )
 
         return http_res

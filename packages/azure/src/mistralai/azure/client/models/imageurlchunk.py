@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 from .imageurl import ImageURL, ImageURLTypedDict
-from mistralai.azure.client.types import BaseModel
+from mistralai.azure.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.azure.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
@@ -30,9 +31,31 @@ class ImageURLChunk(BaseModel):
 
     image_url: ImageURLUnion
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Optional[Literal["image_url"]], AfterValidator(validate_const("image_url"))
         ],
         pydantic.Field(alias="type"),
     ] = "image_url"
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["type"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ImageURLChunk.model_rebuild()
+except NameError:
+    pass

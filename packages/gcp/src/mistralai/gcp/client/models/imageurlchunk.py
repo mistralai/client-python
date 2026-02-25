@@ -30,7 +30,13 @@ class ImageURLChunk(BaseModel):
 
     image_url: ImageURLUnion
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["image_url"], AfterValidator(validate_const("image_url"))],
         pydantic.Field(alias="type"),
     ] = "image_url"
+
+
+try:
+    ImageURLChunk.model_rebuild()
+except NameError:
+    pass

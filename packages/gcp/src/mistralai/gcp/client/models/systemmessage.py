@@ -32,7 +32,13 @@ class SystemMessageTypedDict(TypedDict):
 class SystemMessage(BaseModel):
     content: SystemMessageContent
 
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[Literal["system"], AfterValidator(validate_const("system"))],
         pydantic.Field(alias="role"),
     ] = "system"
+
+
+try:
+    SystemMessage.model_rebuild()
+except NameError:
+    pass

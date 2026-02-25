@@ -15,5 +15,5 @@ SystemMessageContentChunksTypedDict = TypeAliasType(
 
 
 SystemMessageContentChunks = Annotated[
-    Union[TextChunk, ThinkChunk], Field(discriminator="TYPE")
+    Union[TextChunk, ThinkChunk], Field(discriminator="type")
 ]

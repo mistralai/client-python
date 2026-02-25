@@ -3,9 +3,10 @@
 
 from __future__ import annotations
 from datetime import datetime
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -20,7 +21,7 @@ class ResponseStartedEventTypedDict(TypedDict):
 class ResponseStartedEvent(BaseModel):
     conversation_id: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["conversation.response.started"],
             AfterValidator(validate_const("conversation.response.started")),
@@ -29,3 +30,25 @@ class ResponseStartedEvent(BaseModel):
     ] = "conversation.response.started"
 
     created_at: Optional[datetime] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["created_at"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ResponseStartedEvent.model_rebuild()
+except NameError:
+    pass

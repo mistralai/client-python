@@ -3,12 +3,30 @@
 
 from __future__ import annotations
 from datetime import datetime
-from mistralai.client.types import BaseModel
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    UnrecognizedStr,
+)
 from mistralai.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal, Optional
+from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+FunctionCallEventConfirmationStatus = Union[
+    Literal[
+        "pending",
+        "allowed",
+        "denied",
+    ],
+    UnrecognizedStr,
+]
 
 
 class FunctionCallEventTypedDict(TypedDict):
@@ -19,6 +37,9 @@ class FunctionCallEventTypedDict(TypedDict):
     type: Literal["function.call.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
+    model: NotRequired[Nullable[str]]
+    agent_id: NotRequired[Nullable[str]]
+    confirmation_status: NotRequired[Nullable[FunctionCallEventConfirmationStatus]]
 
 
 class FunctionCallEvent(BaseModel):
@@ -30,7 +51,7 @@ class FunctionCallEvent(BaseModel):
 
     arguments: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["function.call.delta"],
             AfterValidator(validate_const("function.call.delta")),
@@ -41,3 +62,42 @@ class FunctionCallEvent(BaseModel):
     created_at: Optional[datetime] = None
 
     output_index: Optional[int] = 0
+
+    model: OptionalNullable[str] = UNSET
+
+    agent_id: OptionalNullable[str] = UNSET
+
+    confirmation_status: OptionalNullable[FunctionCallEventConfirmationStatus] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            ["created_at", "output_index", "model", "agent_id", "confirmation_status"]
+        )
+        nullable_fields = set(["model", "agent_id", "confirmation_status"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
+try:
+    FunctionCallEvent.model_rebuild()
+except NameError:
+    pass

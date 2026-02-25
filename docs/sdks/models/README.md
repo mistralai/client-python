@@ -19,7 +19,7 @@ List all models available to the user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListModels" method="get" path="/v1/models" -->
+<!-- UsageSnippet language="python" operationID="list_models_v1_models_get" method="get" path="/v1/models" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -50,7 +50,7 @@ with Mistral(
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## retrieve
 
@@ -58,7 +58,7 @@ Retrieve information about a model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="RetrieveModel" method="get" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="retrieve_model_v1_models__model_id__get" method="get" path="/v1/models/{model_id}" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -90,8 +90,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## delete
 
@@ -99,7 +99,7 @@ Delete a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteModel" method="delete" path="/v1/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="delete_model_v1_models__model_id__delete" method="delete" path="/v1/models/{model_id}" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -131,8 +131,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## update
 
@@ -140,7 +140,7 @@ Update a model name or description.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UpdateModel" method="patch" path="/v1/fine_tuning/models/{model_id}" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_update_fine_tuned_model" method="patch" path="/v1/fine_tuning/models/{model_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -168,13 +168,13 @@ with Mistral(
 
 ### Response
 
-**[models.UpdateModelResponse](../../models/updatemodelresponse.md)**
+**[models.JobsAPIRoutesFineTuningUpdateFineTunedModelResponse](../../models/jobsapiroutesfinetuningupdatefinetunedmodelresponse.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## archive
 
@@ -182,7 +182,7 @@ Archive a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ArchiveModel" method="post" path="/v1/fine_tuning/models/{model_id}/archive" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_archive_fine_tuned_model" method="post" path="/v1/fine_tuning/models/{model_id}/archive" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -208,13 +208,13 @@ with Mistral(
 
 ### Response
 
-**[models.ArchiveFTModelOut](../../models/archiveftmodelout.md)**
+**[models.ArchiveModelResponse](../../models/archivemodelresponse.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## unarchive
 
@@ -222,7 +222,7 @@ Un-archive a fine-tuned model.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="UnarchiveModel" method="delete" path="/v1/fine_tuning/models/{model_id}/archive" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_fine_tuning_unarchive_fine_tuned_model" method="delete" path="/v1/fine_tuning/models/{model_id}/archive" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -248,10 +248,10 @@ with Mistral(
 
 ### Response
 
-**[models.UnarchiveFTModelOut](../../models/unarchiveftmodelout.md)**
+**[models.UnarchiveModelResponse](../../models/unarchivemodelresponse.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
