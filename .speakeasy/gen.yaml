@@ -13,6 +13,7 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: true
     sharedErrorComponentsApr2025: true
+    nameOverrideFeb2026: true
     methodSignaturesApr2024: true
     sharedNestedComponentsJan2026: true
   auth:
@@ -37,18 +38,22 @@ python:
   allowedRedefinedBuiltins:
     - id
     - object
+    - input
+    - dir
   asyncMode: both
   authors:
     - Mistral
   baseErrorName: MistralError
   clientServerStatusCodesAsErrors: true
-  constFieldCasing: upper
+  constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
   enableCustomCodeRegions: true
   enumFormat: union
   envVarPrefix: MISTRAL
   fixFlags:
+    asyncPaginationSep2025: true
+    conflictResistantModelImportsFeb2026: true
     responseRequiredSep2024: true
   flatAdditionalProperties: true
   flattenGlobalSecurity: true
@@ -60,17 +65,17 @@ python:
     option: openapi
     paths:
       callbacks: ""
-      errors: ""
+      errors: "errors"
       operations: ""
       shared: ""
       webhooks: ""
   inferUnionDiscriminators: true
   inputModelSuffix: input
   license: ""
-  maxMethodParams: 15
+  maxMethodParams: 999
   methodArguments: infer-optional-args
   moduleName: mistralai.client
-  multipartArrayFormat: legacy
+  multipartArrayFormat: standard
   outputModelSuffix: output
   packageManager: uv
   packageName: mistralai
