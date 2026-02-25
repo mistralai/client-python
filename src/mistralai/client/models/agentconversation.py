@@ -10,12 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-AgentConversationObject = Literal["conversation",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 AgentConversationAgentVersionTypedDict = TypeAliasType(
@@ -39,7 +39,7 @@ class AgentConversationTypedDict(TypedDict):
     r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    object: NotRequired[AgentConversationObject]
+    object: Literal["conversation"]
     agent_version: NotRequired[Nullable[AgentConversationAgentVersionTypedDict]]
 
 
@@ -61,36 +61,45 @@ class AgentConversation(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    object: Optional[AgentConversationObject] = "conversation"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation"]],
+            AfterValidator(validate_const("conversation")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation"
 
     agent_version: OptionalNullable[AgentConversationAgentVersion] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["name", "description", "metadata", "object", "agent_version"]
-        nullable_fields = ["name", "description", "metadata", "agent_version"]
-        null_default_fields = []
-
+        optional_fields = set(
+            ["name", "description", "metadata", "object", "agent_version"]
+        )
+        nullable_fields = set(["name", "description", "metadata", "agent_version"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
+
+
+try:
+    AgentConversation.model_rebuild()
+except NameError:
+    pass

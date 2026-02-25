@@ -36,3 +36,9 @@ class OCRTableObject(BaseModel):
 
     format_: Annotated[Format, pydantic.Field(alias="format")]
     r"""Format of the table"""
+
+
+try:
+    OCRTableObject.model_rebuild()
+except NameError:
+    pass

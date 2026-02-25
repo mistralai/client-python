@@ -6,7 +6,7 @@ from typing import Any, Optional, Type, TypeVar, overload
 import httpx
 
 from .serializers import unmarshal_json
-from mistralai.client import models
+from mistralai.client import errors
 
 T = TypeVar("T")
 
@@ -31,7 +31,7 @@ def unmarshal_json_response(
     try:
         return unmarshal_json(body, typ)
     except Exception as e:
-        raise models.ResponseValidationError(
+        raise errors.ResponseValidationError(
             "Response validation failed",
             http_res,
             e,

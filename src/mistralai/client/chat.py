@@ -2,16 +2,8 @@
 # @generated-id: 7eba0f088d47
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.models import (
-    chatcompletionrequest as models_chatcompletionrequest,
-    chatcompletionstreamrequest as models_chatcompletionstreamrequest,
-    mistralpromptmode as models_mistralpromptmode,
-    prediction as models_prediction,
-    responseformat as models_responseformat,
-    tool as models_tool,
-)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -111,8 +103,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionrequest.ChatCompletionRequestMessage],
-            List[models_chatcompletionrequest.ChatCompletionRequestMessageTypedDict],
+            List[models.ChatCompletionRequestMessage],
+            List[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -120,37 +112,32 @@ class Chat(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_chatcompletionrequest.ChatCompletionRequestStop,
-                models_chatcompletionrequest.ChatCompletionRequestStopTypedDict,
+                models.ChatCompletionRequestStop,
+                models.ChatCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
+            Union[List[models.Tool], List[models.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models_chatcompletionrequest.ChatCompletionRequestToolChoice,
-                models_chatcompletionrequest.ChatCompletionRequestToolChoiceTypedDict,
+                models.ChatCompletionRequestToolChoice,
+                models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
+            Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[
-            models_mistralpromptmode.MistralPromptMode
-        ] = UNSET,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -271,25 +258,25 @@ class Chat(BaseSDK):
             return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def complete_async(
         self,
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionrequest.ChatCompletionRequestMessage],
-            List[models_chatcompletionrequest.ChatCompletionRequestMessageTypedDict],
+            List[models.ChatCompletionRequestMessage],
+            List[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -297,37 +284,32 @@ class Chat(BaseSDK):
         stream: Optional[bool] = False,
         stop: Optional[
             Union[
-                models_chatcompletionrequest.ChatCompletionRequestStop,
-                models_chatcompletionrequest.ChatCompletionRequestStopTypedDict,
+                models.ChatCompletionRequestStop,
+                models.ChatCompletionRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
+            Union[List[models.Tool], List[models.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models_chatcompletionrequest.ChatCompletionRequestToolChoice,
-                models_chatcompletionrequest.ChatCompletionRequestToolChoiceTypedDict,
+                models.ChatCompletionRequestToolChoice,
+                models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
+            Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[
-            models_mistralpromptmode.MistralPromptMode
-        ] = UNSET,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -448,27 +430,25 @@ class Chat(BaseSDK):
             return unmarshal_json_response(models.ChatCompletionResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def stream(
         self,
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessage],
-            List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessageTypedDict
-            ],
+            List[models.ChatCompletionStreamRequestMessage],
+            List[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -476,37 +456,32 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStop,
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStopTypedDict,
+                models.ChatCompletionStreamRequestStop,
+                models.ChatCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
+            Union[List[models.Tool], List[models.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoice,
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoiceTypedDict,
+                models.ChatCompletionStreamRequestToolChoice,
+                models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
+            Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[
-            models_mistralpromptmode.MistralPromptMode
-        ] = UNSET,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -636,28 +611,26 @@ class Chat(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def stream_async(
         self,
         *,
         model: str,
         messages: Union[
-            List[models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessage],
-            List[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestMessageTypedDict
-            ],
+            List[models.ChatCompletionStreamRequestMessage],
+            List[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: Optional[float] = None,
@@ -665,37 +638,32 @@ class Chat(BaseSDK):
         stream: Optional[bool] = True,
         stop: Optional[
             Union[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStop,
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestStopTypedDict,
+                models.ChatCompletionStreamRequestStop,
+                models.ChatCompletionStreamRequestStopTypedDict,
             ]
         ] = None,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
-            Union[
-                models_responseformat.ResponseFormat,
-                models_responseformat.ResponseFormatTypedDict,
-            ]
+            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models_tool.Tool], List[models_tool.ToolTypedDict]]
+            Union[List[models.Tool], List[models.ToolTypedDict]]
         ] = UNSET,
         tool_choice: Optional[
             Union[
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoice,
-                models_chatcompletionstreamrequest.ChatCompletionStreamRequestToolChoiceTypedDict,
+                models.ChatCompletionStreamRequestToolChoice,
+                models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
         presence_penalty: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
-            Union[models_prediction.Prediction, models_prediction.PredictionTypedDict]
+            Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[
-            models_mistralpromptmode.MistralPromptMode
-        ] = UNSET,
+        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -825,15 +793,15 @@ class Chat(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)

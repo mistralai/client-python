@@ -24,7 +24,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="StartConversation" method="post" path="/v1/conversations" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start" method="post" path="/v1/conversations" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -72,8 +72,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## list
 
@@ -81,7 +81,7 @@ Retrieve a list of conversation entities sorted by creation time.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListConversations" method="get" path="/v1/conversations" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_list" method="get" path="/v1/conversations" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -109,14 +109,14 @@ with Mistral(
 
 ### Response
 
-**[List[models.ListConversationsResponse]](../../models/.md)**
+**[List[models.AgentsAPIV1ConversationsListResponse]](../../models/.md)**
 
 ### Errors
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## get
 
@@ -124,7 +124,7 @@ Given a conversation_id retrieve a conversation entity with its attributes.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetConversation" method="get" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_get" method="get" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -156,8 +156,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## delete
 
@@ -165,7 +165,7 @@ Delete a conversation given a conversation_id.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="DeleteConversation" method="delete" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_delete" method="delete" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -192,8 +192,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## append
 
@@ -201,7 +201,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="AppendConversation" method="post" path="/v1/conversations/{conversation_id}" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append" method="post" path="/v1/conversations/{conversation_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -211,7 +211,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append(conversation_id="<id>", inputs=[], stream=False, store=True, handoff_execution="server", completion_args={
+    res = mistral.beta.conversations.append(conversation_id="<id>", stream=False, store=True, handoff_execution="server", completion_args={
         "response_format": {
             "type": "text",
         },
@@ -227,11 +227,12 @@ with Mistral(
 | Parameter                                                                                                               | Type                                                                                                                    | Required                                                                                                                | Description                                                                                                             |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `conversation_id`                                                                                                       | *str*                                                                                                                   | :heavy_check_mark:                                                                                                      | ID of the conversation to which we append entries.                                                                      |
-| `inputs`                                                                                                                | [models.ConversationInputs](../../models/conversationinputs.md)                                                         | :heavy_check_mark:                                                                                                      | N/A                                                                                                                     |
+| `inputs`                                                                                                                | [Optional[models.ConversationInputs]](../../models/conversationinputs.md)                                               | :heavy_minus_sign:                                                                                                      | N/A                                                                                                                     |
 | `stream`                                                                                                                | *Optional[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                      | N/A                                                                                                                     |
 | `store`                                                                                                                 | *Optional[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                      | Whether to store the results into our servers or not.                                                                   |
 | `handoff_execution`                                                                                                     | [Optional[models.ConversationAppendRequestHandoffExecution]](../../models/conversationappendrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                      | N/A                                                                                                                     |
 | `completion_args`                                                                                                       | [Optional[models.CompletionArgs]](../../models/completionargs.md)                                                       | :heavy_minus_sign:                                                                                                      | White-listed arguments from the completion API                                                                          |
+| `tool_confirmations`                                                                                                    | List[[models.ToolCallConfirmation](../../models/toolcallconfirmation.md)]                                               | :heavy_minus_sign:                                                                                                      | N/A                                                                                                                     |
 | `retries`                                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                        | :heavy_minus_sign:                                                                                                      | Configuration to override the default retry behavior of the client.                                                     |
 
 ### Response
@@ -242,8 +243,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## get_history
 
@@ -251,7 +252,7 @@ Given a conversation_id retrieve all the entries belonging to that conversation.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetConversationHistory" method="get" path="/v1/conversations/{conversation_id}/history" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_history" method="get" path="/v1/conversations/{conversation_id}/history" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -283,8 +284,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## get_messages
 
@@ -292,7 +293,7 @@ Given a conversation_id retrieve all the messages belonging to that conversation
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetConversationMessages" method="get" path="/v1/conversations/{conversation_id}/messages" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_messages" method="get" path="/v1/conversations/{conversation_id}/messages" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -324,8 +325,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## restart
 
@@ -333,7 +334,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="RestartConversation" method="post" path="/v1/conversations/{conversation_id}/restart" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart" method="post" path="/v1/conversations/{conversation_id}/restart" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -343,7 +344,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=False, store=True, handoff_execution="server", completion_args={
+    res = mistral.beta.conversations.restart(conversation_id="<id>", from_entry_id="<id>", stream=False, store=True, handoff_execution="server", completion_args={
         "response_format": {
             "type": "text",
         },
@@ -359,8 +360,8 @@ with Mistral(
 | Parameter                                                                                                                 | Type                                                                                                                      | Required                                                                                                                  | Description                                                                                                               |
 | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `conversation_id`                                                                                                         | *str*                                                                                                                     | :heavy_check_mark:                                                                                                        | ID of the original conversation which is being restarted.                                                                 |
-| `inputs`                                                                                                                  | [models.ConversationInputs](../../models/conversationinputs.md)                                                           | :heavy_check_mark:                                                                                                        | N/A                                                                                                                       |
 | `from_entry_id`                                                                                                           | *str*                                                                                                                     | :heavy_check_mark:                                                                                                        | N/A                                                                                                                       |
+| `inputs`                                                                                                                  | [Optional[models.ConversationInputs]](../../models/conversationinputs.md)                                                 | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
 | `stream`                                                                                                                  | *Optional[bool]*                                                                                                          | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
 | `store`                                                                                                                   | *Optional[bool]*                                                                                                          | :heavy_minus_sign:                                                                                                        | Whether to store the results into our servers or not.                                                                     |
 | `handoff_execution`                                                                                                       | [Optional[models.ConversationRestartRequestHandoffExecution]](../../models/conversationrestartrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
@@ -377,8 +378,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## start_stream
 
@@ -386,7 +387,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="StartConversationStream" method="post" path="/v1/conversations#stream" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start_stream" method="post" path="/v1/conversations#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -396,7 +397,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs="<value>", stream=True, completion_args={
+    res = mistral.beta.conversations.start_stream(inputs=[
+        {
+            "object": "entry",
+            "type": "function.result",
+            "tool_call_id": "<id>",
+            "result": "<value>",
+        },
+    ], stream=True, completion_args={
         "response_format": {
             "type": "text",
         },
@@ -436,8 +444,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## append_stream
 
@@ -445,7 +453,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="AppendConversationStream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append_stream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -455,7 +463,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append_stream(conversation_id="<id>", inputs="<value>", stream=True, store=True, handoff_execution="server", completion_args={
+    res = mistral.beta.conversations.append_stream(conversation_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
         "response_format": {
             "type": "text",
         },
@@ -473,11 +481,12 @@ with Mistral(
 | Parameter                                                                                                                           | Type                                                                                                                                | Required                                                                                                                            | Description                                                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `conversation_id`                                                                                                                   | *str*                                                                                                                               | :heavy_check_mark:                                                                                                                  | ID of the conversation to which we append entries.                                                                                  |
-| `inputs`                                                                                                                            | [models.ConversationInputs](../../models/conversationinputs.md)                                                                     | :heavy_check_mark:                                                                                                                  | N/A                                                                                                                                 |
+| `inputs`                                                                                                                            | [Optional[models.ConversationInputs]](../../models/conversationinputs.md)                                                           | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
 | `stream`                                                                                                                            | *Optional[bool]*                                                                                                                    | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
 | `store`                                                                                                                             | *Optional[bool]*                                                                                                                    | :heavy_minus_sign:                                                                                                                  | Whether to store the results into our servers or not.                                                                               |
 | `handoff_execution`                                                                                                                 | [Optional[models.ConversationAppendStreamRequestHandoffExecution]](../../models/conversationappendstreamrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
 | `completion_args`                                                                                                                   | [Optional[models.CompletionArgs]](../../models/completionargs.md)                                                                   | :heavy_minus_sign:                                                                                                                  | White-listed arguments from the completion API                                                                                      |
+| `tool_confirmations`                                                                                                                | List[[models.ToolCallConfirmation](../../models/toolcallconfirmation.md)]                                                           | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
 | `retries`                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                    | :heavy_minus_sign:                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                 |
 
 ### Response
@@ -488,8 +497,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## restart_stream
 
@@ -497,7 +506,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="RestartConversationStream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
+<!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart_stream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -507,7 +516,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", inputs="<value>", from_entry_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
+    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", from_entry_id="<id>", stream=True, store=True, handoff_execution="server", completion_args={
         "response_format": {
             "type": "text",
         },
@@ -525,8 +534,8 @@ with Mistral(
 | Parameter                                                                                                                             | Type                                                                                                                                  | Required                                                                                                                              | Description                                                                                                                           |
 | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `conversation_id`                                                                                                                     | *str*                                                                                                                                 | :heavy_check_mark:                                                                                                                    | ID of the original conversation which is being restarted.                                                                             |
-| `inputs`                                                                                                                              | [models.ConversationInputs](../../models/conversationinputs.md)                                                                       | :heavy_check_mark:                                                                                                                    | N/A                                                                                                                                   |
 | `from_entry_id`                                                                                                                       | *str*                                                                                                                                 | :heavy_check_mark:                                                                                                                    | N/A                                                                                                                                   |
+| `inputs`                                                                                                                              | [Optional[models.ConversationInputs]](../../models/conversationinputs.md)                                                             | :heavy_minus_sign:                                                                                                                    | N/A                                                                                                                                   |
 | `stream`                                                                                                                              | *Optional[bool]*                                                                                                                      | :heavy_minus_sign:                                                                                                                    | N/A                                                                                                                                   |
 | `store`                                                                                                                               | *Optional[bool]*                                                                                                                      | :heavy_minus_sign:                                                                                                                    | Whether to store the results into our servers or not.                                                                                 |
 | `handoff_execution`                                                                                                                   | [Optional[models.ConversationRestartStreamRequestHandoffExecution]](../../models/conversationrestartstreamrequesthandoffexecution.md) | :heavy_minus_sign:                                                                                                                    | N/A                                                                                                                                   |
@@ -543,5 +552,5 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

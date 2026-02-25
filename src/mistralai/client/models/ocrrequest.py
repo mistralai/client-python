@@ -18,14 +18,16 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-DocumentTypedDict = TypeAliasType(
-    "DocumentTypedDict",
+DocumentUnionTypedDict = TypeAliasType(
+    "DocumentUnionTypedDict",
     Union[FileChunkTypedDict, ImageURLChunkTypedDict, DocumentURLChunkTypedDict],
 )
 r"""Document to run OCR on"""
 
 
-Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURLChunk])
+DocumentUnion = TypeAliasType(
+    "DocumentUnion", Union[FileChunk, ImageURLChunk, DocumentURLChunk]
+)
 r"""Document to run OCR on"""
 
 
@@ -37,7 +39,7 @@ TableFormat = Literal[
 
 class OCRRequestTypedDict(TypedDict):
     model: Nullable[str]
-    document: DocumentTypedDict
+    document: DocumentUnionTypedDict
     r"""Document to run OCR on"""
     id: NotRequired[str]
     pages: NotRequired[Nullable[List[int]]]
@@ -62,7 +64,7 @@ class OCRRequestTypedDict(TypedDict):
 class OCRRequest(BaseModel):
     model: Nullable[str]
 
-    document: Document
+    document: DocumentUnion
     r"""Document to run OCR on"""
 
     id: Optional[str] = None
@@ -96,52 +98,51 @@ class OCRRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "id",
-            "pages",
-            "include_image_base64",
-            "image_limit",
-            "image_min_size",
-            "bbox_annotation_format",
-            "document_annotation_format",
-            "document_annotation_prompt",
-            "table_format",
-            "extract_header",
-            "extract_footer",
-        ]
-        nullable_fields = [
-            "model",
-            "pages",
-            "include_image_base64",
-            "image_limit",
-            "image_min_size",
-            "bbox_annotation_format",
-            "document_annotation_format",
-            "document_annotation_prompt",
-            "table_format",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "id",
+                "pages",
+                "include_image_base64",
+                "image_limit",
+                "image_min_size",
+                "bbox_annotation_format",
+                "document_annotation_format",
+                "document_annotation_prompt",
+                "table_format",
+                "extract_header",
+                "extract_footer",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "model",
+                "pages",
+                "include_image_base64",
+                "image_limit",
+                "image_min_size",
+                "bbox_annotation_format",
+                "document_annotation_format",
+                "document_annotation_prompt",
+                "table_format",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

@@ -15,7 +15,7 @@ Get a list of batch jobs for your organization and user.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ListBatchJobs" method="get" path="/v1/batch/jobs" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_jobs" method="get" path="/v1/batch/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -49,13 +49,13 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJobsOut](../../models/batchjobsout.md)**
+**[models.ListBatchJobsResponse](../../models/listbatchjobsresponse.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## create
 
@@ -63,7 +63,7 @@ Create a new batch job, it will be queued for processing.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="CreateBatchJob" method="post" path="/v1/batch/jobs" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_create_batch_job" method="post" path="/v1/batch/jobs" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -73,7 +73,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.create(endpoint="/v1/classifications", model="mistral-small-latest", timeout_hours=24)
+    res = mistral.batch.jobs.create(endpoint="/v1/moderations", model="mistral-small-latest", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -87,7 +87,7 @@ with Mistral(
 | `endpoint`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | [models.APIEndpoint](../../models/apiendpoint.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `input_files`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | List[*str*]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a "body" field. An example of such file is the following: ```json {"custom_id": "0", "body": {"max_tokens": 100, "messages": [{"role": "user", "content": "What is the best French cheese?"}]}} {"custom_id": "1", "body": {"max_tokens": 100, "messages": [{"role": "user", "content": "What is the best French wine?"}]}} ``` |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `requests`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | List[[models.BatchRequest](../../models/batchrequest.md)]                                                                                                                                                                                                                                                                                                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| `model`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The model to be used for batch inference.                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | mistral-small-latest                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `model`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The model to be used for batch inference.                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **Example 1:** mistral-small-latest<br/>**Example 2:** mistral-medium-latest                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `agent_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `metadata`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Dict[str, *str*]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The metadata of your choice to be associated with the batch inference job.                                                                                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `timeout_hours`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | *Optional[int]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The timeout in hours for the batch inference job.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -95,13 +95,13 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJobOut](../../models/batchjobout.md)**
+**[models.BatchJob](../../models/batchjob.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## get
 
@@ -112,7 +112,7 @@ Args:
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="GetBatchJob" method="get" path="/v1/batch/jobs/{job_id}" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_job" method="get" path="/v1/batch/jobs/{job_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -122,7 +122,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.get(job_id="358c80a1-79bd-43f0-8f0e-8186713aa3ba")
+    res = mistral.batch.jobs.get(job_id="4017dc9f-b629-42f4-9700-8c681b9e7f0f")
 
     # Handle response
     print(res)
@@ -139,13 +139,13 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJobOut](../../models/batchjobout.md)**
+**[models.BatchJob](../../models/batchjob.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## cancel
 
@@ -153,7 +153,7 @@ Request the cancellation of a batch job.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="CancelBatchJob" method="post" path="/v1/batch/jobs/{job_id}/cancel" -->
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_cancel_batch_job" method="post" path="/v1/batch/jobs/{job_id}/cancel" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -163,7 +163,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.cancel(job_id="393537d7-8b33-4931-a289-7f61f8757eda")
+    res = mistral.batch.jobs.cancel(job_id="4fb29d1c-535b-4f0a-a1cb-2167f86da569")
 
     # Handle response
     print(res)
@@ -179,10 +179,10 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJobOut](../../models/batchjobout.md)**
+**[models.BatchJob](../../models/batchjob.md)**
 
 ### Errors
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |

@@ -21,8 +21,8 @@ class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):
     text: str
     start: float
     end: float
-    speaker_id: NotRequired[Nullable[str]]
     type: Literal["transcription.segment"]
+    speaker_id: NotRequired[Nullable[str]]
 
 
 class TranscriptionStreamSegmentDelta(BaseModel):
@@ -37,15 +37,15 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     end: float
 
-    speaker_id: OptionalNullable[str] = UNSET
-
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.segment"],
             AfterValidator(validate_const("transcription.segment")),
         ],
         pydantic.Field(alias="type"),
     ] = "transcription.segment"
+
+    speaker_id: OptionalNullable[str] = UNSET
 
     @property
     def additional_properties(self):
@@ -57,33 +57,34 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["speaker_id"]
-        nullable_fields = ["speaker_id"]
-        null_default_fields = []
-
+        optional_fields = set(["speaker_id"])
+        nullable_fields = set(["speaker_id"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
             serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
         for k, v in serialized.items():
             m[k] = v
 
         return m
+
+
+try:
+    TranscriptionStreamSegmentDelta.model_rebuild()
+except NameError:
+    pass

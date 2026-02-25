@@ -15,7 +15,7 @@ Create Transcription
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="audio_api_v1_transcriptions_post" method="post" path="/v1/audio/transcriptions" -->
+<!-- UsageSnippet language="python" operationID="audio_api_v1_transcriptions_post" method="post" path="/v1/audio/transcriptions" example="userExample" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -25,7 +25,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.transcriptions.complete(model="Model X", diarize=False)
+    res = mistral.audio.transcriptions.complete(model="voxtral-mini-latest", diarize=False)
 
     # Handle response
     print(res)
@@ -36,7 +36,7 @@ with Mistral(
 
 | Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  | Example                                                                      |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `model`                                                                      | *str*                                                                        | :heavy_check_mark:                                                           | ID of the model to be used.                                                  | voxtral-mini-latest                                                          |
+| `model`                                                                      | *str*                                                                        | :heavy_check_mark:                                                           | ID of the model to be used.                                                  | **Example 1:** voxtral-mini-latest<br/>**Example 2:** voxtral-mini-2507      |
 | `file`                                                                       | [Optional[models.File]](../../models/file.md)                                | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
 | `file_url`                                                                   | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Url of a file to be transcribed                                              |                                                                              |
 | `file_id`                                                                    | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | ID of a file uploaded to /v1/files                                           |                                                                              |
@@ -55,7 +55,7 @@ with Mistral(
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## stream
 
@@ -105,4 +105,4 @@ with Mistral(
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
