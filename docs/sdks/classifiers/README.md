@@ -54,8 +54,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## moderate_chat
 
@@ -75,8 +75,8 @@ with Mistral(
 
     res = mistral.classifiers.moderate_chat(inputs=[
         {
-            "content": "<value>",
             "role": "tool",
+            "content": "<value>",
         },
     ], model="LeBaron")
 
@@ -101,8 +101,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## classify
 
@@ -146,8 +146,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## classify_chat
 
@@ -169,8 +169,8 @@ with Mistral(
         {
             "messages": [
                 {
-                    "content": "<value>",
                     "role": "system",
+                    "content": "<value>",
                 },
             ],
         },
@@ -197,5 +197,5 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

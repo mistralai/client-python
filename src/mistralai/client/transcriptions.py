@@ -2,7 +2,7 @@
 # @generated-id: 75b45780c978
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     file as models_file,
@@ -121,12 +121,12 @@ class Transcriptions(BaseSDK):
             return unmarshal_json_response(models.TranscriptionResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def complete_async(
         self,
@@ -232,12 +232,12 @@ class Transcriptions(BaseSDK):
             return unmarshal_json_response(models.TranscriptionResponse, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def stream(
         self,
@@ -352,13 +352,13 @@ class Transcriptions(BaseSDK):
             )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def stream_async(
         self,
@@ -473,10 +473,10 @@ class Transcriptions(BaseSDK):
             )
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)

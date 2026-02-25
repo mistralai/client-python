@@ -28,22 +28,22 @@ ToolMessageContent = TypeAliasType("ToolMessageContent", Union[str, List[Content
 
 class ToolMessageTypedDict(TypedDict):
     content: Nullable[ToolMessageContentTypedDict]
+    role: Literal["tool"]
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
-    role: Literal["tool"]
 
 
 class ToolMessage(BaseModel):
     content: Nullable[ToolMessageContent]
 
-    tool_call_id: OptionalNullable[str] = UNSET
-
-    name: OptionalNullable[str] = UNSET
-
-    ROLE: Annotated[
+    role: Annotated[
         Annotated[Literal["tool"], AfterValidator(validate_const("tool"))],
         pydantic.Field(alias="role"),
     ] = "tool"
+
+    tool_call_id: OptionalNullable[str] = UNSET
+
+    name: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

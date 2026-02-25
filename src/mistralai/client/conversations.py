@@ -2,17 +2,16 @@
 # @generated-id: 40692a878064
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
+    appendconversationrequest as models_appendconversationrequest,
     completionargs as models_completionargs,
-    conversationappendrequest as models_conversationappendrequest,
-    conversationappendstreamrequest as models_conversationappendstreamrequest,
     conversationinputs as models_conversationinputs,
     conversationrequest as models_conversationrequest,
-    conversationrestartrequest as models_conversationrestartrequest,
-    conversationrestartstreamrequest as models_conversationrestartstreamrequest,
     conversationstreamrequest as models_conversationstreamrequest,
+    restartconversationrequest as models_restartconversationrequest,
+    toolcallconfirmation as models_toolcallconfirmation,
 )
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
@@ -360,7 +359,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartConversation",
+                operation_id="agents_api_v1_conversations_start",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -376,17 +375,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def start_async(
         self,
@@ -513,7 +512,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartConversation",
+                operation_id="agents_api_v1_conversations_start",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -529,17 +528,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def list(
         self,
@@ -551,7 +550,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.ListConversationsResponse]:
+    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -574,7 +573,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListConversationsRequest(
+        request = models.AgentsAPIV1ConversationsListRequest(
             page=page,
             page_size=page_size,
             metadata=metadata,
@@ -609,7 +608,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListConversations",
+                operation_id="agents_api_v1_conversations_list",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -623,21 +622,21 @@ class Conversations(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[models.ListConversationsResponse], http_res
+                List[models.AgentsAPIV1ConversationsListResponse], http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -649,7 +648,7 @@ class Conversations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.ListConversationsResponse]:
+    ) -> List[models.AgentsAPIV1ConversationsListResponse]:
         r"""List all created conversations.
 
         Retrieve a list of conversation entities sorted by creation time.
@@ -672,7 +671,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListConversationsRequest(
+        request = models.AgentsAPIV1ConversationsListRequest(
             page=page,
             page_size=page_size,
             metadata=metadata,
@@ -707,7 +706,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListConversations",
+                operation_id="agents_api_v1_conversations_list",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -721,21 +720,21 @@ class Conversations(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[models.ListConversationsResponse], http_res
+                List[models.AgentsAPIV1ConversationsListResponse], http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -766,7 +765,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationRequest(
+        request = models.AgentsAPIV1ConversationsGetRequest(
             conversation_id=conversation_id,
         )
 
@@ -799,7 +798,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversation",
+                operation_id="agents_api_v1_conversations_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -815,17 +814,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ResponseV1ConversationsGet, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -856,7 +855,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationRequest(
+        request = models.AgentsAPIV1ConversationsGetRequest(
             conversation_id=conversation_id,
         )
 
@@ -889,7 +888,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversation",
+                operation_id="agents_api_v1_conversations_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -905,17 +904,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ResponseV1ConversationsGet, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
@@ -946,7 +945,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteConversationRequest(
+        request = models.AgentsAPIV1ConversationsDeleteRequest(
             conversation_id=conversation_id,
         )
 
@@ -979,7 +978,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteConversation",
+                operation_id="agents_api_v1_conversations_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -995,17 +994,17 @@ class Conversations(BaseSDK):
             return
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
@@ -1036,7 +1035,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteConversationRequest(
+        request = models.AgentsAPIV1ConversationsDeleteRequest(
             conversation_id=conversation_id,
         )
 
@@ -1069,7 +1068,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteConversation",
+                operation_id="agents_api_v1_conversations_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1085,30 +1084,32 @@ class Conversations(BaseSDK):
             return
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def append(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationappendrequest.ConversationAppendRequestHandoffExecution
+            models_appendconversationrequest.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -1116,6 +1117,12 @@ class Conversations(BaseSDK):
                 models_completionargs.CompletionArgsTypedDict,
             ]
         ] = None,
+        tool_confirmations: OptionalNullable[
+            Union[
+                List[models_toolcallconfirmation.ToolCallConfirmation],
+                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1131,6 +1138,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param tool_confirmations:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1146,15 +1154,21 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AppendConversationRequest(
+        request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            conversation_append_request=models.ConversationAppendRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            append_conversation_request=models.AppendConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                tool_confirmations=utils.get_pydantic_model(
+                    tool_confirmations,
+                    OptionalNullable[List[models.ToolCallConfirmation]],
                 ),
             ),
         )
@@ -1173,11 +1187,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1195,7 +1209,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="AppendConversation",
+                operation_id="agents_api_v1_conversations_append",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1211,30 +1225,32 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def append_async(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationappendrequest.ConversationAppendRequestHandoffExecution
+            models_appendconversationrequest.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -1242,6 +1258,12 @@ class Conversations(BaseSDK):
                 models_completionargs.CompletionArgsTypedDict,
             ]
         ] = None,
+        tool_confirmations: OptionalNullable[
+            Union[
+                List[models_toolcallconfirmation.ToolCallConfirmation],
+                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1257,6 +1279,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param tool_confirmations:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1272,15 +1295,21 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AppendConversationRequest(
+        request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            conversation_append_request=models.ConversationAppendRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            append_conversation_request=models.AppendConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                tool_confirmations=utils.get_pydantic_model(
+                    tool_confirmations,
+                    OptionalNullable[List[models.ToolCallConfirmation]],
                 ),
             ),
         )
@@ -1299,11 +1328,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1321,7 +1350,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="AppendConversation",
+                operation_id="agents_api_v1_conversations_append",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1337,17 +1366,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get_history(
         self,
@@ -1378,7 +1407,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationHistoryRequest(
+        request = models.AgentsAPIV1ConversationsHistoryRequest(
             conversation_id=conversation_id,
         )
 
@@ -1411,7 +1440,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversationHistory",
+                operation_id="agents_api_v1_conversations_history",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1427,17 +1456,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationHistory, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_history_async(
         self,
@@ -1468,7 +1497,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationHistoryRequest(
+        request = models.AgentsAPIV1ConversationsHistoryRequest(
             conversation_id=conversation_id,
         )
 
@@ -1501,7 +1530,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversationHistory",
+                operation_id="agents_api_v1_conversations_history",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1517,17 +1546,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationHistory, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get_messages(
         self,
@@ -1558,7 +1587,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationMessagesRequest(
+        request = models.AgentsAPIV1ConversationsMessagesRequest(
             conversation_id=conversation_id,
         )
 
@@ -1591,7 +1620,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversationMessages",
+                operation_id="agents_api_v1_conversations_messages",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1607,17 +1636,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationMessages, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_messages_async(
         self,
@@ -1648,7 +1677,7 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetConversationMessagesRequest(
+        request = models.AgentsAPIV1ConversationsMessagesRequest(
             conversation_id=conversation_id,
         )
 
@@ -1681,7 +1710,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetConversationMessages",
+                operation_id="agents_api_v1_conversations_messages",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1697,31 +1726,33 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationMessages, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def restart(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
         from_entry_id: str,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationrestartrequest.ConversationRestartRequestHandoffExecution
+            models_restartconversationrequest.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -1732,8 +1763,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrestartrequest.ConversationRestartRequestAgentVersion,
-                models_conversationrestartrequest.ConversationRestartRequestAgentVersionTypedDict,
+                models_restartconversationrequest.RestartConversationRequestAgentVersion,
+                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1746,8 +1777,8 @@ class Conversations(BaseSDK):
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
         :param conversation_id: ID of the original conversation which is being restarted.
-        :param inputs:
         :param from_entry_id:
+        :param inputs:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
@@ -1769,10 +1800,12 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RestartConversationRequest(
+        request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            conversation_restart_request=models.ConversationRestartRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            restart_conversation_request=models.RestartConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
@@ -1799,11 +1832,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1821,7 +1854,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RestartConversation",
+                operation_id="agents_api_v1_conversations_restart",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1837,31 +1870,33 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def restart_async(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
         from_entry_id: str,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
         stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationrestartrequest.ConversationRestartRequestHandoffExecution
+            models_restartconversationrequest.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -1872,8 +1907,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrestartrequest.ConversationRestartRequestAgentVersion,
-                models_conversationrestartrequest.ConversationRestartRequestAgentVersionTypedDict,
+                models_restartconversationrequest.RestartConversationRequestAgentVersion,
+                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1886,8 +1921,8 @@ class Conversations(BaseSDK):
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
         :param conversation_id: ID of the original conversation which is being restarted.
-        :param inputs:
         :param from_entry_id:
+        :param inputs:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
@@ -1909,10 +1944,12 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RestartConversationRequest(
+        request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            conversation_restart_request=models.ConversationRestartRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            restart_conversation_request=models.RestartConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
@@ -1939,11 +1976,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1961,7 +1998,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RestartConversation",
+                operation_id="agents_api_v1_conversations_restart",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1977,17 +2014,17 @@ class Conversations(BaseSDK):
             return unmarshal_json_response(models.ConversationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def start_stream(
         self,
@@ -2116,7 +2153,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartConversationStream",
+                operation_id="agents_api_v1_conversations_start_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2138,18 +2175,18 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def start_stream_async(
         self,
@@ -2278,7 +2315,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="StartConversationStream",
+                operation_id="agents_api_v1_conversations_start_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2300,31 +2337,33 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def append_stream(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
-        stream: Optional[bool] = True,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationappendstreamrequest.ConversationAppendStreamRequestHandoffExecution
+            models_appendconversationrequest.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -2332,6 +2371,12 @@ class Conversations(BaseSDK):
                 models_completionargs.CompletionArgsTypedDict,
             ]
         ] = None,
+        tool_confirmations: OptionalNullable[
+            Union[
+                List[models_toolcallconfirmation.ToolCallConfirmation],
+                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2347,6 +2392,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param tool_confirmations:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2362,15 +2408,21 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AppendConversationStreamRequest(
+        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            append_conversation_request=models.AppendConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                tool_confirmations=utils.get_pydantic_model(
+                    tool_confirmations,
+                    OptionalNullable[List[models.ToolCallConfirmation]],
                 ),
             ),
         )
@@ -2389,11 +2441,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendStreamRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2411,7 +2463,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="AppendConversationStream",
+                operation_id="agents_api_v1_conversations_append_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2433,31 +2485,33 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def append_stream_async(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
-        stream: Optional[bool] = True,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationappendstreamrequest.ConversationAppendStreamRequestHandoffExecution
+            models_appendconversationrequest.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -2465,6 +2519,12 @@ class Conversations(BaseSDK):
                 models_completionargs.CompletionArgsTypedDict,
             ]
         ] = None,
+        tool_confirmations: OptionalNullable[
+            Union[
+                List[models_toolcallconfirmation.ToolCallConfirmation],
+                List[models_toolcallconfirmation.ToolCallConfirmationTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2480,6 +2540,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param tool_confirmations:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2495,15 +2556,21 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.AppendConversationStreamRequest(
+        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            append_conversation_request=models.AppendConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                tool_confirmations=utils.get_pydantic_model(
+                    tool_confirmations,
+                    OptionalNullable[List[models.ToolCallConfirmation]],
                 ),
             ),
         )
@@ -2522,11 +2589,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendStreamRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2544,7 +2611,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="AppendConversationStream",
+                operation_id="agents_api_v1_conversations_append_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2566,32 +2633,34 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def restart_stream(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
         from_entry_id: str,
-        stream: Optional[bool] = True,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationrestartstreamrequest.ConversationRestartStreamRequestHandoffExecution
+            models_restartconversationrequest.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -2602,8 +2671,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersion,
-                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersionTypedDict,
+                models_restartconversationrequest.RestartConversationRequestAgentVersion,
+                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2616,8 +2685,8 @@ class Conversations(BaseSDK):
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
         :param conversation_id: ID of the original conversation which is being restarted.
-        :param inputs:
         :param from_entry_id:
+        :param inputs:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
@@ -2639,10 +2708,12 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RestartConversationStreamRequest(
+        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            restart_conversation_request=models.RestartConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
@@ -2669,11 +2740,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartStreamRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2691,7 +2762,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RestartConversationStream",
+                operation_id="agents_api_v1_conversations_restart_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2713,32 +2784,34 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def restart_stream_async(
         self,
         *,
         conversation_id: str,
-        inputs: Union[
-            models_conversationinputs.ConversationInputs,
-            models_conversationinputs.ConversationInputsTypedDict,
-        ],
         from_entry_id: str,
-        stream: Optional[bool] = True,
+        inputs: Optional[
+            Union[
+                models_conversationinputs.ConversationInputs,
+                models_conversationinputs.ConversationInputsTypedDict,
+            ]
+        ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models_conversationrestartstreamrequest.ConversationRestartStreamRequestHandoffExecution
+            models_restartconversationrequest.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[
@@ -2749,8 +2822,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersion,
-                models_conversationrestartstreamrequest.ConversationRestartStreamRequestAgentVersionTypedDict,
+                models_restartconversationrequest.RestartConversationRequestAgentVersion,
+                models_restartconversationrequest.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2763,8 +2836,8 @@ class Conversations(BaseSDK):
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
 
         :param conversation_id: ID of the original conversation which is being restarted.
-        :param inputs:
         :param from_entry_id:
+        :param inputs:
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
@@ -2786,10 +2859,12 @@ class Conversations(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RestartConversationStreamRequest(
+        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
-                inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            restart_conversation_request=models.RestartConversationRequest(
+                inputs=utils.get_pydantic_model(
+                    inputs, Optional[models.ConversationInputs]
+                ),
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
@@ -2816,11 +2891,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartStreamRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2838,7 +2913,7 @@ class Conversations(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="RestartConversationStream",
+                operation_id="agents_api_v1_conversations_restart_stream",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2860,15 +2935,15 @@ class Conversations(BaseSDK):
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res, http_res_text
+                errors.HTTPValidationErrorData, http_res, http_res_text
             )
-            raise models.HTTPValidationError(response_data, http_res, http_res_text)
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
         http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError("Unexpected response received", http_res, http_res_text)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)

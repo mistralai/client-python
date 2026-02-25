@@ -24,7 +24,7 @@ class TranscriptionStreamLanguage(BaseModel):
 
     audio_language: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.language"],
             AfterValidator(validate_const("transcription.language")),

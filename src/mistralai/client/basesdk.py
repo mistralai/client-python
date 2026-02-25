@@ -3,7 +3,7 @@
 
 from .sdkconfiguration import SDKConfiguration
 import httpx
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import (
     AfterErrorContext,
     AfterSuccessContext,
@@ -261,7 +261,7 @@ class BaseSDK:
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise models.NoResponseError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -282,7 +282,7 @@ class BaseSDK:
                     http_res = result
                 else:
                     logger.debug("Raising unexpected SDK error")
-                    raise models.SDKError("Unexpected error occurred", http_res)
+                    raise errors.SDKError("Unexpected error occurred", http_res)
 
             return http_res
 
@@ -333,7 +333,7 @@ class BaseSDK:
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise models.NoResponseError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -354,7 +354,7 @@ class BaseSDK:
                     http_res = result
                 else:
                     logger.debug("Raising unexpected SDK error")
-                    raise models.SDKError("Unexpected error occurred", http_res)
+                    raise errors.SDKError("Unexpected error occurred", http_res)
 
             return http_res
 

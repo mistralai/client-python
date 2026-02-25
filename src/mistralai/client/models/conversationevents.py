@@ -37,13 +37,13 @@ ConversationEventsDataTypedDict = TypeAliasType(
         ResponseStartedEventTypedDict,
         ResponseDoneEventTypedDict,
         ResponseErrorEventTypedDict,
-        ToolExecutionStartedEventTypedDict,
         ToolExecutionDeltaEventTypedDict,
         ToolExecutionDoneEventTypedDict,
         AgentHandoffStartedEventTypedDict,
         AgentHandoffDoneEventTypedDict,
-        FunctionCallEventTypedDict,
+        ToolExecutionStartedEventTypedDict,
         MessageOutputEventTypedDict,
+        FunctionCallEventTypedDict,
     ],
 )
 
@@ -61,7 +61,7 @@ ConversationEventsData = Annotated[
         ToolExecutionDoneEvent,
         ToolExecutionStartedEvent,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 

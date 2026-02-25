@@ -31,11 +31,11 @@ ConversationStreamRequestHandoffExecution = Literal[
 ConversationStreamRequestToolTypedDict = TypeAliasType(
     "ConversationStreamRequestToolTypedDict",
     Union[
+        FunctionToolTypedDict,
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
-        FunctionToolTypedDict,
         DocumentLibraryToolTypedDict,
     ],
 )
@@ -50,7 +50,7 @@ ConversationStreamRequestTool = Annotated[
         WebSearchTool,
         WebSearchPremiumTool,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
 
 

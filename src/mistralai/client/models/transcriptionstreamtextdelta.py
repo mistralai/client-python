@@ -24,7 +24,7 @@ class TranscriptionStreamTextDelta(BaseModel):
 
     text: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.text.delta"],
             AfterValidator(validate_const("transcription.text.delta")),

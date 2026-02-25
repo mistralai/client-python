@@ -2,7 +2,7 @@
 # @generated-id: 26e773725732
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     chatmoderationrequest as models_chatmoderationrequest,
@@ -106,17 +106,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ModerationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def moderate_async(
         self,
@@ -206,17 +206,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ModerationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def moderate_chat(
         self,
@@ -305,17 +305,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ModerationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def moderate_chat_async(
         self,
@@ -404,17 +404,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ModerationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def classify(
         self,
@@ -504,17 +504,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ClassificationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def classify_async(
         self,
@@ -604,17 +604,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ClassificationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def classify_chat(
         self,
@@ -698,17 +698,17 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ClassificationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def classify_chat_async(
         self,
@@ -792,14 +792,14 @@ class Classifiers(BaseSDK):
             return unmarshal_json_response(models.ClassificationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

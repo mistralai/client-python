@@ -38,7 +38,7 @@ class ToolExecutionDeltaEvent(BaseModel):
 
     arguments: str
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["tool.execution.delta"],
             AfterValidator(validate_const("tool.execution.delta")),

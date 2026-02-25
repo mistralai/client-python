@@ -10,12 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ToolReferenceChunkType = Literal["tool_reference",]
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ToolReferenceChunkToolTypedDict = TypeAliasType(
@@ -31,7 +31,7 @@ ToolReferenceChunkTool = TypeAliasType(
 class ToolReferenceChunkTypedDict(TypedDict):
     tool: ToolReferenceChunkToolTypedDict
     title: str
-    type: NotRequired[ToolReferenceChunkType]
+    type: Literal["tool_reference"]
     url: NotRequired[Nullable[str]]
     favicon: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
@@ -42,7 +42,13 @@ class ToolReferenceChunk(BaseModel):
 
     title: str
 
-    type: Optional[ToolReferenceChunkType] = "tool_reference"
+    type: Annotated[
+        Annotated[
+            Optional[Literal["tool_reference"]],
+            AfterValidator(validate_const("tool_reference")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "tool_reference"
 
     url: OptionalNullable[str] = UNSET
 

@@ -21,8 +21,8 @@ class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):
     text: str
     start: float
     end: float
-    speaker_id: NotRequired[Nullable[str]]
     type: Literal["transcription.segment"]
+    speaker_id: NotRequired[Nullable[str]]
 
 
 class TranscriptionStreamSegmentDelta(BaseModel):
@@ -37,15 +37,15 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     end: float
 
-    speaker_id: OptionalNullable[str] = UNSET
-
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.segment"],
             AfterValidator(validate_const("transcription.segment")),
         ],
         pydantic.Field(alias="type"),
     ] = "transcription.segment"
+
+    speaker_id: OptionalNullable[str] = UNSET
 
     @property
     def additional_properties(self):

@@ -2,7 +2,7 @@
 # @generated-id: 2f804a12fc62
 
 from .basesdk import BaseSDK
-from mistralai.client import models, utils
+from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.models import (
     ocrrequest as models_ocrrequest,
@@ -22,7 +22,7 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
         ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
@@ -83,7 +83,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -148,24 +148,24 @@ class Ocr(BaseSDK):
             return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def process_async(
         self,
         *,
         model: Nullable[str],
         document: Union[
-            models_ocrrequest.Document, models_ocrrequest.DocumentTypedDict
+            models_ocrrequest.DocumentUnion, models_ocrrequest.DocumentUnionTypedDict
         ],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
@@ -226,7 +226,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.Document),
+            document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -291,14 +291,14 @@ class Ocr(BaseSDK):
             return unmarshal_json_response(models.OCRResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
-                models.HTTPValidationErrorData, http_res
+                errors.HTTPValidationErrorData, http_res
             )
-            raise models.HTTPValidationError(response_data, http_res)
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError("API error occurred", http_res, http_res_text)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise models.SDKError("Unexpected response received", http_res)
+        raise errors.SDKError("Unexpected response received", http_res)

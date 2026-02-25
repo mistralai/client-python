@@ -5,32 +5,37 @@ from __future__ import annotations
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ThinkingTypedDict = TypeAliasType(
-    "ThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
+ThinkChunkThinkingTypedDict = TypeAliasType(
+    "ThinkChunkThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
 )
 
 
-Thinking = TypeAliasType("Thinking", Union[ReferenceChunk, TextChunk])
-
-
-ThinkChunkType = Literal["thinking",]
+ThinkChunkThinking = TypeAliasType(
+    "ThinkChunkThinking", Union[ReferenceChunk, TextChunk]
+)
 
 
 class ThinkChunkTypedDict(TypedDict):
-    thinking: List[ThinkingTypedDict]
+    thinking: List[ThinkChunkThinkingTypedDict]
+    type: Literal["thinking"]
     closed: NotRequired[bool]
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
-    type: NotRequired[ThinkChunkType]
 
 
 class ThinkChunk(BaseModel):
-    thinking: List[Thinking]
+    thinking: List[ThinkChunkThinking]
+
+    type: Annotated[
+        Annotated[Literal["thinking"], AfterValidator(validate_const("thinking"))],
+        pydantic.Field(alias="type"),
+    ] = "thinking"
 
     closed: Optional[bool] = None
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
-
-    type: Optional[ThinkChunkType] = "thinking"

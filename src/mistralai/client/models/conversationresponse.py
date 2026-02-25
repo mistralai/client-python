@@ -8,27 +8,27 @@ from .functioncallentry import FunctionCallEntry, FunctionCallEntryTypedDict
 from .messageoutputentry import MessageOutputEntry, MessageOutputEntryTypedDict
 from .toolexecutionentry import ToolExecutionEntry, ToolExecutionEntryTypedDict
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ConversationResponseObject = Literal["conversation.response",]
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 OutputTypedDict = TypeAliasType(
     "OutputTypedDict",
     Union[
-        ToolExecutionEntryTypedDict,
-        FunctionCallEntryTypedDict,
         MessageOutputEntryTypedDict,
         AgentHandoffEntryTypedDict,
+        ToolExecutionEntryTypedDict,
+        FunctionCallEntryTypedDict,
     ],
 )
 
 
 Output = TypeAliasType(
     "Output",
-    Union[ToolExecutionEntry, FunctionCallEntry, MessageOutputEntry, AgentHandoffEntry],
+    Union[MessageOutputEntry, AgentHandoffEntry, ToolExecutionEntry, FunctionCallEntry],
 )
 
 
@@ -38,7 +38,7 @@ class ConversationResponseTypedDict(TypedDict):
     conversation_id: str
     outputs: List[OutputTypedDict]
     usage: ConversationUsageInfoTypedDict
-    object: NotRequired[ConversationResponseObject]
+    object: Literal["conversation.response"]
 
 
 class ConversationResponse(BaseModel):
@@ -50,4 +50,10 @@ class ConversationResponse(BaseModel):
 
     usage: ConversationUsageInfo
 
-    object: Optional[ConversationResponseObject] = "conversation.response"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation.response"]],
+            AfterValidator(validate_const("conversation.response")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation.response"

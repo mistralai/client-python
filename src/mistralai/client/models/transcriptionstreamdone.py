@@ -41,7 +41,7 @@ class TranscriptionStreamDone(BaseModel):
 
     segments: Optional[List[TranscriptionSegmentChunk]] = None
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["transcription.done"],
             AfterValidator(validate_const("transcription.done")),

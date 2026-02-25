@@ -17,7 +17,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import Field, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -25,11 +28,11 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 ModelConversationToolTypedDict = TypeAliasType(
     "ModelConversationToolTypedDict",
     Union[
+        FunctionToolTypedDict,
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
-        FunctionToolTypedDict,
         DocumentLibraryToolTypedDict,
     ],
 )
@@ -44,11 +47,8 @@ ModelConversationTool = Annotated[
         WebSearchTool,
         WebSearchPremiumTool,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
-
-
-ModelConversationObject = Literal["conversation",]
 
 
 class ModelConversationTypedDict(TypedDict):
@@ -68,7 +68,7 @@ class ModelConversationTypedDict(TypedDict):
     r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
-    object: NotRequired[ModelConversationObject]
+    object: Literal["conversation"]
 
 
 class ModelConversation(BaseModel):
@@ -98,7 +98,13 @@ class ModelConversation(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
-    object: Optional[ModelConversationObject] = "conversation"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation"]],
+            AfterValidator(validate_const("conversation")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

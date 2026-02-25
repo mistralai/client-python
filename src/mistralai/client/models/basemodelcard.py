@@ -60,7 +60,7 @@ class BaseModelCard(BaseModel):
 
     default_model_temperature: OptionalNullable[float] = UNSET
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["base"], AfterValidator(validate_const("base"))],
         pydantic.Field(alias="type"),
     ] = "base"

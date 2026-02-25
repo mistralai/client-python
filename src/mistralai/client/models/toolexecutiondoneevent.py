@@ -36,7 +36,7 @@ class ToolExecutionDoneEvent(BaseModel):
 
     name: ToolExecutionDoneEventName
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["tool.execution.done"],
             AfterValidator(validate_const("tool.execution.done")),

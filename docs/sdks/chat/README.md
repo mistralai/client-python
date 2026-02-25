@@ -27,8 +27,8 @@ with Mistral(
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
         "type": "text",
@@ -72,8 +72,8 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
 ## stream
 
@@ -93,8 +93,8 @@ with Mistral(
 
     res = mistral.chat.stream(model="mistral-large-latest", messages=[
         {
-            "content": "Who is the best French painter? Answer in one short sentence.",
             "role": "user",
+            "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=True, response_format={
         "type": "text",
@@ -140,5 +140,5 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

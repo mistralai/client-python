@@ -35,7 +35,7 @@ class WandbIntegration(BaseModel):
     api_key: str
     r"""The WandB API key to use for authentication."""
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["wandb"], AfterValidator(validate_const("wandb"))],
         pydantic.Field(alias="type"),
     ] = "wandb"

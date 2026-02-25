@@ -19,7 +19,7 @@ class FunctionToolTypedDict(TypedDict):
 class FunctionTool(BaseModel):
     function: Function
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[Literal["function"], AfterValidator(validate_const("function"))],
         pydantic.Field(alias="type"),
     ] = "function"

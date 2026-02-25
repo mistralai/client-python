@@ -54,5 +54,5 @@ with Mistral(
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| models.HTTPValidationError | 422                        | application/json           |
-| models.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

@@ -11,9 +11,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 AssistantMessageContentTypedDict = TypeAliasType(
@@ -26,18 +29,22 @@ AssistantMessageContent = TypeAliasType(
 )
 
 
-AssistantMessageRole = Literal["assistant",]
-
-
 class AssistantMessageTypedDict(TypedDict):
+    role: Literal["assistant"]
     content: NotRequired[Nullable[AssistantMessageContentTypedDict]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
     prefix: NotRequired[bool]
     r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
-    role: NotRequired[AssistantMessageRole]
 
 
 class AssistantMessage(BaseModel):
+    role: Annotated[
+        Annotated[
+            Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
+        ],
+        pydantic.Field(alias="role"),
+    ] = "assistant"
+
     content: OptionalNullable[AssistantMessageContent] = UNSET
 
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
@@ -45,11 +52,9 @@ class AssistantMessage(BaseModel):
     prefix: Optional[bool] = False
     r"""Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."""
 
-    role: Optional[AssistantMessageRole] = "assistant"
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["content", "tool_calls", "prefix", "role"]
+        optional_fields = ["role", "content", "tool_calls", "prefix"]
         nullable_fields = ["content", "tool_calls"]
         null_default_fields = []
 

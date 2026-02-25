@@ -17,7 +17,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import Field, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -25,11 +28,11 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 AgentToolTypedDict = TypeAliasType(
     "AgentToolTypedDict",
     Union[
+        FunctionToolTypedDict,
         WebSearchToolTypedDict,
         WebSearchPremiumToolTypedDict,
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
-        FunctionToolTypedDict,
         DocumentLibraryToolTypedDict,
     ],
 )
@@ -44,11 +47,8 @@ AgentTool = Annotated[
         WebSearchTool,
         WebSearchPremiumTool,
     ],
-    Field(discriminator="TYPE"),
+    Field(discriminator="type"),
 ]
-
-
-AgentObject = Literal["agent",]
 
 
 class AgentTypedDict(TypedDict):
@@ -70,7 +70,7 @@ class AgentTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
-    object: NotRequired[AgentObject]
+    object: Literal["agent"]
     version_message: NotRequired[Nullable[str]]
 
 
@@ -108,7 +108,10 @@ class Agent(BaseModel):
 
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
-    object: Optional[AgentObject] = "agent"
+    object: Annotated[
+        Annotated[Optional[Literal["agent"]], AfterValidator(validate_const("agent"))],
+        pydantic.Field(alias="object"),
+    ] = "agent"
 
     version_message: OptionalNullable[str] = UNSET
 

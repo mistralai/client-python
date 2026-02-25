@@ -19,9 +19,6 @@ from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-MessageOutputEventRole = Literal["assistant",]
-
-
 MessageOutputEventContentTypedDict = TypeAliasType(
     "MessageOutputEventContentTypedDict", Union[str, OutputContentChunksTypedDict]
 )
@@ -41,7 +38,7 @@ class MessageOutputEventTypedDict(TypedDict):
     content_index: NotRequired[int]
     model: NotRequired[Nullable[str]]
     agent_id: NotRequired[Nullable[str]]
-    role: NotRequired[MessageOutputEventRole]
+    role: Literal["assistant"]
 
 
 class MessageOutputEvent(BaseModel):
@@ -49,7 +46,7 @@ class MessageOutputEvent(BaseModel):
 
     content: MessageOutputEventContent
 
-    TYPE: Annotated[
+    type: Annotated[
         Annotated[
             Literal["message.output.delta"],
             AfterValidator(validate_const("message.output.delta")),
@@ -67,7 +64,12 @@ class MessageOutputEvent(BaseModel):
 
     agent_id: OptionalNullable[str] = UNSET
 
-    role: Optional[MessageOutputEventRole] = "assistant"
+    role: Annotated[
+        Annotated[
+            Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
+        ],
+        pydantic.Field(alias="role"),
+    ] = "assistant"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -55,7 +55,7 @@ with Mistral(
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## stream
 
@@ -105,4 +105,4 @@ with Mistral(
 
 | Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |

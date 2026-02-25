@@ -9,11 +9,11 @@ from .messageinputentry import MessageInputEntry, MessageInputEntryTypedDict
 from .messageoutputentry import MessageOutputEntry, MessageOutputEntryTypedDict
 from .toolexecutionentry import ToolExecutionEntry, ToolExecutionEntryTypedDict
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
-
-
-ConversationHistoryObject = Literal["conversation.history",]
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 EntryTypedDict = TypeAliasType(
@@ -21,10 +21,10 @@ EntryTypedDict = TypeAliasType(
     Union[
         FunctionResultEntryTypedDict,
         MessageInputEntryTypedDict,
-        FunctionCallEntryTypedDict,
-        ToolExecutionEntryTypedDict,
         MessageOutputEntryTypedDict,
         AgentHandoffEntryTypedDict,
+        ToolExecutionEntryTypedDict,
+        FunctionCallEntryTypedDict,
     ],
 )
 
@@ -34,10 +34,10 @@ Entry = TypeAliasType(
     Union[
         FunctionResultEntry,
         MessageInputEntry,
-        FunctionCallEntry,
-        ToolExecutionEntry,
         MessageOutputEntry,
         AgentHandoffEntry,
+        ToolExecutionEntry,
+        FunctionCallEntry,
     ],
 )
 
@@ -47,7 +47,7 @@ class ConversationHistoryTypedDict(TypedDict):
 
     conversation_id: str
     entries: List[EntryTypedDict]
-    object: NotRequired[ConversationHistoryObject]
+    object: Literal["conversation.history"]
 
 
 class ConversationHistory(BaseModel):
@@ -57,4 +57,10 @@ class ConversationHistory(BaseModel):
 
     entries: List[Entry]
 
-    object: Optional[ConversationHistoryObject] = "conversation.history"
+    object: Annotated[
+        Annotated[
+            Optional[Literal["conversation.history"]],
+            AfterValidator(validate_const("conversation.history")),
+        ],
+        pydantic.Field(alias="object"),
+    ] = "conversation.history"
