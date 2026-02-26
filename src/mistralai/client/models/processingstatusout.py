@@ -2,16 +2,20 @@
 # @generated-id: 3df842c4140f
 
 from __future__ import annotations
+from .processstatus import ProcessStatus
 from mistralai.client.types import BaseModel
 from typing_extensions import TypedDict
 
 
 class ProcessingStatusOutTypedDict(TypedDict):
     document_id: str
+    process_status: ProcessStatus
     processing_status: str
 
 
 class ProcessingStatusOut(BaseModel):
     document_id: str
+
+    process_status: ProcessStatus
 
     processing_status: str
