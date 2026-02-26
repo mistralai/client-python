@@ -46,8 +46,6 @@ Azure and GCP SDKs now live under the `mistralai` namespace as separate distribu
 
 #### Installation Changes
 
-The main `mistralai` package now bundles Azure and GCP support. You can also install `mistralai-azure` or `mistralai-gcp` as standalone distributions.
-
 For GCP authentication dependencies, use `pip install "mistralai[gcp]"`.
 
 ### What Stays the Same
