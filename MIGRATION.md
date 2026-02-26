@@ -46,41 +46,16 @@ Azure and GCP SDKs now live under the `mistralai` namespace as separate distribu
 
 #### Installation Changes
 
-| v1 | v2 |
-|---|---|
-| `pip install mistralai` | `pip install mistralai` (includes Azure and GCP) |
-| `pip install mistralai[gcp]` (for GCP auth) | `pip install "mistralai[gcp]"` (for GCP auth dependencies) |
+The main `mistralai` package now bundles Azure and GCP support. You can also install `mistralai-azure` or `mistralai-gcp` as standalone distributions.
 
-Azure and GCP are now standalone distributions that can be installed independently of the core SDK. The `mistralai[azure]` and `mistralai[gcp]` extras are syntactic sugar that pull in the respective distributions.
+For GCP authentication dependencies, use `pip install "mistralai[gcp]"`.
 
 ### What Stays the Same
 
 - The `Mistral` client API is unchanged
 - All models (`UserMessage`, `AssistantMessage`, etc.) work the same way
 
-### Type Name Changes
-
-Some type names have been updated for clarity and consistency:
-
-| Old Name | New Name |
-|---|---|
-| `Tools` | `ConversationRequestTool` |
-| `ToolsTypedDict` | `ConversationRequestToolTypedDict` |
-| `HandoffExecution` | `ConversationRequestHandoffExecution` |
-| `AgentVersion` | `ConversationRequestAgentVersion` |
-
-### Shorter Request/Response Class Names
-
-Internal request and response wrapper classes now use concise names:
-
-| Old Name | New Name |
-|---|---|
-| `JobsAPIRoutesFineTuningArchiveFineTunedModelRequest` | `ArchiveModelRequest` |
-| `JobsAPIRoutesFineTuningCreateFineTuningJobResponse` | `CreateFineTuningJobResponse` |
-| `FilesAPIRoutesUploadFileRequest` | `UploadFileRequest` |
-| `AgentsAPIV1ConversationsAppendRequest` | `AppendConversationRequest` |
-
-This affects all operation-specific request/response types. Core models like `UserMessage`, `ChatCompletionRequest`, etc. are unchanged.
+### Enums
 
 Enums now accept unknown values for forward compatibility with API changes.
 
@@ -89,6 +64,8 @@ Enums now accept unknown values for forward compatibility with API changes.
 ## Migrating from v0.x to v1.x
 
 Version 1.0 introduced significant changes to improve usability and consistency.
+
+> **Note:** The v1.x examples below use v1-style imports (e.g., `from mistralai import Mistral`). If you're on v2.x, combine these API changes with the [v1 to v2 import changes](#migrating-from-v1x-to-v2x) above.
 
 ### Major Changes
 
