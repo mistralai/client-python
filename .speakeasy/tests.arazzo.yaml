@@ -1,0 +1,1530 @@
+arazzo: 1.0.1
+info:
+  title: Test Suite
+  summary: Created from /Users/nelson.proia/PycharmProjects/client-python/.speakeasy/temp/eb63e6/openapi/bundle/openapi.yaml
+  version: 0.0.1
+sourceDescriptions:
+  - name: /Users/nelson.proia/PycharmProjects/client-python/.speakeasy/temp/eb63e6/openapi/bundle/openapi.yaml
+    url: https://TBD.com
+    type: openapi
+workflows:
+  - workflowId: list_models_v1_models_get
+    steps:
+      - stepId: test
+        operationId: list_models_v1_models_get
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object": "list"}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: list_models_v1_models_get-userExample
+    steps:
+      - stepId: test
+        operationId: list_models_v1_models_get
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"list"}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: retrieve_model_v1_models__model_id__get
+    steps:
+      - stepId: test
+        operationId: retrieve_model_v1_models__model_id__get
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"model","owned_by":"mistralai","capabilities":{"completion_chat":true,"function_calling":true,"completion_fim":false,"fine_tuning":false,"vision":false,"ocr":false,"classification":false,"moderation":false,"audio":false,"audio_transcription":false},"max_context_length":32768,"type":"fine-tuned","job":"Product Markets Facilitator","root":"<value>","archived":false}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: retrieve_model_v1_models__model_id__get-userExample
+    steps:
+      - stepId: test
+        operationId: retrieve_model_v1_models__model_id__get
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"model","owned_by":"mistralai","capabilities":{"completion_chat":false,"function_calling":false,"completion_fim":false,"fine_tuning":false,"vision":false,"ocr":false,"classification":false,"moderation":false,"audio":false,"audio_transcription":false},"max_context_length":32768,"type":"fine-tuned","job":"Product Markets Facilitator","root":"<value>","archived":false}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: delete_model_v1_models__model_id__delete
+    steps:
+      - stepId: test
+        operationId: delete_model_v1_models__model_id__delete
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"ft:open-mistral-7b:587a6b29:20240514:7e773925","object":"model","deleted":true}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: delete_model_v1_models__model_id__delete-userExample
+    steps:
+      - stepId: test
+        operationId: delete_model_v1_models__model_id__delete
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"ft:open-mistral-7b:587a6b29:20240514:7e773925","object":"model","deleted":true}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_update_fine_tuned_model
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_update_fine_tuned_model
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        requestBody:
+          contentType: application/json
+          payload: {}
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"model","created":124166,"owned_by":"<value>","workspace_id":"<id>","root":"<value>","root_version":"<value>","archived":true,"capabilities":{"completion_chat":true,"completion_fim":false,"function_calling":false,"fine_tuning":false,"classification":false},"max_context_length":32768,"job":"c4f8ef9a-6612-4f49-88fa-a80eb8116e46","model_type":"completion"}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_archive_fine_tuned_model
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_archive_fine_tuned_model
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"model","archived":true}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_unarchive_fine_tuned_model
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_unarchive_fine_tuned_model
+        parameters:
+          - name: model_id
+            in: path
+            value: ft:open-mistral-7b:587a6b29:20240514:7e773925
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"model","archived":false}
+            type: simple
+    x-speakeasy-test-group: models
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_start
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_start
+        requestBody:
+          contentType: application/json
+          payload:
+            completion_args:
+              response_format:
+                type: text
+            inputs: <value>
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation.response","conversation_id":"<id>","outputs":[{"object":"entry","type":"agent.handoff","previous_agent_id":"<id>","previous_agent_name":"<value>","next_agent_id":"<id>","next_agent_name":"<value>"}],"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0}}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_list
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_list
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 100
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              [{"object":"conversation","id":"<id>","created_at":"2025-11-20T22:30:47.754Z","updated_at":"2025-08-05T08:36:20.296Z","agent_id":"<id>"}]
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_get
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_get
+        parameters:
+          - name: conversation_id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation","id":"<id>","created_at":"2023-06-02T14:00:42.201Z","updated_at":"2024-10-06T17:16:50.325Z","agent_id":"<id>"}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_append
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_append
+        parameters:
+          - name: conversation_id
+            in: path
+            value: <id>
+        requestBody:
+          contentType: application/json
+          payload:
+            completion_args:
+              response_format:
+                type: text
+            handoff_execution: server
+            store: true
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation.response","conversation_id":"<id>","outputs":[],"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0}}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_history
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_history
+        parameters:
+          - name: conversation_id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation.history","conversation_id":"<id>","entries":[{"object":"entry","type":"tool.execution","name":"image_generation","arguments":"<value>"}]}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_messages
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_messages
+        parameters:
+          - name: conversation_id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation.messages","conversation_id":"<id>","messages":[]}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_conversations_restart
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_conversations_restart
+        parameters:
+          - name: conversation_id
+            in: path
+            value: <id>
+        requestBody:
+          contentType: application/json
+          payload:
+            completion_args:
+              response_format:
+                type: text
+            from_entry_id: <id>
+            handoff_execution: server
+            store: true
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"conversation.response","conversation_id":"<id>","outputs":[],"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0}}
+            type: simple
+    x-speakeasy-test-group: conversations
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_create
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_create
+        requestBody:
+          contentType: application/json
+          payload:
+            completion_args:
+              response_format:
+                type: text
+            model: LeBaron
+            name: <value>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"completion_args":{"response_format":{"type":"text"}},"model":"Ranchero","name":"<value>","object":"agent","id":"<id>","version":316961,"versions":[818563,316961],"created_at":"2025-03-26T19:00:51.430Z","updated_at":"2023-04-28T15:08:02.110Z","deployment_chat":false,"source":"<value>"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_list
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_list
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 20
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              [{"model":"Impala","name":"<value>","object":"agent","id":"<id>","version":43153,"versions":[43153,439473],"created_at":"2024-04-26T15:54:09.954Z","updated_at":"2024-02-11T18:27:55.607Z","deployment_chat":true,"source":"<value>"}]
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_get
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_get
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"completion_args":{"response_format":{"type":"text"}},"model":"Silverado","name":"<value>","object":"agent","id":"<id>","version":845972,"versions":[845972,878771,621094],"created_at":"2025-08-21T03:10:48.135Z","updated_at":"2024-11-11T17:15:57.309Z","deployment_chat":false,"source":"<value>"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_update
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_update
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+        requestBody:
+          contentType: application/json
+          payload:
+            completion_args:
+              response_format:
+                type: text
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"completion_args":{"response_format":{"type":"text"}},"model":"Model X","name":"<value>","object":"agent","id":"<id>","version":799821,"versions":[799821,934063],"created_at":"2025-10-20T17:35:08.067Z","updated_at":"2023-11-16T08:47:13.265Z","deployment_chat":true,"source":"<value>"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_update_version
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_update_version
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+          - name: version
+            in: query
+            value: 157995
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"completion_args":{"response_format":{"type":"text"}},"model":"XTS","name":"<value>","object":"agent","id":"<id>","version":310764,"versions":[],"created_at":"2023-05-08T23:29:06.216Z","updated_at":"2023-05-16T19:20:05.735Z","deployment_chat":false,"source":"<value>"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_list_versions
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_list_versions
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 20
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              [{"completion_args":{"response_format":{"type":"text"}},"model":"Prius","name":"<value>","object":"agent","id":"<id>","version":866135,"versions":[849276],"created_at":"2024-07-03T17:01:49.200Z","updated_at":"2026-06-15T18:44:26.883Z","deployment_chat":true,"source":"<value>"}]
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_get_version
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_get_version
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+          - name: version
+            in: path
+            value: "788393"
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"completion_args":{"response_format":{"type":"text"}},"model":"Model 3","name":"<value>","object":"agent","id":"<id>","version":377706,"versions":[658369,642981],"created_at":"2024-10-02T23:01:15.980Z","updated_at":"2026-12-22T00:55:26.568Z","deployment_chat":false,"source":"<value>"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_create_or_update_alias
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_create_or_update_alias
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+          - name: alias
+            in: query
+            value: <value>
+          - name: version
+            in: query
+            value: 595141
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"alias":"<value>","version":768764,"created_at":"2026-12-28T00:40:21.715Z","updated_at":"2025-09-01T12:54:58.254Z"}
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_api_v1_agents_list_version_aliases
+    steps:
+      - stepId: test
+        operationId: agents_api_v1_agents_list_version_aliases
+        parameters:
+          - name: agent_id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              [{"alias":"<value>","version":318290,"created_at":"2025-10-02T20:25:32.322Z","updated_at":"2026-11-19T02:58:37.894Z"}]
+            type: simple
+    x-speakeasy-test-group: beta_agents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_list_v1
+    steps:
+      - stepId: test
+        operationId: libraries_list_v1
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"data":[{"id":"bfc452fd-4bcb-46ec-9f68-ceea101e924d","name":"<value>","created_at":"2024-01-31T13:50:47.409Z","updated_at":"2023-04-09T15:28:24.261Z","owner_id":"3fb92cf9-0fea-44d0-958f-16963601a1f0","owner_type":"<value>","total_size":811051,"nb_documents":634577,"chunk_size":502060}]}
+            type: simple
+    x-speakeasy-test-group: libraries
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_create_v1
+    steps:
+      - stepId: test
+        operationId: libraries_create_v1
+        requestBody:
+          contentType: application/json
+          payload:
+            name: <value>
+        successCriteria:
+          - condition: $statusCode == 201
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"7285d921-bbab-471e-a2df-600e096d8aca","name":"<value>","created_at":"2025-12-10T18:12:15.618Z","updated_at":"2023-12-29T15:14:03.343Z","owner_id":"d5e2af8f-c98a-479e-aece-62d79ea6bab3","owner_type":"<value>","total_size":866940,"nb_documents":123652,"chunk_size":274694}
+            type: simple
+    x-speakeasy-test-group: libraries
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_get_v1
+    steps:
+      - stepId: test
+        operationId: libraries_get_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: d0d23a1e-bfe5-45e7-b7bb-22a4ea78d47f
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"24e6ac5e-61cb-4f2c-b0c0-806dfd5d8dbf","name":"<value>","created_at":"2023-01-19T09:20:07.756Z","updated_at":"2023-05-28T00:39:57.656Z","owner_id":"546a730e-7d06-4324-a4fd-2b7ff127978c","owner_type":"<value>","total_size":191122,"nb_documents":932135,"chunk_size":null}
+            type: simple
+    x-speakeasy-test-group: libraries
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_delete_v1
+    steps:
+      - stepId: test
+        operationId: libraries_delete_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 6cad0b6e-fd2e-4d11-a48b-21d30fb7c17a
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"04e83772-3f8e-41d3-a053-763ed9937e07","name":"<value>","created_at":"2025-03-15T23:45:26.060Z","updated_at":"2024-08-03T06:23:12.129Z","owner_id":"f636aa46-e1d5-4df4-966b-de4af27da6db","owner_type":"<value>","total_size":268102,"nb_documents":821714,"chunk_size":null}
+            type: simple
+    x-speakeasy-test-group: libraries
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_update_v1
+    steps:
+      - stepId: test
+        operationId: libraries_update_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: e01880c3-d0b5-4a29-8b1b-abdb8ce917e4
+        requestBody:
+          contentType: application/json
+          payload: {}
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"c3bb20a7-df8c-4461-8cfb-9e2a978c00da","name":"<value>","created_at":"2025-03-12T04:49:28.349Z","updated_at":"2025-12-18T03:09:25.092Z","owner_id":"734e66b8-ae70-4069-9ebb-7eb7ee3967d5","owner_type":"<value>","total_size":762363,"nb_documents":896591,"chunk_size":507889}
+            type: simple
+    x-speakeasy-test-group: libraries
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_list_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_list_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 5c3ca4cd-62bc-4c71-ad8a-1531ae80d078
+          - name: page_size
+            in: query
+            value: 100
+          - name: page
+            in: query
+            value: 0
+          - name: sort_by
+            in: query
+            value: created_at
+          - name: sort_order
+            in: query
+            value: desc
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"pagination":{"total_items":23246,"total_pages":881485,"current_page":173326,"page_size":318395,"has_more":false},"data":[{"id":"5106c0c7-30fb-4fd3-9083-129b77f9f509","library_id":"71eb68a2-756e-48b0-9d2b-a04d7bf95ff5","hash":"<value>","mime_type":"<value>","extension":"pdf","size":367159,"name":"<value>","created_at":"2024-09-24T04:50:43.988Z","process_status":"noop","uploaded_by_id":"7d65f4d8-1997-479f-bfb4-535c0144b48c","uploaded_by_type":"<value>","processing_status":"<value>","tokens_processing_total":957230}]}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_upload_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_upload_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: a02150d9-5ee0-4877-b62c-28b1fcdf3b76
+        requestBody:
+          contentType: multipart/form-data
+          payload:
+            file: 'x-file: example.file'
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"d40f9b56-c832-405d-aa99-b3e442254dd8","library_id":"868d7955-009a-4433-bfc6-ad7b4be4e7e4","hash":"<value>","mime_type":"<value>","extension":"m2v","size":418415,"name":"<value>","created_at":"2025-04-30T20:11:27.130Z","process_status":"in_progress","uploaded_by_id":"7db8d896-09c9-438c-b6dc-aa5c70102b3f","uploaded_by_type":"<value>","processing_status":"<value>","tokens_processing_total":61161}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_get_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_get_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 03d908c8-90a1-44fd-bf3a-8490fb7c9a03
+          - name: document_id
+            in: path
+            value: 90973aec-0508-4375-8b00-91d732414745
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"0de60230-717d-459a-8c0f-fbb9360c01be","library_id":"e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e","hash":"<value>","mime_type":"<value>","extension":"jpe","size":402478,"name":"<value>","created_at":"2023-07-29T21:43:20.750Z","process_status":"self_managed","uploaded_by_id":"d5eadabe-d7f2-4f87-a337-f80c192f886d","uploaded_by_type":"<value>","processing_status":"<value>","tokens_processing_total":793889}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_update_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_update_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 3ddd8d93-dca5-4a6d-980d-173226c35742
+          - name: document_id
+            in: path
+            value: 2a25e44c-b160-40ca-b5c2-b65fb2fcae34
+        requestBody:
+          contentType: application/json
+          payload: {}
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"1111e519-9ba5-42de-9301-938fbfee59fc","library_id":"70aac5e3-23f7-439b-bbef-090e4c1dbd6d","hash":"<value>","mime_type":"<value>","extension":"m1v","size":802305,"name":"<value>","created_at":"2024-07-02T20:02:03.680Z","process_status":"missing_content","uploaded_by_id":"08471957-b27d-4437-8242-57256727dc49","uploaded_by_type":"<value>","processing_status":"<value>","tokens_processing_total":806683}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_get_text_content_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_get_text_content_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 1d177215-3b6b-45ba-9fa9-baf773223bec
+          - name: document_id
+            in: path
+            value: 60214c91-2aba-4692-a4e6-a53365de8caf
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"text":"<value>"}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_get_status_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_get_status_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: e6906f70-368f-4155-80da-c1718f01bc43
+          - name: document_id
+            in: path
+            value: 2c904915-d831-4e9d-a345-8ce405bcef66
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"document_id":"90473b79-1fd5-437f-bee0-6638bdf69c90","process_status":"waiting_for_capacity","processing_status":"<value>"}
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_get_signed_url_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_get_signed_url_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 23cf6904-a602-4ee8-9f5b-8efc557c336d
+          - name: document_id
+            in: path
+            value: 48598486-df71-4994-acbb-1133c72efa8c
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              "https://burdensome-jellyfish.name"
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_documents_get_extracted_text_signed_url_v1
+    steps:
+      - stepId: test
+        operationId: libraries_documents_get_extracted_text_signed_url_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: a6f15de3-1e82-4f95-af82-851499042ef8
+          - name: document_id
+            in: path
+            value: 9749d4f9-24e5-4ca2-99a3-a406863f805d
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              "https://athletic-disadvantage.info"
+            type: simple
+    x-speakeasy-test-group: documents
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_share_list_v1
+    steps:
+      - stepId: test
+        operationId: libraries_share_list_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: d2169833-d8e2-416e-a372-76518d3d99c2
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"data":[{"library_id":"26c08a7a-d226-4d29-b4d8-c08f0ad41dd1","org_id":"254e3633-51b9-47a9-bc14-466ecf29d167","role":"<value>","share_with_type":"<value>","share_with_uuid":"815eb88e-1f97-4782-863f-5fd00d37268b"}]}
+            type: simple
+    x-speakeasy-test-group: accesses
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_share_create_v1
+    steps:
+      - stepId: test
+        operationId: libraries_share_create_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 36de3a24-5b1c-4c8f-9d84-d5642205a976
+        requestBody:
+          contentType: application/json
+          payload:
+            level: Viewer
+            share_with_type: User
+            share_with_uuid: 0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"library_id":"45b3a5b2-8b81-4453-9130-ded7f1e5a366","org_id":"0fa6e542-f04b-431e-a1be-76a9a92b0e68","role":"<value>","share_with_type":"<value>","share_with_uuid":"cdbcc0c5-e577-4880-8ed3-f919421d4fc5"}
+            type: simple
+    x-speakeasy-test-group: accesses
+    x-speakeasy-test-rebuild: true
+  - workflowId: libraries_share_delete_v1
+    steps:
+      - stepId: test
+        operationId: libraries_share_delete_v1
+        parameters:
+          - name: library_id
+            in: path
+            value: 709e3cad-9fb2-4f4e-bf88-143cf1808107
+        requestBody:
+          contentType: application/json
+          payload:
+            share_with_type: User
+            share_with_uuid: b843cc47-ce8f-4354-8cfc-5fcd7fb2865b
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"library_id":"7f9c6af4-e362-4cf1-9363-0409d51c2dfa","org_id":"6b2cac3a-b29c-4d8f-bebb-0db06ec1bf97","role":"<value>","share_with_type":"<value>","share_with_uuid":"618c78f1-41ca-45c3-8ef2-7d78898c7061"}
+            type: simple
+    x-speakeasy-test-group: accesses
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_upload_file
+    steps:
+      - stepId: test
+        operationId: files_api_routes_upload_file
+        requestBody:
+          contentType: multipart/form-data
+          payload:
+            file: 'x-file: example.file'
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "batch_result", "source": "upload"}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_upload_file-userExample
+    steps:
+      - stepId: test
+        operationId: files_api_routes_upload_file
+        requestBody:
+          contentType: multipart/form-data
+          payload:
+            file: 'x-file: example.file'
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"e85980c9-409e-4a46-9304-36588f6292b0","object":"file","bytes":13000,"created_at":1759500189,"filename":"example.file.jsonl","purpose":"fine-tune","sample_type":"instruct","num_lines":2,"mimetype":"application/jsonl","source":"upload","signature":"d4821d2de1917341"}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_list_files
+    steps:
+      - stepId: test
+        operationId: files_api_routes_list_files
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 100
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"data": [{"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "fine-tune", "sample_type": "batch_error", "source": "upload"}], "object": "<value>", "total": 999335}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_list_files-userExample
+    steps:
+      - stepId: test
+        operationId: files_api_routes_list_files
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 100
+          - name: include_total
+            in: query
+            value: true
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"data":[{"id":"<your_file_id>","object":"file","bytes":13000,"created_at":1759491994,"filename":"<your_file_name>","purpose":"batch","sample_type":"batch_result","num_lines":2,"mimetype":"application/jsonl","source":"mistral","signature":null}, {"id":"<your_file_id>","object":"file","bytes":13000,"created_at":1759491994,"filename":"<your_file_name>","purpose":"batch","sample_type":"batch_result","num_lines":2,"mimetype":"application/jsonl","source":"mistral","signature":null}],"object":"list","total":2}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_retrieve_file
+    steps:
+      - stepId: test
+        operationId: files_api_routes_retrieve_file
+        parameters:
+          - name: file_id
+            in: path
+            value: f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "bytes": 13000, "created_at": 1716963433, "filename": "files_upload.jsonl", "purpose": "batch", "sample_type": "instruct", "source": "repository", "deleted": false}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_retrieve_file-userExample
+    steps:
+      - stepId: test
+        operationId: files_api_routes_retrieve_file
+        parameters:
+          - name: file_id
+            in: path
+            value: f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"e85980c9-409e-4a46-9304-36588f6292b0","object":"file","bytes":13000,"created_at":1759500189,"filename":"example.file.jsonl","purpose":"fine-tune","sample_type":"instruct","num_lines":2,"mimetype":"application/jsonl","source":"upload","signature":"d4821d2de1917341","deleted":false}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_delete_file
+    steps:
+      - stepId: test
+        operationId: files_api_routes_delete_file
+        parameters:
+          - name: file_id
+            in: path
+            value: 3b6d45eb-e30b-416f-8019-f47e2e93d930
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "497f6eca-6276-4993-bfeb-53cbbbba6f09", "object": "file", "deleted": false}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_delete_file-userExample
+    steps:
+      - stepId: test
+        operationId: files_api_routes_delete_file
+        parameters:
+          - name: file_id
+            in: path
+            value: 3b6d45eb-e30b-416f-8019-f47e2e93d930
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"e85980c9-409e-4a46-9304-36588f6292b0","object":"file","deleted":true}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_download_file
+    steps:
+      - stepId: test
+        operationId: files_api_routes_download_file
+        parameters:
+          - name: file_id
+            in: path
+            value: f8919994-a4a1-46b2-8b5b-06335a4300ce
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/octet-stream
+          - context: $response.body
+            condition: |
+              "x-file: example.file"
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_get_signed_url
+    steps:
+      - stepId: test
+        operationId: files_api_routes_get_signed_url
+        parameters:
+          - name: file_id
+            in: path
+            value: 06a020ab-355c-49a6-b19d-304b7c01699f
+          - name: expiry
+            in: query
+            value: 24
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"url": "https://knotty-birdcage.net/"}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: files_api_routes_get_signed_url-userExample
+    steps:
+      - stepId: test
+        operationId: files_api_routes_get_signed_url
+        parameters:
+          - name: file_id
+            in: path
+            value: 06a020ab-355c-49a6-b19d-304b7c01699f
+          - name: expiry
+            in: query
+            value: 24
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"url":"https://mistralaifilesapiprodswe.blob.core.windows.net/fine-tune/.../.../e85980c9409e4a46930436588f6292b0.jsonl?se=2025-10-04T14%3A16%3A17Z&sp=r&sv=2025-01-05&sr=b&sig=..."}
+            type: simple
+    x-speakeasy-test-group: files
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_get_fine_tuning_jobs
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_get_fine_tuning_jobs
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 100
+          - name: created_by_me
+            in: query
+            value: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"list","total":843585}
+            type: simple
+    x-speakeasy-test-group: fine-tuning_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_create_fine_tuning_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_create_fine_tuning_job
+        requestBody:
+          contentType: application/json
+          payload:
+            hyperparameters:
+              learning_rate: 0.0001
+            invalid_sample_skip_percentage: 0
+            model: Camaro
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"expected_duration_seconds":220,"cost":10,"cost_currency":"EUR","train_tokens_per_step":131072,"train_tokens":1310720,"data_tokens":305375,"deprecated":true,"details":"<value>","epochs":4.2922,"training_steps":10,"object":"job.metadata"}
+            type: simple
+    x-speakeasy-test-group: fine-tuning_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_get_fine_tuning_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_get_fine_tuning_job
+        parameters:
+          - name: job_id
+            in: path
+            value: c167a961-ffca-4bcf-93ac-6169468dd389
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"babac92a-96fa-48c4-931c-f6f97e1bf24c","auto_start":false,"model":"Spyder","status":"FAILED","created_at":232438,"modified_at":32259,"training_files":["7a95c5a0-399d-4665-84c8-deab766d22dc"],"object":"job","job_type":"classifier","hyperparameters":{"learning_rate":0.0001},"classifier_targets":[{"name":"<value>","labels":[],"weight":5651,"loss_function":"single_class"}]}
+            type: simple
+    x-speakeasy-test-group: fine-tuning_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_cancel_fine_tuning_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_cancel_fine_tuning_job
+        parameters:
+          - name: job_id
+            in: path
+            value: 6188a2f6-7513-4e0f-89cc-3f8088523a49
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"770b9cc0-1ab6-44de-a816-67010644e9fb","auto_start":false,"model":"Volt","status":"CANCELLATION_REQUESTED","created_at":546404,"modified_at":180081,"training_files":["45e621c6-ac30-4133-b6d1-fc0d1fe24c9f"],"object":"job","job_type":"classifier","hyperparameters":{"learning_rate":0.0001},"classifier_targets":[{"name":"<value>","labels":["<value 1>"],"weight":1298.58,"loss_function":"multi_class"}]}
+            type: simple
+    x-speakeasy-test-group: fine-tuning_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_fine_tuning_start_fine_tuning_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_fine_tuning_start_fine_tuning_job
+        parameters:
+          - name: job_id
+            in: path
+            value: 56553e4d-0679-471e-b9ac-59a77d671103
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"68ad461a-676e-47fe-a07e-15e38f5082b5","auto_start":false,"model":"Grand Cherokee","status":"STARTED","created_at":134515,"modified_at":192651,"training_files":["39dabc3d-15eb-49ac-a549-69973f33acee"],"object":"job","job_type":"completion","hyperparameters":{"learning_rate":0.0001}}
+            type: simple
+    x-speakeasy-test-group: fine-tuning_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_batch_get_batch_jobs
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_batch_get_batch_jobs
+        parameters:
+          - name: page
+            in: query
+            value: 0
+          - name: page_size
+            in: query
+            value: 100
+          - name: created_by_me
+            in: query
+            value: false
+          - name: order_by
+            in: query
+            value: -created
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"list","total":186589}
+            type: simple
+    x-speakeasy-test-group: batch_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_batch_create_batch_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_batch_create_batch_job
+        requestBody:
+          contentType: application/json
+          payload:
+            endpoint: /v1/moderations
+            model: mistral-small-latest
+            timeout_hours: 24
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"batch","input_files":["7b2553d8-e17f-4df5-a862-a1678f6b5271","8c618d9f-7d82-42ba-a284-d57d84f50a58","c042f996-e842-441d-ae47-4e0850334e41"],"endpoint":"<value>","errors":[{"message":"<value>","count":1}],"status":"SUCCESS","created_at":395527,"total_requests":166919,"completed_requests":258552,"succeeded_requests":480980,"failed_requests":684176}
+            type: simple
+    x-speakeasy-test-group: batch_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_batch_get_batch_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_batch_get_batch_job
+        parameters:
+          - name: job_id
+            in: path
+            value: 4017dc9f-b629-42f4-9700-8c681b9e7f0f
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"batch","input_files":["11b83f16-f2f9-4de4-a81f-203fff419c99"],"endpoint":"<value>","errors":[],"status":"TIMEOUT_EXCEEDED","created_at":900958,"total_requests":458292,"completed_requests":184893,"succeeded_requests":104800,"failed_requests":836210}
+            type: simple
+    x-speakeasy-test-group: batch_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: jobs_api_routes_batch_cancel_batch_job
+    steps:
+      - stepId: test
+        operationId: jobs_api_routes_batch_cancel_batch_job
+        parameters:
+          - name: job_id
+            in: path
+            value: 4fb29d1c-535b-4f0a-a1cb-2167f86da569
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"<id>","object":"batch","input_files":["8fd9d88a-66be-43fd-a816-ba509ca3ca85"],"endpoint":"<value>","errors":[],"status":"TIMEOUT_EXCEEDED","created_at":608251,"total_requests":12693,"completed_requests":203340,"succeeded_requests":189291,"failed_requests":969057}
+            type: simple
+    x-speakeasy-test-group: batch_jobs
+    x-speakeasy-test-rebuild: true
+  - workflowId: chat_completion_v1_chat_completions_post
+    steps:
+      - stepId: test
+        operationId: chat_completion_v1_chat_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            messages:
+              - content: Who is the best French painter? Answer in one short sentence.
+                role: user
+            model: mistral-large-latest
+            response_format:
+              type: text
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"chat.completion","model":"mistral-small-latest","usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0},"created":1702256327,"choices":[]}
+            type: simple
+    x-speakeasy-test-group: chat
+    x-speakeasy-test-rebuild: true
+  - workflowId: fim_completion_v1_fim_completions_post
+    steps:
+      - stepId: test
+        operationId: fim_completion_v1_fim_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            model: codestral-2405
+            prompt: def
+            stream: false
+            suffix: return a+b
+            top_p: 1
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "codestral-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
+            type: simple
+    x-speakeasy-test-group: fim
+    x-speakeasy-test-rebuild: true
+  - workflowId: fim_completion_v1_fim_completions_post-userExample
+    steps:
+      - stepId: test
+        operationId: fim_completion_v1_fim_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            model: codestral-latest
+            prompt: def
+            stream: false
+            suffix: return a+b
+            top_p: 1
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"447e3e0d457e42e98248b5d2ef52a2a3","object":"chat.completion","model":"codestral-2508","usage":{"prompt_tokens":8,"completion_tokens":91,"total_tokens":99},"created":1759496862,"choices":[{"index":0,"message":{"role":"assistant","content":"add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n","tool_calls":null,"prefix":false},"finish_reason":"stop"}]}
+            type: simple
+    x-speakeasy-test-group: fim
+    x-speakeasy-test-rebuild: true
+  - workflowId: embeddings_v1_embeddings_post
+    steps:
+      - stepId: test
+        operationId: embeddings_v1_embeddings_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - Embed this sentence.
+              - As well as this one.
+            model: mistral-embed
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "data": [{"object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0}, {"object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1}]}
+            type: simple
+    x-speakeasy-test-group: embeddings
+    x-speakeasy-test-rebuild: true
+  - workflowId: embeddings_v1_embeddings_post-userExample
+    steps:
+      - stepId: test
+        operationId: embeddings_v1_embeddings_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - Embed this sentence.
+              - As well as this one.
+            model: mistral-embed
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"list","model":"mistral-embed","usage":{"prompt_tokens":15,"completion_tokens":0,"total_tokens":15,"prompt_audio_seconds":null},"data":[{"object":"embedding","embedding":[-0.016632080078125,0.0701904296875,0.03143310546875,0.01309967041015625,0.0202789306640625],"index":0}, {"object":"embedding","embedding":[-0.0230560302734375,0.039337158203125,0.0521240234375,-0.0184783935546875,0.034271240234375],"index":1}]}
+            type: simple
+    x-speakeasy-test-group: embeddings
+    x-speakeasy-test-rebuild: true
+  - workflowId: moderations_v1_moderations_post
+    steps:
+      - stepId: test
+        operationId: moderations_v1_moderations_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - <value 1>
+              - <value 2>
+            model: Durango
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Corvette", "results": [{}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: moderations_v1_moderations_post-userExample
+    steps:
+      - stepId: test
+        operationId: moderations_v1_moderations_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input: <value>
+            model: mistral-moderation-latest
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"4d71ae510af942108ef7344f903e2b88","model":"mistral-moderation-latest","results":[{"categories":{"sexual":false,"hate_and_discrimination":false,"violence_and_threats":false,"dangerous_and_criminal_content":false,"selfharm":false,"health":false,"financial":false,"law":false,"pii":false},"category_scores":{"sexual":0.0011335690505802631,"hate_and_discrimination":0.0030753696337342262,"violence_and_threats":0.0003569706459529698,"dangerous_and_criminal_content":0.002251847181469202,"selfharm":0.00017952796770259738,"health":0.0002780309587251395,"financial":0.00008481103577651083,"law":0.00004539786823443137,"pii":0.0023967307060956955}}, {"categories":{"sexual":false,"hate_and_discrimination":false,"violence_and_threats":false,"dangerous_and_criminal_content":false,"selfharm":false,"health":false,"financial":false,"law":false,"pii":false},"category_scores":{"sexual":0.000626334105618298,"hate_and_discrimination":0.0013670255430042744,"violence_and_threats":0.0002611903182696551,"dangerous_and_criminal_content":0.0030753696337342262,"selfharm":0.00010889690747717395,"health":0.00015843621804378927,"financial":0.000191104321856983,"law":0.00004006369272246957,"pii":0.0035936026833951473}}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: chat_moderations_v1_chat_moderations_post
+    steps:
+      - stepId: test
+        operationId: chat_moderations_v1_chat_moderations_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - content: <value>
+                role: tool
+            model: LeBaron
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "mod-e5cc70bb28c444948073e77776eb30ef", "model": "Explorer", "results": [{}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: chat_moderations_v1_chat_moderations_post-userExample
+    steps:
+      - stepId: test
+        operationId: chat_moderations_v1_chat_moderations_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - content: <value>
+                role: tool
+            model: LeBaron
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"352bce1a55814127a3b0bc4fb8f02a35","model":"mistral-moderation-latest","results":[{"categories":{"sexual":false,"hate_and_discrimination":false,"violence_and_threats":false,"dangerous_and_criminal_content":false,"selfharm":false,"health":false,"financial":false,"law":false,"pii":false},"category_scores":{"sexual":0.0010322310263291001,"hate_and_discrimination":0.001597845577634871,"violence_and_threats":0.00020342698553577065,"dangerous_and_criminal_content":0.0029810327105224133,"selfharm":0.00017952796770259738,"health":0.0002959570847451687,"financial":0.000079673009167891,"law":0.00004539786823443137,"pii":0.004198795650154352}}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: classifications_v1_classifications_post
+    steps:
+      - stepId: test
+        operationId: classifications_v1_classifications_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - <value 1>
+            model: mistral-moderation-latest
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"mod-e5cc70bb28c444948073e77776eb30ef","model":"ATS","results":[{}, {"key":{"scores":{"key":2080.19}}}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: chat_classifications_v1_chat_classifications_post
+    steps:
+      - stepId: test
+        operationId: chat_classifications_v1_chat_classifications_post
+        requestBody:
+          contentType: application/json
+          payload:
+            input:
+              - messages:
+                  - content: <value>
+                    role: system
+            model: Camry
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"mod-e5cc70bb28c444948073e77776eb30ef","model":"Altima","results":[{}, {"key":{"scores":{"key":1360.53,"key1":5946.42}}}, {"key":{"scores":{"key":1360.53,"key1":5946.42}}}]}
+            type: simple
+    x-speakeasy-test-group: classifiers
+    x-speakeasy-test-rebuild: true
+  - workflowId: ocr_v1_ocr_post
+    steps:
+      - stepId: test
+        operationId: ocr_v1_ocr_post
+        requestBody:
+          contentType: application/json
+          payload:
+            document:
+              image_url:
+                url: https://measly-scrap.com
+              type: image_url
+            model: CX-9
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"pages": [{"index": 944919, "markdown": "<value>", "images": [], "dimensions": {"dpi": 984283, "height": 453411, "width": 398292}}], "model": "Wrangler", "usage_info": {"pages_processed": 47064}}
+            type: simple
+    x-speakeasy-test-group: ocr
+    x-speakeasy-test-rebuild: true
+  - workflowId: ocr_v1_ocr_post-userExample
+    steps:
+      - stepId: test
+        operationId: ocr_v1_ocr_post
+        requestBody:
+          contentType: application/json
+          payload:
+            bbox_annotation_format:
+              type: text
+            document:
+              document_url: https://upset-labourer.net/
+              type: document_url
+            document_annotation_format:
+              type: text
+            model: CX-9
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"pages":[{"index":1,"markdown":"# LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE\nSaurabh Garg*<br> Carnegie Mellon University<br> sgarg2@andrew.cmu.edu<br> Sivaraman Balakrishnan<br> Carnegie Mellon University<br> sbalakri@andrew.cmu.edu<br> Zachary C. Lipton<br> Carnegie Mellon University<br> zlipton@andrew.cmu.edu\n## Behnam Neyshabur\nGoogle Research, Blueshift team<br> neyshabur@google.com\nHanie Sedghi<br> Google Research, Brain team<br> hsedghi@google.com\n#### Abstract\nReal-world machine learning deployments are characterized by mismatches between the source (training) and target (test) distributions that may cause performance drops. In this work, we investigate methods for predicting the target domain accuracy using only labeled source data and unlabeled target data. We propose Average Thresholded Confidence (ATC), a practical method that learns a threshold on the model's confidence, predicting accuracy as the fraction of unlabeled examples for which model confidence exceeds that threshold. ATC outperforms previous methods across several model architectures, types of distribution shifts (e.g., due to synthetic corruptions, dataset reproduction, or novel subpopulations), and datasets (WILDS, ImageNet, BREEDS, CIFAR, and MNIST). In our experiments, ATC estimates target performance $2-4 \\times$ more accurately than prior methods. We also explore the theoretical foundations of the problem, proving that, in general, identifying the accuracy is just as hard as identifying the optimal predictor and thus, the efficacy of any method rests upon (perhaps unstated) assumptions on the nature of the shift. Finally, analyzing our method on some toy distributions, we provide insights concerning when it works ${ }^{1}$.\n## 1 INTRODUCTION\nMachine learning models deployed in the real world typically encounter examples from previously unseen distributions. While the IID assumption enables us to evaluate models using held-out data from the source distribution (from which training data is sampled), this estimate is no longer valid in presence of a distribution shift. Moreover, under such shifts, model accuracy tends to degrade (Szegedy et al., 2014; Recht et al., 2019; Koh et al., 2021). Commonly, the only data available to the practitioner are a labeled training set (source) and unlabeled deployment-time data which makes the problem more difficult. In this setting, detecting shifts in the distribution of covariates is known to be possible (but difficult) in theory (Ramdas et al., 2015), and in practice (Rabanser et al., 2018). However, producing an optimal predictor using only labeled source and unlabeled target data is well-known to be impossible absent further assumptions (Ben-David et al., 2010; Lipton et al., 2018).\nTwo vital questions that remain are: (i) the precise conditions under which we can estimate a classifier's target-domain accuracy; and (ii) which methods are most practically useful. To begin, the straightforward way to assess the performance of a model under distribution shift would be to collect labeled (target domain) examples and then to evaluate the model on that data. However, collecting fresh labeled data from the target distribution is prohibitively expensive and time-consuming, especially if the target distribution is non-stationary. Hence, instead of using labeled data, we aim to use unlabeled data from the target distribution, that is comparatively abundant, to predict model performance. Note that in this work, our focus is not to improve performance on the target but, rather, to estimate the accuracy on the target for a given classifier.\n[^0]: Work done in part while Saurabh Garg was interning at Google ${ }^{1}$ Code is available at [https://github.com/saurabhgarg1996/ATC_code](https://github.com/saurabhgarg1996/ATC_code).\n","images":[],"dimensions":{"dpi":200,"height":2200,"width":1700}}, {"index":2,"markdown":"![img-0.jpeg](img-0.jpeg)\nFigure 1: Illustration of our proposed method ATC. Left: using source domain validation data, we identify a threshold on a score (e.g. negative entropy) computed on model confidence such that fraction of examples above the threshold matches the validation set accuracy. ATC estimates accuracy on unlabeled target data as the fraction of examples with the score above the threshold. Interestingly, this threshold yields accurate estimates on a wide set of target distributions resulting from natural and synthetic shifts. Right: Efficacy of ATC over previously proposed approaches on our testbed with a post-hoc calibrated model. To obtain errors on the same scale, we rescale all errors with Average Confidence (AC) error. Lower estimation error is better. See Table 1 for exact numbers and comparison on various types of distribution shift. See Sec. 5 for details on our testbed.\nRecently, numerous methods have been proposed for this purpose (Deng & Zheng, 2021; Chen et al., 2021b; Jiang et al., 2021; Deng et al., 2021; Guillory et al., 2021). These methods either require calibration on the target domain to yield consistent estimates (Jiang et al., 2021; Guillory et al., 2021) or additional labeled data from several target domains to learn a linear regression function on a distributional distance that then predicts model performance (Deng et al., 2021; Deng & Zheng, 2021; Guillory et al., 2021). However, methods that require calibration on the target domain typically yield poor estimates since deep models trained and calibrated on source data are not, in general, calibrated on a (previously unseen) target domain (Ovadia et al., 2019). Besides, methods that leverage labeled data from target domains rely on the fact that unseen target domains exhibit strong linear correlation with seen target domains on the underlying distance measure and, hence, can be rendered ineffective when such target domains with labeled data are unavailable (in Sec. 5.1 we demonstrate such a failure on a real-world distribution shift problem). Therefore, throughout the paper, we assume access to labeled source data and only unlabeled data from target domain(s).\nIn this work, we first show that absent assumptions on the source classifier or the nature of the shift, no method of estimating accuracy will work generally (even in non-contrived settings). To estimate accuracy on target domain perfectly, we highlight that even given perfect knowledge of the labeled source distribution (i.e., $p_{s}(x, y)$ ) and unlabeled target distribution (i.e., $p_{t}(x)$ ), we need restrictions on the nature of the shift such that we can uniquely identify the target conditional $p_{t}(y \\mid x)$. Thus, in general, identifying the accuracy of the classifier is as hard as identifying the optimal predictor.\nSecond, motivated by the superiority of methods that use maximum softmax probability (or logit) of a model for Out-Of-Distribution (OOD) detection (Hendrycks & Gimpel, 2016; Hendrycks et al., 2019), we propose a simple method that leverages softmax probability to predict model performance. Our method, Average Thresholded Confidence (ATC), learns a threshold on a score (e.g., maximum confidence or negative entropy) of model confidence on validation source data and predicts target domain accuracy as the fraction of unlabeled target points that receive a score above that threshold. ATC selects a threshold on validation source data such that the fraction of source examples that receive the score above the threshold match the accuracy of those examples. Our primary contribution in ATC is the proposal of obtaining the threshold and observing its efficacy on (practical) accuracy estimation. Importantly, our work takes a step forward in positively answering the question raised in Deng & Zheng (2021); Deng et al. (2021) about a practical strategy to select a threshold that enables accuracy prediction with thresholded model confidence.\n","images":[{"id":"img-0.jpeg","top_left_x":292,"top_left_y":217,"bottom_right_x":1405,"bottom_right_y":649,"image_base64":"<value>"}],"dimensions":{"dpi":200,"height":2200,"width":1700}}, {"index":3,"markdown":"<value>","images":[],"dimensions":{"dpi":539192,"height":944919,"width":247256}}, {"index":27,"markdown":"![img-8.jpeg](img-8.jpeg)\nFigure 9: Scatter plot of predicted accuracy versus (true) OOD accuracy for vision datasets except MNIST with a ResNet50 model. Results reported by aggregating MAE numbers over 4 different seeds.\n","images":[{"id":"img-8.jpeg","top_left_x":290,"top_left_y":226,"bottom_right_x":1405,"bottom_right_y":1834,"image_base64":"<value>"}],"dimensions":{"dpi":200,"height":2200,"width":1700}}, {"index":28,"markdown":"| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 6.60 | 5.74 | 9.88 | 6.89 | 7.25 | 6.07 | 4.77 | 3.21 | 3.02 | 2.99 | 2.85 | |  |  | (0.35) | (0.30) | (0.16) | (0.13) | (0.15) | (0.16) | (0.13) | (0.49) | (0.40) | (0.37) | (0.29) | |  | Synthetic | 12.33 | 10.20 | 16.50 | 11.91 | 13.87 | 11.08 | 6.55 | 4.65 | 4.25 | 4.21 | 3.87 | |  |  | (0.51) | (0.48) | (0.26) | (0.17) | (0.18) | (0.17) | (0.35) | (0.55) | (0.55) | (0.55) | (0.75) | | CIFAR100 | Synthetic | 13.69 | 11.51 | 23.61 | 13.10 | 14.60 | 10.14 | 9.85 | 5.50 | 4.75 | 4.72 | 4.94 | |  |  | (0.55) | (0.41) | (1.16) | (0.80) | (0.77) | (0.64) | (0.57) | (0.70) | (0.73) | (0.74) | (0.74) | | ImageNet200 | Natural | 12.37 | 8.19 | 22.07 | 8.61 | 15.17 | 7.81 | 5.13 | 4.37 | 2.04 | 3.79 | 1.45 | |  |  | (0.25) | (0.33) | (0.08) | (0.25) | (0.11) | (0.29) | (0.08) | (0.39) | (0.24) | (0.30) | (0.27) | |  | Synthetic | 19.86 | 12.94 | 32.44 | 13.35 | 25.02 | 12.38 | 5.41 | 5.93 | 3.09 | 5.00 | 2.68 | |  |  | (1.38) | (1.81) | (1.00) | (1.30) | (1.10) | (1.38) | (0.89) | (1.38) | (0.87) | (1.28) | (0.45) | | ImageNet | Natural | 7.77 | 6.50 | 18.13 | 6.02 | 8.13 | 5.76 | 6.23 | 3.88 | 2.17 | 2.06 | 0.80 | |  |  | (0.27) | (0.33) | (0.23) | (0.34) | (0.27) | (0.37) | (0.41) | (0.53) | (0.62) | (0.54) | (0.44) | |  | Synthetic | 13.39 | 10.12 | 24.62 | 8.51 | 13.55 | 7.90 | 6.32 | 3.34 | 2.53 | 2.61 | 4.89 | |  |  | (0.53) | (0.63) | (0.64) | (0.71) | (0.61) | (0.72) | (0.33) | (0.53) | (0.36) | (0.33) | (0.83) | | FMoW-WILDS | Natural | 5.53 | 4.31 | 33.53 | 12.84 | 5.94 | 4.45 | 5.74 | 3.06 | 2.70 | 3.02 | 2.72 | |  |  | (0.33) | (0.63) | (0.13) | (12.06) | (0.36) | (0.77) | (0.55) | (0.36) | (0.54) | (0.35) | (0.44) | | RxRx1-WILDS | Natural | 5.80 | 5.72 | 7.90 | 4.84 | 5.98 | 5.98 | 6.03 | 4.66 | 4.56 | 4.41 | 4.47 | |  |  | (0.17) | (0.15) | (0.24) | (0.09) | (0.15) | (0.13) | (0.08) | (0.38) | (0.38) | (0.31) | (0.26) | | Amazon-WILDS | Natural | 2.40 | 2.29 | 8.01 | 2.38 | 2.40 | 2.28 | 17.87 | 1.65 | 1.62 | 1.60 | 1.59 | |  |  | (0.08) | (0.09) | (0.53) | (0.17) | (0.09) | (0.09) | (0.18) | (0.06) | (0.05) | (0.14) | (0.15) | | CivilCom.-WILDS | Natural | 12.64 | 10.80 | 16.76 | 11.03 | 13.31 | 10.99 | 16.65 |  | 7.14 |  |  | |  |  | (0.52) | (0.48) | (0.53) | (0.49) | (0.52) | (0.49) | (0.25) |  | (0.41) |  |  | | MNIST | Natural | 18.48 | 15.99 | 21.17 | 14.81 | 20.19 | 14.56 | 24.42 | 5.02 | 2.40 | 3.14 | 3.50 | |  |  | (0.45) | (1.53) | (0.24) | (3.89) | (0.23) | (3.47) | (0.41) | (0.44) | (1.83) | (0.49) | (0.17) | | ENTITY-13 | Same | 16.23 | 11.14 | 24.97 | 10.88 | 19.08 | 10.47 | 10.71 | 5.39 | 3.88 | 4.58 | 4.19 | |  |  | (0.77) | (0.65) | (0.70) | (0.77) | (0.65) | (0.72) | (0.74) | (0.92) | (0.61) | (0.85) | (0.16) | |  | Novel | 28.53 | 22.02 | 38.33 | 21.64 | 32.43 | 21.22 | 20.61 | 13.58 | 10.28 | 12.25 | 6.63 | |  |  | (0.82) | (0.68) | (0.75) | (0.86) | (0.69) | (0.80) | (0.60) | (1.15) | (1.34) | (1.21) | (0.93) | | ENTITY-30 | Same | 18.59 | 14.46 | 28.82 | 14.30 | 21.63 | 13.46 | 12.92 | 9.12 | 7.75 | 8.15 | 7.64 | |  |  | (0.51) | (0.52) | (0.43) | (0.71) | (0.37) | (0.59) | (0.14) | (0.62) | (0.72) | (0.68) | (0.88) | |  | Novel | 32.34 | 26.85 | 44.02 | 26.27 | 36.82 | 25.42 | 23.16 | 17.75 | 14.30 | 15.60 | 10.57 | |  |  | (0.60) | (0.58) | (0.56) | (0.79) | (0.47) | (0.68) | (0.12) | (0.76) | (0.85) | (0.86) | (0.86) | | NONLIVING-26 | Same | 18.66 | 17.17 | 26.39 | 16.14 | 19.86 | 15.58 | 16.63 | 10.87 | 10.24 | 10.07 | 10.26 | |  |  | (0.76) | (0.74) | (0.82) | (0.81) | (0.67) | (0.76) | (0.45) | (0.98) | (0.83) | (0.92) | (1.18) | |  | Novel | 33.43 | 31.53 | 41.66 | 29.87 | 35.13 | 29.31 | 29.56 | 21.70 | 20.12 | 19.08 | 18.26 | |  |  | (0.67) | (0.65) | (0.67) | (0.71) | (0.54) | (0.64) | (0.21) | (0.86) | (0.75) | (0.82) | (1.12) | | LIVING-17 | Same | 12.63 | 11.05 | 18.32 | 10.46 | 14.43 | 10.14 | 9.87 | 4.57 | 3.95 | 3.81 | 4.21 | |  |  | (1.25) | (1.20) | (1.01) | (1.12) | (1.11) | (1.16) | (0.61) | (0.71) | (0.48) | (0.22) | (0.53) | |  | Novel | 29.03 | 26.96 | 35.67 | 26.11 | 31.73 | 25.73 | 23.53 | 16.15 | 14.49 | 12.97 | 11.39 | |  |  | (1.44) | (1.38) | (1.09) | (1.27) | (1.19) | (1.35) | (0.52) | (1.36) | (1.46) | (1.52) | (1.72) |\nTable 3: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. For language datasets, we use DistilBERT-base-uncased, for vision dataset we report results with DenseNet model with the exception of MNIST where we use FCN. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n","images":[],"dimensions":{"dpi":200,"height":2200,"width":1700}}, {"index":29,"markdown":"| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 7.14 | 6.20 | 10.25 | 7.06 | 7.68 | 6.35 | 5.74 | 4.02 | 3.85 | 3.76 | 3.38 | |  |  | (0.14) | (0.11) | (0.31) | (0.33) | (0.28) | (0.27) | (0.25) | (0.38) | (0.30) | (0.33) | (0.32) | |  | Synthetic | 12.62 | 10.75 | 16.50 | 11.91 | 13.93 | 11.20 | 7.97 | 5.66 | 5.03 | 4.87 | 3.63 | |  |  | (0.76) | (0.71) | (0.28) | (0.24) | (0.29) | (0.28) | (0.13) | (0.64) | (0.71) | (0.71) | (0.62) | | CIFAR100 | Synthetic | 12.77 | 12.34 | 16.89 | 12.73 | 11.18 | 9.63 | 12.00 | 5.61 | 5.55 | 5.65 | 5.76 | |  |  | (0.43) | (0.68) | (0.20) | (2.59) | (0.35) | (1.25) | (0.48) | (0.51) | (0.55) | (0.35) | (0.27) | | ImageNet200 | Natural | 12.63 | 7.99 | 23.08 | 7.22 | 15.40 | 6.33 | 5.00 | 4.60 | 1.80 | 4.06 | 1.38 | |  |  | (0.59) | (0.47) | (0.31) | (0.22) | (0.42) | (0.24) | (0.36) | (0.63) | (0.17) | (0.69) | (0.29) | |  | Synthetic | 20.17 | 11.74 | 33.69 | 9.51 | 25.49 | 8.61 | 4.19 | 5.37 | 2.78 | 4.53 | 3.58 | |  |  | (0.74) | (0.80) | (0.73) | (0.51) | (0.66) | (0.50) | (0.14) | (0.88) | (0.23) | (0.79) | (0.33) | | ImageNet | Natural | 8.09 | 6.42 | 21.66 | 5.91 | 8.53 | 5.21 | 5.90 | 3.93 | 1.89 | 2.45 | 0.73 | |  |  | (0.25) | (0.28) | (0.38) | (0.22) | (0.26) | (0.25) | (0.44) | (0.26) | (0.21) | (0.16) | (0.10) | |  | Synthetic | 13.93 | 9.90 | 28.05 | 7.56 | 13.82 | 6.19 | 6.70 | 3.33 | 2.55 | 2.12 | 5.06 | |  |  | (0.14) | (0.23) | (0.39) | (0.13) | (0.31) | (0.07) | (0.52) | (0.25) | (0.25) | (0.31) | (0.27) | | FMoW-WILDS | Natural | 5.15 | 3.55 | 34.64 | 5.03 | 5.58 | 3.46 | 5.08 | 2.59 | 2.33 | 2.52 | 2.22 | |  |  | (0.19) | (0.41) | (0.22) | (0.29) | (0.17) | (0.37) | (0.46) | (0.32) | (0.28) | (0.25) | (0.30) | | RxRx1-WILDS | Natural | 6.17 | 6.11 | 21.05 | 5.21 | 6.54 | 6.27 | 6.82 | 5.30 | 5.20 | 5.19 | 5.63 | |  |  | (0.20) | (0.24) | (0.31) | (0.18) | (0.21) | (0.20) | (0.31) | (0.30) | (0.44) | (0.43) | (0.55) | | Entity-13 | Same | 18.32 | 14.38 | 27.79 | 13.56 | 20.50 | 13.22 | 16.09 | 9.35 | 7.50 | 7.80 | 6.94 | |  |  | (0.29) | (0.53) | (1.18) | (0.58) | (0.47) | (0.58) | (0.84) | (0.79) | (0.65) | (0.62) | (0.71) | |  | Novel | 28.82 | 24.03 | 38.97 | 22.96 | 31.66 | 22.61 | 25.26 | 17.11 | 13.96 | 14.75 | 9.94 | |  |  | (0.30) | (0.55) | (1.32) | (0.59) | (0.54) | (0.58) | (1.08) | (0.93) | (0.64) | (0.78) |  | | Entity-30 | Same | 16.91 | 14.61 | 26.84 | 14.37 | 18.60 | 13.11 | 13.74 | 8.54 | 7.94 | 7.77 | 8.04 | |  |  | (1.33) | (1.11) | (2.15) | (1.34) | (1.69) | (1.30) | (1.07) | (1.47) | (1.38) | (1.44) | (1.51) | |  | Novel | 28.66 | 25.83 | 39.21 | 25.03 | 30.95 | 23.73 | 23.15 | 15.57 | 13.24 | 12.44 | 11.05 | |  |  | (1.16) | (0.88) | (2.03) | (1.11) | (1.64) | (1.11) | (0.51) | (1.44) | (1.15) | (1.26) | (1.13) | | NonLIVING-26 | Same | 17.43 | 15.95 | 27.70 | 15.40 | 18.06 | 14.58 | 16.99 | 10.79 | 10.13 | 10.05 | 10.29 | |  |  | (0.90) | (0.86) | (0.90) | (0.69) | (1.00) | (0.78) | (1.25) | (0.62) | (0.32) | (0.46) | (0.79) | |  | Novel | 29.51 | 27.75 | 40.02 | 26.77 | 30.36 | 25.93 | 27.70 | 19.64 | 17.75 | 16.90 | 15.69 | |  |  | (0.86) | (0.82) | (0.76) | (0.82) | (0.95) | (0.80) | (1.42) | (0.68) | (0.53) | (0.60) | (0.83) | | LIVING-17 | Same | 14.28 | 12.21 | 23.46 | 11.16 | 15.22 | 10.78 | 10.49 | 4.92 | 4.23 | 4.19 | 4.73 | |  |  | (0.96) | (0.93) | (1.16) | (0.90) | (0.96) | (0.99) | (0.97) | (0.57) | (0.42) | (0.35) | (0.24) | |  | Novel | 28.91 | 26.35 | 38.62 | 24.91 | 30.32 | 24.52 | 22.49 | 15.42 | 13.02 | 12.29 | 10.34 | |  |  | (0.66) | (0.73) | (1.01) | (0.61) | (0.59) | (0.74) | (0.85) | (0.59) | (0.53) | (0.73) | (0.62) |\nTable 4: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift for ResNet model. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n","images":[],"dimensions":{"dpi":200,"height":2200,"width":1700}}],"model":"mistral-ocr-2503-completion","usage_info":{"pages_processed":29,"doc_size_bytes":null}}
+            type: simple
+    x-speakeasy-test-group: ocr
+    x-speakeasy-test-rebuild: true
+  - workflowId: audio_api_v1_transcriptions_post
+    steps:
+      - stepId: test
+        operationId: audio_api_v1_transcriptions_post
+        requestBody:
+          contentType: multipart/form-data
+          payload:
+            model: Model X
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"model": "Beetle", "text": "<value>", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "language": "<value>"}
+            type: simple
+    x-speakeasy-test-group: transcriptions
+    x-speakeasy-test-rebuild: true
+  - workflowId: audio_api_v1_transcriptions_post-userExample
+    steps:
+      - stepId: test
+        operationId: audio_api_v1_transcriptions_post
+        requestBody:
+          contentType: multipart/form-data
+          payload:
+            diarize: false
+            model: voxtral-mini-latest
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"model":"voxtral-mini-2507","text":"This week, I traveled to Chicago to deliver my final farewell address to the nation, following in the tradition of presidents before me. It was an opportunity to say thank you. Whether we've seen eye to eye or rarely agreed at all, my conversations with you, the American people, in living rooms, in schools, at farms and on factory floors, at diners and on distant military outposts, All these conversations are what have kept me honest, kept me inspired, and kept me going. Every day, I learned from you. You made me a better President, and you made me a better man.\nOver the course of these eight years, I've seen the goodness, the resilience, and the hope of the American people. I've seen neighbors looking out for each other as we rescued our economy from the worst crisis of our lifetimes. I've hugged cancer survivors who finally know the security of affordable health care. I've seen communities like Joplin rebuild from disaster, and cities like Boston show the world that no terrorist will ever break the American spirit. I've seen the hopeful faces of young graduates and our newest military officers. I've mourned with grieving families searching for answers. And I found grace in a Charleston church. I've seen our scientists help a paralyzed man regain his sense of touch, and our wounded warriors walk again. I've seen our doctors and volunteers rebuild after earthquakes and stop pandemics in their tracks. I've learned from students who are building robots and curing diseases, and who will change the world in ways we can't even imagine. I've seen the youngest of children remind us of our obligations to care for our refugees, to work in peace, and above all, to look out for each other.\nThat's what's possible when we come together in the slow, hard, sometimes frustrating, but always vital work of self-government. But we can't take our democracy for granted. All of us, regardless of party, should throw ourselves into the work of citizenship. Not just when there is an election. Not just when our own narrow interest is at stake. But over the full span of a lifetime. If you're tired of arguing with strangers on the Internet, try to talk with one in real life. If something needs fixing, lace up your shoes and do some organizing. If you're disappointed by your elected officials, then grab a clipboard, get some signatures, and run for office yourself.\nOur success depends on our participation, regardless of which way the pendulum of power swings. It falls on each of us to be guardians of our democracy, to embrace the joyous task we've been given to continually try to improve this great nation of ours. Because for all our outward differences, we all share the same proud title – citizen.\nIt has been the honor of my life to serve you as President. Eight years later, I am even more optimistic about our country's promise. And I look forward to working along your side as a citizen for all my days that remain.\nThanks, everybody. God bless you. And God bless the United States of America.\n","segments":[],"usage":{"prompt_tokens":4,"completion_tokens":635,"total_tokens":3264,"prompt_audio_seconds":203},"language":"en"}
+            type: simple
+    x-speakeasy-test-group: transcriptions
+    x-speakeasy-test-rebuild: true
+  - workflowId: agents_completion_v1_agents_completions_post
+    steps:
+      - stepId: test
+        operationId: agents_completion_v1_agents_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            agent_id: <id>
+            messages:
+              - content: Who is the best French painter? Answer in one short sentence.
+                role: user
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id": "cmpl-e5cc70bb28c444948073e77776eb30ef", "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}, "created": 1702256327, "choices": []}
+            type: simple
+    x-speakeasy-test-group: agents
+    x-speakeasy-test-rebuild: false
+  - workflowId: agents_completion_v1_agents_completions_post-userExample
+    steps:
+      - stepId: test
+        operationId: agents_completion_v1_agents_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            agent_id: <id>
+            messages:
+              - content: Who is the best French painter? Answer in one short sentence.
+                role: user
+            response_format:
+              type: text
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"cf79f7daaee244b1a0ae5c7b1444424a","object":"chat.completion","model":"mistral-medium-latest","usage":{"prompt_tokens":24,"completion_tokens":27,"total_tokens":51,"prompt_audio_seconds":null},"created":1759500534,"choices":[{"index":0,"message":{"role":"assistant","content":"Arrr, the scallywag Claude Monet be the finest French painter to ever splash colors on a canvas, savvy?","tool_calls":null,"prefix":false},"finish_reason":"stop"}]}
+            type: simple
+    x-speakeasy-test-group: agents
+    x-speakeasy-test-rebuild: false

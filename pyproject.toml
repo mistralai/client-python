@@ -49,6 +49,7 @@ dev = [
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
     "websockets >=13.0",
+    "pytest-xdist>=3.8.0",
 ]
 lint = [
     "ruff>=0.11.10,<0.12",

@@ -18,6 +18,7 @@ dev = [
     "pyright>=1.1.401,<2",
     "pytest>=8.2.2,<9",
     "pytest-asyncio>=0.23.7,<0.24",
+    "pytest-xdist>=3.5.0,<4",
 ]
 
 [tool.setuptools.package-data]

@@ -4,3 +4,8 @@ examples/*
 src/mistralai/extra/*
 pylintrc
 scripts/prepare_readme.py
+tests/test_azure_integration.py
+tests/test_azure_v2_parity.py
+tests/test_gcp_integration.py
+tests/test_gcp_v2_parity.py
+tests/test_prepare_readme.py

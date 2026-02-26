@@ -4,3 +4,5 @@ src/mistralai/gcp/client/_hooks/registration.py
 README.md
 USAGE.md
 docs/sdks/**/README.md
+tests/test_chat.py
+tests/test_fim.py
