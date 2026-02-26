@@ -1,20 +1,20 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: bc4a0ba9c38418d84a6a8a76b503977b
+  docChecksum: 58bc2dcdd83a2b7c4856971baa20641b
   docVersion: 1.0.0
   speakeasyVersion: 1.729.0
   generationVersion: 2.841.0
-  releaseVersion: 2.0.0b1
-  configChecksum: 9cea6a311ff15502c47b0ef87e9846a2
+  releaseVersion: 2.0.0
+  configChecksum: d208fbfc438189901f0d6546484d5f26
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/gcp
   published: true
 persistentEdits:
-  generation_id: e503bb37-7bdd-4ebf-9bed-a8f754c99f8a
-  pristine_commit_hash: f14b1b1288437b7fc0ba666a384614a225385259
-  pristine_tree_hash: 67e6d0a84ae20666a636dcc8ad174647a96b105f
+  generation_id: 3209be2b-6096-4135-a6d9-69dc60d0b6c3
+  pristine_commit_hash: 63b45b2d1f34ad162d414315fa128f38fffb47e0
+  pristine_tree_hash: f86baf928b59ffcc5251b139afa6a884b2ead3d0
 features:
   python:
     additionalDependencies: 1.0.0
@@ -326,8 +326,8 @@ trackedFiles:
     pristine_git_object: ea95bed210db9180824efddfb1b3e47f5bf96489
   src/mistralai/gcp/client/_version.py:
     id: f87319e32c7b
-    last_write_checksum: sha1:0d99fadc73b957112022a95eabeb0e3a98d14ff4
-    pristine_git_object: 36e44a5e6067e8bd197b38cc238686f660c77244
+    last_write_checksum: sha1:2c22a5ebb7568968607db20612021af35240f714
+    pristine_git_object: 377c9836b5f8bdf65e87ba375232422114af2966
   src/mistralai/gcp/client/basesdk.py:
     id: 4d594572857b
     last_write_checksum: sha1:d8ef9e2f4fa97d402eb9f5472ceb80fb39693991
