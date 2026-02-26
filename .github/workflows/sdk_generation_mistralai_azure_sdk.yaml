@@ -27,3 +27,36 @@ jobs:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  align-version:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.generate.outputs.branch_name }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Read version from gen.lock and update pyproject.toml
+        run: |
+          VERSION=$(grep 'releaseVersion:' packages/azure/.speakeasy/gen.lock | head -1 | awk '{print $2}')
+          echo "Aligning pyproject.toml to version: $VERSION"
+          uv version "$VERSION" --directory packages/azure
+
+      - name: Configure git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit and push
+        run: |
+          git add packages/azure/pyproject.toml
+          if git diff --cached --quiet; then
+            echo "No version change needed"
+          else
+            git commit -m "chore: align pyproject.toml version with gen.lock"
+            git push
+          fi
