@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: b66b034aac7aa9b38c4fb47a3b3d843e
+  docChecksum: 9ea68a20ee2ef4565df16947f204034b
   docVersion: 1.0.0
   speakeasyVersion: 1.729.0
   generationVersion: 2.841.0
-  releaseVersion: 2.0.0b1
-  configChecksum: 871b5a7d3687bd2a9ebd0e205e4b36a3
+  releaseVersion: 2.0.0
+  configChecksum: 60e6aae39454140823667a495d507fca
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 1527268d-25cf-4a8c-8a67-09694eaf0d79
-  pristine_commit_hash: 5642b69da5a9a00af1e84ca689b7587f2269d0c4
-  pristine_tree_hash: f9eae7c82e85b3114e342a4b6500b9704a266493
+  generation_id: 21353df9-b340-4885-83ce-6dd24ef7d4e5
+  pristine_commit_hash: 851e3a2a0d2e9b0a46232ffaea8ae892ae352913
+  pristine_tree_hash: f9e8412c663c582eac2e82fa0d0b9905f65d40b7
 features:
   python:
     additionalDependencies: 1.0.0
@@ -643,8 +643,8 @@ trackedFiles:
     pristine_git_object: 8142772d7ea33ad8a75cf9cf822564ba3f630de2
   docs/models/document.md:
     id: cd1d2a444370
-    last_write_checksum: sha1:77076e66dea6f4582e73ecc5a55ef750f026448a
-    pristine_git_object: 284babb98fbb0279bef2626fa18eada0035572c5
+    last_write_checksum: sha1:c10641b02547bedcc982b8997097083dfc562598
+    pristine_git_object: 42c639a6a9b235ab4c754286486fa7e8872a0e7e
   docs/models/documentlibrarytool.md:
     id: 68083b0ef8f3
     last_write_checksum: sha1:76b9f47c399915a338abe929cb10c1b37282eadf
@@ -671,12 +671,12 @@ trackedFiles:
     pristine_git_object: 01656b0a85aa87f19909b18100bb6981f89683fc
   docs/models/embeddingrequest.md:
     id: bebee24421b4
-    last_write_checksum: sha1:8e2bfa35f55b55f83fa2ebf7bee28cd00cb681d1
-    pristine_git_object: 7269c0551a0c1040693eafdd99e1b8ebe98478a5
+    last_write_checksum: sha1:087230e81cfbbc539edc7cc1c0a490728276d217
+    pristine_git_object: 71d139cdf5c556a1224d707be70f3fabe032fc27
   docs/models/embeddingrequestinputs.md:
     id: 6a35f3b1910a
-    last_write_checksum: sha1:e12ca056fac504e5af06a304d09154d3ecd17919
-    pristine_git_object: 527a089b38b5cd316173ced4dc74a1429c8e4406
+    last_write_checksum: sha1:f3bf6b89f279f59010124aa402e282c7c691eb03
+    pristine_git_object: a3f82c1c67c726d3ef8e5e5ea5513386acc7c2f4
   docs/models/embeddingresponse.md:
     id: 31cd0f6b7bb5
     last_write_checksum: sha1:1d7351c68b075aba8e91e53d29bdab3c6dd5c3a2
@@ -1175,8 +1175,12 @@ trackedFiles:
     pristine_git_object: fae3c1ca4ba2c2ddb3b7de401ecdc8d56dcc7740
   docs/models/processingstatusout.md:
     id: 83c8c59c1802
-    last_write_checksum: sha1:046375bb3035cc033d4484099cd7f5a4f53ce88c
-    pristine_git_object: 7b67583f4209778ac6f945631c0ee03ba1f4c663
+    last_write_checksum: sha1:7dbbfe790616ab4388e532bd78ffc1a5183b332d
+    pristine_git_object: bc40d3209c4c641dd7416c925b965c1bf7b73b1b
+  docs/models/processstatus.md:
+    id: "336054835357"
+    last_write_checksum: sha1:9b87de1980428307af6c29c2086c0e1f612ebd72
+    pristine_git_object: 3a9c004e55cc31abb52d1f0bb450290465d42a1c
   docs/models/realtimetranscriptionerror.md:
     id: 4bc5e819565b
     last_write_checksum: sha1:c93e4b19a0aa68723ea69973a9f22a581c7b2ff6
@@ -1551,8 +1555,8 @@ trackedFiles:
     pristine_git_object: 9c219b6709d5d5bfa28113efca92012e8c5a5112
   docs/sdks/embeddings/README.md:
     id: 15b5b04486c1
-    last_write_checksum: sha1:76cb4876eebccfd2ab9a10a1b25570477a96a5c1
-    pristine_git_object: eecb5c9e991dcd2fd5c1f0688efe3b64b4c6de3b
+    last_write_checksum: sha1:4a279bf9bcd84a9878ef979c78b8b75af3d52f02
+    pristine_git_object: cb207d8be2ca86b00dc797fc06eabd1498adb770
   docs/sdks/files/README.md:
     id: e576d7a117f0
     last_write_checksum: sha1:f5861c42227b901742fd8afe7155ed6d634b1b4c
@@ -1607,8 +1611,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:f5109c91723cc927e8513ac9e637512edd91f04e
-    pristine_git_object: ab2cf01d06f4d4373b52373795db76aa40f00ceb
+    last_write_checksum: sha1:9ca227af0848f7e58917b55ae2433118ff5f073d
+    pristine_git_object: c7251c9ce55d10a4ef89ce5ab58a05332b9b21ff
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:ed94623aa8a2bd502572a699a2f54c9281ec283e
@@ -1659,8 +1663,8 @@ trackedFiles:
     pristine_git_object: b3130364c0f3cc90ed1e4407a070bd99e3cce606
   src/mistralai/client/embeddings.py:
     id: f9c17258207e
-    last_write_checksum: sha1:0fbf92b59fde3199c770a522ead030f8fa65ff5c
-    pristine_git_object: 5f9d3b9cb611943e509caeda9ddd175e3baee2c3
+    last_write_checksum: sha1:d1610bf12dba8b2f8cb27d2f0aa592594dfe6b3a
+    pristine_git_object: 5d55ffc43c0c98d46e04b238ab23a08d1b9e6a6a
   src/mistralai/client/errors/__init__.py:
     id: 0b2db51246df
     last_write_checksum: sha1:0befddc505c9c47388683126750c7ad0e3fbef52
@@ -1711,8 +1715,8 @@ trackedFiles:
     pristine_git_object: b8728362b87349118ac6f163f50613dd18c43340
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:50727667552480e8298431f5a3dcc78457c53331
-    pristine_git_object: 5ef8b3f3dd9fbb32d4675f7e11808c29fc218c57
+    last_write_checksum: sha1:0ac0c956f0f87979e871a00c32884ee3102b6d2b
+    pristine_git_object: 7d2dfd970d48d54d798f1661206abdc697134434
   src/mistralai/client/models/agent.py:
     id: 1336849c84fb
     last_write_checksum: sha1:6090ddf2b5b40656dfbf3325f1022a40ae418948
@@ -2075,8 +2079,8 @@ trackedFiles:
     pristine_git_object: d9fa230e93d4e0886f21c836cf3813855eb8f9fd
   src/mistralai/client/models/document.py:
     id: fbbf7428328c
-    last_write_checksum: sha1:2a5a28c54f0aec50059b6badc1001b1cd120e7d3
-    pristine_git_object: 31eebbd1a7d7fdcb498259837c533bfc8008a6f9
+    last_write_checksum: sha1:db2e184f7cc97b24e7ec80887c35c32222afd8a8
+    pristine_git_object: fcc5bca541a814143b0489528fd20a69004104b1
   src/mistralai/client/models/documentlibrarytool.py:
     id: 3eb3c218f457
     last_write_checksum: sha1:d03a6136192b56778bd739d834d9bdc80a09cc23
@@ -2095,8 +2099,8 @@ trackedFiles:
     pristine_git_object: 732c4ebe3678563ebcdbafd519f93317261586fb
   src/mistralai/client/models/embeddingrequest.py:
     id: eadbe3f9040c
-    last_write_checksum: sha1:e36282eb015b782804b4bdf3d18b596607b020fd
-    pristine_git_object: 15950590fec8b82a4fb28d69009a6f6cfb83c9ee
+    last_write_checksum: sha1:3ef4e321a698c4a10389280f8b1c7d0da20f4faf
+    pristine_git_object: 5fa2d2f63796523e58e281f2d3bcc05a92111842
   src/mistralai/client/models/embeddingresponse.py:
     id: f7d790e84b65
     last_write_checksum: sha1:9bb53a5a860c8e10d4d504648d84da73068c0a83
@@ -2503,8 +2507,12 @@ trackedFiles:
     pristine_git_object: 0c6f4182ca8140e595f601b12fbd582034257587
   src/mistralai/client/models/processingstatusout.py:
     id: 3df842c4140f
-    last_write_checksum: sha1:007a476e4101cac4d2a9eef94d289f0f486d763a
-    pristine_git_object: 3acadcc9792c286cd31031a80e108b74bc2c0c4e
+    last_write_checksum: sha1:d5acc98adcfc76cdc4fc26e090ecfc4d7835a438
+    pristine_git_object: ed2a4f22dcffe787ce69bb9c6011a95216cf3928
+  src/mistralai/client/models/processstatus.py:
+    id: "0205512146e6"
+    last_write_checksum: sha1:22ad3d5fc80fbf3f83db61512e7bc79295c5fc91
+    pristine_git_object: 15bdce2056f2f642096fbbdb2ac32ce1e5b8c9cf
   src/mistralai/client/models/realtimetranscriptionerror.py:
     id: 8c2267378f48
     last_write_checksum: sha1:78637de61d6fc3bc1fff8e95c0a6f5ffc1a3e111
@@ -3463,7 +3471,7 @@ examples:
           sort_order: "desc"
       responses:
         "200":
-          application/json: {"pagination": {"total_items": 23246, "total_pages": 881485, "current_page": 173326, "page_size": 318395, "has_more": false}, "data": [{"id": "5106c0c7-30fb-4fd3-9083-129b77f9f509", "library_id": "71eb68a2-756e-48b0-9d2b-a04d7bf95ff5", "hash": "<value>", "mime_type": "<value>", "extension": "pdf", "size": 367159, "name": "<value>", "created_at": "2024-09-24T04:50:43.988Z", "uploaded_by_id": "7d65f4d8-1997-479f-bfb4-535c0144b48c", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 957230}]}
+          application/json: {"pagination": {"total_items": 23246, "total_pages": 881485, "current_page": 173326, "page_size": 318395, "has_more": false}, "data": [{"id": "5106c0c7-30fb-4fd3-9083-129b77f9f509", "library_id": "71eb68a2-756e-48b0-9d2b-a04d7bf95ff5", "hash": "<value>", "mime_type": "<value>", "extension": "pdf", "size": 367159, "name": "<value>", "created_at": "2024-09-24T04:50:43.988Z", "process_status": "noop", "uploaded_by_id": "7d65f4d8-1997-479f-bfb4-535c0144b48c", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 957230}]}
         "422":
           application/json: {}
   libraries_documents_upload_v1:
@@ -3475,7 +3483,7 @@ examples:
         multipart/form-data: {"file": "x-file: example.file"}
       responses:
         "200":
-          application/json: {"id": "d40f9b56-c832-405d-aa99-b3e442254dd8", "library_id": "868d7955-009a-4433-bfc6-ad7b4be4e7e4", "hash": "<value>", "mime_type": "<value>", "extension": "m2v", "size": 418415, "name": "<value>", "created_at": "2025-04-30T20:11:27.130Z", "uploaded_by_id": "7db8d896-09c9-438c-b6dc-aa5c70102b3f", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 61161}
+          application/json: {"id": "d40f9b56-c832-405d-aa99-b3e442254dd8", "library_id": "868d7955-009a-4433-bfc6-ad7b4be4e7e4", "hash": "<value>", "mime_type": "<value>", "extension": "m2v", "size": 418415, "name": "<value>", "created_at": "2025-04-30T20:11:27.130Z", "process_status": "in_progress", "uploaded_by_id": "7db8d896-09c9-438c-b6dc-aa5c70102b3f", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 61161}
         "422":
           application/json: {}
   libraries_documents_get_v1:
@@ -3486,7 +3494,7 @@ examples:
           document_id: "90973aec-0508-4375-8b00-91d732414745"
       responses:
         "200":
-          application/json: {"id": "0de60230-717d-459a-8c0f-fbb9360c01be", "library_id": "e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e", "hash": "<value>", "mime_type": "<value>", "extension": "jpe", "size": 402478, "name": "<value>", "created_at": "2023-07-29T21:43:20.750Z", "uploaded_by_id": "d5eadabe-d7f2-4f87-a337-f80c192f886d", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 793889}
+          application/json: {"id": "0de60230-717d-459a-8c0f-fbb9360c01be", "library_id": "e0bf3cf9-cd3b-405b-b842-ac7fcb9c373e", "hash": "<value>", "mime_type": "<value>", "extension": "jpe", "size": 402478, "name": "<value>", "created_at": "2023-07-29T21:43:20.750Z", "process_status": "self_managed", "uploaded_by_id": "d5eadabe-d7f2-4f87-a337-f80c192f886d", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 793889}
         "422":
           application/json: {}
   libraries_documents_update_v1:
@@ -3499,7 +3507,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "1111e519-9ba5-42de-9301-938fbfee59fc", "library_id": "70aac5e3-23f7-439b-bbef-090e4c1dbd6d", "hash": "<value>", "mime_type": "<value>", "extension": "m1v", "size": 802305, "name": "<value>", "created_at": "2024-07-02T20:02:03.680Z", "uploaded_by_id": "08471957-b27d-4437-8242-57256727dc49", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 806683}
+          application/json: {"id": "1111e519-9ba5-42de-9301-938fbfee59fc", "library_id": "70aac5e3-23f7-439b-bbef-090e4c1dbd6d", "hash": "<value>", "mime_type": "<value>", "extension": "m1v", "size": 802305, "name": "<value>", "created_at": "2024-07-02T20:02:03.680Z", "process_status": "missing_content", "uploaded_by_id": "08471957-b27d-4437-8242-57256727dc49", "uploaded_by_type": "<value>", "processing_status": "<value>", "tokens_processing_total": 806683}
         "422":
           application/json: {}
   libraries_documents_delete_v1:
@@ -3530,7 +3538,7 @@ examples:
           document_id: "2c904915-d831-4e9d-a345-8ce405bcef66"
       responses:
         "200":
-          application/json: {"document_id": "90473b79-1fd5-437f-bee0-6638bdf69c90", "processing_status": "<value>"}
+          application/json: {"document_id": "90473b79-1fd5-437f-bee0-6638bdf69c90", "process_status": "waiting_for_capacity", "processing_status": "<value>"}
         "422":
           application/json: {}
   libraries_documents_get_signed_url_v1:
@@ -4302,6 +4310,13 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.beta.libraries.documents.list()`:  `response.data[].process_status` **Added**
+  * `mistral.beta.libraries.documents.upload()`:  `response.process_status` **Added**
+  * `mistral.beta.libraries.documents.get()`:  `response.process_status` **Added**
+  * `mistral.beta.libraries.documents.update()`:  `response.process_status` **Added**
+  * `mistral.beta.libraries.documents.status()`:  `response.process_status` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
