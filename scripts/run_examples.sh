@@ -48,6 +48,7 @@ exclude_files=(
  "examples/mistral/agents/async_conversation_run_mcp_remote.py"
  "examples/mistral/audio/async_realtime_transcription_microphone.py"
  "examples/mistral/audio/async_realtime_transcription_stream.py"
+ "examples/mistral/audio/async_realtime_transcription_dual_delay_microphone.py"
 )
 
 # Files that require extra dependencies (agents, mcp, audio, etc.)

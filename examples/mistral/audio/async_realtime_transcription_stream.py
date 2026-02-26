@@ -91,6 +91,12 @@ def parse_args() -> argparse.Namespace:
         help="Delay between chunks in seconds",
     )
     parser.add_argument(
+        "--target-streaming-delay-ms",
+        type=int,
+        default=None,
+        help="Target streaming delay in milliseconds",
+    )
+    parser.add_argument(
         "--no-convert",
         action="store_true",
         help="Skip ffmpeg conversion (input must be raw PCM)",
@@ -120,6 +126,7 @@ async def main() -> int:
             ),
             model=args.model,
             audio_format=AudioFormat(encoding="pcm_s16le", sample_rate=16000),
+            target_streaming_delay_ms=args.target_streaming_delay_ms,
         ):
             if isinstance(event, TranscriptionStreamTextDelta):
                 print(event.text, end="", flush=True)

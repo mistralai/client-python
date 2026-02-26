@@ -18,15 +18,21 @@ except ImportError as exc:
 
 from mistralai.client.models import (
     AudioFormat,
+    RealtimeTranscriptionInputAudioAppend,
+    RealtimeTranscriptionInputAudioEnd,
+    RealtimeTranscriptionInputAudioFlush,
     RealtimeTranscriptionError,
     RealtimeTranscriptionSession,
     RealtimeTranscriptionSessionCreated,
     RealtimeTranscriptionSessionUpdated,
+    RealtimeTranscriptionSessionUpdateMessage,
+    RealtimeTranscriptionSessionUpdatePayload,
     TranscriptionStreamDone,
     TranscriptionStreamLanguage,
     TranscriptionStreamSegmentDelta,
     TranscriptionStreamTextDelta,
 )
+from mistralai.client.types import UNSET
 
 
 class UnknownRealtimeEvent(BaseModel):
@@ -36,6 +42,7 @@ class UnknownRealtimeEvent(BaseModel):
     - invalid JSON payload
     - schema validation failure
     """
+
     type: Optional[str]
     content: Any
     error: Optional[str] = None
@@ -55,7 +62,6 @@ RealtimeEvent = Union[
     # forward-compat fallback
     UnknownRealtimeEvent,
 ]
-
 
 _MESSAGE_MODELS: dict[str, Any] = {
     "session.created": RealtimeTranscriptionSessionCreated,
@@ -108,7 +114,6 @@ class RealtimeConnection:
     ) -> None:
         self._websocket = websocket
         self._session = session
-        self._audio_format = session.audio_format
         self._closed = False
         self._initial_events: Deque[RealtimeEvent] = deque(initial_events or [])
 
@@ -122,7 +127,7 @@ class RealtimeConnection:
 
     @property
     def audio_format(self) -> AudioFormat:
-        return self._audio_format
+        return self._session.audio_format
 
     @property
     def is_closed(self) -> bool:
@@ -134,27 +139,46 @@ class RealtimeConnection:
         if self._closed:
             raise RuntimeError("Connection is closed")
 
-        message = {
-            "type": "input_audio.append",
-            "audio": base64.b64encode(bytes(audio_bytes)).decode("ascii"),
-        }
-        await self._websocket.send(json.dumps(message))
+        message = RealtimeTranscriptionInputAudioAppend(
+            audio=base64.b64encode(bytes(audio_bytes)).decode("ascii")
+        )
+        await self._websocket.send(message.model_dump_json())
 
-    async def update_session(self, audio_format: AudioFormat) -> None:
+    async def flush_audio(self) -> None:
+        if self._closed:
+            raise RuntimeError("Connection is closed")
+        await self._websocket.send(
+            RealtimeTranscriptionInputAudioFlush().model_dump_json()
+        )
+
+    async def update_session(
+        self,
+        audio_format: Optional[AudioFormat] = None,
+        *,
+        target_streaming_delay_ms: Optional[int] = None,
+    ) -> None:
         if self._closed:
             raise RuntimeError("Connection is closed")
 
-        self._audio_format = audio_format
-        message = {
-            "type": "session.update",
-            "session": {"audio_format": audio_format.model_dump(mode="json")},
-        }
-        await self._websocket.send(json.dumps(message))
+        if audio_format is None and target_streaming_delay_ms is None:
+            raise ValueError("At least one session field must be provided")
+
+        message = RealtimeTranscriptionSessionUpdateMessage(
+            session=RealtimeTranscriptionSessionUpdatePayload(
+                audio_format=audio_format if audio_format is not None else UNSET,
+                target_streaming_delay_ms=target_streaming_delay_ms
+                if target_streaming_delay_ms is not None
+                else UNSET,
+            )
+        )
+        await self._websocket.send(message.model_dump_json())
 
     async def end_audio(self) -> None:
         if self._closed:
             return
-        await self._websocket.send(json.dumps({"type": "input_audio.end"}))
+        await self._websocket.send(
+            RealtimeTranscriptionInputAudioEnd().model_dump_json()
+        )
 
     async def close(self, *, code: int = 1000, reason: str = "") -> None:
         if self._closed:
@@ -202,6 +226,7 @@ class RealtimeConnection:
             await self.close()
 
     def _apply_session_updates(self, ev: RealtimeEvent) -> None:
-        if isinstance(ev, RealtimeTranscriptionSessionCreated) or isinstance(ev, RealtimeTranscriptionSessionUpdated):
+        if isinstance(ev, RealtimeTranscriptionSessionCreated) or isinstance(
+            ev, RealtimeTranscriptionSessionUpdated
+        ):
             self._session = ev.session
-            self._audio_format = ev.session.audio_format
