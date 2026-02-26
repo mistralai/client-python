@@ -734,6 +734,7 @@ if TYPE_CHECKING:
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatusout import ProcessingStatusOut, ProcessingStatusOutTypedDict
+    from .processstatus import ProcessStatus
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -1475,6 +1476,7 @@ __all__ = [
     "PaginationInfoTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ProcessStatus",
     "ProcessingStatusOut",
     "ProcessingStatusOutTypedDict",
     "RealtimeTranscriptionError",
@@ -2199,6 +2201,7 @@ _dynamic_imports: dict[str, str] = {
     "PredictionTypedDict": ".prediction",
     "ProcessingStatusOut": ".processingstatusout",
     "ProcessingStatusOutTypedDict": ".processingstatusout",
+    "ProcessStatus": ".processstatus",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
