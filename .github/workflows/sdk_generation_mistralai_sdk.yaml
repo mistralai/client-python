@@ -27,3 +27,61 @@ jobs:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  align-version:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Align pyproject.toml version with gen.lock
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # Find the most recent PR created by github-actions bot
+          PR_BRANCH=$(gh pr list --repo "$REPO" --author "app/github-actions" \
+            --json headRefName,updatedAt --jq 'sort_by(.updatedAt) | reverse | .[0].headRefName // empty')
+
+          if [ -z "$PR_BRANCH" ]; then
+            echo "No PR found from github-actions bot, skipping"
+            exit 0
+          fi
+          echo "Found PR branch: $PR_BRANCH"
+
+          # Fetch gen.lock from PR branch
+          if ! GEN_LOCK=$(gh api "repos/$REPO/contents/.speakeasy/gen.lock?ref=$PR_BRANCH" --jq '.content' 2>/dev/null | base64 -d); then
+            echo "No gen.lock found, skipping"
+            exit 0
+          fi
+
+          VERSION=$(echo "$GEN_LOCK" | grep 'releaseVersion:' | head -1 | awk '{print $2}' | tr -d '"')
+          if [ -z "$VERSION" ]; then
+            echo "No releaseVersion found in gen.lock"
+            exit 0
+          fi
+          echo "Found version: $VERSION"
+
+          # Fetch current pyproject.toml
+          PYPROJECT_RESPONSE=$(gh api "repos/$REPO/contents/pyproject.toml?ref=$PR_BRANCH")
+          CURRENT_SHA=$(echo "$PYPROJECT_RESPONSE" | jq -r '.sha')
+          PYPROJECT=$(echo "$PYPROJECT_RESPONSE" | jq -r '.content' | base64 -d)
+
+          # Update version
+          UPDATED=$(echo "$PYPROJECT" | sed "s/^version = \".*\"/version = \"$VERSION\"/")
+
+          if [ "$PYPROJECT" = "$UPDATED" ]; then
+            echo "Version already aligned to $VERSION"
+            exit 0
+          fi
+
+          # Commit updated file
+          ENCODED=$(echo "$UPDATED" | base64 -w 0)
+          gh api "repos/$REPO/contents/pyproject.toml" \
+            -X PUT \
+            -f message="chore: align pyproject.toml version to $VERSION" \
+            -f content="$ENCODED" \
+            -f sha="$CURRENT_SHA" \
+            -f branch="$PR_BRANCH"
+
+          echo "Updated pyproject.toml to version $VERSION"
