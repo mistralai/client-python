@@ -5052,3 +5052,4 @@ generatedFiles:
   - src/mistralai/utils/unmarshal_json_response.py
   - src/mistralai/utils/url.py
   - src/mistralai/utils/values.py
+
