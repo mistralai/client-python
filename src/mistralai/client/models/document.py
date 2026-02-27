@@ -2,6 +2,7 @@
 # @generated-id: fbbf7428328c
 
 from __future__ import annotations
+from .processstatus import ProcessStatus
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -24,6 +25,7 @@ class DocumentTypedDict(TypedDict):
     size: Nullable[int]
     name: str
     created_at: datetime
+    process_status: ProcessStatus
     uploaded_by_id: Nullable[str]
     uploaded_by_type: str
     processing_status: str
@@ -53,6 +55,8 @@ class Document(BaseModel):
     name: str
 
     created_at: datetime
+
+    process_status: ProcessStatus
 
     uploaded_by_id: Nullable[str]
 
