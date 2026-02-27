@@ -13,48 +13,110 @@ permissions:
 
 jobs:
   align-version:
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      startsWith(github.event.workflow_run.head_branch, 'speakeasy-sdk-regen-')
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: ${{ github.event.workflow_run.head_branch }}
     steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
-
       - name: Align main SDK version
-        if: hashFiles('.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' .speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
-          echo "Aligning main SDK to version: $VERSION"
-          uv version "$VERSION"
+          # Fetch gen.lock from PR branch via API
+          GEN_LOCK=$(gh api repos/${{ github.repository }}/contents/.speakeasy/gen.lock?ref=$BRANCH --jq '.content' | base64 -d) || exit 0
+          VERSION=$(echo "$GEN_LOCK" | grep 'releaseVersion:' | head -1 | awk '{print $2}' | tr -d '"')
+          if [ -z "$VERSION" ]; then
+            echo "No version found in gen.lock"
+            exit 0
+          fi
+          echo "Found version: $VERSION"
+
+          # Fetch current pyproject.toml
+          PYPROJECT_RESPONSE=$(gh api repos/${{ github.repository }}/contents/pyproject.toml?ref=$BRANCH)
+          CURRENT_SHA=$(echo "$PYPROJECT_RESPONSE" | jq -r '.sha')
+          PYPROJECT=$(echo "$PYPROJECT_RESPONSE" | jq -r '.content' | base64 -d)
+
+          # Update version in pyproject.toml
+          UPDATED=$(echo "$PYPROJECT" | sed "s/^version = \".*\"/version = \"$VERSION\"/")
+
+          if [ "$PYPROJECT" = "$UPDATED" ]; then
+            echo "Version already aligned"
+            exit 0
+          fi
+
+          # Commit updated file via API
+          ENCODED=$(echo "$UPDATED" | base64 -w 0)
+          gh api repos/${{ github.repository }}/contents/pyproject.toml \
+            -X PUT \
+            -f message="chore: align pyproject.toml version with gen.lock" \
+            -f content="$ENCODED" \
+            -f sha="$CURRENT_SHA" \
+            -f branch="$BRANCH"
+          echo "Updated pyproject.toml to version $VERSION"
 
       - name: Align Azure SDK version
-        if: hashFiles('packages/azure/.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' packages/azure/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
-          echo "Aligning Azure SDK to version: $VERSION"
-          uv version "$VERSION" --directory packages/azure
+          # Fetch gen.lock from PR branch via API
+          GEN_LOCK=$(gh api repos/${{ github.repository }}/contents/packages/azure/.speakeasy/gen.lock?ref=$BRANCH --jq '.content' | base64 -d) || exit 0
+          VERSION=$(echo "$GEN_LOCK" | grep 'releaseVersion:' | head -1 | awk '{print $2}' | tr -d '"')
+          if [ -z "$VERSION" ]; then
+            echo "No version found in Azure gen.lock"
+            exit 0
+          fi
+          echo "Found Azure version: $VERSION"
+
+          # Fetch current pyproject.toml
+          PYPROJECT_RESPONSE=$(gh api repos/${{ github.repository }}/contents/packages/azure/pyproject.toml?ref=$BRANCH)
+          CURRENT_SHA=$(echo "$PYPROJECT_RESPONSE" | jq -r '.sha')
+          PYPROJECT=$(echo "$PYPROJECT_RESPONSE" | jq -r '.content' | base64 -d)
+
+          # Update version in pyproject.toml
+          UPDATED=$(echo "$PYPROJECT" | sed "s/^version = \".*\"/version = \"$VERSION\"/")
+
+          if [ "$PYPROJECT" = "$UPDATED" ]; then
+            echo "Azure version already aligned"
+            exit 0
+          fi
+
+          # Commit updated file via API
+          ENCODED=$(echo "$UPDATED" | base64 -w 0)
+          gh api repos/${{ github.repository }}/contents/packages/azure/pyproject.toml \
+            -X PUT \
+            -f message="chore: align Azure pyproject.toml version with gen.lock" \
+            -f content="$ENCODED" \
+            -f sha="$CURRENT_SHA" \
+            -f branch="$BRANCH"
+          echo "Updated Azure pyproject.toml to version $VERSION"
 
       - name: Align GCP SDK version
-        if: hashFiles('packages/gcp/.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' packages/gcp/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
-          echo "Aligning GCP SDK to version: $VERSION"
-          uv version "$VERSION" --directory packages/gcp
-
-      - name: Commit and push
-        run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add pyproject.toml packages/*/pyproject.toml 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No version change needed"
-          else
-            git commit -m "chore: align pyproject.toml version with gen.lock"
-            git push
+          # Fetch gen.lock from PR branch via API
+          GEN_LOCK=$(gh api repos/${{ github.repository }}/contents/packages/gcp/.speakeasy/gen.lock?ref=$BRANCH --jq '.content' | base64 -d) || exit 0
+          VERSION=$(echo "$GEN_LOCK" | grep 'releaseVersion:' | head -1 | awk '{print $2}' | tr -d '"')
+          if [ -z "$VERSION" ]; then
+            echo "No version found in GCP gen.lock"
+            exit 0
           fi
+          echo "Found GCP version: $VERSION"
+
+          # Fetch current pyproject.toml
+          PYPROJECT_RESPONSE=$(gh api repos/${{ github.repository }}/contents/packages/gcp/pyproject.toml?ref=$BRANCH)
+          CURRENT_SHA=$(echo "$PYPROJECT_RESPONSE" | jq -r '.sha')
+          PYPROJECT=$(echo "$PYPROJECT_RESPONSE" | jq -r '.content' | base64 -d)
+
+          # Update version in pyproject.toml
+          UPDATED=$(echo "$PYPROJECT" | sed "s/^version = \".*\"/version = \"$VERSION\"/")
+
+          if [ "$PYPROJECT" = "$UPDATED" ]; then
+            echo "GCP version already aligned"
+            exit 0
+          fi
+
+          # Commit updated file via API
+          ENCODED=$(echo "$UPDATED" | base64 -w 0)
+          gh api repos/${{ github.repository }}/contents/packages/gcp/pyproject.toml \
+            -X PUT \
+            -f message="chore: align GCP pyproject.toml version with gen.lock" \
+            -f content="$ENCODED" \
+            -f sha="$CURRENT_SHA" \
+            -f branch="$BRANCH"
+          echo "Updated GCP pyproject.toml to version $VERSION"
