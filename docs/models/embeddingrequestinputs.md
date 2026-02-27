@@ -1,6 +1,6 @@
 # EmbeddingRequestInputs
 
-The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
+Text to embed.
 
 
 ## Supported Types
