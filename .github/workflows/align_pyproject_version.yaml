@@ -27,21 +27,21 @@ jobs:
       - name: Align main SDK version
         if: hashFiles('.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' .speakeasy/gen.lock | head -1 | awk '{print $2}')
+          VERSION=$(grep 'releaseVersion:' .speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
           echo "Aligning main SDK to version: $VERSION"
           uv version "$VERSION"
 
       - name: Align Azure SDK version
         if: hashFiles('packages/azure/.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' packages/azure/.speakeasy/gen.lock | head -1 | awk '{print $2}')
+          VERSION=$(grep 'releaseVersion:' packages/azure/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
           echo "Aligning Azure SDK to version: $VERSION"
           uv version "$VERSION" --directory packages/azure
 
       - name: Align GCP SDK version
         if: hashFiles('packages/gcp/.speakeasy/gen.lock') != ''
         run: |
-          VERSION=$(grep 'releaseVersion:' packages/gcp/.speakeasy/gen.lock | head -1 | awk '{print $2}')
+          VERSION=$(grep 'releaseVersion:' packages/gcp/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
           echo "Aligning GCP SDK to version: $VERSION"
           uv version "$VERSION" --directory packages/gcp
 
