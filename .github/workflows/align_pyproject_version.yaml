@@ -1,25 +1,25 @@
 name: Align pyproject.toml version
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-    paths:
-      - ".speakeasy/gen.lock"
-      - "packages/azure/.speakeasy/gen.lock"
-      - "packages/gcp/.speakeasy/gen.lock"
+  workflow_run:
+    workflows:
+      - "Generate MISTRALAI"
+      - "Generate MISTRAL-PYTHON-SDK-AZURE"
+      - "Generate MISTRAL-PYTHON-SDK-GOOGLE-CLOUD"
+    types: [completed]
 
 permissions:
   contents: write
 
 jobs:
   align-version:
-    if: github.actor == 'github-actions[bot]'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
