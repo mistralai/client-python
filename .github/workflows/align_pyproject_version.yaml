@@ -1,0 +1,58 @@
+name: Align pyproject.toml version
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - ".speakeasy/gen.lock"
+      - "packages/azure/.speakeasy/gen.lock"
+      - "packages/gcp/.speakeasy/gen.lock"
+
+permissions:
+  contents: write
+
+jobs:
+  align-version:
+    if: github.actor == 'speakeasybot'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+
+      - name: Align main SDK version
+        if: hashFiles('.speakeasy/gen.lock') != ''
+        run: |
+          VERSION=$(grep 'releaseVersion:' .speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
+          echo "Aligning main SDK to version: $VERSION"
+          uv version "$VERSION"
+
+      - name: Align Azure SDK version
+        if: hashFiles('packages/azure/.speakeasy/gen.lock') != ''
+        run: |
+          VERSION=$(grep 'releaseVersion:' packages/azure/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
+          echo "Aligning Azure SDK to version: $VERSION"
+          uv version "$VERSION" --directory packages/azure
+
+      - name: Align GCP SDK version
+        if: hashFiles('packages/gcp/.speakeasy/gen.lock') != ''
+        run: |
+          VERSION=$(grep 'releaseVersion:' packages/gcp/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
+          echo "Aligning GCP SDK to version: $VERSION"
+          uv version "$VERSION" --directory packages/gcp
+
+      - name: Commit and push
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add pyproject.toml packages/*/pyproject.toml 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No version change needed"
+          else
+            git commit -m "chore: align pyproject.toml version with gen.lock"
+            git push
+          fi
