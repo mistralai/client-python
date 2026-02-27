@@ -32,56 +32,56 @@ jobs:
     needs: generate
     runs-on: ubuntu-latest
     steps:
-      - name: Align pyproject.toml version with gen.lock
+      - name: Find PR branch
+        id: find-pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
+        run: |
+          PR_BRANCH=$(gh pr list --repo ${{ github.repository }} --author "app/github-actions" \
+            --json headRefName,updatedAt --jq 'sort_by(.updatedAt) | reverse | .[0].headRefName // empty')
+          echo "branch=$PR_BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Checkout PR branch
+        if: steps.find-pr.outputs.branch != ''
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: ${{ steps.find-pr.outputs.branch }}
+
+      - name: Install uv
+        if: steps.find-pr.outputs.branch != ''
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+
+      - name: Align version using uv
+        if: steps.find-pr.outputs.branch != ''
         run: |
           set -euo pipefail
 
-          # Find the most recent PR created by github-actions bot
-          PR_BRANCH=$(gh pr list --repo "$REPO" --author "app/github-actions" \
-            --json headRefName,updatedAt --jq 'sort_by(.updatedAt) | reverse | .[0].headRefName // empty')
-
-          if [ -z "$PR_BRANCH" ]; then
-            echo "No PR found from github-actions bot, skipping"
-            exit 0
-          fi
-          echo "Found PR branch: $PR_BRANCH"
-
-          # Fetch gen.lock from PR branch
-          if ! GEN_LOCK=$(gh api "repos/$REPO/contents/packages/gcp/.speakeasy/gen.lock?ref=$PR_BRANCH" --jq '.content' 2>/dev/null | base64 -d); then
-            echo "No gen.lock found, skipping"
-            exit 0
-          fi
-
-          VERSION=$(echo "$GEN_LOCK" | grep 'releaseVersion:' | head -1 | awk '{print $2}' | tr -d '"')
+          VERSION=$(grep 'releaseVersion:' packages/gcp/.speakeasy/gen.lock | head -1 | awk '{print $2}' | tr -d '"')
           if [ -z "$VERSION" ]; then
             echo "No releaseVersion found in gen.lock"
             exit 0
           fi
           echo "Found version: $VERSION"
 
-          # Fetch current pyproject.toml
-          PYPROJECT_RESPONSE=$(gh api "repos/$REPO/contents/packages/gcp/pyproject.toml?ref=$PR_BRANCH")
-          CURRENT_SHA=$(echo "$PYPROJECT_RESPONSE" | jq -r '.sha')
-          PYPROJECT=$(echo "$PYPROJECT_RESPONSE" | jq -r '.content' | base64 -d)
-
-          # Update version
-          UPDATED=$(echo "$PYPROJECT" | sed "s/^version = \".*\"/version = \"$VERSION\"/")
-
-          if [ "$PYPROJECT" = "$UPDATED" ]; then
+          CURRENT=$(grep '^version = ' packages/gcp/pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+          if [ "$CURRENT" = "$VERSION" ]; then
             echo "Version already aligned to $VERSION"
             exit 0
           fi
 
-          # Commit updated file
-          ENCODED=$(echo "$UPDATED" | base64 -w 0)
-          gh api "repos/$REPO/contents/packages/gcp/pyproject.toml" \
-            -X PUT \
-            -f message="chore: align GCP pyproject.toml version to $VERSION" \
-            -f content="$ENCODED" \
-            -f sha="$CURRENT_SHA" \
-            -f branch="$PR_BRANCH"
+          echo "Updating version from $CURRENT to $VERSION"
+          uv version "$VERSION" --directory packages/gcp
 
-          echo "Updated packages/gcp/pyproject.toml to version $VERSION"
+      - name: Commit and push
+        if: steps.find-pr.outputs.branch != ''
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add packages/gcp/pyproject.toml packages/gcp/uv.lock
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            VERSION=$(grep '^version = ' packages/gcp/pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+            git commit -m "chore: align GCP pyproject.toml and uv.lock to version $VERSION"
+            git push
+          fi
