@@ -1,20 +1,20 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: bc4a0ba9c38418d84a6a8a76b503977b
+  docChecksum: 58bc2dcdd83a2b7c4856971baa20641b
   docVersion: 1.0.0
-  speakeasyVersion: 1.729.0
-  generationVersion: 2.841.0
+  speakeasyVersion: 1.731.1
+  generationVersion: 2.844.3
   releaseVersion: 2.0.0b1
-  configChecksum: 9cea6a311ff15502c47b0ef87e9846a2
+  configChecksum: bce75a6aa08415ca872a3820a4b071c5
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/gcp
   published: true
 persistentEdits:
-  generation_id: e503bb37-7bdd-4ebf-9bed-a8f754c99f8a
-  pristine_commit_hash: f14b1b1288437b7fc0ba666a384614a225385259
-  pristine_tree_hash: 67e6d0a84ae20666a636dcc8ad174647a96b105f
+  generation_id: 577aae0c-12e3-4c56-8d67-61ce2850edfd
+  pristine_commit_hash: cf468443352a743f80b64de13b46c6682a85bc02
+  pristine_tree_hash: bef1cbe407b46b99c2495a9b2102f624411748d4
 features:
   python:
     additionalDependencies: 1.0.0
@@ -33,6 +33,7 @@ features:
     globalServerURLs: 3.2.0
     includes: 3.0.0
     methodArguments: 1.0.2
+    mockServer: 0.1.1
     nameOverrides: 3.0.3
     nullables: 1.0.2
     openEnums: 1.0.4
@@ -42,6 +43,7 @@ features:
     serverEvents: 1.0.13
     serverEventsSentinels: 0.1.0
     serverIDs: 3.0.0
+    tests: 1.19.7
     unions: 3.1.4
 trackedFiles:
   .gitattributes:
@@ -326,8 +328,8 @@ trackedFiles:
     pristine_git_object: ea95bed210db9180824efddfb1b3e47f5bf96489
   src/mistralai/gcp/client/_version.py:
     id: f87319e32c7b
-    last_write_checksum: sha1:0d99fadc73b957112022a95eabeb0e3a98d14ff4
-    pristine_git_object: 36e44a5e6067e8bd197b38cc238686f660c77244
+    last_write_checksum: sha1:f344a8e2a24b338e76ae691158d87d55487fe915
+    pristine_git_object: fcb97d6c5478694afdafb3f17a3eecf072e84398
   src/mistralai/gcp/client/basesdk.py:
     id: 4d594572857b
     last_write_checksum: sha1:d8ef9e2f4fa97d402eb9f5472ceb80fb39693991
@@ -620,6 +622,198 @@ trackedFiles:
     id: 328207e9ae81
     last_write_checksum: sha1:acaa178a7c41ddd000f58cc691e4632d925b2553
     pristine_git_object: dae01a44384ac3bc13ae07453a053bf6c898ebe3
+  tests/__init__.py:
+    id: 8e911f6351f3
+    last_write_checksum: sha1:cffdfca8e87b9acc39f414eddf64d233ba5fe450
+    pristine_git_object: 368144a74354ed71268d935bfe85efcba8c388ed
+  tests/conftest.py:
+    id: 626af34e8204
+    last_write_checksum: sha1:491c49c033b7c43cb406e4c5b1ffffebb41713f3
+    pristine_git_object: 8929d317282b341546a6dd5d78365aa062ff41f9
+  tests/mockserver/.gitignore:
+    last_write_checksum: sha1:228e1b05712a973948fd771323a2140a3b355ff4
+  tests/mockserver/Dockerfile:
+    last_write_checksum: sha1:72b74bf83cc79b4436ffe1a33211198ea447f06a
+  tests/mockserver/Makefile:
+    last_write_checksum: sha1:f2619d7634d211c3c01dd68668635b0ebdbfc1ea
+  tests/mockserver/go.mod:
+    last_write_checksum: sha1:c2b6f5a81e03003990983f5befd1da3f1a0396b6
+  tests/mockserver/go.sum:
+    last_write_checksum: sha1:cdeb52f5f4c63d07ba612730867a95b0ddb14b2d
+  tests/mockserver/internal/handler/assert/contenttype.go:
+    last_write_checksum: sha1:2d059a68e53e70b269ddf897f8c6017f94434e18
+  tests/mockserver/internal/handler/assert/header.go:
+    last_write_checksum: sha1:a0866dfd740d218b5b94741ac92db4cdf5a2acd9
+  tests/mockserver/internal/handler/assert/parameter.go:
+    last_write_checksum: sha1:0df39c0981a929c99ae767201b628d8c9e31f288
+  tests/mockserver/internal/handler/assert/pointer.go:
+    last_write_checksum: sha1:48714196fb47649be28e8df031761038a9e10ee6
+  tests/mockserver/internal/handler/assert/security.go:
+    last_write_checksum: sha1:3cee6e3d2babea02486fd2df08eb00840f5ddea9
+  tests/mockserver/internal/handler/doc.go:
+    last_write_checksum: sha1:a49b83f9fc775d3cc6f558b0f52b2fc9cf04f863
+  tests/mockserver/internal/handler/generated_handler.go:
+    last_write_checksum: sha1:32101ddff940c59f43a805af303cf645a2bcca0d
+  tests/mockserver/internal/handler/generated_handlers.go:
+    last_write_checksum: sha1:67361bc5142bbecc1e63005d03c7ed21fcad5b98
+  tests/mockserver/internal/handler/pathpostrawpredict.go:
+    last_write_checksum: sha1:21da1fac4c77f9087a36c77f487e09428cfce2f5
+  tests/mockserver/internal/handler/values/files.go:
+    last_write_checksum: sha1:e1e9d78c165e2a35d165f120bd8dcd7b42c33a33
+  tests/mockserver/internal/logging/doc.go:
+    last_write_checksum: sha1:63a119620f179826356304b8205756248caa370e
+  tests/mockserver/internal/logging/formats.go:
+    last_write_checksum: sha1:e84e84e6e62a4dc3b9ad3a7f2a95eb77374f2fcd
+  tests/mockserver/internal/logging/http_file.go:
+    last_write_checksum: sha1:e948142b98821c23bd21c128e007e79a193114a2
+  tests/mockserver/internal/logging/http_logger.go:
+    last_write_checksum: sha1:7a2267a61cb1282405ed7f406f9bd95fbf796b5b
+  tests/mockserver/internal/logging/levels.go:
+    last_write_checksum: sha1:164f3aee47030d3534e4ef2df31192304e9ea97b
+  tests/mockserver/internal/logging/logger.go:
+    last_write_checksum: sha1:92027a7d11dd84831bc444aa2d018cbb7195542f
+  tests/mockserver/internal/logging/oas_operation.go:
+    last_write_checksum: sha1:af9187f31972ef308fb4bc82de73d6dd71b9fb64
+  tests/mockserver/internal/logging/oas_operation_call.go:
+    last_write_checksum: sha1:1ec2244b5fc171dfe7e4e339420b2b17f0df48c9
+  tests/mockserver/internal/sdk/models/components/assistantmessage.go:
+    last_write_checksum: sha1:0514b58f64da0c803b9bd3803e084c2aa20f10fc
+  tests/mockserver/internal/sdk/models/components/chatcompletionchoice.go:
+    last_write_checksum: sha1:963c01bcd0bed12be569b894088d4b62508020a5
+  tests/mockserver/internal/sdk/models/components/chatcompletionrequest.go:
+    last_write_checksum: sha1:341d257406510bd3683cf022878bd767cb7518df
+  tests/mockserver/internal/sdk/models/components/chatcompletionresponse.go:
+    last_write_checksum: sha1:3ca80507eadb0b0fa56676525b860eb3339c07fb
+  tests/mockserver/internal/sdk/models/components/chatcompletionstreamrequest.go:
+    last_write_checksum: sha1:cc6eae24060e7389d195b3b0dedb2b4313ea441f
+  tests/mockserver/internal/sdk/models/components/completionchunk.go:
+    last_write_checksum: sha1:16e8fb6d4af8a7befbe5d79fb010af257bfe9d1f
+  tests/mockserver/internal/sdk/models/components/completionevent.go:
+    last_write_checksum: sha1:6ff4599ad82becc5a459d76c3ada41c831dbb8b8
+  tests/mockserver/internal/sdk/models/components/completionresponsestreamchoice.go:
+    last_write_checksum: sha1:2f88c2d1c86ba113521e3b1ea8e5ab373134a6b0
+  tests/mockserver/internal/sdk/models/components/contentchunk.go:
+    last_write_checksum: sha1:6ee9256caea0c349338c04b90441fed06627cb2b
+  tests/mockserver/internal/sdk/models/components/deltamessage.go:
+    last_write_checksum: sha1:26517e0fa0aff17d90871e71a1b85ae13b96c78b
+  tests/mockserver/internal/sdk/models/components/fimcompletionrequest.go:
+    last_write_checksum: sha1:3708729abdcc93a0e4b8f870929069b0cd855eb7
+  tests/mockserver/internal/sdk/models/components/fimcompletionresponse.go:
+    last_write_checksum: sha1:71efb7488bfe8fb5d6c79166afd45f31243e1758
+  tests/mockserver/internal/sdk/models/components/fimcompletionstreamrequest.go:
+    last_write_checksum: sha1:0903e444b7969c947946400e436531658925716e
+  tests/mockserver/internal/sdk/models/components/function.go:
+    last_write_checksum: sha1:bd4a52fd274944f52ec66d23c2b7cd868c5d2978
+  tests/mockserver/internal/sdk/models/components/functioncall.go:
+    last_write_checksum: sha1:7e2af1c8c279194ace618a16b9a3adf36205006d
+  tests/mockserver/internal/sdk/models/components/functionname.go:
+    last_write_checksum: sha1:d38f300b533d7d1def62a84b91fc60ae2829ed2a
+  tests/mockserver/internal/sdk/models/components/httpmetadata.go:
+    last_write_checksum: sha1:9e4b58e3bb54db4360421109c2e169741499be16
+  tests/mockserver/internal/sdk/models/components/imagedetail.go:
+    last_write_checksum: sha1:a625eb2a965302f3277b394f154a56d088fd3e10
+  tests/mockserver/internal/sdk/models/components/imageurl.go:
+    last_write_checksum: sha1:a1ced1d1219f8631db4c7dbee6dff9046c057285
+  tests/mockserver/internal/sdk/models/components/imageurlchunk.go:
+    last_write_checksum: sha1:d090a173cab561669f2703e3401010c3efdcd7ef
+  tests/mockserver/internal/sdk/models/components/jsonschema.go:
+    last_write_checksum: sha1:ca256d1e62ed2132f130b2cdb62f86b3e9e45746
+  tests/mockserver/internal/sdk/models/components/mistralpromptmode.go:
+    last_write_checksum: sha1:db9c83857c6d8f256867225a7ef8c09790d0541f
+  tests/mockserver/internal/sdk/models/components/prediction.go:
+    last_write_checksum: sha1:a53dd9df332bc599a63404182876e4f36700d7d5
+  tests/mockserver/internal/sdk/models/components/referencechunk.go:
+    last_write_checksum: sha1:009cdbce37dcab2a47367db6e9e975157d45ac45
+  tests/mockserver/internal/sdk/models/components/responseformat.go:
+    last_write_checksum: sha1:60bf7c9ef51ab98a73d3ae04507c31fe90397426
+  tests/mockserver/internal/sdk/models/components/responseformats.go:
+    last_write_checksum: sha1:41920c3d78136cafd96efc14838d68c39f27d6cf
+  tests/mockserver/internal/sdk/models/components/security.go:
+    last_write_checksum: sha1:62aea76b55e26348a4f4c66ee9ef2f1af3bed459
+  tests/mockserver/internal/sdk/models/components/systemmessage.go:
+    last_write_checksum: sha1:136f4d5c0fdf671c3530f87a0bfe09af2b2c0ada
+  tests/mockserver/internal/sdk/models/components/systemmessagecontentchunks.go:
+    last_write_checksum: sha1:d19919f8a34651d90843ceeee6044589cb1c8734
+  tests/mockserver/internal/sdk/models/components/textchunk.go:
+    last_write_checksum: sha1:973c3782d50c52bb506463b76947a31871ea256e
+  tests/mockserver/internal/sdk/models/components/thinkchunk.go:
+    last_write_checksum: sha1:50a53b27f050a0e19f9aaa18c40999d8630d52b6
+  tests/mockserver/internal/sdk/models/components/tool.go:
+    last_write_checksum: sha1:47992afa717a62fc8ee3dd25b1f621136c673fbd
+  tests/mockserver/internal/sdk/models/components/toolcall.go:
+    last_write_checksum: sha1:6a42caeecdecaf61257c71f9c0be8d9189c2e4be
+  tests/mockserver/internal/sdk/models/components/toolchoice.go:
+    last_write_checksum: sha1:ef0593266af2eb09523b7f6bc9b5479eba60d91c
+  tests/mockserver/internal/sdk/models/components/toolchoiceenum.go:
+    last_write_checksum: sha1:8d87eacc3a0c4eaf77866255151c8f6834906c0f
+  tests/mockserver/internal/sdk/models/components/toolmessage.go:
+    last_write_checksum: sha1:a3c891aaa8255c089295977ed874870e875f3b17
+  tests/mockserver/internal/sdk/models/components/tooltypes.go:
+    last_write_checksum: sha1:2f5886903ea8da53c0b29db277a8e5d4fce93a47
+  tests/mockserver/internal/sdk/models/components/usageinfo.go:
+    last_write_checksum: sha1:3a2f712a711e2259b879e7ae8975aaefc931881c
+  tests/mockserver/internal/sdk/models/components/usermessage.go:
+    last_write_checksum: sha1:85e43779a64491d71018ed2a9ac9b3fa4cefac96
+  tests/mockserver/internal/sdk/models/components/validationerror.go:
+    last_write_checksum: sha1:f9ac42332233a05cf0d1beb61f9ce89f13c52def
+  tests/mockserver/internal/sdk/models/operations/chatcompletionv1chatcompletionspost.go:
+    last_write_checksum: sha1:4de0f0ee50b4b60ea876834058bc804cad943bcc
+  tests/mockserver/internal/sdk/models/operations/fimcompletionv1fimcompletionspost.go:
+    last_write_checksum: sha1:893c27500df5b2133fba7722342d4df28b97048b
+  tests/mockserver/internal/sdk/models/operations/streamchat.go:
+    last_write_checksum: sha1:3d99d84cb26d3648b0fd118c1b164c82fedbfe5d
+  tests/mockserver/internal/sdk/models/operations/streamfim.go:
+    last_write_checksum: sha1:17a99dac1a93f9bdcd31518ad82abd4e95879d42
+  tests/mockserver/internal/sdk/models/sdkerrors/httpvalidationerror.go:
+    last_write_checksum: sha1:5fb4ca3b58ed502f0618466d3b7727618b8e2cf0
+  tests/mockserver/internal/sdk/optionalnullable/optionalnullable.go:
+    last_write_checksum: sha1:aa5ff815f31a3657487ad5e0c3f023f573b1fcab
+  tests/mockserver/internal/sdk/optionalnullable/optionalnullable_test.go:
+    last_write_checksum: sha1:c0ca755fb35acd8f838567e22c2b5722592fe1c3
+  tests/mockserver/internal/sdk/types/bigint.go:
+    last_write_checksum: sha1:49b004005d0461fb04b846eca062b070b0360b31
+  tests/mockserver/internal/sdk/types/date.go:
+    last_write_checksum: sha1:3036a2e1ed15a1d484c093367eba000c38f384d0
+  tests/mockserver/internal/sdk/types/datetime.go:
+    last_write_checksum: sha1:196d050af6450669214e9ae4fd28e56263ae2b5d
+  tests/mockserver/internal/sdk/types/decimal.go:
+    last_write_checksum: sha1:54f1f8c0d89d6ef048805121f97c6937404c5d51
+  tests/mockserver/internal/sdk/types/jsonl/jsonl.go:
+    last_write_checksum: sha1:15fb778e0fa6c7b4c228431af3d03b9819b8fd94
+  tests/mockserver/internal/sdk/types/pointers.go:
+    last_write_checksum: sha1:fc2275ea006257ba9ba4ff6f2a2cdb6205371eef
+  tests/mockserver/internal/sdk/types/stream/stream.go:
+    last_write_checksum: sha1:c48811a5243fa7f9e23c67966b140c52614b58bd
+  tests/mockserver/internal/sdk/utils/json.go:
+    last_write_checksum: sha1:53a656712673e70bd0a3e9e8515bdab105e60f3e
+  tests/mockserver/internal/sdk/utils/reflect.go:
+    last_write_checksum: sha1:2e555f970ae33dd41130199d1b87c9864b485fdf
+  tests/mockserver/internal/sdk/utils/sort.go:
+    last_write_checksum: sha1:a9d390de086ad13841c7d154e97d314e6ae2d285
+  tests/mockserver/internal/server/doc.go:
+    last_write_checksum: sha1:71ca1bebc409ffcb7ed573f4bfc85f1d2cb76252
+  tests/mockserver/internal/server/generated_handlers.go:
+    last_write_checksum: sha1:dbaa2e7beedda2a3e0ef373939f0424577cb2666
+  tests/mockserver/internal/server/internal_handlers.go:
+    last_write_checksum: sha1:1c79af9ee45c9bde435f5acc711bc48c9f66315e
+  tests/mockserver/internal/server/server.go:
+    last_write_checksum: sha1:d97000314c64b937ff7a243cbc051c5591ab8722
+  tests/mockserver/internal/server/server_option.go:
+    last_write_checksum: sha1:f787e17525cbaed4d6881d02562da66a1deda9c0
+  tests/mockserver/internal/server/templates/log/index.html.tmpl:
+    last_write_checksum: sha1:7c3fc6e6b03d80e05bc586ade52ddcb8adaee148
+  tests/mockserver/internal/server/templates/log/operation.html.tmpl:
+    last_write_checksum: sha1:ab2894028c76b25dfe613d743a243bfd04fb279c
+  tests/mockserver/internal/server/templates/log/style.css.tmpl:
+    last_write_checksum: sha1:474c79a94fa7d2671135e078a71c51b11f38bfae
+  tests/mockserver/internal/tracking/requesttracker.go:
+    last_write_checksum: sha1:09963693aae5446c247cac171c284f2cdf7cfa4d
+  tests/mockserver/main.go:
+    last_write_checksum: sha1:1267817b54decac7af35c5db3f4d865eb628547d
+  tests/test_client.py:
+    id: 6b61d4b06ccc
+    last_write_checksum: sha1:df970d19cdb9f9e057722699dc73965b6f9b1758
+    pristine_git_object: fb323a5bca29200e1b6e675e739273626c7b8204
 examples:
   stream_chat:
     speakeasy-default-stream-chat:
@@ -652,7 +846,10 @@ examples:
         "200":
           application/json: {"id": "447e3e0d457e42e98248b5d2ef52a2a3", "object": "chat.completion", "model": "codestral-2508", "usage": {"prompt_tokens": 8, "completion_tokens": 91, "total_tokens": 99}, "created": 1759496862, "choices": [{"index": 0, "message": {"role": "assistant", "content": "add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n", "tool_calls": null, "prefix": false}, "finish_reason": "stop"}]}
 examplesVersion: 1.0.2
-generatedTests: {}
+generatedTests:
+  chat_completion_v1_chat_completions_post: "2026-02-26T11:44:37+01:00"
+  fim_completion_v1_fim_completions_post-userExample: "2026-02-26T11:44:37+01:00"
+  fim_completion_v1_fim_completions_post: "2026-02-26T17:23:56+01:00"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

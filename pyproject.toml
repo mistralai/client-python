@@ -49,6 +49,9 @@ dev = [
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
     "websockets >=13.0",
+    "pytest-xdist>=3.8.0",
+    "respx>=0.22.0,<0.23",
+    "time-machine>=2.16.0,<3",
 ]
 lint = [
     "ruff>=0.11.10,<0.12",
@@ -101,6 +104,16 @@ build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "packages/azure/src", "packages/gcp/src"]
+asyncio_mode = "auto"
+markers = [
+    "integration: marks tests requiring real API credentials",
+]
+filterwarnings = [
+    # Suppress async client cleanup warnings - these are non-critical GC cleanup messages
+    "ignore:coroutine 'AsyncClient.aclose' was never awaited:RuntimeWarning",
+    # Suppress Pydantic serialization warnings from generated SDK code
+    "ignore:Pydantic serializer warnings:UserWarning",
+]
 
 [tool.mypy]
 disable_error_code = "misc"

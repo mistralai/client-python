@@ -1,0 +1,54 @@
+arazzo: 1.0.1
+info:
+  title: Test Suite
+  summary: Created from /Users/nelson.proia/PycharmProjects/client-python/.speakeasy/temp/9e5e69/openapi/bundle/openapi.yaml
+  version: 0.0.1
+sourceDescriptions:
+  - name: /Users/nelson.proia/PycharmProjects/client-python/.speakeasy/temp/9e5e69/openapi/bundle/openapi.yaml
+    url: https://TBD.com
+    type: openapi
+workflows:
+  - workflowId: chat_completion_v1_chat_completions_post
+    steps:
+      - stepId: test
+        operationId: chat_completion_v1_chat_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            messages:
+              - content: Who is the best French painter? Answer in one short sentence.
+                role: user
+            model: mistral-large-latest
+            response_format:
+              type: text
+            stream: false
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"chat.completion","model":"mistral-small-latest","usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0},"created":1702256327,"choices":[]}
+            type: simple
+    x-speakeasy-test-group: chat
+    x-speakeasy-test-rebuild: true
+  - workflowId: fim_completion_v1_fim_completions_post-userExample
+    steps:
+      - stepId: test
+        operationId: fim_completion_v1_fim_completions_post
+        requestBody:
+          contentType: application/json
+          payload:
+            model: codestral-latest
+            prompt: def
+            stream: false
+            suffix: return a+b
+            top_p: 1
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"id":"447e3e0d457e42e98248b5d2ef52a2a3","object":"chat.completion","model":"codestral-2508","usage":{"prompt_tokens":8,"completion_tokens":91,"total_tokens":99},"created":1759496862,"choices":[{"index":0,"message":{"role":"assistant","content":"add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n","tool_calls":null,"prefix":false},"finish_reason":"stop"}]}
+            type: simple
+    x-speakeasy-test-group: fim
+    x-speakeasy-test-rebuild: true

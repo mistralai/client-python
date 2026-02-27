@@ -4,3 +4,6 @@ src/mistralai/azure/client/_hooks/registration.py
 README.md
 USAGE.md
 docs/sdks/**/README.md
+tests/unit/**
+tests/test_azure_integration.py
+tests/test_azure_v2_parity.py

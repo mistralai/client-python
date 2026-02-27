@@ -4,3 +4,7 @@ examples/*
 src/mistralai/extra/*
 pylintrc
 scripts/prepare_readme.py
+scripts/run_all_tests.sh
+tests/test_prepare_readme.py
+tests/unit/**
+tests/test_integration.py

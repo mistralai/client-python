@@ -1,15 +1,15 @@
 workflowVersion: 1.0.0
-speakeasyVersion: 1.729.0
+speakeasyVersion: latest
 sources:
     mistral-azure-source:
         inputs:
-        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:v2
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure:v2
     mistral-google-cloud-source:
         inputs:
-        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:v2
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:v2
     mistral-openapi:
         inputs:
-        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:v2
+            - location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:v2
 targets:
     mistralai-azure-sdk:
         target: python
@@ -22,6 +22,8 @@ targets:
             registry:
                 location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-azure-code-samples
             blocking: false
+        testing:
+            enabled: true
     mistralai-gcp-sdk:
         target: python
         source: mistral-google-cloud-source
@@ -33,6 +35,8 @@ targets:
             registry:
                 location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud-code-samples
             blocking: false
+        testing:
+            enabled: true
     mistralai-sdk:
         target: python
         source: mistral-openapi
@@ -43,3 +47,5 @@ targets:
             registry:
                 location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-code-samples
             blocking: false
+        testing:
+            enabled: true

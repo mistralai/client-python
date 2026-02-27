@@ -32,5 +32,47 @@ jobs:
       - name: Run the 'src/mistralai/extra' package unit tests
         run: uv run python3.12 -m unittest discover -s src/mistralai/extra/tests -t src
 
-      - name: Run pytest for repository tests
-        run: uv run pytest tests/
+      - name: Run unit tests
+        run: |
+          uv run pytest tests/unit/ -v --tb=short -x
+          uv run pytest packages/azure/tests/unit/ -v --tb=short -x
+          uv run pytest packages/gcp/tests/unit/ -v --tb=short -x
+
+      - name: Run parity tests
+        run: |
+          uv run pytest packages/azure/tests/test_azure_v2_parity.py -v
+          uv run pytest packages/gcp/tests/test_gcp_v2_parity.py -v
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Start Speakeasy mock server
+        run: |
+          cd tests/mockserver
+          go run . -address :18080 &
+          sleep 3
+          curl -sf http://localhost:18080/_mockserver/health || echo "Mock server health check failed"
+
+      - name: Run Speakeasy contract tests
+        run: uv run pytest tests/ --ignore=tests/unit/ -m "not integration"
+
+      - name: Run main SDK integration tests
+        if: ${{ secrets.MISTRAL_API_KEY != '' }}
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+        run: uv run pytest tests/test_integration.py -v
+
+      - name: Run Azure integration tests
+        if: ${{ secrets.AZURE_API_KEY != '' }}
+        env:
+          AZURE_API_KEY: ${{ secrets.AZURE_API_KEY }}
+          AZURE_ENDPOINT: ${{ secrets.AZURE_ENDPOINT }}
+        run: uv run pytest packages/azure/tests/test_azure_integration.py -v
+
+      - name: Run GCP integration tests
+        if: ${{ secrets.GCP_PROJECT_ID != '' }}
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: uv run pytest packages/gcp/tests/test_gcp_integration.py -v
