@@ -39,7 +39,7 @@ workflows:
           contentType: application/json
           payload:
             document:
-              document_url: httcan you ps://upset-labourer.net/
+              document_url: https://upset-labourer.net/
               type: document_url
             model: CX-9
         successCriteria:

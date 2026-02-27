@@ -19,6 +19,7 @@ dev = [
     "pytest>=8.2.2,<9",
     "pytest-asyncio>=0.23.7,<0.24",
     "pytest-xdist>=3.5.0,<4",
+    "respx>=0.22.0,<0.23",
 ]
 
 [tool.setuptools.package-data]
@@ -46,6 +47,14 @@ build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+asyncio_mode = "auto"
+markers = [
+    "integration: marks tests requiring real API credentials",
+]
+filterwarnings = [
+    "ignore:coroutine 'AsyncClient.aclose' was never awaited:RuntimeWarning",
+    "ignore:Pydantic serializer warnings:UserWarning",
+]
 
 [tool.mypy]
 disable_error_code = "misc"
