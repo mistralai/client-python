@@ -165,23 +165,33 @@ for chunk in client.chat.stream(model="mistral-large-latest", messages=messages)
 
 **v0.x:**
 ```python
+import asyncio
 from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 
-client = MistralAsyncClient(api_key=api_key)
-messages = [ChatMessage(role="user", content="What is the best French cheese?")]
+async def main():
+    client = MistralAsyncClient(api_key=api_key)
+    messages = [ChatMessage(role="user", content="What is the best French cheese?")]
 
-async for chunk in client.chat_stream(model="mistral-large-latest", messages=messages):
-    print(chunk.choices[0].delta.content)
+    async for chunk in client.chat_stream(model="mistral-large-latest", messages=messages):
+        print(chunk.choices[0].delta.content)
+
+asyncio.run(main())
 ```
 
 **v1.x:**
 ```python
+import asyncio
 from mistralai import Mistral, UserMessage
 
-client = Mistral(api_key=api_key)
-messages = [UserMessage(content="What is the best French cheese?")]
+async def main():
+    client = Mistral(api_key=api_key)
+    messages = [UserMessage(content="What is the best French cheese?")]
 
-async for chunk in await client.chat.stream_async(model="mistral-large-latest", messages=messages):
-    print(chunk.data.choices[0].delta.content)
+    async for chunk in await client.chat.stream_async(model="mistral-large-latest", messages=messages):
+        print(chunk.data.choices[0].delta.content)
+
+asyncio.run(main())
 ```
+
+> **Note:** If you are running in an environment with an already-active event loop (e.g., Jupyter notebooks, Positron IDE, VS Code interactive window), use `await main()` instead of `asyncio.run(main())`.
