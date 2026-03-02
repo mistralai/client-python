@@ -154,7 +154,7 @@ wheels = [
 
 [[package]]
 name = "mistralai-azure"
-version = "2.0.0b1"
+version = "2.0.0rc1"
 source = { editable = "." }
 dependencies = [
     { name = "httpcore" },
