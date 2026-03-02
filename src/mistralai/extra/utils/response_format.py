@@ -11,7 +11,7 @@ def response_format_from_pydantic_model(
     model: type[CustomPydanticModel],
 ) -> ResponseFormat:
     """Generate a strict JSON schema from a pydantic model."""
-    model_schema = rec_strict_json_schema(model.model_json_schema())
+    model_schema = rec_strict_json_schema(model.model_json_schema(by_alias=True))
     json_schema = JSONSchema.model_validate(
         {"name": model.__name__, "schema": model_schema, "strict": True}
     )
