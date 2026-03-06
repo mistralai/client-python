@@ -11,7 +11,6 @@ import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_
 import opentelemetry.semconv._incubating.attributes.http_attributes as http_attributes
 import opentelemetry.semconv.attributes.server_attributes as server_attributes
 from opentelemetry import propagate, trace
-from opentelemetry.sdk.trace import SpanProcessor
 from opentelemetry.trace import Span, Status, StatusCode, Tracer, set_span_in_context
 
 logger = logging.getLogger(__name__)
@@ -199,11 +198,6 @@ def enrich_span_from_response(tracer: trace.Tracer, span: Span, operation_id: st
             gen_ai_attributes.GEN_AI_REQUEST_MODEL: response_data.get("model", "")
         }
         span.set_attributes(ocr_attributes)
-
-
-class GenAISpanProcessor(SpanProcessor):
-    def on_start(self, span, parent_context = None):
-        span.set_attributes({"agent.trace.public": ""})
 
 
 def get_or_create_otel_tracer() -> tuple[bool, Tracer]:
