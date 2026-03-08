@@ -91,8 +91,8 @@ def enrich_span_from_request(span: Span, request: httpx.Request) -> Span:
         server_attributes.SERVER_ADDRESS: request.headers.get("host", ""),
         server_attributes.SERVER_PORT: port
     })
-    if request._content:
-        request_body = json.loads(request._content)
+    if request.content:
+        request_body = json.loads(request.content)
 
         attributes = {
             gen_ai_attributes.GEN_AI_REQUEST_CHOICE_COUNT: request_body.get("n", None),
@@ -301,8 +301,8 @@ def get_response_and_error(
             if error:
                 span.record_exception(error)
                 span.set_status(Status(StatusCode.ERROR, str(error)))
-            if hasattr(response, "_content") and response._content:
-                response_body = json.loads(response._content)
+            if response.content:
+                response_body = json.loads(response.content)
                 if response_body.get("object", "") == "error":
                     if error_msg := response_body.get("message", ""):
                         attributes = {
