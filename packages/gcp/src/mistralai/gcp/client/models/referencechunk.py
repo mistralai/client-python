@@ -6,17 +6,17 @@ from mistralai.gcp.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, TypedDict
 
 
 class ReferenceChunkTypedDict(TypedDict):
-    reference_ids: List[int]
+    reference_ids: List[Union[int, str]]
     type: Literal["reference"]
 
 
 class ReferenceChunk(BaseModel):
-    reference_ids: List[int]
+    reference_ids: List[Union[int, str]]
 
     type: Annotated[
         Annotated[
