@@ -96,3 +96,27 @@ Only one user-facing type rename: `Tools` -> `ConversationRequestTool`.
 - Zero endpoints added/removed, zero path changes
 - Python minimum `>=3.10`
 - Installation: `pip install mistralai`
+
+---
+
+## Migrating from v0.x to v1.x
+
+> **Note:** The v1.x examples below use v1-style imports (e.g., `from mistralai import Mistral`). If you're on v2.x, combine these API changes with the [v1 to v2 import changes](#migration-guide-v1x-to-v2x) above.
+
+`MistralClient`/`MistralAsyncClient` consolidated into `Mistral`. `ChatMessage` replaced with `UserMessage`, `AssistantMessage`, etc. Streaming chunks now at `chunk.data.choices[0].delta.content`.
+
+| v0.x | v1.x |
+|---|---|
+| `MistralClient` | `Mistral` |
+| `client.chat` | `client.chat.complete` |
+| `client.chat_stream` | `client.chat.stream` |
+| `client.completions` | `client.fim.complete` |
+| `client.completions_stream` | `client.fim.stream` |
+| `client.embeddings` | `client.embeddings.create` |
+| `client.list_models` | `client.models.list` |
+| `client.delete_model` | `client.models.delete` |
+| `client.files.create` | `client.files.upload` |
+| `client.jobs.create` | `client.fine_tuning.jobs.create` |
+| `client.jobs.list` | `client.fine_tuning.jobs.list` |
+| `client.jobs.retrieve` | `client.fine_tuning.jobs.get` |
+| `client.jobs.cancel` | `client.fine_tuning.jobs.cancel` |
