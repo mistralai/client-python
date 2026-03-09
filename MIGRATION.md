@@ -23,9 +23,6 @@ Azure and GCP are now namespace sub-packages under `mistralai`, no longer separa
 | `from mistralai_azure.models import ...` | `from mistralai.azure.client.models import ...` |
 | `from mistralai_gcp import MistralGoogleCloud` | `from mistralai.gcp.client import MistralGCP` |
 | `from mistralai_gcp.models import ...` | `from mistralai.gcp.client.models import ...` |
-| `pip install mistralai-azure` | `pip install mistralai` |
-| `pip install mistralai[gcp]` | `pip install "mistralai[gcp]"` |
-
 GCP class renamed `MistralGoogleCloud` -> `MistralGCP`.
 
 ## Type Renames
