@@ -10,8 +10,8 @@ import unittest
 from mistralai.client.models import (
     CompletionChunk,
     CompletionResponseStreamChoice,
+    CompletionResponseStreamChoiceFinishReason,
     DeltaMessage,
-    FinishReason,
     FunctionCall,
     ToolCall,
     UsageInfo,
@@ -31,7 +31,7 @@ def _single_choice_chunk(
     role: str | None = None,
     content: str | None = None,
     tool_calls: list[ToolCall] | None = None,
-    finish_reason: FinishReason | None = None,
+    finish_reason: CompletionResponseStreamChoiceFinishReason | None = None,
     object: str | None = None,
     created: int | None = None,
     usage: UsageInfo | None = None,

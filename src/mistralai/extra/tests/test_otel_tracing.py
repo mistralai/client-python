@@ -33,9 +33,9 @@ from mistralai.client._hooks.types import (
 )
 from mistralai.client.models import (
     Agent,
-    AgentCreationRequest,
     AgentsCompletionRequest,
     AssistantMessage,
+    ChatCompletionChoice,
     ChatCompletionRequest,
     ChatCompletionResponse,
     CompletionChunk,
@@ -45,6 +45,7 @@ from mistralai.client.models import (
     ConversationRequest,
     ConversationResponse,
     ConversationUsageInfo,
+    CreateAgentRequest,
     DeltaMessage,
     EmbeddingRequest,
     EmbeddingResponse,
@@ -57,7 +58,6 @@ from mistralai.client.models import (
     ImageURL,
     ImageURLChunk,
     MessageOutputEntry,
-    One,
     SystemMessage,
     TextChunk,
     ThinkChunk,
@@ -261,10 +261,9 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-large-latest",
             created=1700000000,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="There are many great French cheeses! Camembert, Roquefort, and Brie are among the most celebrated.",
                         tool_calls=None,
                     ),
@@ -372,10 +371,9 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-large-latest",
             created=1700000001,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="",
                         tool_calls=[
                             ToolCall(
@@ -509,7 +507,7 @@ class TestOtelTracing(unittest.TestCase):
     # -- Create agent ----------------------------------------------------------
 
     def test_create_agent(self):
-        request = AgentCreationRequest(
+        request = CreateAgentRequest(
             model="mistral-large-latest",
             name="my-test-agent",
             description="A helpful test agent",
@@ -584,10 +582,9 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-large-latest",
             created=1700000002,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="It's sunny and 22C in Paris today.",
                         tool_calls=None,
                     ),
@@ -664,7 +661,6 @@ class TestOtelTracing(unittest.TestCase):
                 ToolExecutionEntry(
                     name="get_weather",
                     arguments='{"location": "Paris"}',
-                    function="get_weather",
                     id="tool-exec-001",
                     info={"temperature": "22C", "condition": "sunny"},
                     created_at=datetime(2024, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
@@ -939,10 +935,9 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-small-latest",
             created=1700000003,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="The weather in Paris is currently 22°C and sunny.",
                         tool_calls=None,
                     ),
@@ -1063,10 +1058,9 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-small-latest",
             created=1700000004,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="The image shows a landscape.",
                         tool_calls=None,
                     ),
@@ -1132,10 +1126,9 @@ class TestOtelTracing(unittest.TestCase):
             model="magistral-small-latest",
             created=1700000006,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content=[
                             ThinkChunk(
                                 thinking=[
@@ -1205,19 +1198,17 @@ class TestOtelTracing(unittest.TestCase):
             model="mistral-small-latest",
             created=1700000005,
             choices=[
-                One(
+                ChatCompletionChoice(
                     index=0,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="Why did the chicken cross the road?",
                         tool_calls=None,
                     ),
                     finish_reason="stop",
                 ),
-                One(
+                ChatCompletionChoice(
                     index=1,
-                    message=DeltaMessage(
-                        role="assistant",
+                    message=AssistantMessage(
                         content="A programmer walks into a bar...",
                         tool_calls=None,
                     ),
