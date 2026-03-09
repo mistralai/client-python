@@ -8,26 +8,28 @@ from typing import Any, Callable, ForwardRef, Sequence, cast, get_type_hints
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 from griffe import (
     Docstring,
-    DocstringSectionKind,
-    DocstringSectionText,
     DocstringParameter,
     DocstringSection,
+    DocstringSectionKind,
+    DocstringSectionText,
 )
 from opentelemetry import trace
+from opentelemetry.trace import Status, StatusCode
 from pydantic import Field, create_model
 from pydantic.fields import FieldInfo
 
-from mistralai.extra.exceptions import RunException
-from mistralai.extra.mcp.base import MCPClientProtocol
-from mistralai.extra.observability.otel import GenAISpanEnum, MistralAIAttributes, set_available_attributes
-from mistralai.extra.run.result import RunOutputEntries
 from mistralai.client.models import (
-    FunctionResultEntry,
-    FunctionTool,
     Function,
     FunctionCallEntry,
+    FunctionResultEntry,
+    FunctionTool,
 )
-
+from mistralai.extra.exceptions import RunException
+from mistralai.extra.mcp.base import MCPClientProtocol
+from mistralai.extra.observability.otel import (
+    set_available_attributes,
+)
+from mistralai.extra.run.result import RunOutputEntries
 
 logger = logging.getLogger(__name__)
 
@@ -193,22 +195,35 @@ async def create_function_result(
         else function_call.arguments
     )
     tracer = trace.get_tracer(__name__)
-    with tracer.start_as_current_span(GenAISpanEnum.function_call(function_call.name)) as span:
+    with tracer.start_as_current_span(
+        f"{gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL.value} {function_call.name}"
+    ) as span:
+        # Always record identity attributes so the span is useful even on error
+        function_call_attributes = {
+            gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL.value,
+            gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value,
+            gen_ai_attributes.GEN_AI_TOOL_CALL_ID: function_call.id,
+            gen_ai_attributes.GEN_AI_TOOL_CALL_ARGUMENTS: function_call.arguments
+            if isinstance(function_call.arguments, str)
+            else json.dumps(function_call.arguments),
+            gen_ai_attributes.GEN_AI_TOOL_NAME: function_call.name,
+            gen_ai_attributes.GEN_AI_TOOL_TYPE: "function",
+        }
+        set_available_attributes(span, function_call_attributes)
         try:
             if isinstance(run_tool, RunFunction):
                 res = run_tool.callable(**arguments)
             elif isinstance(run_tool, RunCoroutine):
                 res = await run_tool.awaitable(**arguments)
             elif isinstance(run_tool, RunMCPTool):
-                res = await run_tool.mcp_client.execute_tool(function_call.name, arguments)
-            function_call_attributes = {
-                    gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL.value,
-                    gen_ai_attributes.GEN_AI_TOOL_CALL_ID: function_call.id,
-                    MistralAIAttributes.MISTRAL_AI_TOOL_CALL_ARGUMENTS: str(function_call.arguments),
-                    gen_ai_attributes.GEN_AI_TOOL_NAME: function_call.name
-                }
-            set_available_attributes(span, function_call_attributes)
+                res = await run_tool.mcp_client.execute_tool(
+                    function_call.name, arguments
+                )
+            result_str = res if isinstance(res, str) else json.dumps(res)
+            span.set_attribute(gen_ai_attributes.GEN_AI_TOOL_CALL_RESULT, result_str)
         except Exception as e:
+            span.record_exception(e)
+            span.set_status(Status(StatusCode.ERROR, str(e)))
             if continue_on_fn_error is True:
                 return FunctionResultEntry(
                     tool_call_id=function_call.tool_call_id,
@@ -219,8 +234,7 @@ async def create_function_result(
             ) from e
 
     return FunctionResultEntry(
-        tool_call_id=function_call.tool_call_id,
-        result=res if isinstance(res, str) else json.dumps(res),
+        tool_call_id=function_call.tool_call_id, result=result_str
     )
 
 
