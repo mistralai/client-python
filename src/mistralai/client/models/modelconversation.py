@@ -6,6 +6,7 @@ from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDi
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
@@ -93,6 +94,7 @@ class ModelConversationTypedDict(TypedDict):
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
@@ -120,6 +122,8 @@ class ModelConversation(BaseModel):
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
 
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
+
     name: OptionalNullable[str] = UNSET
     r"""Name given to the conversation."""
 
@@ -144,13 +148,16 @@ class ModelConversation(BaseModel):
                 "instructions",
                 "tools",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",
                 "object",
             ]
         )
-        nullable_fields = set(["instructions", "name", "description", "metadata"])
+        nullable_fields = set(
+            ["instructions", "guardrails", "name", "description", "metadata"]
+        )
         serialized = handler(self)
         m = {}
 

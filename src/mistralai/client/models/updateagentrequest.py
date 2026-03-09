@@ -6,6 +6,7 @@ from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDi
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
@@ -54,6 +55,7 @@ class UpdateAgentRequestTypedDict(TypedDict):
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     model: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
@@ -72,6 +74,8 @@ class UpdateAgentRequest(BaseModel):
 
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
+
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
     model: OptionalNullable[str] = UNSET
 
@@ -94,6 +98,7 @@ class UpdateAgentRequest(BaseModel):
                 "instructions",
                 "tools",
                 "completion_args",
+                "guardrails",
                 "model",
                 "name",
                 "description",
@@ -106,6 +111,7 @@ class UpdateAgentRequest(BaseModel):
         nullable_fields = set(
             [
                 "instructions",
+                "guardrails",
                 "model",
                 "name",
                 "description",
