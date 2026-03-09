@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
+from .toolreferencechunk import ToolReferenceChunk, ToolReferenceChunkTypedDict
 from mistralai.gcp.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.gcp.client.utils import validate_const
 import pydantic
@@ -13,11 +14,14 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ThinkingTypedDict = TypeAliasType(
-    "ThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
+    "ThinkingTypedDict",
+    Union[TextChunkTypedDict, ReferenceChunkTypedDict, ToolReferenceChunkTypedDict],
 )
 
 
-Thinking = TypeAliasType("Thinking", Union[ReferenceChunk, TextChunk])
+Thinking = TypeAliasType(
+    "Thinking", Union[TextChunk, ReferenceChunk, ToolReferenceChunk]
+)
 
 
 class ThinkChunkTypedDict(TypedDict):

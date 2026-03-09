@@ -1,20 +1,20 @@
 lockVersion: 2.0.0
 id: ec60f2d8-7869-45c1-918e-773d41a8cf74
 management:
-  docChecksum: 58bc2dcdd83a2b7c4856971baa20641b
+  docChecksum: 6f32cd54fc5f3d2a609ff3933cbf34b8
   docVersion: 1.0.0
   speakeasyVersion: 1.729.0
   generationVersion: 2.841.0
-  releaseVersion: 2.0.0rc1
-  configChecksum: 5b0554f4a04c849bc6f376bec69654aa
+  releaseVersion: 2.0.0
+  configChecksum: d208fbfc438189901f0d6546484d5f26
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/gcp
   published: true
 persistentEdits:
-  generation_id: 724d8b32-d30d-4743-9e65-0bd450961ed2
-  pristine_commit_hash: 7ef9f2e9ed9ed33b6f502afc01b1354bd0c499d1
-  pristine_tree_hash: 19a1b62b3168a95e58538e2da4215028949b1ba2
+  generation_id: 4c7dd269-a55c-4b55-a90a-e8fec97c6b98
+  pristine_commit_hash: 81f2700802a475a353aad9d56a4a9845f061ce74
+  pristine_tree_hash: 0984d2a0c850ed3ed1b0ca1e96672c03a46be7d5
 features:
   python:
     additionalDependencies: 1.0.0
@@ -68,6 +68,10 @@ trackedFiles:
     id: 9f1795bbe642
     last_write_checksum: sha1:1ce4066623a8d62d969e5ed3a088d73a9ba26643
     pristine_git_object: 047b7cf95f4db203bf2c501680b73ca0562a122d
+  docs/models/builtinconnectors.md:
+    id: 9d14e972f08a
+    last_write_checksum: sha1:1f32eb515e32c58685d0bdc15de09656194c508c
+    pristine_git_object: f96f50444aaa23ca291db2fd0dc69db0d9d149d9
   docs/models/chatcompletionchoice.md:
     id: 0d15c59ab501
     last_write_checksum: sha1:a6274a39a4239e054816d08517bf8507cb5c4564
@@ -132,6 +136,10 @@ trackedFiles:
     id: d2d3a32080cd
     last_write_checksum: sha1:5839a26cdc412b78caad7fb59df97bdcea57be6d
     pristine_git_object: 22023e8b19692df969693b7a14f8cf6e0143859f
+  docs/models/context.md:
+    id: e8f2f9e54b8e
+    last_write_checksum: sha1:4c14b386f9f89d98f4dd9487ab030f10478c0e63
+    pristine_git_object: 107f1bd428b1f39b36f75e5a10532bc462967ce5
   docs/models/deltamessage.md:
     id: 6c5ed6b60968
     last_write_checksum: sha1:00052476b9b2474dbc149f18dd18c71c86d0fc74
@@ -242,8 +250,8 @@ trackedFiles:
     pristine_git_object: b07f598ebc5f0e9c041186c081dc98bc21104bdb
   docs/models/thinking.md:
     id: 07234f8dd364
-    last_write_checksum: sha1:a5962d1615b57996730da19e59fbfaa684321442
-    pristine_git_object: c7a0d5c9811ea37aaf9e16b6e93c833ab979573f
+    last_write_checksum: sha1:90c0b34284137712678b0671e9f4bfb319548cbf
+    pristine_git_object: d9e51d7dc93b24edd807b018393eab38143d46f4
   docs/models/tool.md:
     id: 8966139dbeed
     last_write_checksum: sha1:1725bf53fc9f1ca3f332322d91de24c9d58adc6a
@@ -268,10 +276,18 @@ trackedFiles:
     id: f0522d2d3c93
     last_write_checksum: sha1:783769c0200baa1b6751327aa3e009fa83da72ee
     pristine_git_object: 5c76091fbd2c8e0d768921fab19c7b761df73411
+  docs/models/toolreferencechunk.md:
+    id: 10414b39b7b3
+    last_write_checksum: sha1:a0e93881de5ecaf765300d45a18ab21dcffe54f9
+    pristine_git_object: 9fc10399fe4ce9eb3b5e87a6bc609643d6a2cb3a
   docs/models/tooltypes.md:
     id: adb50fe63ea2
     last_write_checksum: sha1:f224c3d8732450b9c969b3e04027b7df7892694c
     pristine_git_object: 84e49253c9b9bd1bd314e2a126106404cbb52f16
+  docs/models/toolunion.md:
+    id: ad708b0ce4e0
+    last_write_checksum: sha1:61909a56240c784e05f13dff8d9787272e1aa8bc
+    pristine_git_object: 2dcb3deec9f05d1e578c485a47a8ddd10b375f48
   docs/models/usageinfo.md:
     id: ec6fe65028a9
     last_write_checksum: sha1:cf71fb9676d870eba7c4d10a69636e1db4054adc
@@ -290,8 +306,8 @@ trackedFiles:
     pristine_git_object: 69dd549ec7f5f885101d08dd502e25748183aebf
   docs/models/validationerror.md:
     id: 304bdf06ef8b
-    last_write_checksum: sha1:1889f608099577e6a116c14b211a6811d6b22786
-    pristine_git_object: 7a1654a1a5cfb3ab92360b361e8e962bf2db4582
+    last_write_checksum: sha1:1f297f34069668f6107f2c0389606efe413ff5a8
+    pristine_git_object: 5bcea5b5d12e72222720af2c014d64ec4bdfee4a
   py.typed:
     id: 258c3ed47ae4
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -326,8 +342,8 @@ trackedFiles:
     pristine_git_object: ea95bed210db9180824efddfb1b3e47f5bf96489
   src/mistralai/gcp/client/_version.py:
     id: f87319e32c7b
-    last_write_checksum: sha1:05656d6552e7c9cc97c9bbe6483ee906050d28ea
-    pristine_git_object: 7415341f2a4519b074f4b8ffa0f06c5ac2ac45e3
+    last_write_checksum: sha1:2c22a5ebb7568968607db20612021af35240f714
+    pristine_git_object: 377c9836b5f8bdf65e87ba375232422114af2966
   src/mistralai/gcp/client/basesdk.py:
     id: 4d594572857b
     last_write_checksum: sha1:d8ef9e2f4fa97d402eb9f5472ceb80fb39693991
@@ -370,12 +386,16 @@ trackedFiles:
     pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
   src/mistralai/gcp/client/models/__init__.py:
     id: d9e976d01972
-    last_write_checksum: sha1:97ddfc7f70abd5e1a0b36be6dce209b69e9d5c73
-    pristine_git_object: 575f64040c90152e74954b749ea89bce5a07e02e
+    last_write_checksum: sha1:9ba03a47ef26bb6d64366ec4a2b466a6d417aa82
+    pristine_git_object: e42ed4bb30a39afd1d63dc2f9918e86981f2bf94
   src/mistralai/gcp/client/models/assistantmessage.py:
     id: d39c4bdd289e
     last_write_checksum: sha1:c813783bcbeec4e40f12e007d1dde4aed8ec71cf
     pristine_git_object: 702ac4708abb95fc18d138500b8353715c2dbc98
+  src/mistralai/gcp/client/models/builtinconnectors.py:
+    id: 7bbec8f3c9c7
+    last_write_checksum: sha1:4e94744e3854d4cdc9d1272e4f1d9371f9829a5f
+    pristine_git_object: 6a3b2476d54096722eb3e7a271629d108028bd35
   src/mistralai/gcp/client/models/chatcompletionchoice.py:
     id: 8e65b56f3e6d
     last_write_checksum: sha1:e6d1382e9f880b866130d900fd866997aaf80e45
@@ -490,8 +510,8 @@ trackedFiles:
     pristine_git_object: 690322725c0f852a005d08c5b722c41709868b22
   src/mistralai/gcp/client/models/thinkchunk.py:
     id: 59a1d1ef2020
-    last_write_checksum: sha1:066eeb10de301264e601a9ec64d21e1cc13b0c20
-    pristine_git_object: 33ec83949499d99a28c55bb20429ab948bb5b1e8
+    last_write_checksum: sha1:f2f07f8bf1094cff718fb0f3ef760890c54e4003
+    pristine_git_object: d534fc1ecc2a127d9ac9ac3d7a7aba7156faf7c2
   src/mistralai/gcp/client/models/tool.py:
     id: 4b27d45e56ad
     last_write_checksum: sha1:cb0d879a55218fd7753bdd005be8a155982feb8f
@@ -512,6 +532,10 @@ trackedFiles:
     id: b3774786c2e9
     last_write_checksum: sha1:3d414da8132467d1472ebe485802ffc78eb6f7e4
     pristine_git_object: ce160391f37ce3568daf2877f8dc1aa0f3694821
+  src/mistralai/gcp/client/models/toolreferencechunk.py:
+    id: 16363389756d
+    last_write_checksum: sha1:42abb2395ed4aa06831723288ce3d20f53f38da7
+    pristine_git_object: 0a2a7fa3b80417ac2462126c4fae1e9f777df534
   src/mistralai/gcp/client/models/tooltypes.py:
     id: 5926c64f5229
     last_write_checksum: sha1:ffd576511eed9f823c3d67df9fc5574d8d53c54b
@@ -526,8 +550,8 @@ trackedFiles:
     pristine_git_object: e237e900421a9e65fd15aede29ade0e510b189f6
   src/mistralai/gcp/client/models/validationerror.py:
     id: 6b4f4910ea9c
-    last_write_checksum: sha1:2792fd656f55519902f37670fb9fb3b43b4aa016
-    pristine_git_object: 2d330e9acb579cc4928fa27fdd72288ce8832b8b
+    last_write_checksum: sha1:1fd1ffba68b202465f3a0269d7099b4fee5c85c9
+    pristine_git_object: 3ff872c15f6380c3a7f9dc9be1b80be159f752ba
   src/mistralai/gcp/client/py.typed:
     id: 98b8ab80ab0d
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -653,6 +677,7 @@ examples:
           application/json: {"id": "447e3e0d457e42e98248b5d2ef52a2a3", "object": "chat.completion", "model": "codestral-2508", "usage": {"prompt_tokens": 8, "completion_tokens": 91, "total_tokens": 99}, "created": 1759496862, "choices": [{"index": 0, "message": {"role": "assistant", "content": "add_numbers(a: int, b: int) -> int:\n    \"\"\"\n    You are given two integers `a` and `b`. Your task is to write a function that\n    returns the sum of these two integers. The function should be implemented in a\n    way that it can handle very large integers (up to 10^18). As a reminder, your\n    code has to be in python\n    \"\"\"\n", "tool_calls": null, "prefix": false}, "finish_reason": "stop"}]}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: "## Python SDK Changes:\n* `mistral_gcp.chat.stream()`: \n  *  `request.messages[].union(system).content.union(Array<SystemMessageContentChunks>)[].union(thinking).thinking[].union(ToolReferenceChunk)` **Added**\n  *  `error.detail[]` **Changed**\n* `mistral_gcp.chat.complete()`: \n  *  `request.messages[].union(system).content.union(Array<SystemMessageContentChunks>)[].union(thinking).thinking[].union(ToolReferenceChunk)` **Added**\n  *  `error.detail[]` **Changed**\n* `mistral_gcp.fim.stream()`:  `error.detail[]` **Changed**\n* `mistral_gcp.fim.complete()`:  `error.detail[]` **Changed**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
