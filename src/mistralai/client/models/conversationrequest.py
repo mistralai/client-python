@@ -7,6 +7,7 @@ from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
@@ -73,6 +74,7 @@ class ConversationRequestTypedDict(TypedDict):
     tools: NotRequired[List[ConversationRequestToolTypedDict]]
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
@@ -97,6 +99,8 @@ class ConversationRequest(BaseModel):
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
 
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
+
     name: OptionalNullable[str] = UNSET
 
     description: OptionalNullable[str] = UNSET
@@ -119,6 +123,7 @@ class ConversationRequest(BaseModel):
                 "instructions",
                 "tools",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",
@@ -133,6 +138,7 @@ class ConversationRequest(BaseModel):
                 "handoff_execution",
                 "instructions",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",

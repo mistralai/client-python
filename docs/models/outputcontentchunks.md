@@ -27,10 +27,10 @@ value: models.ToolFileChunk = /* values here */
 value: models.DocumentURLChunk = /* values here */
 ```
 
-### `models.ConversationThinkChunk`
+### `models.ThinkChunk`
 
 ```python
-value: models.ConversationThinkChunk = /* values here */
+value: models.ThinkChunk = /* values here */
 ```
 
 ### `models.ToolReferenceChunk`

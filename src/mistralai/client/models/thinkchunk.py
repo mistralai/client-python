@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
+from .toolreferencechunk import ToolReferenceChunk, ToolReferenceChunkTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
 import pydantic
@@ -13,28 +14,31 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ThinkChunkThinkingTypedDict = TypeAliasType(
-    "ThinkChunkThinkingTypedDict", Union[ReferenceChunkTypedDict, TextChunkTypedDict]
+ThinkingTypedDict = TypeAliasType(
+    "ThinkingTypedDict",
+    Union[TextChunkTypedDict, ReferenceChunkTypedDict, ToolReferenceChunkTypedDict],
 )
 
 
-ThinkChunkThinking = TypeAliasType(
-    "ThinkChunkThinking", Union[ReferenceChunk, TextChunk]
+Thinking = TypeAliasType(
+    "Thinking", Union[TextChunk, ReferenceChunk, ToolReferenceChunk]
 )
 
 
 class ThinkChunkTypedDict(TypedDict):
-    thinking: List[ThinkChunkThinkingTypedDict]
+    thinking: List[ThinkingTypedDict]
     type: Literal["thinking"]
     closed: NotRequired[bool]
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
 
 
 class ThinkChunk(BaseModel):
-    thinking: List[ThinkChunkThinking]
+    thinking: List[Thinking]
 
     type: Annotated[
-        Annotated[Literal["thinking"], AfterValidator(validate_const("thinking"))],
+        Annotated[
+            Optional[Literal["thinking"]], AfterValidator(validate_const("thinking"))
+        ],
         pydantic.Field(alias="type"),
     ] = "thinking"
 
@@ -43,7 +47,7 @@ class ThinkChunk(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["closed"])
+        optional_fields = set(["type", "closed"])
         serialized = handler(self)
         m = {}
 

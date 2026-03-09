@@ -244,6 +244,9 @@ class Conversations(BaseSDK):
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -271,6 +274,7 @@ class Conversations(BaseSDK):
         :param instructions:
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -303,6 +307,9 @@ class Conversations(BaseSDK):
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             name=name,
             description=description,
@@ -391,6 +398,9 @@ class Conversations(BaseSDK):
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -418,6 +428,7 @@ class Conversations(BaseSDK):
         :param instructions:
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -450,6 +461,9 @@ class Conversations(BaseSDK):
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             name=name,
             description=description,
@@ -1721,6 +1735,9 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -1744,6 +1761,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -1772,6 +1790,9 @@ class Conversations(BaseSDK):
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
                 metadata=metadata,
                 from_entry_id=from_entry_id,
@@ -1859,6 +1880,9 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -1882,6 +1906,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -1910,6 +1935,9 @@ class Conversations(BaseSDK):
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
                 metadata=metadata,
                 from_entry_id=from_entry_id,
@@ -2000,6 +2028,9 @@ class Conversations(BaseSDK):
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -2027,6 +2058,7 @@ class Conversations(BaseSDK):
         :param instructions:
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -2059,6 +2091,9 @@ class Conversations(BaseSDK):
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             name=name,
             description=description,
@@ -2154,6 +2189,9 @@ class Conversations(BaseSDK):
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -2181,6 +2219,7 @@ class Conversations(BaseSDK):
         :param instructions:
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -2213,6 +2252,9 @@ class Conversations(BaseSDK):
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             name=name,
             description=description,
@@ -2589,6 +2631,9 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2612,6 +2657,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -2640,6 +2686,9 @@ class Conversations(BaseSDK):
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
                 metadata=metadata,
                 from_entry_id=from_entry_id,
@@ -2734,6 +2783,9 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2757,6 +2809,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -2785,6 +2838,9 @@ class Conversations(BaseSDK):
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
                 metadata=metadata,
                 from_entry_id=from_entry_id,

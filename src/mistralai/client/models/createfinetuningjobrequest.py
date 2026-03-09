@@ -11,8 +11,11 @@ from .completiontrainingparameters import (
     CompletionTrainingParameters,
     CompletionTrainingParametersTypedDict,
 )
+from .creategithubrepositoryrequest import (
+    CreateGithubRepositoryRequest,
+    CreateGithubRepositoryRequestTypedDict,
+)
 from .finetuneablemodeltype import FineTuneableModelType
-from .githubrepositoryin import GithubRepositoryIn, GithubRepositoryInTypedDict
 from .trainingfile import TrainingFile, TrainingFileTypedDict
 from .wandbintegration import WandbIntegration, WandbIntegrationTypedDict
 from mistralai.client.types import (
@@ -44,10 +47,10 @@ Hyperparameters = TypeAliasType(
 )
 
 
-CreateFineTuningJobRequestRepositoryTypedDict = GithubRepositoryInTypedDict
+CreateFineTuningJobRequestRepositoryTypedDict = CreateGithubRepositoryRequestTypedDict
 
 
-CreateFineTuningJobRequestRepository = GithubRepositoryIn
+CreateFineTuningJobRequestRepository = CreateGithubRepositoryRequest
 
 
 class CreateFineTuningJobRequestTypedDict(TypedDict):
