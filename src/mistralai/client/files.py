@@ -18,6 +18,10 @@ class Files(BaseSDK):
         self,
         *,
         file: Union[models.File, models.FileTypedDict],
+        expiry: OptionalNullable[int] = UNSET,
+        visibility: Optional[
+            models.FilesAPIRoutesUploadFileFileVisibility
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -41,6 +45,8 @@ class Files(BaseSDK):
             ```bash
             file=@path/to/your/file.jsonl
             ```
+        :param expiry:
+        :param visibility:
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -58,6 +64,8 @@ class Files(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.MultiPartBodyParams(
+            expiry=expiry,
+            visibility=visibility,
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -120,6 +128,10 @@ class Files(BaseSDK):
         self,
         *,
         file: Union[models.File, models.FileTypedDict],
+        expiry: OptionalNullable[int] = UNSET,
+        visibility: Optional[
+            models.FilesAPIRoutesUploadFileFileVisibility
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -143,6 +155,8 @@ class Files(BaseSDK):
             ```bash
             file=@path/to/your/file.jsonl
             ```
+        :param expiry:
+        :param visibility:
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -160,6 +174,8 @@ class Files(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.MultiPartBodyParams(
+            expiry=expiry,
+            visibility=visibility,
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )

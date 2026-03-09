@@ -218,7 +218,7 @@ with Mistral(
     res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-    })
+    }, visibility="workspace")
 
     # Handle response
     print(res)
@@ -243,7 +243,7 @@ async def main():
         res = await mistral.files.upload_async(file={
             "file_name": "example.file",
             "content": open("example.file", "rb"),
-        })
+        }, visibility="workspace")
 
         # Handle response
         print(res)
@@ -498,6 +498,15 @@ print(res.choices[0].message.content)
 * [list_version_aliases](docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
 * [delete_version_alias](docs/sdks/betaagents/README.md#delete_version_alias) - Delete an agent version alias.
 
+### [Beta.Connectors](docs/sdks/connectors/README.md)
+
+* [create](docs/sdks/connectors/README.md#create) - Create a new connector.
+* [list](docs/sdks/connectors/README.md#list) - List all connectors.
+* [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
+* [get](docs/sdks/connectors/README.md#get) - Get a connector.
+* [update](docs/sdks/connectors/README.md#update) - Update a connector.
+* [delete](docs/sdks/connectors/README.md#delete) - Delete a connector.
+
 ### [Beta.Conversations](docs/sdks/conversations/README.md)
 
 * [start](docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
@@ -538,6 +547,64 @@ print(res.choices[0].message.content)
 * [get_signed_url](docs/sdks/documents/README.md#get_signed_url) - Retrieve the signed URL of a specific document.
 * [extracted_text_signed_url](docs/sdks/documents/README.md#extracted_text_signed_url) - Retrieve the signed URL of text extracted from a given document.
 * [reprocess](docs/sdks/documents/README.md#reprocess) - Reprocess a document.
+
+### [Beta.Observability.Campaigns](docs/sdks/campaigns/README.md)
+
+* [create](docs/sdks/campaigns/README.md#create) - Create and start a new campaign
+* [list](docs/sdks/campaigns/README.md#list) - Get all campaigns
+* [fetch](docs/sdks/campaigns/README.md#fetch) - Get campaign by id
+* [delete](docs/sdks/campaigns/README.md#delete) - Delete a campaign
+* [fetch_status](docs/sdks/campaigns/README.md#fetch_status) - Get campaign status by campaign id
+* [list_events](docs/sdks/campaigns/README.md#list_events) - Get event ids that were selected by the given campaign
+
+### [Beta.Observability.ChatCompletionEvents](docs/sdks/chatcompletionevents/README.md)
+
+* [search](docs/sdks/chatcompletionevents/README.md#search) - Get Chat Completion Events
+* [search_ids](docs/sdks/chatcompletionevents/README.md#search_ids) - Alternative to /search that returns only the IDs and that can return many IDs at once
+* [fetch](docs/sdks/chatcompletionevents/README.md#fetch) - Get Chat Completion Event
+* [fetch_similar_events](docs/sdks/chatcompletionevents/README.md#fetch_similar_events) - Get Similar Chat Completion Events
+* [judge](docs/sdks/chatcompletionevents/README.md#judge) - Run Judge on an event based on the given options
+
+#### [Beta.Observability.ChatCompletionEvents.Fields](docs/sdks/fields/README.md)
+
+* [list](docs/sdks/fields/README.md#list) - Get Chat Completion Fields
+* [fetch_options](docs/sdks/fields/README.md#fetch_options) - Get Chat Completion Field Options
+* [fetch_option_counts](docs/sdks/fields/README.md#fetch_option_counts) - Get Chat Completion Field Options Counts
+
+### [Beta.Observability.Datasets](docs/sdks/datasets/README.md)
+
+* [create](docs/sdks/datasets/README.md#create) - Create a new empty dataset
+* [list](docs/sdks/datasets/README.md#list) - List existing datasets
+* [fetch](docs/sdks/datasets/README.md#fetch) - Get dataset by id
+* [delete](docs/sdks/datasets/README.md#delete) - Delete a dataset
+* [update](docs/sdks/datasets/README.md#update) - Patch dataset
+* [list_records](docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
+* [create_record](docs/sdks/datasets/README.md#create_record) - Add a conversation to the dataset
+* [import_from_campaign](docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with a campaign
+* [import_from_explorer](docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with samples from the explorer
+* [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with samples from an uploaded file
+* [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with samples from the playground
+* [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with samples from another dataset
+* [export_to_jsonl](docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
+* [fetch_task](docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
+* [list_tasks](docs/sdks/datasets/README.md#list_tasks) - List import tasks for the given dataset
+
+#### [Beta.Observability.Datasets.Records](docs/sdks/records/README.md)
+
+* [fetch](docs/sdks/records/README.md#fetch) - Get the content of a given conversation from a dataset
+* [delete](docs/sdks/records/README.md#delete) - Delete a record from a dataset
+* [bulk_delete](docs/sdks/records/README.md#bulk_delete) - Delete multiple records from datasets
+* [judge](docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
+* [update_payload](docs/sdks/records/README.md#update_payload) - Update a dataset record conversation payload
+* [update_properties](docs/sdks/records/README.md#update_properties) - Update conversation properties
+
+### [Beta.Observability.Judges](docs/sdks/judges/README.md)
+
+* [create](docs/sdks/judges/README.md#create) - Create a new judge
+* [list](docs/sdks/judges/README.md#list) - Get judges with optional filtering and search
+* [fetch](docs/sdks/judges/README.md#fetch) - Get judge by id
+* [delete](docs/sdks/judges/README.md#delete) - Delete a judge
+* [update](docs/sdks/judges/README.md#update) - Update a judge
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -739,7 +806,7 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.models.retrieve(model_id="ft:open-mistral-7b:587a6b29:20240514:7e773925")
+        res = mistral.models.list()
 
         # Handle response
         print(res)
@@ -762,7 +829,7 @@ with Mistral(
 **Primary error:**
 * [`MistralError`](./src/mistralai/client/errors/mistralerror.py): The base class for HTTP error responses.
 
-<details><summary>Less common errors (6)</summary>
+<details><summary>Less common errors (7)</summary>
 
 <br />
 
@@ -773,7 +840,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 53 of 75 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 121 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 40 of 121 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

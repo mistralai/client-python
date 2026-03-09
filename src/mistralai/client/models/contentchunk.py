@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .audiochunk import AudioChunk, AudioChunkTypedDict
+from .audiourlchunk import AudioURLChunk, AudioURLChunkTypedDict
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
@@ -26,6 +27,7 @@ ContentChunkTypedDict = TypeAliasType(
         ReferenceChunkTypedDict,
         FileChunkTypedDict,
         AudioChunkTypedDict,
+        AudioURLChunkTypedDict,
         DocumentURLChunkTypedDict,
         ThinkChunkTypedDict,
     ],
@@ -50,6 +52,7 @@ _CONTENT_CHUNK_VARIANTS: dict[str, Any] = {
     "file": FileChunk,
     "thinking": ThinkChunk,
     "input_audio": AudioChunk,
+    "audio_url": AudioURLChunk,
 }
 
 
@@ -62,6 +65,7 @@ ContentChunk = Annotated[
         FileChunk,
         ThinkChunk,
         AudioChunk,
+        AudioURLChunk,
         UnknownContentChunk,
     ],
     BeforeValidator(

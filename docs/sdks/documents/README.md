@@ -307,7 +307,7 @@ with Mistral(
 
 ### Response
 
-**[models.ProcessingStatusOut](../../models/processingstatusout.md)**
+**[models.ProcessingStatus](../../models/processingstatus.md)**
 
 ### Errors
 

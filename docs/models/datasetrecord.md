@@ -1,0 +1,15 @@
+# DatasetRecord
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `deleted_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `dataset_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `payload`                                                            | [models.ConversationPayload](../models/conversationpayload.md)       | :heavy_check_mark:                                                   | N/A                                                                  |
+| `properties`                                                         | Dict[str, *Any*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |
+| `source`                                                             | [models.ConversationSource](../models/conversationsource.md)         | :heavy_check_mark:                                                   | N/A                                                                  |
