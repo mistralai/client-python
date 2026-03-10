@@ -96,13 +96,13 @@ Only one user-facing type rename: `Tools` -> `ConversationRequestTool`.
 
 ---
 
-## Migrating from v1.x to v2.x
+## Migrating from v0.x to v1.x
 
 > **Note:** The v1.x examples below use v1-style imports (e.g., `from mistralai import Mistral`). If you're on v2.x, combine these API changes with the [v1 to v2 import changes](#migration-guide-v1x-to-v2x) above.
 
 `MistralClient`/`MistralAsyncClient` consolidated into `Mistral`. `ChatMessage` replaced with `UserMessage`, `AssistantMessage`, etc. Streaming chunks now at `chunk.data.choices[0].delta.content`.
 
-| v1.x | v2.x |
+| v0.x | v1.x |
 |---|---|
 | `MistralClient` | `Mistral` |
 | `client.chat` | `client.chat.complete` |
