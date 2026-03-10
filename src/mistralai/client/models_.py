@@ -16,6 +16,8 @@ class Models(BaseSDK):
     def list(
         self,
         *,
+        provider: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -25,6 +27,8 @@ class Models(BaseSDK):
 
         List all models available to the user.
 
+        :param provider:
+        :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -39,12 +43,18 @@ class Models(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListModelsV1ModelsGetRequest(
+            provider=provider,
+            model=model,
+        )
+
         req = self._build_request(
             method="GET",
             path="/v1/models",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -75,12 +85,18 @@ class Models(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.ModelList, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -93,6 +109,8 @@ class Models(BaseSDK):
     async def list_async(
         self,
         *,
+        provider: OptionalNullable[str] = UNSET,
+        model: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -102,6 +120,8 @@ class Models(BaseSDK):
 
         List all models available to the user.
 
+        :param provider:
+        :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -116,12 +136,18 @@ class Models(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListModelsV1ModelsGetRequest(
+            provider=provider,
+            model=model,
+        )
+
         req = self._build_request_async(
             method="GET",
             path="/v1/models",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -152,12 +178,18 @@ class Models(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.ModelList, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -359,7 +391,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteModelOut:
+    ) -> models.DeleteModelResponse:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -426,7 +458,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteModelOut, http_res)
+            return unmarshal_json_response(models.DeleteModelResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -449,7 +481,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteModelOut:
+    ) -> models.DeleteModelResponse:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -516,7 +548,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteModelOut, http_res)
+            return unmarshal_json_response(models.DeleteModelResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

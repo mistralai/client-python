@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         AssistantMessageContentTypedDict,
         AssistantMessageTypedDict,
     )
+    from .builtinconnectors import BuiltInConnectors
     from .chatcompletionchoice import (
         ChatCompletionChoice,
         ChatCompletionChoiceFinishReason,
@@ -115,6 +116,12 @@ if TYPE_CHECKING:
         ToolMessageContentTypedDict,
         ToolMessageTypedDict,
     )
+    from .toolreferencechunk import (
+        ToolReferenceChunk,
+        ToolReferenceChunkTypedDict,
+        ToolUnion,
+        ToolUnionTypedDict,
+    )
     from .tooltypes import ToolTypes
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usermessage import (
@@ -124,6 +131,8 @@ if TYPE_CHECKING:
         UserMessageTypedDict,
     )
     from .validationerror import (
+        Context,
+        ContextTypedDict,
         Loc,
         LocTypedDict,
         ValidationError,
@@ -137,6 +146,7 @@ __all__ = [
     "AssistantMessageContent",
     "AssistantMessageContentTypedDict",
     "AssistantMessageTypedDict",
+    "BuiltInConnectors",
     "ChatCompletionChoice",
     "ChatCompletionChoiceFinishReason",
     "ChatCompletionChoiceTypedDict",
@@ -167,6 +177,8 @@ __all__ = [
     "CompletionResponseStreamChoiceTypedDict",
     "ContentChunk",
     "ContentChunkTypedDict",
+    "Context",
+    "ContextTypedDict",
     "DeltaMessage",
     "DeltaMessageContent",
     "DeltaMessageContentTypedDict",
@@ -230,8 +242,12 @@ __all__ = [
     "ToolMessageContent",
     "ToolMessageContentTypedDict",
     "ToolMessageTypedDict",
+    "ToolReferenceChunk",
+    "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
     "ToolTypes",
+    "ToolUnion",
+    "ToolUnionTypedDict",
     "UnknownContentChunk",
     "UsageInfo",
     "UsageInfoTypedDict",
@@ -248,6 +264,7 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
+    "BuiltInConnectors": ".builtinconnectors",
     "ChatCompletionChoice": ".chatcompletionchoice",
     "ChatCompletionChoiceFinishReason": ".chatcompletionchoice",
     "ChatCompletionChoiceTypedDict": ".chatcompletionchoice",
@@ -343,6 +360,10 @@ _dynamic_imports: dict[str, str] = {
     "ToolMessageContent": ".toolmessage",
     "ToolMessageContentTypedDict": ".toolmessage",
     "ToolMessageTypedDict": ".toolmessage",
+    "ToolReferenceChunk": ".toolreferencechunk",
+    "ToolReferenceChunkTypedDict": ".toolreferencechunk",
+    "ToolUnion": ".toolreferencechunk",
+    "ToolUnionTypedDict": ".toolreferencechunk",
     "ToolTypes": ".tooltypes",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
@@ -350,6 +371,8 @@ _dynamic_imports: dict[str, str] = {
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
     "UserMessageTypedDict": ".usermessage",
+    "Context": ".validationerror",
+    "ContextTypedDict": ".validationerror",
     "Loc": ".validationerror",
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",

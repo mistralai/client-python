@@ -29,3 +29,13 @@ Based on:
 - [python v2.0.0rc1] packages/azure
 ### Releases
 - [PyPI v2.0.0rc1] https://pypi.org/project/mistralai-azure/2.0.0rc1 - packages/azure
+
+## 2026-03-09 19:35:33
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.729.0 (2.841.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.0.0] packages/azure
+### Releases
+- [PyPI v2.0.0] https://pypi.org/project/mistralai-azure/2.0.0 - packages/azure

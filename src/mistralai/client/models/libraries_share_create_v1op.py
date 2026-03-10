@@ -2,7 +2,7 @@
 # @generated-id: feaacfd46dd3
 
 from __future__ import annotations
-from .sharingin import SharingIn, SharingInTypedDict
+from .sharingrequest import SharingRequest, SharingRequestTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class LibrariesShareCreateV1RequestTypedDict(TypedDict):
     library_id: str
-    sharing_in: SharingInTypedDict
+    sharing_request: SharingRequestTypedDict
 
 
 class LibrariesShareCreateV1Request(BaseModel):
@@ -18,6 +18,7 @@ class LibrariesShareCreateV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    sharing_in: Annotated[
-        SharingIn, FieldMetadata(request=RequestMetadata(media_type="application/json"))
+    sharing_request: Annotated[
+        SharingRequest,
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

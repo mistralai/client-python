@@ -9,6 +9,7 @@ from mistralai.client.utils.dynamic_imports import lazy_getattr, lazy_dir
 if TYPE_CHECKING:
     from .httpvalidationerror import HTTPValidationError, HTTPValidationErrorData
     from .no_response_error import NoResponseError
+    from .observabilityerror import ObservabilityError, ObservabilityErrorData
     from .responsevalidationerror import ResponseValidationError
     from .sdkerror import SDKError
 
@@ -17,6 +18,8 @@ __all__ = [
     "HTTPValidationErrorData",
     "MistralError",
     "NoResponseError",
+    "ObservabilityError",
+    "ObservabilityErrorData",
     "ResponseValidationError",
     "SDKError",
 ]
@@ -25,6 +28,8 @@ _dynamic_imports: dict[str, str] = {
     "HTTPValidationError": ".httpvalidationerror",
     "HTTPValidationErrorData": ".httpvalidationerror",
     "NoResponseError": ".no_response_error",
+    "ObservabilityError": ".observabilityerror",
+    "ObservabilityErrorData": ".observabilityerror",
     "ResponseValidationError": ".responsevalidationerror",
     "SDKError": ".sdkerror",
 }

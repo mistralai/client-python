@@ -1,0 +1,10 @@
+# GetChatCompletionEventsV1ObservabilityChatCompletionEventsSearchPostRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `page_size`                                                                                | *Optional[int]*                                                                            | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `cursor`                                                                                   | *OptionalNullable[str]*                                                                    | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `search_chat_completion_events_request`                                                    | [models.SearchChatCompletionEventsRequest](../models/searchchatcompletioneventsrequest.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |

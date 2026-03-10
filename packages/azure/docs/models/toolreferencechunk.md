@@ -1,0 +1,13 @@
+# ToolReferenceChunk
+
+
+## Fields
+
+| Field                                      | Type                                       | Required                                   | Description                                |
+| ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
+| `type`                                     | *Optional[Literal["tool_reference"]]*      | :heavy_minus_sign:                         | N/A                                        |
+| `tool`                                     | [models.ToolUnion](../models/toolunion.md) | :heavy_check_mark:                         | N/A                                        |
+| `title`                                    | *str*                                      | :heavy_check_mark:                         | N/A                                        |
+| `url`                                      | *OptionalNullable[str]*                    | :heavy_minus_sign:                         | N/A                                        |
+| `favicon`                                  | *OptionalNullable[str]*                    | :heavy_minus_sign:                         | N/A                                        |
+| `description`                              | *OptionalNullable[str]*                    | :heavy_minus_sign:                         | N/A                                        |
