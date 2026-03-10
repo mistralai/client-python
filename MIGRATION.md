@@ -96,7 +96,8 @@ Only one user-facing type rename: `Tools` -> `ConversationRequestTool`.
 
 ---
 
-## Migrating from v0.x to v1.x
+<details>
+<summary><h1>Legacy: Migrating from v0.x to v1.x</h1></summary>
 
 > **Note:** The v1.x examples below use v1-style imports (e.g., `from mistralai import Mistral`). If you're on v2.x, combine these API changes with the [v1 to v2 import changes](#migration-guide-v1x-to-v2x) above.
 
@@ -117,3 +118,5 @@ Only one user-facing type rename: `Tools` -> `ConversationRequestTool`.
 | `client.jobs.list` | `client.fine_tuning.jobs.list` |
 | `client.jobs.retrieve` | `client.fine_tuning.jobs.get` |
 | `client.jobs.cancel` | `client.fine_tuning.jobs.cancel` |
+
+</details>
