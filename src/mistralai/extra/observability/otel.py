@@ -1,3 +1,9 @@
+"""OTEL conventions for gen AI may be found at:
+
+https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/
+https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-agent-spans/
+"""
+
 import copy
 import json
 import logging
@@ -5,13 +11,23 @@ import os
 import traceback
 from datetime import datetime, timezone
 from enum import Enum
+from typing import Any
 
 import httpx
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 import opentelemetry.semconv._incubating.attributes.http_attributes as http_attributes
+import opentelemetry.semconv.attributes.error_attributes as error_attributes
 import opentelemetry.semconv.attributes.server_attributes as server_attributes
+from opentelemetry import context as context_api
 from opentelemetry import propagate, trace
 from opentelemetry.trace import Span, Status, StatusCode, Tracer, set_span_in_context
+
+from .serialization import (
+    serialize_input_message,
+    serialize_output_message,
+    serialize_tool_definition,
+)
+from .streaming import accumulate_chunks_to_response_dict, parse_sse_chunks
 
 logger = logging.getLogger(__name__)
 
@@ -19,25 +35,21 @@ logger = logging.getLogger(__name__)
 OTEL_SERVICE_NAME: str = "mistralai_sdk"
 MISTRAL_SDK_OTEL_TRACER_NAME: str = OTEL_SERVICE_NAME + "_tracer"
 
-MISTRAL_SDK_DEBUG_TRACING: bool = os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
+MISTRAL_SDK_DEBUG_TRACING: bool = (
+    os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
+)
 DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=true."
 
 
 class MistralAIAttributes:
-    MISTRAL_AI_TOTAL_TOKENS = "mistral_ai.request.total_tokens"
-    MISTRAL_AI_TOOL_CALL_ARGUMENTS = "mistral_ai.tool.call.arguments"
-    MISTRAL_AI_MESSAGE_ID = "mistral_ai.message.id"
-    MISTRAL_AI_OPERATION_NAME= "mistral_ai.operation.name"
     MISTRAL_AI_OCR_USAGE_PAGES_PROCESSED = "mistral_ai.ocr.usage.pages_processed"
     MISTRAL_AI_OCR_USAGE_DOC_SIZE_BYTES = "mistral_ai.ocr.usage.doc_size_bytes"
-    MISTRAL_AI_OPERATION_ID = "mistral_ai.operation.id"
-    MISTRAL_AI_ERROR_TYPE = "mistral_ai.error.type"
-    MISTRAL_AI_ERROR_MESSAGE = "mistral_ai.error.message"
     MISTRAL_AI_ERROR_CODE = "mistral_ai.error.code"
-    MISTRAL_AI_FUNCTION_CALL_ARGUMENTS = "mistral_ai.function.call.arguments"
+
 
 class MistralAINameValues(Enum):
     OCR = "ocr"
+
 
 class TracingErrors(Exception, Enum):
     FAILED_TO_CREATE_SPAN_FOR_REQUEST = "Failed to create span for request."
@@ -48,28 +60,74 @@ class TracingErrors(Exception, Enum):
     def __str__(self):
         return str(self.value)
 
+
 class GenAISpanEnum(str, Enum):
     CONVERSATION = "conversation"
-    CONV_REQUEST = "POST /v1/conversations"
-    EXECUTE_TOOL = "execute_tool"
     VALIDATE_RUN = "validate_run"
-
-    @staticmethod
-    def function_call(func_name: str):
-        return f"function_call[{func_name}]"
 
 
 def parse_time_to_nanos(ts: str) -> int:
     dt = datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
     return int(dt.timestamp() * 1e9)
 
-def set_available_attributes(span: Span, attributes: dict) -> None:
+
+def _infer_gen_ai_operation_name(
+    operation_id: str,
+) -> gen_ai_attributes.GenAiOperationNameValues | None:
+    """Infer the GenAI operation name from the operation_id using rule-based matching."""
+    if "chat_completion" in operation_id or operation_id == "stream_chat":
+        return gen_ai_attributes.GenAiOperationNameValues.CHAT
+    if (
+        "agents_create" in operation_id or "agents_update" in operation_id
+    ) and "alias" not in operation_id:
+        return gen_ai_attributes.GenAiOperationNameValues.CREATE_AGENT
+    if "agents_completion" in operation_id or operation_id == "stream_agents":
+        return gen_ai_attributes.GenAiOperationNameValues.INVOKE_AGENT
+    if "conversations" in operation_id and any(
+        action in operation_id for action in ("start", "append", "restart")
+    ):
+        return gen_ai_attributes.GenAiOperationNameValues.INVOKE_AGENT
+    if "fim" in operation_id:
+        return gen_ai_attributes.GenAiOperationNameValues.TEXT_COMPLETION
+    if "embeddings" in operation_id:
+        return gen_ai_attributes.GenAiOperationNameValues.EMBEDDINGS
+    if "ocr_post" in operation_id:
+        return gen_ai_attributes.GenAiOperationNameValues.GENERATE_CONTENT
+    # TODO: Handle transcriptions (audio_api_v1_transcriptions_post[_stream])
+    return None
+
+
+def _build_genai_span_name(
+    gen_ai_op: gen_ai_attributes.GenAiOperationNameValues, body: dict[str, Any]
+) -> str:
+    """Build span name per GenAI semantic conventions.
+
+    - Chat/text_completion/embeddings: "{operation_name} {model}"
+    - create_agent/invoke_agent: "{operation_name} {agent_name}"
+    - execute_tool: "execute_tool {gen_ai.tool.name}"
+    """
+    op_name = gen_ai_op.value
+    if gen_ai_op in {
+        gen_ai_attributes.GenAiOperationNameValues.CREATE_AGENT,
+        gen_ai_attributes.GenAiOperationNameValues.INVOKE_AGENT,
+    }:
+        agent_name = body.get("name", "")
+        return f"{op_name} {agent_name}" if agent_name else op_name
+    if gen_ai_op is gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL:
+        tool_name = body.get("name", "")
+        return f"{op_name} {tool_name}" if tool_name else op_name
+    model = body.get("model", "")
+    return f"{op_name} {model}" if model else op_name
+
+
+def set_available_attributes(span: Span, attributes: dict[str, Any]) -> None:
     for attribute, value in attributes.items():
         if value:
             span.set_attribute(attribute, value)
 
 
-def enrich_span_from_request(span: Span, request: httpx.Request) -> Span:
+def _set_http_attributes(span: Span, operation_id: str, request: httpx.Request) -> None:
+    """Set HTTP and server attributes on the span."""
     if not request.url.port:
         # From httpx doc:
         # Note that the URL class performs port normalization as per the WHATWG spec.
@@ -84,120 +142,275 @@ def enrich_span_from_request(span: Span, request: httpx.Request) -> Span:
     else:
         port = request.url.port
 
-    span.set_attributes({
-        http_attributes.HTTP_REQUEST_METHOD: request.method,
-        http_attributes.HTTP_URL: str(request.url),
-        server_attributes.SERVER_ADDRESS: request.headers.get("host", ""),
-        server_attributes.SERVER_PORT: port
-    })
-    if request._content:
-        request_body = json.loads(request._content)
-
-        attributes = {
-            gen_ai_attributes.GEN_AI_REQUEST_CHOICE_COUNT: request_body.get("n", None),
-            gen_ai_attributes.GEN_AI_REQUEST_ENCODING_FORMATS: request_body.get("encoding_formats", None),
-            gen_ai_attributes.GEN_AI_REQUEST_FREQUENCY_PENALTY: request_body.get("frequency_penalty", None),
-            gen_ai_attributes.GEN_AI_REQUEST_MAX_TOKENS: request_body.get("max_tokens", None),
-            gen_ai_attributes.GEN_AI_REQUEST_MODEL: request_body.get("model", None),
-            gen_ai_attributes.GEN_AI_REQUEST_PRESENCE_PENALTY: request_body.get("presence_penalty", None),
-            gen_ai_attributes.GEN_AI_REQUEST_SEED: request_body.get("random_seed", None),
-            gen_ai_attributes.GEN_AI_REQUEST_STOP_SEQUENCES: request_body.get("stop", None),
-            gen_ai_attributes.GEN_AI_REQUEST_TEMPERATURE: request_body.get("temperature", None),
-            gen_ai_attributes.GEN_AI_REQUEST_TOP_P: request_body.get("top_p", None),
-            gen_ai_attributes.GEN_AI_REQUEST_TOP_K: request_body.get("top_k", None),
-            # Input messages are likely to be large, containing user/PII data and other sensitive information.
-            # Also structured attributes are not yet supported on spans in Python.
-            # For those reasons, we will not record the input messages for now.
-            gen_ai_attributes.GEN_AI_INPUT_MESSAGES: None,
+    span.set_attributes(
+        {
+            http_attributes.HTTP_REQUEST_METHOD: request.method,
+            http_attributes.HTTP_URL: str(request.url),
+            server_attributes.SERVER_ADDRESS: request.headers.get("host", ""),
+            server_attributes.SERVER_PORT: port,
         }
-        # Set attributes only if they are not None.
-        # From OpenTelemetry documentation: None is not a valid attribute value per spec / is not a permitted value type for an attribute.
-        set_available_attributes(span, attributes)
+    )
+
+
+def _enrich_request_genai_attrs(
+    span: Span,
+    gen_ai_op: gen_ai_attributes.GenAiOperationNameValues,
+    request_body: dict[str, Any],
+) -> None:
+    """Set GenAI request attributes: model params, input messages, tool definitions."""
+    # Update span name per GenAI semantic conventions, now that we have the parsed request body.
+    span.update_name(_build_genai_span_name(gen_ai_op, request_body))
+
+    attributes = {
+        gen_ai_attributes.GEN_AI_REQUEST_CHOICE_COUNT: request_body.get("n"),
+        gen_ai_attributes.GEN_AI_REQUEST_ENCODING_FORMATS: request_body.get(
+            "encoding_formats"
+        ),
+        gen_ai_attributes.GEN_AI_REQUEST_FREQUENCY_PENALTY: request_body.get(
+            "frequency_penalty"
+        ),
+        gen_ai_attributes.GEN_AI_REQUEST_MAX_TOKENS: request_body.get("max_tokens"),
+        gen_ai_attributes.GEN_AI_REQUEST_MODEL: request_body.get("model"),
+        gen_ai_attributes.GEN_AI_REQUEST_PRESENCE_PENALTY: request_body.get(
+            "presence_penalty"
+        ),
+        gen_ai_attributes.GEN_AI_REQUEST_SEED: request_body.get("random_seed"),
+        gen_ai_attributes.GEN_AI_REQUEST_STOP_SEQUENCES: request_body.get("stop"),
+        gen_ai_attributes.GEN_AI_REQUEST_TEMPERATURE: request_body.get("temperature"),
+        gen_ai_attributes.GEN_AI_REQUEST_TOP_P: request_body.get("top_p"),
+        gen_ai_attributes.GEN_AI_REQUEST_TOP_K: request_body.get("top_k"),
+    }
+
+    # Chat/agent completion API uses messages in request body; conversation API uses inputs
+    input_messages = request_body.get("messages") or request_body.get("inputs")
+    if isinstance(input_messages, str):
+        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = [
+            serialize_input_message({"role": "user", "content": input_messages})
+        ]
+    elif isinstance(input_messages, list):
+        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = list(
+            map(serialize_input_message, input_messages)
+        )
+    # Tool definitions
+    if tools := request_body.get("tools"):
+        attributes[gen_ai_attributes.GEN_AI_TOOL_DEFINITIONS] = list(
+            filter(None, map(serialize_tool_definition, tools))
+        )
+    # TODO: For agent start conversation, add agent id and version attributes here ?
+
+    set_available_attributes(span, attributes)
+
+
+def enrich_span_from_request(
+    span: Span, operation_id: str, request: httpx.Request
+) -> Span:
+    _set_http_attributes(span, operation_id, request)
+
+    gen_ai_op = _infer_gen_ai_operation_name(operation_id)
+    if gen_ai_op is None:
+        return span
+
+    span.set_attributes(
+        {
+            gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_op.value,
+            gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value,
+        }
+    )
+
+    if request.content:
+        request_body = json.loads(request.content)
+        _enrich_request_genai_attrs(span, gen_ai_op, request_body)
+
     return span
 
 
-def enrich_span_from_response(tracer: trace.Tracer, span: Span, operation_id: str, response: httpx.Response) -> None:
-    span.set_status(Status(StatusCode.OK))
-    response_data = json.loads(response.content)
+def _enrich_response_genai_attrs(
+    span: Span,
+    gen_ai_op: gen_ai_attributes.GenAiOperationNameValues,
+    response_data: dict[str, Any],
+) -> None:
+    """Set common GenAI response attributes: response ID, model, choices, usage."""
+    attributes: dict[str, Any] = {}
 
-    # Base attributes
-    attributes: dict[str, str | int] = {
-        http_attributes.HTTP_RESPONSE_STATUS_CODE: response.status_code,
-        MistralAIAttributes.MISTRAL_AI_OPERATION_ID: operation_id,
-        gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value
-    }
+    if gen_ai_op is not gen_ai_attributes.GenAiOperationNameValues.CREATE_AGENT:
+        # id has another meaning for create agent operation (id of the agent)
+        attributes[gen_ai_attributes.GEN_AI_RESPONSE_ID] = response_data.get("id")
+    attributes[gen_ai_attributes.GEN_AI_RESPONSE_MODEL] = response_data.get("model")
 
-    # Add usage attributes if available
+    # Finish reasons and output messages from choices
+    choices = response_data.get("choices", [])
+    finish_reasons = [c.get("finish_reason") for c in choices if c.get("finish_reason")]
+    if finish_reasons:
+        attributes[gen_ai_attributes.GEN_AI_RESPONSE_FINISH_REASONS] = finish_reasons
+    if choices:
+        attributes[gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES] = list(
+            map(serialize_output_message, choices)
+        )
+
+    # Usage
     usage = response_data.get("usage", {})
     if usage:
-        attributes.update({
-            gen_ai_attributes.GEN_AI_USAGE_PROMPT_TOKENS: usage.get("prompt_tokens", 0),
-            gen_ai_attributes.GEN_AI_USAGE_OUTPUT_TOKENS: usage.get("completion_tokens", 0),
-            MistralAIAttributes.MISTRAL_AI_TOTAL_TOKENS: usage.get("total_tokens", 0)
-        })
+        attributes.update(
+            {
+                gen_ai_attributes.GEN_AI_USAGE_INPUT_TOKENS: usage.get(
+                    "prompt_tokens", 0
+                ),
+                gen_ai_attributes.GEN_AI_USAGE_OUTPUT_TOKENS: usage.get(
+                    "completion_tokens", 0
+                ),
+            }
+        )
 
-    span.set_attributes(attributes)
-    if operation_id == "agents_api_v1_agents_create":
-        # Semantics from https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-agent-spans/#create-agent-span
-        agent_attributes = {
-            gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.CREATE_AGENT.value,
-            gen_ai_attributes.GEN_AI_AGENT_DESCRIPTION: response_data.get("description", ""),
-            gen_ai_attributes.GEN_AI_AGENT_ID: response_data.get("id", ""),
-            gen_ai_attributes.GEN_AI_AGENT_NAME: response_data.get("name", ""),
-            gen_ai_attributes.GEN_AI_REQUEST_MODEL: response_data.get("model", ""),
-            gen_ai_attributes.GEN_AI_SYSTEM_INSTRUCTIONS: response_data.get("instructions", "")
-        }
-        span.set_attributes(agent_attributes)
-    if operation_id in ["agents_api_v1_conversations_start", "agents_api_v1_conversations_append"]:
-        outputs = response_data.get("outputs", [])
-        conversation_attributes = {
-            gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.INVOKE_AGENT.value,
-            gen_ai_attributes.GEN_AI_CONVERSATION_ID: response_data.get("conversation_id", "")
-        }
-        span.set_attributes(conversation_attributes)
-        parent_context = set_span_in_context(span)
+    set_available_attributes(span, attributes)
 
-        for output in outputs:
-            # TODO: Only enrich the spans if it's a single turn conversation.
-            # Multi turn conversations are handled in the extra.run.tools.create_function_result function
-            if output["type"] == "function.call":
-                pass
-            if output["type"] == "tool.execution":
-                start_ns = parse_time_to_nanos(output["created_at"])
-                end_ns = parse_time_to_nanos(output["completed_at"])
-                child_span = tracer.start_span("Tool Execution", start_time=start_ns, context=parent_context)
-                child_span.set_attributes({"agent.trace.public": ""})
-                tool_attributes = {
-                    gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL.value,
-                    gen_ai_attributes.GEN_AI_TOOL_CALL_ID: output.get("id", ""),
-                    MistralAIAttributes.MISTRAL_AI_TOOL_CALL_ARGUMENTS: output.get("arguments", ""),
-                    gen_ai_attributes.GEN_AI_TOOL_NAME: output.get("name", "")
-                }
-                child_span.set_attributes(tool_attributes)
-                child_span.end(end_time=end_ns)
-            if output["type"] == "message.output":
-                start_ns = parse_time_to_nanos(output["created_at"])
-                end_ns = parse_time_to_nanos(output["completed_at"])
-                child_span = tracer.start_span("Message Output", start_time=start_ns, context=parent_context)
-                child_span.set_attributes({"agent.trace.public": ""})
-                message_attributes = {
-                    gen_ai_attributes.GEN_AI_OPERATION_NAME: gen_ai_attributes.GenAiOperationNameValues.CHAT.value,
-                    gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value,
-                    MistralAIAttributes.MISTRAL_AI_MESSAGE_ID: output.get("id", ""),
-                    gen_ai_attributes.GEN_AI_AGENT_ID: output.get("agent_id", ""),
-                    gen_ai_attributes.GEN_AI_REQUEST_MODEL: output.get("model", "")
-                }
-                child_span.set_attributes(message_attributes)
-                child_span.end(end_time=end_ns)
+
+def _enrich_create_agent(span: Span, response_data: dict[str, Any]) -> None:
+    """Set agent-specific attributes from create_agent response.
+
+    Semantics: https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-agent-spans/#create-agent-span
+    """
+    agent_attributes = {
+        gen_ai_attributes.GEN_AI_AGENT_DESCRIPTION: response_data.get("description"),
+        gen_ai_attributes.GEN_AI_AGENT_ID: response_data.get("id"),
+        gen_ai_attributes.GEN_AI_AGENT_NAME: response_data.get("name"),
+        # As of 2026-03-02: in convention, but not yet in opentelemetry-semantic-conventions
+        "gen_ai.agent.version": str(response_data.get("version")),
+        gen_ai_attributes.GEN_AI_REQUEST_MODEL: response_data.get("model"),
+        gen_ai_attributes.GEN_AI_SYSTEM_INSTRUCTIONS: response_data.get("instructions"),
+    }
+    set_available_attributes(span, agent_attributes)
+
+
+def _create_tool_execution_child_span(
+    tracer: trace.Tracer, parent_context: context_api.Context, output: dict[str, Any]
+) -> None:
+    """Create a child span for a tool.execution conversation output."""
+    start_ns = parse_time_to_nanos(output["created_at"])
+    end_ns = parse_time_to_nanos(output["completed_at"])
+    op_name = gen_ai_attributes.GenAiOperationNameValues.EXECUTE_TOOL
+    span_name = _build_genai_span_name(op_name, output)
+    child_span = tracer.start_span(
+        span_name, start_time=start_ns, context=parent_context
+    )
+    child_span.set_attributes({"agent.trace.public": ""})
+    tool_arguments = output.get("arguments")
+    # The tool call result is in the "info" field, if provided
+    tool_result = output.get("info")
+    tool_attributes = {
+        gen_ai_attributes.GEN_AI_OPERATION_NAME: op_name.value,
+        gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value,
+        gen_ai_attributes.GEN_AI_TOOL_CALL_ID: output.get("id"),
+        gen_ai_attributes.GEN_AI_TOOL_CALL_ARGUMENTS: tool_arguments
+        if isinstance(tool_arguments, str)
+        else (json.dumps(tool_arguments) if tool_arguments else None),
+        gen_ai_attributes.GEN_AI_TOOL_CALL_RESULT: tool_result
+        and json.dumps(tool_result),
+        gen_ai_attributes.GEN_AI_TOOL_NAME: output.get("name"),
+        gen_ai_attributes.GEN_AI_TOOL_TYPE: "extension",
+    }
+    set_available_attributes(child_span, tool_attributes)
+    child_span.end(end_time=end_ns)
+
+
+def _create_message_output_child_span(
+    tracer: trace.Tracer, parent_context: context_api.Context, output: dict[str, Any]
+) -> None:
+    """Create a child span for a message.output conversation output."""
+    start_ns = parse_time_to_nanos(output["created_at"])
+    end_ns = parse_time_to_nanos(output["completed_at"])
+    op_name = gen_ai_attributes.GenAiOperationNameValues.CHAT
+    span_name = _build_genai_span_name(op_name, output)
+    child_span = tracer.start_span(
+        span_name, start_time=start_ns, context=parent_context
+    )
+    child_span.set_attributes({"agent.trace.public": ""})
+    # Wrap the flat conversation output as a choice dict so we
+    # can reuse serialize_output_message (which also handles
+    # tool_calls, not just content).
+    choice_wrapper: dict = {
+        "message": output,
+        "finish_reason": output.get("finish_reason", ""),
+    }
+    message_attributes = {
+        gen_ai_attributes.GEN_AI_OPERATION_NAME: op_name.value,
+        gen_ai_attributes.GEN_AI_PROVIDER_NAME: gen_ai_attributes.GenAiProviderNameValues.MISTRAL_AI.value,
+        gen_ai_attributes.GEN_AI_RESPONSE_ID: output.get("id"),
+        gen_ai_attributes.GEN_AI_AGENT_ID: output.get("agent_id"),
+        gen_ai_attributes.GEN_AI_RESPONSE_MODEL: output.get("model"),
+        gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES: [
+            serialize_output_message(choice_wrapper)
+        ],
+    }
+    set_available_attributes(child_span, message_attributes)
+    child_span.end(end_time=end_ns)
+
+
+def _enrich_invoke_agent(
+    tracer: trace.Tracer, span: Span, response_data: dict[str, Any]
+) -> None:
+    """Set invoke_agent attributes and create child spans for conversation outputs."""
+    conversation_attributes = {
+        gen_ai_attributes.GEN_AI_CONVERSATION_ID: response_data.get("conversation_id"),
+        # We don't have more agent attributes available in the response data
+        # (agent id, name, version, description). For start conversation operation,
+        # we could get it from the request; see associated TODO
+    }
+    set_available_attributes(span, conversation_attributes)
+
+    outputs = response_data.get("outputs", [])
+    parent_context = set_span_in_context(span)
+    for output in outputs:
+        output_type = output.get("type")
+        if not output_type:
+            continue  # Safety net
+        if output_type == "function.call":
+            # handled in the extra.run.tools.create_function_result function
+            continue
+        elif output_type == "tool.execution":
+            _create_tool_execution_child_span(tracer, parent_context, output)
+        elif output_type == "message.output":
+            _create_message_output_child_span(tracer, parent_context, output)
+        # TODO: do type agent.handoff
+
+
+def _enrich_ocr(span: Span, response_data: dict[str, Any]) -> None:
+    """Set OCR-specific usage attributes."""
+    usage_info = response_data.get("usage_info", {})
+    ocr_attributes = {
+        MistralAIAttributes.MISTRAL_AI_OCR_USAGE_PAGES_PROCESSED: usage_info.get(
+            "pages_processed"
+        ),
+        MistralAIAttributes.MISTRAL_AI_OCR_USAGE_DOC_SIZE_BYTES: usage_info.get(
+            "doc_size_bytes"
+        ),
+    }
+    set_available_attributes(span, ocr_attributes)
+
+
+def _enrich_span_from_response(
+    tracer: Tracer,
+    span: Span,
+    operation_id: str,
+    response_data: dict[str, Any],
+) -> None:
+    """Enrich span with GenAI response attributes and operation-specific data.
+
+    Used by both the non-streaming and streaming paths so that the same
+    attributes are set regardless of response type.
+    """
+    gen_ai_op = _infer_gen_ai_operation_name(operation_id)
+    if gen_ai_op is None:
+        return
+
+    _enrich_response_genai_attrs(span, gen_ai_op, response_data)
+
+    if gen_ai_op is gen_ai_attributes.GenAiOperationNameValues.CREATE_AGENT:
+        _enrich_create_agent(span, response_data)
+    elif gen_ai_op is gen_ai_attributes.GenAiOperationNameValues.INVOKE_AGENT:
+        _enrich_invoke_agent(tracer, span, response_data)
+
     if operation_id == "ocr_v1_ocr_post":
-        usage_info = response_data.get("usage_info", "")
-        ocr_attributes = {
-            MistralAIAttributes.MISTRAL_AI_OPERATION_NAME: MistralAINameValues.OCR.value,
-            MistralAIAttributes.MISTRAL_AI_OCR_USAGE_PAGES_PROCESSED: usage_info.get("pages_processed", "") if usage_info else "",
-            MistralAIAttributes.MISTRAL_AI_OCR_USAGE_DOC_SIZE_BYTES: usage_info.get("doc_size_bytes", "") if usage_info else "",
-            gen_ai_attributes.GEN_AI_REQUEST_MODEL: response_data.get("model", "")
-        }
-        span.set_attributes(ocr_attributes)
+        _enrich_ocr(span, response_data)
 
 
 def get_or_create_otel_tracer() -> tuple[bool, Tracer]:
@@ -226,6 +439,7 @@ def get_or_create_otel_tracer() -> tuple[bool, Tracer]:
 
     return tracing_enabled, tracer
 
+
 def get_traced_request_and_span(
     tracing_enabled: bool,
     tracer: Tracer,
@@ -233,26 +447,26 @@ def get_traced_request_and_span(
     operation_id: str,
     request: httpx.Request,
 ) -> tuple[httpx.Request, Span | None]:
-        if not tracing_enabled:
-            return request, span
-
-        try:
-            span = tracer.start_span(name=operation_id)
-            span.set_attributes({"agent.trace.public": ""})
-            # Inject the span context into the request headers to be used by the backend service to continue the trace
-            propagate.inject(request.headers, context=set_span_in_context(span))
-            span = enrich_span_from_request(span, request)
-        except Exception:
-            logger.warning(
-                "%s %s",
-                TracingErrors.FAILED_TO_CREATE_SPAN_FOR_REQUEST,
-                traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
-            )
-            if span:
-                end_span(span=span)
-            span = None
-
+    if not tracing_enabled:
         return request, span
+
+    try:
+        span = tracer.start_span(name=operation_id)
+        span.set_attributes({"agent.trace.public": ""})
+        # Inject the span context into the request headers to be used by the backend service to continue the trace
+        propagate.inject(request.headers, context=set_span_in_context(span))
+        span = enrich_span_from_request(span, operation_id, request)
+    except Exception:
+        logger.warning(
+            "%s %s",
+            TracingErrors.FAILED_TO_CREATE_SPAN_FOR_REQUEST,
+            traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+        )
+        if span:
+            end_span(span=span)
+        span = None
+
+    return request, span
 
 
 def get_traced_response(
@@ -265,12 +479,18 @@ def get_traced_response(
     if not tracing_enabled or not span:
         return response
     try:
+        span.set_status(Status(StatusCode.OK))
+        span.set_attribute(
+            http_attributes.HTTP_RESPONSE_STATUS_CODE, response.status_code
+        )
         is_stream_response = not response.is_closed and not response.is_stream_consumed
         if is_stream_response:
-            return TracedResponse.from_response(resp=response, span=span)
-        enrich_span_from_response(
-            tracer, span, operation_id, response
-        )
+            return TracedResponse.from_response(
+                resp=response, span=span, tracer=tracer, operation_id=operation_id
+            )
+        if response.content:
+            response_data = json.loads(response.content)
+            _enrich_span_from_response(tracer, span, operation_id, response_data)
     except Exception:
         logger.warning(
             "%s %s",
@@ -281,6 +501,7 @@ def get_traced_response(
         end_span(span=span)
     return response
 
+
 def get_response_and_error(
     tracing_enabled: bool,
     tracer: Tracer,
@@ -289,38 +510,48 @@ def get_response_and_error(
     response: httpx.Response,
     error: Exception | None,
 ) -> tuple[httpx.Response, Exception | None]:
-        if not tracing_enabled or not span:
-            return response, error
-        try:
-            if error:
-                span.record_exception(error)
-                span.set_status(Status(StatusCode.ERROR, str(error)))
-            if hasattr(response, "_content") and response._content:
-                response_body = json.loads(response._content)
-                if response_body.get("object", "") == "error":
-                    if error_msg := response_body.get("message", ""):
-                        attributes = {
-                            http_attributes.HTTP_RESPONSE_STATUS_CODE: response.status_code,
-                            MistralAIAttributes.MISTRAL_AI_ERROR_TYPE: response_body.get("type", ""),
-                            MistralAIAttributes.MISTRAL_AI_ERROR_MESSAGE: error_msg,
-                            MistralAIAttributes.MISTRAL_AI_ERROR_CODE: response_body.get("code", ""),
-                        }
-                        for attribute, value in attributes.items():
-                            if value:
-                                span.set_attribute(attribute, value)
+    if not tracing_enabled or not span:
+        return response, error
+    try:
+        if error:
+            span.record_exception(error)
+            span.set_status(Status(StatusCode.ERROR, str(error)))
+        if response.content:
+            response_body = json.loads(response.content)
+            if response_body.get("object", "") == "error":
+                if error_msg := response_body.get("message", ""):
+                    error_type = response_body.get("type", "")
+                    span.set_status(Status(StatusCode.ERROR, error_msg))
+                    span.add_event(
+                        "exception",
+                        {
+                            "exception.type": error_type or "api_error",
+                            "exception.message": error_msg,
+                        },
+                    )
+                    attributes = {
+                        http_attributes.HTTP_RESPONSE_STATUS_CODE: response.status_code,
+                        error_attributes.ERROR_TYPE: error_type,
+                        MistralAIAttributes.MISTRAL_AI_ERROR_CODE: response_body.get(
+                            "code", ""
+                        ),
+                    }
+                    for attribute, value in attributes.items():
+                        if value:
+                            span.set_attribute(attribute, value)
+        span.end()
+        span = None
+    except Exception:
+        logger.warning(
+            "%s %s",
+            TracingErrors.FAILED_TO_HANDLE_ERROR_IN_SPAN,
+            traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+        )
+
+        if span:
             span.end()
             span = None
-        except Exception:
-            logger.warning(
-                "%s %s",
-                TracingErrors.FAILED_TO_HANDLE_ERROR_IN_SPAN,
-                traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
-            )
-
-            if span:
-                span.end()
-                span = None
-        return response, error
+    return response, error
 
 
 def end_span(span: Span) -> None:
@@ -333,34 +564,84 @@ def end_span(span: Span) -> None:
             traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
         )
 
-class TracedResponse(httpx.Response):
-    """
-    TracedResponse is a subclass of httpx.Response that ends the span when the response is closed.
 
-    This hack allows ending the span only once the stream is fully consumed.
+class TracedResponse(httpx.Response):
+    """Subclass of httpx.Response that accumulates streamed SSE bytes and
+    enriches the OTEL span with response attributes when the stream is closed.
     """
-    def __init__(self, *args, span: Span | None, **kwargs) -> None:
+
+    span: Span | None
+    tracer: Tracer
+    operation_id: str
+    _accumulated_sse: bytearray
+
+    def __init__(
+        self,
+        *args,
+        span: Span | None,
+        tracer: Tracer,
+        operation_id: str = "",
+        **kwargs,
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.span = span
+        self.tracer = tracer
+        self.operation_id = operation_id
+        self._accumulated_sse = bytearray()
+
+    def iter_bytes(self, *args, **kwargs):
+        for chunk in super().iter_bytes(*args, **kwargs):
+            self._accumulated_sse.extend(chunk)
+            yield chunk
+
+    async def aiter_bytes(self, *args, **kwargs):
+        async for chunk in super().aiter_bytes(*args, **kwargs):
+            self._accumulated_sse.extend(chunk)
+            yield chunk
 
     def close(self) -> None:
-        if self.span:
-            end_span(span=self.span)
+        self._finalize_span()
         super().close()
 
     async def aclose(self) -> None:
-        if self.span:
-            end_span(span=self.span)
+        self._finalize_span()
         await super().aclose()
 
+    def _finalize_span(self) -> None:
+        """Enrich and end the span after the stream has been fully consumed."""
+        if not self.span:
+            return
+        try:
+            chunks = parse_sse_chunks(bytes(self._accumulated_sse))
+            if chunks:
+                response_data = accumulate_chunks_to_response_dict(chunks)
+                _enrich_span_from_response(
+                    self.tracer, self.span, self.operation_id, response_data
+                )
+        except Exception:
+            logger.warning(
+                "%s %s",
+                TracingErrors.FAILED_TO_ENRICH_SPAN_WITH_RESPONSE,
+                traceback.format_exc() if MISTRAL_SDK_DEBUG_TRACING else DEBUG_HINT,
+            )
+        end_span(span=self.span)
+        self.span = None
+
     @classmethod
-    def from_response(cls, resp: httpx.Response, span: Span | None) -> "TracedResponse":
+    def from_response(
+        cls,
+        resp: httpx.Response,
+        span: Span | None,
+        tracer: Tracer,
+        operation_id: str = "",
+    ) -> "TracedResponse":
+        # Bypass __init__ to steal the live httpx stream/connection via __dict__ copy.
+        # Keep tracing field assignments in sync with __init__.
         traced_resp = cls.__new__(cls)
         traced_resp.__dict__ = copy.copy(resp.__dict__)
         traced_resp.span = span
-
-        # Warning: this syntax bypasses the __init__ method.
-        # If you add init logic in the TracedResponse.__init__ method, you will need to add the following line for it to execute:
-        # traced_resp.__init__(your_arguments)
+        traced_resp.tracer = tracer
+        traced_resp.operation_id = operation_id
+        traced_resp._accumulated_sse = bytearray()
 
         return traced_resp
