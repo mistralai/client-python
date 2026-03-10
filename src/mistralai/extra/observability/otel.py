@@ -219,8 +219,8 @@ def enrich_span_from_request(
         }
     )
 
-    if request._content:
-        request_body = json.loads(request._content)
+    if request.content:
+        request_body = json.loads(request.content)
         _enrich_request_genai_attrs(span, gen_ai_op, request_body)
 
     return span
@@ -521,8 +521,8 @@ def get_response_and_error(
         if error:
             span.record_exception(error)
             span.set_status(Status(StatusCode.ERROR, str(error)))
-        if hasattr(response, "_content") and response._content:
-            response_body = json.loads(response._content)
+        if response.content:
+            response_body = json.loads(response.content)
             if response_body.get("object", "") == "error":
                 if error_msg := response_body.get("message", ""):
                     error_type = response_body.get("type", "")
