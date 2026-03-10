@@ -42,7 +42,6 @@ DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=t
 
 
 class MistralAIAttributes:
-    MISTRAL_AI_TOTAL_TOKENS = "mistral_ai.request.total_tokens"
     MISTRAL_AI_OCR_USAGE_PAGES_PROCESSED = "mistral_ai.ocr.usage.pages_processed"
     MISTRAL_AI_OCR_USAGE_DOC_SIZE_BYTES = "mistral_ai.ocr.usage.doc_size_bytes"
     MISTRAL_AI_OPERATION_ID = "mistral_ai.operation.id"
@@ -260,9 +259,6 @@ def _enrich_response_genai_attrs(
                 ),
                 gen_ai_attributes.GEN_AI_USAGE_OUTPUT_TOKENS: usage.get(
                     "completion_tokens", 0
-                ),
-                MistralAIAttributes.MISTRAL_AI_TOTAL_TOKENS: usage.get(
-                    "total_tokens", 0
                 ),
             }
         )
