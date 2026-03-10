@@ -95,6 +95,7 @@ def _infer_gen_ai_operation_name(
         return gen_ai_attributes.GenAiOperationNameValues.EMBEDDINGS
     if "ocr_post" in operation_id:
         return gen_ai_attributes.GenAiOperationNameValues.GENERATE_CONTENT
+    # TODO: Handle transcriptions (audio_api_v1_transcriptions_post[_stream])
     return None
 
 

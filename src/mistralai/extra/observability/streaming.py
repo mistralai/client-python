@@ -3,6 +3,9 @@
 Pure functions that parse SSE byte streams and accumulate CompletionChunk
 deltas into a ChatCompletionResponse-shaped dict suitable for span enrichment.
 
+TODO: supports chat and agent completion streaming endpoints. Evolutions will
+be necessary to support other streaming endpoints (e.g. conversations).
+
 NOTE: The SSE bytes are re-parsed here even though EventStream already
 parsed them during iteration.
 TracedResponse sits below EventStream and can only accumulate raw bytes; it
