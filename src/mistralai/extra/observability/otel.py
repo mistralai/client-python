@@ -44,7 +44,6 @@ DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=t
 class MistralAIAttributes:
     MISTRAL_AI_OCR_USAGE_PAGES_PROCESSED = "mistral_ai.ocr.usage.pages_processed"
     MISTRAL_AI_OCR_USAGE_DOC_SIZE_BYTES = "mistral_ai.ocr.usage.doc_size_bytes"
-    MISTRAL_AI_OPERATION_ID = "mistral_ai.operation.id"
     MISTRAL_AI_ERROR_CODE = "mistral_ai.error.code"
 
 
@@ -149,7 +148,6 @@ def _set_http_attributes(span: Span, operation_id: str, request: httpx.Request) 
             http_attributes.HTTP_URL: str(request.url),
             server_attributes.SERVER_ADDRESS: request.headers.get("host", ""),
             server_attributes.SERVER_PORT: port,
-            MistralAIAttributes.MISTRAL_AI_OPERATION_ID: operation_id,
         }
     )
 
