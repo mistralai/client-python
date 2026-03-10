@@ -1,13 +1,13 @@
 # Mistral Python Client
 
-> [!IMPORTANT]
-> **Looking for v1 documentation?** If you installed `mistralai` from PyPI (e.g., `pip install mistralai`), you are using **v1** of the SDK. The documentation on this branch (`main`) is for **v2**, which is not yet released on PyPI.
+> [!NOTE]
+> **Looking for v1 documentation?** This is the documentation for the **latest** version (v2) of the `mistralai` SDK, available on PyPI.
 >
-> **➡️ [Go to the v1 branch for v1 documentation](https://github.com/mistralai/client-python/tree/v1)**
+> **[Go to the v1 branch for v1 documentation](https://github.com/mistralai/client-python/tree/v1)**
 
-## Migration warning
+## Migrating from v1
 
-This documentation is for Mistral AI SDK v2. You can find more details on how to migrate from v1 to v2 [here](MIGRATION.md)
+If you are upgrading from v1 to v2, check the [migration guide](MIGRATION.md) for details on breaking changes and how to update your code.
 
 ## API Key Setup
 
@@ -34,7 +34,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [Mistral Python Client](#mistral-python-client)
-  * [Migration warning](#migration-warning)
+  * [Migrating from v1](#migrating-from-v1)
   * [API Key Setup](#api-key-setup)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
