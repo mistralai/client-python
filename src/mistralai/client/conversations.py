@@ -2,6 +2,7 @@
 # @generated-id: 40692a878064
 
 from .basesdk import BaseSDK
+from enum import Enum
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
@@ -36,6 +37,21 @@ if typing.TYPE_CHECKING:
     from mistralai.extra.run.context import RunContext
 
 # endregion imports
+
+
+class StartAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
+
+
+class AppendAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
+
+
+class RestartAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
 
 
 class Conversations(BaseSDK):
@@ -88,6 +104,7 @@ class Conversations(BaseSDK):
                 if run_ctx.conversation_id is None:
                     res = await self.start_async(
                         inputs=input_entries,
+                        stream=False,
                         http_headers=http_headers,
                         name=name,
                         description=description,
@@ -96,6 +113,7 @@ class Conversations(BaseSDK):
                         timeout_ms=timeout_ms,
                         **req,  # type: ignore
                     )
+                    assert isinstance(res, models.ConversationResponse)
                     run_result.conversation_id = res.conversation_id
                     run_ctx.conversation_id = res.conversation_id
                     logger.info(  # pylint: disable=logging-fstring-interpolation
@@ -105,10 +123,12 @@ class Conversations(BaseSDK):
                     res = await self.append_async(
                         conversation_id=run_ctx.conversation_id,
                         inputs=input_entries,
+                        stream=False,
                         retries=retries,
                         server_url=server_url,
                         timeout_ms=timeout_ms,
                     )
+                    assert isinstance(res, models.ConversationResponse)
                 run_ctx.request_count += 1
                 run_result.output_entries.extend(res.outputs)
                 fcalls = get_function_calls(res.outputs)
@@ -167,8 +187,9 @@ class Conversations(BaseSDK):
                     int, list[ConversationEventsData]
                 ] = defaultdict(list)
                 if run_ctx.conversation_id is None:
-                    res = await self.start_stream_async(
+                    res = await self.start_async(
                         inputs=current_entries,
+                        stream=True,
                         http_headers=http_headers,
                         name=name,
                         description=description,
@@ -178,13 +199,15 @@ class Conversations(BaseSDK):
                         **req,  # type: ignore
                     )
                 else:
-                    res = await self.append_stream_async(
+                    res = await self.append_async(
                         conversation_id=run_ctx.conversation_id,
                         inputs=current_entries,
+                        stream=True,
                         retries=retries,
                         server_url=server_url,
                         timeout_ms=timeout_ms,
                     )
+                assert isinstance(res, eventstreaming.EventStreamAsync)
                 async for event in res:
                     if (
                         isinstance(event.data, ResponseStartedEvent)
@@ -261,8 +284,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[StartAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsStartResponse:
         r"""Create a conversation and append entries to it.
 
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
@@ -284,6 +308,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -329,7 +354,9 @@ class Conversations(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -359,17 +386,28 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -377,7 +415,8 @@ class Conversations(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def start_async(
         self,
@@ -415,8 +454,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[StartAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsStartResponse:
         r"""Create a conversation and append entries to it.
 
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
@@ -438,6 +478,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -483,7 +524,9 @@ class Conversations(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -513,17 +556,28 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = await utils.stream_to_text_async(http_res)
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStreamAsync(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -531,7 +585,8 @@ class Conversations(BaseSDK):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def list(
         self,
@@ -1113,8 +1168,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[AppendAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsAppendResponse:
         r"""Append new entries to an existing conversation.
 
         Run completion on the history of the conversation and the user entries. Return the new created entries.
@@ -1129,6 +1185,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -1170,7 +1227,9 @@ class Conversations(BaseSDK):
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -1204,17 +1263,28 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1222,7 +1292,8 @@ class Conversations(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def append_async(
         self,
@@ -1248,8 +1319,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[AppendAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsAppendResponse:
         r"""Append new entries to an existing conversation.
 
         Run completion on the history of the conversation and the user entries. Return the new created entries.
@@ -1264,6 +1336,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -1305,7 +1378,9 @@ class Conversations(BaseSDK):
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -1339,17 +1414,28 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = await utils.stream_to_text_async(http_res)
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStreamAsync(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1357,7 +1443,8 @@ class Conversations(BaseSDK):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def get_history(
         self,
@@ -1748,8 +1835,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[RestartAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsRestartResponse:
         r"""Restart a conversation starting from a given entry.
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
@@ -1767,6 +1855,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -1810,7 +1899,9 @@ class Conversations(BaseSDK):
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -1844,17 +1935,28 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1862,7 +1964,8 @@ class Conversations(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def restart_async(
         self,
@@ -1893,8 +1996,9 @@ class Conversations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[RestartAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConversationResponse:
+    ) -> models.AgentsAPIV1ConversationsRestartResponse:
         r"""Restart a conversation starting from a given entry.
 
         Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
@@ -1912,6 +2016,7 @@ class Conversations(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -1955,7 +2060,9 @@ class Conversations(BaseSDK):
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -1989,914 +2096,16 @@ class Conversations(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConversationResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def start_stream(
-        self,
-        *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
-        stream: Optional[bool] = True,
-        store: OptionalNullable[bool] = UNSET,
-        handoff_execution: OptionalNullable[
-            models.ConversationStreamRequestHandoffExecution
-        ] = UNSET,
-        instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
-            Union[
-                List[models.ConversationStreamRequestTool],
-                List[models.ConversationStreamRequestToolTypedDict],
-            ]
-        ] = None,
-        completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = UNSET,
-        guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
-        ] = UNSET,
-        name: OptionalNullable[str] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[
-            Union[
-                models.ConversationStreamRequestAgentVersion,
-                models.ConversationStreamRequestAgentVersionTypedDict,
-            ]
-        ] = UNSET,
-        model: OptionalNullable[str] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStream[models.ConversationEvents]:
-        r"""Create a conversation and append entries to it.
-
-        Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
-
-        :param inputs:
-        :param stream:
-        :param store:
-        :param handoff_execution:
-        :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
-        :param completion_args:
-        :param guardrails:
-        :param name:
-        :param description:
-        :param metadata:
-        :param agent_id:
-        :param agent_version:
-        :param model:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConversationStreamRequest(
-            inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
-            stream=stream,
-            store=store,
-            handoff_execution=handoff_execution,
-            instructions=instructions,
-            tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
-            ),
-            completion_args=utils.get_pydantic_model(
-                completion_args, OptionalNullable[models.CompletionArgs]
-            ),
-            guardrails=utils.get_pydantic_model(
-                guardrails, OptionalNullable[List[models.GuardrailConfig]]
-            ),
-            name=name,
-            description=description,
-            metadata=metadata,
-            agent_id=agent_id,
-            agent_version=agent_version,
-            model=model,
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/conversations#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ConversationStreamRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStream(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
-                client_ref=self,
+            return unmarshal_json_response(
+                models.ConversationResponse, http_res, http_res_text
             )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = utils.stream_to_text(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    async def start_stream_async(
-        self,
-        *,
-        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
-        stream: Optional[bool] = True,
-        store: OptionalNullable[bool] = UNSET,
-        handoff_execution: OptionalNullable[
-            models.ConversationStreamRequestHandoffExecution
-        ] = UNSET,
-        instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
-            Union[
-                List[models.ConversationStreamRequestTool],
-                List[models.ConversationStreamRequestToolTypedDict],
-            ]
-        ] = None,
-        completion_args: OptionalNullable[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = UNSET,
-        guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
-        ] = UNSET,
-        name: OptionalNullable[str] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_id: OptionalNullable[str] = UNSET,
-        agent_version: OptionalNullable[
-            Union[
-                models.ConversationStreamRequestAgentVersion,
-                models.ConversationStreamRequestAgentVersionTypedDict,
-            ]
-        ] = UNSET,
-        model: OptionalNullable[str] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStreamAsync[models.ConversationEvents]:
-        r"""Create a conversation and append entries to it.
-
-        Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
-
-        :param inputs:
-        :param stream:
-        :param store:
-        :param handoff_execution:
-        :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
-        :param completion_args:
-        :param guardrails:
-        :param name:
-        :param description:
-        :param metadata:
-        :param agent_id:
-        :param agent_version:
-        :param model:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConversationStreamRequest(
-            inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
-            stream=stream,
-            store=store,
-            handoff_execution=handoff_execution,
-            instructions=instructions,
-            tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
-            ),
-            completion_args=utils.get_pydantic_model(
-                completion_args, OptionalNullable[models.CompletionArgs]
-            ),
-            guardrails=utils.get_pydantic_model(
-                guardrails, OptionalNullable[List[models.GuardrailConfig]]
-            ),
-            name=name,
-            description=description,
-            metadata=metadata,
-            agent_id=agent_id,
-            agent_version=agent_version,
-            model=model,
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/conversations#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ConversationStreamRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_start_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStreamAsync(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
-                client_ref=self,
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    def append_stream(
-        self,
-        *,
-        conversation_id: str,
-        inputs: Optional[
-            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
-        ] = None,
-        stream: Optional[bool] = True,
-        store: Optional[bool] = True,
-        handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
-        ] = "server",
-        completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = None,
-        tool_confirmations: OptionalNullable[
-            Union[
-                List[models.ToolCallConfirmation],
-                List[models.ToolCallConfirmationTypedDict],
-            ]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStream[models.ConversationEvents]:
-        r"""Append new entries to an existing conversation.
-
-        Run completion on the history of the conversation and the user entries. Return the new created entries.
-
-        :param conversation_id: ID of the conversation to which we append entries.
-        :param inputs:
-        :param stream:
-        :param store: Whether to store the results into our servers or not.
-        :param handoff_execution:
-        :param completion_args: White-listed arguments from the completion API
-        :param tool_confirmations:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
-            conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
-                inputs=utils.get_pydantic_model(
-                    inputs, Optional[models.ConversationInputs]
-                ),
-                stream=stream,
-                store=store,
-                handoff_execution=handoff_execution,
-                completion_args=utils.get_pydantic_model(
-                    completion_args, Optional[models.CompletionArgs]
-                ),
-                tool_confirmations=utils.get_pydantic_model(
-                    tool_confirmations,
-                    OptionalNullable[List[models.ToolCallConfirmation]],
-                ),
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/conversations/{conversation_id}#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
-                False,
-                False,
-                "json",
-                models.ConversationAppendStreamRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStream(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
-                client_ref=self,
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = utils.stream_to_text(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    async def append_stream_async(
-        self,
-        *,
-        conversation_id: str,
-        inputs: Optional[
-            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
-        ] = None,
-        stream: Optional[bool] = True,
-        store: Optional[bool] = True,
-        handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
-        ] = "server",
-        completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = None,
-        tool_confirmations: OptionalNullable[
-            Union[
-                List[models.ToolCallConfirmation],
-                List[models.ToolCallConfirmationTypedDict],
-            ]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStreamAsync[models.ConversationEvents]:
-        r"""Append new entries to an existing conversation.
-
-        Run completion on the history of the conversation and the user entries. Return the new created entries.
-
-        :param conversation_id: ID of the conversation to which we append entries.
-        :param inputs:
-        :param stream:
-        :param store: Whether to store the results into our servers or not.
-        :param handoff_execution:
-        :param completion_args: White-listed arguments from the completion API
-        :param tool_confirmations:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsAPIV1ConversationsAppendStreamRequest(
-            conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
-                inputs=utils.get_pydantic_model(
-                    inputs, Optional[models.ConversationInputs]
-                ),
-                stream=stream,
-                store=store,
-                handoff_execution=handoff_execution,
-                completion_args=utils.get_pydantic_model(
-                    completion_args, Optional[models.CompletionArgs]
-                ),
-                tool_confirmations=utils.get_pydantic_model(
-                    tool_confirmations,
-                    OptionalNullable[List[models.ToolCallConfirmation]],
-                ),
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/conversations/{conversation_id}#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
-                False,
-                False,
-                "json",
-                models.ConversationAppendStreamRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_append_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStreamAsync(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
-                client_ref=self,
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    def restart_stream(
-        self,
-        *,
-        conversation_id: str,
-        from_entry_id: str,
-        inputs: Optional[
-            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
-        ] = None,
-        stream: Optional[bool] = True,
-        store: Optional[bool] = True,
-        handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
-        ] = "server",
-        completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = None,
-        guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
-        ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[
-            Union[
-                models.ConversationRestartStreamRequestAgentVersion,
-                models.ConversationRestartStreamRequestAgentVersionTypedDict,
-            ]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStream[models.ConversationEvents]:
-        r"""Restart a conversation starting from a given entry.
-
-        Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
-
-        :param conversation_id: ID of the original conversation which is being restarted.
-        :param from_entry_id:
-        :param inputs:
-        :param stream:
-        :param store: Whether to store the results into our servers or not.
-        :param handoff_execution:
-        :param completion_args: White-listed arguments from the completion API
-        :param guardrails:
-        :param metadata: Custom metadata for the conversation.
-        :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
-            conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
-                inputs=utils.get_pydantic_model(
-                    inputs, Optional[models.ConversationInputs]
-                ),
-                stream=stream,
-                store=store,
-                handoff_execution=handoff_execution,
-                completion_args=utils.get_pydantic_model(
-                    completion_args, Optional[models.CompletionArgs]
-                ),
-                guardrails=utils.get_pydantic_model(
-                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
-                ),
-                metadata=metadata,
-                from_entry_id=from_entry_id,
-                agent_version=agent_version,
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/conversations/{conversation_id}/restart#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
-                False,
-                False,
-                "json",
-                models.ConversationRestartStreamRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStream(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.ConversationEvents),
-                client_ref=self,
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = utils.stream_to_text(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    async def restart_stream_async(
-        self,
-        *,
-        conversation_id: str,
-        from_entry_id: str,
-        inputs: Optional[
-            Union[models.ConversationInputs, models.ConversationInputsTypedDict]
-        ] = None,
-        stream: Optional[bool] = True,
-        store: Optional[bool] = True,
-        handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
-        ] = "server",
-        completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
-        ] = None,
-        guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
-        ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        agent_version: OptionalNullable[
-            Union[
-                models.ConversationRestartStreamRequestAgentVersion,
-                models.ConversationRestartStreamRequestAgentVersionTypedDict,
-            ]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStreamAsync[models.ConversationEvents]:
-        r"""Restart a conversation starting from a given entry.
-
-        Given a conversation_id and an id, recreate a conversation from this point and run completion. A new conversation is returned with the new entries returned.
-
-        :param conversation_id: ID of the original conversation which is being restarted.
-        :param from_entry_id:
-        :param inputs:
-        :param stream:
-        :param store: Whether to store the results into our servers or not.
-        :param handoff_execution:
-        :param completion_args: White-listed arguments from the completion API
-        :param guardrails:
-        :param metadata: Custom metadata for the conversation.
-        :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsAPIV1ConversationsRestartStreamRequest(
-            conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
-                inputs=utils.get_pydantic_model(
-                    inputs, Optional[models.ConversationInputs]
-                ),
-                stream=stream,
-                store=store,
-                handoff_execution=handoff_execution,
-                completion_args=utils.get_pydantic_model(
-                    completion_args, Optional[models.CompletionArgs]
-                ),
-                guardrails=utils.get_pydantic_model(
-                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
-                ),
-                metadata=metadata,
-                from_entry_id=from_entry_id,
-                agent_version=agent_version,
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/conversations/{conversation_id}/restart#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
-                False,
-                False,
-                "json",
-                models.ConversationRestartStreamRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="agents_api_v1_conversations_restart_stream",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,

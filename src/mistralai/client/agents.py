@@ -2,12 +2,18 @@
 # @generated-id: e946546e3eaa
 
 from .basesdk import BaseSDK
+from enum import Enum
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Dict, List, Mapping, Optional, Union
+
+
+class CompleteAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
 
 
 class Agents(BaseSDK):
@@ -54,8 +60,9 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[CompleteAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ChatCompletionResponse:
+    ) -> models.AgentsCompletionV1AgentsCompletionsPostResponse:
         r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
@@ -77,6 +84,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -126,7 +134,9 @@ class Agents(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -156,17 +166,29 @@ class Agents(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.ChatCompletionResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                sentinel="[DONE]",
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -174,7 +196,8 @@ class Agents(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def complete_async(
         self,
@@ -217,8 +240,9 @@ class Agents(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[CompleteAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ChatCompletionResponse:
+    ) -> models.AgentsCompletionV1AgentsCompletionsPostResponse:
         r"""Agents Completion
 
         :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
@@ -240,6 +264,7 @@ class Agents(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -289,7 +314,9 @@ class Agents(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -319,349 +346,16 @@ class Agents(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def stream(
-        self,
-        *,
-        messages: Union[
-            List[models.AgentsCompletionStreamRequestMessage],
-            List[models.AgentsCompletionStreamRequestMessageTypedDict],
-        ],
-        agent_id: str,
-        max_tokens: OptionalNullable[int] = UNSET,
-        stream: Optional[bool] = True,
-        stop: Optional[
-            Union[
-                models.AgentsCompletionStreamRequestStop,
-                models.AgentsCompletionStreamRequestStopTypedDict,
-            ]
-        ] = None,
-        random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
-        ] = None,
-        tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
-        ] = UNSET,
-        tool_choice: Optional[
-            Union[
-                models.AgentsCompletionStreamRequestToolChoice,
-                models.AgentsCompletionStreamRequestToolChoiceTypedDict,
-            ]
-        ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
-        n: OptionalNullable[int] = UNSET,
-        prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
-        ] = None,
-        parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStream[models.CompletionEvent]:
-        r"""Stream Agents completion
-
-        Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
-
-        :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-        :param agent_id: The ID of the agent to use for this completion.
-        :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param stream:
-        :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
-        :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param metadata:
-        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
-        :param tools:
-        :param tool_choice:
-        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
-        :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
-        :param parallel_tool_calls:
-        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsCompletionStreamRequest(
-            max_tokens=max_tokens,
-            stream=stream,
-            stop=stop,
-            random_seed=random_seed,
-            metadata=metadata,
-            messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionStreamRequestMessage]
-            ),
-            response_format=utils.get_pydantic_model(
-                response_format, Optional[models.ResponseFormat]
-            ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=utils.get_pydantic_model(
-                tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
-            ),
-            presence_penalty=presence_penalty,
-            frequency_penalty=frequency_penalty,
-            n=n,
-            prediction=utils.get_pydantic_model(
-                prediction, Optional[models.Prediction]
-            ),
-            parallel_tool_calls=parallel_tool_calls,
-            prompt_mode=prompt_mode,
-            agent_id=agent_id,
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/agents/completions#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.AgentsCompletionStreamRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="stream_agents",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "text/event-stream"):
-            return eventstreaming.EventStream(
-                http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
-                sentinel="[DONE]",
-                client_ref=self,
+            return unmarshal_json_response(
+                models.ChatCompletionResponse, http_res, http_res_text
             )
-        if utils.match_response(http_res, "422", "application/json"):
-            http_res_text = utils.stream_to_text(http_res)
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res, http_res_text
-            )
-            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
-
-    async def stream_async(
-        self,
-        *,
-        messages: Union[
-            List[models.AgentsCompletionStreamRequestMessage],
-            List[models.AgentsCompletionStreamRequestMessageTypedDict],
-        ],
-        agent_id: str,
-        max_tokens: OptionalNullable[int] = UNSET,
-        stream: Optional[bool] = True,
-        stop: Optional[
-            Union[
-                models.AgentsCompletionStreamRequestStop,
-                models.AgentsCompletionStreamRequestStopTypedDict,
-            ]
-        ] = None,
-        random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        response_format: Optional[
-            Union[models.ResponseFormat, models.ResponseFormatTypedDict]
-        ] = None,
-        tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
-        ] = UNSET,
-        tool_choice: Optional[
-            Union[
-                models.AgentsCompletionStreamRequestToolChoice,
-                models.AgentsCompletionStreamRequestToolChoiceTypedDict,
-            ]
-        ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
-        n: OptionalNullable[int] = UNSET,
-        prediction: Optional[
-            Union[models.Prediction, models.PredictionTypedDict]
-        ] = None,
-        parallel_tool_calls: Optional[bool] = None,
-        prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> eventstreaming.EventStreamAsync[models.CompletionEvent]:
-        r"""Stream Agents completion
-
-        Mistral AI provides the ability to stream responses back to a client in order to allow partial results for certain requests. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
-
-        :param messages: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-        :param agent_id: The ID of the agent to use for this completion.
-        :param max_tokens: The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
-        :param stream:
-        :param stop: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
-        :param random_seed: The seed to use for random sampling. If set, different calls will generate deterministic results.
-        :param metadata:
-        :param response_format: Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide.
-        :param tools:
-        :param tool_choice:
-        :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
-        :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
-        :param n: Number of completions to return for each request, input tokens are only billed once.
-        :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
-        :param parallel_tool_calls:
-        :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.AgentsCompletionStreamRequest(
-            max_tokens=max_tokens,
-            stream=stream,
-            stop=stop,
-            random_seed=random_seed,
-            metadata=metadata,
-            messages=utils.get_pydantic_model(
-                messages, List[models.AgentsCompletionStreamRequestMessage]
-            ),
-            response_format=utils.get_pydantic_model(
-                response_format, Optional[models.ResponseFormat]
-            ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
-            tool_choice=utils.get_pydantic_model(
-                tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
-            ),
-            presence_penalty=presence_penalty,
-            frequency_penalty=frequency_penalty,
-            n=n,
-            prediction=utils.get_pydantic_model(
-                prediction, Optional[models.Prediction]
-            ),
-            parallel_tool_calls=parallel_tool_calls,
-            prompt_mode=prompt_mode,
-            agent_id=agent_id,
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/agents/completions#stream",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="text/event-stream",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.AgentsCompletionStreamRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="stream_agents",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["422", "4XX", "5XX"],
-            stream=True,
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,

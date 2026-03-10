@@ -6,9 +6,17 @@ from .conversationappendrequest import (
     ConversationAppendRequest,
     ConversationAppendRequestTypedDict,
 )
+from .conversationevents import ConversationEvents, ConversationEventsTypedDict
+from .conversationresponse import ConversationResponse, ConversationResponseTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing_extensions import Annotated, TypedDict
+from mistralai.client.utils import (
+    FieldMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+    eventstreaming,
+)
+from typing import Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 class AgentsAPIV1ConversationsAppendRequestTypedDict(TypedDict):
@@ -27,3 +35,27 @@ class AgentsAPIV1ConversationsAppendRequest(BaseModel):
         ConversationAppendRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
+
+
+AgentsAPIV1ConversationsAppendResponseTypedDict = TypeAliasType(
+    "AgentsAPIV1ConversationsAppendResponseTypedDict",
+    Union[
+        ConversationResponseTypedDict,
+        Union[
+            eventstreaming.EventStream[ConversationEventsTypedDict],
+            eventstreaming.EventStreamAsync[ConversationEventsTypedDict],
+        ],
+    ],
+)
+
+
+AgentsAPIV1ConversationsAppendResponse = TypeAliasType(
+    "AgentsAPIV1ConversationsAppendResponse",
+    Union[
+        ConversationResponse,
+        Union[
+            eventstreaming.EventStream[ConversationEvents],
+            eventstreaming.EventStreamAsync[ConversationEvents],
+        ],
+    ],
+)

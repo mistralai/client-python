@@ -2,13 +2,21 @@
 # @generated-id: 3ba234e5a8fc
 
 from __future__ import annotations
+from .conversationevents import ConversationEvents, ConversationEventsTypedDict
+from .conversationresponse import ConversationResponse, ConversationResponseTypedDict
 from .conversationrestartrequest import (
     ConversationRestartRequest,
     ConversationRestartRequestTypedDict,
 )
 from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing_extensions import Annotated, TypedDict
+from mistralai.client.utils import (
+    FieldMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+    eventstreaming,
+)
+from typing import Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 class AgentsAPIV1ConversationsRestartRequestTypedDict(TypedDict):
@@ -27,3 +35,27 @@ class AgentsAPIV1ConversationsRestartRequest(BaseModel):
         ConversationRestartRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
+
+
+AgentsAPIV1ConversationsRestartResponseTypedDict = TypeAliasType(
+    "AgentsAPIV1ConversationsRestartResponseTypedDict",
+    Union[
+        ConversationResponseTypedDict,
+        Union[
+            eventstreaming.EventStream[ConversationEventsTypedDict],
+            eventstreaming.EventStreamAsync[ConversationEventsTypedDict],
+        ],
+    ],
+)
+
+
+AgentsAPIV1ConversationsRestartResponse = TypeAliasType(
+    "AgentsAPIV1ConversationsRestartResponse",
+    Union[
+        ConversationResponse,
+        Union[
+            eventstreaming.EventStream[ConversationEvents],
+            eventstreaming.EventStreamAsync[ConversationEvents],
+        ],
+    ],
+)
