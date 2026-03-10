@@ -1,13 +1,8 @@
 # Mistral Python Client
 
-> [!NOTE]
-> **Looking for v1 documentation?** This is the documentation for the **latest** version (v2) of the `mistralai` SDK, available on PyPI.
->
-> **[Go to the v1 branch for v1 documentation](https://github.com/mistralai/client-python/tree/v1)**
-
 ## Migrating from v1
 
-If you are upgrading from v1 to v2, check the [migration guide](MIGRATION.md) for details on breaking changes and how to update your code.
+If you are upgrading from v1 to v2, check the [migration guide](https://github.com/mistralai/client-python/blob/main/MIGRATION.md) for details on breaking changes and how to update your code.
 
 ## API Key Setup
 
