@@ -79,6 +79,10 @@ if TYPE_CHECKING:
         AgentsAPIV1AgentsUpdateRequest,
         AgentsAPIV1AgentsUpdateRequestTypedDict,
     )
+    from .agents_api_v1_conversations_append_streamop import (
+        AgentsAPIV1ConversationsAppendStreamRequest,
+        AgentsAPIV1ConversationsAppendStreamRequestTypedDict,
+    )
     from .agents_api_v1_conversations_appendop import (
         AgentsAPIV1ConversationsAppendRequest,
         AgentsAPIV1ConversationsAppendRequestTypedDict,
@@ -109,6 +113,10 @@ if TYPE_CHECKING:
         AgentsAPIV1ConversationsMessagesRequest,
         AgentsAPIV1ConversationsMessagesRequestTypedDict,
     )
+    from .agents_api_v1_conversations_restart_streamop import (
+        AgentsAPIV1ConversationsRestartStreamRequest,
+        AgentsAPIV1ConversationsRestartStreamRequestTypedDict,
+    )
     from .agents_api_v1_conversations_restartop import (
         AgentsAPIV1ConversationsRestartRequest,
         AgentsAPIV1ConversationsRestartRequestTypedDict,
@@ -133,6 +141,16 @@ if TYPE_CHECKING:
         AgentsCompletionRequestToolChoiceTypedDict,
         AgentsCompletionRequestTypedDict,
     )
+    from .agentscompletionstreamrequest import (
+        AgentsCompletionStreamRequest,
+        AgentsCompletionStreamRequestMessage,
+        AgentsCompletionStreamRequestMessageTypedDict,
+        AgentsCompletionStreamRequestStop,
+        AgentsCompletionStreamRequestStopTypedDict,
+        AgentsCompletionStreamRequestToolChoice,
+        AgentsCompletionStreamRequestToolChoiceTypedDict,
+        AgentsCompletionStreamRequestTypedDict,
+    )
     from .annotations import Annotations, AnnotationsTypedDict, Audience
     from .apiendpoint import APIEndpoint
     from .archivemodelresponse import (
@@ -156,6 +174,10 @@ if TYPE_CHECKING:
     from .audiotranscriptionrequest import (
         AudioTranscriptionRequest,
         AudioTranscriptionRequestTypedDict,
+    )
+    from .audiotranscriptionrequeststream import (
+        AudioTranscriptionRequestStream,
+        AudioTranscriptionRequestStreamTypedDict,
     )
     from .audiourl import AudioURL, AudioURLTypedDict
     from .audiourlchunk import (
@@ -221,6 +243,16 @@ if TYPE_CHECKING:
     from .chatcompletionresponse import (
         ChatCompletionResponse,
         ChatCompletionResponseTypedDict,
+    )
+    from .chatcompletionstreamrequest import (
+        ChatCompletionStreamRequest,
+        ChatCompletionStreamRequestMessage,
+        ChatCompletionStreamRequestMessageTypedDict,
+        ChatCompletionStreamRequestStop,
+        ChatCompletionStreamRequestStopTypedDict,
+        ChatCompletionStreamRequestToolChoice,
+        ChatCompletionStreamRequestToolChoiceTypedDict,
+        ChatCompletionStreamRequestTypedDict,
     )
     from .chatmoderationrequest import (
         ChatModerationRequest,
@@ -372,6 +404,11 @@ if TYPE_CHECKING:
         ConversationAppendRequestHandoffExecution,
         ConversationAppendRequestTypedDict,
     )
+    from .conversationappendstreamrequest import (
+        ConversationAppendStreamRequest,
+        ConversationAppendStreamRequestHandoffExecution,
+        ConversationAppendStreamRequestTypedDict,
+    )
     from .conversationevents import (
         ConversationEvents,
         ConversationEventsData,
@@ -415,7 +452,23 @@ if TYPE_CHECKING:
         ConversationRestartRequestHandoffExecution,
         ConversationRestartRequestTypedDict,
     )
+    from .conversationrestartstreamrequest import (
+        ConversationRestartStreamRequest,
+        ConversationRestartStreamRequestAgentVersion,
+        ConversationRestartStreamRequestAgentVersionTypedDict,
+        ConversationRestartStreamRequestHandoffExecution,
+        ConversationRestartStreamRequestTypedDict,
+    )
     from .conversationsource import ConversationSource
+    from .conversationstreamrequest import (
+        ConversationStreamRequest,
+        ConversationStreamRequestAgentVersion,
+        ConversationStreamRequestAgentVersionTypedDict,
+        ConversationStreamRequestHandoffExecution,
+        ConversationStreamRequestTool,
+        ConversationStreamRequestToolTypedDict,
+        ConversationStreamRequestTypedDict,
+    )
     from .conversationusageinfo import (
         ConversationUsageInfo,
         ConversationUsageInfoTypedDict,
@@ -622,6 +675,12 @@ if TYPE_CHECKING:
     from .fimcompletionresponse import (
         FIMCompletionResponse,
         FIMCompletionResponseTypedDict,
+    )
+    from .fimcompletionstreamrequest import (
+        FIMCompletionStreamRequest,
+        FIMCompletionStreamRequestStop,
+        FIMCompletionStreamRequestStopTypedDict,
+        FIMCompletionStreamRequestTypedDict,
     )
     from .finetuneablemodeltype import FineTuneableModelType
     from .finetunedmodelcapabilities import (
@@ -1436,6 +1495,8 @@ __all__ = [
     "AgentsAPIV1ConversationsAppendRequestTypedDict",
     "AgentsAPIV1ConversationsAppendResponse",
     "AgentsAPIV1ConversationsAppendResponseTypedDict",
+    "AgentsAPIV1ConversationsAppendStreamRequest",
+    "AgentsAPIV1ConversationsAppendStreamRequestTypedDict",
     "AgentsAPIV1ConversationsDeleteRequest",
     "AgentsAPIV1ConversationsDeleteRequestTypedDict",
     "AgentsAPIV1ConversationsGetRequest",
@@ -1452,6 +1513,8 @@ __all__ = [
     "AgentsAPIV1ConversationsRestartRequestTypedDict",
     "AgentsAPIV1ConversationsRestartResponse",
     "AgentsAPIV1ConversationsRestartResponseTypedDict",
+    "AgentsAPIV1ConversationsRestartStreamRequest",
+    "AgentsAPIV1ConversationsRestartStreamRequestTypedDict",
     "AgentsAPIV1ConversationsStartResponse",
     "AgentsAPIV1ConversationsStartResponseTypedDict",
     "AgentsCompletionRequest",
@@ -1462,6 +1525,14 @@ __all__ = [
     "AgentsCompletionRequestToolChoice",
     "AgentsCompletionRequestToolChoiceTypedDict",
     "AgentsCompletionRequestTypedDict",
+    "AgentsCompletionStreamRequest",
+    "AgentsCompletionStreamRequestMessage",
+    "AgentsCompletionStreamRequestMessageTypedDict",
+    "AgentsCompletionStreamRequestStop",
+    "AgentsCompletionStreamRequestStopTypedDict",
+    "AgentsCompletionStreamRequestToolChoice",
+    "AgentsCompletionStreamRequestToolChoiceTypedDict",
+    "AgentsCompletionStreamRequestTypedDict",
     "AgentsCompletionV1AgentsCompletionsPostResponse",
     "AgentsCompletionV1AgentsCompletionsPostResponseTypedDict",
     "And",
@@ -1491,6 +1562,8 @@ __all__ = [
     "AudioFormat",
     "AudioFormatTypedDict",
     "AudioTranscriptionRequest",
+    "AudioTranscriptionRequestStream",
+    "AudioTranscriptionRequestStreamTypedDict",
     "AudioTranscriptionRequestTypedDict",
     "AudioURL",
     "AudioURLChunk",
@@ -1540,6 +1613,14 @@ __all__ = [
     "ChatCompletionRequestTypedDict",
     "ChatCompletionResponse",
     "ChatCompletionResponseTypedDict",
+    "ChatCompletionStreamRequest",
+    "ChatCompletionStreamRequestMessage",
+    "ChatCompletionStreamRequestMessageTypedDict",
+    "ChatCompletionStreamRequestStop",
+    "ChatCompletionStreamRequestStopTypedDict",
+    "ChatCompletionStreamRequestToolChoice",
+    "ChatCompletionStreamRequestToolChoiceTypedDict",
+    "ChatCompletionStreamRequestTypedDict",
     "ChatCompletionV1ChatCompletionsPostResponse",
     "ChatCompletionV1ChatCompletionsPostResponseTypedDict",
     "ChatModerationRequest",
@@ -1647,6 +1728,9 @@ __all__ = [
     "ConversationAppendRequest",
     "ConversationAppendRequestHandoffExecution",
     "ConversationAppendRequestTypedDict",
+    "ConversationAppendStreamRequest",
+    "ConversationAppendStreamRequestHandoffExecution",
+    "ConversationAppendStreamRequestTypedDict",
     "ConversationEvents",
     "ConversationEventsData",
     "ConversationEventsDataTypedDict",
@@ -1675,7 +1759,19 @@ __all__ = [
     "ConversationRestartRequestAgentVersionTypedDict",
     "ConversationRestartRequestHandoffExecution",
     "ConversationRestartRequestTypedDict",
+    "ConversationRestartStreamRequest",
+    "ConversationRestartStreamRequestAgentVersion",
+    "ConversationRestartStreamRequestAgentVersionTypedDict",
+    "ConversationRestartStreamRequestHandoffExecution",
+    "ConversationRestartStreamRequestTypedDict",
     "ConversationSource",
+    "ConversationStreamRequest",
+    "ConversationStreamRequestAgentVersion",
+    "ConversationStreamRequestAgentVersionTypedDict",
+    "ConversationStreamRequestHandoffExecution",
+    "ConversationStreamRequestTool",
+    "ConversationStreamRequestToolTypedDict",
+    "ConversationStreamRequestTypedDict",
     "ConversationUsageInfo",
     "ConversationUsageInfoTypedDict",
     "CreateAgentRequest",
@@ -1779,6 +1875,10 @@ __all__ = [
     "FIMCompletionRequestTypedDict",
     "FIMCompletionResponse",
     "FIMCompletionResponseTypedDict",
+    "FIMCompletionStreamRequest",
+    "FIMCompletionStreamRequestStop",
+    "FIMCompletionStreamRequestStopTypedDict",
+    "FIMCompletionStreamRequestTypedDict",
     "FTClassifierLossFunction",
     "FTModelCard",
     "FTModelCardTypedDict",
@@ -2409,6 +2509,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentsAPIV1AgentsUpdateVersionRequestTypedDict": ".agents_api_v1_agents_update_versionop",
     "AgentsAPIV1AgentsUpdateRequest": ".agents_api_v1_agents_updateop",
     "AgentsAPIV1AgentsUpdateRequestTypedDict": ".agents_api_v1_agents_updateop",
+    "AgentsAPIV1ConversationsAppendStreamRequest": ".agents_api_v1_conversations_append_streamop",
+    "AgentsAPIV1ConversationsAppendStreamRequestTypedDict": ".agents_api_v1_conversations_append_streamop",
     "AgentsAPIV1ConversationsAppendRequest": ".agents_api_v1_conversations_appendop",
     "AgentsAPIV1ConversationsAppendRequestTypedDict": ".agents_api_v1_conversations_appendop",
     "AgentsAPIV1ConversationsAppendResponse": ".agents_api_v1_conversations_appendop",
@@ -2427,6 +2529,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentsAPIV1ConversationsListResponseTypedDict": ".agents_api_v1_conversations_listop",
     "AgentsAPIV1ConversationsMessagesRequest": ".agents_api_v1_conversations_messagesop",
     "AgentsAPIV1ConversationsMessagesRequestTypedDict": ".agents_api_v1_conversations_messagesop",
+    "AgentsAPIV1ConversationsRestartStreamRequest": ".agents_api_v1_conversations_restart_streamop",
+    "AgentsAPIV1ConversationsRestartStreamRequestTypedDict": ".agents_api_v1_conversations_restart_streamop",
     "AgentsAPIV1ConversationsRestartRequest": ".agents_api_v1_conversations_restartop",
     "AgentsAPIV1ConversationsRestartRequestTypedDict": ".agents_api_v1_conversations_restartop",
     "AgentsAPIV1ConversationsRestartResponse": ".agents_api_v1_conversations_restartop",
@@ -2443,6 +2547,14 @@ _dynamic_imports: dict[str, str] = {
     "AgentsCompletionRequestToolChoice": ".agentscompletionrequest",
     "AgentsCompletionRequestToolChoiceTypedDict": ".agentscompletionrequest",
     "AgentsCompletionRequestTypedDict": ".agentscompletionrequest",
+    "AgentsCompletionStreamRequest": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestMessage": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestMessageTypedDict": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestStop": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestStopTypedDict": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestToolChoice": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestToolChoiceTypedDict": ".agentscompletionstreamrequest",
+    "AgentsCompletionStreamRequestTypedDict": ".agentscompletionstreamrequest",
     "Annotations": ".annotations",
     "AnnotationsTypedDict": ".annotations",
     "Audience": ".annotations",
@@ -2464,6 +2576,8 @@ _dynamic_imports: dict[str, str] = {
     "AudioFormatTypedDict": ".audioformat",
     "AudioTranscriptionRequest": ".audiotranscriptionrequest",
     "AudioTranscriptionRequestTypedDict": ".audiotranscriptionrequest",
+    "AudioTranscriptionRequestStream": ".audiotranscriptionrequeststream",
+    "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "AudioURL": ".audiourl",
     "AudioURLTypedDict": ".audiourl",
     "AudioURLChunk": ".audiourlchunk",
@@ -2516,6 +2630,14 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionRequestTypedDict": ".chatcompletionrequest",
     "ChatCompletionResponse": ".chatcompletionresponse",
     "ChatCompletionResponseTypedDict": ".chatcompletionresponse",
+    "ChatCompletionStreamRequest": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestMessage": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestMessageTypedDict": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestStop": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestStopTypedDict": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestToolChoice": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestToolChoiceTypedDict": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestTypedDict": ".chatcompletionstreamrequest",
     "ChatModerationRequest": ".chatmoderationrequest",
     "ChatModerationRequestInputs1": ".chatmoderationrequest",
     "ChatModerationRequestInputs1TypedDict": ".chatmoderationrequest",
@@ -2626,6 +2748,9 @@ _dynamic_imports: dict[str, str] = {
     "ConversationAppendRequest": ".conversationappendrequest",
     "ConversationAppendRequestHandoffExecution": ".conversationappendrequest",
     "ConversationAppendRequestTypedDict": ".conversationappendrequest",
+    "ConversationAppendStreamRequest": ".conversationappendstreamrequest",
+    "ConversationAppendStreamRequestHandoffExecution": ".conversationappendstreamrequest",
+    "ConversationAppendStreamRequestTypedDict": ".conversationappendstreamrequest",
     "ConversationEvents": ".conversationevents",
     "ConversationEventsData": ".conversationevents",
     "ConversationEventsDataTypedDict": ".conversationevents",
@@ -2659,7 +2784,19 @@ _dynamic_imports: dict[str, str] = {
     "ConversationRestartRequestAgentVersionTypedDict": ".conversationrestartrequest",
     "ConversationRestartRequestHandoffExecution": ".conversationrestartrequest",
     "ConversationRestartRequestTypedDict": ".conversationrestartrequest",
+    "ConversationRestartStreamRequest": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestAgentVersion": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestAgentVersionTypedDict": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestHandoffExecution": ".conversationrestartstreamrequest",
+    "ConversationRestartStreamRequestTypedDict": ".conversationrestartstreamrequest",
     "ConversationSource": ".conversationsource",
+    "ConversationStreamRequest": ".conversationstreamrequest",
+    "ConversationStreamRequestAgentVersion": ".conversationstreamrequest",
+    "ConversationStreamRequestAgentVersionTypedDict": ".conversationstreamrequest",
+    "ConversationStreamRequestHandoffExecution": ".conversationstreamrequest",
+    "ConversationStreamRequestTool": ".conversationstreamrequest",
+    "ConversationStreamRequestToolTypedDict": ".conversationstreamrequest",
+    "ConversationStreamRequestTypedDict": ".conversationstreamrequest",
     "ConversationUsageInfo": ".conversationusageinfo",
     "ConversationUsageInfoTypedDict": ".conversationusageinfo",
     "CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest": ".create_dataset_record_v1_observability_datasets_dataset_id_records_postop",
@@ -2807,6 +2944,10 @@ _dynamic_imports: dict[str, str] = {
     "FIMCompletionRequestTypedDict": ".fimcompletionrequest",
     "FIMCompletionResponse": ".fimcompletionresponse",
     "FIMCompletionResponseTypedDict": ".fimcompletionresponse",
+    "FIMCompletionStreamRequest": ".fimcompletionstreamrequest",
+    "FIMCompletionStreamRequestStop": ".fimcompletionstreamrequest",
+    "FIMCompletionStreamRequestStopTypedDict": ".fimcompletionstreamrequest",
+    "FIMCompletionStreamRequestTypedDict": ".fimcompletionstreamrequest",
     "FineTuneableModelType": ".finetuneablemodeltype",
     "FineTunedModelCapabilities": ".finetunedmodelcapabilities",
     "FineTunedModelCapabilitiesTypedDict": ".finetunedmodelcapabilities",
