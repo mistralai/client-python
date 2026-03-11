@@ -5,6 +5,7 @@ from __future__ import annotations
 from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
@@ -38,6 +39,7 @@ ConversationRequestToolTypedDict = TypeAliasType(
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
     ],
 )
 
@@ -45,6 +47,7 @@ ConversationRequestToolTypedDict = TypeAliasType(
 ConversationRequestTool = Annotated[
     Union[
         CodeInterpreterTool,
+        CustomConnector,
         DocumentLibraryTool,
         FunctionTool,
         ImageGenerationTool,
@@ -71,8 +74,7 @@ class ConversationRequestTypedDict(TypedDict):
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[List[ConversationRequestToolTypedDict]]
-    r"""List of tools which are available to the model during the conversation."""
+    tools: NotRequired[Nullable[List[ConversationRequestToolTypedDict]]]
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
@@ -94,8 +96,7 @@ class ConversationRequest(BaseModel):
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: Optional[List[ConversationRequestTool]] = None
-    r"""List of tools which are available to the model during the conversation."""
+    tools: OptionalNullable[List[ConversationRequestTool]] = UNSET
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
 
@@ -137,6 +138,7 @@ class ConversationRequest(BaseModel):
                 "store",
                 "handoff_execution",
                 "instructions",
+                "tools",
                 "completion_args",
                 "guardrails",
                 "name",

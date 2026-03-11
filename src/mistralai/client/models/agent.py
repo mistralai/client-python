@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
@@ -37,6 +38,7 @@ AgentToolTypedDict = TypeAliasType(
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
     ],
 )
 
@@ -53,6 +55,7 @@ class UnknownAgentTool(BaseModel):
 
 _AGENT_TOOL_VARIANTS: dict[str, Any] = {
     "code_interpreter": CodeInterpreterTool,
+    "connector": CustomConnector,
     "document_library": DocumentLibraryTool,
     "function": FunctionTool,
     "image_generation": ImageGenerationTool,
@@ -64,6 +67,7 @@ _AGENT_TOOL_VARIANTS: dict[str, Any] = {
 AgentTool = Annotated[
     Union[
         CodeInterpreterTool,
+        CustomConnector,
         DocumentLibraryTool,
         FunctionTool,
         ImageGenerationTool,
