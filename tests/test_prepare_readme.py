@@ -19,6 +19,16 @@ def test_rewrite_relative_links_keeps_absolute() -> None:
     assert prepare_readme.rewrite_relative_links(contents, base_url) == expected
 
 
+def test_rewrite_relative_links_keeps_anchors() -> None:
+    base_url = "https://example.com/blob/main/"
+    contents = "[Retries](#retries)\n[File](docs/README.md#upload)"
+    expected = (
+        "[Retries](#retries)\n"
+        "[File](https://example.com/blob/main/docs/README.md#upload)"
+    )
+    assert prepare_readme.rewrite_relative_links(contents, base_url) == expected
+
+
 def test_main_prints_rewritten_readme_with_defaults(tmp_path, capsys) -> None:
     original = "[Migration](MIGRATION.md)\n"
     base_url = prepare_readme.build_base_url(

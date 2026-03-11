@@ -6,7 +6,7 @@ from pathlib import Path
 
 DEFAULT_REPO_URL = "https://github.com/mistralai/client-python.git"
 DEFAULT_BRANCH = "main"
-LINK_PATTERN = re.compile(r"(\[[^\]]+\]\()((?!https?:)[^\)]+)(\))")
+LINK_PATTERN = re.compile(r"(\[[^\]]+\]\()((?!https?:|#)[^\)]+)(\))")
 
 
 def build_base_url(repo_url: str, branch: str, repo_subdir: str) -> str:

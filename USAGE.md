@@ -26,7 +26,7 @@ with Mistral(
     print(res)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -80,7 +80,7 @@ with Mistral(
     print(res)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -134,7 +134,7 @@ with Mistral(
     print(res)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -167,7 +167,7 @@ asyncio.run(main())
 
 ### Create Embedding Request
 
-This example shows how to create embedding request.
+This example shows how to create an embedding request.
 
 ```python
 # Synchronous Example
@@ -188,7 +188,7 @@ with Mistral(
     print(res)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 

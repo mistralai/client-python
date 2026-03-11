@@ -34,7 +34,7 @@ if res is not None:
     print(res.choices[0].message.content)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python

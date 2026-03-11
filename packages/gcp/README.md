@@ -54,7 +54,7 @@ if res is not None:
     print(res.choices[0].message.content)
 ```
 
-</br>
+<br/>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
@@ -291,10 +291,10 @@ if res is not None:
 ## Custom HTTP Client
 
 The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
-Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
+Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocols ensuring that the client has the necessary methods to make API calls.
 This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
-For example, you could specify a header for every request that this sdk makes as follows:
+For example, you could specify a header for every request that this SDK makes as follows:
 ```python
 import os
 from mistralai.gcp.client import MistralGCP
