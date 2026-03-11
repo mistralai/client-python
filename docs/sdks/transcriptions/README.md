@@ -24,7 +24,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.transcriptions.complete(model="voxtral-mini-latest", diarize=False)
+    res = mistral.audio.transcriptions.complete(model="voxtral-mini-latest", stream=False, diarize=False)
 
     with res as event_stream:
         for event in event_stream:
@@ -43,6 +43,7 @@ with Mistral(
 | `file_id`                                                                    | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | ID of a file uploaded to /v1/files                                           |                                                                              |
 | `language`                                                                   | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Language of the audio, e.g. 'en'. Providing the language can boost accuracy. |                                                                              |
 | `temperature`                                                                | *OptionalNullable[float]*                                                    | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
+| `stream`                                                                     | *Optional[bool]*                                                             | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
 | `diarize`                                                                    | *Optional[bool]*                                                             | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
 | `context_bias`                                                               | List[*str*]                                                                  | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
 | `timestamp_granularities`                                                    | List[[models.TimestampGranularity](../../models/timestampgranularity.md)]    | :heavy_minus_sign:                                                           | Granularities of timestamps to include in the response.                      |                                                                              |

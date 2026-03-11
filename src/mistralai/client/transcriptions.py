@@ -28,6 +28,7 @@ class Transcriptions(BaseSDK):
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
+        stream: Optional[bool] = False,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
         timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
@@ -45,6 +46,7 @@ class Transcriptions(BaseSDK):
         :param file_id: ID of a file uploaded to /v1/files
         :param language: Language of the audio, e.g. 'en'. Providing the language can boost accuracy.
         :param temperature:
+        :param stream:
         :param diarize:
         :param context_bias:
         :param timestamp_granularities: Granularities of timestamps to include in the response.
@@ -71,6 +73,7 @@ class Transcriptions(BaseSDK):
             file_id=file_id,
             language=language,
             temperature=temperature,
+            stream=stream,
             diarize=diarize,
             context_bias=context_bias,
             timestamp_granularities=timestamp_granularities,
@@ -152,6 +155,7 @@ class Transcriptions(BaseSDK):
         file_id: OptionalNullable[str] = UNSET,
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
+        stream: Optional[bool] = False,
         diarize: Optional[bool] = False,
         context_bias: Optional[List[str]] = None,
         timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
@@ -169,6 +173,7 @@ class Transcriptions(BaseSDK):
         :param file_id: ID of a file uploaded to /v1/files
         :param language: Language of the audio, e.g. 'en'. Providing the language can boost accuracy.
         :param temperature:
+        :param stream:
         :param diarize:
         :param context_bias:
         :param timestamp_granularities: Granularities of timestamps to include in the response.
@@ -195,6 +200,7 @@ class Transcriptions(BaseSDK):
             file_id=file_id,
             language=language,
             temperature=temperature,
+            stream=stream,
             diarize=diarize,
             context_bias=context_bias,
             timestamp_granularities=timestamp_granularities,

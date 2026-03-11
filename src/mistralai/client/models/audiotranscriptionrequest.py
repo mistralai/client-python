@@ -11,11 +11,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import FieldMetadata, MultipartFormMetadata, validate_const
-import pydantic
+from mistralai.client.utils import FieldMetadata, MultipartFormMetadata
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -30,7 +28,7 @@ class AudioTranscriptionRequestTypedDict(TypedDict):
     language: NotRequired[Nullable[str]]
     r"""Language of the audio, e.g. 'en'. Providing the language can boost accuracy."""
     temperature: NotRequired[Nullable[float]]
-    stream: Literal[False]
+    stream: NotRequired[bool]
     diarize: NotRequired[bool]
     context_bias: NotRequired[List[str]]
     timestamp_granularities: NotRequired[List[TimestampGranularity]]
@@ -58,11 +56,7 @@ class AudioTranscriptionRequest(BaseModel):
         UNSET
     )
 
-    stream: Annotated[
-        Annotated[Optional[Literal[False]], AfterValidator(validate_const(False))],
-        pydantic.Field(alias="stream"),
-        FieldMetadata(multipart=True),
-    ] = False
+    stream: Annotated[Optional[bool], FieldMetadata(multipart=True)] = False
 
     diarize: Annotated[Optional[bool], FieldMetadata(multipart=True)] = False
 
@@ -109,9 +103,3 @@ class AudioTranscriptionRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-try:
-    AudioTranscriptionRequest.model_rebuild()
-except NameError:
-    pass
