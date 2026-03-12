@@ -153,6 +153,7 @@ if TYPE_CHECKING:
     )
     from .annotations import Annotations, AnnotationsTypedDict, Audience
     from .apiendpoint import APIEndpoint
+    from .apikeyauth import APIKeyAuth, APIKeyAuthTypedDict
     from .archivemodelresponse import (
         ArchiveModelResponse,
         ArchiveModelResponseTypedDict,
@@ -178,13 +179,6 @@ if TYPE_CHECKING:
     from .audiotranscriptionrequeststream import (
         AudioTranscriptionRequestStream,
         AudioTranscriptionRequestStreamTypedDict,
-    )
-    from .audiourl import AudioURL, AudioURLTypedDict
-    from .audiourlchunk import (
-        AudioURLChunk,
-        AudioURLChunkTypedDict,
-        AudioURLUnion,
-        AudioURLUnionTypedDict,
     )
     from .authdata import AuthData, AuthDataTypedDict
     from .basefielddefinition import (
@@ -527,6 +521,13 @@ if TYPE_CHECKING:
     from .createlibraryrequest import (
         CreateLibraryRequest,
         CreateLibraryRequestTypedDict,
+    )
+    from .customconnector import (
+        Authorization,
+        AuthorizationTypedDict,
+        CustomConnector,
+        CustomConnectorTypedDict,
+        UnknownAuthorization,
     )
     from .dataset import Dataset, DatasetTypedDict
     from .datasetimporttask import DatasetImportTask, DatasetImportTaskTypedDict
@@ -1092,7 +1093,7 @@ if TYPE_CHECKING:
         ModelListTypedDict,
         UnknownModelListData,
     )
-    from .moderationllmv1action import ModerationLlmv1Action
+    from .moderationllmaction import ModerationLLMAction
     from .moderationllmv1categorythresholds import (
         ModerationLlmv1CategoryThresholds,
         ModerationLlmv1CategoryThresholdsTypedDict,
@@ -1101,8 +1102,17 @@ if TYPE_CHECKING:
         ModerationLlmv1Config,
         ModerationLlmv1ConfigTypedDict,
     )
+    from .moderationllmv2categorythresholds import (
+        ModerationLlmv2CategoryThresholds,
+        ModerationLlmv2CategoryThresholdsTypedDict,
+    )
+    from .moderationllmv2config import (
+        ModerationLlmv2Config,
+        ModerationLlmv2ConfigTypedDict,
+    )
     from .moderationobject import ModerationObject, ModerationObjectTypedDict
     from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
+    from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
         ObservabilityErrorDetail,
@@ -1453,6 +1463,8 @@ FilterGroup.model_rebuild()
 
 __all__ = [
     "APIEndpoint",
+    "APIKeyAuth",
+    "APIKeyAuthTypedDict",
     "Agent",
     "AgentAliasResponse",
     "AgentAliasResponseTypedDict",
@@ -1565,14 +1577,10 @@ __all__ = [
     "AudioTranscriptionRequestStream",
     "AudioTranscriptionRequestStreamTypedDict",
     "AudioTranscriptionRequestTypedDict",
-    "AudioURL",
-    "AudioURLChunk",
-    "AudioURLChunkTypedDict",
-    "AudioURLTypedDict",
-    "AudioURLUnion",
-    "AudioURLUnionTypedDict",
     "AuthData",
     "AuthDataTypedDict",
+    "Authorization",
+    "AuthorizationTypedDict",
     "BaseFieldDefinition",
     "BaseFieldDefinitionTypedDict",
     "BaseModelCard",
@@ -1806,6 +1814,8 @@ __all__ = [
     "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
+    "CustomConnector",
+    "CustomConnectorTypedDict",
     "Dataset",
     "DatasetImportTask",
     "DatasetImportTaskTypedDict",
@@ -2181,17 +2191,23 @@ __all__ = [
     "ModelListData",
     "ModelListDataTypedDict",
     "ModelListTypedDict",
-    "ModerationLlmv1Action",
+    "ModerationLLMAction",
     "ModerationLlmv1CategoryThresholds",
     "ModerationLlmv1CategoryThresholdsTypedDict",
     "ModerationLlmv1Config",
     "ModerationLlmv1ConfigTypedDict",
+    "ModerationLlmv2CategoryThresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict",
+    "ModerationLlmv2Config",
+    "ModerationLlmv2ConfigTypedDict",
     "ModerationObject",
     "ModerationObjectTypedDict",
     "ModerationResponse",
     "ModerationResponseTypedDict",
     "MultiPartBodyParams",
     "MultiPartBodyParamsTypedDict",
+    "OAuth2TokenAuth",
+    "OAuth2TokenAuthTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
     "OCRPageDimensions",
@@ -2401,6 +2417,7 @@ __all__ = [
     "UnarchiveModelResponse",
     "UnarchiveModelResponseTypedDict",
     "UnknownAgentTool",
+    "UnknownAuthorization",
     "UnknownClassifierFineTuningJobDetailsIntegration",
     "UnknownClassifierFineTuningJobIntegration",
     "UnknownCompletionFineTuningJobDetailsIntegration",
@@ -2559,6 +2576,8 @@ _dynamic_imports: dict[str, str] = {
     "AnnotationsTypedDict": ".annotations",
     "Audience": ".annotations",
     "APIEndpoint": ".apiendpoint",
+    "APIKeyAuth": ".apikeyauth",
+    "APIKeyAuthTypedDict": ".apikeyauth",
     "ArchiveModelResponse": ".archivemodelresponse",
     "ArchiveModelResponseTypedDict": ".archivemodelresponse",
     "AssistantMessage": ".assistantmessage",
@@ -2578,12 +2597,6 @@ _dynamic_imports: dict[str, str] = {
     "AudioTranscriptionRequestTypedDict": ".audiotranscriptionrequest",
     "AudioTranscriptionRequestStream": ".audiotranscriptionrequeststream",
     "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
-    "AudioURL": ".audiourl",
-    "AudioURLTypedDict": ".audiourl",
-    "AudioURLChunk": ".audiourlchunk",
-    "AudioURLChunkTypedDict": ".audiourlchunk",
-    "AudioURLUnion": ".audiourlchunk",
-    "AudioURLUnionTypedDict": ".audiourlchunk",
     "AuthData": ".authdata",
     "AuthDataTypedDict": ".authdata",
     "BaseFieldDefinition": ".basefielddefinition",
@@ -2833,6 +2846,11 @@ _dynamic_imports: dict[str, str] = {
     "CreateJudgeRequestTypedDict": ".createjudgerequest",
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
+    "Authorization": ".customconnector",
+    "AuthorizationTypedDict": ".customconnector",
+    "CustomConnector": ".customconnector",
+    "CustomConnectorTypedDict": ".customconnector",
+    "UnknownAuthorization": ".customconnector",
     "Dataset": ".dataset",
     "DatasetTypedDict": ".dataset",
     "DatasetImportTask": ".datasetimporttask",
@@ -3220,15 +3238,21 @@ _dynamic_imports: dict[str, str] = {
     "ModelListDataTypedDict": ".modellist",
     "ModelListTypedDict": ".modellist",
     "UnknownModelListData": ".modellist",
-    "ModerationLlmv1Action": ".moderationllmv1action",
+    "ModerationLLMAction": ".moderationllmaction",
     "ModerationLlmv1CategoryThresholds": ".moderationllmv1categorythresholds",
     "ModerationLlmv1CategoryThresholdsTypedDict": ".moderationllmv1categorythresholds",
     "ModerationLlmv1Config": ".moderationllmv1config",
     "ModerationLlmv1ConfigTypedDict": ".moderationllmv1config",
+    "ModerationLlmv2CategoryThresholds": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2Config": ".moderationllmv2config",
+    "ModerationLlmv2ConfigTypedDict": ".moderationllmv2config",
     "ModerationObject": ".moderationobject",
     "ModerationObjectTypedDict": ".moderationobject",
     "ModerationResponse": ".moderationresponse",
     "ModerationResponseTypedDict": ".moderationresponse",
+    "OAuth2TokenAuth": ".oauth2tokenauth",
+    "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
