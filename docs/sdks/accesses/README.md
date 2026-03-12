@@ -98,7 +98,7 @@ with Mistral(
 
 ## delete
 
-Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
+Given a library id, you can delete the access level of an entity. An owner cannot delete its own access. You have to be the owner of the library to delete an access other than yours.
 
 ### Example Usage
 

@@ -54,7 +54,7 @@ if res is not None:
 
 ### Response
 
-**[Union[Generator[models.CompletionEvent, None, None], AsyncGenerator[models.CompletionEvent, None]]](../../models/.md)**
+**Union[Generator[models.CompletionEvent, None, None], AsyncGenerator[models.CompletionEvent, None]]**
 ### Errors
 
 | Error Object    | Status Code | Content Type |

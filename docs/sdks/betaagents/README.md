@@ -6,7 +6,7 @@
 
 ### Available Operations
 
-* [create](#create) - Create a agent that can be used within a conversation.
+* [create](#create) - Create an agent that can be used within a conversation.
 * [list](#list) - List agent entities.
 * [get](#get) - Retrieve an agent entity.
 * [update](#update) - Update an agent entity.
@@ -111,7 +111,7 @@ with Mistral(
 
 ### Response
 
-**[List[models.Agent]](../../models/.md)**
+**List[models.Agent]**
 
 ### Errors
 
@@ -330,7 +330,7 @@ with Mistral(
 
 ### Response
 
-**[List[models.Agent]](../../models/.md)**
+**List[models.Agent]**
 
 ### Errors
 
@@ -456,7 +456,7 @@ with Mistral(
 
 ### Response
 
-**[List[models.AgentAliasResponse]](../../models/.md)**
+**List[models.AgentAliasResponse]**
 
 ### Errors
 

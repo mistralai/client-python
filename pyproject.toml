@@ -1,10 +1,10 @@
 [project]
 name = "mistralai"
-version = "2.0.1"
+version = "2.0.1.post1"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
-readme = "README.md"
+readme = "README-PYPI.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
     "httpx >=0.28.1",

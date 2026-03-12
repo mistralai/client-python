@@ -1,10 +1,10 @@
 import os
-from mistralai.client import Mistral
-
-from mistralai.extra.run.context import RunContext
+import asyncio
 import logging
 import time
-import asyncio
+
+from mistralai.client import Mistral
+from mistralai.extra.run.context import RunContext
 
 
 MODEL = "mistral-medium-latest"
@@ -22,23 +22,30 @@ To properly do it you need to:
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
-    mistral_agent_id = os.environ["MISTRAL_AGENT_ID"]
     client = Mistral(
         api_key=api_key, debug_logger=logging.getLogger("mistralai")
     )
 
-    async with RunContext(
-        agent_id=mistral_agent_id
-    ) as run_context:
-        run_context.register_func(get_secret_santa_assignment)
-        run_context.register_func(get_gift_wishlist)
-        run_context.register_func(buy_gift)
-        run_context.register_func(send_gift)
+    # Create a fresh agent for this run to avoid version accumulation
+    agent = client.beta.agents.create(
+        model=MODEL,
+        name="secret-santa-example",
+        instructions="You are a helpful assistant that helps with Secret Santa.",
+    )
 
-        await client.beta.conversations.run_async(
-            run_ctx=run_context,
-            inputs=USER_MESSAGE,
-        )
+    try:
+        async with RunContext(agent_id=agent.id) as run_context:
+            run_context.register_func(get_secret_santa_assignment)
+            run_context.register_func(get_gift_wishlist)
+            run_context.register_func(buy_gift)
+            run_context.register_func(send_gift)
+
+            await client.beta.conversations.run_async(
+                run_ctx=run_context,
+                inputs=USER_MESSAGE,
+            )
+    finally:
+        client.beta.agents.delete(agent_id=agent.id)
 
 
 def get_secret_santa_assignment():

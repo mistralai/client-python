@@ -4,7 +4,7 @@ version = "2.0.0"
 description = "Python Client SDK for the Mistral AI API in Azure."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
-readme = "README.md"
+readme = "README-PYPI.md"
 dependencies = [
     "httpcore >=1.0.9",
     "httpx >=0.28.1",

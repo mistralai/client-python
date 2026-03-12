@@ -34,13 +34,13 @@ class Chat(BaseSDK):
 
 3. Now build the SDK with the custom code:
 ```bash
-rm -rf dist; uv build; uv pip install --reinstall ~/client-python/dist/mistralai-1.4.1-py3-none-any.whl
+rm -rf dist; uv build; uv pip install --reinstall ~/client-python/dist/mistralai-2.0.0-py3-none-any.whl
 ```
 
 4. And now you should be able to call the custom method:
 ```python
 import os
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 api_key = os.environ["MISTRAL_API_KEY"]
 client = Mistral(api_key=api_key)

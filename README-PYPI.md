@@ -378,7 +378,7 @@ pip install mistralai
 
 **Step 2: Example Usage**
 
-Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/azure).
+Here's a basic example to get you started. You can also run [the example in the `examples` directory](https://github.com/mistralai/client-python/blob/main/examples/azure).
 
 ```python
 import os
@@ -426,7 +426,7 @@ pip install "mistralai[gcp]"
 
 **Step 2: Example Usage**
 
-Here's a basic example to get you started. You can also run [the example in the `examples` directory](/examples/gcp).
+Here's a basic example to get you started. You can also run [the example in the `examples` directory](https://github.com/mistralai/client-python/blob/main/examples/gcp).
 
 The SDK automatically:
 - Detects credentials via `google.auth.default()`
@@ -462,195 +462,195 @@ print(res.choices[0].message.content)
 <details open>
 <summary>Available methods</summary>
 
-### [Agents](docs/sdks/agents/README.md)
+### [Agents](https://github.com/mistralai/client-python/blob/main/docs/sdks/agents/README.md)
 
-* [complete](docs/sdks/agents/README.md#complete) - Agents Completion
-* [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
+* [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/agents/README.md#complete) - Agents Completion
+* [stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/agents/README.md#stream) - Stream Agents completion
 
-### [Audio.Transcriptions](docs/sdks/transcriptions/README.md)
+### [Audio.Transcriptions](https://github.com/mistralai/client-python/blob/main/docs/sdks/transcriptions/README.md)
 
-* [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
-* [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
+* [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/transcriptions/README.md#complete) - Create Transcription
+* [stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
 
-### [Batch.Jobs](docs/sdks/batchjobs/README.md)
+### [Batch.Jobs](https://github.com/mistralai/client-python/blob/main/docs/sdks/batchjobs/README.md)
 
-* [list](docs/sdks/batchjobs/README.md#list) - Get Batch Jobs
-* [create](docs/sdks/batchjobs/README.md#create) - Create Batch Job
-* [get](docs/sdks/batchjobs/README.md#get) - Get Batch Job
-* [cancel](docs/sdks/batchjobs/README.md#cancel) - Cancel Batch Job
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/batchjobs/README.md#list) - Get Batch Jobs
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/batchjobs/README.md#create) - Create Batch Job
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/batchjobs/README.md#get) - Get Batch Job
+* [cancel](https://github.com/mistralai/client-python/blob/main/docs/sdks/batchjobs/README.md#cancel) - Cancel Batch Job
 
-### [Beta.Agents](docs/sdks/betaagents/README.md)
+### [Beta.Agents](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md)
 
-* [create](docs/sdks/betaagents/README.md#create) - Create an agent that can be used within a conversation.
-* [list](docs/sdks/betaagents/README.md#list) - List agent entities.
-* [get](docs/sdks/betaagents/README.md#get) - Retrieve an agent entity.
-* [update](docs/sdks/betaagents/README.md#update) - Update an agent entity.
-* [delete](docs/sdks/betaagents/README.md#delete) - Delete an agent entity.
-* [update_version](docs/sdks/betaagents/README.md#update_version) - Update an agent version.
-* [list_versions](docs/sdks/betaagents/README.md#list_versions) - List all versions of an agent.
-* [get_version](docs/sdks/betaagents/README.md#get_version) - Retrieve a specific version of an agent.
-* [create_version_alias](docs/sdks/betaagents/README.md#create_version_alias) - Create or update an agent version alias.
-* [list_version_aliases](docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
-* [delete_version_alias](docs/sdks/betaagents/README.md#delete_version_alias) - Delete an agent version alias.
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#create) - Create an agent that can be used within a conversation.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#list) - List agent entities.
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#get) - Retrieve an agent entity.
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#update) - Update an agent entity.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#delete) - Delete an agent entity.
+* [update_version](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#update_version) - Update an agent version.
+* [list_versions](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#list_versions) - List all versions of an agent.
+* [get_version](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#get_version) - Retrieve a specific version of an agent.
+* [create_version_alias](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#create_version_alias) - Create or update an agent version alias.
+* [list_version_aliases](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
+* [delete_version_alias](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#delete_version_alias) - Delete an agent version alias.
 
-### [Beta.Connectors](docs/sdks/connectors/README.md)
+### [Beta.Connectors](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md)
 
-* [create](docs/sdks/connectors/README.md#create) - Create a new connector.
-* [list](docs/sdks/connectors/README.md#list) - List all connectors.
-* [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
-* [get](docs/sdks/connectors/README.md#get) - Get a connector.
-* [update](docs/sdks/connectors/README.md#update) - Update a connector.
-* [delete](docs/sdks/connectors/README.md#delete) - Delete a connector.
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#create) - Create a new connector.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#list) - List all connectors.
+* [call_tool](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#get) - Get a connector.
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#update) - Update a connector.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete) - Delete a connector.
 
-### [Beta.Conversations](docs/sdks/conversations/README.md)
+### [Beta.Conversations](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md)
 
-* [start](docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
-* [list](docs/sdks/conversations/README.md#list) - List all created conversations.
-* [get](docs/sdks/conversations/README.md#get) - Retrieve a conversation information.
-* [delete](docs/sdks/conversations/README.md#delete) - Delete a conversation.
-* [append](docs/sdks/conversations/README.md#append) - Append new entries to an existing conversation.
-* [get_history](docs/sdks/conversations/README.md#get_history) - Retrieve all entries in a conversation.
-* [get_messages](docs/sdks/conversations/README.md#get_messages) - Retrieve all messages in a conversation.
-* [restart](docs/sdks/conversations/README.md#restart) - Restart a conversation starting from a given entry.
-* [start_stream](docs/sdks/conversations/README.md#start_stream) - Create a conversation and append entries to it.
-* [append_stream](docs/sdks/conversations/README.md#append_stream) - Append new entries to an existing conversation.
-* [restart_stream](docs/sdks/conversations/README.md#restart_stream) - Restart a conversation starting from a given entry.
+* [start](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#list) - List all created conversations.
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#get) - Retrieve a conversation information.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#delete) - Delete a conversation.
+* [append](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#append) - Append new entries to an existing conversation.
+* [get_history](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#get_history) - Retrieve all entries in a conversation.
+* [get_messages](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#get_messages) - Retrieve all messages in a conversation.
+* [restart](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#restart) - Restart a conversation starting from a given entry.
+* [start_stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#start_stream) - Create a conversation and append entries to it.
+* [append_stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#append_stream) - Append new entries to an existing conversation.
+* [restart_stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#restart_stream) - Restart a conversation starting from a given entry.
 
-### [Beta.Libraries](docs/sdks/libraries/README.md)
+### [Beta.Libraries](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md)
 
-* [list](docs/sdks/libraries/README.md#list) - List all libraries you have access to.
-* [create](docs/sdks/libraries/README.md#create) - Create a new Library.
-* [get](docs/sdks/libraries/README.md#get) - Detailed information about a specific Library.
-* [delete](docs/sdks/libraries/README.md#delete) - Delete a library and all of its documents.
-* [update](docs/sdks/libraries/README.md#update) - Update a library.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#list) - List all libraries you have access to.
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#create) - Create a new Library.
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#get) - Detailed information about a specific Library.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#delete) - Delete a library and all of its documents.
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#update) - Update a library.
 
-#### [Beta.Libraries.Accesses](docs/sdks/accesses/README.md)
+#### [Beta.Libraries.Accesses](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md)
 
-* [list](docs/sdks/accesses/README.md#list) - List all of the access to this library.
-* [update_or_create](docs/sdks/accesses/README.md#update_or_create) - Create or update an access level.
-* [delete](docs/sdks/accesses/README.md#delete) - Delete an access level.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md#list) - List all of the access to this library.
+* [update_or_create](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md#update_or_create) - Create or update an access level.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md#delete) - Delete an access level.
 
-#### [Beta.Libraries.Documents](docs/sdks/documents/README.md)
+#### [Beta.Libraries.Documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md)
 
-* [list](docs/sdks/documents/README.md#list) - List documents in a given library.
-* [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
-* [get](docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
-* [update](docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
-* [delete](docs/sdks/documents/README.md#delete) - Delete a document.
-* [text_content](docs/sdks/documents/README.md#text_content) - Retrieve the text content of a specific document.
-* [status](docs/sdks/documents/README.md#status) - Retrieve the processing status of a specific document.
-* [get_signed_url](docs/sdks/documents/README.md#get_signed_url) - Retrieve the signed URL of a specific document.
-* [extracted_text_signed_url](docs/sdks/documents/README.md#extracted_text_signed_url) - Retrieve the signed URL of text extracted from a given document.
-* [reprocess](docs/sdks/documents/README.md#reprocess) - Reprocess a document.
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#list) - List documents in a given library.
+* [upload](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#upload) - Upload a new document.
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#delete) - Delete a document.
+* [text_content](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#text_content) - Retrieve the text content of a specific document.
+* [status](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#status) - Retrieve the processing status of a specific document.
+* [get_signed_url](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#get_signed_url) - Retrieve the signed URL of a specific document.
+* [extracted_text_signed_url](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#extracted_text_signed_url) - Retrieve the signed URL of text extracted from a given document.
+* [reprocess](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#reprocess) - Reprocess a document.
 
-### [Beta.Observability.Campaigns](docs/sdks/campaigns/README.md)
+### [Beta.Observability.Campaigns](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md)
 
-* [create](docs/sdks/campaigns/README.md#create) - Create and start a new campaign
-* [list](docs/sdks/campaigns/README.md#list) - Get all campaigns
-* [fetch](docs/sdks/campaigns/README.md#fetch) - Get campaign by id
-* [delete](docs/sdks/campaigns/README.md#delete) - Delete a campaign
-* [fetch_status](docs/sdks/campaigns/README.md#fetch_status) - Get campaign status by campaign id
-* [list_events](docs/sdks/campaigns/README.md#list_events) - Get event ids that were selected by the given campaign
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#create) - Create and start a new campaign
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#list) - Get all campaigns
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#fetch) - Get campaign by id
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#delete) - Delete a campaign
+* [fetch_status](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#fetch_status) - Get campaign status by campaign id
+* [list_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/campaigns/README.md#list_events) - Get event ids that were selected by the given campaign
 
-### [Beta.Observability.ChatCompletionEvents](docs/sdks/chatcompletionevents/README.md)
+### [Beta.Observability.ChatCompletionEvents](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md)
 
-* [search](docs/sdks/chatcompletionevents/README.md#search) - Get Chat Completion Events
-* [search_ids](docs/sdks/chatcompletionevents/README.md#search_ids) - Alternative to /search that returns only the IDs and that can return many IDs at once
-* [fetch](docs/sdks/chatcompletionevents/README.md#fetch) - Get Chat Completion Event
-* [fetch_similar_events](docs/sdks/chatcompletionevents/README.md#fetch_similar_events) - Get Similar Chat Completion Events
-* [judge](docs/sdks/chatcompletionevents/README.md#judge) - Run Judge on an event based on the given options
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md#search) - Get Chat Completion Events
+* [search_ids](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md#search_ids) - Alternative to /search that returns only the IDs and that can return many IDs at once
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md#fetch) - Get Chat Completion Event
+* [fetch_similar_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md#fetch_similar_events) - Get Similar Chat Completion Events
+* [judge](https://github.com/mistralai/client-python/blob/main/docs/sdks/chatcompletionevents/README.md#judge) - Run Judge on an event based on the given options
 
-#### [Beta.Observability.ChatCompletionEvents.Fields](docs/sdks/fields/README.md)
+#### [Beta.Observability.ChatCompletionEvents.Fields](https://github.com/mistralai/client-python/blob/main/docs/sdks/fields/README.md)
 
-* [list](docs/sdks/fields/README.md#list) - Get Chat Completion Fields
-* [fetch_options](docs/sdks/fields/README.md#fetch_options) - Get Chat Completion Field Options
-* [fetch_option_counts](docs/sdks/fields/README.md#fetch_option_counts) - Get Chat Completion Field Options Counts
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/fields/README.md#list) - Get Chat Completion Fields
+* [fetch_options](https://github.com/mistralai/client-python/blob/main/docs/sdks/fields/README.md#fetch_options) - Get Chat Completion Field Options
+* [fetch_option_counts](https://github.com/mistralai/client-python/blob/main/docs/sdks/fields/README.md#fetch_option_counts) - Get Chat Completion Field Options Counts
 
-### [Beta.Observability.Datasets](docs/sdks/datasets/README.md)
+### [Beta.Observability.Datasets](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md)
 
-* [create](docs/sdks/datasets/README.md#create) - Create a new empty dataset
-* [list](docs/sdks/datasets/README.md#list) - List existing datasets
-* [fetch](docs/sdks/datasets/README.md#fetch) - Get dataset by id
-* [delete](docs/sdks/datasets/README.md#delete) - Delete a dataset
-* [update](docs/sdks/datasets/README.md#update) - Patch dataset
-* [list_records](docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
-* [create_record](docs/sdks/datasets/README.md#create_record) - Add a conversation to the dataset
-* [import_from_campaign](docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with a campaign
-* [import_from_explorer](docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with samples from the explorer
-* [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with samples from an uploaded file
-* [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with samples from the playground
-* [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with samples from another dataset
-* [export_to_jsonl](docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
-* [fetch_task](docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
-* [list_tasks](docs/sdks/datasets/README.md#list_tasks) - List import tasks for the given dataset
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#create) - Create a new empty dataset
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list) - List existing datasets
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch) - Get dataset by id
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#delete) - Delete a dataset
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#update) - Patch dataset
+* [list_records](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
+* [create_record](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#create_record) - Add a conversation to the dataset
+* [import_from_campaign](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with a campaign
+* [import_from_explorer](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with samples from the explorer
+* [import_from_file](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with samples from an uploaded file
+* [import_from_playground](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with samples from the playground
+* [import_from_dataset_records](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with samples from another dataset
+* [export_to_jsonl](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
+* [fetch_task](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
+* [list_tasks](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list_tasks) - List import tasks for the given dataset
 
-#### [Beta.Observability.Datasets.Records](docs/sdks/records/README.md)
+#### [Beta.Observability.Datasets.Records](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md)
 
-* [fetch](docs/sdks/records/README.md#fetch) - Get the content of a given conversation from a dataset
-* [delete](docs/sdks/records/README.md#delete) - Delete a record from a dataset
-* [bulk_delete](docs/sdks/records/README.md#bulk_delete) - Delete multiple records from datasets
-* [judge](docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
-* [update_payload](docs/sdks/records/README.md#update_payload) - Update a dataset record conversation payload
-* [update_properties](docs/sdks/records/README.md#update_properties) - Update conversation properties
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#fetch) - Get the content of a given conversation from a dataset
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#delete) - Delete a record from a dataset
+* [bulk_delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#bulk_delete) - Delete multiple records from datasets
+* [judge](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
+* [update_payload](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#update_payload) - Update a dataset record conversation payload
+* [update_properties](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#update_properties) - Update conversation properties
 
-### [Beta.Observability.Judges](docs/sdks/judges/README.md)
+### [Beta.Observability.Judges](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md)
 
-* [create](docs/sdks/judges/README.md#create) - Create a new judge
-* [list](docs/sdks/judges/README.md#list) - Get judges with optional filtering and search
-* [fetch](docs/sdks/judges/README.md#fetch) - Get judge by id
-* [delete](docs/sdks/judges/README.md#delete) - Delete a judge
-* [update](docs/sdks/judges/README.md#update) - Update a judge
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#create) - Create a new judge
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#list) - Get judges with optional filtering and search
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#fetch) - Get judge by id
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#delete) - Delete a judge
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#update) - Update a judge
 
-### [Chat](docs/sdks/chat/README.md)
+### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
-* [complete](docs/sdks/chat/README.md#complete) - Chat Completion
-* [stream](docs/sdks/chat/README.md#stream) - Stream chat completion
+* [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md#complete) - Chat Completion
+* [stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md#stream) - Stream chat completion
 
-### [Classifiers](docs/sdks/classifiers/README.md)
+### [Classifiers](https://github.com/mistralai/client-python/blob/main/docs/sdks/classifiers/README.md)
 
-* [moderate](docs/sdks/classifiers/README.md#moderate) - Moderations
-* [moderate_chat](docs/sdks/classifiers/README.md#moderate_chat) - Chat Moderations
-* [classify](docs/sdks/classifiers/README.md#classify) - Classifications
-* [classify_chat](docs/sdks/classifiers/README.md#classify_chat) - Chat Classifications
+* [moderate](https://github.com/mistralai/client-python/blob/main/docs/sdks/classifiers/README.md#moderate) - Moderations
+* [moderate_chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/classifiers/README.md#moderate_chat) - Chat Moderations
+* [classify](https://github.com/mistralai/client-python/blob/main/docs/sdks/classifiers/README.md#classify) - Classifications
+* [classify_chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/classifiers/README.md#classify_chat) - Chat Classifications
 
-### [Embeddings](docs/sdks/embeddings/README.md)
+### [Embeddings](https://github.com/mistralai/client-python/blob/main/docs/sdks/embeddings/README.md)
 
-* [create](docs/sdks/embeddings/README.md#create) - Embeddings
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/embeddings/README.md#create) - Embeddings
 
-### [Files](docs/sdks/files/README.md)
+### [Files](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md)
 
-* [upload](docs/sdks/files/README.md#upload) - Upload File
-* [list](docs/sdks/files/README.md#list) - List Files
-* [retrieve](docs/sdks/files/README.md#retrieve) - Retrieve File
-* [delete](docs/sdks/files/README.md#delete) - Delete File
-* [download](docs/sdks/files/README.md#download) - Download File
-* [get_signed_url](docs/sdks/files/README.md#get_signed_url) - Get Signed Url
+* [upload](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#upload) - Upload File
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#list) - List Files
+* [retrieve](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#retrieve) - Retrieve File
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#delete) - Delete File
+* [download](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#download) - Download File
+* [get_signed_url](https://github.com/mistralai/client-python/blob/main/docs/sdks/files/README.md#get_signed_url) - Get Signed Url
 
-### [Fim](docs/sdks/fim/README.md)
+### [Fim](https://github.com/mistralai/client-python/blob/main/docs/sdks/fim/README.md)
 
-* [complete](docs/sdks/fim/README.md#complete) - Fim Completion
-* [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
+* [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/fim/README.md#complete) - Fim Completion
+* [stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/fim/README.md#stream) - Stream fim completion
 
-### [FineTuning.Jobs](docs/sdks/finetuningjobs/README.md)
+### [FineTuning.Jobs](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md)
 
-* [list](docs/sdks/finetuningjobs/README.md#list) - Get Fine Tuning Jobs
-* [create](docs/sdks/finetuningjobs/README.md#create) - Create Fine Tuning Job
-* [get](docs/sdks/finetuningjobs/README.md#get) - Get Fine Tuning Job
-* [cancel](docs/sdks/finetuningjobs/README.md#cancel) - Cancel Fine Tuning Job
-* [start](docs/sdks/finetuningjobs/README.md#start) - Start Fine Tuning Job
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md#list) - Get Fine Tuning Jobs
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md#create) - Create Fine Tuning Job
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md#get) - Get Fine Tuning Job
+* [cancel](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md#cancel) - Cancel Fine Tuning Job
+* [start](https://github.com/mistralai/client-python/blob/main/docs/sdks/finetuningjobs/README.md#start) - Start Fine Tuning Job
 
-### [Models](docs/sdks/models/README.md)
+### [Models](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md)
 
-* [list](docs/sdks/models/README.md#list) - List Models
-* [retrieve](docs/sdks/models/README.md#retrieve) - Retrieve Model
-* [delete](docs/sdks/models/README.md#delete) - Delete Model
-* [update](docs/sdks/models/README.md#update) - Update Fine Tuned Model
-* [archive](docs/sdks/models/README.md#archive) - Archive Fine Tuned Model
-* [unarchive](docs/sdks/models/README.md#unarchive) - Unarchive Fine Tuned Model
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#list) - List Models
+* [retrieve](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#retrieve) - Retrieve Model
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#delete) - Delete Model
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#update) - Update Fine Tuned Model
+* [archive](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#archive) - Archive Fine Tuned Model
+* [unarchive](https://github.com/mistralai/client-python/blob/main/docs/sdks/models/README.md#unarchive) - Unarchive Fine Tuned Model
 
-### [Ocr](docs/sdks/ocr/README.md)
+### [Ocr](https://github.com/mistralai/client-python/blob/main/docs/sdks/ocr/README.md)
 
-* [process](docs/sdks/ocr/README.md#process) - OCR
+* [process](https://github.com/mistralai/client-python/blob/main/docs/sdks/ocr/README.md#process) - OCR
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -778,7 +778,7 @@ with Mistral(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`MistralError`](./src/mistralai/client/errors/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
+[`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py) is the base class for all HTTP error responses. It has the following properties:
 
 | Property           | Type             | Description                                                                             |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
@@ -822,7 +822,7 @@ with Mistral(
 
 ### Error Classes
 **Primary error:**
-* [`MistralError`](./src/mistralai/client/errors/mistralerror.py): The base class for HTTP error responses.
+* [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py): The base class for HTTP error responses.
 
 <details><summary>Less common errors (7)</summary>
 
@@ -834,10 +834,10 @@ with Mistral(
     * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
 
-**Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 121 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 40 of 121 methods.*
-* [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+**Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 121 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 40 of 121 methods.*
+* [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
 

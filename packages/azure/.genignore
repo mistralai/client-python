@@ -4,3 +4,4 @@ src/mistralai/azure/client/_hooks/registration.py
 README.md
 USAGE.md
 docs/sdks/**/README.md
+scripts/prepare_readme.py

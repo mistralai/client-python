@@ -6,19 +6,29 @@ import os
 from mistralai.client import Mistral
 from mistralai.client.models import UserMessage
 
+MODEL = "mistral-medium-latest"
+
 
 async def main():
     api_key = os.environ["MISTRAL_API_KEY"]
-    agent_id = os.environ["MISTRAL_AGENT_ID"]
-
     client = Mistral(api_key=api_key)
 
-    chat_response = await client.agents.complete_async(
-        agent_id=agent_id,
-        messages=[UserMessage(content="What is the best French cheese?")],
+    # Create a fresh agent for this run to avoid version accumulation
+    agent = client.beta.agents.create(
+        model=MODEL,
+        name="cheese-expert-example",
+        instructions="You are a helpful assistant.",
     )
 
-    print(chat_response.choices[0].message.content)
+    try:
+        chat_response = await client.agents.complete_async(
+            agent_id=agent.id,
+            messages=[UserMessage(content="What is the best French cheese?")],
+        )
+
+        print(chat_response.choices[0].message.content)
+    finally:
+        client.beta.agents.delete(agent_id=agent.id)
 
 
 if __name__ == "__main__":

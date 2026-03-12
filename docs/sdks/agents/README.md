@@ -128,7 +128,7 @@ with Mistral(
 
 ### Response
 
-**[Union[eventstreaming.EventStream[models.CompletionEvent], eventstreaming.EventStreamAsync[models.CompletionEvent]]](../../models/.md)**
+**Union[eventstreaming.EventStream[models.CompletionEvent], eventstreaming.EventStreamAsync[models.CompletionEvent]]**
 
 ### Errors
 
