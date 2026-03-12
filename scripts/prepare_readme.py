@@ -6,7 +6,7 @@ from pathlib import Path
 
 DEFAULT_REPO_URL = "https://github.com/mistralai/client-python.git"
 DEFAULT_BRANCH = "main"
-LINK_PATTERN = re.compile(r"(\[[^\]]+\]\()((?!https?:|#)[^\)]+)(\))")
+LINK_PATTERN = re.compile(r"(\[[^\]]+\]\()((?![a-zA-Z][a-zA-Z0-9+.-]*:|#)[^\)]+)(\))")
 
 
 def build_base_url(repo_url: str, branch: str, repo_subdir: str) -> str:
@@ -18,10 +18,23 @@ def build_base_url(repo_url: str, branch: str, repo_subdir: str) -> str:
     return f"{normalized_repo_url}/blob/{branch}/{normalized_subdir}"
 
 
+def _normalize_relative_path(path: str) -> str:
+    """Strip leading './' and '/' from a relative path."""
+    if path.startswith("./"):
+        path = path[2:]
+    elif path.startswith("/"):
+        path = path[1:]
+    return path
+
+
 def rewrite_relative_links(contents: str, base_url: str) -> str:
     """Rewrite Markdown relative links to absolute GitHub URLs."""
     return LINK_PATTERN.sub(
-        lambda match: f"{match.group(1)}{base_url}{match.group(2)}{match.group(3)}",
+        lambda match: (
+            f"{match.group(1)}"
+            f"{base_url}{_normalize_relative_path(match.group(2))}"
+            f"{match.group(3)}"
+        ),
         contents,
     )
 
@@ -32,8 +45,8 @@ def run_with_rewritten_readme(
     """Rewrite README links, run a command, and restore the original README."""
     original_contents = readme_path.read_text(encoding="utf-8")
     rewritten_contents = rewrite_relative_links(original_contents, base_url)
-    readme_path.write_text(rewritten_contents, encoding="utf-8")
     try:
+        readme_path.write_text(rewritten_contents, encoding="utf-8")
         if not command:
             return 0
         result = subprocess.run(command, check=False)
@@ -86,7 +99,8 @@ def main(argv: list[str]) -> int:
     args = parse_args(argv)
     readme_path = args.readme
     if not readme_path.is_file():
-        raise FileNotFoundError(f"README file not found: {readme_path}")
+        print(f"Error: README file not found: {readme_path}", file=sys.stderr)
+        return 1
     base_url = build_base_url(args.repo_url, args.branch, args.repo_subdir)
     command = (
         args.command[1:]
