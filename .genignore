@@ -4,4 +4,3 @@ examples/*
 src/mistralai/extra/*
 pylintrc
 scripts/prepare_readme.py
-scripts/publish.sh
