@@ -39,7 +39,6 @@ jobs:
 
       - name: Build the package
         run: |
-          python scripts/prepare_readme.py
           uv build
 
       - name: Install client with extras and run all examples.

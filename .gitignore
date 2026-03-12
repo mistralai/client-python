@@ -5,7 +5,6 @@
 **/.speakeasy/logs/
 .vscode/
 .speakeasy/reports
-README-PYPI.md
 .venv/
 pyrightconfig.json
 src/*.egg-info/
