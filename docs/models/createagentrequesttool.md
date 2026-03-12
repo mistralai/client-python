@@ -9,6 +9,12 @@
 value: models.CodeInterpreterTool = /* values here */
 ```
 
+### `models.CustomConnector`
+
+```python
+value: models.CustomConnector = /* values here */
+```
+
 ### `models.DocumentLibraryTool`
 
 ```python

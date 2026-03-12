@@ -3,28 +3,40 @@
 
 from __future__ import annotations
 from .moderationllmv1config import ModerationLlmv1Config, ModerationLlmv1ConfigTypedDict
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from .moderationllmv2config import ModerationLlmv2Config, ModerationLlmv2ConfigTypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class GuardrailConfigTypedDict(TypedDict):
-    moderation_llm_v1: Nullable[ModerationLlmv1ConfigTypedDict]
     block_on_error: NotRequired[bool]
     r"""If true, return HTTP 403 and block request in the event of a server-side error"""
+    moderation_llm_v1: NotRequired[Nullable[ModerationLlmv1ConfigTypedDict]]
+    moderation_llm_v2: NotRequired[Nullable[ModerationLlmv2ConfigTypedDict]]
 
 
 class GuardrailConfig(BaseModel):
-    moderation_llm_v1: Nullable[ModerationLlmv1Config]
-
     block_on_error: Optional[bool] = False
     r"""If true, return HTTP 403 and block request in the event of a server-side error"""
 
+    moderation_llm_v1: OptionalNullable[ModerationLlmv1Config] = UNSET
+
+    moderation_llm_v2: OptionalNullable[ModerationLlmv2Config] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["block_on_error"])
-        nullable_fields = set(["moderation_llm_v1"])
+        optional_fields = set(
+            ["block_on_error", "moderation_llm_v1", "moderation_llm_v2"]
+        )
+        nullable_fields = set(["moderation_llm_v1", "moderation_llm_v2"])
         serialized = handler(self)
         m = {}
 
