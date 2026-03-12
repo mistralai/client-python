@@ -47,5 +47,4 @@ jobs:
           uv pip install --system "$PACKAGE"
           ./scripts/run_examples.sh
         env:
-          MISTRAL_AGENT_ID: ${{ secrets.CI_AGENT_ID }}
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
