@@ -45,9 +45,3 @@ value: models.ThinkChunk = /* values here */
 value: models.AudioChunk = /* values here */
 ```
 
-### `models.AudioURLChunk`
-
-```python
-value: models.AudioURLChunk = /* values here */
-```
-

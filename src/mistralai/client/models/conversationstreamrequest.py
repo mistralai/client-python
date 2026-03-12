@@ -5,6 +5,7 @@ from __future__ import annotations
 from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
@@ -38,6 +39,7 @@ ConversationStreamRequestToolTypedDict = TypeAliasType(
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
     ],
 )
 
@@ -45,6 +47,7 @@ ConversationStreamRequestToolTypedDict = TypeAliasType(
 ConversationStreamRequestTool = Annotated[
     Union[
         CodeInterpreterTool,
+        CustomConnector,
         DocumentLibraryTool,
         FunctionTool,
         ImageGenerationTool,
@@ -71,8 +74,7 @@ class ConversationStreamRequestTypedDict(TypedDict):
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationStreamRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[List[ConversationStreamRequestToolTypedDict]]
-    r"""List of tools which are available to the model during the conversation."""
+    tools: NotRequired[Nullable[List[ConversationStreamRequestToolTypedDict]]]
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
@@ -96,8 +98,7 @@ class ConversationStreamRequest(BaseModel):
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: Optional[List[ConversationStreamRequestTool]] = None
-    r"""List of tools which are available to the model during the conversation."""
+    tools: OptionalNullable[List[ConversationStreamRequestTool]] = UNSET
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
 
@@ -139,6 +140,7 @@ class ConversationStreamRequest(BaseModel):
                 "store",
                 "handoff_execution",
                 "instructions",
+                "tools",
                 "completion_args",
                 "guardrails",
                 "name",

@@ -235,12 +235,12 @@ class Conversations(BaseSDK):
             models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationRequestTool],
                 List[models.ConversationRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
@@ -272,7 +272,7 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
         :param guardrails:
         :param name:
@@ -303,7 +303,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationRequestTool]]
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
@@ -389,12 +389,12 @@ class Conversations(BaseSDK):
             models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationRequestTool],
                 List[models.ConversationRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
@@ -426,7 +426,7 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
         :param guardrails:
         :param name:
@@ -457,7 +457,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationRequestTool]]
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
@@ -2019,12 +2019,12 @@ class Conversations(BaseSDK):
             models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationStreamRequestTool],
                 List[models.ConversationStreamRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
@@ -2056,7 +2056,7 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
         :param guardrails:
         :param name:
@@ -2087,7 +2087,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
+                tools, OptionalNullable[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
@@ -2180,12 +2180,12 @@ class Conversations(BaseSDK):
             models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationStreamRequestTool],
                 List[models.ConversationStreamRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
@@ -2217,7 +2217,7 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
         :param guardrails:
         :param name:
@@ -2248,7 +2248,7 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
+                tools, OptionalNullable[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
