@@ -228,8 +228,9 @@ class TestGCPChatStream:
 
     def test_basic_stream(self, gcp_client):
         """Test streaming returns chunks with content."""
-        stream = gcp_client.chat.stream(
+        stream = gcp_client.chat.complete(
             model=GCP_MODEL,
+            stream=True,
             messages=[
                 {"role": "user", "content": "Say 'hello' and nothing else."}
             ],
@@ -247,8 +248,9 @@ class TestGCPChatStream:
 
     def test_stream_with_max_tokens(self, gcp_client):
         """Test streaming respects max_tokens truncation."""
-        stream = gcp_client.chat.stream(
+        stream = gcp_client.chat.complete(
             model=GCP_MODEL,
+            stream=True,
             messages=[
                 {"role": "user", "content": "Count from 1 to 100."}
             ],
@@ -269,8 +271,9 @@ class TestGCPChatStream:
 
     def test_stream_finish_reason(self, gcp_client):
         """Test that the last chunk has a finish_reason."""
-        stream = gcp_client.chat.stream(
+        stream = gcp_client.chat.complete(
             model=GCP_MODEL,
+            stream=True,
             messages=[
                 {"role": "user", "content": "Say 'hi'."}
             ],
@@ -290,8 +293,9 @@ class TestGCPChatStream:
 
     def test_stream_tool_call(self, gcp_client):
         """Test tool call via streaming, collecting tool_call delta chunks."""
-        stream = gcp_client.chat.stream(
+        stream = gcp_client.chat.complete(
             model=GCP_MODEL,
+            stream=True,
             messages=[
                 {"role": "user", "content": "What is the weather in Paris?"}
             ],
@@ -366,8 +370,9 @@ class TestGCPChatStreamAsync:
     @pytest.mark.asyncio
     async def test_basic_stream_async(self, gcp_client):
         """Test async streaming returns chunks with content."""
-        stream = await gcp_client.chat.stream_async(
+        stream = await gcp_client.chat.complete_async(
             model=GCP_MODEL,
+            stream=True,
             messages=[
                 {"role": "user", "content": "Say 'hello' and nothing else."}
             ],
@@ -443,8 +448,9 @@ class TestGCPFIM:
     def test_fim_stream(self):
         """Test FIM streaming returns chunks."""
         client = self._make_fim_client()
-        stream = client.fim.stream(
+        stream = client.fim.complete(
             model=GCP_FIM_MODEL,
+            stream=True,
             prompt="def hello():",
             suffix="    return greeting",
             timeout_ms=10000,
@@ -492,8 +498,9 @@ class TestGCPFIM:
     async def test_fim_stream_async(self):
         """Test async FIM streaming returns chunks."""
         client = self._make_fim_client()
-        stream = await client.fim.stream_async(
+        stream = await client.fim.complete_async(
             model=GCP_FIM_MODEL,
+            stream=True,
             prompt="def hello():",
             suffix="    return greeting",
             timeout_ms=10000,

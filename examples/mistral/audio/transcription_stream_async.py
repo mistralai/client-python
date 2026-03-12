@@ -4,6 +4,7 @@ import os
 
 from mistralai.client import Mistral
 from mistralai.client.models import File
+from mistralai.client.transcriptions import CompleteAcceptEnum
 
 
 async def main():
@@ -12,9 +13,10 @@ async def main():
 
     client = Mistral(api_key=api_key)
     with open("examples/fixtures/bcn_weather.mp3", "rb") as f:
-        response = await client.audio.transcriptions.stream_async(
+        response = await client.audio.transcriptions.complete_async(
             model=model,
             file=File(content=f, file_name=f.name),
+            accept_header_override=CompleteAcceptEnum.TEXT_EVENT_STREAM,
         )
         async for chunk in response:
             print(chunk.event, chunk.data)

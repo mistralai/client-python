@@ -62,8 +62,9 @@ def main():
     print(chat_response.choices[0].message.content)
 
     # Or with the streaming API
-    with client.chat.stream(
+    with client.chat.complete(
         model="mistral-large-latest",
+        stream=True,
         messages=[
             {
                 "role": "system",

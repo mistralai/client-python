@@ -2,6 +2,7 @@
 # @generated-id: 7eba0f088d47
 
 from .basesdk import BaseSDK
+from enum import Enum
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
@@ -23,6 +24,11 @@ from mistralai.extra.utils.response_format import (
 # endregion imports
 
 
+class CompleteAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
+
+
 class Chat(BaseSDK):
     r"""Chat Completion API."""
 
@@ -41,7 +47,9 @@ class Chat(BaseSDK):
         # Convert the input Pydantic Model to a strict JSON ready to be passed to chat.complete
         json_response_format = response_format_from_pydantic_model(response_format)
         # Run the inference
+        kwargs["stream"] = False
         response = self.complete(**kwargs, response_format=json_response_format)
+        assert isinstance(response, models.ChatCompletionResponse)
         # Parse response back to the input pydantic model
         parsed_response = convert_to_parsed_chat_completion_response(
             response, response_format
@@ -58,9 +66,11 @@ class Chat(BaseSDK):
         :return: The parsed response
         """
         json_response_format = response_format_from_pydantic_model(response_format)
+        kwargs["stream"] = False
         response = await self.complete_async(  # pylint: disable=E1125
             **kwargs, response_format=json_response_format
         )
+        assert isinstance(response, models.ChatCompletionResponse)
         parsed_response = convert_to_parsed_chat_completion_response(
             response, response_format
         )
@@ -73,11 +83,13 @@ class Chat(BaseSDK):
         Parse the response using the provided response format.
         For now the response will be in JSON format not in the input Pydantic model.
         :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
-        :param Any **kwargs Additional keyword arguments to pass to the .stream method
+        :param Any **kwargs Additional keyword arguments to pass to the .complete method
         :return: The JSON parsed response
         """
         json_response_format = response_format_from_pydantic_model(response_format)
-        response = self.stream(**kwargs, response_format=json_response_format)
+        kwargs["stream"] = True
+        response = self.complete(**kwargs, response_format=json_response_format)
+        assert isinstance(response, eventstreaming.EventStream)
         return response
 
     async def parse_stream_async(
@@ -87,13 +99,15 @@ class Chat(BaseSDK):
         Asynchronously parse the response using the provided response format.
         For now the response will be in JSON format not in the input Pydantic model.
         :param Type[CustomPydanticModel] response_format: The Pydantic model to parse the response into
-        :param Any **kwargs Additional keyword arguments to pass to the .stream method
+        :param Any **kwargs Additional keyword arguments to pass to the .complete method
         :return: The JSON parsed response
         """
         json_response_format = response_format_from_pydantic_model(response_format)
-        response = await self.stream_async(  # pylint: disable=E1125
+        kwargs["stream"] = True
+        response = await self.complete_async(  # pylint: disable=E1125
             **kwargs, response_format=json_response_format
         )
+        assert isinstance(response, eventstreaming.EventStreamAsync)
         return response
 
     # endregion sdk-class-body
@@ -142,8 +156,9 @@ class Chat(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[CompleteAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ChatCompletionResponse:
+    ) -> models.ChatCompletionV1ChatCompletionsPostResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -168,6 +183,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -220,7 +236,9 @@ class Chat(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -250,17 +268,29 @@ class Chat(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.ChatCompletionResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                sentinel="[DONE]",
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -268,7 +298,8 @@ class Chat(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     async def complete_async(
         self,
@@ -314,8 +345,9 @@ class Chat(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        accept_header_override: Optional[CompleteAcceptEnum] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ChatCompletionResponse:
+    ) -> models.ChatCompletionV1ChatCompletionsPostResponse:
         r"""Chat Completion
 
         :param model: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
@@ -340,6 +372,7 @@ class Chat(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -392,7 +425,9 @@ class Chat(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value=accept_header_override.value
+            if accept_header_override is not None
+            else "application/json;q=1, text/event-stream;q=0",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -422,17 +457,29 @@ class Chat(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ChatCompletionResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = await utils.stream_to_text_async(http_res)
+            return unmarshal_json_response(
+                models.ChatCompletionResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStreamAsync(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                sentinel="[DONE]",
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -440,7 +487,8 @@ class Chat(BaseSDK):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
 
     def stream(
         self,
