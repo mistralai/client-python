@@ -18,7 +18,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -39,14 +39,6 @@ ConversationResponseOutput = TypeAliasType(
 )
 
 
-class GuardrailTypedDict(TypedDict):
-    pass
-
-
-class Guardrail(BaseModel):
-    pass
-
-
 class ConversationResponseTypedDict(TypedDict):
     r"""The response after appending new entries to the conversation."""
 
@@ -54,7 +46,7 @@ class ConversationResponseTypedDict(TypedDict):
     outputs: List[ConversationResponseOutputTypedDict]
     usage: ConversationUsageInfoTypedDict
     object: Literal["conversation.response"]
-    guardrails: NotRequired[Nullable[List[GuardrailTypedDict]]]
+    guardrails: NotRequired[Nullable[List[Dict[str, Any]]]]
 
 
 class ConversationResponse(BaseModel):
@@ -74,7 +66,7 @@ class ConversationResponse(BaseModel):
         pydantic.Field(alias="object"),
     ] = "conversation.response"
 
-    guardrails: OptionalNullable[List[Guardrail]] = UNSET
+    guardrails: OptionalNullable[List[Dict[str, Any]]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

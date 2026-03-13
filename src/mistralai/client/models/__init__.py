@@ -416,8 +416,6 @@ if TYPE_CHECKING:
         ConversationResponseOutput,
         ConversationResponseOutputTypedDict,
         ConversationResponseTypedDict,
-        Guardrail,
-        GuardrailTypedDict,
     )
     from .conversationrestartrequest import (
         ConversationRestartRequest,
@@ -1959,10 +1957,8 @@ __all__ = [
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict",
     "GithubRepository",
     "GithubRepositoryTypedDict",
-    "Guardrail",
     "GuardrailConfig",
     "GuardrailConfigTypedDict",
-    "GuardrailTypedDict",
     "Hyperparameters",
     "HyperparametersTypedDict",
     "ImageContent",
@@ -2740,8 +2736,6 @@ _dynamic_imports: dict[str, str] = {
     "ConversationResponseOutput": ".conversationresponse",
     "ConversationResponseOutputTypedDict": ".conversationresponse",
     "ConversationResponseTypedDict": ".conversationresponse",
-    "Guardrail": ".conversationresponse",
-    "GuardrailTypedDict": ".conversationresponse",
     "ConversationRestartRequest": ".conversationrestartrequest",
     "ConversationRestartRequestAgentVersion": ".conversationrestartrequest",
     "ConversationRestartRequestAgentVersionTypedDict": ".conversationrestartrequest",

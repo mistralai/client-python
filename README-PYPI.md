@@ -165,7 +165,7 @@ with Mistral(
     print(res)
 ```
 
-<br/>
+</br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -219,7 +219,7 @@ with Mistral(
     print(res)
 ```
 
-<br/>
+</br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -273,7 +273,7 @@ with Mistral(
     print(res)
 ```
 
-<br/>
+</br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -306,7 +306,7 @@ asyncio.run(main())
 
 ### Create Embedding Request
 
-This example shows how to create an embedding request.
+This example shows how to create embedding request.
 
 ```python
 # Synchronous Example
@@ -327,7 +327,7 @@ with Mistral(
     print(res)
 ```
 
-<br/>
+</br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
 
@@ -481,7 +481,7 @@ print(res.choices[0].message.content)
 
 ### [Beta.Agents](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md)
 
-* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#create) - Create an agent that can be used within a conversation.
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#create) - Create a agent that can be used within a conversation.
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#list) - List agent entities.
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#get) - Retrieve an agent entity.
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/betaagents/README.md#update) - Update an agent entity.
@@ -521,7 +521,7 @@ print(res.choices[0].message.content)
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#list) - List all libraries you have access to.
 * [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#create) - Create a new Library.
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#get) - Detailed information about a specific Library.
-* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#delete) - Delete a library and all of its documents.
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#delete) - Delete a library and all of it's document.
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#update) - Update a library.
 
 #### [Beta.Libraries.Accesses](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md)
@@ -747,8 +747,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(
-        retries=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+    res = mistral.models.list(,
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
     print(res)
@@ -899,10 +899,10 @@ with Mistral(
 ## Custom HTTP Client
 
 The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
-Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocols ensuring that the client has the necessary methods to make API calls.
+Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
 This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
-For example, you could specify a header for every request that this SDK makes as follows:
+For example, you could specify a header for every request that this sdk makes as follows:
 ```python
 from mistralai.client import Mistral
 import httpx
@@ -1020,7 +1020,7 @@ def main():
     with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
-        pass  # Rest of application here...
+        # Rest of application here...
 
 
 # Or when using async:
@@ -1029,7 +1029,7 @@ async def amain():
     async with Mistral(
         api_key=os.getenv("MISTRAL_API_KEY", ""),
     ) as mistral:
-        pass  # Rest of application here...
+        # Rest of application here...
 ```
 <!-- End Resource Management [resource-management] -->
 
