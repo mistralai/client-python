@@ -1,9 +1,14 @@
 # ConversationAppendStreamRequestHandoffExecution
 
+## Example Usage
+
+```python
+from mistralai.client.models import ConversationAppendStreamRequestHandoffExecution
+value: ConversationAppendStreamRequestHandoffExecution = "client"
+```
+
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `CLIENT` | client   |
-| `SERVER` | server   |
+- `"client"`
+- `"server"`

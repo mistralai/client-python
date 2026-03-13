@@ -22,6 +22,9 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class BaseModelCardTypedDict(TypedDict):
     id: str
     capabilities: ModelCapabilitiesTypedDict
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
     object: NotRequired[str]
     created: NotRequired[int]
     owned_by: NotRequired[str]
@@ -39,6 +42,9 @@ class BaseModelCard(BaseModel):
     id: str
 
     capabilities: ModelCapabilities
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
 
     object: Optional[str] = "model"
 
@@ -95,7 +101,7 @@ class BaseModelCard(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

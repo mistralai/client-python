@@ -683,7 +683,7 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], stream=True, completion_args={
+    ], completion_args={
         "response_format": {
             "type": "text",
         },

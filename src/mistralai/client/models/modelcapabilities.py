@@ -9,6 +9,10 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ModelCapabilitiesTypedDict(TypedDict):
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
+
     completion_chat: NotRequired[bool]
     function_calling: NotRequired[bool]
     completion_fim: NotRequired[bool]
@@ -19,9 +23,15 @@ class ModelCapabilitiesTypedDict(TypedDict):
     moderation: NotRequired[bool]
     audio: NotRequired[bool]
     audio_transcription: NotRequired[bool]
+    audio_transcription_realtime: NotRequired[bool]
+    audio_speech: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
+
     completion_chat: Optional[bool] = False
 
     function_calling: Optional[bool] = False
@@ -42,6 +52,10 @@ class ModelCapabilities(BaseModel):
 
     audio_transcription: Optional[bool] = False
 
+    audio_transcription_realtime: Optional[bool] = False
+
+    audio_speech: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -56,6 +70,8 @@ class ModelCapabilities(BaseModel):
                 "moderation",
                 "audio",
                 "audio_transcription",
+                "audio_transcription_realtime",
+                "audio_speech",
             ]
         )
         serialized = handler(self)
@@ -63,7 +79,7 @@ class ModelCapabilities(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
