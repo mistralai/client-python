@@ -1,0 +1,19 @@
+# WorkflowSpecWithTaskQueue
+
+
+## Fields
+
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `input_schema`                                                     | Dict[str, *Any*]                                                   | :heavy_check_mark:                                                 | Input schema of the workflow's run method                          |
+| `output_schema`                                                    | Dict[str, *Any*]                                                   | :heavy_minus_sign:                                                 | Output schema of the workflow's run method                         |
+| `signals`                                                          | List[[models.SignalDefinition](../models/signaldefinition.md)]     | :heavy_minus_sign:                                                 | Signal handlers defined by the workflow                            |
+| `queries`                                                          | List[[models.QueryDefinition](../models/querydefinition.md)]       | :heavy_minus_sign:                                                 | Query handlers defined by the workflow                             |
+| `updates`                                                          | List[[models.UpdateDefinition](../models/updatedefinition.md)]     | :heavy_minus_sign:                                                 | Update handlers defined by the workflow                            |
+| `enforce_determinism`                                              | *Optional[bool]*                                                   | :heavy_minus_sign:                                                 | Whether the workflow enforces deterministic execution              |
+| `name`                                                             | *str*                                                              | :heavy_check_mark:                                                 | Name of the workflow                                               |
+| `display_name`                                                     | *OptionalNullable[str]*                                            | :heavy_minus_sign:                                                 | Display name of the workflow                                       |
+| `description`                                                      | *OptionalNullable[str]*                                            | :heavy_minus_sign:                                                 | Description of the workflow                                        |
+| `is_technical`                                                     | *Optional[bool]*                                                   | :heavy_minus_sign:                                                 | Whether the workflow is technical (e.g. SDK-managed)               |
+| `schedules`                                                        | List[[models.ScheduleDefinition](../models/scheduledefinition.md)] | :heavy_minus_sign:                                                 | Schedules defined by the workflow                                  |
+| `task_queue`                                                       | *str*                                                              | :heavy_check_mark:                                                 | Task queue name for the workflow                                   |

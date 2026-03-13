@@ -1,0 +1,11 @@
+# ToolData
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `name`                                                                             | *str*                                                                              | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `execution_config`                                                                 | [OptionalNullable[models.ExecutionConfigUnion]](../models/executionconfigunion.md) | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `integration_id`                                                                   | *OptionalNullable[str]*                                                            | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `identifier`                                                                       | *OptionalNullable[str]*                                                            | :heavy_minus_sign:                                                                 | N/A                                                                                |

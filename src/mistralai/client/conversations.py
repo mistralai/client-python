@@ -1732,13 +1732,24 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartRequestTool],
+                List[models.ConversationRestartRequestToolTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1760,9 +1771,15 @@ class Conversations(BaseSDK):
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
         :param guardrails:
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
         :param metadata: Custom metadata for the conversation.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1788,14 +1805,22 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartRequestTool]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
+                name=name,
+                description=description,
                 metadata=metadata,
                 from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
                 agent_version=agent_version,
             ),
         )
@@ -1877,13 +1902,24 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartRequestTool],
+                List[models.ConversationRestartRequestToolTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1905,9 +1941,15 @@ class Conversations(BaseSDK):
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
         :param guardrails:
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
         :param metadata: Custom metadata for the conversation.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1933,14 +1975,22 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartRequestTool]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
+                name=name,
+                description=description,
                 metadata=metadata,
                 from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
                 agent_version=agent_version,
             ),
         )
@@ -1995,6 +2045,700 @@ class Conversations(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.ConversationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def list_internal(
+        self,
+        *,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
+        source: OptionalNullable[models.RequestSource] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> List[models.AgentsAPIV1InternalConversationsListResponse]:
+        r"""List conversations filtered by user_id and conversation_source.
+
+        Internal endpoint to retrieve conversations filtered by user_id and conversation_source.
+
+        :param page:
+        :param page_size:
+        :param metadata:
+        :param user_id:
+        :param source:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1InternalConversationsListRequest(
+            page=page,
+            page_size=page_size,
+            metadata=metadata,
+            user_id=user_id,
+            source=source,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/conversations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_internal_conversations_list",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                List[models.AgentsAPIV1InternalConversationsListResponse], http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def list_internal_async(
+        self,
+        *,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
+        source: OptionalNullable[models.RequestSource] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> List[models.AgentsAPIV1InternalConversationsListResponse]:
+        r"""List conversations filtered by user_id and conversation_source.
+
+        Internal endpoint to retrieve conversations filtered by user_id and conversation_source.
+
+        :param page:
+        :param page_size:
+        :param metadata:
+        :param user_id:
+        :param source:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1InternalConversationsListRequest(
+            page=page,
+            page_size=page_size,
+            metadata=metadata,
+            user_id=user_id,
+            source=source,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/conversations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_internal_conversations_list",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                List[models.AgentsAPIV1InternalConversationsListResponse], http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def debug(
+        self,
+        *,
+        conversation_id: str,
+        no_agents_prompt: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Debug a conversation by returning the complete completion payload.
+
+        :param conversation_id:
+        :param no_agents_prompt:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1ConversationsDebugRequest(
+            conversation_id=conversation_id,
+            no_agents_prompt=no_agents_prompt,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/internal/v1/conversations/{conversation_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_conversations_debug",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def debug_async(
+        self,
+        *,
+        conversation_id: str,
+        no_agents_prompt: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Debug a conversation by returning the complete completion payload.
+
+        :param conversation_id:
+        :param no_agents_prompt:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1ConversationsDebugRequest(
+            conversation_id=conversation_id,
+            no_agents_prompt=no_agents_prompt,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/internal/v1/conversations/{conversation_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_conversations_debug",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def debug_start(
+        self,
+        *,
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
+        store: OptionalNullable[bool] = UNSET,
+        handoff_execution: OptionalNullable[
+            models.ConversationRequestHandoffExecution
+        ] = UNSET,
+        instructions: OptionalNullable[str] = UNSET,
+        tools: OptionalNullable[
+            Union[
+                List[models.ConversationRequestTool],
+                List[models.ConversationRequestToolTypedDict],
+            ]
+        ] = UNSET,
+        completion_args: OptionalNullable[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models.ConversationRequestAgentVersion,
+                models.ConversationRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Debug the start of a conversation by returning the initial completion request.
+
+        :param inputs:
+        :param stream:
+        :param store:
+        :param handoff_execution:
+        :param instructions:
+        :param tools:
+        :param completion_args:
+        :param guardrails:
+        :param name:
+        :param description:
+        :param metadata:
+        :param agent_id:
+        :param agent_version:
+        :param model:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConversationRequest(
+            inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
+            store=store,
+            handoff_execution=handoff_execution,
+            instructions=instructions,
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
+            ),
+            completion_args=utils.get_pydantic_model(
+                completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
+            name=name,
+            description=description,
+            metadata=metadata,
+            agent_id=agent_id,
+            agent_version=agent_version,
+            model=model,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/internal/v1/conversations/start",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.ConversationRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_conversations_debug_start",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def debug_start_async(
+        self,
+        *,
+        inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
+        store: OptionalNullable[bool] = UNSET,
+        handoff_execution: OptionalNullable[
+            models.ConversationRequestHandoffExecution
+        ] = UNSET,
+        instructions: OptionalNullable[str] = UNSET,
+        tools: OptionalNullable[
+            Union[
+                List[models.ConversationRequestTool],
+                List[models.ConversationRequestToolTypedDict],
+            ]
+        ] = UNSET,
+        completion_args: OptionalNullable[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
+        agent_version: OptionalNullable[
+            Union[
+                models.ConversationRequestAgentVersion,
+                models.ConversationRequestAgentVersionTypedDict,
+            ]
+        ] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Debug the start of a conversation by returning the initial completion request.
+
+        :param inputs:
+        :param stream:
+        :param store:
+        :param handoff_execution:
+        :param instructions:
+        :param tools:
+        :param completion_args:
+        :param guardrails:
+        :param name:
+        :param description:
+        :param metadata:
+        :param agent_id:
+        :param agent_version:
+        :param model:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConversationRequest(
+            inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
+            store=store,
+            handoff_execution=handoff_execution,
+            instructions=instructions,
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
+            ),
+            completion_args=utils.get_pydantic_model(
+                completion_args, OptionalNullable[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
+            name=name,
+            description=description,
+            metadata=metadata,
+            agent_id=agent_id,
+            agent_version=agent_version,
+            model=model,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/internal/v1/conversations/start",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.ConversationRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_conversations_debug_start",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -2628,13 +3372,24 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartStreamRequestTool],
+                List[models.ConversationRestartStreamRequestToolTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2656,9 +3411,15 @@ class Conversations(BaseSDK):
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
         :param guardrails:
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
         :param metadata: Custom metadata for the conversation.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2684,14 +3445,22 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartStreamRequestTool]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
+                name=name,
+                description=description,
                 metadata=metadata,
                 from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
                 agent_version=agent_version,
             ),
         )
@@ -2780,13 +3549,24 @@ class Conversations(BaseSDK):
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
         ] = "server",
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.ConversationRestartStreamRequestTool],
+                List[models.ConversationRestartStreamRequestToolTypedDict],
+            ]
+        ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2808,9 +3588,15 @@ class Conversations(BaseSDK):
         :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
         :param guardrails:
+        :param name: Name given to the conversation.
+        :param description: Description of the what the conversation is about.
         :param metadata: Custom metadata for the conversation.
+        :param model: Model which is used as assistant of the conversation. If not provided, will use the original conversation's model.
+        :param agent_id: Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2836,14 +3622,22 @@ class Conversations(BaseSDK):
                 stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.ConversationRestartStreamRequestTool]]
+                ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
+                name=name,
+                description=description,
                 metadata=metadata,
                 from_entry_id=from_entry_id,
+                model=model,
+                agent_id=agent_id,
                 agent_version=agent_version,
             ),
         )

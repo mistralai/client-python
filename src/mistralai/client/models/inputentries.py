@@ -19,8 +19,8 @@ InputEntriesTypedDict = TypeAliasType(
         MessageInputEntryTypedDict,
         MessageOutputEntryTypedDict,
         AgentHandoffEntryTypedDict,
-        ToolExecutionEntryTypedDict,
         FunctionCallEntryTypedDict,
+        ToolExecutionEntryTypedDict,
     ],
 )
 
@@ -32,7 +32,7 @@ InputEntries = TypeAliasType(
         MessageInputEntry,
         MessageOutputEntry,
         AgentHandoffEntry,
-        ToolExecutionEntry,
         FunctionCallEntry,
+        ToolExecutionEntry,
     ],
 )

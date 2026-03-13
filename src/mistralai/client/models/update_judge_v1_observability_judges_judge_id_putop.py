@@ -2,7 +2,7 @@
 # @generated-id: a1bace5342e6
 
 from __future__ import annotations
-from .updatejudgerequest import UpdateJudgeRequest, UpdateJudgeRequestTypedDict
+from .putjudgeinschema import PutJudgeInSchema, PutJudgeInSchemaTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict(TypedDict):
     judge_id: str
-    update_judge_request: UpdateJudgeRequestTypedDict
+    put_judge_in_schema: PutJudgeInSchemaTypedDict
 
 
 class UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest(BaseModel):
@@ -18,7 +18,7 @@ class UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_judge_request: Annotated[
-        UpdateJudgeRequest,
+    put_judge_in_schema: Annotated[
+        PutJudgeInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

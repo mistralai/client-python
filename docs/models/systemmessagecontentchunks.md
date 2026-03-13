@@ -9,6 +9,12 @@
 value: models.TextChunk = /* values here */
 ```
 
+### `models.ReferenceChunk`
+
+```python
+value: models.ReferenceChunk = /* values here */
+```
+
 ### `models.ThinkChunk`
 
 ```python

@@ -221,6 +221,7 @@ class Classifiers(BaseSDK):
             models.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
+        truncate_for_context_length: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -230,6 +231,7 @@ class Classifiers(BaseSDK):
 
         :param inputs: Chat to classify
         :param model:
+        :param truncate_for_context_length:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -250,6 +252,7 @@ class Classifiers(BaseSDK):
                 inputs, models.ChatModerationRequestInputs3
             ),
             model=model,
+            truncate_for_context_length=truncate_for_context_length,
         )
 
         req = self._build_request(
@@ -320,6 +323,7 @@ class Classifiers(BaseSDK):
             models.ChatModerationRequestInputs3TypedDict,
         ],
         model: str,
+        truncate_for_context_length: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -329,6 +333,7 @@ class Classifiers(BaseSDK):
 
         :param inputs: Chat to classify
         :param model:
+        :param truncate_for_context_length:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -349,6 +354,7 @@ class Classifiers(BaseSDK):
                 inputs, models.ChatModerationRequestInputs3
             ),
             model=model,
+            truncate_for_context_length=truncate_for_context_length,
         )
 
         req = self._build_request_async(

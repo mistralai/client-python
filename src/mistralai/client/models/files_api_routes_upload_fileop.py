@@ -23,7 +23,7 @@ FilesAPIRoutesUploadFileFileVisibility = Literal[
 ]
 
 
-class MultiPartBodyParamsTypedDict(TypedDict):
+class FilesAPIRoutesUploadFileMultiPartBodyParamsTypedDict(TypedDict):
     file: FileTypedDict
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:
@@ -40,7 +40,7 @@ class MultiPartBodyParamsTypedDict(TypedDict):
     purpose: NotRequired[FilePurpose]
 
 
-class MultiPartBodyParams(BaseModel):
+class FilesAPIRoutesUploadFileMultiPartBodyParams(BaseModel):
     file: Annotated[File, FieldMetadata(multipart=MultipartFormMetadata(file=True))]
     r"""The File object (not file name) to be uploaded.
     To upload a file and specify a custom file name you should format your request as such:

@@ -14,13 +14,14 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal
+from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WebSearchToolTypedDict(TypedDict):
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
     type: Literal["web_search"]
+    open_results: NotRequired[bool]
 
 
 class WebSearchTool(BaseModel):
@@ -31,9 +32,11 @@ class WebSearchTool(BaseModel):
         pydantic.Field(alias="type"),
     ] = "web_search"
 
+    open_results: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_configuration"])
+        optional_fields = set(["tool_configuration", "open_results"])
         nullable_fields = set(["tool_configuration"])
         serialized = handler(self)
         m = {}

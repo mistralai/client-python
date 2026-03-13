@@ -8,9 +8,12 @@
 
 * [list](#list) - List all libraries you have access to.
 * [create](#create) - Create a new Library.
+* [libraries_resync_v1](#libraries_resync_v1) - Resync the library.
+* [libraries_cancel_sync_v1](#libraries_cancel_sync_v1) - Cancel the library sync if it is running.
 * [get](#get) - Detailed information about a specific Library.
 * [delete](#delete) - Delete a library and all of it's document.
 * [update](#update) - Update a library.
+* [libraries_status_v1](#libraries_status_v1) - Get the status of a library.
 
 ## list
 
@@ -43,7 +46,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListLibrariesResponse](../../models/listlibrariesresponse.md)**
+**[models.ListLibraryOut](../../models/listlibraryout.md)**
 
 ### Errors
 
@@ -76,16 +79,99 @@ with Mistral(
 
 ### Parameters
 
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `name`                                                                              | *str*                                                                               | :heavy_check_mark:                                                                  | N/A                                                                                 |
+| `description`                                                                       | *OptionalNullable[str]*                                                             | :heavy_minus_sign:                                                                  | N/A                                                                                 |
+| `chunk_size`                                                                        | *OptionalNullable[int]*                                                             | :heavy_minus_sign:                                                                  | N/A                                                                                 |
+| `crawler_config`                                                                    | [OptionalNullable[models.LibraryCrawlerInput]](../../models/librarycrawlerinput.md) | :heavy_minus_sign:                                                                  | N/A                                                                                 |
+| `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
+
+### Response
+
+**[models.LibraryOut](../../models/libraryout.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## libraries_resync_v1
+
+Resync the library. If it is a crawled library, it will recrawl the website.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_resync_v1" method="post" path="/v1/libraries/{library_id}/resync" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.libraries_resync_v1(library_id="e2179a63-bebe-47b9-abd5-2647f430c5f9")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `chunk_size`                                                        | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
-**[models.Library](../../models/library.md)**
+**[Any](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## libraries_cancel_sync_v1
+
+Cancel the library sync if it is running
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_cancel_sync_v1" method="post" path="/v1/libraries/{library_id}/cancel_sync" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.libraries_cancel_sync_v1(library_id="e889fd6e-efda-4690-92bd-7667721686a3")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[Any](../../models/.md)**
 
 ### Errors
 
@@ -126,7 +212,7 @@ with Mistral(
 
 ### Response
 
-**[models.Library](../../models/library.md)**
+**[models.LibraryOut](../../models/libraryout.md)**
 
 ### Errors
 
@@ -167,7 +253,7 @@ with Mistral(
 
 ### Response
 
-**[models.Library](../../models/library.md)**
+**[models.LibraryOut](../../models/libraryout.md)**
 
 ### Errors
 
@@ -210,7 +296,48 @@ with Mistral(
 
 ### Response
 
-**[models.Library](../../models/library.md)**
+**[models.LibraryOut](../../models/libraryout.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## libraries_status_v1
+
+Retrieve the status of a library to know its processing state.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_status_v1" method="get" path="/v1/libraries/{library_id}/status" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.libraries_status_v1(library_id="75b7a451-eb89-43c5-bc4f-ce3026d67558")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.LibraryStatusOut](../../models/librarystatusout.md)**
 
 ### Errors
 

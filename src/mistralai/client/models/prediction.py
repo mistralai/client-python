@@ -28,7 +28,7 @@ class Prediction(BaseModel):
         pydantic.Field(alias="type"),
     ] = "content"
 
-    content: Optional[str] = ""
+    content: Optional[str] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

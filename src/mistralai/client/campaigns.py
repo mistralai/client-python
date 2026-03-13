@@ -11,6 +11,8 @@ from typing import Any, Mapping, Optional, Union
 
 
 class Campaigns(BaseSDK):
+    r"""(beta) Run annotation campaigns on past conversations"""
+
     def create(
         self,
         *,
@@ -23,7 +25,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Campaign:
+    ) -> models.CampaignPreview:
         r"""Create and start a new campaign
 
         :param search_params:
@@ -46,7 +48,7 @@ class Campaigns(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateCampaignRequest(
+        request = models.PostCampaignInSchema(
             search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
             judge_id=judge_id,
             name=name,
@@ -68,7 +70,7 @@ class Campaigns(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateCampaignRequest
+                request, False, False, "json", models.PostCampaignInSchema
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -99,7 +101,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.Campaign, http_res)
+            return unmarshal_json_response(models.CampaignPreview, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -128,7 +130,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Campaign:
+    ) -> models.CampaignPreview:
         r"""Create and start a new campaign
 
         :param search_params:
@@ -151,7 +153,7 @@ class Campaigns(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateCampaignRequest(
+        request = models.PostCampaignInSchema(
             search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
             judge_id=judge_id,
             name=name,
@@ -173,7 +175,7 @@ class Campaigns(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateCampaignRequest
+                request, False, False, "json", models.PostCampaignInSchema
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -204,7 +206,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.Campaign, http_res)
+            return unmarshal_json_response(models.CampaignPreview, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -231,7 +233,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListCampaignsResponse:
+    ) -> models.CampaignPreviews:
         r"""Get all campaigns
 
         :param page_size:
@@ -300,7 +302,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListCampaignsResponse, http_res)
+            return unmarshal_json_response(models.CampaignPreviews, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -327,7 +329,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListCampaignsResponse:
+    ) -> models.CampaignPreviews:
         r"""Get all campaigns
 
         :param page_size:
@@ -396,7 +398,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListCampaignsResponse, http_res)
+            return unmarshal_json_response(models.CampaignPreviews, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -421,7 +423,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Campaign:
+    ) -> models.CampaignPreview:
         r"""Get campaign by id
 
         :param campaign_id:
@@ -486,7 +488,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Campaign, http_res)
+            return unmarshal_json_response(models.CampaignPreview, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -511,7 +513,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Campaign:
+    ) -> models.CampaignPreview:
         r"""Get campaign by id
 
         :param campaign_id:
@@ -576,7 +578,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Campaign, http_res)
+            return unmarshal_json_response(models.CampaignPreview, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -781,7 +783,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchCampaignStatusResponse:
+    ) -> models.CampaignStatus:
         r"""Get campaign status by campaign id
 
         :param campaign_id:
@@ -846,7 +848,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.FetchCampaignStatusResponse, http_res)
+            return unmarshal_json_response(models.CampaignStatus, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -871,7 +873,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchCampaignStatusResponse:
+    ) -> models.CampaignStatus:
         r"""Get campaign status by campaign id
 
         :param campaign_id:
@@ -936,7 +938,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.FetchCampaignStatusResponse, http_res)
+            return unmarshal_json_response(models.CampaignStatus, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -963,7 +965,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListCampaignSelectedEventsResponse:
+    ) -> models.CampaignSelectedEvents:
         r"""Get event ids that were selected by the given campaign
 
         :param campaign_id:
@@ -1032,9 +1034,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListCampaignSelectedEventsResponse, http_res
-            )
+            return unmarshal_json_response(models.CampaignSelectedEvents, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -1061,7 +1061,7 @@ class Campaigns(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListCampaignSelectedEventsResponse:
+    ) -> models.CampaignSelectedEvents:
         r"""Get event ids that were selected by the given campaign
 
         :param campaign_id:
@@ -1130,9 +1130,7 @@ class Campaigns(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListCampaignSelectedEventsResponse, http_res
-            )
+            return unmarshal_json_response(models.CampaignSelectedEvents, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):

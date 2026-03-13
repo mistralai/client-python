@@ -2,9 +2,16 @@
 # @generated-id: 521c2b5bfb2b
 
 from __future__ import annotations
+from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
+from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
+from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
+from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,14 +19,42 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Literal, Optional, Union
-from typing_extensions import NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ConversationRestartStreamRequestHandoffExecution = Literal[
     "client",
     "server",
+]
+
+
+ConversationRestartStreamRequestToolTypedDict = TypeAliasType(
+    "ConversationRestartStreamRequestToolTypedDict",
+    Union[
+        FunctionToolTypedDict,
+        CodeInterpreterToolTypedDict,
+        ImageGenerationToolTypedDict,
+        WebSearchToolTypedDict,
+        WebSearchPremiumToolTypedDict,
+        DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
+    ],
+)
+
+
+ConversationRestartStreamRequestTool = Annotated[
+    Union[
+        CodeInterpreterTool,
+        CustomConnector,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
+    ],
+    Field(discriminator="type"),
 ]
 
 
@@ -44,11 +79,23 @@ class ConversationRestartStreamRequestTypedDict(TypedDict):
     store: NotRequired[bool]
     r"""Whether to store the results into our servers or not."""
     handoff_execution: NotRequired[ConversationRestartStreamRequestHandoffExecution]
+    instructions: NotRequired[Nullable[str]]
+    r"""Instruction prompt the model will follow during the conversation."""
+    tools: NotRequired[List[ConversationRestartStreamRequestToolTypedDict]]
+    r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
+    name: NotRequired[Nullable[str]]
+    r"""Name given to the conversation."""
+    description: NotRequired[Nullable[str]]
+    r"""Description of the what the conversation is about."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
+    model: NotRequired[Nullable[str]]
+    r"""Model which is used as assistant of the conversation. If not provided, will use the original conversation's model."""
+    agent_id: NotRequired[Nullable[str]]
+    r"""Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent."""
     agent_version: NotRequired[
         Nullable[ConversationRestartStreamRequestAgentVersionTypedDict]
     ]
@@ -71,13 +118,31 @@ class ConversationRestartStreamRequest(BaseModel):
         "server"
     )
 
+    instructions: OptionalNullable[str] = UNSET
+    r"""Instruction prompt the model will follow during the conversation."""
+
+    tools: Optional[List[ConversationRestartStreamRequestTool]] = None
+    r"""List of tools which are available to the model during the conversation."""
+
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
 
     guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
+    name: OptionalNullable[str] = UNSET
+    r"""Name given to the conversation."""
+
+    description: OptionalNullable[str] = UNSET
+    r"""Description of the what the conversation is about."""
+
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
+
+    model: OptionalNullable[str] = UNSET
+    r"""Model which is used as assistant of the conversation. If not provided, will use the original conversation's model."""
+
+    agent_id: OptionalNullable[str] = UNSET
+    r"""Agent which will be used as assistant to the conversation. If not provided, will use the original conversation's agent."""
 
     agent_version: OptionalNullable[ConversationRestartStreamRequestAgentVersion] = (
         UNSET
@@ -92,13 +157,30 @@ class ConversationRestartStreamRequest(BaseModel):
                 "stream",
                 "store",
                 "handoff_execution",
+                "instructions",
+                "tools",
                 "completion_args",
                 "guardrails",
+                "name",
+                "description",
                 "metadata",
+                "model",
+                "agent_id",
                 "agent_version",
             ]
         )
-        nullable_fields = set(["guardrails", "metadata", "agent_version"])
+        nullable_fields = set(
+            [
+                "instructions",
+                "guardrails",
+                "name",
+                "description",
+                "metadata",
+                "model",
+                "agent_id",
+                "agent_version",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

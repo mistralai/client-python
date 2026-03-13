@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
+from .builtinconnectortools import BuiltInConnectorTools
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -29,9 +30,20 @@ ToolExecutionEntryName = TypeAliasType(
 )
 
 
+ToolExecutionEntryFunctionTypedDict = TypeAliasType(
+    "ToolExecutionEntryFunctionTypedDict", Union[BuiltInConnectorTools, str]
+)
+
+
+ToolExecutionEntryFunction = TypeAliasType(
+    "ToolExecutionEntryFunction", Union[BuiltInConnectorTools, str]
+)
+
+
 class ToolExecutionEntryTypedDict(TypedDict):
     name: ToolExecutionEntryNameTypedDict
     arguments: str
+    function: ToolExecutionEntryFunctionTypedDict
     object: Literal["entry"]
     type: Literal["tool.execution"]
     created_at: NotRequired[datetime]
@@ -46,6 +58,8 @@ class ToolExecutionEntry(BaseModel):
     name: ToolExecutionEntryName
 
     arguments: str
+
+    function: ToolExecutionEntryFunction
 
     object: Annotated[
         Annotated[Optional[Literal["entry"]], AfterValidator(validate_const("entry"))],

@@ -2,15 +2,9 @@
 # @generated-id: 6d9dc624aafd
 
 from __future__ import annotations
-from .classifierfinetunedmodel import (
-    ClassifierFineTunedModel,
-    ClassifierFineTunedModelTypedDict,
-)
-from .completionfinetunedmodel import (
-    CompletionFineTunedModel,
-    CompletionFineTunedModelTypedDict,
-)
-from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
+from .classifierftmodelout import ClassifierFTModelOut, ClassifierFTModelOutTypedDict
+from .completionftmodelout import CompletionFTModelOut, CompletionFTModelOutTypedDict
+from .updateftmodelin import UpdateFTModelIn, UpdateFTModelInTypedDict
 from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -24,7 +18,7 @@ from typing_extensions import Annotated, TypeAliasType, TypedDict
 class JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict(TypedDict):
     model_id: str
     r"""The ID of the model to update."""
-    update_model_request: UpdateModelRequestTypedDict
+    update_ft_model_in: UpdateFTModelInTypedDict
 
 
 class JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(BaseModel):
@@ -33,15 +27,15 @@ class JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(BaseModel):
     ]
     r"""The ID of the model to update."""
 
-    update_model_request: Annotated[
-        UpdateModelRequest,
+    update_ft_model_in: Annotated[
+        UpdateFTModelIn,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
 
 
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict = TypeAliasType(
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict",
-    Union[CompletionFineTunedModelTypedDict, ClassifierFineTunedModelTypedDict],
+    Union[CompletionFTModelOutTypedDict, ClassifierFTModelOutTypedDict],
 )
 r"""OK"""
 
@@ -59,15 +53,15 @@ class UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse(BaseModel):
 _JOBS_API_ROUTES_FINE_TUNING_UPDATE_FINE_TUNED_MODEL_RESPONSE_VARIANTS: dict[
     str, Any
 ] = {
-    "classifier": ClassifierFineTunedModel,
-    "completion": CompletionFineTunedModel,
+    "classifier": ClassifierFTModelOut,
+    "completion": CompletionFTModelOut,
 }
 
 
 JobsAPIRoutesFineTuningUpdateFineTunedModelResponse = Annotated[
     Union[
-        ClassifierFineTunedModel,
-        CompletionFineTunedModel,
+        ClassifierFTModelOut,
+        CompletionFTModelOut,
         UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
     ],
     BeforeValidator(

@@ -2,7 +2,7 @@
 # @generated-id: 7bb459765cba
 
 from __future__ import annotations
-from .updatedatasetrequest import UpdateDatasetRequest, UpdateDatasetRequestTypedDict
+from .patchdatasetinschema import PatchDatasetInSchema, PatchDatasetInSchemaTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict(TypedDict):
     dataset_id: str
-    update_dataset_request: UpdateDatasetRequestTypedDict
+    patch_dataset_in_schema: PatchDatasetInSchemaTypedDict
 
 
 class UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest(BaseModel):
@@ -18,7 +18,7 @@ class UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_dataset_request: Annotated[
-        UpdateDatasetRequest,
+    patch_dataset_in_schema: Annotated[
+        PatchDatasetInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

@@ -1,0 +1,17 @@
+# GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequest
+
+
+## Fields
+
+| Field                                                           | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `workflow_id`                                                   | *OptionalNullable[str]*                                         | :heavy_minus_sign:                                              | The workflow ID to filter by                                    |
+| `task_queue`                                                    | *OptionalNullable[str]*                                         | :heavy_minus_sign:                                              | The task queue to filter by                                     |
+| `active_only`                                                   | *Optional[bool]*                                                | :heavy_minus_sign:                                              | Whether to only return active workflows versions                |
+| `include_shared`                                                | *Optional[bool]*                                                | :heavy_minus_sign:                                              | Whether to include shared workflow versions                     |
+| `workflow_search`                                               | *OptionalNullable[str]*                                         | :heavy_minus_sign:                                              | The workflow name to filter by                                  |
+| `include_archived`                                              | *Optional[bool]*                                                | :heavy_minus_sign:                                              | Whether to include archived workflows                           |
+| `with_workflow`                                                 | *Optional[bool]*                                                | :heavy_minus_sign:                                              | Whether to include the workflow definition                      |
+| `available_in_chat_assistant`                                   | *OptionalNullable[bool]*                                        | :heavy_minus_sign:                                              | Whether to only return workflows compatible with chat assistant |
+| `limit`                                                         | *OptionalNullable[int]*                                         | :heavy_minus_sign:                                              | The maximum number of workflows versions to return              |
+| `cursor`                                                        | *OptionalNullable[str]*                                         | :heavy_minus_sign:                                              | The cursor for pagination                                       |

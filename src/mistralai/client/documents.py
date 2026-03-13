@@ -27,7 +27,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentsResponse:
+    ) -> models.ListDocumentOut:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -106,7 +106,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
+            return unmarshal_json_response(models.ListDocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -135,7 +135,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDocumentsResponse:
+    ) -> models.ListDocumentOut:
         r"""List documents in a given library.
 
         Given a library, lists the document that have been uploaded to that library.
@@ -214,7 +214,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDocumentsResponse, http_res)
+            return unmarshal_json_response(models.ListDocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -238,7 +238,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Upload a new document.
 
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
@@ -320,7 +320,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, ["200", "201"], "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -344,7 +344,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Upload a new document.
 
         Given a library, upload a new document to that library. It is queued for processing, it status will change it has been processed. The processing has to be completed in order be discoverable for the library search
@@ -426,7 +426,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, ["200", "201"], "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -450,7 +450,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Retrieve the metadata of a specific document.
 
         Given a library and a document in this library, you can retrieve the metadata of that document.
@@ -519,7 +519,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -543,7 +543,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Retrieve the metadata of a specific document.
 
         Given a library and a document in this library, you can retrieve the metadata of that document.
@@ -612,7 +612,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -640,7 +640,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Update the metadata of a specific document.
 
         Given a library and a document in that library, update the name of that document.
@@ -667,7 +667,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            update_document_request=models.UpdateDocumentRequest(
+            document_update_in=models.DocumentUpdateIn(
                 name=name,
                 attributes=attributes,
             ),
@@ -687,11 +687,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_document_request,
+                request.document_update_in,
                 False,
                 False,
                 "json",
-                models.UpdateDocumentRequest,
+                models.DocumentUpdateIn,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -722,7 +722,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -750,7 +750,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Document:
+    ) -> models.DocumentOut:
         r"""Update the metadata of a specific document.
 
         Given a library and a document in that library, update the name of that document.
@@ -777,7 +777,7 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsUpdateV1Request(
             library_id=library_id,
             document_id=document_id,
-            update_document_request=models.UpdateDocumentRequest(
+            document_update_in=models.DocumentUpdateIn(
                 name=name,
                 attributes=attributes,
             ),
@@ -797,11 +797,11 @@ class Documents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_document_request,
+                request.document_update_in,
                 False,
                 False,
                 "json",
-                models.UpdateDocumentRequest,
+                models.DocumentUpdateIn,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -832,7 +832,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.Document, http_res)
+            return unmarshal_json_response(models.DocumentOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -1228,7 +1228,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ProcessingStatus:
+    ) -> models.ProcessingStatusOut:
         r"""Retrieve the processing status of a specific document.
 
         Given a library and a document in that library, retrieve the processing status of that document.
@@ -1297,7 +1297,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ProcessingStatus, http_res)
+            return unmarshal_json_response(models.ProcessingStatusOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -1321,7 +1321,7 @@ class Documents(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ProcessingStatus:
+    ) -> models.ProcessingStatusOut:
         r"""Retrieve the processing status of a specific document.
 
         Given a library and a document in that library, retrieve the processing status of that document.
@@ -1390,7 +1390,7 @@ class Documents(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ProcessingStatus, http_res)
+            return unmarshal_json_response(models.ProcessingStatusOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

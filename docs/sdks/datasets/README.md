@@ -2,6 +2,8 @@
 
 ## Overview
 
+(beta) Manage conversation datasets
+
 ### Available Operations
 
 * [create](#create) - Create a new empty dataset
@@ -96,7 +98,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDatasetsResponse](../../models/listdatasetsresponse.md)**
+**[models.DatasetPreviews](../../models/datasetpreviews.md)**
 
 ### Errors
 
@@ -259,7 +261,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDatasetRecordsResponse](../../models/listdatasetrecordsresponse.md)**
+**[models.DatasetRecords](../../models/datasetrecords.md)**
 
 ### Errors
 
@@ -574,7 +576,7 @@ with Mistral(
 
 ### Response
 
-**[models.ExportDatasetResponse](../../models/exportdatasetresponse.md)**
+**[models.DatasetExport](../../models/datasetexport.md)**
 
 ### Errors
 
@@ -659,7 +661,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDatasetImportTasksResponse](../../models/listdatasetimporttasksresponse.md)**
+**[models.DatasetImportTasks](../../models/datasetimporttasks.md)**
 
 ### Errors
 

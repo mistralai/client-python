@@ -2,9 +2,9 @@
 # @generated-id: 4749566fd16d
 
 from __future__ import annotations
-from .judgedatasetrecordrequest import (
-    JudgeDatasetRecordRequest,
-    JudgeDatasetRecordRequestTypedDict,
+from .postdatasetrecordjudginginschema import (
+    PostDatasetRecordJudgingInSchema,
+    PostDatasetRecordJudgingInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,7 @@ class JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingP
     TypedDict
 ):
     dataset_record_id: str
-    judge_dataset_record_request: JudgeDatasetRecordRequestTypedDict
+    post_dataset_record_judging_in_schema: PostDatasetRecordJudgingInSchemaTypedDict
 
 
 class JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest(
@@ -25,7 +25,7 @@ class JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingP
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    judge_dataset_record_request: Annotated[
-        JudgeDatasetRecordRequest,
+    post_dataset_record_judging_in_schema: Annotated[
+        PostDatasetRecordJudgingInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

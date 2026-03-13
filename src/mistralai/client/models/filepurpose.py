@@ -8,9 +8,15 @@ from typing import Literal, Union
 
 FilePurpose = Union[
     Literal[
+        "evaluation",
         "fine-tune",
         "batch",
+        "capture",
         "ocr",
+        "audio",
+        "code_interpreter",
+        "image_generation",
+        "playground",
     ],
     UnrecognizedStr,
 ]

@@ -48,7 +48,7 @@ class MessageOutputEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["message.output.delta"],
+            Optional[Literal["message.output.delta"]],
             AfterValidator(validate_const("message.output.delta")),
         ],
         pydantic.Field(alias="type"),
@@ -74,7 +74,15 @@ class MessageOutputEvent(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["created_at", "output_index", "content_index", "model", "agent_id", "role"]
+            [
+                "type",
+                "created_at",
+                "output_index",
+                "content_index",
+                "model",
+                "agent_id",
+                "role",
+            ]
         )
         nullable_fields = set(["model", "agent_id"])
         serialized = handler(self)

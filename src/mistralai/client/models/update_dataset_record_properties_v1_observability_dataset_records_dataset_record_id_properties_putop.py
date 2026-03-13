@@ -2,9 +2,9 @@
 # @generated-id: b0af26e00bfa
 
 from __future__ import annotations
-from .updatedatasetrecordpropertiesrequest import (
-    UpdateDatasetRecordPropertiesRequest,
-    UpdateDatasetRecordPropertiesRequestTypedDict,
+from .putdatasetrecordpropertiesinschema import (
+    PutDatasetRecordPropertiesInSchema,
+    PutDatasetRecordPropertiesInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,9 +15,7 @@ class UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDP
     TypedDict
 ):
     dataset_record_id: str
-    update_dataset_record_properties_request: (
-        UpdateDatasetRecordPropertiesRequestTypedDict
-    )
+    put_dataset_record_properties_in_schema: PutDatasetRecordPropertiesInSchemaTypedDict
 
 
 class UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequest(
@@ -27,7 +25,7 @@ class UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDP
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_dataset_record_properties_request: Annotated[
-        UpdateDatasetRecordPropertiesRequest,
+    put_dataset_record_properties_in_schema: Annotated[
+        PutDatasetRecordPropertiesInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

@@ -11,6 +11,8 @@ from typing import Any, Mapping, Optional, Union
 
 
 class Fields(BaseSDK):
+    r"""(beta) Fetch info about available fields and filters"""
+
     def list(
         self,
         *,
@@ -18,7 +20,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListChatCompletionFieldsResponse:
+    ) -> models.ChatCompletionFields:
         r"""Get Chat Completion Fields
 
         :param retries: Override the default retry configuration for this method
@@ -77,9 +79,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListChatCompletionFieldsResponse, http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionFields, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -103,7 +103,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListChatCompletionFieldsResponse:
+    ) -> models.ChatCompletionFields:
         r"""Get Chat Completion Fields
 
         :param retries: Override the default retry configuration for this method
@@ -162,9 +162,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListChatCompletionFieldsResponse, http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionFields, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -190,7 +188,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchChatCompletionFieldOptionsResponse:
+    ) -> models.ChatCompletionFieldOptions:
         r"""Get Chat Completion Field Options
 
         :param field_name:
@@ -257,9 +255,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.FetchChatCompletionFieldOptionsResponse, http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionFieldOptions, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -285,7 +281,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchChatCompletionFieldOptionsResponse:
+    ) -> models.ChatCompletionFieldOptions:
         r"""Get Chat Completion Field Options
 
         :param field_name:
@@ -352,9 +348,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.FetchChatCompletionFieldOptionsResponse, http_res
-            )
+            return unmarshal_json_response(models.ChatCompletionFieldOptions, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -382,7 +376,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchFieldOptionCountsResponse:
+    ) -> models.FieldOptionCounts:
         r"""Get Chat Completion Field Options Counts
 
         :param field_name:
@@ -404,7 +398,7 @@ class Fields(BaseSDK):
 
         request = models.GetChatCompletionFieldOptionsCountsV1ObservabilityChatCompletionFieldsFieldNameOptionsCountsPostRequest(
             field_name=field_name,
-            fetch_field_option_counts_request=models.FetchFieldOptionCountsRequest(
+            field_option_counts_in_schema=models.FieldOptionCountsInSchema(
                 filter_params=utils.get_pydantic_model(
                     filter_params, OptionalNullable[models.FilterPayload]
                 ),
@@ -425,11 +419,11 @@ class Fields(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.fetch_field_option_counts_request,
+                request.field_option_counts_in_schema,
                 False,
                 False,
                 "json",
-                models.FetchFieldOptionCountsRequest,
+                models.FieldOptionCountsInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -460,9 +454,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.FetchFieldOptionCountsResponse, http_res
-            )
+            return unmarshal_json_response(models.FieldOptionCounts, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -490,7 +482,7 @@ class Fields(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.FetchFieldOptionCountsResponse:
+    ) -> models.FieldOptionCounts:
         r"""Get Chat Completion Field Options Counts
 
         :param field_name:
@@ -512,7 +504,7 @@ class Fields(BaseSDK):
 
         request = models.GetChatCompletionFieldOptionsCountsV1ObservabilityChatCompletionFieldsFieldNameOptionsCountsPostRequest(
             field_name=field_name,
-            fetch_field_option_counts_request=models.FetchFieldOptionCountsRequest(
+            field_option_counts_in_schema=models.FieldOptionCountsInSchema(
                 filter_params=utils.get_pydantic_model(
                     filter_params, OptionalNullable[models.FilterPayload]
                 ),
@@ -533,11 +525,11 @@ class Fields(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.fetch_field_option_counts_request,
+                request.field_option_counts_in_schema,
                 False,
                 False,
                 "json",
-                models.FetchFieldOptionCountsRequest,
+                models.FieldOptionCountsInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -568,9 +560,7 @@ class Fields(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.FetchFieldOptionCountsResponse, http_res
-            )
+            return unmarshal_json_response(models.FieldOptionCounts, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):

@@ -33,6 +33,18 @@ value: models.ReferenceChunk = /* values here */
 value: models.FileChunk = /* values here */
 ```
 
+### `models.FileURLChunk`
+
+```python
+value: models.FileURLChunk = /* values here */
+```
+
+### `models.SearchResultListChunk`
+
+```python
+value: models.SearchResultListChunk = /* values here */
+```
+
 ### `models.ThinkChunk`
 
 ```python

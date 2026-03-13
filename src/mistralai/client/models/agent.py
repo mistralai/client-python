@@ -33,10 +33,10 @@ AgentToolTypedDict = TypeAliasType(
     "AgentToolTypedDict",
     Union[
         FunctionToolTypedDict,
-        WebSearchToolTypedDict,
-        WebSearchPremiumToolTypedDict,
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
+        WebSearchToolTypedDict,
+        WebSearchPremiumToolTypedDict,
         DocumentLibraryToolTypedDict,
         CustomConnectorTypedDict,
     ],

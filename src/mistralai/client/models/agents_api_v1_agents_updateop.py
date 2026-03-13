@@ -2,7 +2,7 @@
 # @generated-id: bb55993c932d
 
 from __future__ import annotations
-from .updateagentrequest import UpdateAgentRequest, UpdateAgentRequestTypedDict
+from .agentupdaterequest import AgentUpdateRequest, AgentUpdateRequestTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class AgentsAPIV1AgentsUpdateRequestTypedDict(TypedDict):
     agent_id: str
-    update_agent_request: UpdateAgentRequestTypedDict
+    agent_update_request: AgentUpdateRequestTypedDict
 
 
 class AgentsAPIV1AgentsUpdateRequest(BaseModel):
@@ -18,7 +18,7 @@ class AgentsAPIV1AgentsUpdateRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_agent_request: Annotated[
-        UpdateAgentRequest,
+    agent_update_request: Annotated[
+        AgentUpdateRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

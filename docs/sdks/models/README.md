@@ -128,7 +128,7 @@ with Mistral(
 
 ### Response
 
-**[models.DeleteModelResponse](../../models/deletemodelresponse.md)**
+**[models.DeleteModelOut](../../models/deletemodelout.md)**
 
 ### Errors
 
@@ -211,7 +211,7 @@ with Mistral(
 
 ### Response
 
-**[models.ArchiveModelResponse](../../models/archivemodelresponse.md)**
+**[models.ArchiveFTModelOut](../../models/archiveftmodelout.md)**
 
 ### Errors
 
@@ -251,7 +251,7 @@ with Mistral(
 
 ### Response
 
-**[models.UnarchiveModelResponse](../../models/unarchivemodelresponse.md)**
+**[models.UnarchiveFTModelOut](../../models/unarchiveftmodelout.md)**
 
 ### Errors
 

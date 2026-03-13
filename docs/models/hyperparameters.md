@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### `models.CompletionTrainingParameters`
+### `models.CompletionTrainingParametersIn`
 
 ```python
-value: models.CompletionTrainingParameters = /* values here */
+value: models.CompletionTrainingParametersIn = /* values here */
 ```
 
-### `models.ClassifierTrainingParameters`
+### `models.ClassifierTrainingParametersIn`
 
 ```python
-value: models.ClassifierTrainingParameters = /* values here */
+value: models.ClassifierTrainingParametersIn = /* values here */
 ```
 

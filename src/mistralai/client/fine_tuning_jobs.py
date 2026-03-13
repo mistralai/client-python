@@ -31,7 +31,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListFineTuningJobsResponse:
+    ) -> models.JobsOut:
         r"""Get Fine Tuning Jobs
 
         Get a list of fine-tuning jobs for your organization and user.
@@ -115,7 +115,7 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListFineTuningJobsResponse, http_res)
+            return unmarshal_json_response(models.JobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -144,7 +144,7 @@ class FineTuningJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListFineTuningJobsResponse:
+    ) -> models.JobsOut:
         r"""Get Fine Tuning Jobs
 
         Get a list of fine-tuning jobs for your organization and user.
@@ -228,7 +228,7 @@ class FineTuningJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListFineTuningJobsResponse, http_res)
+            return unmarshal_json_response(models.JobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -249,22 +249,19 @@ class FineTuningJobs(BaseSDK):
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
-            Union[
-                List[models.CreateFineTuningJobRequestIntegration],
-                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
-            ]
+            Union[List[models.JobInIntegration], List[models.JobInIntegrationTypedDict]]
         ] = UNSET,
         auto_start: Optional[bool] = None,
-        invalid_sample_skip_percentage: Optional[float] = 0,
+        invalid_sample_skip_percentage: Optional[float] = None,
         job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
-            Union[
-                List[models.CreateFineTuningJobRequestRepository],
-                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
-            ]
+            Union[List[models.JobInRepository], List[models.JobInRepositoryTypedDict]]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
+            Union[
+                List[models.ClassifierTargetIn],
+                List[models.ClassifierTargetInTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -301,7 +298,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateFineTuningJobRequest(
+        request = models.JobIn(
             model=model,
             training_files=utils.get_pydantic_model(
                 training_files, Optional[List[models.TrainingFile]]
@@ -309,8 +306,7 @@ class FineTuningJobs(BaseSDK):
             validation_files=validation_files,
             suffix=suffix,
             integrations=utils.get_pydantic_model(
-                integrations,
-                OptionalNullable[List[models.CreateFineTuningJobRequestIntegration]],
+                integrations, OptionalNullable[List[models.JobInIntegration]]
             ),
             auto_start=auto_start,
             invalid_sample_skip_percentage=invalid_sample_skip_percentage,
@@ -319,11 +315,10 @@ class FineTuningJobs(BaseSDK):
                 hyperparameters, models.Hyperparameters
             ),
             repositories=utils.get_pydantic_model(
-                repositories,
-                OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
+                repositories, OptionalNullable[List[models.JobInRepository]]
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTarget]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
             ),
         )
 
@@ -341,7 +336,7 @@ class FineTuningJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateFineTuningJobRequest
+                request, False, False, "json", models.JobIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -394,22 +389,19 @@ class FineTuningJobs(BaseSDK):
         validation_files: OptionalNullable[List[str]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         integrations: OptionalNullable[
-            Union[
-                List[models.CreateFineTuningJobRequestIntegration],
-                List[models.CreateFineTuningJobRequestIntegrationTypedDict],
-            ]
+            Union[List[models.JobInIntegration], List[models.JobInIntegrationTypedDict]]
         ] = UNSET,
         auto_start: Optional[bool] = None,
-        invalid_sample_skip_percentage: Optional[float] = 0,
+        invalid_sample_skip_percentage: Optional[float] = None,
         job_type: OptionalNullable[models.FineTuneableModelType] = UNSET,
         repositories: OptionalNullable[
-            Union[
-                List[models.CreateFineTuningJobRequestRepository],
-                List[models.CreateFineTuningJobRequestRepositoryTypedDict],
-            ]
+            Union[List[models.JobInRepository], List[models.JobInRepositoryTypedDict]]
         ] = UNSET,
         classifier_targets: OptionalNullable[
-            Union[List[models.ClassifierTarget], List[models.ClassifierTargetTypedDict]]
+            Union[
+                List[models.ClassifierTargetIn],
+                List[models.ClassifierTargetInTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -446,7 +438,7 @@ class FineTuningJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateFineTuningJobRequest(
+        request = models.JobIn(
             model=model,
             training_files=utils.get_pydantic_model(
                 training_files, Optional[List[models.TrainingFile]]
@@ -454,8 +446,7 @@ class FineTuningJobs(BaseSDK):
             validation_files=validation_files,
             suffix=suffix,
             integrations=utils.get_pydantic_model(
-                integrations,
-                OptionalNullable[List[models.CreateFineTuningJobRequestIntegration]],
+                integrations, OptionalNullable[List[models.JobInIntegration]]
             ),
             auto_start=auto_start,
             invalid_sample_skip_percentage=invalid_sample_skip_percentage,
@@ -464,11 +455,10 @@ class FineTuningJobs(BaseSDK):
                 hyperparameters, models.Hyperparameters
             ),
             repositories=utils.get_pydantic_model(
-                repositories,
-                OptionalNullable[List[models.CreateFineTuningJobRequestRepository]],
+                repositories, OptionalNullable[List[models.JobInRepository]]
             ),
             classifier_targets=utils.get_pydantic_model(
-                classifier_targets, OptionalNullable[List[models.ClassifierTarget]]
+                classifier_targets, OptionalNullable[List[models.ClassifierTargetIn]]
             ),
         )
 
@@ -486,7 +476,7 @@ class FineTuningJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateFineTuningJobRequest
+                request, False, False, "json", models.JobIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

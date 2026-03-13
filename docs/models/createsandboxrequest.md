@@ -1,0 +1,19 @@
+# CreateSandboxRequest
+
+Request to create a new sandbox.
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `ttl_seconds`                                                                | *OptionalNullable[int]*                                                      | :heavy_minus_sign:                                                           | Time-to-live in seconds (max: 1 hour). Uses server default if not specified. |
+| `image`                                                                      | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Container image for the sandbox. Default: python:3.13-slim                   |
+| `cpu_request`                                                                | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | CPU request (e.g., '100m')                                                   |
+| `cpu_limit`                                                                  | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | CPU limit (e.g., '500m')                                                     |
+| `memory_request`                                                             | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Memory request (e.g., '128Mi')                                               |
+| `memory_limit`                                                               | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Memory limit (e.g., '512Mi')                                                 |
+| `storage_limit`                                                              | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Ephemeral storage limit (e.g., '1Gi')                                        |
+| `setup_script`                                                               | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Bash script to execute during sandbox initialization                         |
+| `envs`                                                                       | Dict[str, *str*]                                                             | :heavy_minus_sign:                                                           | Environment variables to set in the sandbox                                  |
+| `secrets`                                                                    | Dict[str, *str*]                                                             | :heavy_minus_sign:                                                           | Secret environment variables to set in the sandbox                           |

@@ -4,9 +4,15 @@
 from __future__ import annotations
 from .functioncall import FunctionCall, FunctionCallTypedDict
 from .tooltypes import ToolTypes
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
-from typing import Optional
+from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -15,6 +21,7 @@ class ToolCallTypedDict(TypedDict):
     id: NotRequired[str]
     type: NotRequired[ToolTypes]
     index: NotRequired[int]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class ToolCall(BaseModel):
@@ -24,20 +31,31 @@ class ToolCall(BaseModel):
 
     type: Optional[ToolTypes] = None
 
-    index: Optional[int] = 0
+    index: Optional[int] = None
+
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["id", "type", "index"])
+        optional_fields = set(["id", "type", "index", "metadata"])
+        nullable_fields = set(["metadata"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

@@ -3,13 +3,17 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .mistralpromptdata import MistralPromptData, MistralPromptDataTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
+from .reasoningeffort import ReasoningEffort
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
+from .streamoptions import StreamOptions, StreamOptionsTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
 from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
+from .toolexecutiondata import ToolExecutionData, ToolExecutionDataTypedDict
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
 from mistralai.client.types import (
@@ -19,8 +23,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -49,13 +52,8 @@ ChatCompletionRequestMessageTypedDict = TypeAliasType(
 
 
 ChatCompletionRequestMessage = Annotated[
-    Union[
-        Annotated[AssistantMessage, Tag("assistant")],
-        Annotated[SystemMessage, Tag("system")],
-        Annotated[ToolMessage, Tag("tool")],
-        Annotated[UserMessage, Tag("user")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "role", "role")),
+    Union[AssistantMessage, SystemMessage, ToolMessage, UserMessage],
+    Field(discriminator="role"),
 ]
 
 
@@ -108,6 +106,14 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
+    tool_execution_data: NotRequired[Nullable[ToolExecutionDataTypedDict]]
+    document_image_limit: NotRequired[Nullable[int]]
+    document_page_limit: NotRequired[Nullable[int]]
+    document_image_min_size: NotRequired[Nullable[int]]
+    prompt_data: NotRequired[MistralPromptDataTypedDict]
+    truncate_for_context_length: NotRequired[bool]
+    stream_options: NotRequired[StreamOptionsTypedDict]
+    reasoning_effort: NotRequired[Nullable[ReasoningEffort]]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -166,6 +172,22 @@ class ChatCompletionRequest(BaseModel):
     prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
+    tool_execution_data: OptionalNullable[ToolExecutionData] = UNSET
+
+    document_image_limit: OptionalNullable[int] = UNSET
+
+    document_page_limit: OptionalNullable[int] = UNSET
+
+    document_image_min_size: OptionalNullable[int] = UNSET
+
+    prompt_data: Optional[MistralPromptData] = None
+
+    truncate_for_context_length: Optional[bool] = None
+
+    stream_options: Optional[StreamOptions] = None
+
+    reasoning_effort: OptionalNullable[ReasoningEffort] = UNSET
+
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -189,6 +211,14 @@ class ChatCompletionRequest(BaseModel):
                 "prediction",
                 "parallel_tool_calls",
                 "prompt_mode",
+                "tool_execution_data",
+                "document_image_limit",
+                "document_page_limit",
+                "document_image_min_size",
+                "prompt_data",
+                "truncate_for_context_length",
+                "stream_options",
+                "reasoning_effort",
                 "safe_prompt",
             ]
         )
@@ -201,6 +231,11 @@ class ChatCompletionRequest(BaseModel):
                 "tools",
                 "n",
                 "prompt_mode",
+                "tool_execution_data",
+                "document_image_limit",
+                "document_page_limit",
+                "document_image_min_size",
+                "reasoning_effort",
             ]
         )
         serialized = handler(self)

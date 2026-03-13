@@ -2,9 +2,9 @@
 # @generated-id: fa5d55a9d6cf
 
 from __future__ import annotations
-from .updatedatasetrecordpayloadrequest import (
-    UpdateDatasetRecordPayloadRequest,
-    UpdateDatasetRecordPayloadRequestTypedDict,
+from .putdatasetrecordpayloadinschema import (
+    PutDatasetRecordPayloadInSchema,
+    PutDatasetRecordPayloadInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,7 @@ class UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayl
     TypedDict
 ):
     dataset_record_id: str
-    update_dataset_record_payload_request: UpdateDatasetRecordPayloadRequestTypedDict
+    put_dataset_record_payload_in_schema: PutDatasetRecordPayloadInSchemaTypedDict
 
 
 class UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
@@ -25,7 +25,7 @@ class UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayl
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_dataset_record_payload_request: Annotated[
-        UpdateDatasetRecordPayloadRequest,
+    put_dataset_record_payload_in_schema: Annotated[
+        PutDatasetRecordPayloadInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

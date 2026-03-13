@@ -1,0 +1,14 @@
+# CanSaveJudgeInSchema
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `name`                                                                       | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `description`                                                                | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `model_name`                                                                 | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `output`                                                                     | [models.CanSaveJudgeInSchemaOutput](../models/cansavejudgeinschemaoutput.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `instructions`                                                               | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `tools`                                                                      | List[*str*]                                                                  | :heavy_check_mark:                                                           | N/A                                                                          |
+| `judge_id`                                                                   | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |

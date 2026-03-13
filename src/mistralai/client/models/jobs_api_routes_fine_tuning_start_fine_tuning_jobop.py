@@ -2,13 +2,13 @@
 # @generated-id: e7ff4a4a4edb
 
 from __future__ import annotations
-from .classifierfinetuningjobdetails import (
-    ClassifierFineTuningJobDetails,
-    ClassifierFineTuningJobDetailsTypedDict,
+from .classifierdetailedjobout import (
+    ClassifierDetailedJobOut,
+    ClassifierDetailedJobOutTypedDict,
 )
-from .completionfinetuningjobdetails import (
-    CompletionFineTuningJobDetails,
-    CompletionFineTuningJobDetailsTypedDict,
+from .completiondetailedjobout import (
+    CompletionDetailedJobOut,
+    CompletionDetailedJobOutTypedDict,
 )
 from functools import partial
 from mistralai.client.types import BaseModel
@@ -32,9 +32,7 @@ class JobsAPIRoutesFineTuningStartFineTuningJobRequest(BaseModel):
 
 JobsAPIRoutesFineTuningStartFineTuningJobResponseTypedDict = TypeAliasType(
     "JobsAPIRoutesFineTuningStartFineTuningJobResponseTypedDict",
-    Union[
-        CompletionFineTuningJobDetailsTypedDict, ClassifierFineTuningJobDetailsTypedDict
-    ],
+    Union[CompletionDetailedJobOutTypedDict, ClassifierDetailedJobOutTypedDict],
 )
 r"""OK"""
 
@@ -50,15 +48,15 @@ class UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse(BaseModel):
 
 
 _JOBS_API_ROUTES_FINE_TUNING_START_FINE_TUNING_JOB_RESPONSE_VARIANTS: dict[str, Any] = {
-    "classifier": ClassifierFineTuningJobDetails,
-    "completion": CompletionFineTuningJobDetails,
+    "classifier": ClassifierDetailedJobOut,
+    "completion": CompletionDetailedJobOut,
 }
 
 
 JobsAPIRoutesFineTuningStartFineTuningJobResponse = Annotated[
     Union[
-        ClassifierFineTuningJobDetails,
-        CompletionFineTuningJobDetails,
+        ClassifierDetailedJobOut,
+        CompletionDetailedJobOut,
         UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse,
     ],
     BeforeValidator(

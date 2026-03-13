@@ -9,4 +9,10 @@ System prompt may include knowledge cutoff date, model capabilities, tone to use
 
 | Name        | Value       |
 | ----------- | ----------- |
+| `AUTO`      | auto        |
+| `DEFAULT`   | default     |
+| `CHAT`      | chat        |
+| `AGENTS`    | agents      |
+| `API`       | api         |
 | `REASONING` | reasoning   |
+| `EMPTY`     | empty       |

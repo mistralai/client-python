@@ -53,7 +53,7 @@ class FunctionCallEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["function.call.delta"],
+            Optional[Literal["function.call.delta"]],
             AfterValidator(validate_const("function.call.delta")),
         ],
         pydantic.Field(alias="type"),
@@ -72,7 +72,14 @@ class FunctionCallEvent(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["created_at", "output_index", "model", "agent_id", "confirmation_status"]
+            [
+                "type",
+                "created_at",
+                "output_index",
+                "model",
+                "agent_id",
+                "confirmation_status",
+            ]
         )
         nullable_fields = set(["model", "agent_id", "confirmation_status"])
         serialized = handler(self)

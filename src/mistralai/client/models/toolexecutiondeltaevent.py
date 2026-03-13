@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
+from .builtinconnectortools import BuiltInConnectorTools
 from datetime import datetime
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
@@ -23,10 +24,21 @@ ToolExecutionDeltaEventName = TypeAliasType(
 )
 
 
+ToolExecutionDeltaEventFunctionTypedDict = TypeAliasType(
+    "ToolExecutionDeltaEventFunctionTypedDict", Union[BuiltInConnectorTools, str]
+)
+
+
+ToolExecutionDeltaEventFunction = TypeAliasType(
+    "ToolExecutionDeltaEventFunction", Union[BuiltInConnectorTools, str]
+)
+
+
 class ToolExecutionDeltaEventTypedDict(TypedDict):
     id: str
     name: ToolExecutionDeltaEventNameTypedDict
     arguments: str
+    function: ToolExecutionDeltaEventFunctionTypedDict
     type: Literal["tool.execution.delta"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
@@ -39,9 +51,11 @@ class ToolExecutionDeltaEvent(BaseModel):
 
     arguments: str
 
+    function: ToolExecutionDeltaEventFunction
+
     type: Annotated[
         Annotated[
-            Literal["tool.execution.delta"],
+            Optional[Literal["tool.execution.delta"]],
             AfterValidator(validate_const("tool.execution.delta")),
         ],
         pydantic.Field(alias="type"),
@@ -53,7 +67,7 @@ class ToolExecutionDeltaEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at", "output_index"])
+        optional_fields = set(["type", "created_at", "output_index"])
         serialized = handler(self)
         m = {}
 

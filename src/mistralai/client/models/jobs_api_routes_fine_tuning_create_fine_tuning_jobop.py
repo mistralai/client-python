@@ -2,15 +2,9 @@
 # @generated-id: 81651291187a
 
 from __future__ import annotations
-from .classifierfinetuningjob import (
-    ClassifierFineTuningJob,
-    ClassifierFineTuningJobTypedDict,
-)
-from .completionfinetuningjob import (
-    CompletionFineTuningJob,
-    CompletionFineTuningJobTypedDict,
-)
-from .legacyjobmetadata import LegacyJobMetadata, LegacyJobMetadataTypedDict
+from .classifierjobout import ClassifierJobOut, ClassifierJobOutTypedDict
+from .completionjobout import CompletionJobOut, CompletionJobOutTypedDict
+from .legacyjobmetadataout import LegacyJobMetadataOut, LegacyJobMetadataOutTypedDict
 from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils.unions import parse_open_union
@@ -21,8 +15,7 @@ from typing_extensions import Annotated, TypeAliasType
 
 
 ResponseTypedDict = TypeAliasType(
-    "ResponseTypedDict",
-    Union[ClassifierFineTuningJobTypedDict, CompletionFineTuningJobTypedDict],
+    "ResponseTypedDict", Union[ClassifierJobOutTypedDict, CompletionJobOutTypedDict]
 )
 
 
@@ -37,13 +30,13 @@ class UnknownResponse(BaseModel):
 
 
 _RESPONSE_VARIANTS: dict[str, Any] = {
-    "classifier": ClassifierFineTuningJob,
-    "completion": CompletionFineTuningJob,
+    "classifier": ClassifierJobOut,
+    "completion": CompletionJobOut,
 }
 
 
 Response = Annotated[
-    Union[ClassifierFineTuningJob, CompletionFineTuningJob, UnknownResponse],
+    Union[ClassifierJobOut, CompletionJobOut, UnknownResponse],
     BeforeValidator(
         partial(
             parse_open_union,
@@ -58,13 +51,13 @@ Response = Annotated[
 
 JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict = TypeAliasType(
     "JobsAPIRoutesFineTuningCreateFineTuningJobResponseTypedDict",
-    Union[LegacyJobMetadataTypedDict, ResponseTypedDict],
+    Union[LegacyJobMetadataOutTypedDict, ResponseTypedDict],
 )
 r"""OK"""
 
 
 JobsAPIRoutesFineTuningCreateFineTuningJobResponse = TypeAliasType(
     "JobsAPIRoutesFineTuningCreateFineTuningJobResponse",
-    Union[LegacyJobMetadata, Response],
+    Union[LegacyJobMetadataOut, Response],
 )
 r"""OK"""

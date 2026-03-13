@@ -39,9 +39,7 @@ class AssistantMessageTypedDict(TypedDict):
 
 class AssistantMessage(BaseModel):
     role: Annotated[
-        Annotated[
-            Optional[Literal["assistant"]], AfterValidator(validate_const("assistant"))
-        ],
+        Annotated[Literal["assistant"], AfterValidator(validate_const("assistant"))],
         pydantic.Field(alias="role"),
     ] = "assistant"
 
@@ -54,7 +52,7 @@ class AssistantMessage(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["role", "content", "tool_calls", "prefix"])
+        optional_fields = set(["content", "tool_calls", "prefix"])
         nullable_fields = set(["content", "tool_calls"])
         serialized = handler(self)
         m = {}

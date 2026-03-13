@@ -17,7 +17,7 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
+        document: Union[models.Document, models.DocumentTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
@@ -33,6 +33,9 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        confidence_scores_granularity: OptionalNullable[
+            models.ConfidenceGranularity
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -53,6 +56,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -71,7 +75,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.DocumentUnion),
+            document=utils.get_pydantic_model(document, models.Document),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -86,6 +90,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            confidence_scores_granularity=confidence_scores_granularity,
         )
 
         req = self._build_request(
@@ -152,7 +157,7 @@ class Ocr(BaseSDK):
         self,
         *,
         model: Nullable[str],
-        document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
+        document: Union[models.Document, models.DocumentTypedDict],
         id: Optional[str] = None,
         pages: OptionalNullable[List[int]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
@@ -168,6 +173,9 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        confidence_scores_granularity: OptionalNullable[
+            models.ConfidenceGranularity
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -188,6 +196,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -206,7 +215,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             id=id,
-            document=utils.get_pydantic_model(document, models.DocumentUnion),
+            document=utils.get_pydantic_model(document, models.Document),
             pages=pages,
             include_image_base64=include_image_base64,
             image_limit=image_limit,
@@ -221,6 +230,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            confidence_scores_granularity=confidence_scores_granularity,
         )
 
         req = self._build_request_async(

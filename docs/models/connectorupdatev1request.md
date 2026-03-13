@@ -3,7 +3,7 @@
 
 ## Fields
 
-| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `connector_id`                                                       | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
-| `update_connector_request`                                           | [models.UpdateConnectorRequest](../models/updateconnectorrequest.md) | :heavy_check_mark:                                                   | N/A                                                                  |
+| Field                                                        | Type                                                         | Required                                                     | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `connector_id`                                               | *str*                                                        | :heavy_check_mark:                                           | N/A                                                          |
+| `connector_mcp_update`                                       | [models.ConnectorMCPUpdate](../models/connectormcpupdate.md) | :heavy_check_mark:                                           | N/A                                                          |

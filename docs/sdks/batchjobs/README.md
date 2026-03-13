@@ -49,7 +49,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListBatchJobsResponse](../../models/listbatchjobsresponse.md)**
+**[models.BatchJobsOut](../../models/batchjobsout.md)**
 
 ### Errors
 
@@ -95,7 +95,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 
@@ -139,7 +139,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 
@@ -179,7 +179,7 @@ with Mistral(
 
 ### Response
 
-**[models.BatchJob](../../models/batchjob.md)**
+**[models.BatchJobOut](../../models/batchjobout.md)**
 
 ### Errors
 

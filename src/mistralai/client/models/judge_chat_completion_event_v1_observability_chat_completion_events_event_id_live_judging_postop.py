@@ -2,9 +2,9 @@
 # @generated-id: 98c823e7cc1b
 
 from __future__ import annotations
-from .judgechatcompletioneventrequest import (
-    JudgeChatCompletionEventRequest,
-    JudgeChatCompletionEventRequestTypedDict,
+from .postchatcompletioneventjudginginschema import (
+    PostChatCompletionEventJudgingInSchema,
+    PostChatCompletionEventJudgingInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,9 @@ class JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudg
     TypedDict
 ):
     event_id: str
-    judge_chat_completion_event_request: JudgeChatCompletionEventRequestTypedDict
+    post_chat_completion_event_judging_in_schema: (
+        PostChatCompletionEventJudgingInSchemaTypedDict
+    )
 
 
 class JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequest(
@@ -25,7 +27,7 @@ class JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudg
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    judge_chat_completion_event_request: Annotated[
-        JudgeChatCompletionEventRequest,
+    post_chat_completion_event_judging_in_schema: Annotated[
+        PostChatCompletionEventJudgingInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

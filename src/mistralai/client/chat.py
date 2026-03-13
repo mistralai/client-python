@@ -138,6 +138,20 @@ class Chat(BaseSDK):
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        tool_execution_data: OptionalNullable[
+            Union[models.ToolExecutionData, models.ToolExecutionDataTypedDict]
+        ] = UNSET,
+        document_image_limit: OptionalNullable[int] = UNSET,
+        document_page_limit: OptionalNullable[int] = UNSET,
+        document_image_min_size: OptionalNullable[int] = UNSET,
+        prompt_data: Optional[
+            Union[models.MistralPromptData, models.MistralPromptDataTypedDict]
+        ] = None,
+        truncate_for_context_length: Optional[bool] = None,
+        stream_options: Optional[
+            Union[models.StreamOptions, models.StreamOptionsTypedDict]
+        ] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -164,6 +178,14 @@ class Chat(BaseSDK):
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param tool_execution_data:
+        :param document_image_limit:
+        :param document_page_limit:
+        :param document_image_min_size:
+        :param prompt_data:
+        :param truncate_for_context_length:
+        :param stream_options:
+        :param reasoning_effort:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -207,6 +229,20 @@ class Chat(BaseSDK):
             ),
             parallel_tool_calls=parallel_tool_calls,
             prompt_mode=prompt_mode,
+            tool_execution_data=utils.get_pydantic_model(
+                tool_execution_data, OptionalNullable[models.ToolExecutionData]
+            ),
+            document_image_limit=document_image_limit,
+            document_page_limit=document_page_limit,
+            document_image_min_size=document_image_min_size,
+            prompt_data=utils.get_pydantic_model(
+                prompt_data, Optional[models.MistralPromptData]
+            ),
+            truncate_for_context_length=truncate_for_context_length,
+            stream_options=utils.get_pydantic_model(
+                stream_options, Optional[models.StreamOptions]
+            ),
+            reasoning_effort=reasoning_effort,
             safe_prompt=safe_prompt,
         )
 
@@ -310,6 +346,20 @@ class Chat(BaseSDK):
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        tool_execution_data: OptionalNullable[
+            Union[models.ToolExecutionData, models.ToolExecutionDataTypedDict]
+        ] = UNSET,
+        document_image_limit: OptionalNullable[int] = UNSET,
+        document_page_limit: OptionalNullable[int] = UNSET,
+        document_image_min_size: OptionalNullable[int] = UNSET,
+        prompt_data: Optional[
+            Union[models.MistralPromptData, models.MistralPromptDataTypedDict]
+        ] = None,
+        truncate_for_context_length: Optional[bool] = None,
+        stream_options: Optional[
+            Union[models.StreamOptions, models.StreamOptionsTypedDict]
+        ] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -336,6 +386,14 @@ class Chat(BaseSDK):
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param tool_execution_data:
+        :param document_image_limit:
+        :param document_page_limit:
+        :param document_image_min_size:
+        :param prompt_data:
+        :param truncate_for_context_length:
+        :param stream_options:
+        :param reasoning_effort:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -379,6 +437,20 @@ class Chat(BaseSDK):
             ),
             parallel_tool_calls=parallel_tool_calls,
             prompt_mode=prompt_mode,
+            tool_execution_data=utils.get_pydantic_model(
+                tool_execution_data, OptionalNullable[models.ToolExecutionData]
+            ),
+            document_image_limit=document_image_limit,
+            document_page_limit=document_page_limit,
+            document_image_min_size=document_image_min_size,
+            prompt_data=utils.get_pydantic_model(
+                prompt_data, Optional[models.MistralPromptData]
+            ),
+            truncate_for_context_length=truncate_for_context_length,
+            stream_options=utils.get_pydantic_model(
+                stream_options, Optional[models.StreamOptions]
+            ),
+            reasoning_effort=reasoning_effort,
             safe_prompt=safe_prompt,
         )
 
@@ -482,6 +554,20 @@ class Chat(BaseSDK):
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        tool_execution_data: OptionalNullable[
+            Union[models.ToolExecutionData, models.ToolExecutionDataTypedDict]
+        ] = UNSET,
+        document_image_limit: OptionalNullable[int] = UNSET,
+        document_page_limit: OptionalNullable[int] = UNSET,
+        document_image_min_size: OptionalNullable[int] = UNSET,
+        prompt_data: Optional[
+            Union[models.MistralPromptData, models.MistralPromptDataTypedDict]
+        ] = None,
+        truncate_for_context_length: Optional[bool] = None,
+        stream_options: Optional[
+            Union[models.StreamOptions, models.StreamOptionsTypedDict]
+        ] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -510,6 +596,14 @@ class Chat(BaseSDK):
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param tool_execution_data:
+        :param document_image_limit:
+        :param document_page_limit:
+        :param document_image_min_size:
+        :param prompt_data:
+        :param truncate_for_context_length:
+        :param stream_options:
+        :param reasoning_effort:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -553,6 +647,20 @@ class Chat(BaseSDK):
             ),
             parallel_tool_calls=parallel_tool_calls,
             prompt_mode=prompt_mode,
+            tool_execution_data=utils.get_pydantic_model(
+                tool_execution_data, OptionalNullable[models.ToolExecutionData]
+            ),
+            document_image_limit=document_image_limit,
+            document_page_limit=document_page_limit,
+            document_image_min_size=document_image_min_size,
+            prompt_data=utils.get_pydantic_model(
+                prompt_data, Optional[models.MistralPromptData]
+            ),
+            truncate_for_context_length=truncate_for_context_length,
+            stream_options=utils.get_pydantic_model(
+                stream_options, Optional[models.StreamOptions]
+            ),
+            reasoning_effort=reasoning_effort,
             safe_prompt=safe_prompt,
         )
 
@@ -664,6 +772,20 @@ class Chat(BaseSDK):
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        tool_execution_data: OptionalNullable[
+            Union[models.ToolExecutionData, models.ToolExecutionDataTypedDict]
+        ] = UNSET,
+        document_image_limit: OptionalNullable[int] = UNSET,
+        document_page_limit: OptionalNullable[int] = UNSET,
+        document_image_min_size: OptionalNullable[int] = UNSET,
+        prompt_data: Optional[
+            Union[models.MistralPromptData, models.MistralPromptDataTypedDict]
+        ] = None,
+        truncate_for_context_length: Optional[bool] = None,
+        stream_options: Optional[
+            Union[models.StreamOptions, models.StreamOptionsTypedDict]
+        ] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -692,6 +814,14 @@ class Chat(BaseSDK):
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param tool_execution_data:
+        :param document_image_limit:
+        :param document_page_limit:
+        :param document_image_min_size:
+        :param prompt_data:
+        :param truncate_for_context_length:
+        :param stream_options:
+        :param reasoning_effort:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -735,6 +865,20 @@ class Chat(BaseSDK):
             ),
             parallel_tool_calls=parallel_tool_calls,
             prompt_mode=prompt_mode,
+            tool_execution_data=utils.get_pydantic_model(
+                tool_execution_data, OptionalNullable[models.ToolExecutionData]
+            ),
+            document_image_limit=document_image_limit,
+            document_page_limit=document_page_limit,
+            document_image_min_size=document_image_min_size,
+            prompt_data=utils.get_pydantic_model(
+                prompt_data, Optional[models.MistralPromptData]
+            ),
+            truncate_for_context_length=truncate_for_context_length,
+            stream_options=utils.get_pydantic_model(
+                stream_options, Optional[models.StreamOptions]
+            ),
+            reasoning_effort=reasoning_effort,
             safe_prompt=safe_prompt,
         )
 

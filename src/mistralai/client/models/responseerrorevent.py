@@ -26,7 +26,7 @@ class ResponseErrorEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["conversation.response.error"],
+            Optional[Literal["conversation.response.error"]],
             AfterValidator(validate_const("conversation.response.error")),
         ],
         pydantic.Field(alias="type"),
@@ -36,7 +36,7 @@ class ResponseErrorEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at"])
+        optional_fields = set(["type", "created_at"])
         serialized = handler(self)
         m = {}
 

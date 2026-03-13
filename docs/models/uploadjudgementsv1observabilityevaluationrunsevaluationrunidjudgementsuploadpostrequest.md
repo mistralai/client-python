@@ -1,0 +1,9 @@
+# UploadJudgementsV1ObservabilityEvaluationRunsEvaluationRunIDJudgementsUploadPostRequest
+
+
+## Fields
+
+| Field                                                                                                      | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `evaluation_run_id`                                                                                        | *str*                                                                                                      | :heavy_check_mark:                                                                                         | N/A                                                                                                        |
+| `post_evaluation_run_judgements_upload_in_schema`                                                          | [models.PostEvaluationRunJudgementsUploadInSchema](../models/postevaluationrunjudgementsuploadinschema.md) | :heavy_check_mark:                                                                                         | N/A                                                                                                        |

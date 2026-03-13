@@ -1,0 +1,10 @@
+# MCPVerificationResponse
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `status`                                                                               | [models.MCPAuthVerificationStatus](../models/mcpauthverificationstatus.md)             | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `error_code`                                                                           | [OptionalNullable[models.AuthDetectionErrorCode]](../models/authdetectionerrorcode.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `server_card`                                                                          | [Nullable[models.MCPServerCard]](../models/mcpservercard.md)                           | :heavy_check_mark:                                                                     | N/A                                                                                    |

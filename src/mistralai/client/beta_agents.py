@@ -2,6 +2,7 @@
 # @generated-id: b64ad29b7174
 
 from .basesdk import BaseSDK
+from datetime import datetime
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
@@ -21,8 +22,8 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                List[models.AgentCreationRequestTool],
+                List[models.AgentCreationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
@@ -69,10 +70,10 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateAgentRequest(
+        request = models.AgentCreationRequest(
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.CreateAgentRequestTool]]
+                tools, Optional[List[models.AgentCreationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, Optional[models.CompletionArgs]
@@ -102,7 +103,7 @@ class BetaAgents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateAgentRequest
+                request, False, False, "json", models.AgentCreationRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -156,8 +157,8 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                List[models.AgentCreationRequestTool],
+                List[models.AgentCreationRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
@@ -204,10 +205,10 @@ class BetaAgents(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateAgentRequest(
+        request = models.AgentCreationRequest(
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.CreateAgentRequestTool]]
+                tools, Optional[List[models.AgentCreationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, Optional[models.CompletionArgs]
@@ -237,7 +238,7 @@ class BetaAgents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateAgentRequest
+                request, False, False, "json", models.AgentCreationRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -708,8 +709,8 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                List[models.AgentUpdateRequestTool],
+                List[models.AgentUpdateRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
@@ -763,10 +764,10 @@ class BetaAgents(BaseSDK):
 
         request = models.AgentsAPIV1AgentsUpdateRequest(
             agent_id=agent_id,
-            update_agent_request=models.UpdateAgentRequest(
+            agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
                 tools=utils.get_pydantic_model(
-                    tools, Optional[List[models.UpdateAgentRequestTool]]
+                    tools, Optional[List[models.AgentUpdateRequestTool]]
                 ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
@@ -798,11 +799,11 @@ class BetaAgents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_agent_request,
+                request.agent_update_request,
                 False,
                 False,
                 "json",
-                models.UpdateAgentRequest,
+                models.AgentUpdateRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -855,8 +856,8 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                List[models.AgentUpdateRequestTool],
+                List[models.AgentUpdateRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
@@ -910,10 +911,10 @@ class BetaAgents(BaseSDK):
 
         request = models.AgentsAPIV1AgentsUpdateRequest(
             agent_id=agent_id,
-            update_agent_request=models.UpdateAgentRequest(
+            agent_update_request=models.AgentUpdateRequest(
                 instructions=instructions,
                 tools=utils.get_pydantic_model(
-                    tools, Optional[List[models.UpdateAgentRequestTool]]
+                    tools, Optional[List[models.AgentUpdateRequestTool]]
                 ),
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
@@ -945,11 +946,11 @@ class BetaAgents(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_agent_request,
+                request.agent_update_request,
                 False,
                 False,
                 "json",
-                models.UpdateAgentRequest,
+                models.AgentUpdateRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2279,6 +2280,1556 @@ class BetaAgents(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def connector_usage_count(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Get the count of agents using a connector.
+
+        Retrieve the count of agents that use a specific connector.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsConnectorUsageCountRequest(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/agents/connectors/{connector_id}/count",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_connector_usage_count",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def connector_usage_count_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Dict[str, Any]:
+        r"""Get the count of agents using a connector.
+
+        Retrieve the count of agents that use a specific connector.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsConnectorUsageCountRequest(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/agents/connectors/{connector_id}/count",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_connector_usage_count",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Dict[str, Any], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def create_internal(
+        self,
+        *,
+        model: str,
+        name: str,
+        id: str,
+        temperature: float,
+        conversation_examples: List[Dict[str, str]],
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.InternalAgentCreationRequestTool],
+                List[models.InternalAgentCreationRequestToolTypedDict],
+            ]
+        ] = None,
+        completion_args: Optional[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        handoffs: OptionalNullable[List[str]] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Create an agent internally.
+
+        Create an internal agent
+
+        :param model:
+        :param name:
+        :param id:
+        :param temperature:
+        :param conversation_examples:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
+        :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
+        :param description:
+        :param handoffs:
+        :param metadata:
+        :param version_message:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.InternalAgentCreationRequest(
+            instructions=instructions,
+            tools=utils.get_pydantic_model(
+                tools, Optional[List[models.InternalAgentCreationRequestTool]]
+            ),
+            completion_args=utils.get_pydantic_model(
+                completion_args, Optional[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
+            model=model,
+            name=name,
+            description=description,
+            handoffs=handoffs,
+            metadata=metadata,
+            version_message=version_message,
+            id=id,
+            temperature=temperature,
+            conversation_examples=conversation_examples,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/internal/agents",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.InternalAgentCreationRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_create",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def create_internal_async(
+        self,
+        *,
+        model: str,
+        name: str,
+        id: str,
+        temperature: float,
+        conversation_examples: List[Dict[str, str]],
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.InternalAgentCreationRequestTool],
+                List[models.InternalAgentCreationRequestToolTypedDict],
+            ]
+        ] = None,
+        completion_args: Optional[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        handoffs: OptionalNullable[List[str]] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Create an agent internally.
+
+        Create an internal agent
+
+        :param model:
+        :param name:
+        :param id:
+        :param temperature:
+        :param conversation_examples:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
+        :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
+        :param description:
+        :param handoffs:
+        :param metadata:
+        :param version_message:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.InternalAgentCreationRequest(
+            instructions=instructions,
+            tools=utils.get_pydantic_model(
+                tools, Optional[List[models.InternalAgentCreationRequestTool]]
+            ),
+            completion_args=utils.get_pydantic_model(
+                completion_args, Optional[models.CompletionArgs]
+            ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
+            model=model,
+            name=name,
+            description=description,
+            handoffs=handoffs,
+            metadata=metadata,
+            version_message=version_message,
+            id=id,
+            temperature=temperature,
+            conversation_examples=conversation_examples,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/internal/agents",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.InternalAgentCreationRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_create",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def list_internal(
+        self,
+        *,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 20,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        id: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> List[models.AgentInternal]:
+        r"""Retrieve all internal agent entities.
+
+        Get the current agent version and turn into an internal payload
+
+        :param page: Page number (0-indexed)
+        :param page_size: Number of agents per page
+        :param deployment_chat:
+        :param sources:
+        :param name:
+        :param search: Search agents by name or ID
+        :param id:
+        :param metadata:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalListRequest(
+            page=page,
+            page_size=page_size,
+            deployment_chat=deployment_chat,
+            sources=sources,
+            name=name,
+            search=search,
+            id=id,
+            metadata=metadata,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/agents",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_list",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(List[models.AgentInternal], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def list_internal_async(
+        self,
+        *,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 20,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        id: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> List[models.AgentInternal]:
+        r"""Retrieve all internal agent entities.
+
+        Get the current agent version and turn into an internal payload
+
+        :param page: Page number (0-indexed)
+        :param page_size: Number of agents per page
+        :param deployment_chat:
+        :param sources:
+        :param name:
+        :param search: Search agents by name or ID
+        :param id:
+        :param metadata:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalListRequest(
+            page=page,
+            page_size=page_size,
+            deployment_chat=deployment_chat,
+            sources=sources,
+            name=name,
+            search=search,
+            id=id,
+            metadata=metadata,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/agents",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_list",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(List[models.AgentInternal], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def update_internal(
+        self,
+        *,
+        agent_id: str,
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.InternalAgentUpdateRequestTool],
+                List[models.InternalAgentUpdateRequestToolTypedDict],
+            ]
+        ] = None,
+        completion_args: Optional[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        handoffs: OptionalNullable[List[str]] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
+        temperature: OptionalNullable[float] = UNSET,
+        conversation_examples: OptionalNullable[List[Dict[str, str]]] = UNSET,
+        created_at: OptionalNullable[datetime] = UNSET,
+        updated_at: OptionalNullable[datetime] = UNSET,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Update an agent internally.
+
+        Update an internal agent, if it does not exist then create it.
+
+        :param agent_id:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
+        :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
+        :param model:
+        :param name:
+        :param description:
+        :param handoffs:
+        :param metadata:
+        :param version_message:
+        :param temperature:
+        :param conversation_examples:
+        :param created_at:
+        :param updated_at:
+        :param deployment_chat:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalUpdateRequest(
+            agent_id=agent_id,
+            internal_agent_update_request=models.InternalAgentUpdateRequest(
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.InternalAgentUpdateRequestTool]]
+                ),
+                completion_args=utils.get_pydantic_model(
+                    completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                model=model,
+                name=name,
+                description=description,
+                handoffs=handoffs,
+                metadata=metadata,
+                version_message=version_message,
+                temperature=temperature,
+                conversation_examples=conversation_examples,
+                created_at=created_at,
+                updated_at=updated_at,
+                deployment_chat=deployment_chat,
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.internal_agent_update_request,
+                False,
+                False,
+                "json",
+                models.InternalAgentUpdateRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_update",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def update_internal_async(
+        self,
+        *,
+        agent_id: str,
+        instructions: OptionalNullable[str] = UNSET,
+        tools: Optional[
+            Union[
+                List[models.InternalAgentUpdateRequestTool],
+                List[models.InternalAgentUpdateRequestToolTypedDict],
+            ]
+        ] = None,
+        completion_args: Optional[
+            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+        ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        model: OptionalNullable[str] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        handoffs: OptionalNullable[List[str]] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        version_message: OptionalNullable[str] = UNSET,
+        temperature: OptionalNullable[float] = UNSET,
+        conversation_examples: OptionalNullable[List[Dict[str, str]]] = UNSET,
+        created_at: OptionalNullable[datetime] = UNSET,
+        updated_at: OptionalNullable[datetime] = UNSET,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Update an agent internally.
+
+        Update an internal agent, if it does not exist then create it.
+
+        :param agent_id:
+        :param instructions: Instruction prompt the model will follow during the conversation.
+        :param tools: List of tools which are available to the model during the conversation.
+        :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
+        :param model:
+        :param name:
+        :param description:
+        :param handoffs:
+        :param metadata:
+        :param version_message:
+        :param temperature:
+        :param conversation_examples:
+        :param created_at:
+        :param updated_at:
+        :param deployment_chat:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalUpdateRequest(
+            agent_id=agent_id,
+            internal_agent_update_request=models.InternalAgentUpdateRequest(
+                instructions=instructions,
+                tools=utils.get_pydantic_model(
+                    tools, Optional[List[models.InternalAgentUpdateRequestTool]]
+                ),
+                completion_args=utils.get_pydantic_model(
+                    completion_args, Optional[models.CompletionArgs]
+                ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                model=model,
+                name=name,
+                description=description,
+                handoffs=handoffs,
+                metadata=metadata,
+                version_message=version_message,
+                temperature=temperature,
+                conversation_examples=conversation_examples,
+                created_at=created_at,
+                updated_at=updated_at,
+                deployment_chat=deployment_chat,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.internal_agent_update_request,
+                False,
+                False,
+                "json",
+                models.InternalAgentUpdateRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_update",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def get_internal(
+        self,
+        *,
+        agent_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Retrieve an internal agent entity.
+
+        Get the current agent version and turn into an internal payload
+
+        :param agent_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalGetRequest(
+            agent_id=agent_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_internal_async(
+        self,
+        *,
+        agent_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Retrieve an internal agent entity.
+
+        Get the current agent version and turn into an internal payload
+
+        :param agent_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalGetRequest(
+            agent_id=agent_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def delete_internal(
+        self,
+        *,
+        agent_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ):
+        r"""Retrieve an internal agent entity.
+
+        :param agent_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalDeleteRequest(
+            agent_id=agent_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_delete",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "204", "*"):
+            return
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def delete_internal_async(
+        self,
+        *,
+        agent_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ):
+        r"""Retrieve an internal agent entity.
+
+        :param agent_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalDeleteRequest(
+            agent_id=agent_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/v1/internal/agents/{agent_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_delete",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "204", "*"):
+            return
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def get_version_internal(
+        self,
+        *,
+        agent_id: str,
+        version: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Retrieve an internal agent entity with a version.
+
+        Get the current agent version and turn into an internal payload
+
+        :param agent_id:
+        :param version:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalGetVersionRequest(
+            agent_id=agent_id,
+            version=version,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/agents/{agent_id}/versions/{version}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_get_version",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_version_internal_async(
+        self,
+        *,
+        agent_id: str,
+        version: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.AgentInternal:
+        r"""Retrieve an internal agent entity with a version.
+
+        Get the current agent version and turn into an internal payload
+
+        :param agent_id:
+        :param version:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsInternalGetVersionRequest(
+            agent_id=agent_id,
+            version=version,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/agents/{agent_id}/versions/{version}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_internal_get_version",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.AgentInternal, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

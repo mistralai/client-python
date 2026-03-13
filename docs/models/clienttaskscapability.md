@@ -1,0 +1,13 @@
+# ClientTasksCapability
+
+Capability for client tasks operations.
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `list`                                                                                               | Dict[str, *Any*]                                                                                     | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `cancel`                                                                                             | Dict[str, *Any*]                                                                                     | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `requests`                                                                                           | [OptionalNullable[models.ClientTasksRequestsCapability]](../models/clienttasksrequestscapability.md) | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `__pydantic_extra__`                                                                                 | Dict[str, *Any*]                                                                                     | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |

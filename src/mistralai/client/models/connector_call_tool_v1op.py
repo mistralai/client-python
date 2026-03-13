@@ -2,10 +2,7 @@
 # @generated-id: 7948899b3068
 
 from __future__ import annotations
-from .connectorcalltoolrequest import (
-    ConnectorCallToolRequest,
-    ConnectorCallToolRequestTypedDict,
-)
+from .mcptoolcallrequest import MCPToolCallRequest, MCPToolCallRequestTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -14,7 +11,7 @@ from typing_extensions import Annotated, TypedDict
 class ConnectorCallToolV1RequestTypedDict(TypedDict):
     tool_name: str
     connector_id_or_name: str
-    connector_call_tool_request: ConnectorCallToolRequestTypedDict
+    mcp_tool_call_request: MCPToolCallRequestTypedDict
 
 
 class ConnectorCallToolV1Request(BaseModel):
@@ -26,7 +23,7 @@ class ConnectorCallToolV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    connector_call_tool_request: Annotated[
-        ConnectorCallToolRequest,
+    mcp_tool_call_request: Annotated[
+        MCPToolCallRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

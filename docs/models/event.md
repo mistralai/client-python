@@ -1,10 +1,17 @@
 # Event
 
 
-## Fields
+## Supported Types
 
-| Field                                         | Type                                          | Required                                      | Description                                   |
-| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
-| `name`                                        | *str*                                         | :heavy_check_mark:                            | The name of the event.                        |
-| `data`                                        | Dict[str, *Any*]                              | :heavy_minus_sign:                            | N/A                                           |
-| `created_at`                                  | *int*                                         | :heavy_check_mark:                            | The UNIX timestamp (in seconds) of the event. |
+### `models.WorkflowExecutionTraceEvent`
+
+```python
+value: models.WorkflowExecutionTraceEvent = /* values here */
+```
+
+### `models.WorkflowExecutionProgressTraceEvent`
+
+```python
+value: models.WorkflowExecutionProgressTraceEvent = /* values here */
+```
+

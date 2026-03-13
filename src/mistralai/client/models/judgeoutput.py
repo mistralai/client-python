@@ -7,18 +7,20 @@ from typing import Union
 from typing_extensions import TypeAliasType, TypedDict
 
 
-AnswerTypedDict = TypeAliasType("AnswerTypedDict", Union[str, float])
+JudgeOutputAnswerTypedDict = TypeAliasType(
+    "JudgeOutputAnswerTypedDict", Union[str, float]
+)
 
 
-Answer = TypeAliasType("Answer", Union[str, float])
+JudgeOutputAnswer = TypeAliasType("JudgeOutputAnswer", Union[str, float])
 
 
 class JudgeOutputTypedDict(TypedDict):
     analysis: str
-    answer: AnswerTypedDict
+    answer: JudgeOutputAnswerTypedDict
 
 
 class JudgeOutput(BaseModel):
     analysis: str
 
-    answer: Answer
+    answer: JudgeOutputAnswer

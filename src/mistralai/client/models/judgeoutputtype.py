@@ -2,10 +2,14 @@
 # @generated-id: 3f07e1eb25f9
 
 from __future__ import annotations
-from typing import Literal
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-JudgeOutputType = Literal[
-    "REGRESSION",
-    "CLASSIFICATION",
+JudgeOutputType = Union[
+    Literal[
+        "REGRESSION",
+        "CLASSIFICATION",
+    ],
+    UnrecognizedStr,
 ]

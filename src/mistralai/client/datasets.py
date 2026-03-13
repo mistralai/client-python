@@ -5,7 +5,7 @@ from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.records import Records
+from mistralai.client.datasets_records import DatasetsRecords
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -13,7 +13,10 @@ from typing import Any, Dict, List, Mapping, Optional, Union
 
 
 class Datasets(BaseSDK):
-    records: Records
+    r"""(beta) Manage conversation datasets"""
+
+    records: DatasetsRecords
+    r"""(beta) Manage records of a given dataset"""
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -23,7 +26,9 @@ class Datasets(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.records = Records(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.records = DatasetsRecords(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
 
     def create(
         self,
@@ -54,7 +59,7 @@ class Datasets(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateDatasetRequest(
+        request = models.PostDatasetInSchema(
             name=name,
             description=description,
         )
@@ -73,7 +78,7 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateDatasetRequest
+                request, False, False, "json", models.PostDatasetInSchema
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -150,7 +155,7 @@ class Datasets(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateDatasetRequest(
+        request = models.PostDatasetInSchema(
             name=name,
             description=description,
         )
@@ -169,7 +174,7 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateDatasetRequest
+                request, False, False, "json", models.PostDatasetInSchema
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -227,7 +232,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetsResponse:
+    ) -> models.DatasetPreviews:
         r"""List existing datasets
 
         :param page_size:
@@ -296,7 +301,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDatasetsResponse, http_res)
+            return unmarshal_json_response(models.DatasetPreviews, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -323,7 +328,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetsResponse:
+    ) -> models.DatasetPreviews:
         r"""List existing datasets
 
         :param page_size:
@@ -392,7 +397,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDatasetsResponse, http_res)
+            return unmarshal_json_response(models.DatasetPreviews, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -802,7 +807,7 @@ class Datasets(BaseSDK):
 
         request = models.UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest(
             dataset_id=dataset_id,
-            update_dataset_request=models.UpdateDatasetRequest(
+            patch_dataset_in_schema=models.PatchDatasetInSchema(
                 name=name,
                 description=description,
             ),
@@ -822,11 +827,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_dataset_request,
+                request.patch_dataset_in_schema,
                 False,
                 False,
                 "json",
-                models.UpdateDatasetRequest,
+                models.PatchDatasetInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -907,7 +912,7 @@ class Datasets(BaseSDK):
 
         request = models.UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest(
             dataset_id=dataset_id,
-            update_dataset_request=models.UpdateDatasetRequest(
+            patch_dataset_in_schema=models.PatchDatasetInSchema(
                 name=name,
                 description=description,
             ),
@@ -927,11 +932,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_dataset_request,
+                request.patch_dataset_in_schema,
                 False,
                 False,
                 "json",
-                models.UpdateDatasetRequest,
+                models.PatchDatasetInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -989,7 +994,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetRecordsResponse:
+    ) -> models.DatasetRecords:
         r"""List existing records in the dataset
 
         :param dataset_id:
@@ -1060,7 +1065,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDatasetRecordsResponse, http_res)
+            return unmarshal_json_response(models.DatasetRecords, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -1087,7 +1092,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetRecordsResponse:
+    ) -> models.DatasetRecords:
         r"""List existing records in the dataset
 
         :param dataset_id:
@@ -1158,7 +1163,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListDatasetRecordsResponse, http_res)
+            return unmarshal_json_response(models.DatasetRecords, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -1208,7 +1213,7 @@ class Datasets(BaseSDK):
 
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
-            create_dataset_record_request=models.CreateDatasetRecordRequest(
+            post_dataset_record_in_schema=models.PostDatasetRecordInSchema(
                 payload=utils.get_pydantic_model(payload, models.ConversationPayload),
                 properties=properties,
             ),
@@ -1228,11 +1233,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.create_dataset_record_request,
+                request.post_dataset_record_in_schema,
                 False,
                 False,
                 "json",
-                models.CreateDatasetRecordRequest,
+                models.PostDatasetRecordInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1313,7 +1318,7 @@ class Datasets(BaseSDK):
 
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
-            create_dataset_record_request=models.CreateDatasetRecordRequest(
+            post_dataset_record_in_schema=models.PostDatasetRecordInSchema(
                 payload=utils.get_pydantic_model(payload, models.ConversationPayload),
                 properties=properties,
             ),
@@ -1333,11 +1338,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.create_dataset_record_request,
+                request.post_dataset_record_in_schema,
                 False,
                 False,
                 "json",
-                models.CreateDatasetRecordRequest,
+                models.PostDatasetRecordInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1416,7 +1421,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_campaign_request=models.ImportDatasetFromCampaignRequest(
+            post_dataset_import_from_campaign_in_schema=models.PostDatasetImportFromCampaignInSchema(
                 campaign_id=campaign_id,
             ),
         )
@@ -1435,11 +1440,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_campaign_request,
+                request.post_dataset_import_from_campaign_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromCampaignRequest,
+                models.PostDatasetImportFromCampaignInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1518,7 +1523,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_campaign_request=models.ImportDatasetFromCampaignRequest(
+            post_dataset_import_from_campaign_in_schema=models.PostDatasetImportFromCampaignInSchema(
                 campaign_id=campaign_id,
             ),
         )
@@ -1537,11 +1542,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_campaign_request,
+                request.post_dataset_import_from_campaign_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromCampaignRequest,
+                models.PostDatasetImportFromCampaignInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1620,7 +1625,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromExplorerV1ObservabilityDatasetsDatasetIDImportsFromExplorerPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_explorer_request=models.ImportDatasetFromExplorerRequest(
+            post_dataset_import_from_explorer_in_schema=models.PostDatasetImportFromExplorerInSchema(
                 completion_event_ids=completion_event_ids,
             ),
         )
@@ -1639,11 +1644,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_explorer_request,
+                request.post_dataset_import_from_explorer_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromExplorerRequest,
+                models.PostDatasetImportFromExplorerInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1722,7 +1727,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromExplorerV1ObservabilityDatasetsDatasetIDImportsFromExplorerPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_explorer_request=models.ImportDatasetFromExplorerRequest(
+            post_dataset_import_from_explorer_in_schema=models.PostDatasetImportFromExplorerInSchema(
                 completion_event_ids=completion_event_ids,
             ),
         )
@@ -1741,11 +1746,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_explorer_request,
+                request.post_dataset_import_from_explorer_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromExplorerRequest,
+                models.PostDatasetImportFromExplorerInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1824,7 +1829,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromFileV1ObservabilityDatasetsDatasetIDImportsFromFilePostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_file_request=models.ImportDatasetFromFileRequest(
+            post_dataset_import_from_file_in_schema=models.PostDatasetImportFromFileInSchema(
                 file_id=file_id,
             ),
         )
@@ -1843,11 +1848,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_file_request,
+                request.post_dataset_import_from_file_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromFileRequest,
+                models.PostDatasetImportFromFileInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1926,7 +1931,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromFileV1ObservabilityDatasetsDatasetIDImportsFromFilePostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_file_request=models.ImportDatasetFromFileRequest(
+            post_dataset_import_from_file_in_schema=models.PostDatasetImportFromFileInSchema(
                 file_id=file_id,
             ),
         )
@@ -1945,11 +1950,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_file_request,
+                request.post_dataset_import_from_file_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromFileRequest,
+                models.PostDatasetImportFromFileInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2028,7 +2033,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
+            post_dataset_import_from_playground_in_schema=models.PostDatasetImportFromPlaygroundInSchema(
                 conversation_ids=conversation_ids,
             ),
         )
@@ -2047,11 +2052,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_playground_request,
+                request.post_dataset_import_from_playground_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromPlaygroundRequest,
+                models.PostDatasetImportFromPlaygroundInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2130,7 +2135,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
+            post_dataset_import_from_playground_in_schema=models.PostDatasetImportFromPlaygroundInSchema(
                 conversation_ids=conversation_ids,
             ),
         )
@@ -2149,11 +2154,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_playground_request,
+                request.post_dataset_import_from_playground_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromPlaygroundRequest,
+                models.PostDatasetImportFromPlaygroundInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2232,7 +2237,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_dataset_request=models.ImportDatasetFromDatasetRequest(
+            post_dataset_import_from_dataset_in_schema=models.PostDatasetImportFromDatasetInSchema(
                 dataset_record_ids=dataset_record_ids,
             ),
         )
@@ -2251,11 +2256,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_dataset_request,
+                request.post_dataset_import_from_dataset_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromDatasetRequest,
+                models.PostDatasetImportFromDatasetInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2334,7 +2339,7 @@ class Datasets(BaseSDK):
 
         request = models.PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest(
             dataset_id=dataset_id,
-            import_dataset_from_dataset_request=models.ImportDatasetFromDatasetRequest(
+            post_dataset_import_from_dataset_in_schema=models.PostDatasetImportFromDatasetInSchema(
                 dataset_record_ids=dataset_record_ids,
             ),
         )
@@ -2353,11 +2358,11 @@ class Datasets(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_dataset_request,
+                request.post_dataset_import_from_dataset_in_schema,
                 False,
                 False,
                 "json",
-                models.ImportDatasetFromDatasetRequest,
+                models.PostDatasetImportFromDatasetInSchema,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2413,7 +2418,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ExportDatasetResponse:
+    ) -> models.DatasetExport:
         r"""Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 
         :param dataset_id:
@@ -2478,7 +2483,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ExportDatasetResponse, http_res)
+            return unmarshal_json_response(models.DatasetExport, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -2503,7 +2508,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ExportDatasetResponse:
+    ) -> models.DatasetExport:
         r"""Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 
         :param dataset_id:
@@ -2568,7 +2573,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ExportDatasetResponse, http_res)
+            return unmarshal_json_response(models.DatasetExport, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -2781,7 +2786,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetImportTasksResponse:
+    ) -> models.DatasetImportTasks:
         r"""List import tasks for the given dataset
 
         :param dataset_id:
@@ -2852,9 +2857,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListDatasetImportTasksResponse, http_res
-            )
+            return unmarshal_json_response(models.DatasetImportTasks, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):
@@ -2881,7 +2884,7 @@ class Datasets(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListDatasetImportTasksResponse:
+    ) -> models.DatasetImportTasks:
         r"""List import tasks for the given dataset
 
         :param dataset_id:
@@ -2952,9 +2955,7 @@ class Datasets(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.ListDatasetImportTasksResponse, http_res
-            )
+            return unmarshal_json_response(models.DatasetImportTasks, http_res)
         if utils.match_response(
             http_res, ["400", "404", "408", "409", "422"], "application/json"
         ):

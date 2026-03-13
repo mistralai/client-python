@@ -1,0 +1,16 @@
+# EvaluationRun
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `deleted_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `judge_id`                                                           | *Nullable[str]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |
+| `agent_id`                                                           | *Nullable[str]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |
+| `evaluation_id`                                                      | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `step`                                                               | [models.EvaluationRunStep](../models/evaluationrunstep.md)           | :heavy_check_mark:                                                   | N/A                                                                  |
+| `judge`                                                              | [Nullable[models.JudgePreview]](../models/judgepreview.md)           | :heavy_check_mark:                                                   | N/A                                                                  |

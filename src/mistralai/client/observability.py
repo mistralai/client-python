@@ -4,17 +4,26 @@
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client.campaigns import Campaigns
-from mistralai.client.chat_completion_events import ChatCompletionEvents
 from mistralai.client.datasets import Datasets
 from mistralai.client.judges import Judges
+from mistralai.client.observability_chat_completion_events import (
+    ObservabilityChatCompletionEvents,
+)
+from mistralai.client.observability_evaluations import ObservabilityEvaluations
 from typing import Optional
 
 
 class Observability(BaseSDK):
-    chat_completion_events: ChatCompletionEvents
+    chat_completion_events: ObservabilityChatCompletionEvents
+    r"""(beta) Explore past chat completion events"""
     judges: Judges
+    r"""(beta) Define LLM judges to annotate or evaluate conversations"""
     campaigns: Campaigns
+    r"""(beta) Run annotation campaigns on past conversations"""
     datasets: Datasets
+    r"""(beta) Manage conversation datasets"""
+    evaluations: ObservabilityEvaluations
+    r"""(beta) Evaluate models or agents with LLM judges"""
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -24,9 +33,12 @@ class Observability(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.chat_completion_events = ChatCompletionEvents(
+        self.chat_completion_events = ObservabilityChatCompletionEvents(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
         self.judges = Judges(self.sdk_configuration, parent_ref=self.parent_ref)
         self.campaigns = Campaigns(self.sdk_configuration, parent_ref=self.parent_ref)
         self.datasets = Datasets(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.evaluations = ObservabilityEvaluations(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )

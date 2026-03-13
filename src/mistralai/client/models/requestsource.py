@@ -9,4 +9,5 @@ RequestSource = Literal[
     "api",
     "playground",
     "agent_builder_v1",
+    "deep_research",
 ]

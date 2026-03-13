@@ -75,7 +75,7 @@ with Mistral(
             "role": "tool",
             "content": "<value>",
         },
-    ], model="LeBaron")
+    ], model="LeBaron", truncate_for_context_length=False)
 
     # Handle response
     print(res)
@@ -88,6 +88,7 @@ with Mistral(
 | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `inputs`                                                                            | [models.ChatModerationRequestInputs3](../../models/chatmoderationrequestinputs3.md) | :heavy_check_mark:                                                                  | Chat to classify                                                                    |
 | `model`                                                                             | *str*                                                                               | :heavy_check_mark:                                                                  | N/A                                                                                 |
+| `truncate_for_context_length`                                                       | *Optional[bool]*                                                                    | :heavy_minus_sign:                                                                  | N/A                                                                                 |
 | `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
 ### Response

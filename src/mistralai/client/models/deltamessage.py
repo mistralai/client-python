@@ -12,7 +12,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Union
+from typing import Any, Dict, List, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -26,10 +26,21 @@ DeltaMessageContent = TypeAliasType(
 )
 
 
+RefTypedDict = TypeAliasType("RefTypedDict", Union[int, List[int]])
+
+
+Ref = TypeAliasType("Ref", Union[int, List[int]])
+
+
 class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[Nullable[str]]
     content: NotRequired[Nullable[DeltaMessageContentTypedDict]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
+    refs: NotRequired[Nullable[List[List[RefTypedDict]]]]
+    index: NotRequired[Nullable[int]]
+    r"""If the completion returns multiple messages, this is to specify which message this delta is for."""
+    tool_call_id: NotRequired[Nullable[str]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class DeltaMessage(BaseModel):
@@ -39,10 +50,39 @@ class DeltaMessage(BaseModel):
 
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
 
+    refs: OptionalNullable[List[List[Ref]]] = UNSET
+
+    index: OptionalNullable[int] = UNSET
+    r"""If the completion returns multiple messages, this is to specify which message this delta is for."""
+
+    tool_call_id: OptionalNullable[str] = UNSET
+
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["role", "content", "tool_calls"])
-        nullable_fields = set(["role", "content", "tool_calls"])
+        optional_fields = set(
+            [
+                "role",
+                "content",
+                "tool_calls",
+                "refs",
+                "index",
+                "tool_call_id",
+                "metadata",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "role",
+                "content",
+                "tool_calls",
+                "refs",
+                "index",
+                "tool_call_id",
+                "metadata",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

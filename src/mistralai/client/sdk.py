@@ -22,12 +22,14 @@ if TYPE_CHECKING:
     from mistralai.client.beta import Beta
     from mistralai.client.chat import Chat
     from mistralai.client.classifiers import Classifiers
+    from mistralai.client.datacapture import Datacapture
     from mistralai.client.embeddings import Embeddings
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
     from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
+    from mistralai.client.workflows import Workflows
 
 
 class Mistral(BaseSDK):
@@ -40,6 +42,7 @@ class Mistral(BaseSDK):
     r"""Files API"""
     fine_tuning: "FineTuning"
     batch: "Batch"
+    datacapture: "Datacapture"
     chat: "Chat"
     r"""Chat Completion API."""
     fim: "Fim"
@@ -53,12 +56,14 @@ class Mistral(BaseSDK):
     ocr: "Ocr"
     r"""OCR API"""
     audio: "Audio"
+    workflows: "Workflows"
     _sub_sdk_map = {
         "models": ("mistralai.client.models_", "Models"),
         "beta": ("mistralai.client.beta", "Beta"),
         "files": ("mistralai.client.files", "Files"),
         "fine_tuning": ("mistralai.client.fine_tuning", "FineTuning"),
         "batch": ("mistralai.client.batch", "Batch"),
+        "datacapture": ("mistralai.client.datacapture", "Datacapture"),
         "chat": ("mistralai.client.chat", "Chat"),
         "fim": ("mistralai.client.fim", "Fim"),
         "agents": ("mistralai.client.agents", "Agents"),
@@ -66,6 +71,7 @@ class Mistral(BaseSDK):
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
         "audio": ("mistralai.client.audio", "Audio"),
+        "workflows": ("mistralai.client.workflows", "Workflows"),
     }
 
     def __init__(

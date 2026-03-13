@@ -2,6 +2,7 @@
 # @generated-id: 54adb9a3af16
 
 from __future__ import annotations
+from .prompttokendetails import PromptTokenDetails, PromptTokenDetailsTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -20,6 +21,7 @@ class UsageInfoTypedDict(TypedDict):
     completion_tokens: NotRequired[int]
     total_tokens: NotRequired[int]
     prompt_audio_seconds: NotRequired[Nullable[int]]
+    prompt_token_details: NotRequired[Nullable[PromptTokenDetailsTypedDict]]
 
 
 class UsageInfo(BaseModel):
@@ -35,6 +37,8 @@ class UsageInfo(BaseModel):
     total_tokens: Optional[int] = 0
 
     prompt_audio_seconds: OptionalNullable[int] = UNSET
+
+    prompt_token_details: OptionalNullable[PromptTokenDetails] = UNSET
 
     @property
     def additional_properties(self):
@@ -52,9 +56,10 @@ class UsageInfo(BaseModel):
                 "completion_tokens",
                 "total_tokens",
                 "prompt_audio_seconds",
+                "prompt_token_details",
             ]
         )
-        nullable_fields = set(["prompt_audio_seconds"])
+        nullable_fields = set(["prompt_audio_seconds", "prompt_token_details"])
         serialized = handler(self)
         m = {}
 

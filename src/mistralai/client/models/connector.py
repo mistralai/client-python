@@ -2,7 +2,10 @@
 # @generated-id: 1a4facac922d
 
 from __future__ import annotations
-from .connectortool import ConnectorTool, ConnectorToolTypedDict
+from .integrations_schemas_api_tool_tool import (
+    IntegrationsSchemasAPIToolTool,
+    IntegrationsSchemasAPIToolToolTypedDict,
+)
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -24,7 +27,7 @@ class ConnectorTypedDict(TypedDict):
     modified_at: datetime
     server: NotRequired[Nullable[str]]
     auth_type: NotRequired[Nullable[str]]
-    tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
+    tools: NotRequired[Nullable[List[IntegrationsSchemasAPIToolToolTypedDict]]]
 
 
 class Connector(BaseModel):
@@ -42,7 +45,7 @@ class Connector(BaseModel):
 
     auth_type: OptionalNullable[str] = UNSET
 
-    tools: OptionalNullable[List[ConnectorTool]] = UNSET
+    tools: OptionalNullable[List[IntegrationsSchemasAPIToolTool]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

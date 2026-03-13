@@ -2,13 +2,19 @@
 
 ## Overview
 
+(beta) Define LLM judges to annotate or evaluate conversations
+
 ### Available Operations
 
 * [create](#create) - Create a new judge
 * [list](#list) - Get judges with optional filtering and search
+* [fetch_metadata](#fetch_metadata) - Get available judge types and models for filtering
 * [fetch](#fetch) - Get judge by id
 * [delete](#delete) - Delete a judge
 * [update](#update) - Update a judge
+* [check_save_availability](#check_save_availability) - Get whether judge can be saved
+* [generate_partially_hydrated_template](#generate_partially_hydrated_template) - Get partially hydrated template of judges
+* [validate_template](#validate_template) - Validate Jinja2 template syntax for judge instructions template
 
 ## create
 
@@ -44,19 +50,19 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
-| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `name`                                                                      | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `description`                                                               | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `model_name`                                                                | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `output`                                                                    | [models.CreateJudgeRequestOutput](../../models/createjudgerequestoutput.md) | :heavy_check_mark:                                                          | N/A                                                                         |
-| `instructions`                                                              | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `tools`                                                                     | List[*str*]                                                                 | :heavy_check_mark:                                                          | N/A                                                                         |
-| `retries`                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)            | :heavy_minus_sign:                                                          | Configuration to override the default retry behavior of the client.         |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `name`                                                                    | *str*                                                                     | :heavy_check_mark:                                                        | N/A                                                                       |
+| `description`                                                             | *str*                                                                     | :heavy_check_mark:                                                        | N/A                                                                       |
+| `model_name`                                                              | *str*                                                                     | :heavy_check_mark:                                                        | N/A                                                                       |
+| `output`                                                                  | [models.PostJudgeInSchemaOutput](../../models/postjudgeinschemaoutput.md) | :heavy_check_mark:                                                        | N/A                                                                       |
+| `instructions`                                                            | *str*                                                                     | :heavy_check_mark:                                                        | N/A                                                                       |
+| `tools`                                                                   | List[*str*]                                                               | :heavy_check_mark:                                                        | N/A                                                                       |
+| `retries`                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)          | :heavy_minus_sign:                                                        | Configuration to override the default retry behavior of the client.       |
 
 ### Response
 
-**[models.Judge](../../models/judge.md)**
+**[models.JudgePreview](../../models/judgepreview.md)**
 
 ### Errors
 
@@ -101,7 +107,47 @@ with Mistral(
 
 ### Response
 
-**[models.ListJudgesResponse](../../models/listjudgesresponse.md)**
+**[models.JudgePreviews](../../models/judgepreviews.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## fetch_metadata
+
+Get available judge types and models for filtering
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_judges_metadata_v1_observability_judges_metadata_get" method="get" path="/v1/observability/judges/metadata" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.judges.fetch_metadata()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.JudgeMetadata](../../models/judgemetadata.md)**
 
 ### Errors
 
@@ -142,7 +188,7 @@ with Mistral(
 
 ### Response
 
-**[models.Judge](../../models/judge.md)**
+**[models.JudgePreview](../../models/judgepreview.md)**
 
 ### Errors
 
@@ -217,16 +263,161 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
-| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `judge_id`                                                                  | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `name`                                                                      | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `description`                                                               | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `model_name`                                                                | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `output`                                                                    | [models.UpdateJudgeRequestOutput](../../models/updatejudgerequestoutput.md) | :heavy_check_mark:                                                          | N/A                                                                         |
-| `instructions`                                                              | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
-| `tools`                                                                     | List[*str*]                                                                 | :heavy_check_mark:                                                          | N/A                                                                         |
-| `retries`                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)            | :heavy_minus_sign:                                                          | Configuration to override the default retry behavior of the client.         |
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `judge_id`                                                              | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `name`                                                                  | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `description`                                                           | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `model_name`                                                            | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `output`                                                                | [models.PutJudgeInSchemaOutput](../../models/putjudgeinschemaoutput.md) | :heavy_check_mark:                                                      | N/A                                                                     |
+| `instructions`                                                          | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `tools`                                                                 | List[*str*]                                                             | :heavy_check_mark:                                                      | N/A                                                                     |
+| `retries`                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)        | :heavy_minus_sign:                                                      | Configuration to override the default retry behavior of the client.     |
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## check_save_availability
+
+Get whether judge can be saved
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_can_save_judge_v1_observability_can_save_judge_post" method="post" path="/v1/observability/can-save-judge" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.judges.check_save_availability(name="<value>", description="mortally inure shanghai", model_name="<value>", output={
+        "type": "CLASSIFICATION",
+        "options": [
+            {
+                "value": "<value>",
+                "description": "incidentally geez impassioned",
+            },
+        ],
+    }, instructions="<value>", tools=[
+        "<value 1>",
+    ])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `name`                                                                          | *str*                                                                           | :heavy_check_mark:                                                              | N/A                                                                             |
+| `description`                                                                   | *str*                                                                           | :heavy_check_mark:                                                              | N/A                                                                             |
+| `model_name`                                                                    | *str*                                                                           | :heavy_check_mark:                                                              | N/A                                                                             |
+| `output`                                                                        | [models.CanSaveJudgeInSchemaOutput](../../models/cansavejudgeinschemaoutput.md) | :heavy_check_mark:                                                              | N/A                                                                             |
+| `instructions`                                                                  | *str*                                                                           | :heavy_check_mark:                                                              | N/A                                                                             |
+| `tools`                                                                         | List[*str*]                                                                     | :heavy_check_mark:                                                              | N/A                                                                             |
+| `judge_id`                                                                      | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | N/A                                                                             |
+| `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |
+
+### Response
+
+**[models.CanSaveJudge](../../models/cansavejudge.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## generate_partially_hydrated_template
+
+Get partially hydrated template of judges
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_judges_template_v1_observability_judge_template_post" method="post" path="/v1/observability/judge-template" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.judges.generate_partially_hydrated_template()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `output`                                                                                                  | [OptionalNullable[models.GetJudgeTemplateInSchemaOutput]](../../models/getjudgetemplateinschemaoutput.md) | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `instructions`                                                                                            | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `tools`                                                                                                   | List[*str*]                                                                                               | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `model_name`                                                                                              | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `messages`                                                                                                | List[Dict[str, *Any*]]                                                                                    | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `response`                                                                                                | List[Dict[str, *Any*]]                                                                                    | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `properties`                                                                                              | Dict[str, *Any*]                                                                                          | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `retries`                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                          | :heavy_minus_sign:                                                                                        | Configuration to override the default retry behavior of the client.                                       |
+
+### Response
+
+**[models.JudgeTemplate](../../models/judgetemplate.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## validate_template
+
+Validate Jinja2 template syntax for judge instructions template
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="validate_judge_instructions_v1_observability_judge_template_validate_post" method="post" path="/v1/observability/judge-template/validate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.judges.validate_template(instructions="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `instructions`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ValidateJudgeInstructions](../../models/validatejudgeinstructions.md)**
 
 ### Errors
 

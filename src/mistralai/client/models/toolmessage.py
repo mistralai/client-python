@@ -14,7 +14,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Union
+from typing import Any, Dict, List, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -31,6 +31,7 @@ class ToolMessageTypedDict(TypedDict):
     role: Literal["tool"]
     tool_call_id: NotRequired[Nullable[str]]
     name: NotRequired[Nullable[str]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class ToolMessage(BaseModel):
@@ -45,10 +46,12 @@ class ToolMessage(BaseModel):
 
     name: OptionalNullable[str] = UNSET
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_call_id", "name"])
-        nullable_fields = set(["content", "tool_call_id", "name"])
+        optional_fields = set(["tool_call_id", "name", "metadata"])
+        nullable_fields = set(["content", "tool_call_id", "name", "metadata"])
         serialized = handler(self)
         m = {}
 

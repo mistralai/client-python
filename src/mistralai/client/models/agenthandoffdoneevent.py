@@ -30,7 +30,7 @@ class AgentHandoffDoneEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["agent.handoff.done"],
+            Optional[Literal["agent.handoff.done"]],
             AfterValidator(validate_const("agent.handoff.done")),
         ],
         pydantic.Field(alias="type"),
@@ -42,7 +42,7 @@ class AgentHandoffDoneEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at", "output_index"])
+        optional_fields = set(["type", "created_at", "output_index"])
         serialized = handler(self)
         m = {}
 

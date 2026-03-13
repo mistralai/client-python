@@ -2,10 +2,7 @@
 # @generated-id: 6f884d18ac56
 
 from __future__ import annotations
-from .updateconnectorrequest import (
-    UpdateConnectorRequest,
-    UpdateConnectorRequestTypedDict,
-)
+from .connectormcpupdate import ConnectorMCPUpdate, ConnectorMCPUpdateTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -13,7 +10,7 @@ from typing_extensions import Annotated, TypedDict
 
 class ConnectorUpdateV1RequestTypedDict(TypedDict):
     connector_id: str
-    update_connector_request: UpdateConnectorRequestTypedDict
+    connector_mcp_update: ConnectorMCPUpdateTypedDict
 
 
 class ConnectorUpdateV1Request(BaseModel):
@@ -21,7 +18,7 @@ class ConnectorUpdateV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_connector_request: Annotated[
-        UpdateConnectorRequest,
+    connector_mcp_update: Annotated[
+        ConnectorMCPUpdate,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

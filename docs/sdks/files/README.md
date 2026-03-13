@@ -55,7 +55,7 @@ with Mistral(
 
 ### Response
 
-**[models.CreateFileResponse](../../models/createfileresponse.md)**
+**[models.UploadFileOut](../../models/uploadfileout.md)**
 
 ### Errors
 
@@ -102,7 +102,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListFilesResponse](../../models/listfilesresponse.md)**
+**[models.ListFilesOut](../../models/listfilesout.md)**
 
 ### Errors
 
@@ -142,7 +142,7 @@ with Mistral(
 
 ### Response
 
-**[models.GetFileResponse](../../models/getfileresponse.md)**
+**[models.RetrieveFileOut](../../models/retrievefileout.md)**
 
 ### Errors
 
@@ -182,7 +182,7 @@ with Mistral(
 
 ### Response
 
-**[models.DeleteFileResponse](../../models/deletefileresponse.md)**
+**[models.DeleteFileOut](../../models/deletefileout.md)**
 
 ### Errors
 
@@ -263,7 +263,7 @@ with Mistral(
 
 ### Response
 
-**[models.GetSignedURLResponse](../../models/getsignedurlresponse.md)**
+**[models.FileSignedURL](../../models/filesignedurl.md)**
 
 ### Errors
 

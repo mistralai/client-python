@@ -18,23 +18,48 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ConnectorsQueryFiltersTypedDict(TypedDict):
     active: NotRequired[Nullable[bool]]
     r"""Filter for active connectors for a given user, workspace and organization."""
+    mistral: NotRequired[Nullable[bool]]
+    built_in: NotRequired[Nullable[bool]]
+    fetch_user_data: NotRequired[bool]
+    fetch_customer_data: NotRequired[bool]
     fetch_connection_secrets: NotRequired[bool]
     r"""Fetch connection secrets."""
+    fetch_execution_data: NotRequired[bool]
 
 
 class ConnectorsQueryFilters(BaseModel):
     active: Annotated[OptionalNullable[bool], FieldMetadata(query=True)] = UNSET
     r"""Filter for active connectors for a given user, workspace and organization."""
 
+    mistral: Annotated[OptionalNullable[bool], FieldMetadata(query=True)] = UNSET
+
+    built_in: Annotated[OptionalNullable[bool], FieldMetadata(query=True)] = UNSET
+
+    fetch_user_data: Annotated[Optional[bool], FieldMetadata(query=True)] = False
+
+    fetch_customer_data: Annotated[Optional[bool], FieldMetadata(query=True)] = False
+
     fetch_connection_secrets: Annotated[Optional[bool], FieldMetadata(query=True)] = (
         False
     )
     r"""Fetch connection secrets."""
 
+    fetch_execution_data: Annotated[Optional[bool], FieldMetadata(query=True)] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["active", "fetch_connection_secrets"])
-        nullable_fields = set(["active"])
+        optional_fields = set(
+            [
+                "active",
+                "mistral",
+                "built_in",
+                "fetch_user_data",
+                "fetch_customer_data",
+                "fetch_connection_secrets",
+                "fetch_execution_data",
+            ]
+        )
+        nullable_fields = set(["active", "mistral", "built_in"])
         serialized = handler(self)
         m = {}
 

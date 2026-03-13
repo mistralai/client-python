@@ -21,7 +21,21 @@ class Connectors(BaseSDK):
         server: str,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        mistral_integration: Optional[bool] = False,
+        private_tool_execution: Optional[bool] = False,
+        customer_configuration_schema: Optional[Dict[str, Any]] = None,
+        customer_secrets_schema: Optional[Dict[str, Any]] = None,
+        user_configuration_schema: Optional[Dict[str, Any]] = None,
+        user_secrets_schema: Optional[Dict[str, Any]] = None,
+        connection_config: Optional[Dict[str, Any]] = None,
+        connection_secrets: Optional[Dict[str, Any]] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
+        ] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
@@ -40,7 +54,17 @@ class Connectors(BaseSDK):
         :param server: The url of the MCP server.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param mistral_integration:
+        :param private_tool_execution:
+        :param customer_configuration_schema:
+        :param customer_secrets_schema:
+        :param user_configuration_schema:
+        :param user_secrets_schema:
+        :param connection_config:
+        :param connection_secrets:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param auth_scheme:
+        :param locale:
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
         :param retries: Override the default retry configuration for this method
@@ -58,13 +82,27 @@ class Connectors(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateConnectorRequest(
+        request = models.ConnectorMCPCreate(
             name=name,
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            mistral_integration=mistral_integration,
+            private_tool_execution=private_tool_execution,
+            customer_configuration_schema=customer_configuration_schema,
+            customer_secrets_schema=customer_secrets_schema,
+            user_configuration_schema=user_configuration_schema,
+            user_secrets_schema=user_secrets_schema,
+            connection_config=connection_config,
+            connection_secrets=connection_secrets,
             server=server,
             headers=headers,
+            auth_scheme=utils.get_pydantic_model(
+                auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
+            ),
+            locale=utils.get_pydantic_model(
+                locale, OptionalNullable[models.ConnectorLocale]
+            ),
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
@@ -85,7 +123,7 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateConnectorRequest
+                request, False, False, "json", models.ConnectorMCPCreate
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -139,7 +177,21 @@ class Connectors(BaseSDK):
         server: str,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        mistral_integration: Optional[bool] = False,
+        private_tool_execution: Optional[bool] = False,
+        customer_configuration_schema: Optional[Dict[str, Any]] = None,
+        customer_secrets_schema: Optional[Dict[str, Any]] = None,
+        user_configuration_schema: Optional[Dict[str, Any]] = None,
+        user_secrets_schema: Optional[Dict[str, Any]] = None,
+        connection_config: Optional[Dict[str, Any]] = None,
+        connection_secrets: Optional[Dict[str, Any]] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
+        ] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
@@ -158,7 +210,17 @@ class Connectors(BaseSDK):
         :param server: The url of the MCP server.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param mistral_integration:
+        :param private_tool_execution:
+        :param customer_configuration_schema:
+        :param customer_secrets_schema:
+        :param user_configuration_schema:
+        :param user_secrets_schema:
+        :param connection_config:
+        :param connection_secrets:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param auth_scheme:
+        :param locale:
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
         :param retries: Override the default retry configuration for this method
@@ -176,13 +238,27 @@ class Connectors(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateConnectorRequest(
+        request = models.ConnectorMCPCreate(
             name=name,
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            mistral_integration=mistral_integration,
+            private_tool_execution=private_tool_execution,
+            customer_configuration_schema=customer_configuration_schema,
+            customer_secrets_schema=customer_secrets_schema,
+            user_configuration_schema=user_configuration_schema,
+            user_secrets_schema=user_secrets_schema,
+            connection_config=connection_config,
+            connection_secrets=connection_secrets,
             server=server,
             headers=headers,
+            auth_scheme=utils.get_pydantic_model(
+                auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
+            ),
+            locale=utils.get_pydantic_model(
+                locale, OptionalNullable[models.ConnectorLocale]
+            ),
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
@@ -203,7 +279,7 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateConnectorRequest
+                request, False, False, "json", models.ConnectorMCPCreate
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -459,7 +535,7 @@ class Connectors(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConnectorToolCallResponse:
+    ) -> models.MCPToolCallResponse:
         r"""Call Connector Tool
 
         Call a tool on an MCP connector.
@@ -485,7 +561,7 @@ class Connectors(BaseSDK):
         request = models.ConnectorCallToolV1Request(
             tool_name=tool_name,
             connector_id_or_name=connector_id_or_name,
-            connector_call_tool_request=models.ConnectorCallToolRequest(
+            mcp_tool_call_request=models.MCPToolCallRequest(
                 arguments=arguments,
             ),
         )
@@ -504,11 +580,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.connector_call_tool_request,
+                request.mcp_tool_call_request,
                 False,
                 False,
                 "json",
-                models.ConnectorCallToolRequest,
+                models.MCPToolCallRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -539,7 +615,7 @@ class Connectors(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConnectorToolCallResponse, http_res)
+            return unmarshal_json_response(models.MCPToolCallResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -564,7 +640,7 @@ class Connectors(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ConnectorToolCallResponse:
+    ) -> models.MCPToolCallResponse:
         r"""Call Connector Tool
 
         Call a tool on an MCP connector.
@@ -590,7 +666,7 @@ class Connectors(BaseSDK):
         request = models.ConnectorCallToolV1Request(
             tool_name=tool_name,
             connector_id_or_name=connector_id_or_name,
-            connector_call_tool_request=models.ConnectorCallToolRequest(
+            mcp_tool_call_request=models.MCPToolCallRequest(
                 arguments=arguments,
             ),
         )
@@ -609,11 +685,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.connector_call_tool_request,
+                request.mcp_tool_call_request,
                 False,
                 False,
                 "json",
-                models.ConnectorCallToolRequest,
+                models.MCPToolCallRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -644,7 +720,521 @@ class Connectors(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ConnectorToolCallResponse, http_res)
+            return unmarshal_json_response(models.MCPToolCallResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def list_internal(
+        self,
+        *,
+        query_filters: Optional[
+            Union[models.ConnectorsQueryFilters, models.ConnectorsQueryFiltersTypedDict]
+        ] = None,
+        cursor: OptionalNullable[str] = UNSET,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ResponseGetAllInternalV1InternalConnectorsGet:
+        r"""Get All Internal
+
+        :param query_filters:
+        :param cursor:
+        :param page:
+        :param page_size:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetAllInternalV1InternalConnectorsGetRequest(
+            query_filters=utils.get_pydantic_model(
+                query_filters, Optional[models.ConnectorsQueryFilters]
+            ),
+            cursor=cursor,
+            page=page,
+            page_size=page_size,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/connectors",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_all_internal_v1_internal_connectors_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.ResponseGetAllInternalV1InternalConnectorsGet, http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def list_internal_async(
+        self,
+        *,
+        query_filters: Optional[
+            Union[models.ConnectorsQueryFilters, models.ConnectorsQueryFiltersTypedDict]
+        ] = None,
+        cursor: OptionalNullable[str] = UNSET,
+        page: Optional[int] = 0,
+        page_size: Optional[int] = 100,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ResponseGetAllInternalV1InternalConnectorsGet:
+        r"""Get All Internal
+
+        :param query_filters:
+        :param cursor:
+        :param page:
+        :param page_size:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetAllInternalV1InternalConnectorsGetRequest(
+            query_filters=utils.get_pydantic_model(
+                query_filters, Optional[models.ConnectorsQueryFilters]
+            ),
+            cursor=cursor,
+            page=page,
+            page_size=page_size,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/connectors",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_all_internal_v1_internal_connectors_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.ResponseGetAllInternalV1InternalConnectorsGet, http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def verify_mcp_connector_internal(
+        self,
+        *,
+        name: str,
+        description: str,
+        server: str,
+        icon_url: OptionalNullable[str] = UNSET,
+        visibility: Optional[models.ResourceVisibility] = None,
+        mistral_integration: Optional[bool] = False,
+        private_tool_execution: Optional[bool] = False,
+        customer_configuration_schema: Optional[Dict[str, Any]] = None,
+        customer_secrets_schema: Optional[Dict[str, Any]] = None,
+        user_configuration_schema: Optional[Dict[str, Any]] = None,
+        user_secrets_schema: Optional[Dict[str, Any]] = None,
+        connection_config: Optional[Dict[str, Any]] = None,
+        connection_secrets: Optional[Dict[str, Any]] = None,
+        headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
+        ] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
+        auth_data: OptionalNullable[
+            Union[models.AuthData, models.AuthDataTypedDict]
+        ] = UNSET,
+        system_prompt: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MCPVerificationResponse:
+        r"""Verify Mcp Connector
+
+        :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
+        :param description: The description of the connector.
+        :param server: The url of the MCP server.
+        :param icon_url: The optional url of the icon you want to associate to the connector.
+        :param visibility:
+        :param mistral_integration:
+        :param private_tool_execution:
+        :param customer_configuration_schema:
+        :param customer_secrets_schema:
+        :param user_configuration_schema:
+        :param user_secrets_schema:
+        :param connection_config:
+        :param connection_secrets:
+        :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param auth_scheme:
+        :param locale:
+        :param auth_data: Optional additional authentication data for the connector.
+        :param system_prompt: Optional system prompt for the connector.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorMCPCreate(
+            name=name,
+            description=description,
+            icon_url=icon_url,
+            visibility=visibility,
+            mistral_integration=mistral_integration,
+            private_tool_execution=private_tool_execution,
+            customer_configuration_schema=customer_configuration_schema,
+            customer_secrets_schema=customer_secrets_schema,
+            user_configuration_schema=user_configuration_schema,
+            user_secrets_schema=user_secrets_schema,
+            connection_config=connection_config,
+            connection_secrets=connection_secrets,
+            server=server,
+            headers=headers,
+            auth_scheme=utils.get_pydantic_model(
+                auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
+            ),
+            locale=utils.get_pydantic_model(
+                locale, OptionalNullable[models.ConnectorLocale]
+            ),
+            auth_data=utils.get_pydantic_model(
+                auth_data, OptionalNullable[models.AuthData]
+            ),
+            system_prompt=system_prompt,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/internal/connectors/verify",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.ConnectorMCPCreate
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="verify_mcp_connector_v1_internal_connectors_verify_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MCPVerificationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def verify_mcp_connector_internal_async(
+        self,
+        *,
+        name: str,
+        description: str,
+        server: str,
+        icon_url: OptionalNullable[str] = UNSET,
+        visibility: Optional[models.ResourceVisibility] = None,
+        mistral_integration: Optional[bool] = False,
+        private_tool_execution: Optional[bool] = False,
+        customer_configuration_schema: Optional[Dict[str, Any]] = None,
+        customer_secrets_schema: Optional[Dict[str, Any]] = None,
+        user_configuration_schema: Optional[Dict[str, Any]] = None,
+        user_secrets_schema: Optional[Dict[str, Any]] = None,
+        connection_config: Optional[Dict[str, Any]] = None,
+        connection_secrets: Optional[Dict[str, Any]] = None,
+        headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
+        ] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
+        auth_data: OptionalNullable[
+            Union[models.AuthData, models.AuthDataTypedDict]
+        ] = UNSET,
+        system_prompt: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MCPVerificationResponse:
+        r"""Verify Mcp Connector
+
+        :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
+        :param description: The description of the connector.
+        :param server: The url of the MCP server.
+        :param icon_url: The optional url of the icon you want to associate to the connector.
+        :param visibility:
+        :param mistral_integration:
+        :param private_tool_execution:
+        :param customer_configuration_schema:
+        :param customer_secrets_schema:
+        :param user_configuration_schema:
+        :param user_secrets_schema:
+        :param connection_config:
+        :param connection_secrets:
+        :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param auth_scheme:
+        :param locale:
+        :param auth_data: Optional additional authentication data for the connector.
+        :param system_prompt: Optional system prompt for the connector.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorMCPCreate(
+            name=name,
+            description=description,
+            icon_url=icon_url,
+            visibility=visibility,
+            mistral_integration=mistral_integration,
+            private_tool_execution=private_tool_execution,
+            customer_configuration_schema=customer_configuration_schema,
+            customer_secrets_schema=customer_secrets_schema,
+            user_configuration_schema=user_configuration_schema,
+            user_secrets_schema=user_secrets_schema,
+            connection_config=connection_config,
+            connection_secrets=connection_secrets,
+            server=server,
+            headers=headers,
+            auth_scheme=utils.get_pydantic_model(
+                auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
+            ),
+            locale=utils.get_pydantic_model(
+                locale, OptionalNullable[models.ConnectorLocale]
+            ),
+            auth_data=utils.get_pydantic_model(
+                auth_data, OptionalNullable[models.AuthData]
+            ),
+            system_prompt=system_prompt,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/internal/connectors/verify",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.ConnectorMCPCreate
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="verify_mcp_connector_v1_internal_connectors_verify_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MCPVerificationResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -858,13 +1448,20 @@ class Connectors(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        private_tool_execution: OptionalNullable[bool] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
+        ] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -879,12 +1476,15 @@ class Connectors(BaseSDK):
         :param name: The name of the connector.
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
+        :param locale:
         :param system_prompt: Optional system prompt for the connector.
+        :param private_tool_execution:
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
         :param headers: New headers for your mcp connector.
         :param auth_data: New authentication data for your mcp connector.
+        :param auth_scheme:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -902,17 +1502,24 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
-            update_connector_request=models.UpdateConnectorRequest(
+            connector_mcp_update=models.ConnectorMCPUpdate(
                 name=name,
                 description=description,
                 icon_url=icon_url,
+                locale=utils.get_pydantic_model(
+                    locale, OptionalNullable[models.ConnectorLocale]
+                ),
                 system_prompt=system_prompt,
+                private_tool_execution=private_tool_execution,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,
                 headers=headers,
                 auth_data=utils.get_pydantic_model(
                     auth_data, OptionalNullable[models.AuthData]
+                ),
+                auth_scheme=utils.get_pydantic_model(
+                    auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
                 ),
             ),
         )
@@ -931,11 +1538,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_connector_request,
+                request.connector_mcp_update,
                 False,
                 False,
                 "json",
-                models.UpdateConnectorRequest,
+                models.ConnectorMCPUpdate,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -988,13 +1595,20 @@ class Connectors(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[
+            Union[models.ConnectorLocale, models.ConnectorLocaleTypedDict]
+        ] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        private_tool_execution: OptionalNullable[bool] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
+        ] = UNSET,
+        auth_scheme: OptionalNullable[
+            Union[models.TurbineSecurityScheme, models.TurbineSecuritySchemeTypedDict]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1009,12 +1623,15 @@ class Connectors(BaseSDK):
         :param name: The name of the connector.
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
+        :param locale:
         :param system_prompt: Optional system prompt for the connector.
+        :param private_tool_execution:
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
         :param headers: New headers for your mcp connector.
         :param auth_data: New authentication data for your mcp connector.
+        :param auth_scheme:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1032,17 +1649,24 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
-            update_connector_request=models.UpdateConnectorRequest(
+            connector_mcp_update=models.ConnectorMCPUpdate(
                 name=name,
                 description=description,
                 icon_url=icon_url,
+                locale=utils.get_pydantic_model(
+                    locale, OptionalNullable[models.ConnectorLocale]
+                ),
                 system_prompt=system_prompt,
+                private_tool_execution=private_tool_execution,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,
                 headers=headers,
                 auth_data=utils.get_pydantic_model(
                     auth_data, OptionalNullable[models.AuthData]
+                ),
+                auth_scheme=utils.get_pydantic_model(
+                    auth_scheme, OptionalNullable[models.TurbineSecurityScheme]
                 ),
             ),
         )
@@ -1061,11 +1685,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_connector_request,
+                request.connector_mcp_update,
                 False,
                 False,
                 "json",
-                models.UpdateConnectorRequest,
+                models.ConnectorMCPUpdate,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1277,6 +1901,206 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def get_internal(
+        self,
+        *,
+        connector_id_or_name: str,
+        fetch_user_data: Optional[bool] = False,
+        fetch_customer_data: Optional[bool] = False,
+        fetch_connection_secrets: Optional[bool] = False,
+        fetch_execution_data: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Connector:
+        r"""Get Internal
+
+        :param connector_id_or_name:
+        :param fetch_user_data:
+        :param fetch_customer_data:
+        :param fetch_connection_secrets:
+        :param fetch_execution_data:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetInternalV1InternalConnectorsConnectorIDOrNameGetRequest(
+            fetch_user_data=fetch_user_data,
+            fetch_customer_data=fetch_customer_data,
+            fetch_connection_secrets=fetch_connection_secrets,
+            fetch_execution_data=fetch_execution_data,
+            connector_id_or_name=connector_id_or_name,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/internal/connectors/{connector_id_or_name}#idOrName",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_internal_v1_internal_connectors__connector_id_or_name__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Connector, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_internal_async(
+        self,
+        *,
+        connector_id_or_name: str,
+        fetch_user_data: Optional[bool] = False,
+        fetch_customer_data: Optional[bool] = False,
+        fetch_connection_secrets: Optional[bool] = False,
+        fetch_execution_data: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Connector:
+        r"""Get Internal
+
+        :param connector_id_or_name:
+        :param fetch_user_data:
+        :param fetch_customer_data:
+        :param fetch_connection_secrets:
+        :param fetch_execution_data:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetInternalV1InternalConnectorsConnectorIDOrNameGetRequest(
+            fetch_user_data=fetch_user_data,
+            fetch_customer_data=fetch_customer_data,
+            fetch_connection_secrets=fetch_connection_secrets,
+            fetch_execution_data=fetch_execution_data,
+            connector_id_or_name=connector_id_or_name,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/internal/connectors/{connector_id_or_name}#idOrName",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_internal_v1_internal_connectors__connector_id_or_name__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Connector, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

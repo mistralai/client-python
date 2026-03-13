@@ -2,6 +2,7 @@
 # @generated-id: 297e8905d5af
 
 from __future__ import annotations
+from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from .thinkchunk import ThinkChunk, ThinkChunkTypedDict
 from mistralai.client.utils import get_discriminator
@@ -12,11 +13,15 @@ from typing_extensions import Annotated, TypeAliasType
 
 SystemMessageContentChunksTypedDict = TypeAliasType(
     "SystemMessageContentChunksTypedDict",
-    Union[TextChunkTypedDict, ThinkChunkTypedDict],
+    Union[TextChunkTypedDict, ReferenceChunkTypedDict, ThinkChunkTypedDict],
 )
 
 
 SystemMessageContentChunks = Annotated[
-    Union[Annotated[TextChunk, Tag("text")], Annotated[ThinkChunk, Tag("thinking")]],
+    Union[
+        Annotated[TextChunk, Tag("text")],
+        Annotated[ReferenceChunk, Tag("reference")],
+        Annotated[ThinkChunk, Tag("thinking")],
+    ],
     Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]

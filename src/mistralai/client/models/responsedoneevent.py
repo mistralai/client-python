@@ -24,7 +24,7 @@ class ResponseDoneEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["conversation.response.done"],
+            Optional[Literal["conversation.response.done"]],
             AfterValidator(validate_const("conversation.response.done")),
         ],
         pydantic.Field(alias="type"),
@@ -34,7 +34,7 @@ class ResponseDoneEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at"])
+        optional_fields = set(["type", "created_at"])
         serialized = handler(self)
         m = {}
 

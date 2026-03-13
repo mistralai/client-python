@@ -23,7 +23,7 @@ class ResponseStartedEvent(BaseModel):
 
     type: Annotated[
         Annotated[
-            Literal["conversation.response.started"],
+            Optional[Literal["conversation.response.started"]],
             AfterValidator(validate_const("conversation.response.started")),
         ],
         pydantic.Field(alias="type"),
@@ -33,7 +33,7 @@ class ResponseStartedEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at"])
+        optional_fields = set(["type", "created_at"])
         serialized = handler(self)
         m = {}
 

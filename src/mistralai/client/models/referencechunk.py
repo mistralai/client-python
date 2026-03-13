@@ -7,17 +7,23 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional
-from typing_extensions import Annotated, TypedDict
+from typing import List, Literal, Optional, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
+
+
+ReferenceIDTypedDict = TypeAliasType("ReferenceIDTypedDict", Union[str, int])
+
+
+ReferenceID = TypeAliasType("ReferenceID", Union[str, int])
 
 
 class ReferenceChunkTypedDict(TypedDict):
-    reference_ids: List[int]
+    reference_ids: List[ReferenceIDTypedDict]
     type: Literal["reference"]
 
 
 class ReferenceChunk(BaseModel):
-    reference_ids: List[int]
+    reference_ids: List[ReferenceID]
 
     type: Annotated[
         Annotated[

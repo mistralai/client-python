@@ -55,7 +55,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListDocumentsResponse](../../models/listdocumentsresponse.md)**
+**[models.ListDocumentOut](../../models/listdocumentout.md)**
 
 ### Errors
 
@@ -100,7 +100,7 @@ with Mistral(
 
 ### Response
 
-**[models.Document](../../models/document.md)**
+**[models.DocumentOut](../../models/documentout.md)**
 
 ### Errors
 
@@ -142,7 +142,7 @@ with Mistral(
 
 ### Response
 
-**[models.Document](../../models/document.md)**
+**[models.DocumentOut](../../models/documentout.md)**
 
 ### Errors
 
@@ -186,7 +186,7 @@ with Mistral(
 
 ### Response
 
-**[models.Document](../../models/document.md)**
+**[models.DocumentOut](../../models/documentout.md)**
 
 ### Errors
 
@@ -307,7 +307,7 @@ with Mistral(
 
 ### Response
 
-**[models.ProcessingStatus](../../models/processingstatus.md)**
+**[models.ProcessingStatusOut](../../models/processingstatusout.md)**
 
 ### Errors
 

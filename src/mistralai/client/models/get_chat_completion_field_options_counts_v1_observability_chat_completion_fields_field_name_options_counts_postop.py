@@ -2,9 +2,9 @@
 # @generated-id: 0b1bd06b24af
 
 from __future__ import annotations
-from .fetchfieldoptioncountsrequest import (
-    FetchFieldOptionCountsRequest,
-    FetchFieldOptionCountsRequestTypedDict,
+from .fieldoptioncountsinschema import (
+    FieldOptionCountsInSchema,
+    FieldOptionCountsInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,7 @@ class GetChatCompletionFieldOptionsCountsV1ObservabilityChatCompletionFieldsFiel
     TypedDict
 ):
     field_name: str
-    fetch_field_option_counts_request: FetchFieldOptionCountsRequestTypedDict
+    field_option_counts_in_schema: FieldOptionCountsInSchemaTypedDict
 
 
 class GetChatCompletionFieldOptionsCountsV1ObservabilityChatCompletionFieldsFieldNameOptionsCountsPostRequest(
@@ -25,7 +25,7 @@ class GetChatCompletionFieldOptionsCountsV1ObservabilityChatCompletionFieldsFiel
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    fetch_field_option_counts_request: Annotated[
-        FetchFieldOptionCountsRequest,
+    field_option_counts_in_schema: Annotated[
+        FieldOptionCountsInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

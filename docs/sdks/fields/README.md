@@ -2,6 +2,8 @@
 
 ## Overview
 
+(beta) Fetch info about available fields and filters
+
 ### Available Operations
 
 * [list](#list) - Get Chat Completion Fields
@@ -39,7 +41,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListChatCompletionFieldsResponse](../../models/listchatcompletionfieldsresponse.md)**
+**[models.ChatCompletionFields](../../models/chatcompletionfields.md)**
 
 ### Errors
 
@@ -81,7 +83,7 @@ with Mistral(
 
 ### Response
 
-**[models.FetchChatCompletionFieldOptionsResponse](../../models/fetchchatcompletionfieldoptionsresponse.md)**
+**[models.ChatCompletionFieldOptions](../../models/chatcompletionfieldoptions.md)**
 
 ### Errors
 
@@ -123,7 +125,7 @@ with Mistral(
 
 ### Response
 
-**[models.FetchFieldOptionCountsResponse](../../models/fetchfieldoptioncountsresponse.md)**
+**[models.FieldOptionCounts](../../models/fieldoptioncounts.md)**
 
 ### Errors
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
+from .builtinconnectortools import BuiltInConnectorTools
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -29,10 +30,21 @@ ToolExecutionStartedEventName = TypeAliasType(
 )
 
 
+ToolExecutionStartedEventFunctionTypedDict = TypeAliasType(
+    "ToolExecutionStartedEventFunctionTypedDict", Union[BuiltInConnectorTools, str]
+)
+
+
+ToolExecutionStartedEventFunction = TypeAliasType(
+    "ToolExecutionStartedEventFunction", Union[BuiltInConnectorTools, str]
+)
+
+
 class ToolExecutionStartedEventTypedDict(TypedDict):
     id: str
     name: ToolExecutionStartedEventNameTypedDict
     arguments: str
+    function: ToolExecutionStartedEventFunctionTypedDict
     type: Literal["tool.execution.started"]
     created_at: NotRequired[datetime]
     output_index: NotRequired[int]
@@ -47,9 +59,11 @@ class ToolExecutionStartedEvent(BaseModel):
 
     arguments: str
 
+    function: ToolExecutionStartedEventFunction
+
     type: Annotated[
         Annotated[
-            Literal["tool.execution.started"],
+            Optional[Literal["tool.execution.started"]],
             AfterValidator(validate_const("tool.execution.started")),
         ],
         pydantic.Field(alias="type"),
@@ -65,7 +79,9 @@ class ToolExecutionStartedEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["created_at", "output_index", "model", "agent_id"])
+        optional_fields = set(
+            ["type", "created_at", "output_index", "model", "agent_id"]
+        )
         nullable_fields = set(["model", "agent_id"])
         serialized = handler(self)
         m = {}

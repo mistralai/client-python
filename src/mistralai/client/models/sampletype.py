@@ -10,9 +10,17 @@ SampleType = Union[
     Literal[
         "pretrain",
         "instruct",
+        "dpo",
+        "classification",
         "batch_request",
         "batch_result",
         "batch_error",
+        "capture_result",
+        "ocr_input",
+        "code_interpreter",
+        "image_generation",
+        "audio_input",
+        "playground_input",
     ],
     UnrecognizedStr,
 ]

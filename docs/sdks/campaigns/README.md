@@ -2,6 +2,8 @@
 
 ## Overview
 
+(beta) Run annotation campaigns on past conversations
+
 ### Available Operations
 
 * [create](#create) - Create and start a new campaign
@@ -53,7 +55,7 @@ with Mistral(
 
 ### Response
 
-**[models.Campaign](../../models/campaign.md)**
+**[models.CampaignPreview](../../models/campaignpreview.md)**
 
 ### Errors
 
@@ -96,7 +98,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListCampaignsResponse](../../models/listcampaignsresponse.md)**
+**[models.CampaignPreviews](../../models/campaignpreviews.md)**
 
 ### Errors
 
@@ -137,7 +139,7 @@ with Mistral(
 
 ### Response
 
-**[models.Campaign](../../models/campaign.md)**
+**[models.CampaignPreview](../../models/campaignpreview.md)**
 
 ### Errors
 
@@ -214,7 +216,7 @@ with Mistral(
 
 ### Response
 
-**[models.FetchCampaignStatusResponse](../../models/fetchcampaignstatusresponse.md)**
+**[models.CampaignStatus](../../models/campaignstatus.md)**
 
 ### Errors
 
@@ -257,7 +259,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListCampaignSelectedEventsResponse](../../models/listcampaignselectedeventsresponse.md)**
+**[models.CampaignSelectedEvents](../../models/campaignselectedevents.md)**
 
 ### Errors
 

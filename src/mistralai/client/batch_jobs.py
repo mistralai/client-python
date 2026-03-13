@@ -28,7 +28,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListBatchJobsResponse:
+    ) -> models.BatchJobsOut:
         r"""Get Batch Jobs
 
         Get a list of batch jobs for your organization and user.
@@ -110,7 +110,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListBatchJobsResponse, http_res)
+            return unmarshal_json_response(models.BatchJobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -136,7 +136,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ListBatchJobsResponse:
+    ) -> models.BatchJobsOut:
         r"""Get Batch Jobs
 
         Get a list of batch jobs for your organization and user.
@@ -218,7 +218,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ListBatchJobsResponse, http_res)
+            return unmarshal_json_response(models.BatchJobsOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -244,7 +244,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Create Batch Job
 
         Create a new batch job, it will be queued for processing.
@@ -271,7 +271,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateBatchJobRequest(
+        request = models.BatchJobIn(
             input_files=input_files,
             requests=utils.get_pydantic_model(
                 requests, OptionalNullable[List[models.BatchRequest]]
@@ -297,7 +297,7 @@ class BatchJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateBatchJobRequest
+                request, False, False, "json", models.BatchJobIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -327,7 +327,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -353,7 +353,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Create Batch Job
 
         Create a new batch job, it will be queued for processing.
@@ -380,7 +380,7 @@ class BatchJobs(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateBatchJobRequest(
+        request = models.BatchJobIn(
             input_files=input_files,
             requests=utils.get_pydantic_model(
                 requests, OptionalNullable[List[models.BatchRequest]]
@@ -406,7 +406,7 @@ class BatchJobs(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateBatchJobRequest
+                request, False, False, "json", models.BatchJobIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -436,7 +436,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -455,7 +455,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Get Batch Job
 
         Get a batch job details by its UUID.
@@ -526,7 +526,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -545,7 +545,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Get Batch Job
 
         Get a batch job details by its UUID.
@@ -616,7 +616,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -634,7 +634,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Cancel Batch Job
 
         Request the cancellation of a batch job.
@@ -700,7 +700,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -718,7 +718,7 @@ class BatchJobs(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.BatchJob:
+    ) -> models.BatchJobOut:
         r"""Cancel Batch Job
 
         Request the cancellation of a batch job.
@@ -784,7 +784,7 @@ class BatchJobs(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.BatchJob, http_res)
+            return unmarshal_json_response(models.BatchJobOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)

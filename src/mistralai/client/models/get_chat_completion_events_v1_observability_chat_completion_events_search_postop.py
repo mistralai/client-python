@@ -2,9 +2,9 @@
 # @generated-id: 36957d0f73aa
 
 from __future__ import annotations
-from .searchchatcompletioneventsrequest import (
-    SearchChatCompletionEventsRequest,
-    SearchChatCompletionEventsRequestTypedDict,
+from .getchatcompletioneventsinschema import (
+    GetChatCompletionEventsInSchema,
+    GetChatCompletionEventsInSchemaTypedDict,
 )
 from mistralai.client.types import (
     BaseModel,
@@ -22,7 +22,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class GetChatCompletionEventsV1ObservabilityChatCompletionEventsSearchPostRequestTypedDict(
     TypedDict
 ):
-    search_chat_completion_events_request: SearchChatCompletionEventsRequestTypedDict
+    get_chat_completion_events_in_schema: GetChatCompletionEventsInSchemaTypedDict
     page_size: NotRequired[int]
     cursor: NotRequired[Nullable[str]]
 
@@ -30,8 +30,8 @@ class GetChatCompletionEventsV1ObservabilityChatCompletionEventsSearchPostReques
 class GetChatCompletionEventsV1ObservabilityChatCompletionEventsSearchPostRequest(
     BaseModel
 ):
-    search_chat_completion_events_request: Annotated[
-        SearchChatCompletionEventsRequest,
+    get_chat_completion_events_in_schema: Annotated[
+        GetChatCompletionEventsInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
 

@@ -6,7 +6,18 @@ from mistralai.client.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-MistralPromptMode = Union[Literal["reasoning",], UnrecognizedStr]
+MistralPromptMode = Union[
+    Literal[
+        "auto",
+        "default",
+        "chat",
+        "agents",
+        "api",
+        "reasoning",
+        "empty",
+    ],
+    UnrecognizedStr,
+]
 r"""Available options to the prompt_mode argument on the chat completion endpoint.
 Values represent high-level intent. Assignment to actual SPs is handled internally.
 System prompt may include knowledge cutoff date, model capabilities, tone to use, safety guidelines, etc.

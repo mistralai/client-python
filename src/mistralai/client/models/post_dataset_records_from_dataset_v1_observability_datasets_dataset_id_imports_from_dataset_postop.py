@@ -2,9 +2,9 @@
 # @generated-id: d396e018c804
 
 from __future__ import annotations
-from .importdatasetfromdatasetrequest import (
-    ImportDatasetFromDatasetRequest,
-    ImportDatasetFromDatasetRequestTypedDict,
+from .postdatasetimportfromdatasetinschema import (
+    PostDatasetImportFromDatasetInSchema,
+    PostDatasetImportFromDatasetInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,9 @@ class PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDa
     TypedDict
 ):
     dataset_id: str
-    import_dataset_from_dataset_request: ImportDatasetFromDatasetRequestTypedDict
+    post_dataset_import_from_dataset_in_schema: (
+        PostDatasetImportFromDatasetInSchemaTypedDict
+    )
 
 
 class PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest(
@@ -25,7 +27,7 @@ class PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDa
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    import_dataset_from_dataset_request: Annotated[
-        ImportDatasetFromDatasetRequest,
+    post_dataset_import_from_dataset_in_schema: Annotated[
+        PostDatasetImportFromDatasetInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

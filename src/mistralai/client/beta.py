@@ -6,8 +6,10 @@ from .sdkconfiguration import SDKConfiguration
 from mistralai.client.beta_agents import BetaAgents
 from mistralai.client.connectors import Connectors
 from mistralai.client.conversations import Conversations
+from mistralai.client.deepresearch import Deepresearch
 from mistralai.client.libraries import Libraries
 from mistralai.client.observability import Observability
+from mistralai.client.sandboxes import Sandboxes
 from typing import Optional
 
 
@@ -16,11 +18,14 @@ class Beta(BaseSDK):
     r"""(beta) Conversations API"""
     agents: BetaAgents
     r"""(beta) Agents API"""
+    deepresearch: Deepresearch
     libraries: Libraries
     r"""(beta) Libraries API to create and manage libraries - index your documents to enhance agent capabilities."""
     observability: Observability
     connectors: Connectors
     r"""(beta) Connectors API - manage your connectors"""
+    sandboxes: Sandboxes
+    r"""(beta) Sandboxes API"""
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -34,8 +39,12 @@ class Beta(BaseSDK):
             self.sdk_configuration, parent_ref=self.parent_ref
         )
         self.agents = BetaAgents(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.deepresearch = Deepresearch(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
         self.libraries = Libraries(self.sdk_configuration, parent_ref=self.parent_ref)
         self.observability = Observability(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
         self.connectors = Connectors(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.sandboxes = Sandboxes(self.sdk_configuration, parent_ref=self.parent_ref)

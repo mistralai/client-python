@@ -2,6 +2,7 @@
 # @generated-id: 36f204c64074
 
 from __future__ import annotations
+from .confidencegranularity import ConfidenceGranularity
 from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
@@ -18,16 +19,14 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-DocumentUnionTypedDict = TypeAliasType(
-    "DocumentUnionTypedDict",
+DocumentTypedDict = TypeAliasType(
+    "DocumentTypedDict",
     Union[FileChunkTypedDict, ImageURLChunkTypedDict, DocumentURLChunkTypedDict],
 )
 r"""Document to run OCR on"""
 
 
-DocumentUnion = TypeAliasType(
-    "DocumentUnion", Union[FileChunk, ImageURLChunk, DocumentURLChunk]
-)
+Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURLChunk])
 r"""Document to run OCR on"""
 
 
@@ -39,7 +38,7 @@ TableFormat = Literal[
 
 class OCRRequestTypedDict(TypedDict):
     model: Nullable[str]
-    document: DocumentUnionTypedDict
+    document: DocumentTypedDict
     r"""Document to run OCR on"""
     id: NotRequired[str]
     pages: NotRequired[Nullable[List[int]]]
@@ -59,12 +58,14 @@ class OCRRequestTypedDict(TypedDict):
     table_format: NotRequired[Nullable[TableFormat]]
     extract_header: NotRequired[bool]
     extract_footer: NotRequired[bool]
+    confidence_scores_granularity: NotRequired[Nullable[ConfidenceGranularity]]
+    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
 
 
 class OCRRequest(BaseModel):
     model: Nullable[str]
 
-    document: DocumentUnion
+    document: Document
     r"""Document to run OCR on"""
 
     id: Optional[str] = None
@@ -96,6 +97,9 @@ class OCRRequest(BaseModel):
 
     extract_footer: Optional[bool] = None
 
+    confidence_scores_granularity: OptionalNullable[ConfidenceGranularity] = UNSET
+    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -111,6 +115,7 @@ class OCRRequest(BaseModel):
                 "table_format",
                 "extract_header",
                 "extract_footer",
+                "confidence_scores_granularity",
             ]
         )
         nullable_fields = set(
@@ -124,6 +129,7 @@ class OCRRequest(BaseModel):
                 "document_annotation_format",
                 "document_annotation_prompt",
                 "table_format",
+                "confidence_scores_granularity",
             ]
         )
         serialized = handler(self)

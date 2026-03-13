@@ -391,7 +391,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteModelResponse:
+    ) -> models.DeleteModelOut:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -458,7 +458,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteModelResponse, http_res)
+            return unmarshal_json_response(models.DeleteModelOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -481,7 +481,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DeleteModelResponse:
+    ) -> models.DeleteModelOut:
         r"""Delete Model
 
         Delete a fine-tuned model.
@@ -548,7 +548,7 @@ class Models(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.DeleteModelResponse, http_res)
+            return unmarshal_json_response(models.DeleteModelOut, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -598,7 +598,7 @@ class Models(BaseSDK):
 
         request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
-            update_model_request=models.UpdateModelRequest(
+            update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
                 description=description,
             ),
@@ -618,11 +618,7 @@ class Models(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_model_request,
-                False,
-                False,
-                "json",
-                models.UpdateModelRequest,
+                request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -699,7 +695,7 @@ class Models(BaseSDK):
 
         request = models.JobsAPIRoutesFineTuningUpdateFineTunedModelRequest(
             model_id=model_id,
-            update_model_request=models.UpdateModelRequest(
+            update_ft_model_in=models.UpdateFTModelIn(
                 name=name,
                 description=description,
             ),
@@ -719,11 +715,7 @@ class Models(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_model_request,
-                False,
-                False,
-                "json",
-                models.UpdateModelRequest,
+                request.update_ft_model_in, False, False, "json", models.UpdateFTModelIn
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -773,7 +765,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ArchiveModelResponse:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -839,7 +831,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ArchiveModelResponse, http_res)
+            return unmarshal_json_response(models.ArchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -857,7 +849,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ArchiveModelResponse:
+    ) -> models.ArchiveFTModelOut:
         r"""Archive Fine Tuned Model
 
         Archive a fine-tuned model.
@@ -923,7 +915,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.ArchiveModelResponse, http_res)
+            return unmarshal_json_response(models.ArchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -941,7 +933,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UnarchiveModelResponse:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -1007,7 +999,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UnarchiveModelResponse, http_res)
+            return unmarshal_json_response(models.UnarchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1025,7 +1017,7 @@ class Models(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.UnarchiveModelResponse:
+    ) -> models.UnarchiveFTModelOut:
         r"""Unarchive Fine Tuned Model
 
         Un-archive a fine-tuned model.
@@ -1091,7 +1083,7 @@ class Models(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UnarchiveModelResponse, http_res)
+            return unmarshal_json_response(models.UnarchiveFTModelOut, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)

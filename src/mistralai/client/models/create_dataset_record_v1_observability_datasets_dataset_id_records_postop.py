@@ -2,9 +2,9 @@
 # @generated-id: 1ddc53a46c74
 
 from __future__ import annotations
-from .createdatasetrecordrequest import (
-    CreateDatasetRecordRequest,
-    CreateDatasetRecordRequestTypedDict,
+from .postdatasetrecordinschema import (
+    PostDatasetRecordInSchema,
+    PostDatasetRecordInSchemaTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -15,7 +15,7 @@ class CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequestTyped
     TypedDict
 ):
     dataset_id: str
-    create_dataset_record_request: CreateDatasetRecordRequestTypedDict
+    post_dataset_record_in_schema: PostDatasetRecordInSchemaTypedDict
 
 
 class CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(BaseModel):
@@ -23,7 +23,7 @@ class CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(Base
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    create_dataset_record_request: Annotated[
-        CreateDatasetRecordRequest,
+    post_dataset_record_in_schema: Annotated[
+        PostDatasetRecordInSchema,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

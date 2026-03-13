@@ -5,15 +5,15 @@ OK
 
 ## Supported Types
 
-### `models.ClassifierFineTuningJobDetails`
+### `models.ClassifierDetailedJobOut`
 
 ```python
-value: models.ClassifierFineTuningJobDetails = /* values here */
+value: models.ClassifierDetailedJobOut = /* values here */
 ```
 
-### `models.CompletionFineTuningJobDetails`
+### `models.CompletionDetailedJobOut`
 
 ```python
-value: models.CompletionFineTuningJobDetails = /* values here */
+value: models.CompletionDetailedJobOut = /* values here */
 ```
 

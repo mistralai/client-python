@@ -1,0 +1,12 @@
+# DeepResearchSubmitTaskRequest
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `task_type`                                                                        | [Optional[models.TaskType]](../models/tasktype.md)                                 | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `query`                                                                            | *str*                                                                              | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `steps`                                                                            | List[*str*]                                                                        | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `model`                                                                            | *OptionalNullable[str]*                                                            | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `metadata`                                                                         | [OptionalNullable[models.DeepResearchMetadata]](../models/deepresearchmetadata.md) | :heavy_minus_sign:                                                                 | N/A                                                                                |

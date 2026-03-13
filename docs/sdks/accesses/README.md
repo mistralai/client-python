@@ -42,7 +42,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListSharingResponse](../../models/listsharingresponse.md)**
+**[models.ListSharingOut](../../models/listsharingout.md)**
 
 ### Errors
 
@@ -87,7 +87,7 @@ with Mistral(
 
 ### Response
 
-**[models.Sharing](../../models/sharing.md)**
+**[models.SharingOut](../../models/sharingout.md)**
 
 ### Errors
 
@@ -131,7 +131,7 @@ with Mistral(
 
 ### Response
 
-**[models.Sharing](../../models/sharing.md)**
+**[models.SharingOut](../../models/sharingout.md)**
 
 ### Errors
 
