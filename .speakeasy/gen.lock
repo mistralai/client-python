@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: bb87a2d97f3451b49ece1f757a33f0ba
+  docChecksum: 5009f43722321807dd58e322f7738cf4
   docVersion: 1.0.0
   speakeasyVersion: 1.729.0
   generationVersion: 2.841.0
-  releaseVersion: 2.0.1
-  configChecksum: 006abc607168111d628a422258f355ba
+  releaseVersion: 2.0.2
+  configChecksum: 600f26a381bbc109a39342b9b900117e
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 03da14ba-78d6-4fb7-b997-4bb820eedd19
-  pristine_commit_hash: 81f0d1b22d32115b6bea27499be12662db3c24c1
-  pristine_tree_hash: b7173449eea74b886d2cf12c4108224effd56e16
+  generation_id: 844caeee-5cc5-4912-b4e9-794ec8780d23
+  pristine_commit_hash: e13afd0003d7e5b8cdb9af2921f5d0e43d730272
+  pristine_tree_hash: c5b3654933b6bea986d447829317550dc0b5f80b
 features:
   python:
     additionalDependencies: 1.0.0
@@ -672,8 +672,8 @@ trackedFiles:
     pristine_git_object: 5a58e6d139fd902bb810088221e036001d7690d2
   docs/models/conversationresponse.md:
     id: 2eccf42d48af
-    last_write_checksum: sha1:55493c0b639cb8bda3b5f3bca57a7eec6060b148
-    pristine_git_object: 3f0340ba8f382754589a29758d06e7822446488f
+    last_write_checksum: sha1:519eed0bd9b45ac7c5ccd72f0e56d0a10308aa19
+    pristine_git_object: 414755d3f7db0a27e73ef174c8d8c4714c19774e
   docs/models/conversationresponseoutput.md:
     id: b4663dc32fc3
     last_write_checksum: sha1:5f188564b4b1fd9460a5155bc433c9adf7df031a
@@ -1174,10 +1174,6 @@ trackedFiles:
     id: 66c120df624b
     last_write_checksum: sha1:045e538dd7faffc1c6c6e6816563c5c8e776a276
     pristine_git_object: 827b6f34ae68ace7b8b4811764f59de2e0fcdd22
-  docs/models/guardrail.md:
-    id: 34d09568ab25
-    last_write_checksum: sha1:8c95d17ab908018f763f74cc79e14bd5137f5544
-    pristine_git_object: 319e1415d9396412c455056135189d817e2fc473
   docs/models/guardrailconfig.md:
     id: f60bf2eefb45
     last_write_checksum: sha1:e8dd384d2fd18d731753ba8d45a2975379c97052
@@ -2276,8 +2272,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:3032daf0aeb47d7e21ff355c838e9ab5c765b428
-    pristine_git_object: 7c37028eac3c970d707ee16fa69ae1e7b0020cfc
+    last_write_checksum: sha1:3d3edd7cc94ea5c606cee1b8f046cdc498e8605e
+    pristine_git_object: 131837b21ca2c493f2af563add51d8fe842799db
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -2408,8 +2404,8 @@ trackedFiles:
     pristine_git_object: b8728362b87349118ac6f163f50613dd18c43340
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:15c081adb2e325471e7e1a5aa47159281082abd0
-    pristine_git_object: e0fd60e48c43a87566b6abbc7e87cdd695e83a55
+    last_write_checksum: sha1:8b1de8b199740065d159c3025c564dce74654e1a
+    pristine_git_object: 7b5eb3434b332c53ae32470c513f25fb606caf30
   src/mistralai/client/models/agent.py:
     id: 1336849c84fb
     last_write_checksum: sha1:6bd14cd797a902679111638ede8b3f8a6389ba87
@@ -2812,8 +2808,8 @@ trackedFiles:
     pristine_git_object: 299b41fc79df3b8cd1221142aa693f77e060d757
   src/mistralai/client/models/conversationresponse.py:
     id: ad7a8472c7bf
-    last_write_checksum: sha1:86c11bbd5003fc1a6838636257e07404da981ca7
-    pristine_git_object: 2fc8504dbc7e2157623c0a6077e18ca96a0a0f5c
+    last_write_checksum: sha1:c668077dd7d22c87c075530bbca7f4625bee5d0c
+    pristine_git_object: d1f8ac4b89cb332d4b0b5e90ef936228f267f804
   src/mistralai/client/models/conversationrestartrequest.py:
     id: 681d90d50514
     last_write_checksum: sha1:9a015a4eb700aa97311231704da0f0eef4b4c7c3
@@ -6049,7 +6045,11 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.chat.complete()`: \n  *  `request.messages[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n  *  `response.choices[].message.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.classifiers.classify_chat()`: \n  *  `request.input.union(InstructRequest).messages[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.classifiers.moderate_chat()`: \n  *  `request.inputs.union(Array<>)[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.agents.stream()`: \n  *  `request.messages[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n  *  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.agents.complete()`: \n  *  `request.messages[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n  *  `response.choices[].message.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.fim.stream()`:  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.fim.complete()`:  `response.choices[].message.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.chat.stream()`: \n  *  `request.messages[].union(user).content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n  *  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(audio_url)` **Removed** (Breaking ⚠️)\n* `mistral.beta.conversations.restart_stream()`: \n  *  `request.guardrails[]` **Changed**\n* `mistral.beta.agents.update()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `mistral.beta.agents.update_version()`:  `response` **Changed**\n* `mistral.beta.agents.list_versions()`:  `response.[]` **Changed**\n* `mistral.beta.agents.get_version()`:  `response` **Changed**\n* `mistral.beta.agents.get()`:  `response` **Changed**\n* `mistral.beta.agents.list()`:  `response.[]` **Changed**\n* `mistral.beta.agents.create()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `mistral.beta.conversations.start()`:  `request` **Changed**\n* `mistral.beta.conversations.start_stream()`:  `request` **Changed**\n* `mistral.beta.conversations.restart()`: \n  *  `request.guardrails[]` **Changed**\n* `mistral.beta.conversations.get()`:  `response.union(ModelConversation)` **Changed**\n* `mistral.beta.conversations.list()`:  `response.[].union(ModelConversation)` **Changed**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.beta.conversations.start()`:  `response.guardrails[]` **Changed** (Breaking ⚠️)
+  * `mistral.beta.conversations.append()`:  `response.guardrails[]` **Changed** (Breaking ⚠️)
+  * `mistral.beta.conversations.restart()`:  `response.guardrails[]` **Changed** (Breaking ⚠️)
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
