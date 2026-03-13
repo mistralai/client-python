@@ -12,8 +12,9 @@ def main():
 
     client = Mistral(api_key=api_key)
 
-    for chunk in client.chat.stream(
+    for chunk in client.chat.complete(
         model=model,
+        stream=True,
         messages=[UserMessage(content="What is the best French cheese?")],
     ):
         print(chunk.data.choices[0].delta.content, end="")

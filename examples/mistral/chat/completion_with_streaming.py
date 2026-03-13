@@ -15,8 +15,9 @@ async def main():
     suffix = "n = int(input('Enter a number: '))\nprint(fibonacci(n))"
 
     print(prompt)
-    for chunk in client.fim.stream(
+    for chunk in client.fim.complete(
         model="codestral-latest",
+        stream=True,
         prompt=prompt,
         suffix=suffix,
     ):

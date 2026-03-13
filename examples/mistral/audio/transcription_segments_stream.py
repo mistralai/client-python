@@ -3,6 +3,7 @@
 import os
 
 from mistralai.client import Mistral
+from mistralai.client.transcriptions import CompleteAcceptEnum
 
 
 def main():
@@ -10,10 +11,11 @@ def main():
     model = "voxtral-mini-latest"
 
     client = Mistral(api_key=api_key)
-    response = client.audio.transcriptions.stream(
+    response = client.audio.transcriptions.complete(
         model=model,
         file_url="https://docs.mistral.ai/audio/bcn_weather.mp3",
         timestamp_granularities=["segment"],
+        accept_header_override=CompleteAcceptEnum.TEXT_EVENT_STREAM,
     )
     for chunk in response:
         print(chunk)

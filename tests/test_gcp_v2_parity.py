@@ -15,8 +15,8 @@ from mistralai.gcp.client.fim import Fim
 from mistralai.gcp.client.types import UNSET
 
 GCP_METHODS: dict[str, set[str]] = {
-    "chat": {"complete", "stream"},
-    "fim": {"complete", "stream"},
+    "chat": {"complete"},
+    "fim": {"complete"},
 }
 
 TESTED_METHODS: set[str] = set()
@@ -69,12 +69,8 @@ CHAT_COMPLETE_PARAMS = [
     ("retries", UNSET),
     ("server_url", None),
     ("timeout_ms", None),
+    ("accept_header_override", None),
     ("http_headers", None),
-]
-
-CHAT_STREAM_PARAMS = [
-    (name, True if name == "stream" else default)
-    for name, default in CHAT_COMPLETE_PARAMS
 ]
 
 FIM_COMPLETE_PARAMS = [
@@ -92,12 +88,8 @@ FIM_COMPLETE_PARAMS = [
     ("retries", UNSET),
     ("server_url", None),
     ("timeout_ms", None),
+    ("accept_header_override", None),
     ("http_headers", None),
-]
-
-FIM_STREAM_PARAMS = [
-    (name, True if name == "stream" else default)
-    for name, default in FIM_COMPLETE_PARAMS
 ]
 
 
@@ -136,14 +128,6 @@ class TestGCPChat:
         assert hasattr(Chat, "complete_async")
         mark_tested("chat", "complete_async")
 
-    def test_has_stream(self):
-        assert hasattr(Chat, "stream")
-        mark_tested("chat", "stream")
-
-    def test_has_stream_async(self):
-        assert hasattr(Chat, "stream_async")
-        mark_tested("chat", "stream_async")
-
     # -- complete params --
     @pytest.mark.parametrize("param_name,expected_default", CHAT_COMPLETE_PARAMS)
     def test_complete_has_param(self, param_name, expected_default):
@@ -152,16 +136,6 @@ class TestGCPChat:
         actual = sig.parameters[param_name].default
         assert actual == expected_default, (
             f"Chat.complete param {param_name}: expected {expected_default!r}, got {actual!r}"
-        )
-
-    # -- stream params --
-    @pytest.mark.parametrize("param_name,expected_default", CHAT_STREAM_PARAMS)
-    def test_stream_has_param(self, param_name, expected_default):
-        sig = inspect.signature(Chat.stream)
-        assert param_name in sig.parameters, f"Chat.stream missing param: {param_name}"
-        actual = sig.parameters[param_name].default
-        assert actual == expected_default, (
-            f"Chat.stream param {param_name}: expected {expected_default!r}, got {actual!r}"
         )
 
     # -- complete_async matches complete --
@@ -174,25 +148,10 @@ class TestGCPChat:
             f"Chat.complete_async param {param_name}: expected {expected_default!r}, got {actual!r}"
         )
 
-    # -- stream_async matches stream --
-    @pytest.mark.parametrize("param_name,expected_default", CHAT_STREAM_PARAMS)
-    def test_stream_async_has_param(self, param_name, expected_default):
-        sig = inspect.signature(Chat.stream_async)
-        assert param_name in sig.parameters, f"Chat.stream_async missing param: {param_name}"
-        actual = sig.parameters[param_name].default
-        assert actual == expected_default, (
-            f"Chat.stream_async param {param_name}: expected {expected_default!r}, got {actual!r}"
-        )
-
     # -- sync/async parity --
     def test_complete_async_matches_complete(self):
         sync_params = set(inspect.signature(Chat.complete).parameters) - {"self"}
         async_params = set(inspect.signature(Chat.complete_async).parameters) - {"self"}
-        assert sync_params == async_params
-
-    def test_stream_async_matches_stream(self):
-        sync_params = set(inspect.signature(Chat.stream).parameters) - {"self"}
-        async_params = set(inspect.signature(Chat.stream_async).parameters) - {"self"}
         assert sync_params == async_params
 
     # -- key defaults --
@@ -200,17 +159,9 @@ class TestGCPChat:
         sig = inspect.signature(Chat.complete)
         assert sig.parameters["model"].default is _EMPTY
 
-    def test_stream_model_required(self):
-        sig = inspect.signature(Chat.stream)
-        assert sig.parameters["model"].default is _EMPTY
-
     def test_complete_stream_defaults_false(self):
         sig = inspect.signature(Chat.complete)
         assert sig.parameters["stream"].default is False
-
-    def test_stream_stream_defaults_true(self):
-        sig = inspect.signature(Chat.stream)
-        assert sig.parameters["stream"].default is True
 
 
 class TestGCPFim:
@@ -222,14 +173,6 @@ class TestGCPFim:
         assert hasattr(Fim, "complete_async")
         mark_tested("fim", "complete_async")
 
-    def test_has_stream(self):
-        assert hasattr(Fim, "stream")
-        mark_tested("fim", "stream")
-
-    def test_has_stream_async(self):
-        assert hasattr(Fim, "stream_async")
-        mark_tested("fim", "stream_async")
-
     # -- complete params --
     @pytest.mark.parametrize("param_name,expected_default", FIM_COMPLETE_PARAMS)
     def test_complete_has_param(self, param_name, expected_default):
@@ -238,16 +181,6 @@ class TestGCPFim:
         actual = sig.parameters[param_name].default
         assert actual == expected_default, (
             f"Fim.complete param {param_name}: expected {expected_default!r}, got {actual!r}"
-        )
-
-    # -- stream params --
-    @pytest.mark.parametrize("param_name,expected_default", FIM_STREAM_PARAMS)
-    def test_stream_has_param(self, param_name, expected_default):
-        sig = inspect.signature(Fim.stream)
-        assert param_name in sig.parameters, f"Fim.stream missing param: {param_name}"
-        actual = sig.parameters[param_name].default
-        assert actual == expected_default, (
-            f"Fim.stream param {param_name}: expected {expected_default!r}, got {actual!r}"
         )
 
     # -- complete_async matches complete --
@@ -260,25 +193,10 @@ class TestGCPFim:
             f"Fim.complete_async param {param_name}: expected {expected_default!r}, got {actual!r}"
         )
 
-    # -- stream_async matches stream --
-    @pytest.mark.parametrize("param_name,expected_default", FIM_STREAM_PARAMS)
-    def test_stream_async_has_param(self, param_name, expected_default):
-        sig = inspect.signature(Fim.stream_async)
-        assert param_name in sig.parameters, f"Fim.stream_async missing param: {param_name}"
-        actual = sig.parameters[param_name].default
-        assert actual == expected_default, (
-            f"Fim.stream_async param {param_name}: expected {expected_default!r}, got {actual!r}"
-        )
-
     # -- sync/async parity --
     def test_complete_async_matches_complete(self):
         sync_params = set(inspect.signature(Fim.complete).parameters) - {"self"}
         async_params = set(inspect.signature(Fim.complete_async).parameters) - {"self"}
-        assert sync_params == async_params
-
-    def test_stream_async_matches_stream(self):
-        sync_params = set(inspect.signature(Fim.stream).parameters) - {"self"}
-        async_params = set(inspect.signature(Fim.stream_async).parameters) - {"self"}
         assert sync_params == async_params
 
     # -- key defaults --
@@ -286,24 +204,12 @@ class TestGCPFim:
         sig = inspect.signature(Fim.complete)
         assert sig.parameters["model"].default is _EMPTY
 
-    def test_stream_model_required(self):
-        sig = inspect.signature(Fim.stream)
-        assert sig.parameters["model"].default is _EMPTY
-
     def test_complete_stream_defaults_false(self):
         sig = inspect.signature(Fim.complete)
         assert sig.parameters["stream"].default is False
 
-    def test_stream_stream_defaults_true(self):
-        sig = inspect.signature(Fim.stream)
-        assert sig.parameters["stream"].default is True
-
     def test_complete_top_p_defaults_to_1(self):
         sig = inspect.signature(Fim.complete)
-        assert sig.parameters["top_p"].default == 1
-
-    def test_stream_top_p_defaults_to_1(self):
-        sig = inspect.signature(Fim.stream)
         assert sig.parameters["top_p"].default == 1
 
 
