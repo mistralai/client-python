@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
@@ -98,6 +99,7 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     parallel_tool_calls: NotRequired[bool]
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
 
 
 class AgentsCompletionStreamRequest(BaseModel):
@@ -144,6 +146,8 @@ class AgentsCompletionStreamRequest(BaseModel):
     prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -162,17 +166,26 @@ class AgentsCompletionStreamRequest(BaseModel):
                 "prediction",
                 "parallel_tool_calls",
                 "prompt_mode",
+                "guardrails",
             ]
         )
         nullable_fields = set(
-            ["max_tokens", "random_seed", "metadata", "tools", "n", "prompt_mode"]
+            [
+                "max_tokens",
+                "random_seed",
+                "metadata",
+                "tools",
+                "n",
+                "prompt_mode",
+                "guardrails",
+            ]
         )
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
+            val = serialized.get(k)
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

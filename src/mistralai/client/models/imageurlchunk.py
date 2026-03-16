@@ -21,14 +21,14 @@ ImageURLUnion = TypeAliasType("ImageURLUnion", Union[ImageURL, str])
 
 
 class ImageURLChunkTypedDict(TypedDict):
-    r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
+    r"""{\"type\":\"image_url\",\"image_url\":\"data:image/png;base64,iVBORw0\"}"""
 
     image_url: ImageURLUnionTypedDict
     type: Literal["image_url"]
 
 
 class ImageURLChunk(BaseModel):
-    r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
+    r"""{\"type\":\"image_url\",\"image_url\":\"data:image/png;base64,iVBORw0\"}"""
 
     image_url: ImageURLUnion
 
@@ -47,7 +47,7 @@ class ImageURLChunk(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
+            val = serialized.get(k)
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
