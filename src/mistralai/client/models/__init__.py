@@ -1198,7 +1198,12 @@ if TYPE_CHECKING:
         RealtimeTranscriptionSessionUpdatePayload,
         RealtimeTranscriptionSessionUpdatePayloadTypedDict,
     )
-    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
+    from .referencechunk import (
+        ReferenceChunk,
+        ReferenceChunkTypedDict,
+        ReferenceID,
+        ReferenceIDTypedDict,
+    )
     from .requestsource import RequestSource
     from .resourcelink import ResourceLink, ResourceLinkTypedDict
     from .resourcevisibility import ResourceVisibility
@@ -2249,6 +2254,8 @@ __all__ = [
     "RealtimeTranscriptionSessionUpdatedTypedDict",
     "ReferenceChunk",
     "ReferenceChunkTypedDict",
+    "ReferenceID",
+    "ReferenceIDTypedDict",
     "RequestSource",
     "Resource",
     "ResourceLink",
@@ -3275,6 +3282,8 @@ _dynamic_imports: dict[str, str] = {
     "RealtimeTranscriptionSessionUpdatePayloadTypedDict": ".realtimetranscriptionsessionupdatepayload",
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
+    "ReferenceID": ".referencechunk",
+    "ReferenceIDTypedDict": ".referencechunk",
     "RequestSource": ".requestsource",
     "ResourceLink": ".resourcelink",
     "ResourceLinkTypedDict": ".resourcelink",
