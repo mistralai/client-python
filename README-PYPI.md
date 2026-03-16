@@ -600,6 +600,7 @@ print(res.choices[0].message.content)
 * [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#fetch) - Get judge by id
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#delete) - Delete a judge
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#update) - Update a judge
+* [judge_conversation](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md#judge_conversation) - Run a saved judge on a conversation
 
 ### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
@@ -683,7 +684,7 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], completion_args={
+    ], stream=True, completion_args={
         "response_format": {
             "type": "text",
         },
@@ -835,8 +836,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 121 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 40 of 121 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 122 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 122 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
