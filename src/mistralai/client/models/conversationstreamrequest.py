@@ -19,10 +19,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import validate_const
-import pydantic
 from pydantic import Field, model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -73,7 +70,7 @@ ConversationStreamRequestAgentVersion = TypeAliasType(
 
 class ConversationStreamRequestTypedDict(TypedDict):
     inputs: ConversationInputsTypedDict
-    stream: Literal[True]
+    stream: NotRequired[bool]
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationStreamRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
@@ -91,10 +88,7 @@ class ConversationStreamRequestTypedDict(TypedDict):
 class ConversationStreamRequest(BaseModel):
     inputs: ConversationInputs
 
-    stream: Annotated[
-        Annotated[Optional[Literal[True]], AfterValidator(validate_const(True))],
-        pydantic.Field(alias="stream"),
-    ] = True
+    stream: Optional[bool] = True
 
     store: OptionalNullable[bool] = UNSET
 
@@ -162,7 +156,7 @@ class ConversationStreamRequest(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
+            val = serialized.get(k)
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -177,9 +171,3 @@ class ConversationStreamRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-try:
-    ConversationStreamRequest.model_rebuild()
-except NameError:
-    pass

@@ -36,8 +36,12 @@ InstructRequestMessage = Annotated[
 
 
 class InstructRequestTypedDict(TypedDict):
+    r"""A valid request to be tokenized"""
+
     messages: List[InstructRequestMessageTypedDict]
 
 
 class InstructRequest(BaseModel):
+    r"""A valid request to be tokenized"""
+
     messages: List[InstructRequestMessage]

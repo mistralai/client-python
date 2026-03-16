@@ -12,12 +12,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 ConversationAppendStreamRequestHandoffExecution = Literal[
@@ -28,7 +25,7 @@ ConversationAppendStreamRequestHandoffExecution = Literal[
 
 class ConversationAppendStreamRequestTypedDict(TypedDict):
     inputs: NotRequired[ConversationInputsTypedDict]
-    stream: Literal[True]
+    stream: NotRequired[bool]
     store: NotRequired[bool]
     r"""Whether to store the results into our servers or not."""
     handoff_execution: NotRequired[ConversationAppendStreamRequestHandoffExecution]
@@ -40,10 +37,7 @@ class ConversationAppendStreamRequestTypedDict(TypedDict):
 class ConversationAppendStreamRequest(BaseModel):
     inputs: Optional[ConversationInputs] = None
 
-    stream: Annotated[
-        Annotated[Optional[Literal[True]], AfterValidator(validate_const(True))],
-        pydantic.Field(alias="stream"),
-    ] = True
+    stream: Optional[bool] = True
 
     store: Optional[bool] = True
     r"""Whether to store the results into our servers or not."""
@@ -75,7 +69,7 @@ class ConversationAppendStreamRequest(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
+            val = serialized.get(k)
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -90,9 +84,3 @@ class ConversationAppendStreamRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-try:
-    ConversationAppendStreamRequest.model_rebuild()
-except NameError:
-    pass

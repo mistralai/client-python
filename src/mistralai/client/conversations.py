@@ -229,6 +229,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationRequestHandoffExecution
@@ -267,6 +268,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -296,6 +298,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -380,6 +383,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationRequestHandoffExecution
@@ -418,6 +422,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -447,6 +452,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -1090,6 +1096,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendRequestHandoffExecution
@@ -1114,6 +1121,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1139,6 +1147,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1222,6 +1231,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendRequestHandoffExecution
@@ -1246,6 +1256,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1271,6 +1282,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1715,6 +1727,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
@@ -1744,6 +1757,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1771,6 +1785,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1857,6 +1872,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
@@ -1886,6 +1902,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1913,6 +1930,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1995,6 +2013,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationStreamRequestHandoffExecution
@@ -2033,6 +2052,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -2062,6 +2082,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationStreamRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -2153,6 +2174,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationStreamRequestHandoffExecution
@@ -2191,6 +2213,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -2220,6 +2243,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationStreamRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -2314,6 +2338,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendStreamRequestHandoffExecution
@@ -2338,6 +2363,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2363,6 +2389,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2453,6 +2480,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendStreamRequestHandoffExecution
@@ -2477,6 +2505,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2502,6 +2531,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2593,6 +2623,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
@@ -2622,6 +2653,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2649,6 +2681,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2742,6 +2775,7 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = True,
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
@@ -2771,6 +2805,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2798,6 +2833,7 @@ class Conversations(BaseSDK):
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
