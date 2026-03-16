@@ -21,7 +21,7 @@ jobs:
       force: ${{ github.event.inputs.force }}
       mode: pr
       set_version: ${{ github.event.inputs.set_version }}
-      speakeasy_version: latest
+      speakeasy_version: 1.754.0
       target: mistralai-azure-sdk
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
