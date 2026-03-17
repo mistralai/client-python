@@ -79,6 +79,13 @@ python:
   moduleName: mistralai.client
   multipartArrayFormat: standard
   outputModelSuffix: output
+  compileCommands:
+    - ["uv", "lock"]
+    - ["uv", "sync", "--dev"]
+    - ["uv", "run", "python", "-m", "compileall", "-q", "."]
+    - ["uv", "run", "python", "-m", "pylint", "-j=1", "src/mistralai"]
+    - ["uv", "run", "python", "-m", "mypy", "src/mistralai"]
+    - ["uv", "run", "python", "-m", "pyright", "src/mistralai"]
   packageManager: uv
   packageName: mistralai
   preApplyUnionDiscriminators: true
