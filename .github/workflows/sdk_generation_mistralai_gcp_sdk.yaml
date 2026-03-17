@@ -32,6 +32,7 @@ jobs:
             echo "Could not resolve speakeasyVersion from .speakeasy/workflow.yaml"
             exit 1
           fi
+          echo "Resolved Speakeasy version: $VERSION"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
   generate:
