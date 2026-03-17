@@ -15,13 +15,34 @@ permissions:
         description: optionally set a specific SDK version
         type: string
 jobs:
+  resolve-speakeasy-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Resolve Speakeasy version from workflow config
+        id: resolve
+        run: |
+          set -euo pipefail
+          VERSION=$(awk '/^speakeasyVersion:/{print $2; exit}' .speakeasy/workflow.yaml | tr -d '"')
+          if [ -z "${VERSION:-}" ]; then
+            echo "Could not resolve speakeasyVersion from .speakeasy/workflow.yaml"
+            exit 1
+          fi
+          echo "Resolved Speakeasy version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
   generate:
+    needs: resolve-speakeasy-version
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
     with:
       force: ${{ github.event.inputs.force }}
       mode: pr
       set_version: ${{ github.event.inputs.set_version }}
-      speakeasy_version: latest
+      speakeasy_version: ${{ needs.resolve-speakeasy-version.outputs.version }}
       target: mistralai-azure-sdk
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
