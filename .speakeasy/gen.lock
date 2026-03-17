@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: a28f11e05b4050a47313ba9e725c55c5
+  docChecksum: 08b0a109c2cd72be260f8fbb93bf2cb6
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.0.3
-  configChecksum: cc3e7bf223cce3355d58aa70e4487807
+  releaseVersion: 2.0.4
+  configChecksum: 0964286b9eba516a737f07bc6df48ae0
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: b5cdaabc-ba14-4abb-8080-6f4f928e4eb3
-  pristine_commit_hash: 356e2bc15c5030be3633fae9afc292f221a450e0
-  pristine_tree_hash: 683aa349d8c61cfbf8ede85bf8272b7ae49b3d4d
+  generation_id: ff2e07bf-1f59-4beb-9713-4ab00b2f74db
+  pristine_commit_hash: 5a7d227975a5bba51344c986dd7058343ed6f3b0
+  pristine_tree_hash: 13ee286646e26939958800598c22aea96423104f
 features:
   python:
     additionalDependencies: 1.0.0
@@ -184,8 +184,8 @@ trackedFiles:
     pristine_git_object: 7548286af5d1db51fbfd29c893eb8afdc3c97c4d
   docs/models/agentscompletionrequest.md:
     id: 906b82c214dc
-    last_write_checksum: sha1:b5685a779b633823ccfe99d9740078e0aab50bde
-    pristine_git_object: 33435732b94c81c7bccff5cf1868b2f382223200
+    last_write_checksum: sha1:9c5f4de69cfa954d329cac76e7186db6e31e03c6
+    pristine_git_object: 63a26c0750a478e844aa4cc39ab52c6fd67717bf
   docs/models/agentscompletionrequestmessage.md:
     id: 5337f0644b40
     last_write_checksum: sha1:ecf7b7cdf0d24a5e97b520366cf816b8731734bb
@@ -200,8 +200,8 @@ trackedFiles:
     pristine_git_object: 63b9dca9fbb8d829f93d8327a77fbc385a846c76
   docs/models/agentscompletionstreamrequest.md:
     id: 21d09756447b
-    last_write_checksum: sha1:9d506ac8f620f4cef54b4b7a1891fb17b8eaefa5
-    pristine_git_object: 407be8e0c1264a31cc0d80c1059f3bd62c2eaceb
+    last_write_checksum: sha1:8e2b38627d5f03877a8e9ac43a1117456e7f717d
+    pristine_git_object: f9589a4299e9c834da81388941df16069587e9fc
   docs/models/agentscompletionstreamrequestmessage.md:
     id: b309ade92081
     last_write_checksum: sha1:98744c9646969250242cbbfbdf428dbd7030e4bb
@@ -364,8 +364,8 @@ trackedFiles:
     pristine_git_object: dd2138278eb73abffc15fdc2583fe61c6c1f17d1
   docs/models/chatcompletionrequest.md:
     id: adffe90369d0
-    last_write_checksum: sha1:4980b698006c641b1c84495c5b601cc8662b05f6
-    pristine_git_object: 921161faf38b2f4d4648d6d744c08a96ed38f0a6
+    last_write_checksum: sha1:98ea9e1011aa7c27ff28f4bcc44d0c2f1a75a284
+    pristine_git_object: d119d0cc28bd0b2f58838d06f251348f2dfa6248
   docs/models/chatcompletionrequestmessage.md:
     id: 3f5e170d418c
     last_write_checksum: sha1:7921c5a508a9f88adc01caab34e26182b8035607
@@ -384,8 +384,8 @@ trackedFiles:
     pristine_git_object: a0465ffbfc5558628953e03fbc53b80bbdc8649b
   docs/models/chatcompletionstreamrequest.md:
     id: cf8f29558a68
-    last_write_checksum: sha1:c54d4a32d0d65533b79c381174690e9b735b2800
-    pristine_git_object: 8761f000d4249de86265bc63da785cd807c2e7a5
+    last_write_checksum: sha1:2370e3e1175b08cc828619094a94237776f1d127
+    pristine_git_object: ecb8309e3f0506de17e5cac7bdc23e0ef497e70b
   docs/models/chatcompletionstreamrequestmessage.md:
     id: 053a98476cd2
     last_write_checksum: sha1:8270692463fab1243d9de4bbef7162daa64e52c5
@@ -1200,8 +1200,8 @@ trackedFiles:
     pristine_git_object: 6358e0acb2dea4816203413842243704ca955783
   docs/models/imageurlchunk.md:
     id: 4407097bfff3
-    last_write_checksum: sha1:da7a792f7b649f311062338dfbf3d25ff55fe6c5
-    pristine_git_object: db0c53d22e29fa25222edb86b264e5135879a029
+    last_write_checksum: sha1:05e0c3053720c6ad6c663237a3f3621e0e9fed9f
+    pristine_git_object: 6d238e255d368c1b12ddc231dc5f8dc11279d47e
   docs/models/imageurlunion.md:
     id: 9d3c691a9db0
     last_write_checksum: sha1:4e32bcd7d44746d2ddbfafbef96152bb2bdb2a15
@@ -1236,8 +1236,8 @@ trackedFiles:
     pristine_git_object: d5771207d9725f04ca2ab1be692fc089360a58f4
   docs/models/instructrequest.md:
     id: a0034d7349a2
-    last_write_checksum: sha1:34a81411110cbb7a099c45e482f5d1702ae48fd3
-    pristine_git_object: 5f0cdfff135fb72d3b1a81999a30b720c044e3d4
+    last_write_checksum: sha1:45632a9226f6539dc978eb46cdda7bffce624838
+    pristine_git_object: 1bd5eb649ba747cced7bb4ec89ce5d48c303ef0b
   docs/models/instructrequestmessage.md:
     id: 380503708a09
     last_write_checksum: sha1:551b5d6dd3ba0b39cad32478213a9eb7549f0023
@@ -1334,6 +1334,14 @@ trackedFiles:
     id: 41dde6c5cf31
     last_write_checksum: sha1:25cc262d748a2c9285cccdc8ed6c3d1572016a2b
     pristine_git_object: 67e08ed21124756e4fe471bba5deccfc9bc7ebd2
+  docs/models/judgeconversationrequest.md:
+    id: d2a3c6b8ddd3
+    last_write_checksum: sha1:b40e607d37edf7fca7f1fb19a05688da61bf6400
+    pristine_git_object: 491c3b3459b508d7573daa77ac46a8aedfb78161
+  docs/models/judgeconversationv1observabilityjudgesjudgeidlivejudgingpostrequest.md:
+    id: c5ca3ccf1640
+    last_write_checksum: sha1:946d24c242aff90e205bae751cc62c42db1585f7
+    pristine_git_object: 4d36242330ae3b9d49984151f0cef6793b2cb1e2
   docs/models/judgedatasetrecordrequest.md:
     id: 8b53c13e8af5
     last_write_checksum: sha1:6f636ff57171c21f214b012dbde5400be91057c4
@@ -2164,8 +2172,8 @@ trackedFiles:
     pristine_git_object: 51051e2f8def9bfd6032617530ba9bead989404f
   docs/sdks/agents/README.md:
     id: 5965d8232fd8
-    last_write_checksum: sha1:a73ae6719acef32b47be55ea5c5684e91f7eda68
-    pristine_git_object: 8a60837030b9e5dd0adca0d07d9f0266158b080f
+    last_write_checksum: sha1:506e1f1951252f82f5ef804ec53acbfd9d67f767
+    pristine_git_object: 5a47f54e738a99dab0eddff3837effb4e0413ecc
   docs/sdks/batchjobs/README.md:
     id: a3b8043c6336
     last_write_checksum: sha1:b4b3123ff210545048e2b0c729f2b7e5f7460f4e
@@ -2180,8 +2188,8 @@ trackedFiles:
     pristine_git_object: d5d7e4d4681811419874f58c294cb59688e595aa
   docs/sdks/chat/README.md:
     id: 393193527c2c
-    last_write_checksum: sha1:5e7a43def5636140d70a7c781ed417e527ce9819
-    pristine_git_object: 1bf4aeadc762f5d696c278eefaa759f35993e9d5
+    last_write_checksum: sha1:d89d55ed51fe1729187fc4f1376ec21bb53f8120
+    pristine_git_object: 64e47d344d1d1b40cfd120a313ecf0551fff3598
   docs/sdks/chatcompletionevents/README.md:
     id: 6965539e0525
     last_write_checksum: sha1:ae7c0a0e7576a1114a85b9e607cb91c2ac1181a2
@@ -2228,8 +2236,8 @@ trackedFiles:
     pristine_git_object: 4262b3a9833180ce86da43a26ee7ab27403f2cd0
   docs/sdks/judges/README.md:
     id: 330e067ff8b7
-    last_write_checksum: sha1:270582ab7a4200c44b0c865afb6b82d6e0c95182
-    pristine_git_object: f1187518e46b00d8fb1b2bb0c4c72f51cd828a2b
+    last_write_checksum: sha1:e21c7f2201ab3e2ed14c5be687e5291f7c6ee9cb
+    pristine_git_object: 34d167398ac81ce78d50c1498c01f4c74917ce7f
   docs/sdks/libraries/README.md:
     id: df9a982905a3
     last_write_checksum: sha1:e3eb0e9efb3f758fdf830aa1752c942d59a4f72b
@@ -2276,16 +2284,16 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:0e303dbbffd662c25a730fc8e8722335aa60bd56
-    pristine_git_object: 4531730bf1c2d53c691ae836aff2478b6ffc0aa9
+    last_write_checksum: sha1:18a14cf702297e53942e16c4b05b6c2ba3992ea8
+    pristine_git_object: f92c542057f0412986b9a3a2e3d05636267063a6
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
     pristine_git_object: 2cfdc7da91be41177f62b8ac7b2fe48aba42e496
   src/mistralai/client/agents.py:
     id: e946546e3eaa
-    last_write_checksum: sha1:7049cab7c308888c88b0341fb29f0132e154e3cb
-    pristine_git_object: 2b70d1520663d999773159d89b1f9dc96f7fbf97
+    last_write_checksum: sha1:f60f8126ec99df039b1c9480366089a88fcc31bc
+    pristine_git_object: aecd1430c3b00c05ad2858d47cd70aa455097bb6
   src/mistralai/client/audio.py:
     id: 7a8ed2e90d61
     last_write_checksum: sha1:e202d775d24c0303053e0548af83fcb04e2748f4
@@ -2316,8 +2324,8 @@ trackedFiles:
     pristine_git_object: a1ffcebc7c98a3c889ccace55c9a6c9cf3ff28df
   src/mistralai/client/chat.py:
     id: 7eba0f088d47
-    last_write_checksum: sha1:520b0da011d63c60bd0d3a960a410a8f4a6a3e22
-    pristine_git_object: 13b9c01f035c4fd6f60b78f20a1801bedf3b582b
+    last_write_checksum: sha1:16fb3809cfe47630f0a6869dcd2d80a99fc977ec
+    pristine_git_object: f53c346fec153219910bf9cf5e2ccccc2faadb3c
   src/mistralai/client/chat_completion_events.py:
     id: 1813f339625b
     last_write_checksum: sha1:cde21c8338e4fd60143fdc6ca361c0c42ec54775
@@ -2400,16 +2408,16 @@ trackedFiles:
     pristine_git_object: 544af7f87d6b7097935290bebd08e30e5f485672
   src/mistralai/client/judges.py:
     id: b6024a41ecb4
-    last_write_checksum: sha1:83cf149e1f7ccd75799da72bcc11f6ec99515c13
-    pristine_git_object: e5dacd7fad62473a2b946afc4b05f34e3789c722
+    last_write_checksum: sha1:4179fabb26ef8b8a9af00a95672f39d6ea87073e
+    pristine_git_object: b0eb1ea0965f63efb681d8364ac456b96f1e3983
   src/mistralai/client/libraries.py:
     id: d43a5f78045f
     last_write_checksum: sha1:6440b3df71fe557ecba5c23768d115efd4ceb26f
     pristine_git_object: b8728362b87349118ac6f163f50613dd18c43340
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:c3fbb9ce09e935d3c6c987a519c080c4728f7dad
-    pristine_git_object: 361b16a917f8fd65d1ec57294f3168f3dbe0389e
+    last_write_checksum: sha1:5229fd903cba2fca3054f0444c96155e9b87c92d
+    pristine_git_object: 82bb5c99a48b483bf0ebb93779fb0d6c2caf165d
   src/mistralai/client/models/agent.py:
     id: 1336849c84fb
     last_write_checksum: sha1:c650f57616b5455de2a6ff33c51f91b174586aee
@@ -2512,12 +2520,12 @@ trackedFiles:
     pristine_git_object: 3186d5df9000d4a62c0fbc64a601e6b709803deb
   src/mistralai/client/models/agentscompletionrequest.py:
     id: 3960bc4c545f
-    last_write_checksum: sha1:9f4a0bafdbe8ebde528dc54eac074585d40e449a
-    pristine_git_object: 1cff8f9537636933d3fcabe4378ec471ff9115c0
+    last_write_checksum: sha1:42bbd08afd7cb8b96b756cdf7e4dae10aad25a76
+    pristine_git_object: b343027cfd19e334fb64039f6b56275be4fc16cc
   src/mistralai/client/models/agentscompletionstreamrequest.py:
     id: 1b73f90befc2
-    last_write_checksum: sha1:0e6a229fc0e5f082f6fbaafeb759d5df5100c8bb
-    pristine_git_object: 32f13fb1ed7dcb68eed43166c24aee680030c59a
+    last_write_checksum: sha1:1e591f9a1fe930847fe17dc3e36ee4c373505a0a
+    pristine_git_object: 761d1d1e6d06e528bc99e5f90672b7c09854adac
   src/mistralai/client/models/annotations.py:
     id: 3ae9e07de11d
     last_write_checksum: sha1:c015e86fa53f60f6fccce2be63b2faf8a6d81f38
@@ -2624,16 +2632,16 @@ trackedFiles:
     pristine_git_object: e7fef9d08ca3d8ea1fa1f63c5847a5f8a6d74201
   src/mistralai/client/models/chatcompletionrequest.py:
     id: 9979805d8c38
-    last_write_checksum: sha1:adeccdfdc69c077eb8ab783e82aabf898b80fa9a
-    pristine_git_object: 1b4bfb025c1ba2527943bd18219aeddd9de7f45b
+    last_write_checksum: sha1:462a7846a7d9d4090e7fb862dd5f3a89f39adece
+    pristine_git_object: 6eafb95c62d64ccc31e5f5a399d7ce959e5abc3b
   src/mistralai/client/models/chatcompletionresponse.py:
     id: 669d996b8e82
     last_write_checksum: sha1:97f164fea881127ac82303e637b6a270e200ac5b
     pristine_git_object: 7092bbc18425091d111ec998b33edc009ff0931b
   src/mistralai/client/models/chatcompletionstreamrequest.py:
     id: 18cb2b2415d4
-    last_write_checksum: sha1:077bc9c7a9afe2d10cd699aaf75997928b7eca1c
-    pristine_git_object: 75aab84cb34ded037561f4445b843e435350676a
+    last_write_checksum: sha1:690f8626cf667c39d52c3cd797c092f064be3198
+    pristine_git_object: 7ce030779f098f876a6a36e6f5e9c8d846936d3d
   src/mistralai/client/models/chatmoderationrequest.py:
     id: 057aecb07275
     last_write_checksum: sha1:7677494c0e36ccbc201384cb587abeb852a1a924
@@ -3244,8 +3252,8 @@ trackedFiles:
     pristine_git_object: 32efa67ba4a33ac90c1a16c153ef480e35d1bb67
   src/mistralai/client/models/imageurlchunk.py:
     id: 746fde62f637
-    last_write_checksum: sha1:deae705ab4819d4a016ce04d61776ae378210b96
-    pristine_git_object: 1e342fd6dc457d2b00f4dd0c78e38008c6c82e33
+    last_write_checksum: sha1:84122edbb655e6fb252dc37abbb14cdd59d8a488
+    pristine_git_object: 55a2023ef775f06d586a50ac98e129950ef55d5d
   src/mistralai/client/models/importdatasetfromcampaignrequest.py:
     id: ee475b85bfc7
     last_write_checksum: sha1:34367bb23d1528b87e67f36d06cc362a05a02c6b
@@ -3276,8 +3284,8 @@ trackedFiles:
     pristine_git_object: 9ecd7f484ea306b91a9ebf038a0addd80ccd57c4
   src/mistralai/client/models/instructrequest.py:
     id: 6d3ad9f896c7
-    last_write_checksum: sha1:b56a77442b50b50151adedaa5ec356dc96c56428
-    pristine_git_object: e5f9cccf174d8e73c42e8ee4aa294b43e1ad6cf5
+    last_write_checksum: sha1:d49d03f5a1d0e35668851aced62848ed3e20f001
+    pristine_git_object: 2bda83781d24d3a999014d483ea92604c7509438
   src/mistralai/client/models/jobmetadata.py:
     id: cfbdde7fc0a2
     last_write_checksum: sha1:efe10ba4aad0a0e0befd94525b73ab2194e43be8
@@ -3338,6 +3346,10 @@ trackedFiles:
     id: 98c823e7cc1b
     last_write_checksum: sha1:74dd8fba663c0338a24c497949572b5e5df7e494
     pristine_git_object: a6b9c969d506481b3c3bf5c86611905f30f6ec88
+  src/mistralai/client/models/judge_conversation_v1_observability_judges_judge_id_live_judging_postop.py:
+    id: a958f3e6b122
+    last_write_checksum: sha1:21834ba5dc03705ebd02e5d449549cf1dcd2fd32
+    pristine_git_object: 4f211dd3463eb2cbeffc67c22d17e43a083f9501
   src/mistralai/client/models/judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop.py:
     id: 4749566fd16d
     last_write_checksum: sha1:cc2201d706b884e41bd83333d4db37970cf7bcd5
@@ -3354,6 +3366,10 @@ trackedFiles:
     id: c238f17d786b
     last_write_checksum: sha1:1adbac09caf15374b52b61f257d838db2e486690
     pristine_git_object: 64fad49fa2336b0cbaa69dac7493a18593021275
+  src/mistralai/client/models/judgeconversationrequest.py:
+    id: b8bfdade89a2
+    last_write_checksum: sha1:42873ec62a6e8f78beeeddc7c87b82b23fcb5532
+    pristine_git_object: 2c93f7b7c2cb00f19eb3a7ce2cf3f5da76ba50af
   src/mistralai/client/models/judgedatasetrecordrequest.py:
     id: 9ad8915328dd
     last_write_checksum: sha1:c37f9c158061e4d3c6c6eda2d7ee8a5d5e7f5afa
@@ -6047,9 +6063,27 @@ examples:
           application/json: {"message": "<value>"}
         "422":
           application/json: {}
+  judge_conversation_v1_observability_judges__judge_id__live_judging_post:
+    speakeasy-default-judge-conversation-v1-observability-judges-judge-id-live-judging-post:
+      parameters:
+        path:
+          judge_id: "7fb9f06a-22fb-45db-ad58-6a5715280755"
+      requestBody:
+        application/json: {"messages": []}
+      responses:
+        "200":
+          application/json: {"analysis": "<value>", "answer": 4277.83}
+        "400":
+          application/json: {"detail": {"message": "<value>", "error_code": "TEMPLATE_SYNTAX_ERROR"}}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.beta.conversations.append_stream()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.[].data.union(message.output.delta).content.union(OutputContentChunks).union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.chat.complete()`: \n  *  `request.messages[].union(system).content.union(Array<SystemMessageContentChunks>)[].union(thinking).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.choices[].message.content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.start()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.outputs[].union(MessageOutputEntry).content.union(Array<MessageOutputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.append()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageOutputEntry).content.union(Array<MessageOutputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.outputs[].union(MessageOutputEntry).content.union(Array<MessageOutputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.get_history()`:  `response.entries[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.get_messages()`:  `response.messages[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.restart()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.outputs[].union(MessageOutputEntry).content.union(Array<MessageOutputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.start_stream()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.[].data.union(message.output.delta).content.union(OutputContentChunks).union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.classifiers.classify_chat()`: \n  *  `request.input.union(InstructRequest).messages[].union(user).content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.classifiers.moderate_chat()`: \n  *  `request.inputs.union(Array<>)[].union(tool).content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.beta.conversations.restart_stream()`: \n  *  `request.inputs.union(Array<InputEntries>)[].union(MessageInputEntry).content.union(Array<MessageInputContentChunks>)[].union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.[].data.union(message.output.delta).content.union(OutputContentChunks).union(ThinkChunk).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.chat.stream()`: \n  *  `request.messages[].union(tool).content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.fim.complete()`:  `response.choices[].message.content.union(Array<ContentChunk>)[].union(thinking).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.fim.stream()`:  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(thinking).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.agents.complete()`: \n  *  `request.messages[].union(system).content.union(Array<SystemMessageContentChunks>)[].union(thinking).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.choices[].message.content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.agents.stream()`: \n  *  `request.messages[].union(system).content.union(Array<SystemMessageContentChunks>)[].union(thinking).thinking[].union(ReferenceChunk).reference_ids[]` **Changed** (Breaking ⚠️)\n  *  `response.[].data.choices[].delta.content.union(Array<ContentChunk>)[].union(reference).reference_ids[]` **Changed** (Breaking ⚠️)\n* `mistral.models.list()`:  `response.data[].union(base).capabilities` **Changed**\n* `mistral.models.retrieve()`:  `response.union(base).capabilities` **Changed**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.beta.observability.judges.judge_conversation()`: **Added**
+  * `mistral.chat.complete()`:  `request.guardrails` **Added**
+  * `mistral.chat.stream()`:  `request.guardrails` **Added**
+  * `mistral.agents.complete()`:  `request.guardrails` **Added**
+  * `mistral.agents.stream()`:  `request.guardrails` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

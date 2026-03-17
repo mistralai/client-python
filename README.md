@@ -600,6 +600,7 @@ print(res.choices[0].message.content)
 * [fetch](docs/sdks/judges/README.md#fetch) - Get judge by id
 * [delete](docs/sdks/judges/README.md#delete) - Delete a judge
 * [update](docs/sdks/judges/README.md#update) - Update a judge
+* [judge_conversation](docs/sdks/judges/README.md#judge_conversation) - Run a saved judge on a conversation
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -835,8 +836,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 121 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 40 of 121 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 122 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 122 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

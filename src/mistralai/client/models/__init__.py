@@ -876,6 +876,10 @@ if TYPE_CHECKING:
         JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequest,
         JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequestTypedDict,
     )
+    from .judge_conversation_v1_observability_judges_judge_id_live_judging_postop import (
+        JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest,
+        JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict,
+    )
     from .judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop import (
         JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest,
         JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict,
@@ -891,6 +895,10 @@ if TYPE_CHECKING:
     from .judgeclassificationoutputoption import (
         JudgeClassificationOutputOption,
         JudgeClassificationOutputOptionTypedDict,
+    )
+    from .judgeconversationrequest import (
+        JudgeConversationRequest,
+        JudgeConversationRequestTypedDict,
     )
     from .judgedatasetrecordrequest import (
         JudgeDatasetRecordRequest,
@@ -2039,6 +2047,10 @@ __all__ = [
     "JudgeClassificationOutputOption",
     "JudgeClassificationOutputOptionTypedDict",
     "JudgeClassificationOutputTypedDict",
+    "JudgeConversationRequest",
+    "JudgeConversationRequestTypedDict",
+    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest",
+    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict",
     "JudgeDatasetRecordRequest",
     "JudgeDatasetRecordRequestTypedDict",
     "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest",
@@ -3063,6 +3075,8 @@ _dynamic_imports: dict[str, str] = {
     "UnknownJudgeOutputUnion": ".judge",
     "JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequest": ".judge_chat_completion_event_v1_observability_chat_completion_events_event_id_live_judging_postop",
     "JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequestTypedDict": ".judge_chat_completion_event_v1_observability_chat_completion_events_event_id_live_judging_postop",
+    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest": ".judge_conversation_v1_observability_judges_judge_id_live_judging_postop",
+    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict": ".judge_conversation_v1_observability_judges_judge_id_live_judging_postop",
     "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest": ".judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop",
     "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict": ".judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop",
     "JudgeChatCompletionEventRequest": ".judgechatcompletioneventrequest",
@@ -3071,6 +3085,8 @@ _dynamic_imports: dict[str, str] = {
     "JudgeClassificationOutputTypedDict": ".judgeclassificationoutput",
     "JudgeClassificationOutputOption": ".judgeclassificationoutputoption",
     "JudgeClassificationOutputOptionTypedDict": ".judgeclassificationoutputoption",
+    "JudgeConversationRequest": ".judgeconversationrequest",
+    "JudgeConversationRequestTypedDict": ".judgeconversationrequest",
     "JudgeDatasetRecordRequest": ".judgedatasetrecordrequest",
     "JudgeDatasetRecordRequestTypedDict": ".judgedatasetrecordrequest",
     "Answer": ".judgeoutput",
