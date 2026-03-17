@@ -9,6 +9,7 @@
 * [fetch](#fetch) - Get judge by id
 * [delete](#delete) - Delete a judge
 * [update](#update) - Update a judge
+* [judge_conversation](#judge_conversation) - Run a saved judge on a conversation
 
 ## create
 
@@ -227,6 +228,49 @@ with Mistral(
 | `instructions`                                                              | *str*                                                                       | :heavy_check_mark:                                                          | N/A                                                                         |
 | `tools`                                                                     | List[*str*]                                                                 | :heavy_check_mark:                                                          | N/A                                                                         |
 | `retries`                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)            | :heavy_minus_sign:                                                          | Configuration to override the default retry behavior of the client.         |
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## judge_conversation
+
+Run a saved judge on a conversation
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="judge_conversation_v1_observability_judges__judge_id__live_judging_post" method="post" path="/v1/observability/judges/{judge_id}/live-judging" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.judges.judge_conversation(judge_id="7fb9f06a-22fb-45db-ad58-6a5715280755", messages=[])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `judge_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `messages`                                                          | List[Dict[str, *Any*]]                                              | :heavy_check_mark:                                                  | N/A                                                                 |
+| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.JudgeOutput](../../models/judgeoutput.md)**
 
 ### Errors
 
