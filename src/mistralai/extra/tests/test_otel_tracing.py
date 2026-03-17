@@ -18,7 +18,9 @@ from datetime import datetime, timezone
 from unittest.mock import MagicMock
 
 import httpx
+from opentelemetry import context as context_api
 from opentelemetry import trace
+from opentelemetry.baggage import set_baggage
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -1523,6 +1525,77 @@ class TestOtelTracing(unittest.TestCase):
             any(e.name == "exception" for e in span.events),
             "Expected an exception event on the span",
         )
+
+
+    # -- Baggage propagation: gen_ai.conversation.id ---------------------------
+
+    def test_conversation_id_from_baggage(self):
+        """When gen_ai.conversation.id is set in OTEL baggage, it must appear as a span attribute."""
+        request = ChatCompletionRequest(
+            model="mistral-small-latest",
+            messages=[UserMessage(content="Hello")],
+        )
+        response = ChatCompletionResponse(
+            id="cmpl-baggage-001",
+            object="chat.completion",
+            model="mistral-small-latest",
+            created=1700000010,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Hi!", tool_calls=None),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=UsageInfo(prompt_tokens=5, completion_tokens=2, total_tokens=7),
+        )
+
+        # Attach baggage to the current context
+        ctx = set_baggage("gen_ai.conversation.id", "conv-from-baggage-123")
+        token = context_api.attach(ctx)
+        try:
+            self._run_hook_lifecycle(
+                "chat_completion_v1_chat_completions_post",
+                request,
+                response,
+            )
+        finally:
+            context_api.detach(token)
+
+        span = self._get_single_span()
+        self.assertEqual(
+            span.attributes["gen_ai.conversation.id"], "conv-from-baggage-123"
+        )
+
+    def test_no_conversation_id_without_baggage(self):
+        """When no baggage is set, gen_ai.conversation.id must NOT appear on a chat span."""
+        request = ChatCompletionRequest(
+            model="mistral-small-latest",
+            messages=[UserMessage(content="Hello")],
+        )
+        response = ChatCompletionResponse(
+            id="cmpl-nobag-001",
+            object="chat.completion",
+            model="mistral-small-latest",
+            created=1700000011,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Hi!", tool_calls=None),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=UsageInfo(prompt_tokens=5, completion_tokens=2, total_tokens=7),
+        )
+
+        self._run_hook_lifecycle(
+            "chat_completion_v1_chat_completions_post",
+            request,
+            response,
+        )
+
+        span = self._get_single_span()
+        self.assertNotIn("gen_ai.conversation.id", span.attributes)
 
 
 if __name__ == "__main__":
