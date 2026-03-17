@@ -21,14 +21,14 @@ ImageURLUnion = TypeAliasType("ImageURLUnion", Union[ImageURL, str])
 
 
 class ImageURLChunkTypedDict(TypedDict):
-    r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
+    r"""{\"type\":\"image_url\",\"image_url\":\"data:image/png;base64,iVBORw0\"}"""
 
     image_url: ImageURLUnionTypedDict
     type: Literal["image_url"]
 
 
 class ImageURLChunk(BaseModel):
-    r"""{\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/png;base64,iVBORw0"""
+    r"""{\"type\":\"image_url\",\"image_url\":\"data:image/png;base64,iVBORw0\"}"""
 
     image_url: ImageURLUnion
 
