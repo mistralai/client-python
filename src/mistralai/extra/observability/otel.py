@@ -20,6 +20,7 @@ import opentelemetry.semconv.attributes.error_attributes as error_attributes
 import opentelemetry.semconv.attributes.server_attributes as server_attributes
 from opentelemetry import context as context_api
 from opentelemetry import propagate, trace
+from opentelemetry.baggage import get_baggage
 from opentelemetry.trace import Span, Status, StatusCode, Tracer, set_span_in_context
 
 from .serialization import (
@@ -453,6 +454,12 @@ def get_traced_request_and_span(
     try:
         span = tracer.start_span(name=operation_id)
         span.set_attributes({"agent.trace.public": ""})
+        # Propagate gen_ai.conversation.id from OTEL baggage if present
+        conversation_id = get_baggage(gen_ai_attributes.GEN_AI_CONVERSATION_ID)
+        if conversation_id:
+            span.set_attribute(
+                gen_ai_attributes.GEN_AI_CONVERSATION_ID, str(conversation_id)
+            )
         # Inject the span context into the request headers to be used by the backend service to continue the trace
         propagate.inject(request.headers, context=set_span_in_context(span))
         span = enrich_span_from_request(span, operation_id, request)
