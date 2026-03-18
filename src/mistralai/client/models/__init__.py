@@ -165,6 +165,7 @@ if TYPE_CHECKING:
         AudioTranscriptionRequestStreamTypedDict,
     )
     from .authdata import AuthData, AuthDataTypedDict
+    from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
         BaseFieldDefinitionTypedDict,
@@ -334,6 +335,10 @@ if TYPE_CHECKING:
     from .connector_delete_v1op import (
         ConnectorDeleteV1Request,
         ConnectorDeleteV1RequestTypedDict,
+    )
+    from .connector_get_auth_url_v1op import (
+        ConnectorGetAuthURLV1Request,
+        ConnectorGetAuthURLV1RequestTypedDict,
     )
     from .connector_get_v1op import (
         ConnectorGetV1Request,
@@ -1206,6 +1211,7 @@ if TYPE_CHECKING:
         RealtimeTranscriptionSessionUpdatePayload,
         RealtimeTranscriptionSessionUpdatePayloadTypedDict,
     )
+    from .reasoningeffort import ReasoningEffort
     from .referencechunk import (
         ReferenceChunk,
         ReferenceChunkTypedDict,
@@ -1556,6 +1562,8 @@ __all__ = [
     "AudioTranscriptionRequestTypedDict",
     "AuthData",
     "AuthDataTypedDict",
+    "AuthURLResponse",
+    "AuthURLResponseTypedDict",
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
@@ -1683,6 +1691,8 @@ __all__ = [
     "ConnectorCallToolV1RequestTypedDict",
     "ConnectorDeleteV1Request",
     "ConnectorDeleteV1RequestTypedDict",
+    "ConnectorGetAuthURLV1Request",
+    "ConnectorGetAuthURLV1RequestTypedDict",
     "ConnectorGetV1Request",
     "ConnectorGetV1RequestTypedDict",
     "ConnectorListV1Request",
@@ -2264,6 +2274,7 @@ __all__ = [
     "RealtimeTranscriptionSessionUpdatePayloadTypedDict",
     "RealtimeTranscriptionSessionUpdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict",
+    "ReasoningEffort",
     "ReferenceChunk",
     "ReferenceChunkTypedDict",
     "ReferenceID",
@@ -2566,6 +2577,8 @@ _dynamic_imports: dict[str, str] = {
     "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "AuthData": ".authdata",
     "AuthDataTypedDict": ".authdata",
+    "AuthURLResponse": ".authurlresponse",
+    "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
     "BaseFieldDefinitionTypedDict": ".basefielddefinition",
     "SupportedOperator": ".basefielddefinition",
@@ -2697,6 +2710,8 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorCallToolV1RequestTypedDict": ".connector_call_tool_v1op",
     "ConnectorDeleteV1Request": ".connector_delete_v1op",
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
+    "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
+    "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetV1Request": ".connector_get_v1op",
     "ConnectorGetV1RequestTypedDict": ".connector_get_v1op",
     "ConnectorListV1Request": ".connector_list_v1op",
@@ -3296,6 +3311,7 @@ _dynamic_imports: dict[str, str] = {
     "RealtimeTranscriptionSessionUpdateMessageTypedDict": ".realtimetranscriptionsessionupdatemessage",
     "RealtimeTranscriptionSessionUpdatePayload": ".realtimetranscriptionsessionupdatepayload",
     "RealtimeTranscriptionSessionUpdatePayloadTypedDict": ".realtimetranscriptionsessionupdatepayload",
+    "ReasoningEffort": ".reasoningeffort",
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
     "ReferenceID": ".referencechunk",

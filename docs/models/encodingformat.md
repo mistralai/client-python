@@ -1,9 +1,14 @@
 # EncodingFormat
 
+## Example Usage
+
+```python
+from mistralai.client.models import EncodingFormat
+value: EncodingFormat = "float"
+```
+
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `FLOAT`  | float    |
-| `BASE64` | base64   |
+- `"float"`
+- `"base64"`
