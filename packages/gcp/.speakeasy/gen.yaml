@@ -24,13 +24,14 @@ generation:
     allOfMergeStrategy: shallowMerge
   requestBodyFieldName: ""
   versioningStrategy: automatic
-  persistentEdits: {}
+  persistentEdits:
+    enabled: never
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.0.0
+  version: 2.0.1
   additionalDependencies:
     dev:
       pytest: ^8.2.2

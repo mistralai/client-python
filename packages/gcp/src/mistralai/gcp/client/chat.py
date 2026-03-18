@@ -51,7 +51,11 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -78,7 +82,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -120,7 +126,11 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
         )
 
         req = self._build_request(
@@ -228,7 +238,11 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -255,7 +269,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -297,7 +313,11 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
         )
 
         req = self._build_request_async(
@@ -405,7 +425,11 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -430,7 +454,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -472,7 +498,11 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
         )
 
         req = self._build_request(
@@ -572,7 +602,11 @@ class Chat(BaseSDK):
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -597,7 +631,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -639,7 +675,11 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
         )
 
         req = self._build_request_async(

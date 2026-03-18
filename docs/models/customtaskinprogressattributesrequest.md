@@ -1,0 +1,12 @@
+# CustomTaskInProgressAttributesRequest
+
+Attributes for custom task in-progress events with streaming updates.
+
+
+## Fields
+
+| Field                                                                                                            | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `custom_task_id`                                                                                                 | *str*                                                                                                            | :heavy_check_mark:                                                                                               | Unique identifier for the custom task within the workflow.                                                       |
+| `custom_task_type`                                                                                               | *str*                                                                                                            | :heavy_check_mark:                                                                                               | The type/category of the custom task (e.g., 'llm_call', 'api_request').                                          |
+| `payload`                                                                                                        | [models.CustomTaskInProgressAttributesRequestPayload](../models/customtaskinprogressattributesrequestpayload.md) | :heavy_check_mark:                                                                                               | The current state or incremental update for the task.                                                            |

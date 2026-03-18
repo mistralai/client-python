@@ -467,10 +467,23 @@ print(res.choices[0].message.content)
 * [complete](docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
 
+### [Audio.Speech](docs/sdks/speech/README.md)
+
+* [complete](docs/sdks/speech/README.md#complete) - Speech
+
 ### [Audio.Transcriptions](docs/sdks/transcriptions/README.md)
 
 * [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
 * [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
+
+### [Audio.Voices](docs/sdks/voices/README.md)
+
+* [list](docs/sdks/voices/README.md#list) - List all voices
+* [create](docs/sdks/voices/README.md#create) - Create a new voice
+* [delete](docs/sdks/voices/README.md#delete) - Delete a custom voice
+* [update](docs/sdks/voices/README.md#update) - Update voice metadata
+* [get](docs/sdks/voices/README.md#get) - Get voice details
+* [get_sample_audio](docs/sdks/voices/README.md#get_sample_audio) - Get voice sample audio
 
 ### [Batch.Jobs](docs/sdks/batchjobs/README.md)
 
@@ -619,6 +632,13 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/embeddings/README.md#create) - Embeddings
 
+### [Events](docs/sdks/events/README.md)
+
+* [receive_workflow_event](docs/sdks/events/README.md#receive_workflow_event) - Receive Workflow Event
+* [receive_workflow_events_batch](docs/sdks/events/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [get_stream_events](docs/sdks/events/README.md#get_stream_events) - Get Stream Events
+* [get_workflow_events](docs/sdks/events/README.md#get_workflow_events) - Get Workflow Events
+
 ### [Files](docs/sdks/files/README.md)
 
 * [upload](docs/sdks/files/README.md#upload) - Upload File
@@ -654,6 +674,58 @@ print(res.choices[0].message.content)
 
 * [process](docs/sdks/ocr/README.md#process) - OCR
 
+### [Workflows](docs/sdks/workflows/README.md)
+
+* [get_workflows](docs/sdks/workflows/README.md#get_workflows) - Get Workflows
+* [get_workflow_registrations](docs/sdks/workflows/README.md#get_workflow_registrations) - Get Workflow Registrations
+* [execute_workflow](docs/sdks/workflows/README.md#execute_workflow) - Execute Workflow
+* [execute_workflow_registration](docs/sdks/workflows/README.md#execute_workflow_registration) - Execute Workflow Registration
+* [get_workflow](docs/sdks/workflows/README.md#get_workflow) - Get Workflow
+* [update_workflow](docs/sdks/workflows/README.md#update_workflow) - Update Workflow
+* [get_workflow_registration](docs/sdks/workflows/README.md#get_workflow_registration) - Get Workflow Registration
+* [archive_workflow](docs/sdks/workflows/README.md#archive_workflow) - Archive Workflow
+* [unarchive_workflow](docs/sdks/workflows/README.md#unarchive_workflow) - Unarchive Workflow
+
+#### [Workflows.Events](docs/sdks/workflowsevents/README.md)
+
+* [receive_workflow_event](docs/sdks/workflowsevents/README.md#receive_workflow_event) - Receive Workflow Event
+* [receive_workflow_events_batch](docs/sdks/workflowsevents/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [get_stream_events](docs/sdks/workflowsevents/README.md#get_stream_events) - Get Stream Events
+* [get_workflow_events](docs/sdks/workflowsevents/README.md#get_workflow_events) - Get Workflow Events
+
+#### [Workflows.Executions](docs/sdks/executions/README.md)
+
+* [get_workflow_execution](docs/sdks/executions/README.md#get_workflow_execution) - Get Workflow Execution
+* [get_workflow_execution_history](docs/sdks/executions/README.md#get_workflow_execution_history) - Get Workflow Execution History
+* [signal_workflow_execution](docs/sdks/executions/README.md#signal_workflow_execution) - Signal Workflow Execution
+* [query_workflow_execution](docs/sdks/executions/README.md#query_workflow_execution) - Query Workflow Execution
+* [terminate_workflow_execution](docs/sdks/executions/README.md#terminate_workflow_execution) - Terminate Workflow Execution
+* [batch_terminate_workflow_executions](docs/sdks/executions/README.md#batch_terminate_workflow_executions) - Batch Terminate Workflow Executions
+* [cancel_workflow_execution](docs/sdks/executions/README.md#cancel_workflow_execution) - Cancel Workflow Execution
+* [batch_cancel_workflow_executions](docs/sdks/executions/README.md#batch_cancel_workflow_executions) - Batch Cancel Workflow Executions
+* [reset_workflow](docs/sdks/executions/README.md#reset_workflow) - Reset Workflow
+* [update_workflow_execution](docs/sdks/executions/README.md#update_workflow_execution) - Update Workflow Execution
+* [get_workflow_execution_trace_otel](docs/sdks/executions/README.md#get_workflow_execution_trace_otel) - Get Workflow Execution Trace Otel
+* [get_workflow_execution_trace_summary](docs/sdks/executions/README.md#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
+* [get_workflow_execution_trace_events](docs/sdks/executions/README.md#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
+* [stream](docs/sdks/executions/README.md#stream) - Stream
+
+#### [Workflows.Metrics](docs/sdks/metrics/README.md)
+
+* [get_workflow_metrics](docs/sdks/metrics/README.md#get_workflow_metrics) - Get Workflow Metrics
+
+#### [Workflows.Runs](docs/sdks/runs/README.md)
+
+* [list_runs](docs/sdks/runs/README.md#list_runs) - List Runs
+* [get_run](docs/sdks/runs/README.md#get_run) - Get Run
+* [get_run_history](docs/sdks/runs/README.md#get_run_history) - Get Run History
+
+#### [Workflows.Schedules](docs/sdks/schedules/README.md)
+
+* [get_schedules](docs/sdks/schedules/README.md#get_schedules) - Get Schedules
+* [schedule_workflow](docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
+* [unschedule_workflow](docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
+
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
@@ -678,18 +750,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs=[
-        {
-            "object": "entry",
-            "type": "function.result",
-            "tool_call_id": "<id>",
-            "result": "<value>",
-        },
-    ], completion_args={
-        "response_format": {
-            "type": "text",
-        },
-    })
+    res = mistral.audio.transcriptions.stream(model="Camry", diarize=False)
 
     with res as event_stream:
         for event in event_stream:
@@ -722,10 +783,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
-        "file_name": "example.file",
-        "content": open("example.file", "rb"),
-    })
+    res = mistral.audio.transcriptions.complete(model="Model X", diarize=False)
 
     # Handle response
     print(res)
@@ -749,7 +807,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(,
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -769,7 +829,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    })
 
     # Handle response
     print(res)
@@ -803,7 +865,9 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.models.list()
+        res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+        })
 
         # Handle response
         print(res)
@@ -837,8 +901,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 61 of 123 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 123 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 101 of 168 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 168 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -869,7 +933,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    })
 
     # Handle response
     print(res)
@@ -889,7 +955,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    })
 
     # Handle response
     print(res)
@@ -999,7 +1067,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    })
 
     # Handle response
     print(res)

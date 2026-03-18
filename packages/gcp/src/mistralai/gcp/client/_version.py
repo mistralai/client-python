@@ -3,10 +3,10 @@
 import importlib.metadata
 
 __title__: str = "mistralai-gcp"
-__version__: str = "2.0.0"
+__version__: str = "2.0.1"
 __openapi_doc_version__: str = "1.0.0"
-__gen_version__: str = "2.841.0"
-__user_agent__: str = "speakeasy-sdk/python 2.0.0 2.841.0 1.0.0 mistralai-gcp"
+__gen_version__: str = "2.862.0"
+__user_agent__: str = "speakeasy-sdk/python 2.0.1 2.862.0 1.0.0 mistralai-gcp"
 
 try:
     if __package__ is not None:

@@ -1,9 +1,14 @@
 # TableFormat
 
+## Example Usage
+
+```python
+from mistralai.azure.client.models import TableFormat
+value: TableFormat = "markdown"
+```
+
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `MARKDOWN` | markdown   |
-| `HTML`     | html       |
+- `"markdown"`
+- `"html"`

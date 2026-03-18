@@ -65,6 +65,7 @@ if TYPE_CHECKING:
         FunctionCallTypedDict,
     )
     from .functionname import FunctionName, FunctionNameTypedDict
+    from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .imagedetail import ImageDetail
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
@@ -75,6 +76,23 @@ if TYPE_CHECKING:
     )
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .mistralpromptmode import MistralPromptMode
+    from .moderationllmaction import ModerationLLMAction
+    from .moderationllmv1categorythresholds import (
+        ModerationLlmv1CategoryThresholds,
+        ModerationLlmv1CategoryThresholdsTypedDict,
+    )
+    from .moderationllmv1config import (
+        ModerationLlmv1Config,
+        ModerationLlmv1ConfigTypedDict,
+    )
+    from .moderationllmv2categorythresholds import (
+        ModerationLlmv2CategoryThresholds,
+        ModerationLlmv2CategoryThresholdsTypedDict,
+    )
+    from .moderationllmv2config import (
+        ModerationLlmv2Config,
+        ModerationLlmv2ConfigTypedDict,
+    )
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
@@ -89,7 +107,13 @@ if TYPE_CHECKING:
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
-    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
+    from .reasoningeffort import ReasoningEffort
+    from .referencechunk import (
+        ReferenceChunk,
+        ReferenceChunkTypedDict,
+        ReferenceID,
+        ReferenceIDTypedDict,
+    )
     from .responseformat import ResponseFormat, ResponseFormatTypedDict
     from .responseformats import ResponseFormats
     from .security import Security, SecurityTypedDict
@@ -195,6 +219,8 @@ __all__ = [
     "FunctionName",
     "FunctionNameTypedDict",
     "FunctionTypedDict",
+    "GuardrailConfig",
+    "GuardrailConfigTypedDict",
     "ImageDetail",
     "ImageURL",
     "ImageURLChunk",
@@ -207,6 +233,15 @@ __all__ = [
     "Loc",
     "LocTypedDict",
     "MistralPromptMode",
+    "ModerationLLMAction",
+    "ModerationLlmv1CategoryThresholds",
+    "ModerationLlmv1CategoryThresholdsTypedDict",
+    "ModerationLlmv1Config",
+    "ModerationLlmv1ConfigTypedDict",
+    "ModerationLlmv2CategoryThresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict",
+    "ModerationLlmv2Config",
+    "ModerationLlmv2ConfigTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
     "OCRPageDimensions",
@@ -223,8 +258,11 @@ __all__ = [
     "OCRUsageInfoTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ReasoningEffort",
     "ReferenceChunk",
     "ReferenceChunkTypedDict",
+    "ReferenceID",
+    "ReferenceIDTypedDict",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
@@ -323,6 +361,8 @@ _dynamic_imports: dict[str, str] = {
     "FunctionCallTypedDict": ".functioncall",
     "FunctionName": ".functionname",
     "FunctionNameTypedDict": ".functionname",
+    "GuardrailConfig": ".guardrailconfig",
+    "GuardrailConfigTypedDict": ".guardrailconfig",
     "ImageDetail": ".imagedetail",
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
@@ -333,6 +373,15 @@ _dynamic_imports: dict[str, str] = {
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
     "MistralPromptMode": ".mistralpromptmode",
+    "ModerationLLMAction": ".moderationllmaction",
+    "ModerationLlmv1CategoryThresholds": ".moderationllmv1categorythresholds",
+    "ModerationLlmv1CategoryThresholdsTypedDict": ".moderationllmv1categorythresholds",
+    "ModerationLlmv1Config": ".moderationllmv1config",
+    "ModerationLlmv1ConfigTypedDict": ".moderationllmv1config",
+    "ModerationLlmv2CategoryThresholds": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2Config": ".moderationllmv2config",
+    "ModerationLlmv2ConfigTypedDict": ".moderationllmv2config",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
     "OCRPageDimensions": ".ocrpagedimensions",
@@ -353,8 +402,11 @@ _dynamic_imports: dict[str, str] = {
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "Prediction": ".prediction",
     "PredictionTypedDict": ".prediction",
+    "ReasoningEffort": ".reasoningeffort",
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
+    "ReferenceID": ".referencechunk",
+    "ReferenceIDTypedDict": ".referencechunk",
     "ResponseFormat": ".responseformat",
     "ResponseFormatTypedDict": ".responseformat",
     "ResponseFormats": ".responseformats",

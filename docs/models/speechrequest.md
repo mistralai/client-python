@@ -1,0 +1,15 @@
+# SpeechRequest
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `model`                                                                | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `metadata`                                                             | [OptionalNullable[models.MetadataDict]](../models/metadatadict.md)     | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `stream`                                                               | *Optional[bool]*                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `voice_id`                                                             | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `ref_audio`                                                            | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `input`                                                                | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
+| `response_format`                                                      | [Optional[models.SpeechOutputFormat]](../models/speechoutputformat.md) | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `__pydantic_extra__`                                                   | Dict[str, *Any*]                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |

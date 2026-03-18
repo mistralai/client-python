@@ -10,6 +10,7 @@ from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDi
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
@@ -23,7 +24,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import Field, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -82,7 +83,7 @@ class ConversationRequestTypedDict(TypedDict):
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     agent_id: NotRequired[Nullable[str]]
     agent_version: NotRequired[Nullable[ConversationRequestAgentVersionTypedDict]]
     model: NotRequired[Nullable[str]]
@@ -112,7 +113,7 @@ class ConversationRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
 
     agent_id: OptionalNullable[str] = UNSET
 

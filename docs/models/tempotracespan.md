@@ -1,0 +1,16 @@
+# TempoTraceSpan
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `trace_id`                                                           | *str*                                                                | :heavy_check_mark:                                                   | The trace ID of the scope                                            |
+| `span_id`                                                            | *str*                                                                | :heavy_check_mark:                                                   | The span ID of the scope                                             |
+| `parent_span_id`                                                     | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | The parent span ID of the scope                                      |
+| `name`                                                               | *str*                                                                | :heavy_check_mark:                                                   | The name of the scope                                                |
+| `kind`                                                               | [models.TempoTraceScopeKind](../models/tempotracescopekind.md)       | :heavy_check_mark:                                                   | N/A                                                                  |
+| `start_time_unix_nano`                                               | *str*                                                                | :heavy_check_mark:                                                   | The start time of the scope in Unix nano                             |
+| `end_time_unix_nano`                                                 | *str*                                                                | :heavy_check_mark:                                                   | The end time of the scope in Unix nano                               |
+| `attributes`                                                         | List[[models.TempoTraceAttribute](../models/tempotraceattribute.md)] | :heavy_minus_sign:                                                   | The attributes of the scope                                          |
+| `events`                                                             | List[[models.TempoTraceEvent](../models/tempotraceevent.md)]         | :heavy_minus_sign:                                                   | The events of the scope                                              |

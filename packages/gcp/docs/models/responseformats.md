@@ -1,10 +1,15 @@
 # ResponseFormats
 
+## Example Usage
+
+```python
+from mistralai.gcp.client.models import ResponseFormats
+value: ResponseFormats = "text"
+```
+
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `TEXT`        | text          |
-| `JSON_OBJECT` | json_object   |
-| `JSON_SCHEMA` | json_schema   |
+- `"text"`
+- `"json_object"`
+- `"json_schema"`

@@ -23,16 +23,19 @@ if TYPE_CHECKING:
     from mistralai.client.chat import Chat
     from mistralai.client.classifiers import Classifiers
     from mistralai.client.embeddings import Embeddings
+    from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
     from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
+    from mistralai.client.workflows import Workflows
 
 
 class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
+    audio: "Audio"
     models: "Models"
     r"""Model Management API"""
     beta: "Beta"
@@ -52,8 +55,10 @@ class Mistral(BaseSDK):
     r"""Classifiers API."""
     ocr: "Ocr"
     r"""OCR API"""
-    audio: "Audio"
+    workflows: "Workflows"
+    events: "Events"
     _sub_sdk_map = {
+        "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
         "beta": ("mistralai.client.beta", "Beta"),
         "files": ("mistralai.client.files", "Files"),
@@ -65,7 +70,8 @@ class Mistral(BaseSDK):
         "embeddings": ("mistralai.client.embeddings", "Embeddings"),
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
-        "audio": ("mistralai.client.audio", "Audio"),
+        "workflows": ("mistralai.client.workflows", "Workflows"),
+        "events": ("mistralai.client.events", "Events"),
     }
 
     def __init__(

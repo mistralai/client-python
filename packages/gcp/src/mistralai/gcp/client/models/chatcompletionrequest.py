@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
+from .reasoningeffort import ReasoningEffort
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -105,8 +107,10 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content."""
     parallel_tool_calls: NotRequired[bool]
     r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
+    reasoning_effort: NotRequired[Nullable[ReasoningEffort]]
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
 
 
 class ChatCompletionRequest(BaseModel):
@@ -160,8 +164,12 @@ class ChatCompletionRequest(BaseModel):
     parallel_tool_calls: Optional[bool] = None
     r"""Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel."""
 
+    reasoning_effort: OptionalNullable[ReasoningEffort] = UNSET
+
     prompt_mode: OptionalNullable[MistralPromptMode] = UNSET
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
+
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -182,7 +190,9 @@ class ChatCompletionRequest(BaseModel):
                 "n",
                 "prediction",
                 "parallel_tool_calls",
+                "reasoning_effort",
                 "prompt_mode",
+                "guardrails",
             ]
         )
         nullable_fields = set(
@@ -193,7 +203,9 @@ class ChatCompletionRequest(BaseModel):
                 "metadata",
                 "tools",
                 "n",
+                "reasoning_effort",
                 "prompt_mode",
+                "guardrails",
             ]
         )
         serialized = handler(self)
@@ -201,7 +213,7 @@ class ChatCompletionRequest(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

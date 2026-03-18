@@ -9,6 +9,7 @@ from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDi
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from datetime import datetime
@@ -25,7 +26,7 @@ from mistralai.client.utils.unions import parse_open_union
 import pydantic
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import AfterValidator, BeforeValidator
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -106,7 +107,7 @@ class AgentTypedDict(TypedDict):
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     object: Literal["agent"]
     version_message: NotRequired[Nullable[str]]
 
@@ -145,7 +146,7 @@ class Agent(BaseModel):
 
     handoffs: OptionalNullable[List[str]] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
 
     object: Annotated[
         Annotated[Optional[Literal["agent"]], AfterValidator(validate_const("agent"))],

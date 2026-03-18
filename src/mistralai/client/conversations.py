@@ -248,7 +248,9 @@ class Conversations(BaseSDK):
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -310,7 +312,9 @@ class Conversations(BaseSDK):
             ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -399,7 +403,9 @@ class Conversations(BaseSDK):
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -461,7 +467,9 @@ class Conversations(BaseSDK):
             ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -1725,7 +1733,9 @@ class Conversations(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1779,7 +1789,9 @@ class Conversations(BaseSDK):
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -1867,7 +1879,9 @@ class Conversations(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1921,7 +1935,9 @@ class Conversations(BaseSDK):
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -2014,7 +2030,9 @@ class Conversations(BaseSDK):
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2076,7 +2094,9 @@ class Conversations(BaseSDK):
             ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -2172,7 +2192,9 @@ class Conversations(BaseSDK):
         ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2234,7 +2256,9 @@ class Conversations(BaseSDK):
             ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -2603,7 +2627,9 @@ class Conversations(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2657,7 +2683,9 @@ class Conversations(BaseSDK):
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -2752,7 +2780,9 @@ class Conversations(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2806,7 +2836,9 @@ class Conversations(BaseSDK):
                 guardrails=utils.get_pydantic_model(
                     guardrails, OptionalNullable[List[models.GuardrailConfig]]
                 ),
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
