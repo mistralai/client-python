@@ -497,6 +497,7 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/connectors/README.md#create) - Create a new connector.
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
+* [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [get](docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](docs/sdks/connectors/README.md#update) - Update a connector.
@@ -684,7 +685,7 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], stream=True, completion_args={
+    ], completion_args={
         "response_format": {
             "type": "text",
         },
@@ -836,8 +837,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 122 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 122 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 61 of 123 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 123 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

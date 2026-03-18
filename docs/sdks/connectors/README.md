@@ -8,6 +8,7 @@
 
 * [create](#create) - Create a new connector.
 * [list](#list) - List all connectors.
+* [get_auth_url](#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](#call_tool) - Call Connector Tool
 * [get](#get) - Get a connector.
 * [update](#update) - Update a connector.
@@ -96,6 +97,48 @@ with Mistral(
 ### Response
 
 **[models.PaginatedConnectors](../../models/paginatedconnectors.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_auth_url
+
+Get the OAuth2 authorization URL for a connector to initiate user authentication.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_get_auth_url_v1" method="get" path="/v1/connectors/{connector_id_or_name}/auth_url" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.get_auth_url(connector_id_or_name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id_or_name`                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `app_return_url`                                                    | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.AuthURLResponse](../../models/authurlresponse.md)**
 
 ### Errors
 

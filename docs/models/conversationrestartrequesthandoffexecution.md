@@ -1,9 +1,14 @@
 # ConversationRestartRequestHandoffExecution
 
+## Example Usage
+
+```python
+from mistralai.client.models import ConversationRestartRequestHandoffExecution
+value: ConversationRestartRequestHandoffExecution = "client"
+```
+
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `CLIENT` | client   |
-| `SERVER` | server   |
+- `"client"`
+- `"server"`

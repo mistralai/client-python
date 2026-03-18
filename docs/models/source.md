@@ -1,10 +1,19 @@
 # Source
 
+## Example Usage
+
+```python
+from mistralai.client.models import Source
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: Source = "upload"
+```
+
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `UPLOAD`     | upload       |
-| `REPOSITORY` | repository   |
-| `MISTRAL`    | mistral      |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"upload"`
+- `"repository"`
+- `"mistral"`
