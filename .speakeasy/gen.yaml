@@ -2,6 +2,7 @@ configVersion: 2.0.0
 generation:
   sdkClassName: Mistral
   maintainOpenAPIOrder: true
+  inferSSEOverload: true
   usageSnippets:
     optionalPropertyRendering: withExample
     sdkInitStyle: constructor
