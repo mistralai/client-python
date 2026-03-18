@@ -1,10 +1,19 @@
 # FunctionCallEntryConfirmationStatus
 
+## Example Usage
+
+```python
+from mistralai.client.models import FunctionCallEntryConfirmationStatus
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: FunctionCallEntryConfirmationStatus = "pending"
+```
+
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `PENDING` | pending   |
-| `ALLOWED` | allowed   |
-| `DENIED`  | denied    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"pending"`
+- `"allowed"`
+- `"denied"`

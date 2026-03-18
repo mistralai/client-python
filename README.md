@@ -497,6 +497,7 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/connectors/README.md#create) - Create a new connector.
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
+* [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [get](docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](docs/sdks/connectors/README.md#update) - Update a connector.
@@ -618,6 +619,12 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/embeddings/README.md#create) - Embeddings
 
+### [Events](docs/sdks/events/README.md)
+
+* [receive_workflow_event_v1_workflows_events_post](docs/sdks/events/README.md#receive_workflow_event_v1_workflows_events_post) - Receive Workflow Event
+* [get_stream_events_v1_workflows_events_stream_get](docs/sdks/events/README.md#get_stream_events_v1_workflows_events_stream_get) - Get Stream Events
+* [get_workflow_events_v1_workflows_events_list_get](docs/sdks/events/README.md#get_workflow_events_v1_workflows_events_list_get) - Get Workflow Events
+
 ### [Files](docs/sdks/files/README.md)
 
 * [upload](docs/sdks/files/README.md#upload) - Upload File
@@ -653,6 +660,47 @@ print(res.choices[0].message.content)
 
 * [process](docs/sdks/ocr/README.md#process) - OCR
 
+### [Workflows](docs/sdks/workflows/README.md)
+
+* [~~get_executions_v1_workflows_executions_get~~](docs/sdks/workflows/README.md#get_executions_v1_workflows_executions_get) - Get Executions :warning: **Deprecated**
+* [get_workflow_execution_v1_workflows_executions_execution_id_get](docs/sdks/workflows/README.md#get_workflow_execution_v1_workflows_executions_execution_id_get) - Get Workflow Execution
+* [get_workflow_execution_history_v1_workflows_executions_execution_id_history_get](docs/sdks/workflows/README.md#get_workflow_execution_history_v1_workflows_executions_execution_id_history_get) - Get Workflow Execution History
+* [signal_workflow_execution_v1_workflows_executions_execution_id_signals_post](docs/sdks/workflows/README.md#signal_workflow_execution_v1_workflows_executions_execution_id_signals_post) - Signal Workflow Execution
+* [query_workflow_execution_v1_workflows_executions_execution_id_queries_post](docs/sdks/workflows/README.md#query_workflow_execution_v1_workflows_executions_execution_id_queries_post) - Query Workflow Execution
+* [terminate_workflow_execution_v1_workflows_executions_execution_id_terminate_post](docs/sdks/workflows/README.md#terminate_workflow_execution_v1_workflows_executions_execution_id_terminate_post) - Terminate Workflow Execution
+* [batch_terminate_workflow_executions_v1_workflows_executions_terminate_post](docs/sdks/workflows/README.md#batch_terminate_workflow_executions_v1_workflows_executions_terminate_post) - Batch Terminate Workflow Executions
+* [cancel_workflow_execution_v1_workflows_executions_execution_id_cancel_post](docs/sdks/workflows/README.md#cancel_workflow_execution_v1_workflows_executions_execution_id_cancel_post) - Cancel Workflow Execution
+* [batch_cancel_workflow_executions_v1_workflows_executions_cancel_post](docs/sdks/workflows/README.md#batch_cancel_workflow_executions_v1_workflows_executions_cancel_post) - Batch Cancel Workflow Executions
+* [reset_workflow_v1_workflows_executions_execution_id_reset_post](docs/sdks/workflows/README.md#reset_workflow_v1_workflows_executions_execution_id_reset_post) - Reset Workflow
+* [update_workflow_execution_v1_workflows_executions_execution_id_updates_post](docs/sdks/workflows/README.md#update_workflow_execution_v1_workflows_executions_execution_id_updates_post) - Update Workflow Execution
+* [get_workflow_execution_trace_otel](docs/sdks/workflows/README.md#get_workflow_execution_trace_otel) - Get Workflow Execution Trace Otel
+* [get_workflow_execution_trace_summary](docs/sdks/workflows/README.md#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
+* [get_workflow_execution_trace_events](docs/sdks/workflows/README.md#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
+* [stream_v1_workflows_executions_execution_id_stream_get](docs/sdks/workflows/README.md#stream_v1_workflows_executions_execution_id_stream_get) - Stream
+* [get_workflow_metrics_v1_workflows_workflow_name_metrics_get](docs/sdks/workflows/README.md#get_workflow_metrics_v1_workflows_workflow_name_metrics_get) - Get Workflow Metrics
+* [list_runs_v1_workflows_runs_get](docs/sdks/workflows/README.md#list_runs_v1_workflows_runs_get) - List Runs
+* [get_run_v1_workflows_runs_run_id_get](docs/sdks/workflows/README.md#get_run_v1_workflows_runs_run_id_get) - Get Run
+* [get_run_history_v1_workflows_runs_run_id_history_get](docs/sdks/workflows/README.md#get_run_history_v1_workflows_runs_run_id_history_get) - Get Run History
+* [get_schedules_v1_workflows_schedules_get](docs/sdks/workflows/README.md#get_schedules_v1_workflows_schedules_get) - Get Schedules
+* [schedule_workflow_v1_workflows_schedules_post](docs/sdks/workflows/README.md#schedule_workflow_v1_workflows_schedules_post) - Schedule Workflow
+* [unschedule_workflow_v1_workflows_schedules_schedule_id_delete](docs/sdks/workflows/README.md#unschedule_workflow_v1_workflows_schedules_schedule_id_delete) - Unschedule Workflow
+* [receive_workflow_event_v1_workflows_events_post](docs/sdks/workflows/README.md#receive_workflow_event_v1_workflows_events_post) - Receive Workflow Event
+* [get_stream_events_v1_workflows_events_stream_get](docs/sdks/workflows/README.md#get_stream_events_v1_workflows_events_stream_get) - Get Stream Events
+* [get_workflow_events_v1_workflows_events_list_get](docs/sdks/workflows/README.md#get_workflow_events_v1_workflows_events_list_get) - Get Workflow Events
+* [get_workflows_v1_workflows_get](docs/sdks/workflows/README.md#get_workflows_v1_workflows_get) - Get Workflows
+* [get_workflow_registrations_v1_workflows_registrations_get](docs/sdks/workflows/README.md#get_workflow_registrations_v1_workflows_registrations_get) - Get Workflow Registrations
+* [~~get_workflow_registrations_deprecated_v1_workflows_versions_get~~](docs/sdks/workflows/README.md#get_workflow_registrations_deprecated_v1_workflows_versions_get) - Get Workflow Registrations Deprecated :warning: **Deprecated**
+* [register_workflow_definitions_v1_workflows_register_post](docs/sdks/workflows/README.md#register_workflow_definitions_v1_workflows_register_post) - Register Workflow Definitions
+* [execute_workflow_v1_workflows_workflow_identifier_execute_post](docs/sdks/workflows/README.md#execute_workflow_v1_workflows_workflow_identifier_execute_post) - Execute Workflow
+* [execute_workflow_registration_v1_workflows_registrations_workflow_registration_id_execute_post](docs/sdks/workflows/README.md#execute_workflow_registration_v1_workflows_registrations_workflow_registration_id_execute_post) - Execute Workflow Registration
+* [~~execute_workflow_registration_deprecated_v1_workflows_versions_workflow_version_id_execute_post~~](docs/sdks/workflows/README.md#execute_workflow_registration_deprecated_v1_workflows_versions_workflow_version_id_execute_post) - Execute Workflow Registration Deprecated :warning: **Deprecated**
+* [get_workflow_v1_workflows_workflow_identifier_get](docs/sdks/workflows/README.md#get_workflow_v1_workflows_workflow_identifier_get) - Get Workflow
+* [update_workflow_v1_workflows_workflow_identifier_put](docs/sdks/workflows/README.md#update_workflow_v1_workflows_workflow_identifier_put) - Update Workflow
+* [get_workflow_registration_v1_workflows_registrations_workflow_registration_id_get](docs/sdks/workflows/README.md#get_workflow_registration_v1_workflows_registrations_workflow_registration_id_get) - Get Workflow Registration
+* [~~get_workflow_registration_deprecated_v1_workflows_versions_workflow_version_id_get~~](docs/sdks/workflows/README.md#get_workflow_registration_deprecated_v1_workflows_versions_workflow_version_id_get) - Get Workflow Registration Deprecated :warning: **Deprecated**
+* [archive_workflow_v1_workflows_workflow_identifier_archive_put](docs/sdks/workflows/README.md#archive_workflow_v1_workflows_workflow_identifier_archive_put) - Archive Workflow
+* [unarchive_workflow_v1_workflows_workflow_identifier_unarchive_put](docs/sdks/workflows/README.md#unarchive_workflow_v1_workflows_workflow_identifier_unarchive_put) - Unarchive Workflow
+
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
@@ -684,7 +732,7 @@ with Mistral(
             "tool_call_id": "<id>",
             "result": "<value>",
         },
-    ], stream=True, completion_args={
+    ], completion_args={
         "response_format": {
             "type": "text",
         },
@@ -836,8 +884,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 60 of 122 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 122 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 98 of 164 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 164 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

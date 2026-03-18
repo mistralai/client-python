@@ -1,9 +1,14 @@
 # TimestampGranularity
 
+## Example Usage
+
+```python
+from mistralai.client.models import TimestampGranularity
+value: TimestampGranularity = "segment"
+```
+
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `SEGMENT` | segment   |
-| `WORD`    | word      |
+- `"segment"`
+- `"word"`
