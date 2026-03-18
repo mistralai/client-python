@@ -2,15 +2,93 @@
 # @generated-id: 5c1f1109aa5e
 
 from .basesdk import BaseSDK
+from enum import Enum
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
-from mistralai.client.utils import get_security_from_env
+from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Mapping, Optional, Union
+from typing import Any, Dict, Literal, Mapping, Optional, Union, overload
+
+
+class CompleteAcceptEnum(str, Enum):
+    APPLICATION_JSON = "application/json"
+    TEXT_EVENT_STREAM = "text/event-stream"
 
 
 class Speech(BaseSDK):
+    @overload
+    def complete(
+        self,
+        *,
+        input: str,
+        model: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
+        stream: Union[Literal[False], None] = None,
+        voice_id: OptionalNullable[str] = UNSET,
+        ref_audio: OptionalNullable[str] = UNSET,
+        response_format: Optional[models.SpeechOutputFormat] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SpeechResponse:
+        r"""Speech
+
+        :param input:
+        :param model:
+        :param metadata:
+        :param stream:
+        :param voice_id:
+        :param ref_audio:
+        :param response_format:
+        :param additional_properties:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+
+    @overload
+    def complete(
+        self,
+        *,
+        input: str,
+        model: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
+        stream: Literal[True],
+        voice_id: OptionalNullable[str] = UNSET,
+        ref_audio: OptionalNullable[str] = UNSET,
+        response_format: Optional[models.SpeechOutputFormat] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> eventstreaming.EventStream[models.SpeechStreamEvents]:
+        r"""Speech
+
+        :param input:
+        :param model:
+        :param metadata:
+        :param stream:
+        :param voice_id:
+        :param ref_audio:
+        :param response_format:
+        :param additional_properties:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+
     def complete(
         self,
         *,
@@ -28,7 +106,7 @@ class Speech(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
+    ) -> models.SpeechV1AudioSpeechPostResponse:
         r"""Speech
 
         :param input:
@@ -42,6 +120,7 @@ class Speech(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -77,7 +156,7 @@ class Speech(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value="text/event-stream" if stream else "application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -107,17 +186,28 @@ class Speech(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = utils.stream_to_text(http_res)
+            return unmarshal_json_response(
+                models.SpeechResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.SpeechStreamEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -125,7 +215,80 @@ class Speech(BaseSDK):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
+
+    @overload
+    async def complete_async(
+        self,
+        *,
+        input: str,
+        model: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
+        stream: Union[Literal[False], None] = None,
+        voice_id: OptionalNullable[str] = UNSET,
+        ref_audio: OptionalNullable[str] = UNSET,
+        response_format: Optional[models.SpeechOutputFormat] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SpeechResponse:
+        r"""Speech
+
+        :param input:
+        :param model:
+        :param metadata:
+        :param stream:
+        :param voice_id:
+        :param ref_audio:
+        :param response_format:
+        :param additional_properties:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+
+    @overload
+    async def complete_async(
+        self,
+        *,
+        input: str,
+        model: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
+        stream: Literal[True],
+        voice_id: OptionalNullable[str] = UNSET,
+        ref_audio: OptionalNullable[str] = UNSET,
+        response_format: Optional[models.SpeechOutputFormat] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> eventstreaming.EventStreamAsync[models.SpeechStreamEvents]:
+        r"""Speech
+
+        :param input:
+        :param model:
+        :param metadata:
+        :param stream:
+        :param voice_id:
+        :param ref_audio:
+        :param response_format:
+        :param additional_properties:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
+        :param http_headers: Additional headers to set or replace on requests.
+        """
 
     async def complete_async(
         self,
@@ -144,7 +307,7 @@ class Speech(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
+    ) -> models.SpeechV1AudioSpeechPostResponse:
         r"""Speech
 
         :param input:
@@ -158,6 +321,7 @@ class Speech(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param accept_header_override: Override the default accept header for this method
         :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
@@ -193,7 +357,7 @@ class Speech(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="application/json",
+            accept_header_value="text/event-stream" if stream else "application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -223,17 +387,28 @@ class Speech(BaseSDK):
             ),
             request=req,
             error_status_codes=["422", "4XX", "5XX"],
+            stream=True,
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
+            http_res_text = await utils.stream_to_text_async(http_res)
+            return unmarshal_json_response(
+                models.SpeechResponse, http_res, http_res_text
             )
-            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "200", "text/event-stream"):
+            return eventstreaming.EventStreamAsync(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.SpeechStreamEvents),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -241,4 +416,5 @@ class Speech(BaseSDK):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        raise errors.SDKError("Unexpected response received", http_res)
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)

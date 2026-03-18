@@ -1354,6 +1354,7 @@ if TYPE_CHECKING:
         MessageOutputEventTypedDict,
     )
     from .messageresponse import MessageResponse, MessageResponseTypedDict
+    from .messagetokens import MessageTokens, MessageTokensTypedDict
     from .metadatadict import MetadataDict, MetadataDictTypedDict
     from .metric import Metric, MetricTypedDict
     from .mirrorconfig import MirrorConfig, MirrorConfigTypedDict
@@ -1464,6 +1465,7 @@ if TYPE_CHECKING:
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
+    from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict,
@@ -1551,6 +1553,7 @@ if TYPE_CHECKING:
         RetrieveModelV1ModelsModelIDGetRequestTypedDict,
         UnknownResponseRetrieveModelV1ModelsModelIDGet,
     )
+    from .roles import Roles
     from .sampletype import SampleType
     from .scalarmetric import (
         ScalarMetric,
@@ -1607,8 +1610,25 @@ if TYPE_CHECKING:
         SignalWorkflowResponseTypedDict,
     )
     from .source import Source
+    from .speech_v1_audio_speech_postop import (
+        SpeechResponse,
+        SpeechResponseTypedDict,
+        SpeechStreamEvents,
+        SpeechStreamEventsTypedDict,
+        SpeechV1AudioSpeechPostData,
+        SpeechV1AudioSpeechPostDataTypedDict,
+        SpeechV1AudioSpeechPostResponse,
+        SpeechV1AudioSpeechPostResponseTypedDict,
+        UnknownSpeechV1AudioSpeechPostData,
+    )
     from .speechoutputformat import SpeechOutputFormat
     from .speechrequest import SpeechRequest, SpeechRequestTypedDict
+    from .speechstreamaudiodelta import (
+        SpeechStreamAudioDelta,
+        SpeechStreamAudioDeltaTypedDict,
+    )
+    from .speechstreamdone import SpeechStreamDone, SpeechStreamDoneTypedDict
+    from .speechstreameventtypes import SpeechStreamEventTypes
     from .ssetypes import SSETypes
     from .stream_v1_workflows_executions_execution_id_stream_getop import (
         StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest,
@@ -1862,6 +1882,7 @@ if TYPE_CHECKING:
         UpdateWorkflowResponseTypedDict,
     )
     from .usageinfo import UsageInfo, UsageInfoTypedDict
+    from .usageinfo_dollar_defs import UsageInfoDollarDefs, UsageInfoDollarDefsTypedDict
     from .usermessage import (
         UserMessage,
         UserMessageContent,
@@ -3001,6 +3022,8 @@ __all__ = [
     "MessageOutputEventTypedDict",
     "MessageResponse",
     "MessageResponseTypedDict",
+    "MessageTokens",
+    "MessageTokensTypedDict",
     "MetadataDict",
     "MetadataDictTypedDict",
     "Metric",
@@ -3098,6 +3121,8 @@ __all__ = [
     "ProcessStatus",
     "ProcessingStatus",
     "ProcessingStatusTypedDict",
+    "PromptTokensDetails",
+    "PromptTokensDetailsTypedDict",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -3167,6 +3192,7 @@ __all__ = [
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
     "Role",
+    "Roles",
     "SSETypes",
     "SampleType",
     "ScalarMetric",
@@ -3220,6 +3246,19 @@ __all__ = [
     "SpeechOutputFormat",
     "SpeechRequest",
     "SpeechRequestTypedDict",
+    "SpeechResponse",
+    "SpeechResponseTypedDict",
+    "SpeechStreamAudioDelta",
+    "SpeechStreamAudioDeltaTypedDict",
+    "SpeechStreamDone",
+    "SpeechStreamDoneTypedDict",
+    "SpeechStreamEventTypes",
+    "SpeechStreamEvents",
+    "SpeechStreamEventsTypedDict",
+    "SpeechV1AudioSpeechPostData",
+    "SpeechV1AudioSpeechPostDataTypedDict",
+    "SpeechV1AudioSpeechPostResponse",
+    "SpeechV1AudioSpeechPostResponseTypedDict",
     "StreamEventSsePayload",
     "StreamEventSsePayloadData",
     "StreamEventSsePayloadDataTypedDict",
@@ -3369,6 +3408,7 @@ __all__ = [
     "UnknownModelListData",
     "UnknownResponse",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
+    "UnknownSpeechV1AudioSpeechPostData",
     "UnknownTranscriptionStreamEventsData",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict",
@@ -3417,6 +3457,8 @@ __all__ = [
     "UpdateWorkflowV1WorkflowsWorkflowIdentifierPutRequest",
     "UpdateWorkflowV1WorkflowsWorkflowIdentifierPutRequestTypedDict",
     "UsageInfo",
+    "UsageInfoDollarDefs",
+    "UsageInfoDollarDefsTypedDict",
     "UsageInfoTypedDict",
     "UserMessage",
     "UserMessageContent",
@@ -4471,6 +4513,8 @@ _dynamic_imports: dict[str, str] = {
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MessageResponse": ".messageresponse",
     "MessageResponseTypedDict": ".messageresponse",
+    "MessageTokens": ".messagetokens",
+    "MessageTokensTypedDict": ".messagetokens",
     "MetadataDict": ".metadatadict",
     "MetadataDictTypedDict": ".metadatadict",
     "Metric": ".metric",
@@ -4565,6 +4609,8 @@ _dynamic_imports: dict[str, str] = {
     "ProcessingStatus": ".processingstatus",
     "ProcessingStatusTypedDict": ".processingstatus",
     "ProcessStatus": ".processstatus",
+    "PromptTokensDetails": ".prompttokensdetails",
+    "PromptTokensDetailsTypedDict": ".prompttokensdetails",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -4624,6 +4670,7 @@ _dynamic_imports: dict[str, str] = {
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",
+    "Roles": ".roles",
     "SampleType": ".sampletype",
     "ScalarMetric": ".scalarmetric",
     "ScalarMetricTypedDict": ".scalarmetric",
@@ -4672,9 +4719,23 @@ _dynamic_imports: dict[str, str] = {
     "SignalWorkflowResponse": ".signalworkflowresponse",
     "SignalWorkflowResponseTypedDict": ".signalworkflowresponse",
     "Source": ".source",
+    "SpeechResponse": ".speech_v1_audio_speech_postop",
+    "SpeechResponseTypedDict": ".speech_v1_audio_speech_postop",
+    "SpeechStreamEvents": ".speech_v1_audio_speech_postop",
+    "SpeechStreamEventsTypedDict": ".speech_v1_audio_speech_postop",
+    "SpeechV1AudioSpeechPostData": ".speech_v1_audio_speech_postop",
+    "SpeechV1AudioSpeechPostDataTypedDict": ".speech_v1_audio_speech_postop",
+    "SpeechV1AudioSpeechPostResponse": ".speech_v1_audio_speech_postop",
+    "SpeechV1AudioSpeechPostResponseTypedDict": ".speech_v1_audio_speech_postop",
+    "UnknownSpeechV1AudioSpeechPostData": ".speech_v1_audio_speech_postop",
     "SpeechOutputFormat": ".speechoutputformat",
     "SpeechRequest": ".speechrequest",
     "SpeechRequestTypedDict": ".speechrequest",
+    "SpeechStreamAudioDelta": ".speechstreamaudiodelta",
+    "SpeechStreamAudioDeltaTypedDict": ".speechstreamaudiodelta",
+    "SpeechStreamDone": ".speechstreamdone",
+    "SpeechStreamDoneTypedDict": ".speechstreamdone",
+    "SpeechStreamEventTypes": ".speechstreameventtypes",
     "SSETypes": ".ssetypes",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
@@ -4851,6 +4912,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateWorkflowResponseTypedDict": ".updateworkflowresponse",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
+    "UsageInfoDollarDefs": ".usageinfo_dollar_defs",
+    "UsageInfoDollarDefsTypedDict": ".usageinfo_dollar_defs",
     "UserMessage": ".usermessage",
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",

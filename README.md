@@ -750,7 +750,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.transcriptions.stream(model="Camry", diarize=False)
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    })
 
     with res as event_stream:
         for event in event_stream:
@@ -812,8 +814,10 @@ with Mistral(
     },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -833,8 +837,10 @@ with Mistral(
 
     })
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Retries [retries] -->
@@ -869,8 +875,10 @@ with Mistral(
 
         })
 
-        # Handle response
-        print(res)
+        with res as event_stream:
+            for event in event_stream:
+                # handle event
+                print(event, flush=True)
 
 
     except errors.MistralError as e:
@@ -937,8 +945,10 @@ with Mistral(
 
     })
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -959,8 +969,10 @@ with Mistral(
 
     })
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Server Selection [server] -->
@@ -1071,8 +1083,10 @@ with Mistral(
 
     })
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Authentication [security] -->
