@@ -9,6 +9,7 @@ from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDi
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
@@ -19,7 +20,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import Field, model_serializer
-from typing import Any, Dict, List, Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -64,7 +65,7 @@ class UpdateAgentRequestTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     handoffs: NotRequired[Nullable[List[str]]]
     deployment_chat: NotRequired[Nullable[bool]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     version_message: NotRequired[Nullable[str]]
 
 
@@ -90,7 +91,7 @@ class UpdateAgentRequest(BaseModel):
 
     deployment_chat: OptionalNullable[bool] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
 
     version_message: OptionalNullable[str] = UNSET
 
