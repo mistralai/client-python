@@ -5,16 +5,16 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.0.1
-  configChecksum: fe9ca150dad91afb6d5036d0896d14de
+  releaseVersion: 2.0.2
+  configChecksum: 95d33f3d96644d3b215e012a266de16b
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/azure
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/azure
   published: true
 persistentEdits:
-  generation_id: 67ab27c4-c9f7-4b84-8bd4-f3d2fa1f6e3c
-  pristine_commit_hash: d1550231f193133ba2990c9e028f6b10a9cfead7
-  pristine_tree_hash: b64c4ba8348d809e3641087061556f63237f1805
+  generation_id: 8c2f70c9-24ec-419c-9694-54652008d89d
+  pristine_commit_hash: 0a2a9f75aa004c9015acf207f950e61de1398c0e
+  pristine_tree_hash: ba216118efaba9b6bb8ad092dabd575760e268a6
 features:
   python:
     additionalDependencies: 1.0.0
@@ -398,8 +398,8 @@ trackedFiles:
     pristine_git_object: 3e4e39555d60adebe84e596c8323ee5b80676fc9
   src/mistralai/azure/client/_version.py:
     id: a77160e60e5d
-    last_write_checksum: sha1:c851719bece495554ad91dda49dcc3d73d0ff285
-    pristine_git_object: bdc25001c32c9bd08632c8f0d450a0f66bec7dc7
+    last_write_checksum: sha1:bd78763159757b76ab8f3345dfe8935042b5e3ed
+    pristine_git_object: 42b880611942fda402398ce148513657771fd0b6
   src/mistralai/azure/client/basesdk.py:
     id: 5a585a95ec21
     last_write_checksum: sha1:0c2e686aa42d6aeeb103193aa058d6ddff7bcf74

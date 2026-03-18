@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.0.1
-  configChecksum: d6761e484c1e3742c625c1a9cc0d3362
+  releaseVersion: 2.0.2
+  configChecksum: 86258e60f5d93aff2c8d3c1b11e529c4
   repoURL: https://github.com/mistralai/client-python.git
   repoSubDirectory: packages/gcp
   installationURL: https://github.com/mistralai/client-python.git#subdirectory=packages/gcp
@@ -354,7 +354,7 @@ trackedFiles:
     pristine_git_object: ea95bed210db9180824efddfb1b3e47f5bf96489
   src/mistralai/gcp/client/_version.py:
     id: f87319e32c7b
-    last_write_checksum: sha1:5b8cb44852eb27732d018bd1a6f94b1ef4ceab8a
+    last_write_checksum: sha1:564486234874864933fb2b78990302c00d30361a
     pristine_git_object: 377c9836b5f8bdf65e87ba375232422114af2966
   src/mistralai/gcp/client/basesdk.py:
     id: 4d594572857b

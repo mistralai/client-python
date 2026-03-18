@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.0.6
-  configChecksum: 4e8c950a09fb5b186ee1859e1ebc2beb
+  releaseVersion: 2.0.7
+  configChecksum: 6ee951e9634bbbb069afcd7869cd6006
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 89b39760-cb54-484f-9cca-bca8dc6bb0e1
-  pristine_commit_hash: e91d336ee75c02ede1800c79fd729b132e63c9aa
-  pristine_tree_hash: 585401656ff2352501abbbe3b4f688ba159d74b1
+  generation_id: 2996906b-9cd3-4c3c-9942-11a607814efb
+  pristine_commit_hash: 52ccd4f9f1cbe65b8093adc36b014fde27d5f338
+  pristine_tree_hash: 6655fd367aea45023120b044e4392b633a9b5d94
 features:
   python:
     additionalDependencies: 1.0.0
@@ -3199,8 +3199,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:ef7c427ebe17be1fae10d7f795292dc3dc9650b7
-    pristine_git_object: 98cfeffb65fc4868d835c2510d352a24e4072671
+    last_write_checksum: sha1:421a8127f10d5e8ae6d826664f60d0abcb675381
+    pristine_git_object: 9599d1d2898c487dfcc8f7f3ef849ff20f46b126
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -8231,7 +8231,7 @@ examples:
           limit: 100
       responses:
         "200":
-          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_IN_PROGRESS", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json_patch", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
+          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_STARTED", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
         "422":
           application/json: {}
 examplesVersion: 1.0.2
