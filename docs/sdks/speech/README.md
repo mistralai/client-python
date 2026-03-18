@@ -26,8 +26,10 @@ with Mistral(
 
     })
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -47,7 +49,7 @@ with Mistral(
 
 ### Response
 
-**[Any](../../models/.md)**
+**[models.SpeechV1AudioSpeechPostResponse](../../models/speechv1audiospeechpostresponse.md)**
 
 ### Errors
 
