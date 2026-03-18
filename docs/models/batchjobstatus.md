@@ -1,14 +1,23 @@
 # BatchJobStatus
 
+## Example Usage
+
+```python
+from mistralai.client.models import BatchJobStatus
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: BatchJobStatus = "QUEUED"
+```
+
 
 ## Values
 
-| Name                     | Value                    |
-| ------------------------ | ------------------------ |
-| `QUEUED`                 | QUEUED                   |
-| `RUNNING`                | RUNNING                  |
-| `SUCCESS`                | SUCCESS                  |
-| `FAILED`                 | FAILED                   |
-| `TIMEOUT_EXCEEDED`       | TIMEOUT_EXCEEDED         |
-| `CANCELLATION_REQUESTED` | CANCELLATION_REQUESTED   |
-| `CANCELLED`              | CANCELLED                |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"QUEUED"`
+- `"RUNNING"`
+- `"SUCCESS"`
+- `"FAILED"`
+- `"TIMEOUT_EXCEEDED"`
+- `"CANCELLATION_REQUESTED"`
+- `"CANCELLED"`

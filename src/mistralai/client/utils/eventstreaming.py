@@ -33,9 +33,12 @@ class EventStream(Generic[T]):
         decoder: Callable[[str], T],
         sentinel: Optional[str] = None,
         client_ref: Optional[object] = None,
+        data_required: bool = True,
     ):
         self.response = response
-        self.generator = stream_events(response, decoder, sentinel)
+        self.generator = stream_events(
+            response, decoder, sentinel, data_required=data_required
+        )
         self.client_ref = client_ref
         self._closed = False
 
@@ -69,9 +72,12 @@ class EventStreamAsync(Generic[T]):
         decoder: Callable[[str], T],
         sentinel: Optional[str] = None,
         client_ref: Optional[object] = None,
+        data_required: bool = True,
     ):
         self.response = response
-        self.generator = stream_events_async(response, decoder, sentinel)
+        self.generator = stream_events_async(
+            response, decoder, sentinel, data_required=data_required
+        )
         self.client_ref = client_ref
         self._closed = False
 
@@ -117,6 +123,7 @@ async def stream_events_async(
     response: httpx.Response,
     decoder: Callable[[str], T],
     sentinel: Optional[str] = None,
+    data_required: bool = True,
 ) -> AsyncGenerator[T, None]:
     buffer = bytearray()
     position = 0
@@ -139,7 +146,11 @@ async def stream_events_async(
             block = buffer[position:i]
             position = i + len(seq)
             event, discard, event_id = _parse_event(
-                raw=block, decoder=decoder, sentinel=sentinel, event_id=event_id
+                raw=block,
+                decoder=decoder,
+                sentinel=sentinel,
+                event_id=event_id,
+                data_required=data_required,
             )
             if event is not None:
                 yield event
@@ -152,7 +163,11 @@ async def stream_events_async(
             position = 0
 
     event, discard, _ = _parse_event(
-        raw=buffer, decoder=decoder, sentinel=sentinel, event_id=event_id
+        raw=buffer,
+        decoder=decoder,
+        sentinel=sentinel,
+        event_id=event_id,
+        data_required=data_required,
     )
     if event is not None:
         yield event
@@ -162,6 +177,7 @@ def stream_events(
     response: httpx.Response,
     decoder: Callable[[str], T],
     sentinel: Optional[str] = None,
+    data_required: bool = True,
 ) -> Generator[T, None, None]:
     buffer = bytearray()
     position = 0
@@ -184,7 +200,11 @@ def stream_events(
             block = buffer[position:i]
             position = i + len(seq)
             event, discard, event_id = _parse_event(
-                raw=block, decoder=decoder, sentinel=sentinel, event_id=event_id
+                raw=block,
+                decoder=decoder,
+                sentinel=sentinel,
+                event_id=event_id,
+                data_required=data_required,
             )
             if event is not None:
                 yield event
@@ -197,7 +217,11 @@ def stream_events(
             position = 0
 
     event, discard, _ = _parse_event(
-        raw=buffer, decoder=decoder, sentinel=sentinel, event_id=event_id
+        raw=buffer,
+        decoder=decoder,
+        sentinel=sentinel,
+        event_id=event_id,
+        data_required=data_required,
     )
     if event is not None:
         yield event
@@ -209,6 +233,7 @@ def _parse_event(
     decoder: Callable[[str], T],
     sentinel: Optional[str] = None,
     event_id: Optional[str] = None,
+    data_required: bool = True,
 ) -> Tuple[Optional[T], bool, Optional[str]]:
     block = raw.decode()
     lines = re.split(r"\r?\n|\r", block)
@@ -250,6 +275,10 @@ def _parse_event(
 
     if sentinel and data == f"{sentinel}\n":
         return None, True, event_id
+
+    # Skip data-less events when data is required
+    if not data and publish and data_required:
+        return None, False, event_id
 
     if data:
         data = data[:-1]

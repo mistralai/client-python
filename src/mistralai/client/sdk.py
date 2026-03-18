@@ -23,11 +23,13 @@ if TYPE_CHECKING:
     from mistralai.client.chat import Chat
     from mistralai.client.classifiers import Classifiers
     from mistralai.client.embeddings import Embeddings
+    from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
     from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
+    from mistralai.client.workflows import Workflows
 
 
 class Mistral(BaseSDK):
@@ -53,6 +55,8 @@ class Mistral(BaseSDK):
     ocr: "Ocr"
     r"""OCR API"""
     audio: "Audio"
+    workflows: "Workflows"
+    events: "Events"
     _sub_sdk_map = {
         "models": ("mistralai.client.models_", "Models"),
         "beta": ("mistralai.client.beta", "Beta"),
@@ -66,14 +70,16 @@ class Mistral(BaseSDK):
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
         "audio": ("mistralai.client.audio", "Audio"),
+        "workflows": ("mistralai.client.workflows", "Workflows"),
+        "events": ("mistralai.client.events", "Events"),
     }
 
     def __init__(
         self,
         api_key: Optional[Union[Optional[str], Callable[[], Optional[str]]]] = None,
         server: Optional[str] = None,
-        server_url: Optional[str] = None,
         url_params: Optional[Dict[str, str]] = None,
+        server_url: Optional[str] = None,
         client: Optional[HttpClient] = None,
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
