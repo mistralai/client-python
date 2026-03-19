@@ -10,6 +10,7 @@ import importlib
 import logging
 from mistralai.azure.client import models, utils
 from mistralai.azure.client._hooks import SDKHooks
+from mistralai.azure.client._hooks.registration import AzureServerlessPathHook
 from mistralai.azure.client.types import OptionalNullable, UNSET
 import sys
 from typing import Callable, Dict, Optional, TYPE_CHECKING, Union, cast
@@ -49,6 +50,7 @@ class MistralAzure(BaseSDK):
         timeout_ms: Optional[int] = None,
         debug_logger: Optional[Logger] = None,
         api_version: str = "2024-05-01-preview",
+        is_foundry: bool = True,
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -61,6 +63,8 @@ class MistralAzure(BaseSDK):
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         :param api_version: Azure API version to use (injected as query param)
+        :param is_foundry: True for Foundry Resource endpoints (services.ai.azure.com),
+            False for legacy serverless endpoints (models.ai.azure.com)
         """
         client_supplied = True
         if client is None:
@@ -134,6 +138,9 @@ class MistralAzure(BaseSDK):
 
         hooks = SDKHooks()
         self.sdk_configuration.__dict__["_hooks"] = hooks
+
+        if not is_foundry:
+            hooks.register_before_request_hook(AzureServerlessPathHook())
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
