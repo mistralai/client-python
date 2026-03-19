@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .completionargsstop import CompletionArgsStop, CompletionArgsStopTypedDict
 from .prediction import Prediction, PredictionTypedDict
+from .reasoningeffort import ReasoningEffort
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from mistralai.client.types import (
@@ -31,6 +32,7 @@ class CompletionArgsTypedDict(TypedDict):
     prediction: NotRequired[Nullable[PredictionTypedDict]]
     response_format: NotRequired[Nullable[ResponseFormatTypedDict]]
     tool_choice: NotRequired[ToolChoiceEnum]
+    reasoning_effort: NotRequired[Nullable[ReasoningEffort]]
 
 
 class CompletionArgs(BaseModel):
@@ -56,6 +58,8 @@ class CompletionArgs(BaseModel):
 
     tool_choice: Optional[ToolChoiceEnum] = None
 
+    reasoning_effort: OptionalNullable[ReasoningEffort] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -70,6 +74,7 @@ class CompletionArgs(BaseModel):
                 "prediction",
                 "response_format",
                 "tool_choice",
+                "reasoning_effort",
             ]
         )
         nullable_fields = set(
@@ -83,6 +88,7 @@ class CompletionArgs(BaseModel):
                 "random_seed",
                 "prediction",
                 "response_format",
+                "reasoning_effort",
             ]
         )
         serialized = handler(self)

@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 935dfa929e1e1ce9ce95e8113516b4d6
+  docChecksum: a9300bb15f1502486d8652842b44e197
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.0.5
-  configChecksum: 3e3409f4ae2a461d1ac6804338d30297
+  releaseVersion: 2.0.6
+  configChecksum: 4e8c950a09fb5b186ee1859e1ebc2beb
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 89696261-5908-4dee-88ea-d37528273266
-  pristine_commit_hash: e85fd7bfb52babb0a1d1e719b507e74434907135
-  pristine_tree_hash: 47c226db0e18f3950f48ffd5a6a91205025e9ad1
+  generation_id: 3b178d6d-42ff-41c4-9ef1-2c10a75970dd
+  pristine_commit_hash: bc2bc691efc08d12db752f377541ffda5cb2477d
+  pristine_tree_hash: ca5f195f33c25a3c23f40e92e22d1bc66c9f0ce2
 features:
   python:
     additionalDependencies: 1.0.0
@@ -488,8 +488,8 @@ trackedFiles:
     pristine_git_object: 6302fc627d7c49442b6c9aec19c70fdceaf7c519
   docs/models/completionargs.md:
     id: 3b54534f9830
-    last_write_checksum: sha1:7432daccf23d8963a65fa4f2b103ea0396fbfbeb
-    pristine_git_object: 148f760859636e8c32259604698785663491a445
+    last_write_checksum: sha1:3629a70a095750b82bc60a80c0a2b3e3496bafba
+    pristine_git_object: 51f7ff3070cb6d6e79c17dadff2340b028958563
   docs/models/completionargsstop.md:
     id: 40b0f0c81dc8
     last_write_checksum: sha1:2a576618c62d4818af0048ed3a79080149a88642
@@ -1564,8 +1564,8 @@ trackedFiles:
     pristine_git_object: 9b234e3ea8fc13261897acf18ce4da3b14485f72
   docs/models/modelcapabilities.md:
     id: 283fbc5fa32f
-    last_write_checksum: sha1:98df9700314cc4ee6051e0e18d22dfaacb0ad648
-    pristine_git_object: 7ff789ed85ae894b51ef2253e9a66aec558616d5
+    last_write_checksum: sha1:804b67d580cbb8be444485712b85ade3c059fbe1
+    pristine_git_object: 7c125e6490b40b53b090f55ff9b5634bc2c2572c
   docs/models/modelconversation.md:
     id: 497521ee9bd6
     last_write_checksum: sha1:aea6f51b6276c5e36447c828e78a30367f15a978
@@ -1792,8 +1792,8 @@ trackedFiles:
     pristine_git_object: d6c6547d7895e53be15a0cce46b6524178acc3bc
   docs/models/reasoningeffort.md:
     id: c8fd630d3f07
-    last_write_checksum: sha1:1419a2647967fd29a098941e8ca3d5d874ee6c71
-    pristine_git_object: e0b17c8ba4d4f75b14f7dea9559514bde37ccb89
+    last_write_checksum: sha1:0a4afcf2f35b5a53764b7daae3ea3c5834743312
+    pristine_git_object: 9b418bc3b9819560a9b468571d619e5d2f65dea5
   docs/models/referencechunk.md:
     id: 07895f9debfd
     last_write_checksum: sha1:3d35227a4f7612301fd5f17a445c4c2b712f0bf1
@@ -2296,8 +2296,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:ac9ec8877b23bb3ae3a0e194d80d8ab722604054
-    pristine_git_object: 03ef265bdb484ad28dc5d9813c04d71c3a6bdcdf
+    last_write_checksum: sha1:ef7c427ebe17be1fae10d7f795292dc3dc9650b7
+    pristine_git_object: 98cfeffb65fc4868d835c2510d352a24e4072671
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -2712,8 +2712,8 @@ trackedFiles:
     pristine_git_object: 4cf9d055c3aaee426d99071180ae6de21eb648cf
   src/mistralai/client/models/completionargs.py:
     id: 3db008bcddca
-    last_write_checksum: sha1:b922bb4464d2759c54aa6dd1a4fd82fba5595e9b
-    pristine_git_object: 76c4cf98ccb348c0d806a442ad7e3697b8e79d68
+    last_write_checksum: sha1:1c9918b8b9631471dcee25f6608c026770810a2f
+    pristine_git_object: 57e4840a14602ab11b4018810aae5bc5772a1e5c
   src/mistralai/client/models/completionargsstop.py:
     id: 5f339214501d
     last_write_checksum: sha1:744878976d33423327ea257defeff62073dad920
@@ -3576,8 +3576,8 @@ trackedFiles:
     pristine_git_object: 9b91323e7545d636308064085ca16fc554eac904
   src/mistralai/client/models/modelcapabilities.py:
     id: 64d8a422ea29
-    last_write_checksum: sha1:352a8cf6dfa61eff04e37609272e0b1ab7a5ffee
-    pristine_git_object: 3267c7079218df12d78db6815fb6339fad0c6168
+    last_write_checksum: sha1:fcc03fee877a5a9a11bbcfdfe84cc4c3ee76dfd9
+    pristine_git_object: 2206f9a7e5a42e66bf00e550591c9b09eba56620
   src/mistralai/client/models/modelconversation.py:
     id: fea0a651f888
     last_write_checksum: sha1:46ed83726fd34517bf05bf6fc1204a0134c38a06
@@ -3768,8 +3768,8 @@ trackedFiles:
     pristine_git_object: d4ce43f77c6dd2e6691b04402523bee6b9d21ba6
   src/mistralai/client/models/reasoningeffort.py:
     id: b930a0a20654
-    last_write_checksum: sha1:09493b60af60741211e5321d9350498f017db80a
-    pristine_git_object: e95b8fee4c0f502d9473887fd33f9b8dfb1177ea
+    last_write_checksum: sha1:2dcf48ea45f83012695492d9d97ba1e74674fc8d
+    pristine_git_object: e4dd2a33247f23ad98f3e39802d98df028d65fab
   src/mistralai/client/models/referencechunk.py:
     id: 921acd3a224a
     last_write_checksum: sha1:2534e964c706b886e64fdedfe34b1cbf4cb23e76
@@ -4197,7 +4197,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "function_calling": true, "completion_fim": false, "fine_tuning": false, "vision": false, "ocr": false, "classification": false, "moderation": false, "audio": false, "audio_transcription": false, "audio_transcription_realtime": false, "audio_speech": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
+          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": true, "function_calling": true, "reasoning": false, "completion_fim": false, "fine_tuning": false, "vision": false, "ocr": false, "classification": false, "moderation": false, "audio": false, "audio_transcription": false, "audio_transcription_realtime": false, "audio_speech": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
         "422":
           application/json: {}
     userExample:
@@ -4206,7 +4206,7 @@ examples:
           model_id: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": false, "function_calling": false, "completion_fim": false, "fine_tuning": false, "vision": false, "ocr": false, "classification": false, "moderation": false, "audio": false, "audio_transcription": false, "audio_transcription_realtime": false, "audio_speech": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
+          application/json: {"id": "<id>", "object": "model", "owned_by": "mistralai", "capabilities": {"completion_chat": false, "function_calling": false, "reasoning": false, "completion_fim": false, "fine_tuning": false, "vision": false, "ocr": false, "classification": false, "moderation": false, "audio": false, "audio_transcription": false, "audio_transcription_realtime": false, "audio_speech": false}, "max_context_length": 32768, "type": "fine-tuned", "job": "Product Markets Facilitator", "root": "<value>", "archived": false}
   delete_model_v1_models__model_id__delete:
     speakeasy-default-delete-model-v1-models-model-id-delete:
       parameters:
@@ -6111,13 +6111,7 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `mistral.beta.connectors.get_auth_url()`: **Added**
-  * `mistral.chat.complete()`:  `request.reasoning_effort` **Added**
-  * `mistral.chat.stream()`:  `request.reasoning_effort` **Added**
-  * `mistral.agents.complete()`:  `request.reasoning_effort` **Added**
-  * `mistral.agents.stream()`:  `request.reasoning_effort` **Added**
+releaseNotes: "## Python SDK Changes:\n* `mistral.models.list()`:  `response.data[].union(base).capabilities.reasoning` **Added**\n* `mistral.models.retrieve()`:  `response.union(fine-tuned).capabilities.reasoning` **Added**\n* `mistral.beta.conversations.start()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.list()`:  `response.[].union(ModelConversation).completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.get()`:  `response.union(ModelConversation).completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.append()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.restart()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.start_stream()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.append_stream()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.conversations.restart_stream()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.create()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n  *  `response.completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.list()`:  `response.[].completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.get()`:  `response.completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.update()`: \n  *  `request.completion_args.reasoning_effort` **Added**\n  *  `response.completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.update_version()`:  `response.completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.list_versions()`:  `response.[].completion_args.reasoning_effort` **Added**\n* `mistral.beta.agents.get_version()`:  `response.completion_args.reasoning_effort` **Added**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
