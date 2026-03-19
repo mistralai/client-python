@@ -5,9 +5,6 @@ from ..utils.response_format import (
 )
 from pydantic import BaseModel, Field, ValidationError
 
-from mistralai.client.models import ResponseFormat, JSONSchema
-from mistralai.client.types.basemodel import Unset
-
 import unittest
 
 
@@ -55,15 +52,14 @@ mathdemo_strict_schema = mathdemo_schema.copy()
 mathdemo_strict_schema["$defs"]["Explanation"]["additionalProperties"] = False # type: ignore
 mathdemo_strict_schema["additionalProperties"] = False
 
-mathdemo_response_format = ResponseFormat(
-    type="json_schema",
-    json_schema=JSONSchema(
-        name="MathDemonstration",
-        schema_definition=mathdemo_strict_schema,
-        description=Unset(),
-        strict=True,
-    ),
-)
+mathdemo_response_format = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "MathDemonstration",
+        "schema": mathdemo_strict_schema,
+        "strict": True,
+    },
+}
 
 
 class TestResponseFormat(unittest.TestCase):
@@ -220,10 +216,10 @@ class TestResponseFormat(unittest.TestCase):
         # Should not raise ValueError
         result = response_format_from_pydantic_model(ModelWithConstraints)
 
-        # Verify it returns a valid ResponseFormat
-        self.assertIsInstance(result, ResponseFormat)
-        self.assertEqual(result.type, "json_schema")
-        self.assertIsNotNone(result.json_schema)
+        # Verify it returns a valid response format dict
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result.get("type"), "json_schema")
+        self.assertIsNotNone(result.get("json_schema"))
 
     def test_rec_strict_json_schema_with_invalid_type(self):
         """Test that rec_strict_json_schema raises ValueError for truly invalid types."""
