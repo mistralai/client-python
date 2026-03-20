@@ -7,6 +7,7 @@ from mistralai.client import Mistral
 from mistralai.client.models import (
     AssistantMessage,
     ChatCompletionRequestMessage,
+    ChatCompletionRequestTools1,
     Function,
     Tool,
     ToolMessage,
@@ -48,7 +49,7 @@ names_to_functions = {
     "retrieve_payment_date": functools.partial(retrieve_payment_date, data=data),
 }
 
-tools: list[Tool] = [
+tools: list[ChatCompletionRequestTools1] = [
     Tool(
         function=Function(
             name="retrieve_payment_status",
