@@ -1,12 +1,12 @@
-# BaseFieldDefinitionType
+# TypeEnum
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import BaseFieldDefinitionType
+from mistralai.client.models import TypeEnum
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: BaseFieldDefinitionType = "ENUM"
+value: TypeEnum = "ENUM"
 ```
 
 

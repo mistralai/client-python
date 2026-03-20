@@ -20,9 +20,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import get_discriminator, validate_const
+from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Field, model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -50,15 +50,15 @@ ConversationRequestToolTypedDict = TypeAliasType(
 
 ConversationRequestTool = Annotated[
     Union[
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
-        Annotated[CustomConnector, Tag("connector")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[FunctionTool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        CodeInterpreterTool,
+        CustomConnector,
+        DocumentLibraryTool,
+        FunctionTool,
+        ImageGenerationTool,
+        WebSearchTool,
+        WebSearchPremiumTool,
     ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+    Field(discriminator="type"),
 ]
 
 

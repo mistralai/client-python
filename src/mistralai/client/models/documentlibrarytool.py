@@ -10,19 +10,19 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-DocumentLibraryToolType = Literal["document_library",]
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DocumentLibraryToolTypedDict(TypedDict):
     library_ids: List[str]
     r"""Ids of the library in which to search."""
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
-    type: NotRequired[DocumentLibraryToolType]
+    type: Literal["document_library"]
 
 
 class DocumentLibraryTool(BaseModel):
@@ -31,11 +31,17 @@ class DocumentLibraryTool(BaseModel):
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    type: Optional[DocumentLibraryToolType] = "document_library"
+    type: Annotated[
+        Annotated[
+            Literal["document_library"],
+            AfterValidator(validate_const("document_library")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "document_library"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_configuration", "type"])
+        optional_fields = set(["tool_configuration"])
         nullable_fields = set(["tool_configuration"])
         serialized = handler(self)
         m = {}
@@ -57,3 +63,9 @@ class DocumentLibraryTool(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    DocumentLibraryTool.model_rebuild()
+except NameError:
+    pass

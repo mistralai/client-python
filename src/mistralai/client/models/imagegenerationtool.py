@@ -10,27 +10,33 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-ImageGenerationToolType = Literal["image_generation",]
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ImageGenerationToolTypedDict(TypedDict):
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
-    type: NotRequired[ImageGenerationToolType]
+    type: Literal["image_generation"]
 
 
 class ImageGenerationTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    type: Optional[ImageGenerationToolType] = "image_generation"
+    type: Annotated[
+        Annotated[
+            Literal["image_generation"],
+            AfterValidator(validate_const("image_generation")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "image_generation"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_configuration", "type"])
+        optional_fields = set(["tool_configuration"])
         nullable_fields = set(["tool_configuration"])
         serialized = handler(self)
         m = {}
@@ -52,3 +58,9 @@ class ImageGenerationTool(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    ImageGenerationTool.model_rebuild()
+except NameError:
+    pass

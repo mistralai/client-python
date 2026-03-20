@@ -10,27 +10,30 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-WebSearchToolType = Literal["web_search",]
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WebSearchToolTypedDict(TypedDict):
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
-    type: NotRequired[WebSearchToolType]
+    type: Literal["web_search"]
 
 
 class WebSearchTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    type: Optional[WebSearchToolType] = "web_search"
+    type: Annotated[
+        Annotated[Literal["web_search"], AfterValidator(validate_const("web_search"))],
+        pydantic.Field(alias="type"),
+    ] = "web_search"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_configuration", "type"])
+        optional_fields = set(["tool_configuration"])
         nullable_fields = set(["tool_configuration"])
         serialized = handler(self)
         m = {}
@@ -52,3 +55,9 @@ class WebSearchTool(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    WebSearchTool.model_rebuild()
+except NameError:
+    pass
