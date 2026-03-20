@@ -10,27 +10,33 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
-
-
-CodeInterpreterToolType = Literal["code_interpreter",]
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CodeInterpreterToolTypedDict(TypedDict):
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
-    type: NotRequired[CodeInterpreterToolType]
+    type: Literal["code_interpreter"]
 
 
 class CodeInterpreterTool(BaseModel):
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    type: Optional[CodeInterpreterToolType] = "code_interpreter"
+    type: Annotated[
+        Annotated[
+            Literal["code_interpreter"],
+            AfterValidator(validate_const("code_interpreter")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "code_interpreter"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tool_configuration", "type"])
+        optional_fields = set(["tool_configuration"])
         nullable_fields = set(["tool_configuration"])
         serialized = handler(self)
         m = {}
@@ -52,3 +58,9 @@ class CodeInterpreterTool(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    CodeInterpreterTool.model_rebuild()
+except NameError:
+    pass

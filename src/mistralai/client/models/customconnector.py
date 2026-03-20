@@ -13,14 +13,13 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
 from mistralai.client.utils.unions import parse_open_union
+import pydantic
 from pydantic import ConfigDict, model_serializer
-from pydantic.functional_validators import BeforeValidator
-from typing import Any, Literal, Optional, Union
+from pydantic.functional_validators import AfterValidator, BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
-
-
-CustomConnectorType = Literal["connector",]
 
 
 AuthorizationTypedDict = TypeAliasType(
@@ -60,7 +59,7 @@ Authorization = Annotated[
 
 class CustomConnectorTypedDict(TypedDict):
     connector_id: str
-    type: NotRequired[CustomConnectorType]
+    type: Literal["connector"]
     authorization: NotRequired[Nullable[AuthorizationTypedDict]]
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
 
@@ -68,7 +67,10 @@ class CustomConnectorTypedDict(TypedDict):
 class CustomConnector(BaseModel):
     connector_id: str
 
-    type: Optional[CustomConnectorType] = "connector"
+    type: Annotated[
+        Annotated[Literal["connector"], AfterValidator(validate_const("connector"))],
+        pydantic.Field(alias="type"),
+    ] = "connector"
 
     authorization: OptionalNullable[Authorization] = UNSET
 
@@ -76,7 +78,7 @@ class CustomConnector(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["type", "authorization", "tool_configuration"])
+        optional_fields = set(["authorization", "tool_configuration"])
         nullable_fields = set(["authorization", "tool_configuration"])
         serialized = handler(self)
         m = {}
@@ -98,3 +100,9 @@ class CustomConnector(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    CustomConnector.model_rebuild()
+except NameError:
+    pass

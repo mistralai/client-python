@@ -3,11 +3,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
-from .customconnector import CustomConnector, CustomConnectorTypedDict
-from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
-from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
@@ -18,8 +14,6 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
-from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
-from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -28,8 +22,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import get_discriminator
-import pydantic
-from pydantic import ConfigDict, Discriminator, Tag, model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -68,46 +61,6 @@ AgentsCompletionRequestMessage = Annotated[
 ]
 
 
-AgentsCompletionRequestTools1TypedDict = TypeAliasType(
-    "AgentsCompletionRequestTools1TypedDict",
-    Union[
-        WebSearchToolTypedDict,
-        WebSearchPremiumToolTypedDict,
-        CodeInterpreterToolTypedDict,
-        ImageGenerationToolTypedDict,
-        ToolTypedDict,
-        DocumentLibraryToolTypedDict,
-        CustomConnectorTypedDict,
-    ],
-)
-
-
-AgentsCompletionRequestTools1 = TypeAliasType(
-    "AgentsCompletionRequestTools1",
-    Union[
-        WebSearchTool,
-        WebSearchPremiumTool,
-        CodeInterpreterTool,
-        ImageGenerationTool,
-        Tool,
-        DocumentLibraryTool,
-        CustomConnector,
-    ],
-)
-
-
-AgentsCompletionRequestTools2TypedDict = TypeAliasType(
-    "AgentsCompletionRequestTools2TypedDict",
-    Union[List[AgentsCompletionRequestTools1TypedDict], List[str]],
-)
-
-
-AgentsCompletionRequestTools2 = TypeAliasType(
-    "AgentsCompletionRequestTools2",
-    Union[List[AgentsCompletionRequestTools1], List[str]],
-)
-
-
 AgentsCompletionRequestToolChoiceTypedDict = TypeAliasType(
     "AgentsCompletionRequestToolChoiceTypedDict",
     Union[ToolChoiceTypedDict, ToolChoiceEnum],
@@ -135,7 +88,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
-    tools: NotRequired[Nullable[AgentsCompletionRequestTools2TypedDict]]
+    tools: NotRequired[Nullable[List[ToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
     presence_penalty: NotRequired[float]
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
@@ -153,11 +106,6 @@ class AgentsCompletionRequestTypedDict(TypedDict):
 
 
 class AgentsCompletionRequest(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
-
     messages: List[AgentsCompletionRequestMessage]
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
 
@@ -181,7 +129,7 @@ class AgentsCompletionRequest(BaseModel):
     response_format: Optional[ResponseFormat] = None
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
-    tools: OptionalNullable[AgentsCompletionRequestTools2] = UNSET
+    tools: OptionalNullable[List[Tool]] = UNSET
 
     tool_choice: Optional[AgentsCompletionRequestToolChoice] = None
 
@@ -205,14 +153,6 @@ class AgentsCompletionRequest(BaseModel):
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
 
     guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -254,7 +194,6 @@ class AgentsCompletionRequest(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -267,7 +206,5 @@ class AgentsCompletionRequest(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m
