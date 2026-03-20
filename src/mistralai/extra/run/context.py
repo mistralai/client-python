@@ -243,7 +243,9 @@ class RunContext:
     def response_format(self) -> ResponseFormat:
         if not self.output_format:
             raise RunException("No response format exist for the current RunContext.")
-        return response_format_from_pydantic_model(self.output_format)
+        return ResponseFormat.model_validate(
+            response_format_from_pydantic_model(self.output_format)
+        )
 
 
 async def _validate_run(

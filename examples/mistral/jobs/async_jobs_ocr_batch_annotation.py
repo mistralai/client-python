@@ -29,9 +29,7 @@ def create_ocr_batch_request(custom_id: str, document_url: str) -> dict:
         "custom_id": custom_id,
         "body": {
             "document": {"type": "document_url", "document_url": document_url},
-            "document_annotation_format": response_format.model_dump(
-                by_alias=True, exclude_none=True
-            ),
+            "document_annotation_format": response_format,
             "pages": [0, 1, 2, 3, 4, 5, 6, 7],
             "include_image_base64": False,
         },

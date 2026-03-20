@@ -1,7 +1,7 @@
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 from pydantic import BaseModel
-from mistralai.client.models import JSONSchema, ResponseFormat
+from mistralai.client.models import ResponseFormatTypedDict
 from ._pydantic_helper import rec_strict_json_schema
 
 CustomPydanticModel = TypeVar("CustomPydanticModel", bound=BaseModel)
@@ -9,13 +9,24 @@ CustomPydanticModel = TypeVar("CustomPydanticModel", bound=BaseModel)
 
 def response_format_from_pydantic_model(
     model: type[CustomPydanticModel],
-) -> ResponseFormat:
-    """Generate a strict JSON schema from a pydantic model."""
+) -> ResponseFormatTypedDict:
+    """Generate a strict JSON schema response format from a pydantic model.
+
+    Returns a TypedDict compatible with both the main SDK's and Azure SDK's
+    ResponseFormat / ResponseFormatTypedDict.
+    """
     model_schema = rec_strict_json_schema(model.model_json_schema())
-    json_schema = JSONSchema.model_validate(
-        {"name": model.__name__, "schema": model_schema, "strict": True}
+    return cast(
+        ResponseFormatTypedDict,
+        {
+            "type": "json_schema",
+            "json_schema": {
+                "name": model.__name__,
+                "schema": model_schema,
+                "strict": True,
+            },
+        },
     )
-    return ResponseFormat(type="json_schema", json_schema=json_schema)
 
 
 def pydantic_model_from_json(
