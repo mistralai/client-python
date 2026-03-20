@@ -5,6 +5,7 @@ from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,7 +17,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -50,7 +51,7 @@ class ConversationRestartStreamRequestTypedDict(TypedDict):
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     r"""Custom metadata for the conversation."""
     agent_version: NotRequired[
         Nullable[ConversationRestartStreamRequestAgentVersionTypedDict]
@@ -82,7 +83,7 @@ class ConversationRestartStreamRequest(BaseModel):
 
     guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
     r"""Custom metadata for the conversation."""
 
     agent_version: OptionalNullable[ConversationRestartStreamRequestAgentVersion] = (

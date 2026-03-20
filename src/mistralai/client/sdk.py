@@ -33,6 +33,7 @@ if TYPE_CHECKING:
 class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
+    audio: "Audio"
     models: "Models"
     r"""Model Management API"""
     beta: "Beta"
@@ -52,8 +53,8 @@ class Mistral(BaseSDK):
     r"""Classifiers API."""
     ocr: "Ocr"
     r"""OCR API"""
-    audio: "Audio"
     _sub_sdk_map = {
+        "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
         "beta": ("mistralai.client.beta", "Beta"),
         "files": ("mistralai.client.files", "Files"),
@@ -65,7 +66,6 @@ class Mistral(BaseSDK):
         "embeddings": ("mistralai.client.embeddings", "Embeddings"),
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
-        "audio": ("mistralai.client.audio", "Audio"),
     }
 
     def __init__(

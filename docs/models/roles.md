@@ -1,12 +1,12 @@
-# TypeEnum
+# Roles
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import TypeEnum
+from mistralai.client.models import Roles
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: TypeEnum = "ENUM"
+value: Roles = "system"
 ```
 
 
@@ -14,10 +14,7 @@ value: TypeEnum = "ENUM"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"ENUM"`
-- `"TEXT"`
-- `"INT"`
-- `"FLOAT"`
-- `"BOOL"`
-- `"TIMESTAMP"`
-- `"ARRAY"`
+- `"system"`
+- `"user"`
+- `"assistant"`
+- `"tool"`

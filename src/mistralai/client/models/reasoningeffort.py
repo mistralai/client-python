@@ -2,10 +2,14 @@
 # @generated-id: b930a0a20654
 
 from __future__ import annotations
-from typing import Literal
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-ReasoningEffort = Literal[
-    "none",
-    "high",
+ReasoningEffort = Union[
+    Literal[
+        "none",
+        "high",
+    ],
+    UnrecognizedStr,
 ]

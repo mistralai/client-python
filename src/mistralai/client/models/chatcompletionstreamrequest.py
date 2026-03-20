@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
+from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
@@ -14,6 +18,8 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
+from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
+from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -22,7 +28,8 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, model_serializer
+import pydantic
+from pydantic import ConfigDict, Discriminator, Tag, model_serializer
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -61,6 +68,48 @@ ChatCompletionStreamRequestMessage = Annotated[
 ]
 
 
+ChatCompletionStreamRequestTools1TypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestTools1TypedDict",
+    Union[
+        WebSearchToolTypedDict,
+        WebSearchPremiumToolTypedDict,
+        CodeInterpreterToolTypedDict,
+        ImageGenerationToolTypedDict,
+        ToolTypedDict,
+        DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
+    ],
+)
+
+
+ChatCompletionStreamRequestTools1 = TypeAliasType(
+    "ChatCompletionStreamRequestTools1",
+    Union[
+        WebSearchTool,
+        WebSearchPremiumTool,
+        CodeInterpreterTool,
+        ImageGenerationTool,
+        Tool,
+        DocumentLibraryTool,
+        CustomConnector,
+    ],
+)
+
+
+ChatCompletionStreamRequestTools2TypedDict = TypeAliasType(
+    "ChatCompletionStreamRequestTools2TypedDict",
+    Union[List[ChatCompletionStreamRequestTools1TypedDict], List[str]],
+)
+r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
+
+
+ChatCompletionStreamRequestTools2 = TypeAliasType(
+    "ChatCompletionStreamRequestTools2",
+    Union[List[ChatCompletionStreamRequestTools1], List[str]],
+)
+r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
+
+
 ChatCompletionStreamRequestToolChoiceTypedDict = TypeAliasType(
     "ChatCompletionStreamRequestToolChoiceTypedDict",
     Union[ToolChoiceTypedDict, ToolChoiceEnum],
@@ -93,7 +142,7 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
-    tools: NotRequired[Nullable[List[ToolTypedDict]]]
+    tools: NotRequired[Nullable[ChatCompletionStreamRequestTools2TypedDict]]
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
     tool_choice: NotRequired[ChatCompletionStreamRequestToolChoiceTypedDict]
     r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
@@ -116,6 +165,11 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
 
 
 class ChatCompletionStreamRequest(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
     model: str
     r"""ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions."""
 
@@ -144,7 +198,7 @@ class ChatCompletionStreamRequest(BaseModel):
     response_format: Optional[ResponseFormat] = None
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
-    tools: OptionalNullable[List[Tool]] = UNSET
+    tools: OptionalNullable[ChatCompletionStreamRequestTools2] = UNSET
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
 
     tool_choice: Optional[ChatCompletionStreamRequestToolChoice] = None
@@ -174,6 +228,14 @@ class ChatCompletionStreamRequest(BaseModel):
 
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -219,6 +281,7 @@ class ChatCompletionStreamRequest(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -231,5 +294,7 @@ class ChatCompletionStreamRequest(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
+        for k, v in serialized.items():
+            m[k] = v
 
         return m
