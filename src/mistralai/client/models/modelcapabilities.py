@@ -15,6 +15,7 @@ class ModelCapabilitiesTypedDict(TypedDict):
 
     completion_chat: NotRequired[bool]
     function_calling: NotRequired[bool]
+    reasoning: NotRequired[bool]
     completion_fim: NotRequired[bool]
     fine_tuning: NotRequired[bool]
     vision: NotRequired[bool]
@@ -35,6 +36,8 @@ class ModelCapabilities(BaseModel):
     completion_chat: Optional[bool] = False
 
     function_calling: Optional[bool] = False
+
+    reasoning: Optional[bool] = False
 
     completion_fim: Optional[bool] = False
 
@@ -62,6 +65,7 @@ class ModelCapabilities(BaseModel):
             [
                 "completion_chat",
                 "function_calling",
+                "reasoning",
                 "completion_fim",
                 "fine_tuning",
                 "vision",

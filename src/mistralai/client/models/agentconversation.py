@@ -2,6 +2,7 @@
 # @generated-id: 1b7d73eddf51
 
 from __future__ import annotations
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -14,7 +15,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional, Union
+from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -37,7 +38,7 @@ class AgentConversationTypedDict(TypedDict):
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
     r"""Description of the what the conversation is about."""
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     r"""Custom metadata for the conversation."""
     object: Literal["conversation"]
     agent_version: NotRequired[Nullable[AgentConversationAgentVersionTypedDict]]
@@ -58,7 +59,7 @@ class AgentConversation(BaseModel):
     description: OptionalNullable[str] = UNSET
     r"""Description of the what the conversation is about."""
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
     r"""Custom metadata for the conversation."""
 
     object: Annotated[

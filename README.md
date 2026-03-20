@@ -159,6 +159,8 @@ with Mistral(
         },
     ], stream=False, response_format={
         "type": "text",
+    }, additional_properties={
+
     })
 
     # Handle response
@@ -188,6 +190,8 @@ async def main():
             },
         ], stream=False, response_format={
             "type": "text",
+        }, additional_properties={
+
         })
 
         # Handle response
@@ -267,6 +271,8 @@ with Mistral(
         },
     ], agent_id="<id>", stream=False, response_format={
         "type": "text",
+    }, additional_properties={
+
     })
 
     # Handle response
@@ -296,6 +302,8 @@ async def main():
             },
         ], agent_id="<id>", stream=False, response_format={
             "type": "text",
+        }, additional_properties={
+
         })
 
         # Handle response
@@ -467,10 +475,23 @@ print(res.choices[0].message.content)
 * [complete](docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](docs/sdks/agents/README.md#stream) - Stream Agents completion
 
+### [Audio.Speech](docs/sdks/speech/README.md)
+
+* [complete](docs/sdks/speech/README.md#complete) - Speech
+
 ### [Audio.Transcriptions](docs/sdks/transcriptions/README.md)
 
 * [complete](docs/sdks/transcriptions/README.md#complete) - Create Transcription
 * [stream](docs/sdks/transcriptions/README.md#stream) - Create Streaming Transcription (SSE)
+
+### [Audio.Voices](docs/sdks/voices/README.md)
+
+* [list](docs/sdks/voices/README.md#list) - List all voices
+* [create](docs/sdks/voices/README.md#create) - Create a new voice
+* [delete](docs/sdks/voices/README.md#delete) - Delete a custom voice
+* [update](docs/sdks/voices/README.md#update) - Update voice metadata
+* [get](docs/sdks/voices/README.md#get) - Get voice details
+* [get_sample_audio](docs/sdks/voices/README.md#get_sample_audio) - Get voice sample audio
 
 ### [Batch.Jobs](docs/sdks/batchjobs/README.md)
 
@@ -678,17 +699,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.start_stream(inputs=[
-        {
-            "object": "entry",
-            "type": "function.result",
-            "tool_call_id": "<id>",
-            "result": "<value>",
-        },
-    ], completion_args={
-        "response_format": {
-            "type": "text",
-        },
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
     })
 
     with res as event_stream:
@@ -722,10 +734,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
-        "file_name": "example.file",
-        "content": open("example.file", "rb"),
-    })
+    res = mistral.audio.transcriptions.complete(model="Model X", diarize=False)
 
     # Handle response
     print(res)
@@ -749,11 +758,15 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list(,
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+
+    },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    # Handle response
-    print(res)
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -769,10 +782,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
 
-    # Handle response
-    print(res)
+    })
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Retries [retries] -->
@@ -803,10 +820,14 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.models.list()
+        res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
 
-        # Handle response
-        print(res)
+        })
+
+        with res as event_stream:
+            for event in event_stream:
+                # handle event
+                print(event, flush=True)
 
 
     except errors.MistralError as e:
@@ -837,8 +858,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 61 of 123 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 123 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 68 of 130 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 130 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -869,10 +890,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
 
-    # Handle response
-    print(res)
+    })
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 
@@ -889,10 +914,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
 
-    # Handle response
-    print(res)
+    })
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Server Selection [server] -->
@@ -999,10 +1028,14 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.models.list()
+    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
 
-    # Handle response
-    print(res)
+    })
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
 
 ```
 <!-- End Authentication [security] -->

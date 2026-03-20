@@ -122,7 +122,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.ChatCompletionRequestTools2,
+                models.ChatCompletionRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -143,6 +146,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         safe_prompt: Optional[bool] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -171,6 +175,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -201,7 +206,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.ChatCompletionRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -218,6 +225,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             safe_prompt=safe_prompt,
+            **(additional_properties or {}),
         )
 
         req = self._build_request(
@@ -304,7 +312,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.ChatCompletionRequestTools2,
+                models.ChatCompletionRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -325,6 +336,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         safe_prompt: Optional[bool] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -353,6 +365,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -383,7 +396,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.ChatCompletionRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -400,6 +415,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             safe_prompt=safe_prompt,
+            **(additional_properties or {}),
         )
 
         req = self._build_request_async(
@@ -486,7 +502,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.ChatCompletionStreamRequestTools2,
+                models.ChatCompletionStreamRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -507,6 +526,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         safe_prompt: Optional[bool] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -537,6 +557,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -567,7 +588,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.ChatCompletionStreamRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
@@ -584,6 +607,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             safe_prompt=safe_prompt,
+            **(additional_properties or {}),
         )
 
         req = self._build_request(
@@ -678,7 +702,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.ChatCompletionStreamRequestTools2,
+                models.ChatCompletionStreamRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -699,6 +726,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         safe_prompt: Optional[bool] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -729,6 +757,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -759,7 +788,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.ChatCompletionStreamRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
@@ -776,6 +807,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             safe_prompt=safe_prompt,
+            **(additional_properties or {}),
         )
 
         req = self._build_request_async(

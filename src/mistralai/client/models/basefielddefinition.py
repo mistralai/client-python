@@ -15,7 +15,7 @@ from typing import List, Literal, Union
 from typing_extensions import NotRequired, TypedDict
 
 
-TypeEnum = Union[
+BaseFieldDefinitionType = Union[
     Literal[
         "ENUM",
         "TEXT",
@@ -58,7 +58,7 @@ SupportedOperator = Union[
 class BaseFieldDefinitionTypedDict(TypedDict):
     name: str
     label: str
-    type: TypeEnum
+    type: BaseFieldDefinitionType
     supported_operators: List[SupportedOperator]
     group: NotRequired[Nullable[str]]
 
@@ -68,7 +68,7 @@ class BaseFieldDefinition(BaseModel):
 
     label: str
 
-    type: TypeEnum
+    type: BaseFieldDefinitionType
 
     supported_operators: List[SupportedOperator]
 

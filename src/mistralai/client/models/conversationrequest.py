@@ -10,6 +10,7 @@ from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDi
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
@@ -19,11 +20,11 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import validate_const
+from mistralai.client.utils import get_discriminator, validate_const
 import pydantic
-from pydantic import Field, model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -49,15 +50,15 @@ ConversationRequestToolTypedDict = TypeAliasType(
 
 ConversationRequestTool = Annotated[
     Union[
-        CodeInterpreterTool,
-        CustomConnector,
-        DocumentLibraryTool,
-        FunctionTool,
-        ImageGenerationTool,
-        WebSearchTool,
-        WebSearchPremiumTool,
+        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
+        Annotated[CustomConnector, Tag("connector")],
+        Annotated[DocumentLibraryTool, Tag("document_library")],
+        Annotated[FunctionTool, Tag("function")],
+        Annotated[ImageGenerationTool, Tag("image_generation")],
+        Annotated[WebSearchTool, Tag("web_search")],
+        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
     ],
-    Field(discriminator="type"),
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]
 
 
@@ -82,7 +83,7 @@ class ConversationRequestTypedDict(TypedDict):
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     agent_id: NotRequired[Nullable[str]]
     agent_version: NotRequired[Nullable[ConversationRequestAgentVersionTypedDict]]
     model: NotRequired[Nullable[str]]
@@ -112,7 +113,7 @@ class ConversationRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
 
     agent_id: OptionalNullable[str] = UNSET
 
