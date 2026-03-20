@@ -35,7 +35,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.AgentsCompletionRequestTools2,
+                models.AgentsCompletionRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -55,6 +58,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -80,6 +84,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -107,7 +112,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.AgentsCompletionRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
@@ -124,6 +131,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             agent_id=agent_id,
+            **(additional_properties or {}),
         )
 
         req = self._build_request(
@@ -208,7 +216,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.AgentsCompletionRequestTools2,
+                models.AgentsCompletionRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -228,6 +239,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -253,6 +265,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -280,7 +293,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.AgentsCompletionRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
@@ -297,6 +312,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             agent_id=agent_id,
+            **(additional_properties or {}),
         )
 
         req = self._build_request_async(
@@ -381,7 +397,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.AgentsCompletionStreamRequestTools2,
+                models.AgentsCompletionStreamRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -401,6 +420,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -428,6 +448,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -455,7 +476,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.AgentsCompletionStreamRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),
@@ -472,6 +495,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             agent_id=agent_id,
+            **(additional_properties or {}),
         )
 
         req = self._build_request(
@@ -564,7 +588,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                models.AgentsCompletionStreamRequestTools2,
+                models.AgentsCompletionStreamRequestTools2TypedDict,
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -584,6 +611,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -611,6 +639,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -638,7 +667,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[models.AgentsCompletionStreamRequestTools2]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),
@@ -655,6 +686,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             agent_id=agent_id,
+            **(additional_properties or {}),
         )
 
         req = self._build_request_async(

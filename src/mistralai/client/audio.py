@@ -3,7 +3,9 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
+from mistralai.client.speech import Speech
 from mistralai.client.transcriptions import Transcriptions
+from mistralai.client.voices import Voices
 from typing import Optional
 
 # region imports
@@ -15,8 +17,10 @@ if TYPE_CHECKING:
 
 
 class Audio(BaseSDK):
+    speech: Speech
     transcriptions: Transcriptions
     r"""API for audio transcription."""
+    voices: Voices
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -26,9 +30,11 @@ class Audio(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
+        self.speech = Speech(self.sdk_configuration, parent_ref=self.parent_ref)
         self.transcriptions = Transcriptions(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
+        self.voices = Voices(self.sdk_configuration, parent_ref=self.parent_ref)
 
     # region sdk-class-body
     @property

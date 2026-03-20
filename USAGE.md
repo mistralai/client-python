@@ -20,6 +20,8 @@ with Mistral(
         },
     ], stream=False, response_format={
         "type": "text",
+    }, additional_properties={
+
     })
 
     # Handle response
@@ -49,6 +51,8 @@ async def main():
             },
         ], stream=False, response_format={
             "type": "text",
+        }, additional_properties={
+
         })
 
         # Handle response
@@ -128,6 +132,8 @@ with Mistral(
         },
     ], agent_id="<id>", stream=False, response_format={
         "type": "text",
+    }, additional_properties={
+
     })
 
     # Handle response
@@ -157,6 +163,8 @@ async def main():
             },
         ], agent_id="<id>", stream=False, response_format={
             "type": "text",
+        }, additional_properties={
+
         })
 
         # Handle response
