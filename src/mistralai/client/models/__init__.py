@@ -127,10 +127,6 @@ if TYPE_CHECKING:
         AgentsCompletionRequestStopTypedDict,
         AgentsCompletionRequestToolChoice,
         AgentsCompletionRequestToolChoiceTypedDict,
-        AgentsCompletionRequestTools1,
-        AgentsCompletionRequestTools1TypedDict,
-        AgentsCompletionRequestTools2,
-        AgentsCompletionRequestTools2TypedDict,
         AgentsCompletionRequestTypedDict,
     )
     from .agentscompletionstreamrequest import (
@@ -141,10 +137,6 @@ if TYPE_CHECKING:
         AgentsCompletionStreamRequestStopTypedDict,
         AgentsCompletionStreamRequestToolChoice,
         AgentsCompletionStreamRequestToolChoiceTypedDict,
-        AgentsCompletionStreamRequestTools1,
-        AgentsCompletionStreamRequestTools1TypedDict,
-        AgentsCompletionStreamRequestTools2,
-        AgentsCompletionStreamRequestTools2TypedDict,
         AgentsCompletionStreamRequestTypedDict,
     )
     from .annotations import Annotations, AnnotationsTypedDict, Audience
@@ -176,9 +168,9 @@ if TYPE_CHECKING:
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
-        BaseFieldDefinitionType,
         BaseFieldDefinitionTypedDict,
         SupportedOperator,
+        TypeEnum,
     )
     from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .basetaskstatus import BaseTaskStatus
@@ -196,15 +188,10 @@ if TYPE_CHECKING:
         ChatClassificationRequest,
         ChatClassificationRequestTypedDict,
     )
-    from .chatcompletionchoice_union import (
-        ChatCompletionChoice1,
-        ChatCompletionChoice1TypedDict,
-        ChatCompletionChoice2,
-        ChatCompletionChoice2TypedDict,
-        ChatCompletionChoiceFinishReason1,
-        ChatCompletionChoiceFinishReason2,
-        ChatCompletionChoiceUnion,
-        ChatCompletionChoiceUnionTypedDict,
+    from .chatcompletionchoice import (
+        ChatCompletionChoice,
+        ChatCompletionChoiceFinishReason,
+        ChatCompletionChoiceTypedDict,
     )
     from .chatcompletionevent import (
         ChatCompletionEvent,
@@ -226,10 +213,6 @@ if TYPE_CHECKING:
         ChatCompletionRequestStopTypedDict,
         ChatCompletionRequestToolChoice,
         ChatCompletionRequestToolChoiceTypedDict,
-        ChatCompletionRequestTools1,
-        ChatCompletionRequestTools1TypedDict,
-        ChatCompletionRequestTools2,
-        ChatCompletionRequestTools2TypedDict,
         ChatCompletionRequestTypedDict,
     )
     from .chatcompletionresponse import (
@@ -244,10 +227,6 @@ if TYPE_CHECKING:
         ChatCompletionStreamRequestStopTypedDict,
         ChatCompletionStreamRequestToolChoice,
         ChatCompletionStreamRequestToolChoiceTypedDict,
-        ChatCompletionStreamRequestTools1,
-        ChatCompletionStreamRequestTools1TypedDict,
-        ChatCompletionStreamRequestTools2,
-        ChatCompletionStreamRequestTools2TypedDict,
         ChatCompletionStreamRequestTypedDict,
     )
     from .chatmoderationrequest import (
@@ -308,11 +287,7 @@ if TYPE_CHECKING:
         ClassifierTrainingParameters,
         ClassifierTrainingParametersTypedDict,
     )
-    from .codeinterpretertool import (
-        CodeInterpreterTool,
-        CodeInterpreterToolType,
-        CodeInterpreterToolTypedDict,
-    )
+    from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
     from .completionargs import CompletionArgs, CompletionArgsTypedDict
     from .completionargsstop import CompletionArgsStop, CompletionArgsStopTypedDict
     from .completionchunk import CompletionChunk, CompletionChunkTypedDict
@@ -534,7 +509,6 @@ if TYPE_CHECKING:
         Authorization,
         AuthorizationTypedDict,
         CustomConnector,
-        CustomConnectorType,
         CustomConnectorTypedDict,
         UnknownAuthorization,
     )
@@ -579,11 +553,7 @@ if TYPE_CHECKING:
         DeltaMessageTypedDict,
     )
     from .document import Document, DocumentTypedDict
-    from .documentlibrarytool import (
-        DocumentLibraryTool,
-        DocumentLibraryToolType,
-        DocumentLibraryToolTypedDict,
-    )
+    from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
     from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
     from .embeddedresource import (
@@ -813,11 +783,7 @@ if TYPE_CHECKING:
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .imagecontent import ImageContent, ImageContentTypedDict
     from .imagedetail import ImageDetail
-    from .imagegenerationtool import (
-        ImageGenerationTool,
-        ImageGenerationToolType,
-        ImageGenerationToolTypedDict,
-    )
+    from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
         ImageURLChunk,
@@ -1535,12 +1501,10 @@ if TYPE_CHECKING:
     )
     from .websearchpremiumtool import (
         WebSearchPremiumTool,
-        WebSearchPremiumToolType,
         WebSearchPremiumToolTypedDict,
     )
     from .websearchtool import (
         WebSearchTool,
-        WebSearchToolType,
         WebSearchToolTypedDict,
     )  # Pydantic models with forward references
 FilterGroup.model_rebuild()
@@ -1615,10 +1579,6 @@ __all__ = [
     "AgentsCompletionRequestStopTypedDict",
     "AgentsCompletionRequestToolChoice",
     "AgentsCompletionRequestToolChoiceTypedDict",
-    "AgentsCompletionRequestTools1",
-    "AgentsCompletionRequestTools1TypedDict",
-    "AgentsCompletionRequestTools2",
-    "AgentsCompletionRequestTools2TypedDict",
     "AgentsCompletionRequestTypedDict",
     "AgentsCompletionStreamRequest",
     "AgentsCompletionStreamRequestMessage",
@@ -1627,10 +1587,6 @@ __all__ = [
     "AgentsCompletionStreamRequestStopTypedDict",
     "AgentsCompletionStreamRequestToolChoice",
     "AgentsCompletionStreamRequestToolChoiceTypedDict",
-    "AgentsCompletionStreamRequestTools1",
-    "AgentsCompletionStreamRequestTools1TypedDict",
-    "AgentsCompletionStreamRequestTools2",
-    "AgentsCompletionStreamRequestTools2TypedDict",
     "AgentsCompletionStreamRequestTypedDict",
     "And",
     "AndTypedDict",
@@ -1667,7 +1623,6 @@ __all__ = [
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
-    "BaseFieldDefinitionType",
     "BaseFieldDefinitionTypedDict",
     "BaseModelCard",
     "BaseModelCardTypedDict",
@@ -1686,14 +1641,9 @@ __all__ = [
     "CampaignTypedDict",
     "ChatClassificationRequest",
     "ChatClassificationRequestTypedDict",
-    "ChatCompletionChoice1",
-    "ChatCompletionChoice1TypedDict",
-    "ChatCompletionChoice2",
-    "ChatCompletionChoice2TypedDict",
-    "ChatCompletionChoiceFinishReason1",
-    "ChatCompletionChoiceFinishReason2",
-    "ChatCompletionChoiceUnion",
-    "ChatCompletionChoiceUnionTypedDict",
+    "ChatCompletionChoice",
+    "ChatCompletionChoiceFinishReason",
+    "ChatCompletionChoiceTypedDict",
     "ChatCompletionEvent",
     "ChatCompletionEventExtraFields",
     "ChatCompletionEventExtraFieldsTypedDict",
@@ -1709,10 +1659,6 @@ __all__ = [
     "ChatCompletionRequestStopTypedDict",
     "ChatCompletionRequestToolChoice",
     "ChatCompletionRequestToolChoiceTypedDict",
-    "ChatCompletionRequestTools1",
-    "ChatCompletionRequestTools1TypedDict",
-    "ChatCompletionRequestTools2",
-    "ChatCompletionRequestTools2TypedDict",
     "ChatCompletionRequestTypedDict",
     "ChatCompletionResponse",
     "ChatCompletionResponseTypedDict",
@@ -1723,10 +1669,6 @@ __all__ = [
     "ChatCompletionStreamRequestStopTypedDict",
     "ChatCompletionStreamRequestToolChoice",
     "ChatCompletionStreamRequestToolChoiceTypedDict",
-    "ChatCompletionStreamRequestTools1",
-    "ChatCompletionStreamRequestTools1TypedDict",
-    "ChatCompletionStreamRequestTools2",
-    "ChatCompletionStreamRequestTools2TypedDict",
     "ChatCompletionStreamRequestTypedDict",
     "ChatModerationRequest",
     "ChatModerationRequestInputs1",
@@ -1767,7 +1709,6 @@ __all__ = [
     "ClassifierTrainingParameters",
     "ClassifierTrainingParametersTypedDict",
     "CodeInterpreterTool",
-    "CodeInterpreterToolType",
     "CodeInterpreterToolTypedDict",
     "CompletionArgs",
     "CompletionArgsStop",
@@ -1915,7 +1856,6 @@ __all__ = [
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
     "CustomConnector",
-    "CustomConnectorType",
     "CustomConnectorTypedDict",
     "Dataset",
     "DatasetImportTask",
@@ -1949,7 +1889,6 @@ __all__ = [
     "DeltaMessageTypedDict",
     "Document",
     "DocumentLibraryTool",
-    "DocumentLibraryToolType",
     "DocumentLibraryToolTypedDict",
     "DocumentTextContent",
     "DocumentTextContentTypedDict",
@@ -2111,7 +2050,6 @@ __all__ = [
     "ImageContentTypedDict",
     "ImageDetail",
     "ImageGenerationTool",
-    "ImageGenerationToolType",
     "ImageGenerationToolTypedDict",
     "ImageURL",
     "ImageURLChunk",
@@ -2558,6 +2496,7 @@ __all__ = [
     "TranscriptionStreamSegmentDeltaTypedDict",
     "TranscriptionStreamTextDelta",
     "TranscriptionStreamTextDeltaTypedDict",
+    "TypeEnum",
     "UnarchiveModelResponse",
     "UnarchiveModelResponseTypedDict",
     "UnknownAgentTool",
@@ -2638,10 +2577,8 @@ __all__ = [
     "WandbIntegrationResultTypedDict",
     "WandbIntegrationTypedDict",
     "WebSearchPremiumTool",
-    "WebSearchPremiumToolType",
     "WebSearchPremiumToolTypedDict",
     "WebSearchTool",
-    "WebSearchToolType",
     "WebSearchToolTypedDict",
 ]
 
@@ -2714,10 +2651,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentsCompletionRequestStopTypedDict": ".agentscompletionrequest",
     "AgentsCompletionRequestToolChoice": ".agentscompletionrequest",
     "AgentsCompletionRequestToolChoiceTypedDict": ".agentscompletionrequest",
-    "AgentsCompletionRequestTools1": ".agentscompletionrequest",
-    "AgentsCompletionRequestTools1TypedDict": ".agentscompletionrequest",
-    "AgentsCompletionRequestTools2": ".agentscompletionrequest",
-    "AgentsCompletionRequestTools2TypedDict": ".agentscompletionrequest",
     "AgentsCompletionRequestTypedDict": ".agentscompletionrequest",
     "AgentsCompletionStreamRequest": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestMessage": ".agentscompletionstreamrequest",
@@ -2726,10 +2659,6 @@ _dynamic_imports: dict[str, str] = {
     "AgentsCompletionStreamRequestStopTypedDict": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestToolChoice": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestToolChoiceTypedDict": ".agentscompletionstreamrequest",
-    "AgentsCompletionStreamRequestTools1": ".agentscompletionstreamrequest",
-    "AgentsCompletionStreamRequestTools1TypedDict": ".agentscompletionstreamrequest",
-    "AgentsCompletionStreamRequestTools2": ".agentscompletionstreamrequest",
-    "AgentsCompletionStreamRequestTools2TypedDict": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestTypedDict": ".agentscompletionstreamrequest",
     "Annotations": ".annotations",
     "AnnotationsTypedDict": ".annotations",
@@ -2759,9 +2688,9 @@ _dynamic_imports: dict[str, str] = {
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
-    "BaseFieldDefinitionType": ".basefielddefinition",
     "BaseFieldDefinitionTypedDict": ".basefielddefinition",
     "SupportedOperator": ".basefielddefinition",
+    "TypeEnum": ".basefielddefinition",
     "BaseModelCard": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
     "BaseTaskStatus": ".basetaskstatus",
@@ -2779,14 +2708,9 @@ _dynamic_imports: dict[str, str] = {
     "CampaignTypedDict": ".campaign",
     "ChatClassificationRequest": ".chatclassificationrequest",
     "ChatClassificationRequestTypedDict": ".chatclassificationrequest",
-    "ChatCompletionChoice1": ".chatcompletionchoice_union",
-    "ChatCompletionChoice1TypedDict": ".chatcompletionchoice_union",
-    "ChatCompletionChoice2": ".chatcompletionchoice_union",
-    "ChatCompletionChoice2TypedDict": ".chatcompletionchoice_union",
-    "ChatCompletionChoiceFinishReason1": ".chatcompletionchoice_union",
-    "ChatCompletionChoiceFinishReason2": ".chatcompletionchoice_union",
-    "ChatCompletionChoiceUnion": ".chatcompletionchoice_union",
-    "ChatCompletionChoiceUnionTypedDict": ".chatcompletionchoice_union",
+    "ChatCompletionChoice": ".chatcompletionchoice",
+    "ChatCompletionChoiceFinishReason": ".chatcompletionchoice",
+    "ChatCompletionChoiceTypedDict": ".chatcompletionchoice",
     "ChatCompletionEvent": ".chatcompletionevent",
     "ChatCompletionEventExtraFields": ".chatcompletionevent",
     "ChatCompletionEventExtraFieldsTypedDict": ".chatcompletionevent",
@@ -2802,10 +2726,6 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionRequestStopTypedDict": ".chatcompletionrequest",
     "ChatCompletionRequestToolChoice": ".chatcompletionrequest",
     "ChatCompletionRequestToolChoiceTypedDict": ".chatcompletionrequest",
-    "ChatCompletionRequestTools1": ".chatcompletionrequest",
-    "ChatCompletionRequestTools1TypedDict": ".chatcompletionrequest",
-    "ChatCompletionRequestTools2": ".chatcompletionrequest",
-    "ChatCompletionRequestTools2TypedDict": ".chatcompletionrequest",
     "ChatCompletionRequestTypedDict": ".chatcompletionrequest",
     "ChatCompletionResponse": ".chatcompletionresponse",
     "ChatCompletionResponseTypedDict": ".chatcompletionresponse",
@@ -2816,10 +2736,6 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionStreamRequestStopTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolChoice": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolChoiceTypedDict": ".chatcompletionstreamrequest",
-    "ChatCompletionStreamRequestTools1": ".chatcompletionstreamrequest",
-    "ChatCompletionStreamRequestTools1TypedDict": ".chatcompletionstreamrequest",
-    "ChatCompletionStreamRequestTools2": ".chatcompletionstreamrequest",
-    "ChatCompletionStreamRequestTools2TypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestTypedDict": ".chatcompletionstreamrequest",
     "ChatModerationRequest": ".chatmoderationrequest",
     "ChatModerationRequestInputs1": ".chatmoderationrequest",
@@ -2862,7 +2778,6 @@ _dynamic_imports: dict[str, str] = {
     "ClassifierTrainingParameters": ".classifiertrainingparameters",
     "ClassifierTrainingParametersTypedDict": ".classifiertrainingparameters",
     "CodeInterpreterTool": ".codeinterpretertool",
-    "CodeInterpreterToolType": ".codeinterpretertool",
     "CodeInterpreterToolTypedDict": ".codeinterpretertool",
     "CompletionArgs": ".completionargs",
     "CompletionArgsTypedDict": ".completionargs",
@@ -3020,7 +2935,6 @@ _dynamic_imports: dict[str, str] = {
     "Authorization": ".customconnector",
     "AuthorizationTypedDict": ".customconnector",
     "CustomConnector": ".customconnector",
-    "CustomConnectorType": ".customconnector",
     "CustomConnectorTypedDict": ".customconnector",
     "UnknownAuthorization": ".customconnector",
     "Dataset": ".dataset",
@@ -3056,7 +2970,6 @@ _dynamic_imports: dict[str, str] = {
     "Document": ".document",
     "DocumentTypedDict": ".document",
     "DocumentLibraryTool": ".documentlibrarytool",
-    "DocumentLibraryToolType": ".documentlibrarytool",
     "DocumentLibraryToolTypedDict": ".documentlibrarytool",
     "DocumentTextContent": ".documenttextcontent",
     "DocumentTextContentTypedDict": ".documenttextcontent",
@@ -3216,7 +3129,6 @@ _dynamic_imports: dict[str, str] = {
     "ImageContentTypedDict": ".imagecontent",
     "ImageDetail": ".imagedetail",
     "ImageGenerationTool": ".imagegenerationtool",
-    "ImageGenerationToolType": ".imagegenerationtool",
     "ImageGenerationToolTypedDict": ".imagegenerationtool",
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
@@ -3731,10 +3643,8 @@ _dynamic_imports: dict[str, str] = {
     "WandbIntegrationResult": ".wandbintegrationresult",
     "WandbIntegrationResultTypedDict": ".wandbintegrationresult",
     "WebSearchPremiumTool": ".websearchpremiumtool",
-    "WebSearchPremiumToolType": ".websearchpremiumtool",
     "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
     "WebSearchTool": ".websearchtool",
-    "WebSearchToolType": ".websearchtool",
     "WebSearchToolTypedDict": ".websearchtool",
 }
 

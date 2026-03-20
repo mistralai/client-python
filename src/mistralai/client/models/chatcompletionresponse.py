@@ -2,10 +2,7 @@
 # @generated-id: 669d996b8e82
 
 from __future__ import annotations
-from .chatcompletionchoice_union import (
-    ChatCompletionChoiceUnion,
-    ChatCompletionChoiceUnionTypedDict,
-)
+from .chatcompletionchoice import ChatCompletionChoice, ChatCompletionChoiceTypedDict
 from .usageinfo import UsageInfo, UsageInfoTypedDict
 from mistralai.client.types import BaseModel
 from typing import List
@@ -18,7 +15,7 @@ class ChatCompletionResponseTypedDict(TypedDict):
     model: str
     usage: UsageInfoTypedDict
     created: int
-    choices: List[ChatCompletionChoiceUnionTypedDict]
+    choices: List[ChatCompletionChoiceTypedDict]
 
 
 class ChatCompletionResponse(BaseModel):
@@ -32,4 +29,4 @@ class ChatCompletionResponse(BaseModel):
 
     created: int
 
-    choices: List[ChatCompletionChoiceUnion]
+    choices: List[ChatCompletionChoice]
