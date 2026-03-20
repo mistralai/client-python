@@ -489,6 +489,15 @@ wheels = [
 ]
 
 [[package]]
+name = "jsonpath-python"
+version = "1.1.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/db/2f4ecc24da35c6142b39c353d5b7c16eef955cc94b35a48d3fa47996d7c3/jsonpath_python-1.1.5.tar.gz", hash = "sha256:ceea2efd9e56add09330a2c9631ea3d55297b9619348c1055e5bfb9cb0b8c538", size = 87352, upload-time = "2026-03-17T06:16:40.597Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/50/1a313fb700526b134c71eb8a225d8b83be0385dbb0204337b4379c698cef/jsonpath_python-1.1.5-py3-none-any.whl", hash = "sha256:a60315404d70a65e76c9a782c84e50600480221d94a58af47b7b4d437351cb4b", size = 14090, upload-time = "2026-03-17T06:16:39.152Z" },
+]
+
+[[package]]
 name = "jsonschema"
 version = "4.25.1"
 source = { registry = "https://pypi.org/simple" }
@@ -556,6 +565,7 @@ source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },
     { name = "httpx" },
+    { name = "jsonpath-python" },
     { name = "opentelemetry-api" },
     { name = "opentelemetry-semantic-conventions" },
     { name = "pydantic" },
@@ -607,6 +617,7 @@ requires-dist = [
     { name = "google-auth", marker = "extra == 'gcp'", specifier = ">=2.27.0" },
     { name = "griffe", marker = "extra == 'agents'", specifier = ">=1.7.3,<2.0" },
     { name = "httpx", specifier = ">=0.28.1" },
+    { name = "jsonpath-python", specifier = ">=1.0.6" },
     { name = "mcp", marker = "extra == 'agents'", specifier = ">=1.0,<2.0" },
     { name = "opentelemetry-api", specifier = ">=1.33.1,<2.0.0" },
     { name = "opentelemetry-semantic-conventions", specifier = ">=0.60b1,<0.61" },
