@@ -512,6 +512,7 @@ print(res.choices[0].message.content)
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
+* [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get](docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](docs/sdks/connectors/README.md#update) - Update a connector.
 * [delete](docs/sdks/connectors/README.md#delete) - Delete a connector.
@@ -850,8 +851,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 68 of 130 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 130 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 69 of 131 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 131 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
