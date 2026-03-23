@@ -10,6 +10,7 @@
 * [list](#list) - List all connectors.
 * [get_auth_url](#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](#call_tool) - Call Connector Tool
+* [list_tools](#list_tools) - List tools for a connector.
 * [get](#get) - Get a connector.
 * [update](#update) - Update a connector.
 * [delete](#delete) - Delete a connector.
@@ -182,6 +183,51 @@ with Mistral(
 ### Response
 
 **[models.ConnectorToolCallResponse](../../models/connectortoolcallresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## list_tools
+
+List all tools available for an MCP connector.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_list_tools_v1" method="get" path="/v1/connectors/{connector_id_or_name}/tools" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.list_tools(connector_id_or_name="<value>", page=1, page_size=100, refresh=False, pretty=False)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `connector_id_or_name`                                                                           | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `page`                                                                                           | *Optional[int]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `page_size`                                                                                      | *Optional[int]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `refresh`                                                                                        | *Optional[bool]*                                                                                 | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `pretty`                                                                                         | *Optional[bool]*                                                                                 | :heavy_minus_sign:                                                                               | Return a simplified payload with only name, description, annotations, and a compact inputSchema. |
+| `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
+
+### Response
+
+**[models.ResponseConnectorListToolsV12](../../models/responseconnectorlisttoolsv12.md)**
 
 ### Errors
 
