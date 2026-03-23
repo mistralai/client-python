@@ -1,0 +1,230 @@
+# Workflows.Events
+
+## Overview
+
+### Available Operations
+
+* [receive_workflow_event](#receive_workflow_event) - Receive Workflow Event
+* [receive_workflow_events_batch](#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [get_stream_events](#get_stream_events) - Get Stream Events
+* [get_workflow_events](#get_workflow_events) - Get Workflow Events
+
+## receive_workflow_event
+
+Receive workflow events from workers.
+
+Events are published to NATS for real-time streaming and persisted in the database.
+
+For shared workers, the actual execution owner is resolved from the execution record,
+ensuring events are streamed to the correct user's namespace.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="receive_workflow_event_v1_workflows_events_post" method="post" path="/v1/workflows/events" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.events.receive_workflow_event(event={
+        "event_id": "<id>",
+        "root_workflow_exec_id": "<id>",
+        "workflow_exec_id": "<id>",
+        "workflow_run_id": "<id>",
+        "workflow_name": "<value>",
+        "event_type": "CUSTOM_TASK_STARTED",
+        "attributes": {
+            "custom_task_id": "<id>",
+            "custom_task_type": "<value>",
+        },
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `event`                                                                       | [models.WorkflowEventRequestEvent](../../models/workfloweventrequestevent.md) | :heavy_check_mark:                                                            | The workflow event payload.                                                   |
+| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
+
+### Response
+
+**[models.WorkflowEventResponse](../../models/workfloweventresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## receive_workflow_events_batch
+
+Receive multiple workflow events from workers in a single batch.
+
+Events are published to NATS for real-time streaming and persisted in the database.
+This endpoint processes events sequentially to maintain ordering guarantees.
+
+For shared workers, the actual execution owner is resolved from the execution record,
+ensuring events are streamed to the correct user's namespace.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="receive_workflow_events_batch_v1_workflows_events_batch_post" method="post" path="/v1/workflows/events/batch" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.events.receive_workflow_events_batch(events=[
+        {
+            "event_id": "<id>",
+            "root_workflow_exec_id": "<id>",
+            "workflow_exec_id": "<id>",
+            "workflow_run_id": "<id>",
+            "workflow_name": "<value>",
+            "event_type": "WORKFLOW_EXECUTION_STARTED",
+            "attributes": {
+                "task_id": "<id>",
+                "workflow_name": "<value>",
+                "input": {
+                    "type": "json",
+                    "value": "<value>",
+                },
+            },
+        },
+    ])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `events`                                                                                      | List[[models.WorkflowEventBatchRequestEvent](../../models/workfloweventbatchrequestevent.md)] | :heavy_check_mark:                                                                            | List of workflow events to send.                                                              |
+| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |
+
+### Response
+
+**[models.WorkflowEventBatchResponse](../../models/workfloweventbatchresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_stream_events
+
+Get Stream Events
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_stream_events_v1_workflows_events_stream_get" method="get" path="/v1/workflows/events/stream" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.events.get_stream_events(scope="*", activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `scope`                                                             | [Optional[models.Scope]](../../models/scope.md)                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `activity_name`                                                     | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `activity_id`                                                       | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `workflow_name`                                                     | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `workflow_exec_id`                                                  | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `root_workflow_exec_id`                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `parent_workflow_exec_id`                                           | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `stream`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `start_seq`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `metadata_filters`                                                  | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `workflow_event_types`                                              | List[[models.WorkflowEventType](../../models/workfloweventtype.md)] | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `last_event_id`                                                     | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[Union[eventstreaming.EventStream[models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody], eventstreaming.EventStreamAsync[models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody]]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_workflow_events
+
+Get Workflow Events
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_workflow_events_v1_workflows_events_list_get" method="get" path="/v1/workflows/events/list" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.events.get_workflow_events(limit=100)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `root_workflow_exec_id`                                                | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | Execution ID of the root workflow that initiated this execution chain. |
+| `workflow_exec_id`                                                     | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | Execution ID of the workflow that emitted this event.                  |
+| `workflow_run_id`                                                      | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | Run ID of the workflow that emitted this event.                        |
+| `limit`                                                                | *Optional[int]*                                                        | :heavy_minus_sign:                                                     | Maximum number of events to return.                                    |
+| `cursor`                                                               | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | Cursor for pagination.                                                 |
+| `retries`                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)       | :heavy_minus_sign:                                                     | Configuration to override the default retry behavior of the client.    |
+
+### Response
+
+**[models.ListWorkflowEventResponse](../../models/listworkfloweventresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |

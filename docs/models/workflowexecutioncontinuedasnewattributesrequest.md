@@ -1,0 +1,13 @@
+# WorkflowExecutionContinuedAsNewAttributesRequest
+
+Attributes for workflow execution continued-as-new events.
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `task_id`                                                                                      | *str*                                                                                          | :heavy_check_mark:                                                                             | Unique identifier for the task within the workflow execution.                                  |
+| `new_execution_run_id`                                                                         | *str*                                                                                          | :heavy_check_mark:                                                                             | The run ID of the new workflow execution that continues this workflow.                         |
+| `workflow_name`                                                                                | *str*                                                                                          | :heavy_check_mark:                                                                             | The registered name of the continued workflow.                                                 |
+| `input`                                                                                        | [models.JSONPayloadRequest](../models/jsonpayloadrequest.md)                                   | :heavy_check_mark:                                                                             | A payload containing arbitrary JSON data.<br/><br/>Used for complete state snapshots or final results. |
