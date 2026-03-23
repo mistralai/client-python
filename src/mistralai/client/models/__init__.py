@@ -344,6 +344,14 @@ if TYPE_CHECKING:
         ConnectorGetV1Request,
         ConnectorGetV1RequestTypedDict,
     )
+    from .connector_list_tools_v1op import (
+        ConnectorListToolsV1Request,
+        ConnectorListToolsV1RequestTypedDict,
+        ResponseConnectorListToolsV11,
+        ResponseConnectorListToolsV11TypedDict,
+        ResponseConnectorListToolsV12,
+        ResponseConnectorListToolsV12TypedDict,
+    )
     from .connector_list_v1op import (
         ConnectorListV1Request,
         ConnectorListV1RequestTypedDict,
@@ -1056,6 +1064,9 @@ if TYPE_CHECKING:
     )
     from .listsharingresponse import ListSharingResponse, ListSharingResponseTypedDict
     from .mcpservericon import MCPServerIcon, MCPServerIconTypedDict
+    from .mcptool import MCPTool, MCPToolTypedDict
+    from .mcptoolmeta import MCPToolMeta, MCPToolMetaTypedDict
+    from .mcpuitoolmeta import MCPUIToolMeta, MCPUIToolMetaTypedDict, Visibility
     from .messageentries import MessageEntries, MessageEntriesTypedDict
     from .messageinputcontentchunks import (
         MessageInputContentChunks,
@@ -1326,6 +1337,7 @@ if TYPE_CHECKING:
     from .thinkchunk import ThinkChunk, ThinkChunkTypedDict, Thinking, ThinkingTypedDict
     from .timestampgranularity import TimestampGranularity
     from .tool import Tool, ToolTypedDict
+    from .toolannotations import ToolAnnotations, ToolAnnotationsTypedDict
     from .toolcall import ToolCall, ToolCallTypedDict
     from .toolcallconfirmation import (
         Confirmation,
@@ -1335,6 +1347,7 @@ if TYPE_CHECKING:
     from .toolchoice import ToolChoice, ToolChoiceTypedDict
     from .toolchoiceenum import ToolChoiceEnum
     from .toolconfiguration import ToolConfiguration, ToolConfigurationTypedDict
+    from .toolexecution import TaskSupport, ToolExecution, ToolExecutionTypedDict
     from .toolexecutiondeltaevent import (
         ToolExecutionDeltaEvent,
         ToolExecutionDeltaEventName,
@@ -1377,6 +1390,7 @@ if TYPE_CHECKING:
         ToolReferenceChunkToolTypedDict,
         ToolReferenceChunkTypedDict,
     )
+    from .tooltype import ToolType
     from .tooltypes import ToolTypes
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
@@ -1411,6 +1425,8 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDelta,
         TranscriptionStreamTextDeltaTypedDict,
     )
+    from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
+    from .turbinetoolmeta import TurbineToolMeta, TurbineToolMetaTypedDict
     from .unarchivemodelresponse import (
         UnarchiveModelResponse,
         UnarchiveModelResponseTypedDict,
@@ -1751,6 +1767,8 @@ __all__ = [
     "ConnectorGetAuthURLV1RequestTypedDict",
     "ConnectorGetV1Request",
     "ConnectorGetV1RequestTypedDict",
+    "ConnectorListToolsV1Request",
+    "ConnectorListToolsV1RequestTypedDict",
     "ConnectorListV1Request",
     "ConnectorListV1RequestTypedDict",
     "ConnectorTool",
@@ -2211,6 +2229,12 @@ __all__ = [
     "LocTypedDict",
     "MCPServerIcon",
     "MCPServerIconTypedDict",
+    "MCPTool",
+    "MCPToolMeta",
+    "MCPToolMetaTypedDict",
+    "MCPToolTypedDict",
+    "MCPUIToolMeta",
+    "MCPUIToolMetaTypedDict",
     "MessageEntries",
     "MessageEntriesTypedDict",
     "MessageInputContentChunks",
@@ -2364,6 +2388,10 @@ __all__ = [
     "ResourceTypedDict",
     "ResourceVisibility",
     "Response",
+    "ResponseConnectorListToolsV11",
+    "ResponseConnectorListToolsV11TypedDict",
+    "ResponseConnectorListToolsV12",
+    "ResponseConnectorListToolsV12TypedDict",
     "ResponseDoneEvent",
     "ResponseDoneEventTypedDict",
     "ResponseErrorEvent",
@@ -2426,6 +2454,7 @@ __all__ = [
     "SystemMessageContentTypedDict",
     "SystemMessageTypedDict",
     "TableFormat",
+    "TaskSupport",
     "TextChunk",
     "TextChunkTypedDict",
     "TextContent",
@@ -2438,6 +2467,8 @@ __all__ = [
     "ThinkingTypedDict",
     "TimestampGranularity",
     "Tool",
+    "ToolAnnotations",
+    "ToolAnnotationsTypedDict",
     "ToolCall",
     "ToolCallConfirmation",
     "ToolCallConfirmationTypedDict",
@@ -2447,6 +2478,7 @@ __all__ = [
     "ToolChoiceTypedDict",
     "ToolConfiguration",
     "ToolConfigurationTypedDict",
+    "ToolExecution",
     "ToolExecutionDeltaEvent",
     "ToolExecutionDeltaEventName",
     "ToolExecutionDeltaEventNameTypedDict",
@@ -2463,6 +2495,7 @@ __all__ = [
     "ToolExecutionStartedEventName",
     "ToolExecutionStartedEventNameTypedDict",
     "ToolExecutionStartedEventTypedDict",
+    "ToolExecutionTypedDict",
     "ToolFileChunk",
     "ToolFileChunkTool",
     "ToolFileChunkToolTypedDict",
@@ -2475,6 +2508,7 @@ __all__ = [
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkTypedDict",
+    "ToolType",
     "ToolTypedDict",
     "ToolTypes",
     "TrainingFile",
@@ -2496,6 +2530,10 @@ __all__ = [
     "TranscriptionStreamSegmentDeltaTypedDict",
     "TranscriptionStreamTextDelta",
     "TranscriptionStreamTextDeltaTypedDict",
+    "TurbineToolLocale",
+    "TurbineToolLocaleTypedDict",
+    "TurbineToolMeta",
+    "TurbineToolMetaTypedDict",
     "TypeEnum",
     "UnarchiveModelResponse",
     "UnarchiveModelResponseTypedDict",
@@ -2564,6 +2602,7 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
+    "Visibility",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
     "VoiceListResponse",
@@ -2822,6 +2861,12 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetV1Request": ".connector_get_v1op",
     "ConnectorGetV1RequestTypedDict": ".connector_get_v1op",
+    "ConnectorListToolsV1Request": ".connector_list_tools_v1op",
+    "ConnectorListToolsV1RequestTypedDict": ".connector_list_tools_v1op",
+    "ResponseConnectorListToolsV11": ".connector_list_tools_v1op",
+    "ResponseConnectorListToolsV11TypedDict": ".connector_list_tools_v1op",
+    "ResponseConnectorListToolsV12": ".connector_list_tools_v1op",
+    "ResponseConnectorListToolsV12TypedDict": ".connector_list_tools_v1op",
     "ConnectorListV1Request": ".connector_list_v1op",
     "ConnectorListV1RequestTypedDict": ".connector_list_v1op",
     "ConnectorUpdateV1Request": ".connector_update_v1op",
@@ -3302,6 +3347,13 @@ _dynamic_imports: dict[str, str] = {
     "ListSharingResponseTypedDict": ".listsharingresponse",
     "MCPServerIcon": ".mcpservericon",
     "MCPServerIconTypedDict": ".mcpservericon",
+    "MCPTool": ".mcptool",
+    "MCPToolTypedDict": ".mcptool",
+    "MCPToolMeta": ".mcptoolmeta",
+    "MCPToolMetaTypedDict": ".mcptoolmeta",
+    "MCPUIToolMeta": ".mcpuitoolmeta",
+    "MCPUIToolMetaTypedDict": ".mcpuitoolmeta",
+    "Visibility": ".mcpuitoolmeta",
     "MessageEntries": ".messageentries",
     "MessageEntriesTypedDict": ".messageentries",
     "MessageInputContentChunks": ".messageinputcontentchunks",
@@ -3521,6 +3573,8 @@ _dynamic_imports: dict[str, str] = {
     "TimestampGranularity": ".timestampgranularity",
     "Tool": ".tool",
     "ToolTypedDict": ".tool",
+    "ToolAnnotations": ".toolannotations",
+    "ToolAnnotationsTypedDict": ".toolannotations",
     "ToolCall": ".toolcall",
     "ToolCallTypedDict": ".toolcall",
     "Confirmation": ".toolcallconfirmation",
@@ -3531,6 +3585,9 @@ _dynamic_imports: dict[str, str] = {
     "ToolChoiceEnum": ".toolchoiceenum",
     "ToolConfiguration": ".toolconfiguration",
     "ToolConfigurationTypedDict": ".toolconfiguration",
+    "TaskSupport": ".toolexecution",
+    "ToolExecution": ".toolexecution",
+    "ToolExecutionTypedDict": ".toolexecution",
     "ToolExecutionDeltaEvent": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventName": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventNameTypedDict": ".toolexecutiondeltaevent",
@@ -3559,6 +3616,7 @@ _dynamic_imports: dict[str, str] = {
     "ToolReferenceChunkTool": ".toolreferencechunk",
     "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
+    "ToolType": ".tooltype",
     "ToolTypes": ".tooltypes",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
@@ -3580,6 +3638,10 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamSegmentDeltaTypedDict": ".transcriptionstreamsegmentdelta",
     "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
+    "TurbineToolLocale": ".turbinetoollocale",
+    "TurbineToolLocaleTypedDict": ".turbinetoollocale",
+    "TurbineToolMeta": ".turbinetoolmeta",
+    "TurbineToolMetaTypedDict": ".turbinetoolmeta",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
     "UnarchiveModelResponseTypedDict": ".unarchivemodelresponse",
     "UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest": ".update_dataset_record_payload_v1_observability_dataset_records_dataset_record_id_payload_putop",
