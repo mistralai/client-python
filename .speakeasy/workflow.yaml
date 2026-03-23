@@ -9,7 +9,7 @@ sources:
         -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-google-cloud:v2
     mistral-openapi:
         inputs:
-        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:v2
+        -   location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi:antoinehoorelbeke-migrate-workflows-client-core-mistralai-v2
 targets:
     mistralai-azure-sdk:
         target: python
