@@ -4,12 +4,12 @@
 
 ### Available Operations
 
-* [receive_workflow_event](#receive_workflow_event) - Receive Workflow Event
-* [receive_workflow_events_batch](#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [send_event](#send_event) - Receive Workflow Event
+* [send_events_batch](#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](#get_stream_events) - Get Stream Events
 * [get_workflow_events](#get_workflow_events) - Get Workflow Events
 
-## receive_workflow_event
+## send_event
 
 Receive workflow events from workers.
 
@@ -30,7 +30,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.events.receive_workflow_event(event={
+    res = mistral.workflows.events.send_event(event={
         "event_id": "<id>",
         "root_workflow_exec_id": "<id>",
         "workflow_exec_id": "<id>",
@@ -66,7 +66,7 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
-## receive_workflow_events_batch
+## send_events_batch
 
 Receive multiple workflow events from workers in a single batch.
 
@@ -88,7 +88,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.events.receive_workflow_events_batch(events=[
+    res = mistral.workflows.events.send_events_batch(events=[
         {
             "event_id": "<id>",
             "root_workflow_exec_id": "<id>",
