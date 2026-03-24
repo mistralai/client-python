@@ -3,7 +3,8 @@
 
 ## Fields
 
-| Field                              | Type                               | Required                           | Description                        |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| `limit`                            | *Optional[int]*                    | :heavy_minus_sign:                 | Maximum number of voices to return |
-| `offset`                           | *Optional[int]*                    | :heavy_minus_sign:                 | Offset for pagination              |
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `limit`                                                                                        | *Optional[int]*                                                                                | :heavy_minus_sign:                                                                             | Maximum number of voices to return                                                             |
+| `offset`                                                                                       | *Optional[int]*                                                                                | :heavy_minus_sign:                                                                             | Offset for pagination                                                                          |
+| `type`                                                                                         | [Optional[models.ListVoicesV1AudioVoicesGetType]](../models/listvoicesv1audiovoicesgettype.md) | :heavy_minus_sign:                                                                             | Filter the voices between customs and presets                                                  |

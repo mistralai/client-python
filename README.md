@@ -36,6 +36,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Providers' SDKs Example Usage](#providers-sdks-example-usage)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Server-sent event streaming](#server-sent-event-streaming)
+  * [Pagination](#pagination)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -490,6 +491,7 @@ print(res.choices[0].message.content)
 * [list](docs/sdks/batchjobs/README.md#list) - Get Batch Jobs
 * [create](docs/sdks/batchjobs/README.md#create) - Create Batch Job
 * [get](docs/sdks/batchjobs/README.md#get) - Get Batch Job
+* [delete](docs/sdks/batchjobs/README.md#delete) - Delete Batch Job
 * [cancel](docs/sdks/batchjobs/README.md#cancel) - Cancel Batch Job
 
 ### [Beta.Agents](docs/sdks/betaagents/README.md)
@@ -633,6 +635,13 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/embeddings/README.md#create) - Embeddings
 
+### [Events](docs/sdks/events/README.md)
+
+* [receive_workflow_event](docs/sdks/events/README.md#receive_workflow_event) - Receive Workflow Event
+* [receive_workflow_events_batch](docs/sdks/events/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [get_stream_events](docs/sdks/events/README.md#get_stream_events) - Get Stream Events
+* [get_workflow_events](docs/sdks/events/README.md#get_workflow_events) - Get Workflow Events
+
 ### [Files](docs/sdks/files/README.md)
 
 * [upload](docs/sdks/files/README.md#upload) - Upload File
@@ -667,6 +676,63 @@ print(res.choices[0].message.content)
 ### [Ocr](docs/sdks/ocr/README.md)
 
 * [process](docs/sdks/ocr/README.md#process) - OCR
+
+### [Workflows](docs/sdks/workflows/README.md)
+
+* [get_workflows](docs/sdks/workflows/README.md#get_workflows) - Get Workflows
+* [get_workflow_registrations](docs/sdks/workflows/README.md#get_workflow_registrations) - Get Workflow Registrations
+* [execute_workflow](docs/sdks/workflows/README.md#execute_workflow) - Execute Workflow
+* [~~execute_workflow_registration~~](docs/sdks/workflows/README.md#execute_workflow_registration) - Execute Workflow Registration :warning: **Deprecated**
+* [get_workflow](docs/sdks/workflows/README.md#get_workflow) - Get Workflow
+* [update_workflow](docs/sdks/workflows/README.md#update_workflow) - Update Workflow
+* [get_workflow_registration](docs/sdks/workflows/README.md#get_workflow_registration) - Get Workflow Registration
+* [archive_workflow](docs/sdks/workflows/README.md#archive_workflow) - Archive Workflow
+* [unarchive_workflow](docs/sdks/workflows/README.md#unarchive_workflow) - Unarchive Workflow
+
+#### [Workflows.Deployments](docs/sdks/deployments/README.md)
+
+* [list_deployments](docs/sdks/deployments/README.md#list_deployments) - List Deployments
+* [get_deployment](docs/sdks/deployments/README.md#get_deployment) - Get Deployment
+
+#### [Workflows.Events](docs/sdks/workflowsevents/README.md)
+
+* [receive_workflow_event](docs/sdks/workflowsevents/README.md#receive_workflow_event) - Receive Workflow Event
+* [receive_workflow_events_batch](docs/sdks/workflowsevents/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [get_stream_events](docs/sdks/workflowsevents/README.md#get_stream_events) - Get Stream Events
+* [get_workflow_events](docs/sdks/workflowsevents/README.md#get_workflow_events) - Get Workflow Events
+
+#### [Workflows.Executions](docs/sdks/executions/README.md)
+
+* [get_workflow_execution](docs/sdks/executions/README.md#get_workflow_execution) - Get Workflow Execution
+* [get_workflow_execution_history](docs/sdks/executions/README.md#get_workflow_execution_history) - Get Workflow Execution History
+* [signal_workflow_execution](docs/sdks/executions/README.md#signal_workflow_execution) - Signal Workflow Execution
+* [query_workflow_execution](docs/sdks/executions/README.md#query_workflow_execution) - Query Workflow Execution
+* [terminate_workflow_execution](docs/sdks/executions/README.md#terminate_workflow_execution) - Terminate Workflow Execution
+* [batch_terminate_workflow_executions](docs/sdks/executions/README.md#batch_terminate_workflow_executions) - Batch Terminate Workflow Executions
+* [cancel_workflow_execution](docs/sdks/executions/README.md#cancel_workflow_execution) - Cancel Workflow Execution
+* [batch_cancel_workflow_executions](docs/sdks/executions/README.md#batch_cancel_workflow_executions) - Batch Cancel Workflow Executions
+* [reset_workflow](docs/sdks/executions/README.md#reset_workflow) - Reset Workflow
+* [update_workflow_execution](docs/sdks/executions/README.md#update_workflow_execution) - Update Workflow Execution
+* [get_workflow_execution_trace_otel](docs/sdks/executions/README.md#get_workflow_execution_trace_otel) - Get Workflow Execution Trace Otel
+* [get_workflow_execution_trace_summary](docs/sdks/executions/README.md#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
+* [get_workflow_execution_trace_events](docs/sdks/executions/README.md#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
+* [stream](docs/sdks/executions/README.md#stream) - Stream
+
+#### [Workflows.Metrics](docs/sdks/metrics/README.md)
+
+* [get_workflow_metrics](docs/sdks/metrics/README.md#get_workflow_metrics) - Get Workflow Metrics
+
+#### [Workflows.Runs](docs/sdks/runs/README.md)
+
+* [list_runs](docs/sdks/runs/README.md#list_runs) - List Runs
+* [get_run](docs/sdks/runs/README.md#get_run) - Get Run
+* [get_run_history](docs/sdks/runs/README.md#get_run_history) - Get Run History
+
+#### [Workflows.Schedules](docs/sdks/schedules/README.md)
+
+* [get_schedules](docs/sdks/schedules/README.md#get_schedules) - Get Schedules
+* [schedule_workflow](docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
+* [unschedule_workflow](docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -707,6 +773,33 @@ with Mistral(
 [generator]: https://book.pythontips.com/en/latest/generators.html
 [context-manager]: https://book.pythontips.com/en/latest/context_managers.html
 <!-- End Server-sent event streaming [eventstream] -->
+
+<!-- Start Pagination [pagination] -->
+## Pagination
+
+Some of the endpoints in this SDK support pagination. To use pagination, you make your SDK calls as usual, but the
+returned response object will have a `Next` method that can be called to pull down the next group of results. If the
+return value of `Next` is `None`, then there are no more pages to be fetched.
+
+Here's an example of one such pagination call:
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.get_workflows(active_only=False, include_shared=True, limit=50)
+
+    while res is not None:
+        # Handle items
+
+        res = res.next()
+
+```
+<!-- End Pagination [pagination] -->
 
 <!-- Start File uploads [file-upload] -->
 ## File uploads
@@ -851,8 +944,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 69 of 131 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 131 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 104 of 172 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 172 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
