@@ -637,8 +637,8 @@ print(res.choices[0].message.content)
 
 ### [Events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md)
 
-* [receive_workflow_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#receive_workflow_event) - Receive Workflow Event
-* [receive_workflow_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [send_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#send_event) - Receive Workflow Event
+* [send_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#get_workflow_events) - Get Workflow Events
 
@@ -696,8 +696,8 @@ print(res.choices[0].message.content)
 
 #### [Workflows.Events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md)
 
-* [receive_workflow_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#receive_workflow_event) - Receive Workflow Event
-* [receive_workflow_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [send_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#send_event) - Receive Workflow Event
+* [send_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#get_workflow_events) - Get Workflow Events
 

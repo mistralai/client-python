@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 29585bbc18bc53a8009d63f65f55009d
+  docChecksum: 983d9508d55f35f1828673cecddd38ee
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.2.0
-  configChecksum: ed5cc4cf5a87eaacbf1b77366abd2467
+  releaseVersion: 2.2.1
+  configChecksum: d39c00303cffb2a9684327475a8b6933
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: ff07472d-59e0-49a7-9eb9-854e36d9041a
-  pristine_commit_hash: 73fe98c148bae035f53b6dc137c8c9c46e4ebd34
-  pristine_tree_hash: d823dcbfc12c9c3ce48cdb2468aeff689fd89243
+  generation_id: cdf7721b-90c2-420a-a702-85d68dc01550
+  pristine_commit_hash: f8d29036269e1d762a89212ced32ad618934da8e
+  pristine_tree_hash: 4f905c7275c883b36fa5fdff7a5d85e4e4d5e57b
 features:
   python:
     acceptHeaders: 3.0.0
@@ -1094,12 +1094,12 @@ trackedFiles:
     pristine_git_object: 301585b20b8e5c433dbff021782a543c599e6115
   docs/models/embeddingrequest.md:
     id: bebee24421b4
-    last_write_checksum: sha1:087230e81cfbbc539edc7cc1c0a490728276d217
-    pristine_git_object: 71d139cdf5c556a1224d707be70f3fabe032fc27
+    last_write_checksum: sha1:8e2bfa35f55b55f83fa2ebf7bee28cd00cb681d1
+    pristine_git_object: 7269c0551a0c1040693eafdd99e1b8ebe98478a5
   docs/models/embeddingrequestinputs.md:
     id: 6a35f3b1910a
-    last_write_checksum: sha1:f3bf6b89f279f59010124aa402e282c7c691eb03
-    pristine_git_object: a3f82c1c67c726d3ef8e5e5ea5513386acc7c2f4
+    last_write_checksum: sha1:e12ca056fac504e5af06a304d09154d3ecd17919
+    pristine_git_object: 527a089b38b5cd316173ced4dc74a1429c8e4406
   docs/models/embeddingresponse.md:
     id: 31cd0f6b7bb5
     last_write_checksum: sha1:1d7351c68b075aba8e91e53d29bdab3c6dd5c3a2
@@ -3238,12 +3238,12 @@ trackedFiles:
     pristine_git_object: 2c9440f93d68a220c2cb2cf03c5cd656eece3be8
   docs/sdks/embeddings/README.md:
     id: 15b5b04486c1
-    last_write_checksum: sha1:4a279bf9bcd84a9878ef979c78b8b75af3d52f02
-    pristine_git_object: cb207d8be2ca86b00dc797fc06eabd1498adb770
+    last_write_checksum: sha1:76cb4876eebccfd2ab9a10a1b25570477a96a5c1
+    pristine_git_object: eecb5c9e991dcd2fd5c1f0688efe3b64b4c6de3b
   docs/sdks/events/README.md:
     id: cf45a4390b9b
-    last_write_checksum: sha1:9305fbb844865a70722fc3d4354537a5e2939e1c
-    pristine_git_object: 1de37e5c9aad042cacde48d885f16210ea08b817
+    last_write_checksum: sha1:45137ac490479dc39fbfdb62942724c3b1d57140
+    pristine_git_object: 436bb6a31703d248395ac8b8675b2894e975c78c
   docs/sdks/executions/README.md:
     id: 401745b17323
     last_write_checksum: sha1:74e97aa7308bebb4865de66110386f3d863049f2
@@ -3314,8 +3314,8 @@ trackedFiles:
     pristine_git_object: e65383ca453849b3bab58f921f80f5b8e7df7839
   docs/sdks/workflowsevents/README.md:
     id: 514b42269280
-    last_write_checksum: sha1:819db9d9561cc4802f139bbd1dec8045b718866f
-    pristine_git_object: bae0cb908bf2dcc0ddabfc340d929eddaea38c97
+    last_write_checksum: sha1:dd4afb7d9af0f71d9049131227f7da2b135589cb
+    pristine_git_object: b89cde24eef4083057d3c22f947d5e1e0fe90b49
   py.typed:
     id: 258c3ed47ae4
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -3342,8 +3342,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:e0d4cdfdf25c401429c0e9beb40be8846cb2a235
-    pristine_git_object: 0473419e2e46dbf2e975a7fdcc5355d056752cdf
+    last_write_checksum: sha1:9933fec60d6cb6e1a41cbea658b9220b7a550b03
+    pristine_git_object: 0028cefab4f4c1f7642d94aac383cb729b3bb037
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -3414,8 +3414,8 @@ trackedFiles:
     pristine_git_object: 95ea432390fcf4c8c07b3e99c7c1f5776007ce10
   src/mistralai/client/embeddings.py:
     id: f9c17258207e
-    last_write_checksum: sha1:d1610bf12dba8b2f8cb27d2f0aa592594dfe6b3a
-    pristine_git_object: 5d55ffc43c0c98d46e04b238ab23a08d1b9e6a6a
+    last_write_checksum: sha1:0fbf92b59fde3199c770a522ead030f8fa65ff5c
+    pristine_git_object: 5f9d3b9cb611943e509caeda9ddd175e3baee2c3
   src/mistralai/client/errors/__init__.py:
     id: 0b2db51246df
     last_write_checksum: sha1:0032f4eb3501c71fafb8f68113a8c80e677311a4
@@ -3446,8 +3446,8 @@ trackedFiles:
     pristine_git_object: 25b87255a51021079f8ba5cc60b43509e12f9a4d
   src/mistralai/client/events.py:
     id: ac9b961cc70d
-    last_write_checksum: sha1:2b128064a9cf9c1b99552fd2d7ec3e81f9aa6160
-    pristine_git_object: d44c0692278f07df2a1a21bc77f55cfe0ddc65c4
+    last_write_checksum: sha1:cd92fc550a2b4887b247863acfeb77597a2211e7
+    pristine_git_object: 22d3b1a27f696f6d1bb3dd8d4a43c1b3e38d5c27
   src/mistralai/client/executions.py:
     id: 974004d347a2
     last_write_checksum: sha1:6e2247d95aa58732722c58b9ce57cfbf9e669c15
@@ -4242,8 +4242,8 @@ trackedFiles:
     pristine_git_object: 732c4ebe3678563ebcdbafd519f93317261586fb
   src/mistralai/client/models/embeddingrequest.py:
     id: eadbe3f9040c
-    last_write_checksum: sha1:00e4499575e7a8a4a5e879174b7f25a0f522fd8c
-    pristine_git_object: 2ef747d8ba91f824f0ad117d21c5a8487cc7ea80
+    last_write_checksum: sha1:58e517289f8bedea0f04010923e90216e4ee1a57
+    pristine_git_object: 3c6b33ece741e9ee381f8acdefb62cb86cfedb24
   src/mistralai/client/models/embeddingresponse.py:
     id: f7d790e84b65
     last_write_checksum: sha1:9bb53a5a860c8e10d4d504648d84da73068c0a83
@@ -6126,8 +6126,8 @@ trackedFiles:
     pristine_git_object: e2de6524a730c7c0d1877e51dac901e354c4c201
   src/mistralai/client/workflows_events.py:
     id: 6d4f674ce8ef
-    last_write_checksum: sha1:3c9d60fa7c49e547a25ae62b941cae7a5437c21c
-    pristine_git_object: 03df3f78288f2b3263bf1ed5ce7aa3a8d138d0f0
+    last_write_checksum: sha1:7196b5cfb3329b3234cd0a9d85b99dc2c82e5a4d
+    pristine_git_object: 2c6b14ee58712adc3fdc7fd53dbea341fb621722
 examples:
   list_models_v1_models_get:
     speakeasy-default-list-models-v1-models-get:
@@ -8502,7 +8502,7 @@ examples:
           limit: 100
       responses:
         "200":
-          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_IN_PROGRESS", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json_patch", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
+          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_STARTED", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
         "422":
           application/json: {}
   list_deployments_v1_workflows_deployments_get:
