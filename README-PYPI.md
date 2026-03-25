@@ -734,6 +734,10 @@ print(res.choices[0].message.content)
 * [schedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
 * [unschedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
 
+#### [Workflows.Workers](https://github.com/mistralai/client-python/blob/main/docs/sdks/workers/README.md)
+
+* [whoami](https://github.com/mistralai/client-python/blob/main/docs/sdks/workers/README.md#whoami) - Get Worker Info
+
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
@@ -944,8 +948,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 104 of 172 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 172 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 104 of 173 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 173 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
