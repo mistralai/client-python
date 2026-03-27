@@ -462,6 +462,54 @@ class TestOtelTracing(unittest.TestCase):
             ],
         )
 
+    def test_chat_completion_with_cached_prompt_tokens(self):
+        request = ChatCompletionRequest(
+            model="mistral-large-latest",
+            messages=[
+                UserMessage(content="Summarize this document."),
+            ],
+        )
+        response = {
+            "id": "cmpl-cache-001",
+            "object": "chat.completion",
+            "model": "mistral-large-latest",
+            "created": 1700000002,
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": "Here is the summary.",
+                    },
+                    "finish_reason": "stop",
+                }
+            ],
+            "usage": {
+                "prompt_tokens": 42,
+                "completion_tokens": 9,
+                "total_tokens": 51,
+                "prompt_tokens_details": {
+                    "cached_tokens": 12,
+                },
+            },
+        }
+
+        self._run_hook_lifecycle(
+            "chat_completion_v1_chat_completions_post",
+            request,
+            response,
+        )
+        span = self._get_single_span()
+
+        self.assertSpanAttributes(
+            span,
+            {
+                "gen_ai.usage.input_tokens": 42,
+                "gen_ai.usage.output_tokens": 9,
+                "gen_ai.usage.cache_read.input_tokens": 12,
+            },
+        )
+
     # -- Embeddings ------------------------------------------------------------
 
     def test_embeddings(self):
@@ -1440,6 +1488,71 @@ class TestOtelTracing(unittest.TestCase):
             ],
         )
 
+    def test_streaming_chat_completion_with_num_cached_tokens(self):
+        request = ChatCompletionRequest(
+            model="mistral-large-latest",
+            messages=[
+                UserMessage(content="Continue."),
+            ],
+        )
+        response_events = [
+            CompletionEvent(
+                data=CompletionChunk(
+                    id="cmpl-stream-cache-001",
+                    model="mistral-large-latest",
+                    object="chat.completion.chunk",
+                    created=1700000000,
+                    choices=[
+                        CompletionResponseStreamChoice(
+                            index=0,
+                            delta=DeltaMessage(role="assistant", content="Done."),
+                            finish_reason=None,
+                        ),
+                    ],
+                ),
+            ),
+            CompletionEvent(
+                data=CompletionChunk(
+                    id="cmpl-stream-cache-001",
+                    model="mistral-large-latest",
+                    object="chat.completion.chunk",
+                    created=1700000000,
+                    choices=[
+                        CompletionResponseStreamChoice(
+                            index=0,
+                            delta=DeltaMessage(content=""),
+                            finish_reason="stop",
+                        ),
+                    ],
+                    usage=UsageInfo.model_validate(
+                        {
+                            "prompt_tokens": 24,
+                            "completion_tokens": 3,
+                            "total_tokens": 27,
+                            "num_cached_tokens": 10,
+                        }
+                    ),
+                ),
+            ),
+        ]
+
+        self._run_hook_lifecycle(
+            "chat_completion_v1_chat_completions_post",
+            request,
+            response_events,
+            streaming=True,
+        )
+        span = self._get_single_span()
+
+        self.assertSpanAttributes(
+            span,
+            {
+                "gen_ai.usage.input_tokens": 24,
+                "gen_ai.usage.output_tokens": 3,
+                "gen_ai.usage.cache_read.input_tokens": 10,
+            },
+        )
+
     # -- create_function_result (client-side tool execution) -------------------
 
     def test_create_function_result_span_attributes(self):
@@ -1525,7 +1638,6 @@ class TestOtelTracing(unittest.TestCase):
             any(e.name == "exception" for e in span.events),
             "Expected an exception event on the span",
         )
-
 
     # -- Baggage propagation: gen_ai.conversation.id ---------------------------
 

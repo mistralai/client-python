@@ -40,6 +40,9 @@ MISTRAL_SDK_DEBUG_TRACING: bool = (
     os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
 )
 DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=true."
+# As of 2026-03-27: in GenAI semantic conventions, but not yet in
+# opentelemetry-semantic-conventions for Python.
+GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS = "gen_ai.usage.cache_read.input_tokens"
 
 
 class MistralAIAttributes:
@@ -251,18 +254,34 @@ def _enrich_response_genai_attrs(
     # Usage
     usage = response_data.get("usage", {})
     if usage:
-        attributes.update(
-            {
-                gen_ai_attributes.GEN_AI_USAGE_INPUT_TOKENS: usage.get(
-                    "prompt_tokens", 0
-                ),
-                gen_ai_attributes.GEN_AI_USAGE_OUTPUT_TOKENS: usage.get(
-                    "completion_tokens", 0
-                ),
-            }
+        attributes[gen_ai_attributes.GEN_AI_USAGE_INPUT_TOKENS] = usage.get(
+            "prompt_tokens", 0
+        )
+        attributes[gen_ai_attributes.GEN_AI_USAGE_OUTPUT_TOKENS] = usage.get(
+            "completion_tokens", 0
         )
 
+        cached_input_tokens = _extract_cached_input_tokens(usage)
+        if cached_input_tokens is not None:
+            attributes[GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS] = cached_input_tokens
+
     set_available_attributes(span, attributes)
+
+
+def _extract_cached_input_tokens(usage: dict[str, Any]) -> int | None:
+    prompt_token_details = usage.get("prompt_tokens_details") or usage.get(
+        "prompt_token_details"
+    )
+    if isinstance(prompt_token_details, dict):
+        cached_tokens = prompt_token_details.get("cached_tokens")
+        if isinstance(cached_tokens, int):
+            return cached_tokens
+
+    num_cached_tokens = usage.get("num_cached_tokens")
+    if isinstance(num_cached_tokens, int):
+        return num_cached_tokens
+
+    return None
 
 
 def _enrich_create_agent(span: Span, response_data: dict[str, Any]) -> None:
