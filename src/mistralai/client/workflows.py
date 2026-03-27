@@ -102,23 +102,22 @@ class Workflows(BaseSDK):
                 deployment_name=deployment_name,
             )
             return response.result
-        else:
-            # Use polling method
-            execution = self.execute_workflow(
-                workflow_identifier=workflow_identifier,
-                input=input,
-                execution_id=execution_id,
-                custom_tracing_attributes=custom_tracing_attributes,
-                task_queue=task_queue,
-                deployment_name=deployment_name,
-            )
+        # Use polling method
+        execution = self.execute_workflow(
+            workflow_identifier=workflow_identifier,
+            input=input,
+            execution_id=execution_id,
+            custom_tracing_attributes=custom_tracing_attributes,
+            task_queue=task_queue,
+            deployment_name=deployment_name,
+        )
 
-            # Wait for completion
-            final_execution = self._wait_for_workflow_completion(
-                execution.execution_id, polling_interval, max_attempts
-            )
+        # Wait for completion
+        final_execution = self._wait_for_workflow_completion(
+            execution.execution_id, polling_interval, max_attempts
+        )
 
-            return final_execution.result
+        return final_execution.result
 
     def _wait_for_workflow_completion(
         self,
@@ -147,8 +146,7 @@ class Workflows(BaseSDK):
             if response.status != "RUNNING":
                 if response.status == "COMPLETED":
                     return response
-                else:
-                    raise RuntimeError(f"Workflow failed with status: {response.status}")
+                raise RuntimeError(f"Workflow failed with status: {response.status}")
 
             attempts += 1
             if max_attempts is not None and attempts >= max_attempts:
@@ -205,23 +203,23 @@ class Workflows(BaseSDK):
                 deployment_name=deployment_name,
             )
             return response.result
-        else:
-            # Use polling method
-            execution = await self.execute_workflow_async(
-                workflow_identifier=workflow_identifier,
-                input=input,
-                execution_id=execution_id,
-                custom_tracing_attributes=custom_tracing_attributes,
-                task_queue=task_queue,
-                deployment_name=deployment_name,
-            )
 
-            # Wait for completion
-            final_execution = await self._wait_for_workflow_completion_async(
-                execution.execution_id, polling_interval, max_attempts
-            )
+        # Use polling method
+        execution = await self.execute_workflow_async(
+            workflow_identifier=workflow_identifier,
+            input=input,
+            execution_id=execution_id,
+            custom_tracing_attributes=custom_tracing_attributes,
+            task_queue=task_queue,
+            deployment_name=deployment_name,
+        )
 
-            return final_execution.result
+        # Wait for completion
+        final_execution = await self._wait_for_workflow_completion_async(
+            execution.execution_id, polling_interval, max_attempts
+        )
+
+        return final_execution.result
 
     async def _wait_for_workflow_completion_async(
         self,
@@ -252,8 +250,7 @@ class Workflows(BaseSDK):
             if response.status != "RUNNING":
                 if response.status == "COMPLETED":
                     return response
-                else:
-                    raise RuntimeError(f"Workflow failed with status: {response.status}")
+                raise RuntimeError(f"Workflow failed with status: {response.status}")
 
             attempts += 1
             if max_attempts is not None and attempts >= max_attempts:
