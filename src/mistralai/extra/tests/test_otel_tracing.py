@@ -1400,11 +1400,13 @@ class TestOtelTracing(unittest.TestCase):
                             finish_reason="stop",
                         ),
                     ],
-                    usage=UsageInfo(
-                        prompt_tokens=20,
-                        completion_tokens=8,
-                        total_tokens=28,
-                        num_cached_tokens=10,
+                    usage=UsageInfo.model_validate(
+                        {
+                            "prompt_tokens": 20,
+                            "completion_tokens": 8,
+                            "total_tokens": 28,
+                            "num_cached_tokens": 10,
+                        }
                     ),
                 ),
             ),
