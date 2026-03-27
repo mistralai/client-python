@@ -60,7 +60,6 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any]] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
-        task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
         polling_interval: int = 5,
@@ -74,7 +73,6 @@ class Workflows(BaseSDK):
             workflow_identifier: The workflow name or ID.
             input: Input parameters for the workflow
             execution_id: Optional custom execution ID
-            task_queue: Deprecated. Use deployment_name instead.
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
             polling_interval: Seconds between status checks when polling
@@ -98,7 +96,6 @@ class Workflows(BaseSDK):
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
-                task_queue=task_queue,
                 deployment_name=deployment_name,
             )
             return response.result
@@ -108,7 +105,6 @@ class Workflows(BaseSDK):
             input=input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
-            task_queue=task_queue,
             deployment_name=deployment_name,
         )
 
@@ -161,7 +157,6 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any]] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
-        task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
         polling_interval: int = 5,
@@ -175,7 +170,6 @@ class Workflows(BaseSDK):
             workflow_identifier: The workflow name or ID.
             input: Input parameters for the workflow
             execution_id: Optional custom execution ID
-            task_queue: Deprecated. Use deployment_name instead.
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
             polling_interval: Seconds between status checks when polling
@@ -199,7 +193,6 @@ class Workflows(BaseSDK):
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
-                task_queue=task_queue,
                 deployment_name=deployment_name,
             )
             return response.result
@@ -210,7 +203,6 @@ class Workflows(BaseSDK):
             input=input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
-            task_queue=task_queue,
             deployment_name=deployment_name,
         )
 
