@@ -18,6 +18,11 @@ from mistralai.client.workflows_events import WorkflowsEvents
 from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
+# region imports
+import asyncio
+import time
+# endregion imports
+
 
 class Workflows(BaseSDK):
     executions: Executions
@@ -45,6 +50,206 @@ class Workflows(BaseSDK):
         self.deployments = Deployments(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
+
+    # region sdk-class-body
+    def execute_workflow_and_wait(
+        self,
+        workflow_identifier: str,
+        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        execution_id: OptionalNullable[str] = UNSET,
+        deployment_name: OptionalNullable[str] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        polling_interval: int = 5,
+        max_attempts: Optional[int] = None,
+        use_api_sync: bool = False,
+        timeout_seconds: OptionalNullable[float] = UNSET,
+    ) -> Any:
+        """Execute a workflow and wait for its completion.
+
+        Args:
+            workflow_identifier: The workflow name or ID.
+            input: Input parameters for the workflow
+            execution_id: Optional custom execution ID
+            deployment_name: Name of the deployment to route this execution to
+            custom_tracing_attributes: Custom tracing attributes
+            polling_interval: Seconds between status checks when polling
+            max_attempts: Maximum number of polling attempts when polling (None for unlimited)
+            use_api_sync: Whether to use the API's built-in sync execution capability
+            timeout_seconds: Maximum time to wait in seconds when using API sync
+
+        Returns:
+            The workflow result directly
+
+        Raises:
+            TimeoutError: If max_attempts is reached and workflow is still running
+            RuntimeError: If workflow fails or terminates abnormally
+        """
+        if use_api_sync:
+            # Use the API's built-in synchronous execution
+            response = self.execute_workflow(
+                workflow_identifier=workflow_identifier,
+                input=input,
+                execution_id=execution_id,
+                wait_for_result=True,
+                timeout_seconds=timeout_seconds,
+                custom_tracing_attributes=custom_tracing_attributes,
+                deployment_name=deployment_name,
+            )
+            return response.result
+        # Use polling method
+        execution = self.execute_workflow(
+            workflow_identifier=workflow_identifier,
+            input=input,
+            execution_id=execution_id,
+            custom_tracing_attributes=custom_tracing_attributes,
+            deployment_name=deployment_name,
+        )
+
+        # Wait for completion
+        final_execution = self._wait_for_workflow_completion(
+            execution.execution_id, polling_interval, max_attempts
+        )
+
+        return final_execution.result
+
+    def _wait_for_workflow_completion(
+        self,
+        execution_id: str,
+        polling_interval: int = 5,
+        max_attempts: Optional[int] = None,
+    ) -> models.WorkflowExecutionResponse:
+        """Wait for a workflow to complete by polling its status.
+
+        Args:
+            execution_id: Execution ID of the workflow
+            polling_interval: Seconds between status checks
+            max_attempts: Maximum number of polling attempts (None for unlimited)
+
+        Returns:
+            WorkflowExecutionResponse with the final execution details
+
+        Raises:
+            TimeoutError: If max_attempts is reached and workflow is still running
+            RuntimeError: If workflow fails or terminates abnormally
+        """
+        attempts = 0
+        while True:
+            response = self.executions.get_workflow_execution(execution_id=execution_id)
+
+            if response.status != "RUNNING":
+                if response.status == "COMPLETED":
+                    return response
+                raise RuntimeError(f"Workflow failed with status: {response.status}")
+
+            attempts += 1
+            if max_attempts is not None and attempts >= max_attempts:
+                raise TimeoutError(
+                    f"Workflow is still running after {max_attempts} polling attempts"
+                )
+
+            time.sleep(polling_interval)
+
+    async def execute_workflow_and_wait_async(
+        self,
+        workflow_identifier: str,
+        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        execution_id: OptionalNullable[str] = UNSET,
+        deployment_name: OptionalNullable[str] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        polling_interval: int = 5,
+        max_attempts: Optional[int] = None,
+        use_api_sync: bool = False,
+        timeout_seconds: OptionalNullable[float] = UNSET,
+    ) -> Any:
+        """Execute a workflow and wait for its completion (async version).
+
+        Args:
+            workflow_identifier: The workflow name or ID.
+            input: Input parameters for the workflow
+            execution_id: Optional custom execution ID
+            deployment_name: Name of the deployment to route this execution to
+            custom_tracing_attributes: Custom tracing attributes
+            polling_interval: Seconds between status checks when polling
+            max_attempts: Maximum number of polling attempts when polling (None for unlimited)
+            use_api_sync: Whether to use the API's built-in sync execution capability
+            timeout_seconds: Maximum time to wait in seconds when using API sync
+
+        Returns:
+            The workflow result directly
+
+        Raises:
+            TimeoutError: If max_attempts is reached and workflow is still running
+            RuntimeError: If workflow fails or terminates abnormally
+        """
+        if use_api_sync:
+            # Use the API's built-in synchronous execution
+            response = await self.execute_workflow_async(
+                workflow_identifier=workflow_identifier,
+                input=input,
+                execution_id=execution_id,
+                wait_for_result=True,
+                timeout_seconds=timeout_seconds,
+                custom_tracing_attributes=custom_tracing_attributes,
+                deployment_name=deployment_name,
+            )
+            return response.result
+
+        # Use polling method
+        execution = await self.execute_workflow_async(
+            workflow_identifier=workflow_identifier,
+            input=input,
+            execution_id=execution_id,
+            custom_tracing_attributes=custom_tracing_attributes,
+            deployment_name=deployment_name,
+        )
+
+        # Wait for completion
+        final_execution = await self._wait_for_workflow_completion_async(
+            execution.execution_id, polling_interval, max_attempts
+        )
+
+        return final_execution.result
+
+    async def _wait_for_workflow_completion_async(
+        self,
+        execution_id: str,
+        polling_interval: int = 5,
+        max_attempts: Optional[int] = None,
+    ) -> models.WorkflowExecutionResponse:
+        """Wait for a workflow to complete by polling its status (async version).
+
+        Args:
+            execution_id: Execution ID of the workflow
+            polling_interval: Seconds between status checks
+            max_attempts: Maximum number of polling attempts (None for unlimited)
+
+        Returns:
+            WorkflowExecutionResponse with the final execution details
+
+        Raises:
+            TimeoutError: If max_attempts is reached and workflow is still running
+            RuntimeError: If workflow fails or terminates abnormally
+        """
+        attempts = 0
+        while True:
+            response = await self.executions.get_workflow_execution_async(
+                execution_id=execution_id
+            )
+
+            if response.status != "RUNNING":
+                if response.status == "COMPLETED":
+                    return response
+                raise RuntimeError(f"Workflow failed with status: {response.status}")
+
+            attempts += 1
+            if max_attempts is not None and attempts >= max_attempts:
+                raise TimeoutError(
+                    f"Workflow is still running after {max_attempts} polling attempts"
+                )
+
+            await asyncio.sleep(polling_interval)
+
+    # endregion sdk-class-body
 
     def get_workflows(
         self,

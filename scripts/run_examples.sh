@@ -49,6 +49,10 @@ exclude_files=(
  "examples/mistral/audio/async_realtime_transcription_microphone.py"
  "examples/mistral/audio/async_realtime_transcription_stream.py"
  "examples/mistral/audio/async_realtime_transcription_dual_delay_microphone.py"
+ "examples/mistral/workflows/workflow_execute_and_wait.py"
+ "examples/mistral/workflows/async_workflow_execute_and_wait.py"
+ "examples/mistral/workflows/workflow_execute.py"
+ "examples/mistral/workflows/async_workflow_execute.py"
 )
 
 # Files that require extra dependencies (agents, mcp, audio, etc.)
