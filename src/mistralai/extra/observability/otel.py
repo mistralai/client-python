@@ -40,9 +40,6 @@ MISTRAL_SDK_DEBUG_TRACING: bool = (
     os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
 )
 DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=true."
-# As of 2026-03-27: in GenAI semantic conventions, but not yet in
-# opentelemetry-semantic-conventions for Python.
-GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS = "gen_ai.usage.cache_read.input_tokens"
 
 
 class MistralAIAttributes:
@@ -263,12 +260,15 @@ def _enrich_response_genai_attrs(
 
         cached_input_tokens = _extract_cached_input_tokens(usage)
         if cached_input_tokens is not None:
-            attributes[GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS] = cached_input_tokens
+            attributes["gen_ai.usage.cache_read.input_tokens"] = cached_input_tokens
 
     set_available_attributes(span, attributes)
 
 
 def _extract_cached_input_tokens(usage: dict[str, Any]) -> int | None:
+    # The generated usage schema currently exposes both plural/singular
+    # prompt token details names, plus the legacy top-level cached token count.
+    # Prefer the nested cached_tokens value when present.
     prompt_token_details = usage.get("prompt_tokens_details") or usage.get(
         "prompt_token_details"
     )
