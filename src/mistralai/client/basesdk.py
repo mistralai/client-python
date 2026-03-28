@@ -216,17 +216,22 @@ class BaseSDK:
             for header, value in http_headers.items():
                 headers[header] = value
 
-        timeout = timeout_ms / 1000 if timeout_ms is not None else None
+        # Build request kwargs, only include timeout if explicitly set
+        # to respect httpx client-level timeout when timeout_ms is None
+        kwargs: dict = {
+            "params": query_params,
+            "content": serialized_request_body.content,
+            "data": serialized_request_body.data,
+            "files": serialized_request_body.files,
+            "headers": headers,
+        }
+        if timeout_ms is not None:
+            kwargs["timeout"] = timeout_ms / 1000
 
         return client.build_request(
             method,
             url,
-            params=query_params,
-            content=serialized_request_body.content,
-            data=serialized_request_body.data,
-            files=serialized_request_body.files,
-            headers=headers,
-            timeout=timeout,
+            **kwargs,
         )
 
     def do_request(
