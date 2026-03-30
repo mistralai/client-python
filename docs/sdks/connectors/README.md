@@ -177,6 +177,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `tool_name`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `connector_id_or_name`                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `credentials_name`                                                  | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `arguments`                                                         | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
@@ -227,7 +228,7 @@ with Mistral(
 
 ### Response
 
-**[models.ResponseConnectorListToolsV12](../../models/responseconnectorlisttoolsv12.md)**
+**[models.ResponseConnectorListToolsV1](../../models/responseconnectorlisttoolsv1.md)**
 
 ### Errors
 
