@@ -2,15 +2,14 @@
 # @generated-id: f2e953cfb4fe
 
 from __future__ import annotations
+from enum import Enum
 from mistralai.client.types import BaseModel
-from typing import Literal
 from typing_extensions import TypedDict
 
 
-Confirmation = Literal[
-    "allow",
-    "deny",
-]
+class Confirmation(str, Enum):
+    ALLOW = "allow"
+    DENY = "deny"
 
 
 class ToolCallConfirmationTypedDict(TypedDict):

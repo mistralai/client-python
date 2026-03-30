@@ -2,6 +2,7 @@
 # @generated-id: 6b3ce5be1294
 
 from __future__ import annotations
+from enum import Enum
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
@@ -9,11 +10,21 @@ from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
+class ListVoicesV1AudioVoicesGetType(str, Enum):
+    r"""Filter the voices between customs and presets"""
+
+    ALL = "all"
+    CUSTOM = "custom"
+    PRESET = "preset"
+
+
 class ListVoicesV1AudioVoicesGetRequestTypedDict(TypedDict):
     limit: NotRequired[int]
     r"""Maximum number of voices to return"""
     offset: NotRequired[int]
     r"""Offset for pagination"""
+    type: NotRequired[ListVoicesV1AudioVoicesGetType]
+    r"""Filter the voices between customs and presets"""
 
 
 class ListVoicesV1AudioVoicesGetRequest(BaseModel):
@@ -29,9 +40,15 @@ class ListVoicesV1AudioVoicesGetRequest(BaseModel):
     ] = 0
     r"""Offset for pagination"""
 
+    type: Annotated[
+        Optional[ListVoicesV1AudioVoicesGetType],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = ListVoicesV1AudioVoicesGetType.ALL
+    r"""Filter the voices between customs and presets"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "offset"])
+        optional_fields = set(["limit", "offset", "type"])
         serialized = handler(self)
         m = {}
 

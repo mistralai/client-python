@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .batcherror import BatchError, BatchErrorTypedDict
 from .batchjobstatus import BatchJobStatus
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -13,7 +14,7 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -82,6 +83,15 @@ class BatchJob(BaseModel):
     started_at: OptionalNullable[int] = UNSET
 
     completed_at: OptionalNullable[int] = UNSET
+
+    @field_serializer("status")
+    def serialize_status(self, value):
+        if isinstance(value, str):
+            try:
+                return models.BatchJobStatus(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

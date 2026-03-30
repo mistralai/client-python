@@ -2,20 +2,16 @@
 # @generated-id: 7b381554d5c7
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-BaseTaskStatus = Union[
-    Literal[
-        "RUNNING",
-        "COMPLETED",
-        "FAILED",
-        "CANCELED",
-        "TERMINATED",
-        "CONTINUED_AS_NEW",
-        "TIMED_OUT",
-        "UNKNOWN",
-    ],
-    UnrecognizedStr,
-]
+class BaseTaskStatus(str, Enum, metaclass=utils.OpenEnumMeta):
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELED = "CANCELED"
+    TERMINATED = "TERMINATED"
+    CONTINUED_AS_NEW = "CONTINUED_AS_NEW"
+    TIMED_OUT = "TIMED_OUT"
+    UNKNOWN = "UNKNOWN"

@@ -2,14 +2,10 @@
 # @generated-id: b930a0a20654
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ReasoningEffort = Union[
-    Literal[
-        "none",
-        "high",
-    ],
-    UnrecognizedStr,
-]
+class ReasoningEffort(str, Enum, metaclass=utils.OpenEnumMeta):
+    NONE = "none"
+    HIGH = "high"

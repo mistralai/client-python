@@ -4,11 +4,14 @@
 
 ```python
 from mistralai.client.models import EncodingFormat
-value: EncodingFormat = "float"
+
+value = EncodingFormat.FLOAT
 ```
 
 
 ## Values
 
-- `"float"`
-- `"base64"`
+| Name     | Value    |
+| -------- | -------- |
+| `FLOAT`  | float    |
+| `BASE64` | base64   |

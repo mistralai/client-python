@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 from .processstatus import ProcessStatus
+from mistralai.client import models
 from mistralai.client.types import BaseModel
+from pydantic import field_serializer
 from typing_extensions import TypedDict
 
 
@@ -19,3 +21,12 @@ class ProcessingStatus(BaseModel):
     process_status: ProcessStatus
 
     processing_status: str
+
+    @field_serializer("process_status")
+    def serialize_process_status(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ProcessStatus(value)
+            except ValueError:
+                return value
+        return value

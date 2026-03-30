@@ -2,17 +2,13 @@
 # @generated-id: a9309422fed7
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-SampleType = Union[
-    Literal[
-        "pretrain",
-        "instruct",
-        "batch_request",
-        "batch_result",
-        "batch_error",
-    ],
-    UnrecognizedStr,
-]
+class SampleType(str, Enum, metaclass=utils.OpenEnumMeta):
+    PRETRAIN = "pretrain"
+    INSTRUCT = "instruct"
+    BATCH_REQUEST = "batch_request"
+    BATCH_RESULT = "batch_result"
+    BATCH_ERROR = "batch_error"

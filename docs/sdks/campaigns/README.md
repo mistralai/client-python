@@ -19,7 +19,7 @@ Create and start a new campaign
 
 <!-- UsageSnippet language="python" operationID="create_campaign_v1_observability_campaigns_post" method="post" path="/v1/observability/campaigns" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -30,7 +30,7 @@ with Mistral(
     res = mistral.beta.observability.campaigns.create(search_params={
         "filters": {
             "field": "<value>",
-            "op": "lt",
+            "op": models.Op.LT,
             "value": "<value>",
         },
     }, judge_id="9b501b9f-3525-44a7-a51a-5352679be9ed", name="<value>", description="shakily triangular scotch requirement whether once oh", max_nb_events=232889)

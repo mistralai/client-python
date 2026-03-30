@@ -2,14 +2,10 @@
 # @generated-id: b76eee4fdf6a
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-SpeechStreamEventTypes = Union[
-    Literal[
-        "speech.audio.delta",
-        "speech.audio.done",
-    ],
-    UnrecognizedStr,
-]
+class SpeechStreamEventTypes(str, Enum, metaclass=utils.OpenEnumMeta):
+    SPEECH_AUDIO_DELTA = "speech.audio.delta"
+    SPEECH_AUDIO_DONE = "speech.audio.done"

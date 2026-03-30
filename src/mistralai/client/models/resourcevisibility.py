@@ -2,16 +2,12 @@
 # @generated-id: b5819dd5f981
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ResourceVisibility = Union[
-    Literal[
-        "shared_global",
-        "shared_org",
-        "shared_workspace",
-        "private",
-    ],
-    UnrecognizedStr,
-]
+class ResourceVisibility(str, Enum, metaclass=utils.OpenEnumMeta):
+    SHARED_GLOBAL = "shared_global"
+    SHARED_ORG = "shared_org"
+    SHARED_WORKSPACE = "shared_workspace"
+    PRIVATE = "private"

@@ -2,34 +2,34 @@
 # @generated-id: 4fb7f3c0e51b
 
 from __future__ import annotations
+from enum import Enum
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
-from typing import Literal
 from typing_extensions import Annotated, TypedDict
 
 
-Operator = Literal[
-    "lt",
-    "lte",
-    "gt",
-    "gte",
-    "startswith",
-    "istartswith",
-    "endswith",
-    "iendswith",
-    "contains",
-    "icontains",
-    "matches",
-    "notcontains",
-    "inotcontains",
-    "eq",
-    "neq",
-    "isnull",
-    "includes",
-    "excludes",
-    "len_eq",
-]
-r"""The operator to use for filtering options"""
+class Operator(str, Enum):
+    r"""The operator to use for filtering options"""
+
+    LT = "lt"
+    LTE = "lte"
+    GT = "gt"
+    GTE = "gte"
+    STARTSWITH = "startswith"
+    ISTARTSWITH = "istartswith"
+    ENDSWITH = "endswith"
+    IENDSWITH = "iendswith"
+    CONTAINS = "contains"
+    ICONTAINS = "icontains"
+    MATCHES = "matches"
+    NOTCONTAINS = "notcontains"
+    INOTCONTAINS = "inotcontains"
+    EQ = "eq"
+    NEQ = "neq"
+    ISNULL = "isnull"
+    INCLUDES = "includes"
+    EXCLUDES = "excludes"
+    LEN_EQ = "len_eq"
 
 
 class GetChatCompletionFieldOptionsV1ObservabilityChatCompletionFieldsFieldNameOptionsGetRequestTypedDict(

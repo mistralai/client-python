@@ -3,14 +3,18 @@
 
 from __future__ import annotations
 from .library import Library, LibraryTypedDict
+from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
 from mistralai.client.types import BaseModel
 from typing import List
 from typing_extensions import TypedDict
 
 
 class ListLibrariesResponseTypedDict(TypedDict):
+    pagination: PaginationInfoTypedDict
     data: List[LibraryTypedDict]
 
 
 class ListLibrariesResponse(BaseModel):
+    pagination: PaginationInfo
+
     data: List[Library]

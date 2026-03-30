@@ -640,6 +640,7 @@ class Connectors(BaseSDK):
         *,
         tool_name: str,
         connector_id_or_name: str,
+        credentials_name: OptionalNullable[str] = UNSET,
         arguments: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -652,6 +653,7 @@ class Connectors(BaseSDK):
 
         :param tool_name:
         :param connector_id_or_name:
+        :param credentials_name:
         :param arguments:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -670,6 +672,7 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorCallToolV1Request(
             tool_name=tool_name,
+            credentials_name=credentials_name,
             connector_id_or_name=connector_id_or_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
                 arguments=arguments,
@@ -745,6 +748,7 @@ class Connectors(BaseSDK):
         *,
         tool_name: str,
         connector_id_or_name: str,
+        credentials_name: OptionalNullable[str] = UNSET,
         arguments: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -757,6 +761,7 @@ class Connectors(BaseSDK):
 
         :param tool_name:
         :param connector_id_or_name:
+        :param credentials_name:
         :param arguments:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -775,6 +780,7 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorCallToolV1Request(
             tool_name=tool_name,
+            credentials_name=credentials_name,
             connector_id_or_name=connector_id_or_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
                 arguments=arguments,
@@ -857,7 +863,7 @@ class Connectors(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ResponseConnectorListToolsV12:
+    ) -> models.ResponseConnectorListToolsV1:
         r"""List tools for a connector.
 
         List all tools available for an MCP connector.
@@ -933,7 +939,7 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.ResponseConnectorListToolsV12, http_res
+                models.ResponseConnectorListToolsV1, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -961,7 +967,7 @@ class Connectors(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.ResponseConnectorListToolsV12:
+    ) -> models.ResponseConnectorListToolsV1:
         r"""List tools for a connector.
 
         List all tools available for an MCP connector.
@@ -1037,7 +1043,7 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.ResponseConnectorListToolsV12, http_res
+                models.ResponseConnectorListToolsV1, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(

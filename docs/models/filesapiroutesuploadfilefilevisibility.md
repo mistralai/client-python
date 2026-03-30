@@ -4,11 +4,14 @@
 
 ```python
 from mistralai.client.models import FilesAPIRoutesUploadFileFileVisibility
-value: FilesAPIRoutesUploadFileFileVisibility = "workspace"
+
+value = FilesAPIRoutesUploadFileFileVisibility.WORKSPACE
 ```
 
 
 ## Values
 
-- `"workspace"`
-- `"user"`
+| Name        | Value       |
+| ----------- | ----------- |
+| `WORKSPACE` | workspace   |
+| `USER`      | user        |

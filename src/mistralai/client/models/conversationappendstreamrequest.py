@@ -5,6 +5,7 @@ from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from .toolcallconfirmation import ToolCallConfirmation, ToolCallConfirmationTypedDict
+from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -20,10 +21,9 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-ConversationAppendStreamRequestHandoffExecution = Literal[
-    "client",
-    "server",
-]
+class ConversationAppendStreamRequestHandoffExecution(str, Enum):
+    CLIENT = "client"
+    SERVER = "server"
 
 
 class ConversationAppendStreamRequestTypedDict(TypedDict):
@@ -49,7 +49,7 @@ class ConversationAppendStreamRequest(BaseModel):
     r"""Whether to store the results into our servers or not."""
 
     handoff_execution: Optional[ConversationAppendStreamRequestHandoffExecution] = (
-        "server"
+        ConversationAppendStreamRequestHandoffExecution.SERVER
     )
 
     completion_args: Optional[CompletionArgs] = None

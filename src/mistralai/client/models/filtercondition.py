@@ -2,35 +2,34 @@
 # @generated-id: ba62f90873c5
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UnrecognizedStr
-from typing import Any, Literal, Union
+from enum import Enum
+from mistralai.client import models, utils
+from mistralai.client.types import BaseModel
+from pydantic import field_serializer
+from typing import Any
 from typing_extensions import TypedDict
 
 
-Op = Union[
-    Literal[
-        "lt",
-        "lte",
-        "gt",
-        "gte",
-        "startswith",
-        "istartswith",
-        "endswith",
-        "iendswith",
-        "contains",
-        "icontains",
-        "matches",
-        "notcontains",
-        "inotcontains",
-        "eq",
-        "neq",
-        "isnull",
-        "includes",
-        "excludes",
-        "len_eq",
-    ],
-    UnrecognizedStr,
-]
+class Op(str, Enum, metaclass=utils.OpenEnumMeta):
+    LT = "lt"
+    LTE = "lte"
+    GT = "gt"
+    GTE = "gte"
+    STARTSWITH = "startswith"
+    ISTARTSWITH = "istartswith"
+    ENDSWITH = "endswith"
+    IENDSWITH = "iendswith"
+    CONTAINS = "contains"
+    ICONTAINS = "icontains"
+    MATCHES = "matches"
+    NOTCONTAINS = "notcontains"
+    INOTCONTAINS = "inotcontains"
+    EQ = "eq"
+    NEQ = "neq"
+    ISNULL = "isnull"
+    INCLUDES = "includes"
+    EXCLUDES = "excludes"
+    LEN_EQ = "len_eq"
 
 
 class FilterConditionTypedDict(TypedDict):
@@ -45,3 +44,12 @@ class FilterCondition(BaseModel):
     op: Op
 
     value: Any
+
+    @field_serializer("op")
+    def serialize_op(self, value):
+        if isinstance(value, str):
+            try:
+                return models.Op(value)
+            except ValueError:
+                return value
+        return value

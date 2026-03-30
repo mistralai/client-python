@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 from .audioencoding import AudioEncoding
+from mistralai.client import models
 from mistralai.client.types import BaseModel
+from pydantic import field_serializer
 from typing_extensions import TypedDict
 
 
@@ -16,3 +18,12 @@ class AudioFormat(BaseModel):
     encoding: AudioEncoding
 
     sample_rate: int
+
+    @field_serializer("encoding")
+    def serialize_encoding(self, value):
+        if isinstance(value, str):
+            try:
+                return models.AudioEncoding(value)
+            except ValueError:
+                return value
+        return value

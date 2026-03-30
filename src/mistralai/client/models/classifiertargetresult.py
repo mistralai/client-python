@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 from .ftclassifierlossfunction import FTClassifierLossFunction
+from mistralai.client import models
 from mistralai.client.types import BaseModel
+from pydantic import field_serializer
 from typing import List
 from typing_extensions import TypedDict
 
@@ -23,3 +25,12 @@ class ClassifierTargetResult(BaseModel):
     weight: float
 
     loss_function: FTClassifierLossFunction
+
+    @field_serializer("loss_function")
+    def serialize_loss_function(self, value):
+        if isinstance(value, str):
+            try:
+                return models.FTClassifierLossFunction(value)
+            except ValueError:
+                return value
+        return value

@@ -17,7 +17,7 @@ Chat Completion
 
 <!-- UsageSnippet language="python" operationID="chat_completion_v1_chat_completions_post" method="post" path="/v1/chat/completions" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -31,7 +31,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
-        "type": "text",
+        "type": models.ResponseFormats.TEXT,
     })
 
     # Handle response
@@ -85,7 +85,7 @@ Mistral AI provides the ability to stream responses back to a client in order to
 
 <!-- UsageSnippet language="python" operationID="stream_chat" method="post" path="/v1/chat/completions#stream" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -99,7 +99,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=True, response_format={
-        "type": "text",
+        "type": models.ResponseFormats.TEXT,
     })
 
     with res as event_stream:

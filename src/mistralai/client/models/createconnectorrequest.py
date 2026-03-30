@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
 from .resourcevisibility import ResourceVisibility
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,7 +12,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -57,6 +58,15 @@ class CreateConnectorRequest(BaseModel):
 
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
+
+    @field_serializer("visibility")
+    def serialize_visibility(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ResourceVisibility(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -4,11 +4,14 @@
 
 ```python
 from mistralai.client.models import JudgeOutputType
-value: JudgeOutputType = "REGRESSION"
+
+value = JudgeOutputType.REGRESSION
 ```
 
 
 ## Values
 
-- `"REGRESSION"`
-- `"CLASSIFICATION"`
+| Name             | Value            |
+| ---------------- | ---------------- |
+| `REGRESSION`     | REGRESSION       |
+| `CLASSIFICATION` | CLASSIFICATION   |

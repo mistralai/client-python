@@ -5,16 +5,17 @@
 ```python
 from mistralai.client.models import ToolType
 
+value = ToolType.RAG
+
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ToolType = "rag"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"rag"`
-- `"image"`
-- `"code"`
-- `"event"`
+| Name    | Value   |
+| ------- | ------- |
+| `RAG`   | rag     |
+| `IMAGE` | image   |
+| `CODE`  | code    |
+| `EVENT` | event   |

@@ -7,6 +7,7 @@ from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .toolchoiceenum import ToolChoiceEnum
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +15,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -59,6 +60,24 @@ class CompletionArgs(BaseModel):
     tool_choice: Optional[ToolChoiceEnum] = None
 
     reasoning_effort: OptionalNullable[ReasoningEffort] = UNSET
+
+    @field_serializer("tool_choice")
+    def serialize_tool_choice(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ToolChoiceEnum(value)
+            except ValueError:
+                return value
+        return value
+
+    @field_serializer("reasoning_effort")
+    def serialize_reasoning_effort(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ReasoningEffort(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -4,8 +4,9 @@
 from __future__ import annotations
 from .functionname import FunctionName, FunctionNameTypedDict
 from .tooltypes import ToolTypes
+from mistralai.client import models
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -25,6 +26,15 @@ class ToolChoice(BaseModel):
     r"""this restriction of `Function` is used to select a specific function to call"""
 
     type: Optional[ToolTypes] = None
+
+    @field_serializer("type")
+    def serialize_type(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ToolTypes(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -9,13 +9,14 @@ System prompt may include knowledge cutoff date, model capabilities, tone to use
 ```python
 from mistralai.client.models import MistralPromptMode
 
+value = MistralPromptMode.REASONING
+
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: MistralPromptMode = "reasoning"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"reasoning"`
+| Name        | Value       |
+| ----------- | ----------- |
+| `REASONING` | reasoning   |

@@ -7,6 +7,7 @@ from .moderationllmv1categorythresholds import (
     ModerationLlmv1CategoryThresholds,
     ModerationLlmv1CategoryThresholdsTypedDict,
 )
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +15,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -42,6 +43,15 @@ class ModerationLlmv1Config(BaseModel):
     r"""If true, only evaluate categories in custom_category_thresholds; others are ignored."""
 
     action: Optional[ModerationLLMAction] = None
+
+    @field_serializer("action")
+    def serialize_action(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ModerationLLMAction(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

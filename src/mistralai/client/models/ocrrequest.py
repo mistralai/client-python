@@ -6,6 +6,7 @@ from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
+from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +15,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Literal, Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -31,10 +32,9 @@ DocumentUnion = TypeAliasType(
 r"""Document to run OCR on"""
 
 
-TableFormat = Literal[
-    "markdown",
-    "html",
-]
+class TableFormat(str, Enum):
+    MARKDOWN = "markdown"
+    HTML = "html"
 
 
 class OCRRequestTypedDict(TypedDict):

@@ -2,15 +2,11 @@
 # @generated-id: a11e7f9f2d45
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-FilePurpose = Union[
-    Literal[
-        "fine-tune",
-        "batch",
-        "ocr",
-    ],
-    UnrecognizedStr,
-]
+class FilePurpose(str, Enum, metaclass=utils.OpenEnumMeta):
+    FINE_TUNE = "fine-tune"
+    BATCH = "batch"
+    OCR = "ocr"

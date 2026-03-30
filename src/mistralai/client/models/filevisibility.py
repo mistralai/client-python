@@ -2,14 +2,10 @@
 # @generated-id: 11a670fa3b71
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-FileVisibility = Union[
-    Literal[
-        "workspace",
-        "user",
-    ],
-    UnrecognizedStr,
-]
+class FileVisibility(str, Enum, metaclass=utils.OpenEnumMeta):
+    WORKSPACE = "workspace"
+    USER = "user"

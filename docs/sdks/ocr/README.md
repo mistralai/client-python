@@ -16,7 +16,7 @@ OCR
 
 <!-- UsageSnippet language="python" operationID="ocr_v1_ocr_post" method="post" path="/v1/ocr" example="userExample" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -28,9 +28,9 @@ with Mistral(
         "type": "document_url",
         "document_url": "https://upset-labourer.net/",
     }, bbox_annotation_format={
-        "type": "text",
+        "type": models.ResponseFormats.TEXT,
     }, document_annotation_format={
-        "type": "text",
+        "type": models.ResponseFormats.TEXT,
     })
 
     # Handle response

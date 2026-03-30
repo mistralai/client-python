@@ -1101,7 +1101,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationAppendRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -1233,7 +1233,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationAppendRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -1726,7 +1726,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationRestartRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -1872,7 +1872,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationRestartRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -2341,7 +2341,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendStreamRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationAppendStreamRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -2480,7 +2480,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationAppendStreamRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationAppendStreamRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -2620,7 +2620,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationRestartStreamRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
@@ -2773,7 +2773,7 @@ class Conversations(BaseSDK):
         store: Optional[bool] = True,
         handoff_execution: Optional[
             models.ConversationRestartStreamRequestHandoffExecution
-        ] = "server",
+        ] = models.ConversationRestartStreamRequestHandoffExecution.SERVER,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,

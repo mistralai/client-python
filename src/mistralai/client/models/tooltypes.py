@@ -2,8 +2,9 @@
 # @generated-id: 86c3b54272fd
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ToolTypes = Union[Literal["function",], UnrecognizedStr]
+class ToolTypes(str, Enum, metaclass=utils.OpenEnumMeta):
+    FUNCTION = "function"

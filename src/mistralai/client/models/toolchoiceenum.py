@@ -2,16 +2,12 @@
 # @generated-id: c7798801f860
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ToolChoiceEnum = Union[
-    Literal[
-        "auto",
-        "none",
-        "any",
-        "required",
-    ],
-    UnrecognizedStr,
-]
+class ToolChoiceEnum(str, Enum, metaclass=utils.OpenEnumMeta):
+    AUTO = "auto"
+    NONE = "none"
+    ANY = "any"
+    REQUIRED = "required"

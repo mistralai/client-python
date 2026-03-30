@@ -2,16 +2,12 @@
 # @generated-id: 24d6a0861d4b
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ConversationSource = Union[
-    Literal[
-        "EXPLORER",
-        "UPLOADED_FILE",
-        "DIRECT_INPUT",
-        "PLAYGROUND",
-    ],
-    UnrecognizedStr,
-]
+class ConversationSource(str, Enum, metaclass=utils.OpenEnumMeta):
+    EXPLORER = "EXPLORER"
+    UPLOADED_FILE = "UPLOADED_FILE"
+    DIRECT_INPUT = "DIRECT_INPUT"
+    PLAYGROUND = "PLAYGROUND"

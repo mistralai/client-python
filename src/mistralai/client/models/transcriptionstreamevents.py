@@ -20,9 +20,10 @@ from .transcriptionstreamtextdelta import (
     TranscriptionStreamTextDeltaTypedDict,
 )
 from functools import partial
+from mistralai.client import models
 from mistralai.client.types import BaseModel
 from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict
+from pydantic import ConfigDict, field_serializer
 from pydantic.functional_validators import BeforeValidator
 from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
@@ -86,3 +87,12 @@ class TranscriptionStreamEvents(BaseModel):
     event: TranscriptionStreamEventTypes
 
     data: TranscriptionStreamEventsData
+
+    @field_serializer("event")
+    def serialize_event(self, value):
+        if isinstance(value, str):
+            try:
+                return models.TranscriptionStreamEventTypes(value)
+            except ValueError:
+                return value
+        return value

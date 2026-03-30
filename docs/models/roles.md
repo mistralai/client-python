@@ -5,16 +5,17 @@
 ```python
 from mistralai.client.models import Roles
 
+value = Roles.SYSTEM
+
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Roles = "system"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"system"`
-- `"user"`
-- `"assistant"`
-- `"tool"`
+| Name        | Value       |
+| ----------- | ----------- |
+| `SYSTEM`    | system      |
+| `USER`      | user        |
+| `ASSISTANT` | assistant   |
+| `TOOL`      | tool        |

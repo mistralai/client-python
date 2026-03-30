@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .jsonschema import JSONSchema, JSONSchemaTypedDict
 from .responseformats import ResponseFormats
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,7 +12,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -29,6 +30,15 @@ class ResponseFormat(BaseModel):
     type: Optional[ResponseFormats] = None
 
     json_schema: OptionalNullable[JSONSchema] = UNSET
+
+    @field_serializer("type")
+    def serialize_type(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ResponseFormats(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .tooltype import ToolType
 from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,7 +12,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -30,6 +31,15 @@ class TurbineToolMeta(BaseModel):
     timeout: OptionalNullable[float] = UNSET
 
     private_execution: OptionalNullable[bool] = UNSET
+
+    @field_serializer("tool_type")
+    def serialize_tool_type(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ToolType(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

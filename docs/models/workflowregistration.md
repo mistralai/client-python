@@ -1,0 +1,13 @@
+# WorkflowRegistration
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier of the workflow registration                       |
+| `task_queue`                                                         | *str*                                                                | :heavy_check_mark:                                                   | Project name of the workflow                                         |
+| `definition`                                                         | [models.WorkflowCodeDefinition](../models/workflowcodedefinition.md) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `workflow_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | Workflow ID of the workflow                                          |
+| `workflow`                                                           | [OptionalNullable[models.Workflow]](../models/workflow.md)           | :heavy_minus_sign:                                                   | Workflow of the workflow registration                                |
+| `compatible_with_chat_assistant`                                     | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | Whether the workflow is compatible with chat assistant               |

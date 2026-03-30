@@ -2,12 +2,14 @@
 # @generated-id: 95abc4ec799a
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-MistralPromptMode = Union[Literal["reasoning",], UnrecognizedStr]
-r"""Available options to the prompt_mode argument on the chat completion endpoint.
-Values represent high-level intent. Assignment to actual SPs is handled internally.
-System prompt may include knowledge cutoff date, model capabilities, tone to use, safety guidelines, etc.
-"""
+class MistralPromptMode(str, Enum, metaclass=utils.OpenEnumMeta):
+    r"""Available options to the prompt_mode argument on the chat completion endpoint.
+    Values represent high-level intent. Assignment to actual SPs is handled internally.
+    System prompt may include knowledge cutoff date, model capabilities, tone to use, safety guidelines, etc.
+    """
+
+    REASONING = "reasoning"

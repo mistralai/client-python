@@ -2,13 +2,12 @@
 # @generated-id: e6be9ec9e74c
 
 from __future__ import annotations
-from typing import Literal
+from enum import Enum
 
 
-SpeechOutputFormat = Literal[
-    "pcm",
-    "wav",
-    "mp3",
-    "flac",
-    "opus",
-]
+class SpeechOutputFormat(str, Enum):
+    PCM = "pcm"
+    WAV = "wav"
+    MP3 = "mp3"
+    FLAC = "flac"
+    OPUS = "opus"

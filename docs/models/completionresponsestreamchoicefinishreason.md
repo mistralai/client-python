@@ -5,16 +5,17 @@
 ```python
 from mistralai.client.models import CompletionResponseStreamChoiceFinishReason
 
+value = CompletionResponseStreamChoiceFinishReason.STOP
+
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: CompletionResponseStreamChoiceFinishReason = "stop"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"stop"`
-- `"length"`
-- `"error"`
-- `"tool_calls"`
+| Name         | Value        |
+| ------------ | ------------ |
+| `STOP`       | stop         |
+| `LENGTH`     | length       |
+| `ERROR`      | error        |
+| `TOOL_CALLS` | tool_calls   |

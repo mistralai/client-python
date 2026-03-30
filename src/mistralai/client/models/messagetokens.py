@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .roles import Roles
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,7 +11,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -34,6 +35,15 @@ class MessageTokens(BaseModel):
     truncated: Optional[bool] = False
 
     usage_count: Optional[int] = 1
+
+    @field_serializer("role")
+    def serialize_role(self, value):
+        if isinstance(value, str):
+            try:
+                return models.Roles(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

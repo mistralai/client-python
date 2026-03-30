@@ -3,8 +3,9 @@
 
 from __future__ import annotations
 from .observabilityerrorcode import ObservabilityErrorCode
+from mistralai.client import models
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing_extensions import TypedDict
 
 
@@ -17,6 +18,15 @@ class ObservabilityErrorDetail(BaseModel):
     message: str
 
     error_code: Nullable[ObservabilityErrorCode]
+
+    @field_serializer("error_code")
+    def serialize_error_code(self, value):
+        if isinstance(value, str):
+            try:
+                return models.ObservabilityErrorCode(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

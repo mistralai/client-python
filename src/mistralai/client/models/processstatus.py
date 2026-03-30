@@ -2,20 +2,16 @@
 # @generated-id: 0205512146e6
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ProcessStatus = Union[
-    Literal[
-        "self_managed",
-        "missing_content",
-        "noop",
-        "done",
-        "todo",
-        "in_progress",
-        "error",
-        "waiting_for_capacity",
-    ],
-    UnrecognizedStr,
-]
+class ProcessStatus(str, Enum, metaclass=utils.OpenEnumMeta):
+    SELF_MANAGED = "self_managed"
+    MISSING_CONTENT = "missing_content"
+    NOOP = "noop"
+    DONE = "done"
+    TODO = "todo"
+    IN_PROGRESS = "in_progress"
+    ERROR = "error"
+    WAITING_FOR_CAPACITY = "waiting_for_capacity"

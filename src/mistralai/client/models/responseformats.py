@@ -2,15 +2,11 @@
 # @generated-id: c4462a05fb08
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ResponseFormats = Union[
-    Literal[
-        "text",
-        "json_object",
-        "json_schema",
-    ],
-    UnrecognizedStr,
-]
+class ResponseFormats(str, Enum, metaclass=utils.OpenEnumMeta):
+    TEXT = "text"
+    JSON_OBJECT = "json_object"
+    JSON_SCHEMA = "json_schema"

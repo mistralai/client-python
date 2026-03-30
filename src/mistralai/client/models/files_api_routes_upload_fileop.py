@@ -4,6 +4,8 @@
 from __future__ import annotations
 from .file import File, FileTypedDict
 from .filepurpose import FilePurpose
+from enum import Enum
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,15 +14,14 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import FieldMetadata, MultipartFormMetadata
-from pydantic import model_serializer
-from typing import Literal, Optional
+from pydantic import field_serializer, model_serializer
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-FilesAPIRoutesUploadFileFileVisibility = Literal[
-    "workspace",
-    "user",
-]
+class FilesAPIRoutesUploadFileFileVisibility(str, Enum):
+    WORKSPACE = "workspace"
+    USER = "user"
 
 
 class MultiPartBodyParamsTypedDict(TypedDict):
@@ -57,9 +58,18 @@ class MultiPartBodyParams(BaseModel):
 
     visibility: Annotated[
         Optional[FilesAPIRoutesUploadFileFileVisibility], FieldMetadata(multipart=True)
-    ] = "workspace"
+    ] = FilesAPIRoutesUploadFileFileVisibility.WORKSPACE
 
     purpose: Annotated[Optional[FilePurpose], FieldMetadata(multipart=True)] = None
+
+    @field_serializer("purpose")
+    def serialize_purpose(self, value):
+        if isinstance(value, str):
+            try:
+                return models.FilePurpose(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

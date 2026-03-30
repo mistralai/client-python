@@ -4,11 +4,14 @@
 
 ```python
 from mistralai.client.models import FineTuneableModelType
-value: FineTuneableModelType = "completion"
+
+value = FineTuneableModelType.COMPLETION
 ```
 
 
 ## Values
 
-- `"completion"`
-- `"classifier"`
+| Name         | Value        |
+| ------------ | ------------ |
+| `COMPLETION` | completion   |
+| `CLASSIFIER` | classifier   |

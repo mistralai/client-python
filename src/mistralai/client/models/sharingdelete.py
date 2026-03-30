@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .entitytype import EntityType
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,7 +11,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -30,6 +31,15 @@ class SharingDelete(BaseModel):
     r"""The type of entity, used to share a library."""
 
     org_id: OptionalNullable[str] = UNSET
+
+    @field_serializer("share_with_type")
+    def serialize_share_with_type(self, value):
+        if isinstance(value, str):
+            try:
+                return models.EntityType(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

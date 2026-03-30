@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from datetime import datetime
+from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,23 +13,23 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-JobsAPIRoutesFineTuningGetFineTuningJobsStatus = Literal[
-    "QUEUED",
-    "STARTED",
-    "VALIDATING",
-    "VALIDATED",
-    "RUNNING",
-    "FAILED_VALIDATION",
-    "FAILED",
-    "SUCCESS",
-    "CANCELLED",
-    "CANCELLATION_REQUESTED",
-]
-r"""The current job state to filter on. When set, the other results are not displayed."""
+class JobsAPIRoutesFineTuningGetFineTuningJobsStatus(str, Enum):
+    r"""The current job state to filter on. When set, the other results are not displayed."""
+
+    QUEUED = "QUEUED"
+    STARTED = "STARTED"
+    VALIDATING = "VALIDATING"
+    VALIDATED = "VALIDATED"
+    RUNNING = "RUNNING"
+    FAILED_VALIDATION = "FAILED_VALIDATION"
+    FAILED = "FAILED"
+    SUCCESS = "SUCCESS"
+    CANCELLED = "CANCELLED"
+    CANCELLATION_REQUESTED = "CANCELLATION_REQUESTED"
 
 
 class JobsAPIRoutesFineTuningGetFineTuningJobsRequestTypedDict(TypedDict):

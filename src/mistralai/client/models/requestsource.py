@@ -2,11 +2,10 @@
 # @generated-id: 3f2774d9e609
 
 from __future__ import annotations
-from typing import Literal
+from enum import Enum
 
 
-RequestSource = Literal[
-    "api",
-    "playground",
-    "agent_builder_v1",
-]
+class RequestSource(str, Enum):
+    API = "api"
+    PLAYGROUND = "playground"
+    AGENT_BUILDER_V1 = "agent_builder_v1"

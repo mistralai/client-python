@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .apiendpoint import APIEndpoint
 from .batchrequest import BatchRequest, BatchRequestTypedDict
+from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,7 +12,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
+from pydantic import field_serializer, model_serializer
 from typing import Dict, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -50,6 +51,15 @@ class CreateBatchJobRequest(BaseModel):
 
     timeout_hours: Optional[int] = 24
     r"""The timeout in hours for the batch inference job."""
+
+    @field_serializer("endpoint")
+    def serialize_endpoint(self, value):
+        if isinstance(value, str):
+            try:
+                return models.APIEndpoint(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

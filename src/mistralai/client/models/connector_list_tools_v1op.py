@@ -63,26 +63,15 @@ class ConnectorListToolsV1Request(BaseModel):
         return m
 
 
-ResponseConnectorListToolsV11TypedDict = TypeAliasType(
-    "ResponseConnectorListToolsV11TypedDict",
-    Union[MCPToolTypedDict, ConnectorToolTypedDict],
-)
-
-
-ResponseConnectorListToolsV11 = TypeAliasType(
-    "ResponseConnectorListToolsV11", Union[MCPTool, ConnectorTool]
-)
-
-
-ResponseConnectorListToolsV12TypedDict = TypeAliasType(
-    "ResponseConnectorListToolsV12TypedDict",
-    Union[List[ResponseConnectorListToolsV11TypedDict], List[Dict[str, Any]]],
+ResponseConnectorListToolsV1TypedDict = TypeAliasType(
+    "ResponseConnectorListToolsV1TypedDict",
+    Union[List[ConnectorToolTypedDict], List[MCPToolTypedDict], List[Dict[str, Any]]],
 )
 r"""Successful Response"""
 
 
-ResponseConnectorListToolsV12 = TypeAliasType(
-    "ResponseConnectorListToolsV12",
-    Union[List[ResponseConnectorListToolsV11], List[Dict[str, Any]]],
+ResponseConnectorListToolsV1 = TypeAliasType(
+    "ResponseConnectorListToolsV1",
+    Union[List[ConnectorTool], List[MCPTool], List[Dict[str, Any]]],
 )
 r"""Successful Response"""

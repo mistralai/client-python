@@ -2,14 +2,10 @@
 # @generated-id: 7b18ccbd8ca9
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-ModerationLLMAction = Union[
-    Literal[
-        "none",
-        "block",
-    ],
-    UnrecognizedStr,
-]
+class ModerationLLMAction(str, Enum, metaclass=utils.OpenEnumMeta):
+    NONE = "none"
+    BLOCK = "block"

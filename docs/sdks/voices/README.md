@@ -19,7 +19,7 @@ List all voices (excluding sample data)
 
 <!-- UsageSnippet language="python" operationID="list_voices_v1_audio_voices_get" method="get" path="/v1/audio/voices" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -27,7 +27,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.voices.list(limit=10, offset=0)
+    res = mistral.audio.voices.list(limit=10, offset=0, type_=models.ListVoicesV1AudioVoicesGetType.ALL)
 
     # Handle response
     print(res)
@@ -36,11 +36,12 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `limit`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Maximum number of voices to return                                  |
-| `offset`                                                            | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Offset for pagination                                               |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `limit`                                                                                           | *Optional[int]*                                                                                   | :heavy_minus_sign:                                                                                | Maximum number of voices to return                                                                |
+| `offset`                                                                                          | *Optional[int]*                                                                                   | :heavy_minus_sign:                                                                                | Offset for pagination                                                                             |
+| `type`                                                                                            | [Optional[models.ListVoicesV1AudioVoicesGetType]](../../models/listvoicesv1audiovoicesgettype.md) | :heavy_minus_sign:                                                                                | Filter the voices between customs and presets                                                     |
+| `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |
 
 ### Response
 

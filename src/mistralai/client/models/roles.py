@@ -2,16 +2,12 @@
 # @generated-id: e41c04cf7422
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from enum import Enum
+from mistralai.client import utils
 
 
-Roles = Union[
-    Literal[
-        "system",
-        "user",
-        "assistant",
-        "tool",
-    ],
-    UnrecognizedStr,
-]
+class Roles(str, Enum, metaclass=utils.OpenEnumMeta):
+    SYSTEM = "system"
+    USER = "user"
+    ASSISTANT = "assistant"
+    TOOL = "tool"

@@ -2,27 +2,24 @@
 # @generated-id: 7c54fb6157a9
 
 from __future__ import annotations
+from enum import Enum
+from mistralai.client import utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
-    UnrecognizedStr,
 )
 import pydantic
 from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, List, Literal, Union
+from typing import Any, Dict, List
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-Visibility = Union[
-    Literal[
-        "model",
-        "app",
-    ],
-    UnrecognizedStr,
-]
+class Visibility(str, Enum, metaclass=utils.OpenEnumMeta):
+    MODEL = "model"
+    APP = "app"
 
 
 class MCPUIToolMetaTypedDict(TypedDict):

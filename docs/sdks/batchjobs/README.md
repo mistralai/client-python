@@ -7,6 +7,7 @@
 * [list](#list) - Get Batch Jobs
 * [create](#create) - Create Batch Job
 * [get](#get) - Get Batch Job
+* [delete](#delete) - Delete Batch Job
 * [cancel](#cancel) - Cancel Batch Job
 
 ## list
@@ -17,7 +18,7 @@ Get a list of batch jobs for your organization and user.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_jobs" method="get" path="/v1/batch/jobs" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -25,7 +26,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False, order_by="-created")
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False, order_by=models.OrderBy.MINUS_CREATED)
 
     # Handle response
     print(res)
@@ -65,7 +66,7 @@ Create a new batch job, it will be queued for processing.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_create_batch_job" method="post" path="/v1/batch/jobs" -->
 ```python
-from mistralai.client import Mistral
+from mistralai.client import Mistral, models
 import os
 
 
@@ -73,7 +74,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.create(endpoint="/v1/moderations", model="mistral-small-latest", timeout_hours=24)
+    res = mistral.batch.jobs.create(endpoint=models.APIEndpoint.ROOT_V1_MODERATIONS, model="mistral-small-latest", timeout_hours=24)
 
     # Handle response
     print(res)
@@ -140,6 +141,46 @@ with Mistral(
 ### Response
 
 **[models.BatchJob](../../models/batchjob.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
+
+## delete
+
+Request the deletion of a batch job.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_delete_batch_job" method="delete" path="/v1/batch/jobs/{job_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.batch.jobs.delete(job_id="d9e71426-5791-49ad-b8d1-cf0d90d1b7d0")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `job_id`                                                            | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.DeleteBatchJobResponse](../../models/deletebatchjobresponse.md)**
 
 ### Errors
 

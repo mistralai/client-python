@@ -2,20 +2,19 @@
 # @generated-id: d74dd0d2ddac
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UnrecognizedStr
+from enum import Enum
+from mistralai.client import models, utils
+from mistralai.client.types import BaseModel
 import pydantic
-from typing import Literal, Union
+from pydantic import field_serializer
 from typing_extensions import Annotated, TypedDict
 
 
-Format = Union[
-    Literal[
-        "markdown",
-        "html",
-    ],
-    UnrecognizedStr,
-]
-r"""Format of the table"""
+class Format(str, Enum, metaclass=utils.OpenEnumMeta):
+    r"""Format of the table"""
+
+    MARKDOWN = "markdown"
+    HTML = "html"
 
 
 class OCRTableObjectTypedDict(TypedDict):
@@ -36,6 +35,15 @@ class OCRTableObject(BaseModel):
 
     format_: Annotated[Format, pydantic.Field(alias="format")]
     r"""Format of the table"""
+
+    @field_serializer("format_")
+    def serialize_format_(self, value):
+        if isinstance(value, str):
+            try:
+                return models.Format(value)
+            except ValueError:
+                return value
+        return value
 
 
 try:

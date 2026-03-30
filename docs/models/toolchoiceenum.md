@@ -5,16 +5,17 @@
 ```python
 from mistralai.client.models import ToolChoiceEnum
 
+value = ToolChoiceEnum.AUTO
+
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ToolChoiceEnum = "auto"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"auto"`
-- `"none"`
-- `"any"`
-- `"required"`
+| Name       | Value      |
+| ---------- | ---------- |
+| `AUTO`     | auto       |
+| `NONE`     | none       |
+| `ANY`      | any        |
+| `REQUIRED` | required   |
