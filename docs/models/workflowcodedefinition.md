@@ -1,0 +1,14 @@
+# WorkflowCodeDefinition
+
+
+## Fields
+
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `input_schema`                                                     | Dict[str, *Any*]                                                   | :heavy_check_mark:                                                 | Input schema of the workflow's run method                          |
+| `output_schema`                                                    | Dict[str, *Any*]                                                   | :heavy_minus_sign:                                                 | Output schema of the workflow's run method                         |
+| `signals`                                                          | List[[models.SignalDefinition](../models/signaldefinition.md)]     | :heavy_minus_sign:                                                 | Signal handlers defined by the workflow                            |
+| `queries`                                                          | List[[models.QueryDefinition](../models/querydefinition.md)]       | :heavy_minus_sign:                                                 | Query handlers defined by the workflow                             |
+| `updates`                                                          | List[[models.UpdateDefinition](../models/updatedefinition.md)]     | :heavy_minus_sign:                                                 | Update handlers defined by the workflow                            |
+| `enforce_determinism`                                              | *Optional[bool]*                                                   | :heavy_minus_sign:                                                 | Whether the workflow enforces deterministic execution              |
+| `execution_timeout`                                                | *Optional[float]*                                                  | :heavy_minus_sign:                                                 | Maximum total execution time including retries and continue-as-new |
