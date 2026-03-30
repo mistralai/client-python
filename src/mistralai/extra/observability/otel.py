@@ -40,16 +40,6 @@ MISTRAL_SDK_DEBUG_TRACING: bool = (
     os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
 )
 DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=true."
-GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS = getattr(
-    gen_ai_attributes,
-    "GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS",
-    "gen_ai.usage.cache_read.input_tokens",
-)
-GEN_AI_AGENT_VERSION = getattr(
-    gen_ai_attributes,
-    "GEN_AI_AGENT_VERSION",
-    "gen_ai.agent.version",
-)
 
 
 class MistralAIAttributes:
@@ -270,7 +260,9 @@ def _enrich_response_genai_attrs(
 
         cached_input_tokens = _extract_cached_input_tokens(usage)
         if cached_input_tokens is not None:
-            attributes[GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS] = cached_input_tokens
+            attributes[
+                gen_ai_attributes.GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS
+            ] = cached_input_tokens
 
     set_available_attributes(span, attributes)
 
@@ -303,7 +295,7 @@ def _enrich_create_agent(span: Span, response_data: dict[str, Any]) -> None:
         gen_ai_attributes.GEN_AI_AGENT_DESCRIPTION: response_data.get("description"),
         gen_ai_attributes.GEN_AI_AGENT_ID: response_data.get("id"),
         gen_ai_attributes.GEN_AI_AGENT_NAME: response_data.get("name"),
-        GEN_AI_AGENT_VERSION: str(response_data.get("version")),
+        gen_ai_attributes.GEN_AI_AGENT_VERSION: str(response_data.get("version")),
         gen_ai_attributes.GEN_AI_REQUEST_MODEL: response_data.get("model"),
         gen_ai_attributes.GEN_AI_SYSTEM_INSTRUCTIONS: response_data.get("instructions"),
     }
