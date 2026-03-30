@@ -637,8 +637,6 @@ print(res.choices[0].message.content)
 
 ### [Events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md)
 
-* [send_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#send_event) - Receive Workflow Event
-* [send_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/events/README.md#get_workflow_events) - Get Workflow Events
 
@@ -696,8 +694,6 @@ print(res.choices[0].message.content)
 
 #### [Workflows.Events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md)
 
-* [send_event](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#send_event) - Receive Workflow Event
-* [send_events_batch](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsevents/README.md#get_workflow_events) - Get Workflow Events
 
@@ -948,8 +944,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 105 of 173 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 173 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 103 of 169 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 169 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
