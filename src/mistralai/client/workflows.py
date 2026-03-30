@@ -14,6 +14,7 @@ from mistralai.client.schedules import Schedules
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
+from mistralai.client.workers import Workers
 from mistralai.client.workflows_events import WorkflowsEvents
 from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 from typing_extensions import deprecated
@@ -29,6 +30,7 @@ class Workflows(BaseSDK):
     metrics: Metrics
     runs: Runs
     schedules: Schedules
+    workers: Workers
     events: WorkflowsEvents
     deployments: Deployments
 
@@ -44,6 +46,7 @@ class Workflows(BaseSDK):
         self.metrics = Metrics(self.sdk_configuration, parent_ref=self.parent_ref)
         self.runs = Runs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.schedules = Schedules(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.workers = Workers(self.sdk_configuration, parent_ref=self.parent_ref)
         self.events = WorkflowsEvents(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
