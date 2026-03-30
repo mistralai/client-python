@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Mapping, Optional, Union
 
 
 class WorkflowsEvents(BaseSDK):
-    def receive_workflow_event(
+    def send_event(
         self,
         *,
         event: Union[
@@ -111,7 +111,7 @@ class WorkflowsEvents(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def receive_workflow_event_async(
+    async def send_event_async(
         self,
         *,
         event: Union[
@@ -211,7 +211,7 @@ class WorkflowsEvents(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def receive_workflow_events_batch(
+    def send_events_batch(
         self,
         *,
         events: Union[
@@ -315,7 +315,7 @@ class WorkflowsEvents(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def receive_workflow_events_batch_async(
+    async def send_events_batch_async(
         self,
         *,
         events: Union[

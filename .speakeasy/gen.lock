@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 463d7bdb3f827922fff6e7a9e1dc09ec
+  docChecksum: 5dc178f76bda42bff2a1efe2ade6ce1a
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.2.0rc1
-  configChecksum: c8c010d5fe5b11bf44e0ab048a2f7e9a
+  releaseVersion: 2.2.0rc2
+  configChecksum: a070d48160a03b893e2a26141ff4723f
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: ea079c2e-a12c-493c-8efb-a9762e991b50
-  pristine_commit_hash: e2352f93e359fc65c00ad6cc04c6e2167424ff5f
-  pristine_tree_hash: 60f2f179ff27fe8be3c50ff8dded0f32427ee36b
+  generation_id: fe447a6a-75de-45e0-a302-05d34989224a
+  pristine_commit_hash: 3ae1d96a2924cd1ae4e3d600f959687a7f82ddc1
+  pristine_tree_hash: 7ddaa03b8484400c18b7e77566625ddda654248d
 features:
   python:
     acceptHeaders: 3.0.0
@@ -1407,8 +1407,8 @@ trackedFiles:
     pristine_git_object: 154ece82c1932053d4764d7d8fb2ab0f394027b2
   docs/models/getrunhistoryv1workflowsrunsrunidhistorygetrequest.md:
     id: d0010e389ace
-    last_write_checksum: sha1:656aedb84d30a4f532ed0e2247f5424023fb4fe2
-    pristine_git_object: 8d4af7322e4ebe359216fb794c7209c3dc624d69
+    last_write_checksum: sha1:9083de20179b09071ac9f5ded13a15b70d4fea87
+    pristine_git_object: a2d1f1b4aa6663e205dfd98ecac7c6964ec68188
   docs/models/getrunv1workflowsrunsrunidgetrequest.md:
     id: ac9de7c67a5f
     last_write_checksum: sha1:40fa492321f18e77792d49cb9142b0293be7ffe3
@@ -1443,8 +1443,8 @@ trackedFiles:
     pristine_git_object: 5594402ce103f05e902b33c465fbaa225a3e5eb6
   docs/models/getworkflowexecutionhistoryv1workflowsexecutionsexecutionidhistorygetrequest.md:
     id: 7524ddab7997
-    last_write_checksum: sha1:b47a3b47cee2e582a58d2504511c37266bb3b0b3
-    pristine_git_object: dc63ca0a3d798c3be90f3b126357e239edb34806
+    last_write_checksum: sha1:39f74888b1cc5ff5257f890f2d17725ec313d57f
+    pristine_git_object: 1934b7f961625c636fa020a655b61b0302e2b725
   docs/models/getworkflowexecutiontraceeventsrequest.md:
     id: 6722ae5f7115
     last_write_checksum: sha1:2764ba45e55fe648e50f8d397826cebbf3a3dced
@@ -2921,6 +2921,10 @@ trackedFiles:
     id: fc4df52fb9b5
     last_write_checksum: sha1:72636dc7ae74264bb5158d284ef6f83da5290b27
     pristine_git_object: 4ca7333c412ad819e3e02c61debe402e3f9b0af9
+  docs/models/workerinfo.md:
+    id: f8e56340a1d8
+    last_write_checksum: sha1:29c6d1ac23a55a0a8ecb108833c516332d358b11
+    pristine_git_object: 997f62ab0242d0017871a434ffbfbc2c58c69294
   docs/models/workflow.md:
     id: a782201b7327
     last_write_checksum: sha1:0a6dbea734dc94626fb53ab37c619fef48b9db63
@@ -3247,12 +3251,12 @@ trackedFiles:
     pristine_git_object: cb207d8be2ca86b00dc797fc06eabd1498adb770
   docs/sdks/events/README.md:
     id: cf45a4390b9b
-    last_write_checksum: sha1:9305fbb844865a70722fc3d4354537a5e2939e1c
-    pristine_git_object: 1de37e5c9aad042cacde48d885f16210ea08b817
+    last_write_checksum: sha1:45137ac490479dc39fbfdb62942724c3b1d57140
+    pristine_git_object: 436bb6a31703d248395ac8b8675b2894e975c78c
   docs/sdks/executions/README.md:
     id: 401745b17323
-    last_write_checksum: sha1:74e97aa7308bebb4865de66110386f3d863049f2
-    pristine_git_object: a2f4aeb06e6b7e609a0def9347864201122a40f0
+    last_write_checksum: sha1:67b02156343207bfd48b4199908c6543ea2e23bb
+    pristine_git_object: 43c3c0519c994ea678b492e54d2a466336429dfa
   docs/sdks/fields/README.md:
     id: fdb6c4f3bd69
     last_write_checksum: sha1:ea6dea75f85d25fd0ccdd2c659ecec43d0e5242d
@@ -3295,8 +3299,8 @@ trackedFiles:
     pristine_git_object: ce8f1f689512a9eac118c05ec1e9acf17e931556
   docs/sdks/runs/README.md:
     id: 4598fd39b715
-    last_write_checksum: sha1:e049a4caff6e27e6fc62b44f372c0dd4877c79dc
-    pristine_git_object: bd7865446b10d0ce2728a763a535d919dc2b4446
+    last_write_checksum: sha1:9b5afa2866e24ef4dc188f0b388187cd5ec80083
+    pristine_git_object: 6efc34e27adc1c0c1a3b619049c458b398770fa9
   docs/sdks/schedules/README.md:
     id: 2f28c809a225
     last_write_checksum: sha1:70cf78f4dd201a70da97aa86a1f5d936dfabbe13
@@ -3313,14 +3317,18 @@ trackedFiles:
     id: 4f1a657c8f68
     last_write_checksum: sha1:8ddfebe91ff50ea863d4c0bd85c75458a482667e
     pristine_git_object: 3b4d135f39bdfc3237c36c03367952eae54bdd48
+  docs/sdks/workers/README.md:
+    id: aaba95bc3191
+    last_write_checksum: sha1:d940b7a4fc0866c94714f1e2a994cf08f1f83b58
+    pristine_git_object: 5e2380d1d15afd204e20d0a16adc84f30e91e041
   docs/sdks/workflows/README.md:
     id: 80c76ce944c0
     last_write_checksum: sha1:572ef0ec9cadcd850e3966dad909a3d2e901280a
     pristine_git_object: e65383ca453849b3bab58f921f80f5b8e7df7839
   docs/sdks/workflowsevents/README.md:
     id: 514b42269280
-    last_write_checksum: sha1:819db9d9561cc4802f139bbd1dec8045b718866f
-    pristine_git_object: bae0cb908bf2dcc0ddabfc340d929eddaea38c97
+    last_write_checksum: sha1:dd4afb7d9af0f71d9049131227f7da2b135589cb
+    pristine_git_object: b89cde24eef4083057d3c22f947d5e1e0fe90b49
   py.typed:
     id: 258c3ed47ae4
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -3347,8 +3355,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:b98fd6b10eefa6ebd5e051393980c124cd65058d
-    pristine_git_object: 5cebd13059e236d30d9d91cd3fdd5a7da81c42b5
+    last_write_checksum: sha1:3630c9f9a0c2fecfaca2d6e32559673f72bf2172
+    pristine_git_object: 54dfc8a03fcbaa15a3e1986b5a0ffc066773ae25
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -3451,12 +3459,12 @@ trackedFiles:
     pristine_git_object: 25b87255a51021079f8ba5cc60b43509e12f9a4d
   src/mistralai/client/events.py:
     id: ac9b961cc70d
-    last_write_checksum: sha1:2b128064a9cf9c1b99552fd2d7ec3e81f9aa6160
-    pristine_git_object: d44c0692278f07df2a1a21bc77f55cfe0ddc65c4
+    last_write_checksum: sha1:cd92fc550a2b4887b247863acfeb77597a2211e7
+    pristine_git_object: 22d3b1a27f696f6d1bb3dd8d4a43c1b3e38d5c27
   src/mistralai/client/executions.py:
     id: 974004d347a2
-    last_write_checksum: sha1:6e2247d95aa58732722c58b9ce57cfbf9e669c15
-    pristine_git_object: 7112dc1a94cb55a753246f5c7a83ff6a4d469bcc
+    last_write_checksum: sha1:295214ac21dd54e789c8e38d6ae0c71c63a414c6
+    pristine_git_object: 779097b507f9b16311d9686aac016032d3ffbf3b
   src/mistralai/client/fields.py:
     id: 862335210b20
     last_write_checksum: sha1:789ac221e3aec61d0d31abd1761e368e383fba88
@@ -3495,8 +3503,8 @@ trackedFiles:
     pristine_git_object: 3df1ca56638d59e5a8bd36fd762e49fd1c5df7b9
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:767af34246fb87d24793c8235c2e7a8f3ebdb6bf
-    pristine_git_object: a6ac62a6b71432a3b7b2de1678458f4e7a24a4bd
+    last_write_checksum: sha1:7946adb2598f1384fb2f0a4e6601abe9b09604ac
+    pristine_git_object: caaf77092f522379e1da167ee4c94d0727993c02
   src/mistralai/client/models/activitytaskcompletedattributesrequest.py:
     id: a9e5ef17794f
     last_write_checksum: sha1:c9862308564483a8da1e373ab2d94f0eb798a5a9
@@ -4523,8 +4531,8 @@ trackedFiles:
     pristine_git_object: b5d0980e197c19eaa70ac26f3b118a8e60364e3e
   src/mistralai/client/models/get_run_history_v1_workflows_runs_run_id_history_getop.py:
     id: 9d566ab77998
-    last_write_checksum: sha1:de2b5f449d510a05c9c8805e35f43085e5592e1d
-    pristine_git_object: d974f981d5b3e9055c787fec446e55f642c8823a
+    last_write_checksum: sha1:d3f4cd875f677a479976cf843559f366b13a0fec
+    pristine_git_object: 24f1e8daf5eea541c8b0550aa642609178654877
   src/mistralai/client/models/get_run_v1_workflows_runs_run_id_getop.py:
     id: 60463c59ff01
     last_write_checksum: sha1:a851312a3e0c91273ad444c6e2cc81c8c541c9cd
@@ -4551,8 +4559,8 @@ trackedFiles:
     pristine_git_object: 186c55486ef2f9ba01b4c5ace5b91a416b0a6bcb
   src/mistralai/client/models/get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop.py:
     id: 8d636c8cad1e
-    last_write_checksum: sha1:026e7390d2df0f6f67bbd62fe6aa9ebaa0142f76
-    pristine_git_object: 66c6fb065dd395fbcd02031c968d49c757cb8da2
+    last_write_checksum: sha1:71ed0aba0f677e7a245527ee8954310f060456f9
+    pristine_git_object: cfb0c991333f1c23311109ca29362158910204b2
   src/mistralai/client/models/get_workflow_execution_trace_eventsop.py:
     id: 75438195bf19
     last_write_checksum: sha1:3fc47c8b7c301c1029f6a10e30298d8bc776d140
@@ -5749,6 +5757,10 @@ trackedFiles:
     id: 26b0903423e5
     last_write_checksum: sha1:e486f50095cc7540ce828fff7571c6aa6748bf2f
     pristine_git_object: f82b6ec1c89cae83ea21d9bae12a1984679262ae
+  src/mistralai/client/models/workerinfo.py:
+    id: 0c231087534e
+    last_write_checksum: sha1:0d9e4e56c7a4c570ccf49bcdc835b33f7500629b
+    pristine_git_object: 65edcec61125e3276bddabf424ec289667b3b671
   src/mistralai/client/models/workflow.py:
     id: 1548cd73984e
     last_write_checksum: sha1:14e1db57af8784d77633d7dc1d22198f2377909b
@@ -6019,8 +6031,8 @@ trackedFiles:
     pristine_git_object: ceb8de4fe3edfbd818f6002381c365ea8437ac2c
   src/mistralai/client/runs.py:
     id: 4297d58aeb21
-    last_write_checksum: sha1:779390755335dda530d2e563bbcf38e5ea161009
-    pristine_git_object: 01b667cf9daf9ea37064f8e489fb45f84c87f203
+    last_write_checksum: sha1:c3bf240846fefbf97e63283b3e5cd217c41816ea
+    pristine_git_object: 5b534b63106ee5133032ec9cb8c6ca4a5437d553
   src/mistralai/client/schedules.py:
     id: d3b4fe452390
     last_write_checksum: sha1:74a1455c5ba17253d2e878f638b7314edca66e21
@@ -6129,14 +6141,18 @@ trackedFiles:
     id: ab76b1377d79
     last_write_checksum: sha1:a71af619fe7d44cb4e537b739cf3ae71d1f8da68
     pristine_git_object: 2d57185746c0b2deee7c614c69a528c4a6565ee7
+  src/mistralai/client/workers.py:
+    id: 54a46aba8359
+    last_write_checksum: sha1:009ae7cbfc6ff8eb8bf29a6ccca93192ef643416
+    pristine_git_object: e2d41c70ecaeec1439ff9398b79de2af7eca54f1
   src/mistralai/client/workflows.py:
     id: e2a0381191f6
-    last_write_checksum: sha1:95e516c32702cfcf121f8278fcaf1bf6f5847c76
-    pristine_git_object: e2de6524a730c7c0d1877e51dac901e354c4c201
+    last_write_checksum: sha1:df0555b350409d103ca9715c69fab2e061d7ea41
+    pristine_git_object: aae12f774608d18baf1bf5ccedd1a39363c0c29d
   src/mistralai/client/workflows_events.py:
     id: 6d4f674ce8ef
-    last_write_checksum: sha1:3c9d60fa7c49e547a25ae62b941cae7a5437c21c
-    pristine_git_object: 03df3f78288f2b3263bf1ed5ce7aa3a8d138d0f0
+    last_write_checksum: sha1:7196b5cfb3329b3234cd0a9d85b99dc2c82e5a4d
+    pristine_git_object: 2c6b14ee58712adc3fdc7fd53dbea341fb621722
 examples:
   list_models_v1_models_get:
     speakeasy-default-list-models-v1-models-get:
@@ -8288,6 +8304,8 @@ examples:
       parameters:
         path:
           execution_id: "<id>"
+        query:
+          decode_payloads: false
       responses:
         "200":
           application/json: "<value>"
@@ -8449,6 +8467,8 @@ examples:
       parameters:
         path:
           run_id: "f7296489-0212-4239-9e35-12fabfe8cd11"
+        query:
+          decode_payloads: false
       responses:
         "200":
           application/json: "<value>"
@@ -8517,7 +8537,7 @@ examples:
           limit: 100
       responses:
         "200":
-          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_IN_PROGRESS", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json_patch", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
+          application/json: {"events": [{"event_id": "<id>", "event_timestamp": 93683, "root_workflow_exec_id": "<id>", "parent_workflow_exec_id": "<id>", "workflow_exec_id": "<id>", "workflow_run_id": "<id>", "workflow_name": "<value>", "event_type": "CUSTOM_TASK_STARTED", "attributes": {"custom_task_id": "<id>", "custom_task_type": "<value>", "payload": {"type": "json", "value": [{"path": "/sys", "value": "<value>", "op": "remove"}]}}}]}
         "422":
           application/json: {}
   list_deployments_v1_workflows_deployments_get:
@@ -8540,9 +8560,26 @@ examples:
           application/json: {"id": "c3310963-59e6-41a6-b644-84aca97cc893", "name": "<value>", "is_active": true, "created_at": "2024-10-22T00:46:19.102Z", "updated_at": "2024-10-19T15:10:50.721Z", "workers": []}
         "422":
           application/json: {}
+  get_worker_info_v1_workflows_workers_whoami_get:
+    speakeasy-default-get-worker-info-v1-workflows-workers-whoami-get:
+      responses:
+        "200":
+          application/json: {"scheduler_url": "https://closed-passport.info/", "namespace": "<value>", "tls": false}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.models.list()`:  `response.data[].union(fine-tuned).job` **Changed** (Breaking ⚠️)\n* `mistral.beta.connectors.list_tools()`:  `response` **Changed** (Breaking ⚠️)\n* `mistral.models.update()`:  `response` **Changed** (Breaking ⚠️)\n* `mistral.models.retrieve()`:  `response.union(fine-tuned).job` **Changed** (Breaking ⚠️)\n* `mistral.workflows.metrics.get_workflow_metrics()`: **Added**\n* `mistral.workflows.get_workflow()`: **Added**\n* `mistral.workflows.update_workflow()`: **Added**\n* `mistral.workflows.get_workflow_registration()`: **Added**\n* `mistral.workflows.archive_workflow()`: **Added**\n* `mistral.workflows.unarchive_workflow()`: **Added**\n* `mistral.workflows.executions.get_workflow_execution()`: **Added**\n* `mistral.workflows.executions.get_workflow_execution_history()`: **Added**\n* `mistral.workflows.executions.signal_workflow_execution()`: **Added**\n* `mistral.workflows.executions.query_workflow_execution()`: **Added**\n* `mistral.workflows.executions.terminate_workflow_execution()`: **Added**\n* `mistral.workflows.executions.batch_terminate_workflow_executions()`: **Added**\n* `mistral.workflows.executions.cancel_workflow_execution()`: **Added**\n* `mistral.workflows.executions.batch_cancel_workflow_executions()`: **Added**\n* `mistral.workflows.executions.reset_workflow()`: **Added**\n* `mistral.workflows.executions.update_workflow_execution()`: **Added**\n* `mistral.workflows.executions.get_workflow_execution_trace_otel()`: **Added**\n* `mistral.workflows.executions.get_workflow_execution_trace_summary()`: **Added**\n* `mistral.workflows.executions.get_workflow_execution_trace_events()`: **Added**\n* `mistral.workflows.executions.stream()`: **Added**\n* `mistral.workflows.runs.get_run()`: **Added**\n* `mistral.batch.jobs.delete()`: **Added**\n* `mistral.workflows.runs.list_runs()`: **Added**\n* `mistral.workflows.runs.get_run_history()`: **Added**\n* `mistral.workflows.schedules.get_schedules()`: **Added**\n* `mistral.workflows.schedules.schedule_workflow()`: **Added**\n* `mistral.workflows.schedules.unschedule_workflow()`: **Added**\n* `mistral.workflows.events.receive_workflow_event()`: **Added**\n* `mistral.workflows.events.receive_workflow_events_batch()`: **Added**\n* `mistral.workflows.events.get_stream_events()`: **Added**\n* `mistral.workflows.events.get_workflow_events()`: **Added**\n* `mistral.workflows.deployments.list_deployments()`: **Added**\n* `mistral.workflows.deployments.get_deployment()`: **Added**\n* `mistral.events.receive_workflow_event()`: **Added**\n* `mistral.events.receive_workflow_events_batch()`: **Added**\n* `mistral.events.get_stream_events()`: **Added**\n* `mistral.events.get_workflow_events()`: **Added**\n* `mistral.audio.voices.list()`:  `request.type` **Added**\n* `mistral.workflows.execute_workflow_registration()`: **Added**\n* `mistral.workflows.execute_workflow()`: **Added**\n* `mistral.workflows.get_workflow_registrations()`: **Added**\n* `mistral.beta.libraries.list()`: \n  *  `request` **Changed**\n  *  `response.pagination` **Added**\n  *  `error.status[422]` **Added**\n* `mistral.beta.connectors.call_tool()`:  `request.credentials_name` **Added**\n* `mistral.workflows.get_workflows()`: **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.workflows.workers.whoami()`: **Added**
+  * `mistral.workflows.events.send_event()`: **Added**
+  * `mistral.workflows.events.send_events_batch()`: **Added**
+  * `mistral.events.send_event()`: **Added**
+  * `mistral.events.send_events_batch()`: **Added**
+  * `mistral.workflows.events.receive_workflow_event()`: **Removed** (Breaking ⚠️)
+  * `mistral.workflows.events.receive_workflow_events_batch()`: **Removed** (Breaking ⚠️)
+  * `mistral.events.receive_workflow_event()`: **Removed** (Breaking ⚠️)
+  * `mistral.events.receive_workflow_events_batch()`: **Removed** (Breaking ⚠️)
+  * `mistral.workflows.executions.get_workflow_execution_history()`:  `request.decode_payloads` **Added**
+  * `mistral.workflows.runs.get_run_history()`:  `request.decode_payloads` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

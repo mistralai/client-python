@@ -637,8 +637,8 @@ print(res.choices[0].message.content)
 
 ### [Events](docs/sdks/events/README.md)
 
-* [receive_workflow_event](docs/sdks/events/README.md#receive_workflow_event) - Receive Workflow Event
-* [receive_workflow_events_batch](docs/sdks/events/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [send_event](docs/sdks/events/README.md#send_event) - Receive Workflow Event
+* [send_events_batch](docs/sdks/events/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](docs/sdks/events/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](docs/sdks/events/README.md#get_workflow_events) - Get Workflow Events
 
@@ -696,8 +696,8 @@ print(res.choices[0].message.content)
 
 #### [Workflows.Events](docs/sdks/workflowsevents/README.md)
 
-* [receive_workflow_event](docs/sdks/workflowsevents/README.md#receive_workflow_event) - Receive Workflow Event
-* [receive_workflow_events_batch](docs/sdks/workflowsevents/README.md#receive_workflow_events_batch) - Receive Workflow Events Batch
+* [send_event](docs/sdks/workflowsevents/README.md#send_event) - Receive Workflow Event
+* [send_events_batch](docs/sdks/workflowsevents/README.md#send_events_batch) - Receive Workflow Events Batch
 * [get_stream_events](docs/sdks/workflowsevents/README.md#get_stream_events) - Get Stream Events
 * [get_workflow_events](docs/sdks/workflowsevents/README.md#get_workflow_events) - Get Workflow Events
 
@@ -733,6 +733,10 @@ print(res.choices[0].message.content)
 * [get_schedules](docs/sdks/schedules/README.md#get_schedules) - Get Schedules
 * [schedule_workflow](docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
 * [unschedule_workflow](docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
+
+#### [Workflows.Workers](docs/sdks/workers/README.md)
+
+* [whoami](docs/sdks/workers/README.md#whoami) - Get Worker Info
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -944,8 +948,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 105 of 172 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 172 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 105 of 173 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 173 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
