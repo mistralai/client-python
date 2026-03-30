@@ -191,6 +191,7 @@ class Executions(BaseSDK):
         self,
         *,
         execution_id: str,
+        decode_payloads: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -199,6 +200,7 @@ class Executions(BaseSDK):
         r"""Get Workflow Execution History
 
         :param execution_id:
+        :param decode_payloads:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -216,6 +218,7 @@ class Executions(BaseSDK):
 
         request = models.GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest(
             execution_id=execution_id,
+            decode_payloads=decode_payloads,
         )
 
         req = self._build_request(
@@ -279,6 +282,7 @@ class Executions(BaseSDK):
         self,
         *,
         execution_id: str,
+        decode_payloads: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -287,6 +291,7 @@ class Executions(BaseSDK):
         r"""Get Workflow Execution History
 
         :param execution_id:
+        :param decode_payloads:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -304,6 +309,7 @@ class Executions(BaseSDK):
 
         request = models.GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest(
             execution_id=execution_id,
+            decode_payloads=decode_payloads,
         )
 
         req = self._build_request_async(

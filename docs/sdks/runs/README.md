@@ -112,7 +112,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.runs.get_run_history(run_id="f7296489-0212-4239-9e35-12fabfe8cd11")
+    res = mistral.workflows.runs.get_run_history(run_id="f7296489-0212-4239-9e35-12fabfe8cd11", decode_payloads=False)
 
     # Handle response
     print(res)
@@ -124,6 +124,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `run_id`                                                            | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `decode_payloads`                                                   | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
