@@ -109,13 +109,13 @@ class Workflows(BaseSDK):
         )
 
         # Wait for completion
-        final_execution = self._wait_for_workflow_completion(
+        final_execution = self.wait_for_workflow_completion(
             execution.execution_id, polling_interval, max_attempts
         )
 
         return final_execution.result
 
-    def _wait_for_workflow_completion(
+    def wait_for_workflow_completion(
         self,
         execution_id: str,
         polling_interval: int = 5,
@@ -207,13 +207,13 @@ class Workflows(BaseSDK):
         )
 
         # Wait for completion
-        final_execution = await self._wait_for_workflow_completion_async(
+        final_execution = await self.wait_for_workflow_completion_async(
             execution.execution_id, polling_interval, max_attempts
         )
 
         return final_execution.result
 
-    async def _wait_for_workflow_completion_async(
+    async def wait_for_workflow_completion_async(
         self,
         execution_id: str,
         polling_interval: int = 5,
