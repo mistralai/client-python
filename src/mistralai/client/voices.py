@@ -16,6 +16,7 @@ class Voices(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        type_: Optional[models.ListVoicesV1AudioVoicesGetType] = "all",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -27,6 +28,7 @@ class Voices(BaseSDK):
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
+        :param type: Filter the voices between customs and presets
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -45,6 +47,7 @@ class Voices(BaseSDK):
         request = models.ListVoicesV1AudioVoicesGetRequest(
             limit=limit,
             offset=offset,
+            type=type_,
         )
 
         req = self._build_request(
@@ -109,6 +112,7 @@ class Voices(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        type_: Optional[models.ListVoicesV1AudioVoicesGetType] = "all",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -120,6 +124,7 @@ class Voices(BaseSDK):
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
+        :param type: Filter the voices between customs and presets
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -138,6 +143,7 @@ class Voices(BaseSDK):
         request = models.ListVoicesV1AudioVoicesGetRequest(
             limit=limit,
             offset=offset,
+            type=type_,
         )
 
         req = self._build_request_async(

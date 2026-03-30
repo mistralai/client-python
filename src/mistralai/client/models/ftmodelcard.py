@@ -27,7 +27,6 @@ class FTModelCardTypedDict(TypedDict):
     r"""This is populated by Harmattan, but some fields have a name
     that we don't want to expose in the API.
     """
-    job: str
     root: str
     object: NotRequired[str]
     created: NotRequired[int]
@@ -40,6 +39,7 @@ class FTModelCardTypedDict(TypedDict):
     deprecation_replacement_model: NotRequired[Nullable[str]]
     default_model_temperature: NotRequired[Nullable[float]]
     type: Literal["fine-tuned"]
+    job: NotRequired[Nullable[str]]
     archived: NotRequired[bool]
 
 
@@ -52,8 +52,6 @@ class FTModelCard(BaseModel):
     r"""This is populated by Harmattan, but some fields have a name
     that we don't want to expose in the API.
     """
-
-    job: str
 
     root: str
 
@@ -82,6 +80,8 @@ class FTModelCard(BaseModel):
         pydantic.Field(alias="type"),
     ] = "fine-tuned"
 
+    job: OptionalNullable[str] = UNSET
+
     archived: Optional[bool] = False
 
     @model_serializer(mode="wrap")
@@ -98,6 +98,7 @@ class FTModelCard(BaseModel):
                 "deprecation",
                 "deprecation_replacement_model",
                 "default_model_temperature",
+                "job",
                 "archived",
             ]
         )
@@ -108,6 +109,7 @@ class FTModelCard(BaseModel):
                 "deprecation",
                 "deprecation_replacement_model",
                 "default_model_temperature",
+                "job",
             ]
         )
         serialized = handler(self)

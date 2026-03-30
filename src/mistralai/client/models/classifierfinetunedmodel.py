@@ -34,13 +34,13 @@ class ClassifierFineTunedModelTypedDict(TypedDict):
     root_version: str
     archived: bool
     capabilities: FineTunedModelCapabilitiesTypedDict
-    job: str
     classifier_targets: List[ClassifierTargetResultTypedDict]
     object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
+    job: NotRequired[Nullable[str]]
     model_type: Literal["classifier"]
 
 
@@ -61,8 +61,6 @@ class ClassifierFineTunedModel(BaseModel):
 
     capabilities: FineTunedModelCapabilities
 
-    job: str
-
     classifier_targets: List[ClassifierTargetResult]
 
     object: Annotated[
@@ -78,6 +76,8 @@ class ClassifierFineTunedModel(BaseModel):
 
     aliases: Optional[List[str]] = None
 
+    job: OptionalNullable[str] = UNSET
+
     model_type: Annotated[
         Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],
         pydantic.Field(alias="model_type"),
@@ -86,9 +86,9 @@ class ClassifierFineTunedModel(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "name", "description", "max_context_length", "aliases"]
+            ["object", "name", "description", "max_context_length", "aliases", "job"]
         )
-        nullable_fields = set(["name", "description"])
+        nullable_fields = set(["name", "description", "job"])
         serialized = handler(self)
         m = {}
 
