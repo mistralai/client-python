@@ -26,7 +26,7 @@ class GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetReque
     decode_payloads: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = False
+    ] = True
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

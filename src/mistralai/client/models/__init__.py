@@ -14,17 +14,9 @@ from typing import Any, TYPE_CHECKING
 from mistralai.client.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
-    from .activitytaskcompletedattributesrequest import (
-        ActivityTaskCompletedAttributesRequest,
-        ActivityTaskCompletedAttributesRequestTypedDict,
-    )
     from .activitytaskcompletedattributesresponse import (
         ActivityTaskCompletedAttributesResponse,
         ActivityTaskCompletedAttributesResponseTypedDict,
-    )
-    from .activitytaskcompletedrequest import (
-        ActivityTaskCompletedRequest,
-        ActivityTaskCompletedRequestTypedDict,
     )
     from .activitytaskcompletedresponse import (
         ActivityTaskCompletedResponse,
@@ -34,10 +26,6 @@ if TYPE_CHECKING:
         ActivityTaskFailedAttributes,
         ActivityTaskFailedAttributesTypedDict,
     )
-    from .activitytaskfailedrequest import (
-        ActivityTaskFailedRequest,
-        ActivityTaskFailedRequestTypedDict,
-    )
     from .activitytaskfailedresponse import (
         ActivityTaskFailedResponse,
         ActivityTaskFailedResponseTypedDict,
@@ -46,25 +34,13 @@ if TYPE_CHECKING:
         ActivityTaskRetryingAttributes,
         ActivityTaskRetryingAttributesTypedDict,
     )
-    from .activitytaskretryingrequest import (
-        ActivityTaskRetryingRequest,
-        ActivityTaskRetryingRequestTypedDict,
-    )
     from .activitytaskretryingresponse import (
         ActivityTaskRetryingResponse,
         ActivityTaskRetryingResponseTypedDict,
     )
-    from .activitytaskstartedattributesrequest import (
-        ActivityTaskStartedAttributesRequest,
-        ActivityTaskStartedAttributesRequestTypedDict,
-    )
     from .activitytaskstartedattributesresponse import (
         ActivityTaskStartedAttributesResponse,
         ActivityTaskStartedAttributesResponseTypedDict,
-    )
-    from .activitytaskstartedrequest import (
-        ActivityTaskStartedRequest,
-        ActivityTaskStartedRequestTypedDict,
     )
     from .activitytaskstartedresponse import (
         ActivityTaskStartedResponse,
@@ -595,25 +571,13 @@ if TYPE_CHECKING:
         CustomTaskCanceledAttributes,
         CustomTaskCanceledAttributesTypedDict,
     )
-    from .customtaskcanceledrequest import (
-        CustomTaskCanceledRequest,
-        CustomTaskCanceledRequestTypedDict,
-    )
     from .customtaskcanceledresponse import (
         CustomTaskCanceledResponse,
         CustomTaskCanceledResponseTypedDict,
     )
-    from .customtaskcompletedattributesrequest import (
-        CustomTaskCompletedAttributesRequest,
-        CustomTaskCompletedAttributesRequestTypedDict,
-    )
     from .customtaskcompletedattributesresponse import (
         CustomTaskCompletedAttributesResponse,
         CustomTaskCompletedAttributesResponseTypedDict,
-    )
-    from .customtaskcompletedrequest import (
-        CustomTaskCompletedRequest,
-        CustomTaskCompletedRequestTypedDict,
     )
     from .customtaskcompletedresponse import (
         CustomTaskCompletedResponse,
@@ -623,46 +587,24 @@ if TYPE_CHECKING:
         CustomTaskFailedAttributes,
         CustomTaskFailedAttributesTypedDict,
     )
-    from .customtaskfailedrequest import (
-        CustomTaskFailedRequest,
-        CustomTaskFailedRequestTypedDict,
-    )
     from .customtaskfailedresponse import (
         CustomTaskFailedResponse,
         CustomTaskFailedResponseTypedDict,
     )
-    from .customtaskinprogressattributesrequest import (
-        CustomTaskInProgressAttributesRequest,
-        CustomTaskInProgressAttributesRequestPayload,
-        CustomTaskInProgressAttributesRequestPayloadTypedDict,
-        CustomTaskInProgressAttributesRequestTypedDict,
-    )
     from .customtaskinprogressattributesresponse import (
         CustomTaskInProgressAttributesResponse,
-        CustomTaskInProgressAttributesResponsePayload,
-        CustomTaskInProgressAttributesResponsePayloadTypedDict,
         CustomTaskInProgressAttributesResponseTypedDict,
-        UnknownCustomTaskInProgressAttributesResponsePayload,
-    )
-    from .customtaskinprogressrequest import (
-        CustomTaskInProgressRequest,
-        CustomTaskInProgressRequestTypedDict,
+        Payload,
+        PayloadTypedDict,
+        UnknownPayload,
     )
     from .customtaskinprogressresponse import (
         CustomTaskInProgressResponse,
         CustomTaskInProgressResponseTypedDict,
     )
-    from .customtaskstartedattributesrequest import (
-        CustomTaskStartedAttributesRequest,
-        CustomTaskStartedAttributesRequestTypedDict,
-    )
     from .customtaskstartedattributesresponse import (
         CustomTaskStartedAttributesResponse,
         CustomTaskStartedAttributesResponseTypedDict,
-    )
-    from .customtaskstartedrequest import (
-        CustomTaskStartedRequest,
-        CustomTaskStartedRequestTypedDict,
     )
     from .customtaskstartedresponse import (
         CustomTaskStartedResponse,
@@ -671,10 +613,6 @@ if TYPE_CHECKING:
     from .customtasktimedoutattributes import (
         CustomTaskTimedOutAttributes,
         CustomTaskTimedOutAttributesTypedDict,
-    )
-    from .customtasktimedoutrequest import (
-        CustomTaskTimedOutRequest,
-        CustomTaskTimedOutRequestTypedDict,
     )
     from .customtasktimedoutresponse import (
         CustomTaskTimedOutResponse,
@@ -1160,12 +1098,6 @@ if TYPE_CHECKING:
     )
     from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
     from .jsonpatchappend import JSONPatchAppend, JSONPatchAppendTypedDict
-    from .jsonpatchpayloadrequest import (
-        JSONPatchPayloadRequest,
-        JSONPatchPayloadRequestTypedDict,
-        JSONPatchPayloadRequestValue,
-        JSONPatchPayloadRequestValueTypedDict,
-    )
     from .jsonpatchpayloadresponse import (
         JSONPatchPayloadResponse,
         JSONPatchPayloadResponseTypedDict,
@@ -1175,7 +1107,6 @@ if TYPE_CHECKING:
     )
     from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
-    from .jsonpayloadrequest import JSONPayloadRequest, JSONPayloadRequestTypedDict
     from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .judge import (
@@ -1977,68 +1908,26 @@ if TYPE_CHECKING:
         WorkflowCodeDefinition,
         WorkflowCodeDefinitionTypedDict,
     )
-    from .workfloweventbatchrequest import (
-        WorkflowEventBatchRequest,
-        WorkflowEventBatchRequestEvent,
-        WorkflowEventBatchRequestEventTypedDict,
-        WorkflowEventBatchRequestTypedDict,
-    )
-    from .workfloweventbatchresponse import (
-        WorkflowEventBatchResponse,
-        WorkflowEventBatchResponseStatus,
-        WorkflowEventBatchResponseTypedDict,
-    )
-    from .workfloweventrequest import (
-        WorkflowEventRequest,
-        WorkflowEventRequestEvent,
-        WorkflowEventRequestEventTypedDict,
-        WorkflowEventRequestTypedDict,
-    )
-    from .workfloweventresponse import (
-        WorkflowEventResponse,
-        WorkflowEventResponseStatus,
-        WorkflowEventResponseTypedDict,
-    )
     from .workfloweventtype import WorkflowEventType
     from .workflowexecutioncanceledattributes import (
         WorkflowExecutionCanceledAttributes,
         WorkflowExecutionCanceledAttributesTypedDict,
     )
-    from .workflowexecutioncanceledrequest import (
-        WorkflowExecutionCanceledRequest,
-        WorkflowExecutionCanceledRequestTypedDict,
-    )
     from .workflowexecutioncanceledresponse import (
         WorkflowExecutionCanceledResponse,
         WorkflowExecutionCanceledResponseTypedDict,
-    )
-    from .workflowexecutioncompletedattributesrequest import (
-        WorkflowExecutionCompletedAttributesRequest,
-        WorkflowExecutionCompletedAttributesRequestTypedDict,
     )
     from .workflowexecutioncompletedattributesresponse import (
         WorkflowExecutionCompletedAttributesResponse,
         WorkflowExecutionCompletedAttributesResponseTypedDict,
     )
-    from .workflowexecutioncompletedrequest import (
-        WorkflowExecutionCompletedRequest,
-        WorkflowExecutionCompletedRequestTypedDict,
-    )
     from .workflowexecutioncompletedresponse import (
         WorkflowExecutionCompletedResponse,
         WorkflowExecutionCompletedResponseTypedDict,
     )
-    from .workflowexecutioncontinuedasnewattributesrequest import (
-        WorkflowExecutionContinuedAsNewAttributesRequest,
-        WorkflowExecutionContinuedAsNewAttributesRequestTypedDict,
-    )
     from .workflowexecutioncontinuedasnewattributesresponse import (
         WorkflowExecutionContinuedAsNewAttributesResponse,
         WorkflowExecutionContinuedAsNewAttributesResponseTypedDict,
-    )
-    from .workflowexecutioncontinuedasnewrequest import (
-        WorkflowExecutionContinuedAsNewRequest,
-        WorkflowExecutionContinuedAsNewRequestTypedDict,
     )
     from .workflowexecutioncontinuedasnewresponse import (
         WorkflowExecutionContinuedAsNewResponse,
@@ -2047,10 +1936,6 @@ if TYPE_CHECKING:
     from .workflowexecutionfailedattributes import (
         WorkflowExecutionFailedAttributes,
         WorkflowExecutionFailedAttributesTypedDict,
-    )
-    from .workflowexecutionfailedrequest import (
-        WorkflowExecutionFailedRequest,
-        WorkflowExecutionFailedRequestTypedDict,
     )
     from .workflowexecutionfailedresponse import (
         WorkflowExecutionFailedResponse,
@@ -2072,17 +1957,9 @@ if TYPE_CHECKING:
         WorkflowExecutionResponse,
         WorkflowExecutionResponseTypedDict,
     )
-    from .workflowexecutionstartedattributesrequest import (
-        WorkflowExecutionStartedAttributesRequest,
-        WorkflowExecutionStartedAttributesRequestTypedDict,
-    )
     from .workflowexecutionstartedattributesresponse import (
         WorkflowExecutionStartedAttributesResponse,
         WorkflowExecutionStartedAttributesResponseTypedDict,
-    )
-    from .workflowexecutionstartedrequest import (
-        WorkflowExecutionStartedRequest,
-        WorkflowExecutionStartedRequestTypedDict,
     )
     from .workflowexecutionstartedresponse import (
         WorkflowExecutionStartedResponse,
@@ -2162,10 +2039,6 @@ if TYPE_CHECKING:
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
     )
-    from .workflowtaskfailedrequest import (
-        WorkflowTaskFailedRequest,
-        WorkflowTaskFailedRequestTypedDict,
-    )
     from .workflowtaskfailedresponse import (
         WorkflowTaskFailedResponse,
         WorkflowTaskFailedResponseTypedDict,
@@ -2173,10 +2046,6 @@ if TYPE_CHECKING:
     from .workflowtasktimedoutattributes import (
         WorkflowTaskTimedOutAttributes,
         WorkflowTaskTimedOutAttributesTypedDict,
-    )
-    from .workflowtasktimedoutrequest import (
-        WorkflowTaskTimedOutRequest,
-        WorkflowTaskTimedOutRequestTypedDict,
     )
     from .workflowtasktimedoutresponse import (
         WorkflowTaskTimedOutResponse,
@@ -2206,32 +2075,20 @@ __all__ = [
     "APIEndpoint",
     "APIKeyAuth",
     "APIKeyAuthTypedDict",
-    "ActivityTaskCompletedAttributesRequest",
-    "ActivityTaskCompletedAttributesRequestTypedDict",
     "ActivityTaskCompletedAttributesResponse",
     "ActivityTaskCompletedAttributesResponseTypedDict",
-    "ActivityTaskCompletedRequest",
-    "ActivityTaskCompletedRequestTypedDict",
     "ActivityTaskCompletedResponse",
     "ActivityTaskCompletedResponseTypedDict",
     "ActivityTaskFailedAttributes",
     "ActivityTaskFailedAttributesTypedDict",
-    "ActivityTaskFailedRequest",
-    "ActivityTaskFailedRequestTypedDict",
     "ActivityTaskFailedResponse",
     "ActivityTaskFailedResponseTypedDict",
     "ActivityTaskRetryingAttributes",
     "ActivityTaskRetryingAttributesTypedDict",
-    "ActivityTaskRetryingRequest",
-    "ActivityTaskRetryingRequestTypedDict",
     "ActivityTaskRetryingResponse",
     "ActivityTaskRetryingResponseTypedDict",
-    "ActivityTaskStartedAttributesRequest",
-    "ActivityTaskStartedAttributesRequestTypedDict",
     "ActivityTaskStartedAttributesResponse",
     "ActivityTaskStartedAttributesResponseTypedDict",
-    "ActivityTaskStartedRequest",
-    "ActivityTaskStartedRequestTypedDict",
     "ActivityTaskStartedResponse",
     "ActivityTaskStartedResponseTypedDict",
     "Agent",
@@ -2592,48 +2449,26 @@ __all__ = [
     "CustomConnectorTypedDict",
     "CustomTaskCanceledAttributes",
     "CustomTaskCanceledAttributesTypedDict",
-    "CustomTaskCanceledRequest",
-    "CustomTaskCanceledRequestTypedDict",
     "CustomTaskCanceledResponse",
     "CustomTaskCanceledResponseTypedDict",
-    "CustomTaskCompletedAttributesRequest",
-    "CustomTaskCompletedAttributesRequestTypedDict",
     "CustomTaskCompletedAttributesResponse",
     "CustomTaskCompletedAttributesResponseTypedDict",
-    "CustomTaskCompletedRequest",
-    "CustomTaskCompletedRequestTypedDict",
     "CustomTaskCompletedResponse",
     "CustomTaskCompletedResponseTypedDict",
     "CustomTaskFailedAttributes",
     "CustomTaskFailedAttributesTypedDict",
-    "CustomTaskFailedRequest",
-    "CustomTaskFailedRequestTypedDict",
     "CustomTaskFailedResponse",
     "CustomTaskFailedResponseTypedDict",
-    "CustomTaskInProgressAttributesRequest",
-    "CustomTaskInProgressAttributesRequestPayload",
-    "CustomTaskInProgressAttributesRequestPayloadTypedDict",
-    "CustomTaskInProgressAttributesRequestTypedDict",
     "CustomTaskInProgressAttributesResponse",
-    "CustomTaskInProgressAttributesResponsePayload",
-    "CustomTaskInProgressAttributesResponsePayloadTypedDict",
     "CustomTaskInProgressAttributesResponseTypedDict",
-    "CustomTaskInProgressRequest",
-    "CustomTaskInProgressRequestTypedDict",
     "CustomTaskInProgressResponse",
     "CustomTaskInProgressResponseTypedDict",
-    "CustomTaskStartedAttributesRequest",
-    "CustomTaskStartedAttributesRequestTypedDict",
     "CustomTaskStartedAttributesResponse",
     "CustomTaskStartedAttributesResponseTypedDict",
-    "CustomTaskStartedRequest",
-    "CustomTaskStartedRequestTypedDict",
     "CustomTaskStartedResponse",
     "CustomTaskStartedResponseTypedDict",
     "CustomTaskTimedOutAttributes",
     "CustomTaskTimedOutAttributesTypedDict",
-    "CustomTaskTimedOutRequest",
-    "CustomTaskTimedOutRequestTypedDict",
     "CustomTaskTimedOutResponse",
     "CustomTaskTimedOutResponseTypedDict",
     "Dataset",
@@ -2916,10 +2751,6 @@ __all__ = [
     "JSONPatchAddTypedDict",
     "JSONPatchAppend",
     "JSONPatchAppendTypedDict",
-    "JSONPatchPayloadRequest",
-    "JSONPatchPayloadRequestTypedDict",
-    "JSONPatchPayloadRequestValue",
-    "JSONPatchPayloadRequestValueTypedDict",
     "JSONPatchPayloadResponse",
     "JSONPatchPayloadResponseTypedDict",
     "JSONPatchPayloadResponseValue",
@@ -2928,8 +2759,6 @@ __all__ = [
     "JSONPatchRemoveTypedDict",
     "JSONPatchReplace",
     "JSONPatchReplaceTypedDict",
-    "JSONPayloadRequest",
-    "JSONPayloadRequestTypedDict",
     "JSONPayloadResponse",
     "JSONPayloadResponseTypedDict",
     "JSONSchema",
@@ -3191,6 +3020,8 @@ __all__ = [
     "PaginationInfoTypedDict",
     "PaginationResponse",
     "PaginationResponseTypedDict",
+    "Payload",
+    "PayloadTypedDict",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict",
     "PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest",
@@ -3492,7 +3323,6 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownCustomTaskInProgressAttributesResponsePayload",
     "UnknownJSONPatchPayloadResponseValue",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
@@ -3502,6 +3332,7 @@ __all__ = [
     "UnknownListFineTuningJobsResponseData",
     "UnknownModelConversationTool",
     "UnknownModelListData",
+    "UnknownPayload",
     "UnknownResponse",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
     "UnknownSpeechV1AudioSpeechPostData",
@@ -3588,47 +3419,21 @@ __all__ = [
     "WorkflowBasicDefinitionTypedDict",
     "WorkflowCodeDefinition",
     "WorkflowCodeDefinitionTypedDict",
-    "WorkflowEventBatchRequest",
-    "WorkflowEventBatchRequestEvent",
-    "WorkflowEventBatchRequestEventTypedDict",
-    "WorkflowEventBatchRequestTypedDict",
-    "WorkflowEventBatchResponse",
-    "WorkflowEventBatchResponseStatus",
-    "WorkflowEventBatchResponseTypedDict",
-    "WorkflowEventRequest",
-    "WorkflowEventRequestEvent",
-    "WorkflowEventRequestEventTypedDict",
-    "WorkflowEventRequestTypedDict",
-    "WorkflowEventResponse",
-    "WorkflowEventResponseStatus",
-    "WorkflowEventResponseTypedDict",
     "WorkflowEventType",
     "WorkflowExecutionCanceledAttributes",
     "WorkflowExecutionCanceledAttributesTypedDict",
-    "WorkflowExecutionCanceledRequest",
-    "WorkflowExecutionCanceledRequestTypedDict",
     "WorkflowExecutionCanceledResponse",
     "WorkflowExecutionCanceledResponseTypedDict",
-    "WorkflowExecutionCompletedAttributesRequest",
-    "WorkflowExecutionCompletedAttributesRequestTypedDict",
     "WorkflowExecutionCompletedAttributesResponse",
     "WorkflowExecutionCompletedAttributesResponseTypedDict",
-    "WorkflowExecutionCompletedRequest",
-    "WorkflowExecutionCompletedRequestTypedDict",
     "WorkflowExecutionCompletedResponse",
     "WorkflowExecutionCompletedResponseTypedDict",
-    "WorkflowExecutionContinuedAsNewAttributesRequest",
-    "WorkflowExecutionContinuedAsNewAttributesRequestTypedDict",
     "WorkflowExecutionContinuedAsNewAttributesResponse",
     "WorkflowExecutionContinuedAsNewAttributesResponseTypedDict",
-    "WorkflowExecutionContinuedAsNewRequest",
-    "WorkflowExecutionContinuedAsNewRequestTypedDict",
     "WorkflowExecutionContinuedAsNewResponse",
     "WorkflowExecutionContinuedAsNewResponseTypedDict",
     "WorkflowExecutionFailedAttributes",
     "WorkflowExecutionFailedAttributesTypedDict",
-    "WorkflowExecutionFailedRequest",
-    "WorkflowExecutionFailedRequestTypedDict",
     "WorkflowExecutionFailedResponse",
     "WorkflowExecutionFailedResponseTypedDict",
     "WorkflowExecutionListResponse",
@@ -3639,12 +3444,8 @@ __all__ = [
     "WorkflowExecutionRequestTypedDict",
     "WorkflowExecutionResponse",
     "WorkflowExecutionResponseTypedDict",
-    "WorkflowExecutionStartedAttributesRequest",
-    "WorkflowExecutionStartedAttributesRequestTypedDict",
     "WorkflowExecutionStartedAttributesResponse",
     "WorkflowExecutionStartedAttributesResponseTypedDict",
-    "WorkflowExecutionStartedRequest",
-    "WorkflowExecutionStartedRequestTypedDict",
     "WorkflowExecutionStartedResponse",
     "WorkflowExecutionStartedResponseTypedDict",
     "WorkflowExecutionStatus",
@@ -3690,14 +3491,10 @@ __all__ = [
     "WorkflowScheduleResponseTypedDict",
     "WorkflowTaskFailedAttributes",
     "WorkflowTaskFailedAttributesTypedDict",
-    "WorkflowTaskFailedRequest",
-    "WorkflowTaskFailedRequestTypedDict",
     "WorkflowTaskFailedResponse",
     "WorkflowTaskFailedResponseTypedDict",
     "WorkflowTaskTimedOutAttributes",
     "WorkflowTaskTimedOutAttributesTypedDict",
-    "WorkflowTaskTimedOutRequest",
-    "WorkflowTaskTimedOutRequestTypedDict",
     "WorkflowTaskTimedOutResponse",
     "WorkflowTaskTimedOutResponseTypedDict",
     "WorkflowType",
@@ -3713,32 +3510,20 @@ __all__ = [
 ]
 
 _dynamic_imports: dict[str, str] = {
-    "ActivityTaskCompletedAttributesRequest": ".activitytaskcompletedattributesrequest",
-    "ActivityTaskCompletedAttributesRequestTypedDict": ".activitytaskcompletedattributesrequest",
     "ActivityTaskCompletedAttributesResponse": ".activitytaskcompletedattributesresponse",
     "ActivityTaskCompletedAttributesResponseTypedDict": ".activitytaskcompletedattributesresponse",
-    "ActivityTaskCompletedRequest": ".activitytaskcompletedrequest",
-    "ActivityTaskCompletedRequestTypedDict": ".activitytaskcompletedrequest",
     "ActivityTaskCompletedResponse": ".activitytaskcompletedresponse",
     "ActivityTaskCompletedResponseTypedDict": ".activitytaskcompletedresponse",
     "ActivityTaskFailedAttributes": ".activitytaskfailedattributes",
     "ActivityTaskFailedAttributesTypedDict": ".activitytaskfailedattributes",
-    "ActivityTaskFailedRequest": ".activitytaskfailedrequest",
-    "ActivityTaskFailedRequestTypedDict": ".activitytaskfailedrequest",
     "ActivityTaskFailedResponse": ".activitytaskfailedresponse",
     "ActivityTaskFailedResponseTypedDict": ".activitytaskfailedresponse",
     "ActivityTaskRetryingAttributes": ".activitytaskretryingattributes",
     "ActivityTaskRetryingAttributesTypedDict": ".activitytaskretryingattributes",
-    "ActivityTaskRetryingRequest": ".activitytaskretryingrequest",
-    "ActivityTaskRetryingRequestTypedDict": ".activitytaskretryingrequest",
     "ActivityTaskRetryingResponse": ".activitytaskretryingresponse",
     "ActivityTaskRetryingResponseTypedDict": ".activitytaskretryingresponse",
-    "ActivityTaskStartedAttributesRequest": ".activitytaskstartedattributesrequest",
-    "ActivityTaskStartedAttributesRequestTypedDict": ".activitytaskstartedattributesrequest",
     "ActivityTaskStartedAttributesResponse": ".activitytaskstartedattributesresponse",
     "ActivityTaskStartedAttributesResponseTypedDict": ".activitytaskstartedattributesresponse",
-    "ActivityTaskStartedRequest": ".activitytaskstartedrequest",
-    "ActivityTaskStartedRequestTypedDict": ".activitytaskstartedrequest",
     "ActivityTaskStartedResponse": ".activitytaskstartedresponse",
     "ActivityTaskStartedResponseTypedDict": ".activitytaskstartedresponse",
     "Agent": ".agent",
@@ -4111,49 +3896,29 @@ _dynamic_imports: dict[str, str] = {
     "UnknownAuthorization": ".customconnector",
     "CustomTaskCanceledAttributes": ".customtaskcanceledattributes",
     "CustomTaskCanceledAttributesTypedDict": ".customtaskcanceledattributes",
-    "CustomTaskCanceledRequest": ".customtaskcanceledrequest",
-    "CustomTaskCanceledRequestTypedDict": ".customtaskcanceledrequest",
     "CustomTaskCanceledResponse": ".customtaskcanceledresponse",
     "CustomTaskCanceledResponseTypedDict": ".customtaskcanceledresponse",
-    "CustomTaskCompletedAttributesRequest": ".customtaskcompletedattributesrequest",
-    "CustomTaskCompletedAttributesRequestTypedDict": ".customtaskcompletedattributesrequest",
     "CustomTaskCompletedAttributesResponse": ".customtaskcompletedattributesresponse",
     "CustomTaskCompletedAttributesResponseTypedDict": ".customtaskcompletedattributesresponse",
-    "CustomTaskCompletedRequest": ".customtaskcompletedrequest",
-    "CustomTaskCompletedRequestTypedDict": ".customtaskcompletedrequest",
     "CustomTaskCompletedResponse": ".customtaskcompletedresponse",
     "CustomTaskCompletedResponseTypedDict": ".customtaskcompletedresponse",
     "CustomTaskFailedAttributes": ".customtaskfailedattributes",
     "CustomTaskFailedAttributesTypedDict": ".customtaskfailedattributes",
-    "CustomTaskFailedRequest": ".customtaskfailedrequest",
-    "CustomTaskFailedRequestTypedDict": ".customtaskfailedrequest",
     "CustomTaskFailedResponse": ".customtaskfailedresponse",
     "CustomTaskFailedResponseTypedDict": ".customtaskfailedresponse",
-    "CustomTaskInProgressAttributesRequest": ".customtaskinprogressattributesrequest",
-    "CustomTaskInProgressAttributesRequestPayload": ".customtaskinprogressattributesrequest",
-    "CustomTaskInProgressAttributesRequestPayloadTypedDict": ".customtaskinprogressattributesrequest",
-    "CustomTaskInProgressAttributesRequestTypedDict": ".customtaskinprogressattributesrequest",
     "CustomTaskInProgressAttributesResponse": ".customtaskinprogressattributesresponse",
-    "CustomTaskInProgressAttributesResponsePayload": ".customtaskinprogressattributesresponse",
-    "CustomTaskInProgressAttributesResponsePayloadTypedDict": ".customtaskinprogressattributesresponse",
     "CustomTaskInProgressAttributesResponseTypedDict": ".customtaskinprogressattributesresponse",
-    "UnknownCustomTaskInProgressAttributesResponsePayload": ".customtaskinprogressattributesresponse",
-    "CustomTaskInProgressRequest": ".customtaskinprogressrequest",
-    "CustomTaskInProgressRequestTypedDict": ".customtaskinprogressrequest",
+    "Payload": ".customtaskinprogressattributesresponse",
+    "PayloadTypedDict": ".customtaskinprogressattributesresponse",
+    "UnknownPayload": ".customtaskinprogressattributesresponse",
     "CustomTaskInProgressResponse": ".customtaskinprogressresponse",
     "CustomTaskInProgressResponseTypedDict": ".customtaskinprogressresponse",
-    "CustomTaskStartedAttributesRequest": ".customtaskstartedattributesrequest",
-    "CustomTaskStartedAttributesRequestTypedDict": ".customtaskstartedattributesrequest",
     "CustomTaskStartedAttributesResponse": ".customtaskstartedattributesresponse",
     "CustomTaskStartedAttributesResponseTypedDict": ".customtaskstartedattributesresponse",
-    "CustomTaskStartedRequest": ".customtaskstartedrequest",
-    "CustomTaskStartedRequestTypedDict": ".customtaskstartedrequest",
     "CustomTaskStartedResponse": ".customtaskstartedresponse",
     "CustomTaskStartedResponseTypedDict": ".customtaskstartedresponse",
     "CustomTaskTimedOutAttributes": ".customtasktimedoutattributes",
     "CustomTaskTimedOutAttributesTypedDict": ".customtasktimedoutattributes",
-    "CustomTaskTimedOutRequest": ".customtasktimedoutrequest",
-    "CustomTaskTimedOutRequestTypedDict": ".customtasktimedoutrequest",
     "CustomTaskTimedOutResponse": ".customtasktimedoutresponse",
     "CustomTaskTimedOutResponseTypedDict": ".customtasktimedoutresponse",
     "Dataset": ".dataset",
@@ -4483,10 +4248,6 @@ _dynamic_imports: dict[str, str] = {
     "JSONPatchAddTypedDict": ".jsonpatchadd",
     "JSONPatchAppend": ".jsonpatchappend",
     "JSONPatchAppendTypedDict": ".jsonpatchappend",
-    "JSONPatchPayloadRequest": ".jsonpatchpayloadrequest",
-    "JSONPatchPayloadRequestTypedDict": ".jsonpatchpayloadrequest",
-    "JSONPatchPayloadRequestValue": ".jsonpatchpayloadrequest",
-    "JSONPatchPayloadRequestValueTypedDict": ".jsonpatchpayloadrequest",
     "JSONPatchPayloadResponse": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadResponseTypedDict": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadResponseValue": ".jsonpatchpayloadresponse",
@@ -4496,8 +4257,6 @@ _dynamic_imports: dict[str, str] = {
     "JSONPatchRemoveTypedDict": ".jsonpatchremove",
     "JSONPatchReplace": ".jsonpatchreplace",
     "JSONPatchReplaceTypedDict": ".jsonpatchreplace",
-    "JSONPayloadRequest": ".jsonpayloadrequest",
-    "JSONPayloadRequestTypedDict": ".jsonpayloadrequest",
     "JSONPayloadResponse": ".jsonpayloadresponse",
     "JSONPayloadResponseTypedDict": ".jsonpayloadresponse",
     "JSONSchema": ".jsonschema",
@@ -5093,47 +4852,21 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowBasicDefinitionTypedDict": ".workflowbasicdefinition",
     "WorkflowCodeDefinition": ".workflowcodedefinition",
     "WorkflowCodeDefinitionTypedDict": ".workflowcodedefinition",
-    "WorkflowEventBatchRequest": ".workfloweventbatchrequest",
-    "WorkflowEventBatchRequestEvent": ".workfloweventbatchrequest",
-    "WorkflowEventBatchRequestEventTypedDict": ".workfloweventbatchrequest",
-    "WorkflowEventBatchRequestTypedDict": ".workfloweventbatchrequest",
-    "WorkflowEventBatchResponse": ".workfloweventbatchresponse",
-    "WorkflowEventBatchResponseStatus": ".workfloweventbatchresponse",
-    "WorkflowEventBatchResponseTypedDict": ".workfloweventbatchresponse",
-    "WorkflowEventRequest": ".workfloweventrequest",
-    "WorkflowEventRequestEvent": ".workfloweventrequest",
-    "WorkflowEventRequestEventTypedDict": ".workfloweventrequest",
-    "WorkflowEventRequestTypedDict": ".workfloweventrequest",
-    "WorkflowEventResponse": ".workfloweventresponse",
-    "WorkflowEventResponseStatus": ".workfloweventresponse",
-    "WorkflowEventResponseTypedDict": ".workfloweventresponse",
     "WorkflowEventType": ".workfloweventtype",
     "WorkflowExecutionCanceledAttributes": ".workflowexecutioncanceledattributes",
     "WorkflowExecutionCanceledAttributesTypedDict": ".workflowexecutioncanceledattributes",
-    "WorkflowExecutionCanceledRequest": ".workflowexecutioncanceledrequest",
-    "WorkflowExecutionCanceledRequestTypedDict": ".workflowexecutioncanceledrequest",
     "WorkflowExecutionCanceledResponse": ".workflowexecutioncanceledresponse",
     "WorkflowExecutionCanceledResponseTypedDict": ".workflowexecutioncanceledresponse",
-    "WorkflowExecutionCompletedAttributesRequest": ".workflowexecutioncompletedattributesrequest",
-    "WorkflowExecutionCompletedAttributesRequestTypedDict": ".workflowexecutioncompletedattributesrequest",
     "WorkflowExecutionCompletedAttributesResponse": ".workflowexecutioncompletedattributesresponse",
     "WorkflowExecutionCompletedAttributesResponseTypedDict": ".workflowexecutioncompletedattributesresponse",
-    "WorkflowExecutionCompletedRequest": ".workflowexecutioncompletedrequest",
-    "WorkflowExecutionCompletedRequestTypedDict": ".workflowexecutioncompletedrequest",
     "WorkflowExecutionCompletedResponse": ".workflowexecutioncompletedresponse",
     "WorkflowExecutionCompletedResponseTypedDict": ".workflowexecutioncompletedresponse",
-    "WorkflowExecutionContinuedAsNewAttributesRequest": ".workflowexecutioncontinuedasnewattributesrequest",
-    "WorkflowExecutionContinuedAsNewAttributesRequestTypedDict": ".workflowexecutioncontinuedasnewattributesrequest",
     "WorkflowExecutionContinuedAsNewAttributesResponse": ".workflowexecutioncontinuedasnewattributesresponse",
     "WorkflowExecutionContinuedAsNewAttributesResponseTypedDict": ".workflowexecutioncontinuedasnewattributesresponse",
-    "WorkflowExecutionContinuedAsNewRequest": ".workflowexecutioncontinuedasnewrequest",
-    "WorkflowExecutionContinuedAsNewRequestTypedDict": ".workflowexecutioncontinuedasnewrequest",
     "WorkflowExecutionContinuedAsNewResponse": ".workflowexecutioncontinuedasnewresponse",
     "WorkflowExecutionContinuedAsNewResponseTypedDict": ".workflowexecutioncontinuedasnewresponse",
     "WorkflowExecutionFailedAttributes": ".workflowexecutionfailedattributes",
     "WorkflowExecutionFailedAttributesTypedDict": ".workflowexecutionfailedattributes",
-    "WorkflowExecutionFailedRequest": ".workflowexecutionfailedrequest",
-    "WorkflowExecutionFailedRequestTypedDict": ".workflowexecutionfailedrequest",
     "WorkflowExecutionFailedResponse": ".workflowexecutionfailedresponse",
     "WorkflowExecutionFailedResponseTypedDict": ".workflowexecutionfailedresponse",
     "WorkflowExecutionListResponse": ".workflowexecutionlistresponse",
@@ -5144,12 +4877,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowExecutionRequestTypedDict": ".workflowexecutionrequest",
     "WorkflowExecutionResponse": ".workflowexecutionresponse",
     "WorkflowExecutionResponseTypedDict": ".workflowexecutionresponse",
-    "WorkflowExecutionStartedAttributesRequest": ".workflowexecutionstartedattributesrequest",
-    "WorkflowExecutionStartedAttributesRequestTypedDict": ".workflowexecutionstartedattributesrequest",
     "WorkflowExecutionStartedAttributesResponse": ".workflowexecutionstartedattributesresponse",
     "WorkflowExecutionStartedAttributesResponseTypedDict": ".workflowexecutionstartedattributesresponse",
-    "WorkflowExecutionStartedRequest": ".workflowexecutionstartedrequest",
-    "WorkflowExecutionStartedRequestTypedDict": ".workflowexecutionstartedrequest",
     "WorkflowExecutionStartedResponse": ".workflowexecutionstartedresponse",
     "WorkflowExecutionStartedResponseTypedDict": ".workflowexecutionstartedresponse",
     "WorkflowExecutionStatus": ".workflowexecutionstatus",
@@ -5195,14 +4924,10 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleResponseTypedDict": ".workflowscheduleresponse",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
-    "WorkflowTaskFailedRequest": ".workflowtaskfailedrequest",
-    "WorkflowTaskFailedRequestTypedDict": ".workflowtaskfailedrequest",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",
     "WorkflowTaskFailedResponseTypedDict": ".workflowtaskfailedresponse",
     "WorkflowTaskTimedOutAttributes": ".workflowtasktimedoutattributes",
     "WorkflowTaskTimedOutAttributesTypedDict": ".workflowtasktimedoutattributes",
-    "WorkflowTaskTimedOutRequest": ".workflowtasktimedoutrequest",
-    "WorkflowTaskTimedOutRequestTypedDict": ".workflowtasktimedoutrequest",
     "WorkflowTaskTimedOutResponse": ".workflowtasktimedoutresponse",
     "WorkflowTaskTimedOutResponseTypedDict": ".workflowtasktimedoutresponse",
     "WorkflowType": ".workflowtype",

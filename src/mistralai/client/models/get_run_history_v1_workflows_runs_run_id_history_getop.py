@@ -22,7 +22,7 @@ class GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest(BaseModel):
     decode_payloads: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = False
+    ] = True
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

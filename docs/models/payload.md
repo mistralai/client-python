@@ -1,4 +1,4 @@
-# CustomTaskInProgressAttributesResponsePayload
+# Payload
 
 The current state or incremental update for the task.
 

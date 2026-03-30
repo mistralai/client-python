@@ -112,7 +112,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.runs.get_run_history(run_id="f7296489-0212-4239-9e35-12fabfe8cd11", decode_payloads=False)
+    res = mistral.workflows.runs.get_run_history(run_id="f7296489-0212-4239-9e35-12fabfe8cd11", decode_payloads=True)
 
     # Handle response
     print(res)

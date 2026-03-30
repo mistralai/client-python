@@ -16,15 +16,15 @@ from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-CustomTaskInProgressAttributesResponsePayloadTypedDict = TypeAliasType(
-    "CustomTaskInProgressAttributesResponsePayloadTypedDict",
+PayloadTypedDict = TypeAliasType(
+    "PayloadTypedDict",
     Union[JSONPayloadResponseTypedDict, JSONPatchPayloadResponseTypedDict],
 )
 r"""The current state or incremental update for the task."""
 
 
-class UnknownCustomTaskInProgressAttributesResponsePayload(BaseModel):
-    r"""A CustomTaskInProgressAttributesResponsePayload variant the SDK doesn't recognize. Preserves the raw payload."""
+class UnknownPayload(BaseModel):
+    r"""A Payload variant the SDK doesn't recognize. Preserves the raw payload."""
 
     type: Literal["UNKNOWN"] = "UNKNOWN"
     raw: Any
@@ -33,25 +33,21 @@ class UnknownCustomTaskInProgressAttributesResponsePayload(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
-_CUSTOM_TASK_IN_PROGRESS_ATTRIBUTES_RESPONSE_PAYLOAD_VARIANTS: dict[str, Any] = {
+_PAYLOAD_VARIANTS: dict[str, Any] = {
     "json": JSONPayloadResponse,
     "json_patch": JSONPatchPayloadResponse,
 }
 
 
-CustomTaskInProgressAttributesResponsePayload = Annotated[
-    Union[
-        JSONPayloadResponse,
-        JSONPatchPayloadResponse,
-        UnknownCustomTaskInProgressAttributesResponsePayload,
-    ],
+Payload = Annotated[
+    Union[JSONPayloadResponse, JSONPatchPayloadResponse, UnknownPayload],
     BeforeValidator(
         partial(
             parse_open_union,
             disc_key="type",
-            variants=_CUSTOM_TASK_IN_PROGRESS_ATTRIBUTES_RESPONSE_PAYLOAD_VARIANTS,
-            unknown_cls=UnknownCustomTaskInProgressAttributesResponsePayload,
-            union_name="CustomTaskInProgressAttributesResponsePayload",
+            variants=_PAYLOAD_VARIANTS,
+            unknown_cls=UnknownPayload,
+            union_name="Payload",
         )
     ),
 ]
@@ -65,7 +61,7 @@ class CustomTaskInProgressAttributesResponseTypedDict(TypedDict):
     r"""Unique identifier for the custom task within the workflow."""
     custom_task_type: str
     r"""The type/category of the custom task (e.g., 'llm_call', 'api_request')."""
-    payload: CustomTaskInProgressAttributesResponsePayloadTypedDict
+    payload: PayloadTypedDict
     r"""The current state or incremental update for the task."""
 
 
@@ -78,5 +74,5 @@ class CustomTaskInProgressAttributesResponse(BaseModel):
     custom_task_type: str
     r"""The type/category of the custom task (e.g., 'llm_call', 'api_request')."""
 
-    payload: CustomTaskInProgressAttributesResponsePayload
+    payload: Payload
     r"""The current state or incremental update for the task."""
