@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import ReasoningEffort
 
-value = ReasoningEffort.NONE
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: ReasoningEffort = "none"
 ```
 
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `NONE` | none   |
-| `HIGH` | high   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"none"`
+- `"high"`

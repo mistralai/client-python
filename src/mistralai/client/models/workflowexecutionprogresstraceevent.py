@@ -8,7 +8,6 @@ from .workflowexecutiontracesummaryattributesvalues import (
     WorkflowExecutionTraceSummaryAttributesValues,
     WorkflowExecutionTraceSummaryAttributesValuesTypedDict,
 )
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,7 +15,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -72,24 +71,6 @@ class WorkflowExecutionProgressTraceEvent(BaseModel):
 
     error: OptionalNullable[str] = UNSET
     r"""The error message, if any"""
-
-    @field_serializer("type")
-    def serialize_type(self, value):
-        if isinstance(value, str):
-            try:
-                return models.EventType(value)
-            except ValueError:
-                return value
-        return value
-
-    @field_serializer("status")
-    def serialize_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.EventProgressStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

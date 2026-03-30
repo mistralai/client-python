@@ -13,7 +13,6 @@ from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDi
 from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
-from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -29,9 +28,10 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class ConversationStreamRequestHandoffExecution(str, Enum):
-    CLIENT = "client"
-    SERVER = "server"
+ConversationStreamRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
 
 
 ConversationStreamRequestToolTypedDict = TypeAliasType(

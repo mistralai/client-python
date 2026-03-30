@@ -6,7 +6,6 @@ from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .metadatadict import MetadataDict, MetadataDictTypedDict
-from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -22,9 +21,10 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class ConversationRestartRequestHandoffExecution(str, Enum):
-    CLIENT = "client"
-    SERVER = "server"
+ConversationRestartRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
 
 
 ConversationRestartRequestAgentVersionTypedDict = TypeAliasType(
@@ -74,9 +74,7 @@ class ConversationRestartRequest(BaseModel):
     store: Optional[bool] = True
     r"""Whether to store the results into our servers or not."""
 
-    handoff_execution: Optional[ConversationRestartRequestHandoffExecution] = (
-        ConversationRestartRequestHandoffExecution.SERVER
-    )
+    handoff_execution: Optional[ConversationRestartRequestHandoffExecution] = "server"
 
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""

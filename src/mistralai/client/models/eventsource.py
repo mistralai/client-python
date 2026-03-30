@@ -2,9 +2,10 @@
 # @generated-id: 8b926028b7b2
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class EventSource(str, Enum):
-    DATABASE = "DATABASE"
-    LIVE = "LIVE"
+EventSource = Literal[
+    "DATABASE",
+    "LIVE",
+]

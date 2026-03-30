@@ -5,7 +5,6 @@ from __future__ import annotations
 from .filepurpose import FilePurpose
 from .sampletype import SampleType
 from .source import Source
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +13,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -70,15 +69,6 @@ class FilesAPIRoutesListFilesRequest(BaseModel):
         OptionalNullable[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-
-    @field_serializer("purpose")
-    def serialize_purpose(self, value):
-        if isinstance(value, str):
-            try:
-                return models.FilePurpose(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

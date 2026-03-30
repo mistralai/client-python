@@ -4,13 +4,10 @@
 
 ```python
 from mistralai.client.models import WorkflowType
-
-value = WorkflowType.CODE
+value: WorkflowType = "code"
 ```
 
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `CODE` | code   |
+- `"code"`

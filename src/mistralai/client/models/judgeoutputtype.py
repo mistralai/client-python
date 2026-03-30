@@ -2,9 +2,10 @@
 # @generated-id: 3f07e1eb25f9
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class JudgeOutputType(str, Enum):
-    REGRESSION = "REGRESSION"
-    CLASSIFICATION = "CLASSIFICATION"
+JudgeOutputType = Literal[
+    "REGRESSION",
+    "CLASSIFICATION",
+]

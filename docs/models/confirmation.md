@@ -4,14 +4,11 @@
 
 ```python
 from mistralai.client.models import Confirmation
-
-value = Confirmation.ALLOW
+value: Confirmation = "allow"
 ```
 
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `ALLOW` | allow   |
-| `DENY`  | deny    |
+- `"allow"`
+- `"deny"`

@@ -2,24 +2,27 @@
 # @generated-id: 3ae9e07de11d
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 import pydantic
 from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Literal, Union
 from typing_extensions import NotRequired, TypedDict
 
 
-class Audience(str, Enum, metaclass=utils.OpenEnumMeta):
-    USER = "user"
-    ASSISTANT = "assistant"
+Audience = Union[
+    Literal[
+        "user",
+        "assistant",
+    ],
+    UnrecognizedStr,
+]
 
 
 class AnnotationsTypedDict(TypedDict):

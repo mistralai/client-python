@@ -2,12 +2,16 @@
 # @generated-id: 6f71f6fbf4c5
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class TranscriptionStreamEventTypes(str, Enum, metaclass=utils.OpenEnumMeta):
-    TRANSCRIPTION_LANGUAGE = "transcription.language"
-    TRANSCRIPTION_SEGMENT = "transcription.segment"
-    TRANSCRIPTION_TEXT_DELTA = "transcription.text.delta"
-    TRANSCRIPTION_DONE = "transcription.done"
+TranscriptionStreamEventTypes = Union[
+    Literal[
+        "transcription.language",
+        "transcription.segment",
+        "transcription.text.delta",
+        "transcription.done",
+    ],
+    UnrecognizedStr,
+]

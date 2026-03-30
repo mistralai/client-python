@@ -64,7 +64,7 @@ Alternative to /search that returns only the IDs and that can return many IDs at
 
 <!-- UsageSnippet language="python" operationID="get_chat_completion_event_ids_v1_observability_chat_completion_events_search_ids_post" method="post" path="/v1/observability/chat-completion-events/search-ids" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -75,7 +75,7 @@ with Mistral(
     res = mistral.beta.observability.chat_completion_events.search_ids(search_params={
         "filters": {
             "field": "<value>",
-            "op": models.Op.LT,
+            "op": "lt",
             "value": "<value>",
         },
     })

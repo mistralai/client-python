@@ -2,10 +2,14 @@
 # @generated-id: a0e2a7a16bf8
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class ShareEnum(str, Enum, metaclass=utils.OpenEnumMeta):
-    VIEWER = "Viewer"
-    EDITOR = "Editor"
+ShareEnum = Union[
+    Literal[
+        "Viewer",
+        "Editor",
+    ],
+    UnrecognizedStr,
+]

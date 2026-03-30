@@ -2,10 +2,11 @@
 # @generated-id: 97955ebc2eb9
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class EncodedPayloadOptions(str, Enum):
-    OFFLOADED = "offloaded"
-    ENCRYPTED = "encrypted"
-    ENCRYPTED_PARTIAL = "encrypted-partial"
+EncodedPayloadOptions = Literal[
+    "offloaded",
+    "encrypted",
+    "encrypted-partial",
+]

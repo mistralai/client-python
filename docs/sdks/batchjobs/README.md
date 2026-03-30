@@ -18,7 +18,7 @@ Get a list of batch jobs for your organization and user.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_get_batch_jobs" method="get" path="/v1/batch/jobs" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -26,7 +26,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False, order_by=models.OrderBy.MINUS_CREATED)
+    res = mistral.batch.jobs.list(page=0, page_size=100, created_by_me=False, order_by="-created")
 
     # Handle response
     print(res)
@@ -66,7 +66,7 @@ Create a new batch job, it will be queued for processing.
 
 <!-- UsageSnippet language="python" operationID="jobs_api_routes_batch_create_batch_job" method="post" path="/v1/batch/jobs" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -74,7 +74,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.batch.jobs.create(endpoint=models.APIEndpoint.ROOT_V1_MODERATIONS, model="mistral-small-latest", timeout_hours=24)
+    res = mistral.batch.jobs.create(endpoint="/v1/moderations", model="mistral-small-latest", timeout_hours=24)
 
     # Handle response
     print(res)

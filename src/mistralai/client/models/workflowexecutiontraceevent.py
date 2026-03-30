@@ -7,9 +7,8 @@ from .workflowexecutiontracesummaryattributesvalues import (
     WorkflowExecutionTraceSummaryAttributesValues,
     WorkflowExecutionTraceSummaryAttributesValuesTypedDict,
 )
-from mistralai.client import models
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -47,15 +46,6 @@ class WorkflowExecutionTraceEvent(BaseModel):
 
     internal: Optional[bool] = False
     r"""Whether the event is internal"""
-
-    @field_serializer("type")
-    def serialize_type(self, value):
-        if isinstance(value, str):
-            try:
-                return models.EventType(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

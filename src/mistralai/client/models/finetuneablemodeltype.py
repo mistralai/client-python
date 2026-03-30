@@ -2,9 +2,10 @@
 # @generated-id: 05e097395df3
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class FineTuneableModelType(str, Enum):
-    COMPLETION = "completion"
-    CLASSIFIER = "classifier"
+FineTuneableModelType = Literal[
+    "completion",
+    "classifier",
+]

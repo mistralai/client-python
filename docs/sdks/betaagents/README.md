@@ -26,7 +26,7 @@ Create a new agent giving it instructions, tools, description. The agent is then
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_create" method="post" path="/v1/agents" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -36,7 +36,7 @@ with Mistral(
 
     res = mistral.beta.agents.create(model="LeBaron", name="<value>", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -170,7 +170,7 @@ Update an agent attributes and create a new version.
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_agents_update" method="patch" path="/v1/agents/{agent_id}" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -180,7 +180,7 @@ with Mistral(
 
     res = mistral.beta.agents.update(agent_id="<id>", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 

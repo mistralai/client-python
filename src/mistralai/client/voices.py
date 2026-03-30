@@ -16,9 +16,7 @@ class Voices(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        type_: Optional[
-            models.ListVoicesV1AudioVoicesGetType
-        ] = models.ListVoicesV1AudioVoicesGetType.ALL,
+        type_: Optional[models.ListVoicesV1AudioVoicesGetType] = "all",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -114,9 +112,7 @@ class Voices(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        type_: Optional[
-            models.ListVoicesV1AudioVoicesGetType
-        ] = models.ListVoicesV1AudioVoicesGetType.ALL,
+        type_: Optional[models.ListVoicesV1AudioVoicesGetType] = "all",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

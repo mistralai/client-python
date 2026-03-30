@@ -5,14 +5,13 @@
 ```python
 from mistralai.client.models import ToolTypes
 
-value = ToolTypes.FUNCTION
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: ToolTypes = "function"
 ```
 
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `FUNCTION` | function   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"function"`

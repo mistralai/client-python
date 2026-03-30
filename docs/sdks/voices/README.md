@@ -19,7 +19,7 @@ List all voices (excluding sample data)
 
 <!-- UsageSnippet language="python" operationID="list_voices_v1_audio_voices_get" method="get" path="/v1/audio/voices" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -27,7 +27,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.voices.list(limit=10, offset=0, type_=models.ListVoicesV1AudioVoicesGetType.ALL)
+    res = mistral.audio.voices.list(limit=10, offset=0, type_="all")
 
     # Handle response
     print(res)

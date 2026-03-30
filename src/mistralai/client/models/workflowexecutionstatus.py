@@ -2,16 +2,20 @@
 # @generated-id: 56a16810d5de
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class WorkflowExecutionStatus(str, Enum, metaclass=utils.OpenEnumMeta):
-    RUNNING = "RUNNING"
-    COMPLETED = "COMPLETED"
-    FAILED = "FAILED"
-    CANCELED = "CANCELED"
-    TERMINATED = "TERMINATED"
-    CONTINUED_AS_NEW = "CONTINUED_AS_NEW"
-    TIMED_OUT = "TIMED_OUT"
-    RETRYING_AFTER_ERROR = "RETRYING_AFTER_ERROR"
+WorkflowExecutionStatus = Union[
+    Literal[
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+        "CANCELED",
+        "TERMINATED",
+        "CONTINUED_AS_NEW",
+        "TIMED_OUT",
+        "RETRYING_AFTER_ERROR",
+    ],
+    UnrecognizedStr,
+]

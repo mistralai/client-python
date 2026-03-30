@@ -5,7 +5,6 @@ from __future__ import annotations
 from .tempotraceattribute import TempoTraceAttribute, TempoTraceAttributeTypedDict
 from .tempotraceevent import TempoTraceEvent, TempoTraceEventTypedDict
 from .tempotracescopekind import TempoTraceScopeKind
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +13,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 import pydantic
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -67,15 +66,6 @@ class TempoTraceSpan(BaseModel):
 
     events: Optional[List[TempoTraceEvent]] = None
     r"""The events of the scope"""
-
-    @field_serializer("kind")
-    def serialize_kind(self, value):
-        if isinstance(value, str):
-            try:
-                return models.TempoTraceScopeKind(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

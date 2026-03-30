@@ -3,19 +3,21 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from enum import Enum
-from mistralai.client import models, utils
-from mistralai.client.types import BaseModel
-from pydantic import field_serializer
+from mistralai.client.types import BaseModel, UnrecognizedStr
+from typing import Literal, Union
 from typing_extensions import TypedDict
 
 
-class ChatCompletionChoiceFinishReason(str, Enum, metaclass=utils.OpenEnumMeta):
-    STOP = "stop"
-    LENGTH = "length"
-    MODEL_LENGTH = "model_length"
-    ERROR = "error"
-    TOOL_CALLS = "tool_calls"
+ChatCompletionChoiceFinishReason = Union[
+    Literal[
+        "stop",
+        "length",
+        "model_length",
+        "error",
+        "tool_calls",
+    ],
+    UnrecognizedStr,
+]
 
 
 class ChatCompletionChoiceTypedDict(TypedDict):
@@ -30,12 +32,3 @@ class ChatCompletionChoice(BaseModel):
     message: AssistantMessage
 
     finish_reason: ChatCompletionChoiceFinishReason
-
-    @field_serializer("finish_reason")
-    def serialize_finish_reason(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ChatCompletionChoiceFinishReason(value)
-            except ValueError:
-                return value
-        return value

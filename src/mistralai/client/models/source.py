@@ -2,11 +2,15 @@
 # @generated-id: fcee60a4ea0d
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class Source(str, Enum, metaclass=utils.OpenEnumMeta):
-    UPLOAD = "upload"
-    REPOSITORY = "repository"
-    MISTRAL = "mistral"
+Source = Union[
+    Literal[
+        "upload",
+        "repository",
+        "mistral",
+    ],
+    UnrecognizedStr,
+]

@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import ShareEnum
 
-value = ShareEnum.VIEWER
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: ShareEnum = "Viewer"
 ```
 
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `VIEWER` | Viewer   |
-| `EDITOR` | Editor   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"Viewer"`
+- `"Editor"`

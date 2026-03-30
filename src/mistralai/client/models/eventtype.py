@@ -2,10 +2,14 @@
 # @generated-id: f70686df1fa5
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class EventType(str, Enum, metaclass=utils.OpenEnumMeta):
-    EVENT = "EVENT"
-    EVENT_PROGRESS = "EVENT_PROGRESS"
+EventType = Union[
+    Literal[
+        "EVENT",
+        "EVENT_PROGRESS",
+    ],
+    UnrecognizedStr,
+]

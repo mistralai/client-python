@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import SpeechStreamEventTypes
 
-value = SpeechStreamEventTypes.SPEECH_AUDIO_DELTA
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: SpeechStreamEventTypes = "speech.audio.delta"
 ```
 
 
 ## Values
 
-| Name                 | Value                |
-| -------------------- | -------------------- |
-| `SPEECH_AUDIO_DELTA` | speech.audio.delta   |
-| `SPEECH_AUDIO_DONE`  | speech.audio.done    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"speech.audio.delta"`
+- `"speech.audio.done"`

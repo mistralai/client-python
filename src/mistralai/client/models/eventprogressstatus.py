@@ -2,11 +2,15 @@
 # @generated-id: 48623263df72
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class EventProgressStatus(str, Enum, metaclass=utils.OpenEnumMeta):
-    RUNNING = "RUNNING"
-    COMPLETED = "COMPLETED"
-    FAILED = "FAILED"
+EventProgressStatus = Union[
+    Literal[
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+    ],
+    UnrecognizedStr,
+]

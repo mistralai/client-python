@@ -15,7 +15,7 @@ Get Stream Events
 
 <!-- UsageSnippet language="python" operationID="get_stream_events_v1_workflows_events_stream_get" method="get" path="/v1/workflows/events/stream" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -23,7 +23,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.events.get_stream_events(scope=models.Scope.WILDCARD_, activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
+    res = mistral.events.get_stream_events(scope="*", activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
 
     with res as event_stream:
         for event in event_stream:

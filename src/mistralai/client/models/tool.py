@@ -4,9 +4,8 @@
 from __future__ import annotations
 from .function import Function, FunctionTypedDict
 from .tooltypes import ToolTypes
-from mistralai.client import models
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -20,15 +19,6 @@ class Tool(BaseModel):
     function: Function
 
     type: Optional[ToolTypes] = None
-
-    @field_serializer("type")
-    def serialize_type(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ToolTypes(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

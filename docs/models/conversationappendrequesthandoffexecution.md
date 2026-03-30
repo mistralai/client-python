@@ -4,14 +4,11 @@
 
 ```python
 from mistralai.client.models import ConversationAppendRequestHandoffExecution
-
-value = ConversationAppendRequestHandoffExecution.CLIENT
+value: ConversationAppendRequestHandoffExecution = "client"
 ```
 
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `CLIENT` | client   |
-| `SERVER` | server   |
+- `"client"`
+- `"server"`

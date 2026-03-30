@@ -2,18 +2,21 @@
 # @generated-id: a729c26f9c43
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedInt
+from typing import Literal, Union
 
 
-class ScheduleOverlapPolicy(int, Enum, metaclass=utils.OpenEnumMeta):
-    r"""Controls what happens when a workflow would be started by a schedule but
-    one is already running.
-    """
-
-    ONE = 1
-    TWO = 2
-    THREE = 3
-    FOUR = 4
-    FIVE = 5
-    SIX = 6
+ScheduleOverlapPolicy = Union[
+    Literal[
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+    ],
+    UnrecognizedInt,
+]
+r"""Controls what happens when a workflow would be started by a schedule but
+one is already running.
+"""

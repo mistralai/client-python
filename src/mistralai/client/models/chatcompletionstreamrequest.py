@@ -14,7 +14,6 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -23,7 +22,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import get_discriminator
-from pydantic import Discriminator, Tag, field_serializer, model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -175,24 +174,6 @@ class ChatCompletionStreamRequest(BaseModel):
 
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
-
-    @field_serializer("reasoning_effort")
-    def serialize_reasoning_effort(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ReasoningEffort(value)
-            except ValueError:
-                return value
-        return value
-
-    @field_serializer("prompt_mode")
-    def serialize_prompt_mode(self, value):
-        if isinstance(value, str):
-            try:
-                return models.MistralPromptMode(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

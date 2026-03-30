@@ -5,9 +5,8 @@ from __future__ import annotations
 from .conversationpayload import ConversationPayload, ConversationPayloadTypedDict
 from .conversationsource import ConversationSource
 from datetime import datetime
-from mistralai.client import models
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Any, Dict
 from typing_extensions import TypedDict
 
@@ -39,15 +38,6 @@ class DatasetRecord(BaseModel):
     properties: Dict[str, Any]
 
     source: ConversationSource
-
-    @field_serializer("source")
-    def serialize_source(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ConversationSource(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

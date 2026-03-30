@@ -26,7 +26,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start" method="post" path="/v1/conversations" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -36,7 +36,7 @@ with Mistral(
 
     res = mistral.beta.conversations.start(inputs="<value>", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -203,7 +203,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append" method="post" path="/v1/conversations/{conversation_id}" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -211,9 +211,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append(conversation_id="<id>", store=True, handoff_execution=models.ConversationAppendRequestHandoffExecution.SERVER, completion_args={
+    res = mistral.beta.conversations.append(conversation_id="<id>", store=True, handoff_execution="server", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -335,7 +335,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart" method="post" path="/v1/conversations/{conversation_id}/restart" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -343,9 +343,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart(conversation_id="<id>", from_entry_id="<id>", store=True, handoff_execution=models.ConversationRestartRequestHandoffExecution.SERVER, completion_args={
+    res = mistral.beta.conversations.restart(conversation_id="<id>", from_entry_id="<id>", store=True, handoff_execution="server", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -388,7 +388,7 @@ Create a new conversation, using a base model or an agent and append entries. Co
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_start_stream" method="post" path="/v1/conversations#stream" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -405,7 +405,7 @@ with Mistral(
         },
     ], completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -454,7 +454,7 @@ Run completion on the history of the conversation and the user entries. Return t
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_append_stream" method="post" path="/v1/conversations/{conversation_id}#stream" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -462,9 +462,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.append_stream(conversation_id="<id>", store=True, handoff_execution=models.ConversationAppendStreamRequestHandoffExecution.SERVER, completion_args={
+    res = mistral.beta.conversations.append_stream(conversation_id="<id>", store=True, handoff_execution="server", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 
@@ -506,7 +506,7 @@ Given a conversation_id and an id, recreate a conversation from this point and r
 
 <!-- UsageSnippet language="python" operationID="agents_api_v1_conversations_restart_stream" method="post" path="/v1/conversations/{conversation_id}/restart#stream" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -514,9 +514,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", from_entry_id="<id>", store=True, handoff_execution=models.ConversationRestartStreamRequestHandoffExecution.SERVER, completion_args={
+    res = mistral.beta.conversations.restart_stream(conversation_id="<id>", from_entry_id="<id>", store=True, handoff_execution="server", completion_args={
         "response_format": {
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         },
     })
 

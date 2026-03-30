@@ -7,15 +7,14 @@ Format of the table
 ```python
 from mistralai.client.models import Format
 
-value = Format.MARKDOWN
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: Format = "markdown"
 ```
 
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `MARKDOWN` | markdown   |
-| `HTML`     | html       |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"markdown"`
+- `"html"`

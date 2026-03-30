@@ -2,20 +2,19 @@
 # @generated-id: 6b3ce5be1294
 
 from __future__ import annotations
-from enum import Enum
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Optional
+from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class ListVoicesV1AudioVoicesGetType(str, Enum):
-    r"""Filter the voices between customs and presets"""
-
-    ALL = "all"
-    CUSTOM = "custom"
-    PRESET = "preset"
+ListVoicesV1AudioVoicesGetType = Literal[
+    "all",
+    "custom",
+    "preset",
+]
+r"""Filter the voices between customs and presets"""
 
 
 class ListVoicesV1AudioVoicesGetRequestTypedDict(TypedDict):
@@ -43,7 +42,7 @@ class ListVoicesV1AudioVoicesGetRequest(BaseModel):
     type: Annotated[
         Optional[ListVoicesV1AudioVoicesGetType],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = ListVoicesV1AudioVoicesGetType.ALL
+    ] = "all"
     r"""Filter the voices between customs and presets"""
 
     @model_serializer(mode="wrap")

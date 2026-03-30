@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import FileVisibility
 
-value = FileVisibility.WORKSPACE
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: FileVisibility = "workspace"
 ```
 
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `WORKSPACE` | workspace   |
-| `USER`      | user        |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"workspace"`
+- `"user"`

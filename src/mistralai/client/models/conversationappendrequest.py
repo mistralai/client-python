@@ -5,7 +5,6 @@ from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
 from .toolcallconfirmation import ToolCallConfirmation, ToolCallConfirmationTypedDict
-from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -21,9 +20,10 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class ConversationAppendRequestHandoffExecution(str, Enum):
-    CLIENT = "client"
-    SERVER = "server"
+ConversationAppendRequestHandoffExecution = Literal[
+    "client",
+    "server",
+]
 
 
 class ConversationAppendRequestTypedDict(TypedDict):
@@ -48,9 +48,7 @@ class ConversationAppendRequest(BaseModel):
     store: Optional[bool] = True
     r"""Whether to store the results into our servers or not."""
 
-    handoff_execution: Optional[ConversationAppendRequestHandoffExecution] = (
-        ConversationAppendRequestHandoffExecution.SERVER
-    )
+    handoff_execution: Optional[ConversationAppendRequestHandoffExecution] = "server"
 
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""

@@ -3,27 +3,30 @@
 
 from __future__ import annotations
 from datetime import datetime
-from enum import Enum
-from mistralai.client import models, utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal, Optional
+from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class FunctionCallEventConfirmationStatus(str, Enum, metaclass=utils.OpenEnumMeta):
-    PENDING = "pending"
-    ALLOWED = "allowed"
-    DENIED = "denied"
+FunctionCallEventConfirmationStatus = Union[
+    Literal[
+        "pending",
+        "allowed",
+        "denied",
+    ],
+    UnrecognizedStr,
+]
 
 
 class FunctionCallEventTypedDict(TypedDict):
@@ -65,15 +68,6 @@ class FunctionCallEvent(BaseModel):
     agent_id: OptionalNullable[str] = UNSET
 
     confirmation_status: OptionalNullable[FunctionCallEventConfirmationStatus] = UNSET
-
-    @field_serializer("confirmation_status")
-    def serialize_confirmation_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.FunctionCallEventConfirmationStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

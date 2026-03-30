@@ -6,7 +6,6 @@ from .filepurpose import FilePurpose
 from .filevisibility import FileVisibility
 from .sampletype import SampleType
 from .source import Source
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -15,7 +14,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 import pydantic
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -71,42 +70,6 @@ class CreateFileResponse(BaseModel):
     expires_at: OptionalNullable[int] = UNSET
 
     visibility: OptionalNullable[FileVisibility] = UNSET
-
-    @field_serializer("purpose")
-    def serialize_purpose(self, value):
-        if isinstance(value, str):
-            try:
-                return models.FilePurpose(value)
-            except ValueError:
-                return value
-        return value
-
-    @field_serializer("sample_type")
-    def serialize_sample_type(self, value):
-        if isinstance(value, str):
-            try:
-                return models.SampleType(value)
-            except ValueError:
-                return value
-        return value
-
-    @field_serializer("source")
-    def serialize_source(self, value):
-        if isinstance(value, str):
-            try:
-                return models.Source(value)
-            except ValueError:
-                return value
-        return value
-
-    @field_serializer("visibility")
-    def serialize_visibility(self, value):
-        if isinstance(value, str):
-            try:
-                return models.FileVisibility(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

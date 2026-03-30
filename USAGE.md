@@ -5,7 +5,7 @@ This example shows how to create chat completions.
 
 ```python
 # Synchronous Example
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -19,7 +19,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], stream=False, response_format={
-        "type": models.ResponseFormats.TEXT,
+        "type": "text",
     })
 
     # Handle response
@@ -33,7 +33,7 @@ The same SDK client can also be used to make asynchronous requests by importing 
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 async def main():
@@ -48,7 +48,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], stream=False, response_format={
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         })
 
         # Handle response
@@ -63,7 +63,7 @@ This example shows how to upload a file.
 
 ```python
 # Synchronous Example
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -74,7 +74,7 @@ with Mistral(
     res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-    }, visibility=models.FilesAPIRoutesUploadFileFileVisibility.WORKSPACE)
+    }, visibility="workspace")
 
     # Handle response
     print(res)
@@ -87,7 +87,7 @@ The same SDK client can also be used to make asynchronous requests by importing 
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 async def main():
@@ -99,7 +99,7 @@ async def main():
         res = await mistral.files.upload_async(file={
             "file_name": "example.file",
             "content": open("example.file", "rb"),
-        }, visibility=models.FilesAPIRoutesUploadFileFileVisibility.WORKSPACE)
+        }, visibility="workspace")
 
         # Handle response
         print(res)
@@ -113,7 +113,7 @@ This example shows how to create agents completions.
 
 ```python
 # Synchronous Example
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -127,7 +127,7 @@ with Mistral(
             "content": "Who is the best French painter? Answer in one short sentence.",
         },
     ], agent_id="<id>", stream=False, response_format={
-        "type": models.ResponseFormats.TEXT,
+        "type": "text",
     })
 
     # Handle response
@@ -141,7 +141,7 @@ The same SDK client can also be used to make asynchronous requests by importing 
 ```python
 # Asynchronous Example
 import asyncio
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 async def main():
@@ -156,7 +156,7 @@ async def main():
                 "content": "Who is the best French painter? Answer in one short sentence.",
             },
         ], agent_id="<id>", stream=False, response_format={
-            "type": models.ResponseFormats.TEXT,
+            "type": "text",
         })
 
         # Handle response

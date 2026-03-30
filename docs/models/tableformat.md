@@ -4,14 +4,11 @@
 
 ```python
 from mistralai.client.models import TableFormat
-
-value = TableFormat.MARKDOWN
+value: TableFormat = "markdown"
 ```
 
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `MARKDOWN` | markdown   |
-| `HTML`     | html       |
+- `"markdown"`
+- `"html"`

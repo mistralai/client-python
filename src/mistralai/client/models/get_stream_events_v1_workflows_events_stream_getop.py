@@ -4,7 +4,6 @@
 from __future__ import annotations
 from .streameventssepayload import StreamEventSsePayload, StreamEventSsePayloadTypedDict
 from .workfloweventtype import WorkflowEventType
-from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -15,14 +14,15 @@ from mistralai.client.types import (
 from mistralai.client.utils import FieldMetadata, HeaderMetadata, QueryParamMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class Scope(str, Enum):
-    ACTIVITY = "activity"
-    WORKFLOW = "workflow"
-    WILDCARD_ = "*"
+Scope = Literal[
+    "activity",
+    "workflow",
+    "*",
+]
 
 
 class GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict(TypedDict):
@@ -44,7 +44,7 @@ class GetStreamEventsV1WorkflowsEventsStreamGetRequest(BaseModel):
     scope: Annotated[
         Optional[Scope],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = Scope.WILDCARD_
+    ] = "*"
 
     activity_name: Annotated[
         Optional[str],

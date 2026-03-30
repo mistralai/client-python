@@ -2,50 +2,57 @@
 # @generated-id: ffa42818fea3
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import models, utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
-from pydantic import field_serializer, model_serializer
-from typing import List
+from pydantic import model_serializer
+from typing import List, Literal, Union
 from typing_extensions import NotRequired, TypedDict
 
 
-class BaseFieldDefinitionType(str, Enum, metaclass=utils.OpenEnumMeta):
-    ENUM = "ENUM"
-    TEXT = "TEXT"
-    INT = "INT"
-    FLOAT = "FLOAT"
-    BOOL = "BOOL"
-    TIMESTAMP = "TIMESTAMP"
-    ARRAY = "ARRAY"
+BaseFieldDefinitionType = Union[
+    Literal[
+        "ENUM",
+        "TEXT",
+        "INT",
+        "FLOAT",
+        "BOOL",
+        "TIMESTAMP",
+        "ARRAY",
+    ],
+    UnrecognizedStr,
+]
 
 
-class SupportedOperator(str, Enum, metaclass=utils.OpenEnumMeta):
-    LT = "lt"
-    LTE = "lte"
-    GT = "gt"
-    GTE = "gte"
-    STARTSWITH = "startswith"
-    ISTARTSWITH = "istartswith"
-    ENDSWITH = "endswith"
-    IENDSWITH = "iendswith"
-    CONTAINS = "contains"
-    ICONTAINS = "icontains"
-    MATCHES = "matches"
-    NOTCONTAINS = "notcontains"
-    INOTCONTAINS = "inotcontains"
-    EQ = "eq"
-    NEQ = "neq"
-    ISNULL = "isnull"
-    INCLUDES = "includes"
-    EXCLUDES = "excludes"
-    LEN_EQ = "len_eq"
+SupportedOperator = Union[
+    Literal[
+        "lt",
+        "lte",
+        "gt",
+        "gte",
+        "startswith",
+        "istartswith",
+        "endswith",
+        "iendswith",
+        "contains",
+        "icontains",
+        "matches",
+        "notcontains",
+        "inotcontains",
+        "eq",
+        "neq",
+        "isnull",
+        "includes",
+        "excludes",
+        "len_eq",
+    ],
+    UnrecognizedStr,
+]
 
 
 class BaseFieldDefinitionTypedDict(TypedDict):
@@ -66,15 +73,6 @@ class BaseFieldDefinition(BaseModel):
     supported_operators: List[SupportedOperator]
 
     group: OptionalNullable[str] = UNSET
-
-    @field_serializer("type")
-    def serialize_type(self, value):
-        if isinstance(value, str):
-            try:
-                return models.BaseFieldDefinitionType(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

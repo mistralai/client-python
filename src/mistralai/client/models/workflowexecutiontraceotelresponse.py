@@ -5,7 +5,6 @@ from __future__ import annotations
 from .tempogettraceresponse import TempoGetTraceResponse, TempoGetTraceResponseTypedDict
 from .workflowexecutionstatus import WorkflowExecutionStatus
 from datetime import datetime
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -13,7 +12,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Any
 from typing_extensions import NotRequired, TypedDict
 
@@ -81,15 +80,6 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
 
     otel_trace_data: OptionalNullable[TempoGetTraceResponse] = UNSET
     r"""The raw OpenTelemetry trace data"""
-
-    @field_serializer("status")
-    def serialize_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.WorkflowExecutionStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

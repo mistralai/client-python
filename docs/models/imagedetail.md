@@ -5,16 +5,15 @@
 ```python
 from mistralai.client.models import ImageDetail
 
-value = ImageDetail.LOW
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: ImageDetail = "low"
 ```
 
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `LOW`  | low    |
-| `AUTO` | auto   |
-| `HIGH` | high   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"low"`
+- `"auto"`
+- `"high"`

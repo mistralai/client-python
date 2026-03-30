@@ -4,7 +4,6 @@
 from __future__ import annotations
 from .processstatus import ProcessStatus
 from datetime import datetime
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,7 +11,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
@@ -80,15 +79,6 @@ class Document(BaseModel):
     url: OptionalNullable[str] = UNSET
 
     attributes: OptionalNullable[Dict[str, Any]] = UNSET
-
-    @field_serializer("process_status")
-    def serialize_process_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ProcessStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

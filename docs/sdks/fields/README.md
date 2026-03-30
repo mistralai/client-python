@@ -56,7 +56,7 @@ Get Chat Completion Field Options
 
 <!-- UsageSnippet language="python" operationID="get_chat_completion_field_options_v1_observability_chat_completion_fields__field_name__options_get" method="get" path="/v1/observability/chat-completion-fields/{field_name}/options" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -64,7 +64,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.chat_completion_events.fields.fetch_options(field_name="<value>", operator=models.Operator.STARTSWITH)
+    res = mistral.beta.observability.chat_completion_events.fields.fetch_options(field_name="<value>", operator="startswith")
 
     # Handle response
     print(res)

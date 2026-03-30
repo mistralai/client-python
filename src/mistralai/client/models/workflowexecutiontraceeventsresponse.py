@@ -12,7 +12,6 @@ from .workflowexecutiontraceevent import (
     WorkflowExecutionTraceEventTypedDict,
 )
 from datetime import datetime
-from mistralai.client import models
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -20,7 +19,7 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Any, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
@@ -93,15 +92,6 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
 
     events: Optional[List[WorkflowExecutionTraceEventsResponseEvent]] = None
     r"""The events of the workflow execution"""
-
-    @field_serializer("status")
-    def serialize_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.WorkflowExecutionStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

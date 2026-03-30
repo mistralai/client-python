@@ -4,7 +4,6 @@
 from __future__ import annotations
 from .batchjobstatus import BatchJobStatus
 from datetime import datetime
-from enum import Enum
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,13 +13,14 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class OrderBy(str, Enum):
-    CREATED = "created"
-    MINUS_CREATED = "-created"
+OrderBy = Literal[
+    "created",
+    "-created",
+]
 
 
 class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
@@ -79,7 +79,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
     order_by: Annotated[
         Optional[OrderBy],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = OrderBy.MINUS_CREATED
+    ] = "-created"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

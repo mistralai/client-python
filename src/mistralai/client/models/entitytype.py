@@ -2,13 +2,16 @@
 # @generated-id: 62d6a6a13288
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class EntityType(str, Enum, metaclass=utils.OpenEnumMeta):
-    r"""The type of entity, used to share a library."""
-
-    USER = "User"
-    WORKSPACE = "Workspace"
-    ORG = "Org"
+EntityType = Union[
+    Literal[
+        "User",
+        "Workspace",
+        "Org",
+    ],
+    UnrecognizedStr,
+]
+r"""The type of entity, used to share a library."""

@@ -21,7 +21,7 @@ class Files(BaseSDK):
         expiry: OptionalNullable[int] = UNSET,
         visibility: Optional[
             models.FilesAPIRoutesUploadFileFileVisibility
-        ] = models.FilesAPIRoutesUploadFileFileVisibility.WORKSPACE,
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -131,7 +131,7 @@ class Files(BaseSDK):
         expiry: OptionalNullable[int] = UNSET,
         visibility: Optional[
             models.FilesAPIRoutesUploadFileFileVisibility
-        ] = models.FilesAPIRoutesUploadFileFileVisibility.WORKSPACE,
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

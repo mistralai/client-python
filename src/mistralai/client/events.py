@@ -14,7 +14,7 @@ class Events(BaseSDK):
     def get_stream_events(
         self,
         *,
-        scope: Optional[models.Scope] = models.Scope.WILDCARD_,
+        scope: Optional[models.Scope] = "*",
         activity_name: Optional[str] = "*",
         activity_id: Optional[str] = "*",
         workflow_name: Optional[str] = "*",
@@ -147,7 +147,7 @@ class Events(BaseSDK):
     async def get_stream_events_async(
         self,
         *,
-        scope: Optional[models.Scope] = models.Scope.WILDCARD_,
+        scope: Optional[models.Scope] = "*",
         activity_name: Optional[str] = "*",
         activity_id: Optional[str] = "*",
         workflow_name: Optional[str] = "*",

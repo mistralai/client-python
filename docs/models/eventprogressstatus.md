@@ -5,16 +5,15 @@
 ```python
 from mistralai.client.models import EventProgressStatus
 
-value = EventProgressStatus.RUNNING
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: EventProgressStatus = "RUNNING"
 ```
 
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `RUNNING`   | RUNNING     |
-| `COMPLETED` | COMPLETED   |
-| `FAILED`    | FAILED      |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"RUNNING"`
+- `"COMPLETED"`
+- `"FAILED"`

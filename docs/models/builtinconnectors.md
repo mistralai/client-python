@@ -5,18 +5,17 @@
 ```python
 from mistralai.client.models import BuiltInConnectors
 
-value = BuiltInConnectors.WEB_SEARCH
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: BuiltInConnectors = "web_search"
 ```
 
 
 ## Values
 
-| Name                 | Value                |
-| -------------------- | -------------------- |
-| `WEB_SEARCH`         | web_search           |
-| `WEB_SEARCH_PREMIUM` | web_search_premium   |
-| `CODE_INTERPRETER`   | code_interpreter     |
-| `IMAGE_GENERATION`   | image_generation     |
-| `DOCUMENT_LIBRARY`   | document_library     |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"web_search"`
+- `"web_search_premium"`
+- `"code_interpreter"`
+- `"image_generation"`
+- `"document_library"`

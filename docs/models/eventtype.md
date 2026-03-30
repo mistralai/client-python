@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import EventType
 
-value = EventType.EVENT
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: EventType = "EVENT"
 ```
 
 
 ## Values
 
-| Name             | Value            |
-| ---------------- | ---------------- |
-| `EVENT`          | EVENT            |
-| `EVENT_PROGRESS` | EVENT_PROGRESS   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"EVENT"`
+- `"EVENT_PROGRESS"`

@@ -26,10 +26,9 @@ from .toolexecutionstartedevent import (
     ToolExecutionStartedEventTypedDict,
 )
 from functools import partial
-from mistralai.client import models
 from mistralai.client.types import BaseModel
 from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict, field_serializer
+from pydantic import ConfigDict
 from pydantic.functional_validators import BeforeValidator
 from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
@@ -113,12 +112,3 @@ class ConversationEvents(BaseModel):
     r"""Server side events sent when streaming a conversation response."""
 
     data: ConversationEventsData
-
-    @field_serializer("event")
-    def serialize_event(self, value):
-        if isinstance(value, str):
-            try:
-                return models.SSETypes(value)
-            except ValueError:
-                return value
-        return value

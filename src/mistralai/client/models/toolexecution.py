@@ -2,25 +2,28 @@
 # @generated-id: 69fcb691327a
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import models, utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 import pydantic
-from pydantic import ConfigDict, field_serializer, model_serializer
-from typing import Any, Dict
+from pydantic import ConfigDict, model_serializer
+from typing import Any, Dict, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class TaskSupport(str, Enum, metaclass=utils.OpenEnumMeta):
-    FORBIDDEN = "forbidden"
-    OPTIONAL = "optional"
-    REQUIRED = "required"
+TaskSupport = Union[
+    Literal[
+        "forbidden",
+        "optional",
+        "required",
+    ],
+    UnrecognizedStr,
+]
 
 
 class ToolExecutionTypedDict(TypedDict):
@@ -48,15 +51,6 @@ class ToolExecution(BaseModel):
     @additional_properties.setter
     def additional_properties(self, value):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
-
-    @field_serializer("task_support")
-    def serialize_task_support(self, value):
-        if isinstance(value, str):
-            try:
-                return models.TaskSupport(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

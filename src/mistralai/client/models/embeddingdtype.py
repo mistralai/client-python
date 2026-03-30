@@ -2,12 +2,13 @@
 # @generated-id: 77f9526a78df
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class EmbeddingDtype(str, Enum):
-    FLOAT = "float"
-    INT8 = "int8"
-    UINT8 = "uint8"
-    BINARY = "binary"
-    UBINARY = "ubinary"
+EmbeddingDtype = Literal[
+    "float",
+    "int8",
+    "uint8",
+    "binary",
+    "ubinary",
+]

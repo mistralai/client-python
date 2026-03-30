@@ -2,12 +2,16 @@
 # @generated-id: cbe8c44aee50
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class ToolType(str, Enum, metaclass=utils.OpenEnumMeta):
-    RAG = "rag"
-    IMAGE = "image"
-    CODE = "code"
-    EVENT = "event"
+ToolType = Union[
+    Literal[
+        "rag",
+        "image",
+        "code",
+        "event",
+    ],
+    UnrecognizedStr,
+]

@@ -5,15 +5,14 @@
 ```python
 from mistralai.client.models import Visibility
 
-value = Visibility.MODEL
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: Visibility = "model"
 ```
 
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `MODEL` | model   |
-| `APP`   | app     |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"model"`
+- `"app"`

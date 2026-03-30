@@ -3,20 +3,21 @@
 
 from __future__ import annotations
 from .deltamessage import DeltaMessage, DeltaMessageTypedDict
-from enum import Enum
-from mistralai.client import models, utils
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
-from pydantic import field_serializer, model_serializer
+from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL, UnrecognizedStr
+from pydantic import model_serializer
+from typing import Literal, Union
 from typing_extensions import TypedDict
 
 
-class CompletionResponseStreamChoiceFinishReason(
-    str, Enum, metaclass=utils.OpenEnumMeta
-):
-    STOP = "stop"
-    LENGTH = "length"
-    ERROR = "error"
-    TOOL_CALLS = "tool_calls"
+CompletionResponseStreamChoiceFinishReason = Union[
+    Literal[
+        "stop",
+        "length",
+        "error",
+        "tool_calls",
+    ],
+    UnrecognizedStr,
+]
 
 
 class CompletionResponseStreamChoiceTypedDict(TypedDict):
@@ -31,15 +32,6 @@ class CompletionResponseStreamChoice(BaseModel):
     delta: DeltaMessage
 
     finish_reason: Nullable[CompletionResponseStreamChoiceFinishReason]
-
-    @field_serializer("finish_reason")
-    def serialize_finish_reason(self, value):
-        if isinstance(value, str):
-            try:
-                return models.CompletionResponseStreamChoiceFinishReason(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

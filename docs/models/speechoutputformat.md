@@ -4,17 +4,14 @@
 
 ```python
 from mistralai.client.models import SpeechOutputFormat
-
-value = SpeechOutputFormat.PCM
+value: SpeechOutputFormat = "pcm"
 ```
 
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `PCM`  | pcm    |
-| `WAV`  | wav    |
-| `MP3`  | mp3    |
-| `FLAC` | flac   |
-| `OPUS` | opus   |
+- `"pcm"`
+- `"wav"`
+- `"mp3"`
+- `"flac"`
+- `"opus"`

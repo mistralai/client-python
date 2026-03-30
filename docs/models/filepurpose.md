@@ -5,16 +5,15 @@
 ```python
 from mistralai.client.models import FilePurpose
 
-value = FilePurpose.FINE_TUNE
-
 # Open enum: unrecognized values are captured as UnrecognizedStr
+value: FilePurpose = "fine-tune"
 ```
 
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `FINE_TUNE` | fine-tune   |
-| `BATCH`     | batch       |
-| `OCR`       | ocr         |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"fine-tune"`
+- `"batch"`
+- `"ocr"`

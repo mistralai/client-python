@@ -6,22 +6,19 @@ The current job state to filter on. When set, the other results are not displaye
 
 ```python
 from mistralai.client.models import JobsAPIRoutesFineTuningGetFineTuningJobsStatus
-
-value = JobsAPIRoutesFineTuningGetFineTuningJobsStatus.QUEUED
+value: JobsAPIRoutesFineTuningGetFineTuningJobsStatus = "QUEUED"
 ```
 
 
 ## Values
 
-| Name                     | Value                    |
-| ------------------------ | ------------------------ |
-| `QUEUED`                 | QUEUED                   |
-| `STARTED`                | STARTED                  |
-| `VALIDATING`             | VALIDATING               |
-| `VALIDATED`              | VALIDATED                |
-| `RUNNING`                | RUNNING                  |
-| `FAILED_VALIDATION`      | FAILED_VALIDATION        |
-| `FAILED`                 | FAILED                   |
-| `SUCCESS`                | SUCCESS                  |
-| `CANCELLED`              | CANCELLED                |
-| `CANCELLATION_REQUESTED` | CANCELLATION_REQUESTED   |
+- `"QUEUED"`
+- `"STARTED"`
+- `"VALIDATING"`
+- `"VALIDATED"`
+- `"RUNNING"`
+- `"FAILED_VALIDATION"`
+- `"FAILED"`
+- `"SUCCESS"`
+- `"CANCELLED"`
+- `"CANCELLATION_REQUESTED"`

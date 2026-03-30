@@ -2,10 +2,14 @@
 # @generated-id: d21e2a36ab1f
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class FTClassifierLossFunction(str, Enum, metaclass=utils.OpenEnumMeta):
-    SINGLE_CLASS = "single_class"
-    MULTI_CLASS = "multi_class"
+FTClassifierLossFunction = Union[
+    Literal[
+        "single_class",
+        "multi_class",
+    ],
+    UnrecognizedStr,
+]

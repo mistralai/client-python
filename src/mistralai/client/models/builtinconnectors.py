@@ -2,13 +2,17 @@
 # @generated-id: 2d276ce938dc
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class BuiltInConnectors(str, Enum, metaclass=utils.OpenEnumMeta):
-    WEB_SEARCH = "web_search"
-    WEB_SEARCH_PREMIUM = "web_search_premium"
-    CODE_INTERPRETER = "code_interpreter"
-    IMAGE_GENERATION = "image_generation"
-    DOCUMENT_LIBRARY = "document_library"
+BuiltInConnectors = Union[
+    Literal[
+        "web_search",
+        "web_search_premium",
+        "code_interpreter",
+        "image_generation",
+        "document_library",
+    ],
+    UnrecognizedStr,
+]

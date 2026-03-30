@@ -4,14 +4,11 @@
 
 ```python
 from mistralai.client.models import EventSource
-
-value = EventSource.DATABASE
+value: EventSource = "DATABASE"
 ```
 
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `DATABASE` | DATABASE   |
-| `LIVE`     | LIVE       |
+- `"DATABASE"`
+- `"LIVE"`

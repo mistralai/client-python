@@ -2,15 +2,19 @@
 # @generated-id: 61e08cf5eea9
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class BatchJobStatus(str, Enum, metaclass=utils.OpenEnumMeta):
-    QUEUED = "QUEUED"
-    RUNNING = "RUNNING"
-    SUCCESS = "SUCCESS"
-    FAILED = "FAILED"
-    TIMEOUT_EXCEEDED = "TIMEOUT_EXCEEDED"
-    CANCELLATION_REQUESTED = "CANCELLATION_REQUESTED"
-    CANCELLED = "CANCELLED"
+BatchJobStatus = Union[
+    Literal[
+        "QUEUED",
+        "RUNNING",
+        "SUCCESS",
+        "FAILED",
+        "TIMEOUT_EXCEEDED",
+        "CANCELLATION_REQUESTED",
+        "CANCELLED",
+    ],
+    UnrecognizedStr,
+]

@@ -3,9 +3,7 @@
 
 from __future__ import annotations
 from .basetaskstatus import BaseTaskStatus
-from mistralai.client import models
 from mistralai.client.types import BaseModel
-from pydantic import field_serializer
 from typing_extensions import TypedDict
 
 
@@ -15,12 +13,3 @@ class FetchCampaignStatusResponseTypedDict(TypedDict):
 
 class FetchCampaignStatusResponse(BaseModel):
     status: BaseTaskStatus
-
-    @field_serializer("status")
-    def serialize_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.BaseTaskStatus(value)
-            except ValueError:
-                return value
-        return value

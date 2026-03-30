@@ -2,11 +2,15 @@
 # @generated-id: c1084b549abb
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class ImageDetail(str, Enum, metaclass=utils.OpenEnumMeta):
-    LOW = "low"
-    AUTO = "auto"
-    HIGH = "high"
+ImageDetail = Union[
+    Literal[
+        "low",
+        "auto",
+        "high",
+    ],
+    UnrecognizedStr,
+]

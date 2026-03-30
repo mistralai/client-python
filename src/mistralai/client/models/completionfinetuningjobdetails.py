@@ -14,34 +14,37 @@ from .wandbintegrationresult import (
     WandbIntegrationResult,
     WandbIntegrationResultTypedDict,
 )
-from enum import Enum
-from mistralai.client import models, utils
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import ConfigDict, field_serializer, model_serializer
+from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, List, Literal, Optional
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class CompletionFineTuningJobDetailsStatus(str, Enum, metaclass=utils.OpenEnumMeta):
-    QUEUED = "QUEUED"
-    STARTED = "STARTED"
-    VALIDATING = "VALIDATING"
-    VALIDATED = "VALIDATED"
-    RUNNING = "RUNNING"
-    FAILED_VALIDATION = "FAILED_VALIDATION"
-    FAILED = "FAILED"
-    SUCCESS = "SUCCESS"
-    CANCELLED = "CANCELLED"
-    CANCELLATION_REQUESTED = "CANCELLATION_REQUESTED"
+CompletionFineTuningJobDetailsStatus = Union[
+    Literal[
+        "QUEUED",
+        "STARTED",
+        "VALIDATING",
+        "VALIDATED",
+        "RUNNING",
+        "FAILED_VALIDATION",
+        "FAILED",
+        "SUCCESS",
+        "CANCELLED",
+        "CANCELLATION_REQUESTED",
+    ],
+    UnrecognizedStr,
+]
 
 
 CompletionFineTuningJobDetailsIntegrationTypedDict = WandbIntegrationResultTypedDict
@@ -158,15 +161,6 @@ class CompletionFineTuningJobDetails(BaseModel):
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
 
     checkpoints: Optional[List[Checkpoint]] = None
-
-    @field_serializer("status")
-    def serialize_status(self, value):
-        if isinstance(value, str):
-            try:
-                return models.CompletionFineTuningJobDetailsStatus(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

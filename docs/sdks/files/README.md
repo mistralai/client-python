@@ -25,7 +25,7 @@ Please contact us if you need to increase these storage limits.
 
 <!-- UsageSnippet language="python" operationID="files_api_routes_upload_file" method="post" path="/v1/files" example="userExample" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -36,7 +36,7 @@ with Mistral(
     res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-    }, visibility=models.FilesAPIRoutesUploadFileFileVisibility.WORKSPACE)
+    }, visibility="workspace")
 
     # Handle response
     print(res)

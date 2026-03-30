@@ -2,8 +2,7 @@
 # @generated-id: 01f37d193b17
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class WorkflowType(str, Enum):
-    CODE = "code"
+WorkflowType = Literal["code",]

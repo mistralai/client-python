@@ -2,11 +2,15 @@
 # @generated-id: 40c697c1e617
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class TempoTraceScopeKind(str, Enum, metaclass=utils.OpenEnumMeta):
-    SPAN_KIND_INTERNAL = "SPAN_KIND_INTERNAL"
-    SPAN_KIND_SERVER = "SPAN_KIND_SERVER"
-    SPAN_KIND_CLIENT = "SPAN_KIND_CLIENT"
+TempoTraceScopeKind = Union[
+    Literal[
+        "SPAN_KIND_INTERNAL",
+        "SPAN_KIND_SERVER",
+        "SPAN_KIND_CLIENT",
+    ],
+    UnrecognizedStr,
+]

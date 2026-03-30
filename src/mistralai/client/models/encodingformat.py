@@ -2,9 +2,10 @@
 # @generated-id: b51ec296cc92
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class EncodingFormat(str, Enum):
-    FLOAT = "float"
-    BASE64 = "base64"
+EncodingFormat = Literal[
+    "float",
+    "base64",
+]

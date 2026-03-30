@@ -3,9 +3,8 @@
 
 from __future__ import annotations
 from .scheduleoverlappolicy import ScheduleOverlapPolicy
-from mistralai.client import models
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import field_serializer, model_serializer
+from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -32,15 +31,6 @@ class SchedulePolicy(BaseModel):
 
     pause_on_failure: Optional[bool] = False
     r"""Whether to pause the schedule after a workflow failure."""
-
-    @field_serializer("overlap")
-    def serialize_overlap(self, value):
-        if isinstance(value, str):
-            try:
-                return models.ScheduleOverlapPolicy(value)
-            except ValueError:
-                return value
-        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

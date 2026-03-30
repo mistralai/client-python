@@ -2,20 +2,23 @@
 # @generated-id: 1733e4765106
 
 from __future__ import annotations
-from enum import Enum
-from mistralai.client import utils
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-class SSETypes(str, Enum, metaclass=utils.OpenEnumMeta):
-    r"""Server side events sent when streaming a conversation response."""
-
-    CONVERSATION_RESPONSE_STARTED = "conversation.response.started"
-    CONVERSATION_RESPONSE_DONE = "conversation.response.done"
-    CONVERSATION_RESPONSE_ERROR = "conversation.response.error"
-    MESSAGE_OUTPUT_DELTA = "message.output.delta"
-    TOOL_EXECUTION_STARTED = "tool.execution.started"
-    TOOL_EXECUTION_DELTA = "tool.execution.delta"
-    TOOL_EXECUTION_DONE = "tool.execution.done"
-    AGENT_HANDOFF_STARTED = "agent.handoff.started"
-    AGENT_HANDOFF_DONE = "agent.handoff.done"
-    FUNCTION_CALL_DELTA = "function.call.delta"
+SSETypes = Union[
+    Literal[
+        "conversation.response.started",
+        "conversation.response.done",
+        "conversation.response.error",
+        "message.output.delta",
+        "tool.execution.started",
+        "tool.execution.delta",
+        "tool.execution.done",
+        "agent.handoff.started",
+        "agent.handoff.done",
+        "function.call.delta",
+    ],
+    UnrecognizedStr,
+]
+r"""Server side events sent when streaming a conversation response."""

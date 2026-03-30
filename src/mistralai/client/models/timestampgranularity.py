@@ -2,9 +2,10 @@
 # @generated-id: 68ddf8d702ea
 
 from __future__ import annotations
-from enum import Enum
+from typing import Literal
 
 
-class TimestampGranularity(str, Enum):
-    SEGMENT = "segment"
-    WORD = "word"
+TimestampGranularity = Literal[
+    "segment",
+    "word",
+]

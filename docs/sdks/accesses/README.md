@@ -59,7 +59,7 @@ Given a library id, you can create or update the access level of an entity. You 
 
 <!-- UsageSnippet language="python" operationID="libraries_share_create_v1" method="put" path="/v1/libraries/{library_id}/share" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -67,7 +67,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.update_or_create(library_id="36de3a24-5b1c-4c8f-9d84-d5642205a976", level=models.ShareEnum.VIEWER, share_with_uuid="0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", share_with_type=models.EntityType.USER)
+    res = mistral.beta.libraries.accesses.update_or_create(library_id="36de3a24-5b1c-4c8f-9d84-d5642205a976", level="Viewer", share_with_uuid="0ae92ecb-21ed-47c5-9f7e-0b2cbe325a20", share_with_type="User")
 
     # Handle response
     print(res)
@@ -104,7 +104,7 @@ Given a library id, you can delete the access level of an entity. An owner canno
 
 <!-- UsageSnippet language="python" operationID="libraries_share_delete_v1" method="delete" path="/v1/libraries/{library_id}/share" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -112,7 +112,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type=models.EntityType.USER)
+    res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type="User")
 
     # Handle response
     print(res)

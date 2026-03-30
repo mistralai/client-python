@@ -4,14 +4,11 @@
 
 ```python
 from mistralai.client.models import OrderBy
-
-value = OrderBy.CREATED
+value: OrderBy = "created"
 ```
 
 
 ## Values
 
-| Name            | Value           |
-| --------------- | --------------- |
-| `CREATED`       | created         |
-| `MINUS_CREATED` | -created        |
+- `"created"`
+- `"-created"`
