@@ -7,13 +7,19 @@ from opentelemetry.propagate import inject
 from .types import BeforeRequestContext, BeforeRequestHook
 
 
+_EXECUTE_OPERATION_IDS = {
+    "execute_workflow_v1_workflows__workflow_identifier__execute_post",
+    "execute_workflow_registration_v1_workflows_registrations__workflow_registration_id__execute_post",
+}
+
+
 class TraceparentInjectionHook(BeforeRequestHook):
     """Inject a sampled traceparent on /execute requests so worker traces are always recorded."""
 
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
-        if not request.url.path.endswith("/execute"):
+        if hook_ctx.operation_id not in _EXECUTE_OPERATION_IDS:
             return request
 
         # Don't overwrite an explicitly provided traceparent.
