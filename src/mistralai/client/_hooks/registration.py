@@ -1,5 +1,6 @@
 from .custom_user_agent import CustomUserAgentHook
 from .deprecation_warning import DeprecationWarningHook
+from .traceparent import TraceparentInjectionHook
 from .tracing import TracingHook
 from .types import Hooks
 
@@ -16,6 +17,7 @@ def init_hooks(hooks: Hooks):
     """
     tracing_hook = TracingHook()
     hooks.register_before_request_hook(CustomUserAgentHook())
+    hooks.register_before_request_hook(TraceparentInjectionHook())
     hooks.register_after_success_hook(DeprecationWarningHook())
     hooks.register_after_success_hook(tracing_hook)
     hooks.register_before_request_hook(tracing_hook)
