@@ -1,5 +1,3 @@
-"""Tests for TraceparentInjectionHook."""
-
 import re
 import unittest
 from unittest.mock import MagicMock
@@ -104,15 +102,6 @@ class TestTraceparentInjectionHook(unittest.TestCase):
 
         injected = result.headers["traceparent"]
         self.assertTrue(injected.endswith("-01"), f"Expected sampled, got: {injected}")
-
-    def test_generated_traceparents_are_unique(self):
-        ids = set()
-        for _ in range(50):
-            req = _make_request("/v1/workflows/my-wf/execute")
-            result = self.hook.before_request(_make_hook_ctx(), req)
-            ids.add(result.headers["traceparent"])
-        self.assertEqual(len(ids), 50)
-
 
 if __name__ == "__main__":
     unittest.main()

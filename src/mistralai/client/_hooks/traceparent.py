@@ -8,12 +8,7 @@ from .types import BeforeRequestContext, BeforeRequestHook
 
 
 class TraceparentInjectionHook(BeforeRequestHook):
-    """Inject a sampled W3C traceparent header on workflow execute requests.
-
-    Forwards the current OTEL span context if one is active and sampled,
-    otherwise generates a fresh sampled traceparent. This ensures worker traces
-    are always recorded regardless of the caller's sampling configuration.
-    """
+    """Inject a sampled traceparent on /execute requests so worker traces are always recorded."""
 
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
