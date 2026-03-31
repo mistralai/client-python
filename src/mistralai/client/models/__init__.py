@@ -1959,6 +1959,7 @@ if TYPE_CHECKING:
         WebSearchPremiumToolTypedDict,
     )
     from .websearchtool import WebSearchTool, WebSearchToolTypedDict
+    from .workerinfo import WorkerInfo, WorkerInfoTypedDict
     from .workflow import Workflow, WorkflowTypedDict
     from .workflowarchiveresponse import (
         WorkflowArchiveResponse,
@@ -3572,6 +3573,8 @@ __all__ = [
     "WebSearchPremiumToolTypedDict",
     "WebSearchTool",
     "WebSearchToolTypedDict",
+    "WorkerInfo",
+    "WorkerInfoTypedDict",
     "Workflow",
     "WorkflowArchiveResponse",
     "WorkflowArchiveResponseTypedDict",
@@ -5072,6 +5075,8 @@ _dynamic_imports: dict[str, str] = {
     "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
     "WebSearchTool": ".websearchtool",
     "WebSearchToolTypedDict": ".websearchtool",
+    "WorkerInfo": ".workerinfo",
+    "WorkerInfoTypedDict": ".workerinfo",
     "Workflow": ".workflow",
     "WorkflowTypedDict": ".workflow",
     "WorkflowArchiveResponse": ".workflowarchiveresponse",
