@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.754.0
   generationVersion: 2.862.0
-  releaseVersion: 2.2.0rc3
-  configChecksum: 8d1009e9db71a2652f088ee569fe5127
+  releaseVersion: 2.2.0
+  configChecksum: ed5cc4cf5a87eaacbf1b77366abd2467
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: ab642f78-4f68-4ede-8d20-e3dcf0b0890a
-  pristine_commit_hash: 887bc7bbf7e576b5744938985652c7d8b26336bb
-  pristine_tree_hash: cf45f9d57a91e07050136255cbf5a28b9b41e187
+  generation_id: 6b0c3b1d-b7b3-4318-b2a1-5d44dd7fa3ac
+  pristine_commit_hash: 2e766581e0b9c6c42cbd61b500b0b6469a27a175
+  pristine_tree_hash: ded10775e62be5fb057ebf7819d56da121f02829
 features:
   python:
     acceptHeaders: 3.0.0
@@ -3207,8 +3207,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:7c4b8f8436c7e5c45a2d3558401950ec81133c45
-    pristine_git_object: 0c0161c82d1aa0061e2e86ccc8a53eb216434083
+    last_write_checksum: sha1:e0d4cdfdf25c401429c0e9beb40be8846cb2a235
+    pristine_git_object: 0473419e2e46dbf2e975a7fdcc5355d056752cdf
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:4b1cf5d760f690d35582f9037df44c97c11e7e14
@@ -8295,12 +8295,6 @@ examples:
           application/json: {"scheduler_url": "https://closed-passport.info/", "namespace": "<value>", "tls": false}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `mistral.workflows.events.send_event()`: **Removed** (Breaking ⚠️)
-  * `mistral.workflows.events.send_events_batch()`: **Removed** (Breaking ⚠️)
-  * `mistral.events.send_event()`: **Removed** (Breaking ⚠️)
-  * `mistral.events.send_events_batch()`: **Removed** (Breaking ⚠️)
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
