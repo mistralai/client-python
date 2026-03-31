@@ -8,7 +8,7 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 from opentelemetry.sdk.trace.sampling import ALWAYS_OFF
 
-from mistralai.client._hooks.traceparent import TraceparentInjectionHook, _EXECUTE_OPERATION_IDS
+from mistralai.client._hooks.traceparent import TraceparentInjectionHook
 from mistralai.client._hooks.types import BeforeRequestContext, HookContext
 
 
