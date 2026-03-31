@@ -3,7 +3,6 @@ import unittest
 from unittest.mock import MagicMock
 
 import httpx
-from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -43,11 +42,13 @@ class TestTraceparentInjectionHook(unittest.TestCase):
     def test_non_execute_path_is_unchanged(self):
         req = _make_request("/v1/workflows/my-wf/executions")
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertNotIn("traceparent", result.headers)
 
     def test_root_path_is_unchanged(self):
         req = _make_request("/v1/workflows/my-wf")
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertNotIn("traceparent", result.headers)
 
     # --- /execute path: header injected ---
@@ -55,12 +56,14 @@ class TestTraceparentInjectionHook(unittest.TestCase):
     def test_execute_path_gets_sampled_traceparent(self):
         req = _make_request("/v1/workflows/my-wf/execute")
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertIn("traceparent", result.headers)
         self.assertRegex(result.headers["traceparent"], TRACEPARENT_RE)
 
     def test_execute_registration_path_gets_sampled_traceparent(self):
         req = _make_request("/v1/workflows/registrations/reg-id/execute")
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertIn("traceparent", result.headers)
         self.assertRegex(result.headers["traceparent"], TRACEPARENT_RE)
 
@@ -68,6 +71,7 @@ class TestTraceparentInjectionHook(unittest.TestCase):
         explicit = "00-aabbccddeeff00112233445566778899-0102030405060708-01"
         req = _make_request("/v1/workflows/my-wf/execute", traceparent=explicit)
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertEqual(result.headers["traceparent"], explicit)
 
     # --- OTEL context propagation ---
@@ -82,6 +86,7 @@ class TestTraceparentInjectionHook(unittest.TestCase):
             req = _make_request("/v1/workflows/my-wf/execute")
             result = self.hook.before_request(_make_hook_ctx(), req)
 
+        assert isinstance(result, httpx.Request)
         injected = result.headers["traceparent"]
         self.assertTrue(injected.endswith("-01"))
         trace_id_hex = f"{span.get_span_context().trace_id:032x}"
@@ -90,6 +95,7 @@ class TestTraceparentInjectionHook(unittest.TestCase):
     def test_generates_fresh_traceparent_when_no_active_span(self):
         req = _make_request("/v1/workflows/my-wf/execute")
         result = self.hook.before_request(_make_hook_ctx(), req)
+        assert isinstance(result, httpx.Request)
         self.assertRegex(result.headers["traceparent"], TRACEPARENT_RE)
 
     def test_generates_fresh_traceparent_when_span_is_unsampled(self):
@@ -100,6 +106,7 @@ class TestTraceparentInjectionHook(unittest.TestCase):
             req = _make_request("/v1/workflows/my-wf/execute")
             result = self.hook.before_request(_make_hook_ctx(), req)
 
+        assert isinstance(result, httpx.Request)
         injected = result.headers["traceparent"]
         self.assertTrue(injected.endswith("-01"), f"Expected sampled, got: {injected}")
 
