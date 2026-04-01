@@ -239,7 +239,7 @@ class Mistral(BaseSDK):
     def configure_workflow_encoding(
         self,
         config: WorkflowEncodingConfig,
-        namespace: str,
+        namespace: str | None = None,
     ) -> "Mistral":
         """Configure workflow payload encoding for this SDK instance.
 
@@ -273,6 +273,9 @@ class Mistral(BaseSDK):
             ...     namespace="my-namespace",
             ... )
         """
+        if not namespace:
+            whoami_response = self.workflows.workers.whoami()
+            namespace = whoami_response.namespace
         _configure_workflow_encoding(config, namespace)
         return self
 
