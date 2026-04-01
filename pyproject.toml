@@ -30,6 +30,27 @@ realtime = [
     "websockets >=13.0",
 ]
 
+workflow_payload_offloading_azure = [
+    "azure-storage-blob[aio]>=12.28.0,<13.0.0",
+]
+workflow_payload_offloading_gcs = [
+    "gcloud-aio-storage>=9.3.0,<10.0.0",
+    "opentelemetry-instrumentation-aiohttp-client>=0.60b1,<0.61",  # For observability
+]
+workflow_payload_offloading_s3 = [
+    "aioboto3>=12.4.0,<13.0.0",
+]
+
+workflow_payload_offloading = [
+    "mistralai[workflow_payload_offloading_azure]",
+    "mistralai[workflow_payload_offloading_gcs]",
+    "mistralai[workflow_payload_offloading_s3]",
+]
+workflow_payload_encryption = [
+    "cryptography>=41.0.0,<47.0.0",
+]
+
+
 [project.urls]
 Repository = "https://github.com/mistralai/client-python.git"
 

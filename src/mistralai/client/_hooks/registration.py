@@ -3,6 +3,7 @@ from .deprecation_warning import DeprecationWarningHook
 from .traceparent import TraceparentInjectionHook
 from .tracing import TracingHook
 from .types import Hooks
+from .workflow_encoding_hook import WorkflowEncodingHook
 
 # This file is only ever generated once on the first generation and then is free to be modified.
 # Any hooks you wish to add should be registered in the init_hooks function. Feel free to define them
@@ -16,9 +17,12 @@ def init_hooks(hooks: Hooks):
     Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance
     """
     tracing_hook = TracingHook()
+    workflow_encoding_hook = WorkflowEncodingHook()
     hooks.register_before_request_hook(CustomUserAgentHook())
     hooks.register_before_request_hook(TraceparentInjectionHook())
     hooks.register_after_success_hook(DeprecationWarningHook())
     hooks.register_after_success_hook(tracing_hook)
     hooks.register_before_request_hook(tracing_hook)
     hooks.register_after_error_hook(tracing_hook)
+    hooks.register_before_request_hook(workflow_encoding_hook)
+    hooks.register_after_success_hook(workflow_encoding_hook)

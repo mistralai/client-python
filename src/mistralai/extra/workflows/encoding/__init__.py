@@ -1,12 +1,13 @@
-from .encoding import (
+from .config import (
     WorkflowEncodingConfig,
     PayloadOffloadingConfig,
     PayloadEncryptionConfig,
     PayloadEncryptionMode,
     BlobStorageConfig,
     StorageProvider,
-    EncryptedStrField,
 )
+from .models import EncryptedStrField
+from .payload_encoder import PayloadEncoder
 
 __all__ = [
     "WorkflowEncodingConfig",
@@ -16,4 +17,5 @@ __all__ = [
     "BlobStorageConfig",
     "StorageProvider",
     "EncryptedStrField",
+    "PayloadEncoder",
 ]
