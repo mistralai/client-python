@@ -6,7 +6,7 @@ Skip if GCP_PROJECT_ID env var is not set.
 
 Prerequisites:
     1. Authenticate with GCP: gcloud auth application-default login
-    2. Have "Vertex AI User" role on the project (e.g. model-garden-420509)
+    2. Have "Vertex AI User" role on the project
 
 The SDK automatically:
     - Detects credentials via google.auth.default()
@@ -19,7 +19,7 @@ Available models:
     See: https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/mistral
 
 Usage:
-    GCP_PROJECT_ID=model-garden-420509 pytest tests/test_gcp_integration.py -v
+    GCP_PROJECT_ID=<your-project-id> pytest tests/test_gcp_integration.py -v
 
 Environment variables:
     GCP_PROJECT_ID: GCP project ID (required, or auto-detected from credentials)

@@ -4,28 +4,23 @@ Integration tests for Azure SDK.
 These tests require credentials and make real API calls.
 Skip if AZURE_API_KEY env var is not set.
 
-Prerequisites:
-    1. Azure API key (stored in Bitwarden at "[MaaS] - Azure Foundry API key")
-    2. Tailscale connected via gw-0 exit node
-
 Usage:
-    AZURE_API_KEY=xxx pytest tests/test_azure_integration.py -v
+    AZURE_API_KEY=xxx AZURE_SERVER_URL=https://<resource>.services.ai.azure.com AZURE_MODEL=<model> AZURE_OCR_MODEL=<ocr-model> pytest tests/test_azure_integration.py -v
 
 Environment variables:
     AZURE_API_KEY: API key (required)
-    AZURE_ENDPOINT: Base URL (default: https://maas-qa-aifoundry.services.ai.azure.com/models)
-    AZURE_MODEL: Model name (default: maas-qa-ministral-3b)
+    AZURE_SERVER_URL: Base host URL (required, e.g. https://<resource>.services.ai.azure.com)
+    AZURE_MODEL: Chat model name (required)
+    AZURE_OCR_MODEL: OCR model name (required)
     AZURE_API_VERSION: API version (default: 2024-05-01-preview)
 
-Note: AZURE_ENDPOINT should be the base URL without path suffixes.
-The SDK appends /chat/completions to this URL. The api_version parameter
-is automatically injected as a query parameter by the SDK.
-
-Available models:
-    Chat: maas-qa-ministral-3b, maas-qa-mistral-large-3, maas-qa-mistral-medium-2505
-    OCR: maas-qa-mistral-document-ai-2505, maas-qa-mistral-document-ai-2512
-         (OCR uses a separate endpoint, not tested here)
+Note: AZURE_SERVER_URL should be the base host URL without any path suffix.
+The SDK appends the correct path per operation type:
+  - Chat: /models/chat/completions
+  - OCR:  /providers/mistral/azure/ocr
+The api_version parameter is automatically injected as a query parameter.
 """
+import base64
 import json
 import os
 
@@ -33,18 +28,16 @@ import pytest
 
 # Configuration from env vars
 AZURE_API_KEY = os.environ.get("AZURE_API_KEY")
-AZURE_ENDPOINT = os.environ.get(
-    "AZURE_ENDPOINT",
-    "https://maas-qa-aifoundry.services.ai.azure.com/models",
-)
-AZURE_MODEL = os.environ.get("AZURE_MODEL", "maas-qa-ministral-3b")
+AZURE_SERVER_URL = os.environ.get("AZURE_SERVER_URL")
+AZURE_MODEL = os.environ.get("AZURE_MODEL")
+AZURE_OCR_MODEL = os.environ.get("AZURE_OCR_MODEL")
 AZURE_API_VERSION = os.environ.get("AZURE_API_VERSION", "2024-05-01-preview")
 
-SKIP_REASON = "AZURE_API_KEY env var required"
+SKIP_REASON = "Required env vars: AZURE_API_KEY, AZURE_SERVER_URL, AZURE_MODEL, AZURE_OCR_MODEL"
 
 pytestmark = pytest.mark.skipif(
-    not AZURE_API_KEY,
-    reason=SKIP_REASON
+    not all([AZURE_API_KEY, AZURE_SERVER_URL, AZURE_MODEL, AZURE_OCR_MODEL]),
+    reason=SKIP_REASON,
 )
 
 # Shared tool definition for tool-call tests
@@ -61,15 +54,23 @@ WEATHER_TOOL = {
     },
 }
 
+# Minimal valid PDF for OCR tests (single blank page)
+MINIMAL_PDF = (
+    b"%PDF-1.0\n1 0 obj<</Pages 2 0 R>>endobj\n"
+    b"2 0 obj<</Kids[3 0 R]/Count 1>>endobj\n"
+    b"3 0 obj<</MediaBox[0 0 612 792]>>endobj\n"
+    b"trailer<</Root 1 0 R>>"
+)
+
 
 @pytest.fixture
 def azure_client():
-    """Create an Azure client with api_version parameter."""
+    """Create an Azure client for Foundry Resource endpoints."""
     from mistralai.azure.client import MistralAzure
     assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
     return MistralAzure(
         api_key=AZURE_API_KEY,
-        server_url=AZURE_ENDPOINT,
+        server_url=AZURE_SERVER_URL,
         api_version=AZURE_API_VERSION,
     )
 
@@ -323,6 +324,37 @@ class TestAzureChatStream:
         assert tool_call_found, "Expected tool_call delta chunks in stream"
 
 
+class TestAzureOcr:
+    """Test OCR endpoint."""
+
+    def test_basic_ocr(self, azure_client):
+        """Test OCR processes a document and returns pages."""
+        encoded = base64.b64encode(MINIMAL_PDF).decode("utf-8")
+        res = azure_client.ocr.process(
+            model=AZURE_OCR_MODEL,
+            document={
+                "type": "document_url",
+                "document_url": f"data:application/pdf;base64,{encoded}",
+            },
+        )
+        assert res is not None
+        assert res.pages is not None
+
+    @pytest.mark.asyncio
+    async def test_basic_ocr_async(self, azure_client):
+        """Test async OCR processes a document and returns pages."""
+        encoded = base64.b64encode(MINIMAL_PDF).decode("utf-8")
+        res = await azure_client.ocr.process_async(
+            model=AZURE_OCR_MODEL,
+            document={
+                "type": "document_url",
+                "document_url": f"data:application/pdf;base64,{encoded}",
+            },
+        )
+        assert res is not None
+        assert res.pages is not None
+
+
 class TestAzureChatCompleteAsync:
     """Test async chat completion."""
 
@@ -401,7 +433,7 @@ class TestAzureContextManager:
         assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
         with MistralAzure(
             api_key=AZURE_API_KEY,
-            server_url=AZURE_ENDPOINT,
+            server_url=AZURE_SERVER_URL,
             api_version=AZURE_API_VERSION,
         ) as client:
             res = client.chat.complete(
@@ -420,7 +452,7 @@ class TestAzureContextManager:
         assert AZURE_API_KEY is not None, "AZURE_API_KEY must be set"
         async with MistralAzure(
             api_key=AZURE_API_KEY,
-            server_url=AZURE_ENDPOINT,
+            server_url=AZURE_SERVER_URL,
             api_version=AZURE_API_VERSION,
         ) as client:
             res = await client.chat.complete_async(
