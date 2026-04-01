@@ -965,7 +965,7 @@ class Files(BaseSDK):
         r"""Get Signed Url
 
         :param file_id:
-        :param expiry: Number of hours before the url becomes invalid. Defaults to 24h
+        :param expiry: Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1050,7 +1050,7 @@ class Files(BaseSDK):
         r"""Get Signed Url
 
         :param file_id:
-        :param expiry: Number of hours before the url becomes invalid. Defaults to 24h
+        :param expiry: Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
