@@ -16,5 +16,6 @@ repos:
   rev: v1.15.0
   hooks:
     - id: mypy
+      additional_dependencies: [httpx, pydantic]
       files: ^(examples/|src/mistralai/|packages/(azure|gcp)/src/mistralai/).*\.py$
       exclude: ^src/mistralai/(__init__|sdkhooks|types)\.py$
