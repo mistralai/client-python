@@ -784,7 +784,7 @@ class Workflows(BaseSDK):
 
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -912,7 +912,7 @@ class Workflows(BaseSDK):
 
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -1043,7 +1043,7 @@ class Workflows(BaseSDK):
 
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -1174,7 +1174,7 @@ class Workflows(BaseSDK):
 
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
