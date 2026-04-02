@@ -35,7 +35,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.AgentsCompletionRequestTool],
+                List[models.AgentsCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -107,7 +110,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.AgentsCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
@@ -208,7 +213,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.AgentsCompletionRequestTool],
+                List[models.AgentsCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -280,7 +288,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.AgentsCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionRequestToolChoice]
             ),
@@ -381,7 +391,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.AgentsCompletionStreamRequestTool],
+                List[models.AgentsCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -455,7 +468,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.AgentsCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),
@@ -564,7 +579,10 @@ class Agents(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.AgentsCompletionStreamRequestTool],
+                List[models.AgentsCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -638,7 +656,9 @@ class Agents(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.AgentsCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.AgentsCompletionStreamRequestToolChoice]
             ),

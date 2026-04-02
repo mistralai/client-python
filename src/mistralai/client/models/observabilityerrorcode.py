@@ -50,6 +50,7 @@ ObservabilityErrorCode = Union[
         "EVALUATION_RUN_TRANSITION_IS_INVALID",
         "EVALUATION_RUN_TRANSITION_IS_RUNNING_ALREADY",
         "EVALUATION_RUN_TRANSITION_ERROR",
+        "TEMPLATE_ERROR",
         "TEMPLATE_SYNTAX_ERROR",
     ],
     UnrecognizedStr,
