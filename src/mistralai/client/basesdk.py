@@ -67,6 +67,7 @@ class BaseSDK:
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
         allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.async_client
         return self._build_request_with_client(
@@ -88,6 +89,7 @@ class BaseSDK:
             url_override,
             http_headers,
             allow_empty_value,
+            allowed_fields,
         )
 
     def _build_request(
@@ -111,6 +113,7 @@ class BaseSDK:
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
         allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.client
         return self._build_request_with_client(
@@ -132,6 +135,7 @@ class BaseSDK:
             url_override,
             http_headers,
             allow_empty_value,
+            allowed_fields,
         )
 
     def _build_request_with_client(
@@ -156,6 +160,7 @@ class BaseSDK:
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
         allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         query_params = {}
 
@@ -189,7 +194,9 @@ class BaseSDK:
                 security = security()
         security = utils.get_security_from_env(security, models.Security)
         if security is not None:
-            security_headers, security_query_params = utils.get_security(security)
+            security_headers, security_query_params = utils.get_security(
+                security, allowed_fields
+            )
             headers = {**headers, **security_headers}
             query_params = {**query_params, **security_query_params}
 
@@ -226,7 +233,7 @@ class BaseSDK:
             data=serialized_request_body.data,
             files=serialized_request_body.files,
             headers=headers,
-            timeout=timeout,
+            timeout=timeout if timeout is not None else httpx.USE_CLIENT_DEFAULT,
         )
 
     def do_request(
@@ -246,6 +253,8 @@ class BaseSDK:
             http_res = None
             try:
                 req = hooks.before_request(BeforeRequestContext(hook_ctx), request)
+                if "timeout" in request.extensions and "timeout" not in req.extensions:
+                    req.extensions["timeout"] = request.extensions["timeout"]
                 logger.debug(
                     "Request:\nMethod: %s\nURL: %s\nHeaders: %s\nBody: %s",
                     req.method,
@@ -321,6 +330,8 @@ class BaseSDK:
                     hooks.before_request, BeforeRequestContext(hook_ctx), request
                 )
 
+                if "timeout" in request.extensions and "timeout" not in req.extensions:
+                    req.extensions["timeout"] = request.extensions["timeout"]
                 logger.debug(
                     "Request:\nMethod: %s\nURL: %s\nHeaders: %s\nBody: %s",
                     req.method,
