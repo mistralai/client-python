@@ -19,7 +19,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class WorkflowExecutionRequestTypedDict(TypedDict):
     execution_id: NotRequired[Nullable[str]]
     r"""Allows you to specify a custom execution ID. If not provided, a random ID will be generated."""
-    input: NotRequired[Nullable[Dict[str, Any]]]
+    input: NotRequired[Nullable[Any]]
     r"""The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema."""
     encoded_input: NotRequired[Nullable[NetworkEncodedInputTypedDict]]
     r"""Encoded input to the workflow, used when payload encoding is enabled."""
@@ -38,7 +38,7 @@ class WorkflowExecutionRequest(BaseModel):
     execution_id: OptionalNullable[str] = UNSET
     r"""Allows you to specify a custom execution ID. If not provided, a random ID will be generated."""
 
-    input: OptionalNullable[Dict[str, Any]] = UNSET
+    input: OptionalNullable[Any] = UNSET
     r"""The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema."""
 
     encoded_input: OptionalNullable[NetworkEncodedInput] = UNSET

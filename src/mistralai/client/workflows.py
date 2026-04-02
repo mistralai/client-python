@@ -766,7 +766,7 @@ class Workflows(BaseSDK):
         *,
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -894,7 +894,7 @@ class Workflows(BaseSDK):
         *,
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -1025,7 +1025,7 @@ class Workflows(BaseSDK):
         *,
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -1156,7 +1156,7 @@ class Workflows(BaseSDK):
         *,
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
