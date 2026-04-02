@@ -9,8 +9,13 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ModelCapabilitiesTypedDict(TypedDict):
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
+
     completion_chat: NotRequired[bool]
     function_calling: NotRequired[bool]
+    reasoning: NotRequired[bool]
     completion_fim: NotRequired[bool]
     fine_tuning: NotRequired[bool]
     vision: NotRequired[bool]
@@ -19,12 +24,20 @@ class ModelCapabilitiesTypedDict(TypedDict):
     moderation: NotRequired[bool]
     audio: NotRequired[bool]
     audio_transcription: NotRequired[bool]
+    audio_transcription_realtime: NotRequired[bool]
+    audio_speech: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
+
     completion_chat: Optional[bool] = False
 
     function_calling: Optional[bool] = False
+
+    reasoning: Optional[bool] = False
 
     completion_fim: Optional[bool] = False
 
@@ -42,12 +55,17 @@ class ModelCapabilities(BaseModel):
 
     audio_transcription: Optional[bool] = False
 
+    audio_transcription_realtime: Optional[bool] = False
+
+    audio_speech: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
                 "completion_chat",
                 "function_calling",
+                "reasoning",
                 "completion_fim",
                 "fine_tuning",
                 "vision",
@@ -56,6 +74,8 @@ class ModelCapabilities(BaseModel):
                 "moderation",
                 "audio",
                 "audio_transcription",
+                "audio_transcription_realtime",
+                "audio_speech",
             ]
         )
         serialized = handler(self)

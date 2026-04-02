@@ -7,17 +7,23 @@ from .conversationusageinfo import ConversationUsageInfo, ConversationUsageInfoT
 from .functioncallentry import FunctionCallEntry, FunctionCallEntryTypedDict
 from .messageoutputentry import MessageOutputEntry, MessageOutputEntryTypedDict
 from .toolexecutionentry import ToolExecutionEntry, ToolExecutionEntryTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional, Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
+from typing import Any, Dict, List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-OutputTypedDict = TypeAliasType(
-    "OutputTypedDict",
+ConversationResponseOutputTypedDict = TypeAliasType(
+    "ConversationResponseOutputTypedDict",
     Union[
         MessageOutputEntryTypedDict,
         AgentHandoffEntryTypedDict,
@@ -27,8 +33,8 @@ OutputTypedDict = TypeAliasType(
 )
 
 
-Output = TypeAliasType(
-    "Output",
+ConversationResponseOutput = TypeAliasType(
+    "ConversationResponseOutput",
     Union[MessageOutputEntry, AgentHandoffEntry, ToolExecutionEntry, FunctionCallEntry],
 )
 
@@ -37,9 +43,10 @@ class ConversationResponseTypedDict(TypedDict):
     r"""The response after appending new entries to the conversation."""
 
     conversation_id: str
-    outputs: List[OutputTypedDict]
+    outputs: List[ConversationResponseOutputTypedDict]
     usage: ConversationUsageInfoTypedDict
     object: Literal["conversation.response"]
+    guardrails: NotRequired[Nullable[List[Dict[str, Any]]]]
 
 
 class ConversationResponse(BaseModel):
@@ -47,7 +54,7 @@ class ConversationResponse(BaseModel):
 
     conversation_id: str
 
-    outputs: List[Output]
+    outputs: List[ConversationResponseOutput]
 
     usage: ConversationUsageInfo
 
@@ -59,18 +66,29 @@ class ConversationResponse(BaseModel):
         pydantic.Field(alias="object"),
     ] = "conversation.response"
 
+    guardrails: OptionalNullable[List[Dict[str, Any]]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object"])
+        optional_fields = set(["object", "guardrails"])
+        nullable_fields = set(["guardrails"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

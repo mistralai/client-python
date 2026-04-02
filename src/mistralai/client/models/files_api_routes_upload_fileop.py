@@ -4,11 +4,23 @@
 from __future__ import annotations
 from .file import File, FileTypedDict
 from .filepurpose import FilePurpose
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import FieldMetadata, MultipartFormMetadata
 from pydantic import model_serializer
-from typing import Optional
+from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+FilesAPIRoutesUploadFileFileVisibility = Literal[
+    "workspace",
+    "user",
+]
 
 
 class MultiPartBodyParamsTypedDict(TypedDict):
@@ -23,6 +35,8 @@ class MultiPartBodyParamsTypedDict(TypedDict):
     file=@path/to/your/file.jsonl
     ```
     """
+    expiry: NotRequired[Nullable[int]]
+    visibility: NotRequired[FilesAPIRoutesUploadFileFileVisibility]
     purpose: NotRequired[FilePurpose]
 
 
@@ -39,20 +53,35 @@ class MultiPartBodyParams(BaseModel):
     ```
     """
 
+    expiry: Annotated[OptionalNullable[int], FieldMetadata(multipart=True)] = UNSET
+
+    visibility: Annotated[
+        Optional[FilesAPIRoutesUploadFileFileVisibility], FieldMetadata(multipart=True)
+    ] = "workspace"
+
     purpose: Annotated[Optional[FilePurpose], FieldMetadata(multipart=True)] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["purpose"])
+        optional_fields = set(["expiry", "visibility", "purpose"])
+        nullable_fields = set(["expiry"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

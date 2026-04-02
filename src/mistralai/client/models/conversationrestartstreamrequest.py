@@ -4,6 +4,8 @@
 from __future__ import annotations
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,7 +14,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Any, Dict, Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -45,7 +47,8 @@ class ConversationRestartStreamRequestTypedDict(TypedDict):
     handoff_execution: NotRequired[ConversationRestartStreamRequestHandoffExecution]
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     r"""Custom metadata for the conversation."""
     agent_version: NotRequired[
         Nullable[ConversationRestartStreamRequestAgentVersionTypedDict]
@@ -72,7 +75,9 @@ class ConversationRestartStreamRequest(BaseModel):
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
+
+    metadata: OptionalNullable[MetadataDict] = UNSET
     r"""Custom metadata for the conversation."""
 
     agent_version: OptionalNullable[ConversationRestartStreamRequestAgentVersion] = (
@@ -89,11 +94,12 @@ class ConversationRestartStreamRequest(BaseModel):
                 "store",
                 "handoff_execution",
                 "completion_args",
+                "guardrails",
                 "metadata",
                 "agent_version",
             ]
         )
-        nullable_fields = set(["metadata", "agent_version"])
+        nullable_fields = set(["guardrails", "metadata", "agent_version"])
         serialized = handler(self)
         m = {}
 

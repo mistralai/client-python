@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .filepurpose import FilePurpose
+from .filevisibility import FileVisibility
 from .sampletype import SampleType
 from .source import Source
 from mistralai.client.types import (
@@ -34,6 +35,8 @@ class FileSchemaTypedDict(TypedDict):
     num_lines: NotRequired[Nullable[int]]
     mimetype: NotRequired[Nullable[str]]
     signature: NotRequired[Nullable[str]]
+    expires_at: NotRequired[Nullable[int]]
+    visibility: NotRequired[Nullable[FileVisibility]]
 
 
 class FileSchema(BaseModel):
@@ -64,10 +67,18 @@ class FileSchema(BaseModel):
 
     signature: OptionalNullable[str] = UNSET
 
+    expires_at: OptionalNullable[int] = UNSET
+
+    visibility: OptionalNullable[FileVisibility] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["num_lines", "mimetype", "signature"])
-        nullable_fields = set(["num_lines", "mimetype", "signature"])
+        optional_fields = set(
+            ["num_lines", "mimetype", "signature", "expires_at", "visibility"]
+        )
+        nullable_fields = set(
+            ["num_lines", "mimetype", "signature", "expires_at", "visibility"]
+        )
         serialized = handler(self)
         m = {}
 

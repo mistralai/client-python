@@ -1,0 +1,9 @@
+# UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequest
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `dataset_record_id`                                                                              | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `update_dataset_record_properties_request`                                                       | [models.UpdateDatasetRecordPropertiesRequest](../models/updatedatasetrecordpropertiesrequest.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |

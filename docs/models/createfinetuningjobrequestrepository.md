@@ -3,9 +3,9 @@
 
 ## Supported Types
 
-### `models.GithubRepositoryIn`
+### `models.CreateGithubRepositoryRequest`
 
 ```python
-value: models.GithubRepositoryIn = /* values here */
+value: models.CreateGithubRepositoryRequest = /* values here */
 ```
 

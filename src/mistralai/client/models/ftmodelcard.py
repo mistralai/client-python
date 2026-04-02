@@ -24,6 +24,9 @@ class FTModelCardTypedDict(TypedDict):
 
     id: str
     capabilities: ModelCapabilitiesTypedDict
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
     job: str
     root: str
     object: NotRequired[str]
@@ -46,6 +49,9 @@ class FTModelCard(BaseModel):
     id: str
 
     capabilities: ModelCapabilities
+    r"""This is populated by Harmattan, but some fields have a name
+    that we don't want to expose in the API.
+    """
 
     job: str
 

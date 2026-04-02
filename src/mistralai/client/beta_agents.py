@@ -28,9 +28,14 @@ class BetaAgents(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -46,6 +51,7 @@ class BetaAgents(BaseSDK):
         :param instructions: Instruction prompt the model will follow during the conversation.
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param description:
         :param handoffs:
         :param metadata:
@@ -60,6 +66,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -73,11 +82,16 @@ class BetaAgents(BaseSDK):
             completion_args=utils.get_pydantic_model(
                 completion_args, Optional[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             model=model,
             name=name,
             description=description,
             handoffs=handoffs,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             version_message=version_message,
         )
 
@@ -156,9 +170,14 @@ class BetaAgents(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -174,6 +193,7 @@ class BetaAgents(BaseSDK):
         :param instructions: Instruction prompt the model will follow during the conversation.
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param description:
         :param handoffs:
         :param metadata:
@@ -188,6 +208,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -201,11 +224,16 @@ class BetaAgents(BaseSDK):
             completion_args=utils.get_pydantic_model(
                 completion_args, Optional[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             model=model,
             name=name,
             description=description,
             handoffs=handoffs,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             version_message=version_message,
         )
 
@@ -306,6 +334,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -418,6 +449,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -522,6 +556,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -620,6 +657,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -701,12 +741,17 @@ class BetaAgents(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -721,6 +766,7 @@ class BetaAgents(BaseSDK):
         :param instructions: Instruction prompt the model will follow during the conversation.
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param model:
         :param name:
         :param description:
@@ -738,6 +784,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -753,12 +802,17 @@ class BetaAgents(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
                 model=model,
                 name=name,
                 description=description,
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 version_message=version_message,
             ),
         )
@@ -841,12 +895,17 @@ class BetaAgents(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -861,6 +920,7 @@ class BetaAgents(BaseSDK):
         :param instructions: Instruction prompt the model will follow during the conversation.
         :param tools: List of tools which are available to the model during the conversation.
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param model:
         :param name:
         :param description:
@@ -878,6 +938,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -893,12 +956,17 @@ class BetaAgents(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
                 model=model,
                 name=name,
                 description=description,
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
-                metadata=metadata,
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 version_message=version_message,
             ),
         )
@@ -989,6 +1057,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1076,6 +1147,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1169,6 +1243,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1261,6 +1338,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1356,6 +1436,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1453,6 +1536,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1547,6 +1633,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1639,6 +1728,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1734,6 +1826,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1831,6 +1926,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1923,6 +2021,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2012,6 +2113,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -2105,6 +2209,9 @@ class BetaAgents(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2197,6 +2304,9 @@ class BetaAgents(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url

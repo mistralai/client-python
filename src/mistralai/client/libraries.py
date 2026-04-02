@@ -35,6 +35,8 @@ class Libraries(BaseSDK):
     def list(
         self,
         *,
+        page_size: Optional[int] = 100,
+        page: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -44,6 +46,8 @@ class Libraries(BaseSDK):
 
         List all libraries that you have created or have been shared with you.
 
+        :param page_size:
+        :param page:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -54,16 +58,25 @@ class Libraries(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.LibrariesListV1Request(
+            page_size=page_size,
+            page=page,
+        )
+
         req = self._build_request(
             method="GET",
             path="/v1/libraries",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -94,12 +107,18 @@ class Libraries(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.ListLibrariesResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -112,6 +131,8 @@ class Libraries(BaseSDK):
     async def list_async(
         self,
         *,
+        page_size: Optional[int] = 100,
+        page: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -121,6 +142,8 @@ class Libraries(BaseSDK):
 
         List all libraries that you have created or have been shared with you.
 
+        :param page_size:
+        :param page:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -131,16 +154,25 @@ class Libraries(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.LibrariesListV1Request(
+            page_size=page_size,
+            page=page,
+        )
+
         req = self._build_request_async(
             method="GET",
             path="/v1/libraries",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -171,12 +203,18 @@ class Libraries(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.ListLibrariesResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -213,6 +251,9 @@ class Libraries(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -313,6 +354,9 @@ class Libraries(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -408,6 +452,9 @@ class Libraries(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -497,6 +544,9 @@ class Libraries(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -588,6 +638,9 @@ class Libraries(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -677,6 +730,9 @@ class Libraries(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -771,6 +827,9 @@ class Libraries(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -876,6 +935,9 @@ class Libraries(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url

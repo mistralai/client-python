@@ -12,7 +12,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class FilesAPIRoutesGetSignedURLRequestTypedDict(TypedDict):
     file_id: str
     expiry: NotRequired[int]
-    r"""Number of hours before the url becomes invalid. Defaults to 24h"""
+    r"""Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h."""
 
 
 class FilesAPIRoutesGetSignedURLRequest(BaseModel):
@@ -24,7 +24,7 @@ class FilesAPIRoutesGetSignedURLRequest(BaseModel):
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 24
-    r"""Number of hours before the url becomes invalid. Defaults to 24h"""
+    r"""Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

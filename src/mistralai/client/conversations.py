@@ -235,18 +235,23 @@ class Conversations(BaseSDK):
             models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationRequestTool],
                 List[models.ConversationRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -269,8 +274,9 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -287,6 +293,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -299,14 +308,19 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationRequestTool]]
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -382,18 +396,23 @@ class Conversations(BaseSDK):
             models.ConversationRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationRequestTool],
                 List[models.ConversationRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -416,8 +435,9 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -434,6 +454,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -446,14 +469,19 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationRequestTool]]
+                tools, OptionalNullable[List[models.ConversationRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -546,6 +574,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -645,6 +676,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -739,6 +773,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -828,6 +865,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -919,6 +959,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1008,6 +1051,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1121,6 +1167,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1257,6 +1306,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1369,6 +1421,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1458,6 +1513,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1549,6 +1607,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1639,6 +1700,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1721,7 +1785,12 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1744,6 +1813,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -1755,6 +1825,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1773,7 +1846,12 @@ class Conversations(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
-                metadata=metadata,
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -1859,7 +1937,12 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartRequestAgentVersion,
@@ -1882,6 +1965,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -1893,6 +1977,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1911,7 +1998,12 @@ class Conversations(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
-                metadata=metadata,
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -1991,18 +2083,23 @@ class Conversations(BaseSDK):
             models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationStreamRequestTool],
                 List[models.ConversationStreamRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2025,8 +2122,9 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -2043,6 +2141,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2055,14 +2156,19 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
+                tools, OptionalNullable[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -2145,18 +2251,23 @@ class Conversations(BaseSDK):
             models.ConversationStreamRequestHandoffExecution
         ] = UNSET,
         instructions: OptionalNullable[str] = UNSET,
-        tools: Optional[
+        tools: OptionalNullable[
             Union[
                 List[models.ConversationStreamRequestTool],
                 List[models.ConversationStreamRequestToolTypedDict],
             ]
-        ] = None,
+        ] = UNSET,
         completion_args: OptionalNullable[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
         agent_version: OptionalNullable[
             Union[
@@ -2179,8 +2290,9 @@ class Conversations(BaseSDK):
         :param store:
         :param handoff_execution:
         :param instructions:
-        :param tools: List of tools which are available to the model during the conversation.
+        :param tools:
         :param completion_args:
+        :param guardrails:
         :param name:
         :param description:
         :param metadata:
@@ -2197,6 +2309,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2209,14 +2324,19 @@ class Conversations(BaseSDK):
             handoff_execution=handoff_execution,
             instructions=instructions,
             tools=utils.get_pydantic_model(
-                tools, Optional[List[models.ConversationStreamRequestTool]]
+                tools, OptionalNullable[List[models.ConversationStreamRequestTool]]
             ),
             completion_args=utils.get_pydantic_model(
                 completion_args, OptionalNullable[models.CompletionArgs]
             ),
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             name=name,
             description=description,
-            metadata=metadata,
+            metadata=utils.get_pydantic_model(
+                metadata, OptionalNullable[models.MetadataDict]
+            ),
             agent_id=agent_id,
             agent_version=agent_version,
             model=model,
@@ -2335,6 +2455,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -2478,6 +2601,9 @@ class Conversations(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2589,7 +2715,12 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2612,6 +2743,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -2623,6 +2755,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -2641,7 +2776,12 @@ class Conversations(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
-                metadata=metadata,
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),
@@ -2734,7 +2874,12 @@ class Conversations(BaseSDK):
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
+        metadata: OptionalNullable[
+            Union[models.MetadataDict, models.MetadataDictTypedDict]
+        ] = UNSET,
         agent_version: OptionalNullable[
             Union[
                 models.ConversationRestartStreamRequestAgentVersion,
@@ -2757,6 +2902,7 @@ class Conversations(BaseSDK):
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
+        :param guardrails:
         :param metadata: Custom metadata for the conversation.
         :param agent_version: Specific version of the agent to use when restarting. If not provided, uses the current version.
         :param retries: Override the default retry configuration for this method
@@ -2768,6 +2914,9 @@ class Conversations(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -2786,7 +2935,12 @@ class Conversations(BaseSDK):
                 completion_args=utils.get_pydantic_model(
                     completion_args, Optional[models.CompletionArgs]
                 ),
-                metadata=metadata,
+                guardrails=utils.get_pydantic_model(
+                    guardrails, OptionalNullable[List[models.GuardrailConfig]]
+                ),
+                metadata=utils.get_pydantic_model(
+                    metadata, OptionalNullable[models.MetadataDict]
+                ),
                 from_entry_id=from_entry_id,
                 agent_version=agent_version,
             ),

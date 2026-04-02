@@ -4,9 +4,12 @@
 from __future__ import annotations
 from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from datetime import datetime
@@ -23,7 +26,7 @@ from mistralai.client.utils.unions import parse_open_union
 import pydantic
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import AfterValidator, BeforeValidator
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -36,6 +39,7 @@ ModelConversationToolTypedDict = TypeAliasType(
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
     ],
 )
 
@@ -52,6 +56,7 @@ class UnknownModelConversationTool(BaseModel):
 
 _MODEL_CONVERSATION_TOOL_VARIANTS: dict[str, Any] = {
     "code_interpreter": CodeInterpreterTool,
+    "connector": CustomConnector,
     "document_library": DocumentLibraryTool,
     "function": FunctionTool,
     "image_generation": ImageGenerationTool,
@@ -63,6 +68,7 @@ _MODEL_CONVERSATION_TOOL_VARIANTS: dict[str, Any] = {
 ModelConversationTool = Annotated[
     Union[
         CodeInterpreterTool,
+        CustomConnector,
         DocumentLibraryTool,
         FunctionTool,
         ImageGenerationTool,
@@ -93,11 +99,12 @@ class ModelConversationTypedDict(TypedDict):
     r"""List of tools which are available to the model during the conversation."""
     completion_args: NotRequired[CompletionArgsTypedDict]
     r"""White-listed arguments from the completion API"""
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
     r"""Description of the what the conversation is about."""
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     r"""Custom metadata for the conversation."""
     object: Literal["conversation"]
 
@@ -120,13 +127,15 @@ class ModelConversation(BaseModel):
     completion_args: Optional[CompletionArgs] = None
     r"""White-listed arguments from the completion API"""
 
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
+
     name: OptionalNullable[str] = UNSET
     r"""Name given to the conversation."""
 
     description: OptionalNullable[str] = UNSET
     r"""Description of the what the conversation is about."""
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
     r"""Custom metadata for the conversation."""
 
     object: Annotated[
@@ -144,13 +153,16 @@ class ModelConversation(BaseModel):
                 "instructions",
                 "tools",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",
                 "object",
             ]
         )
-        nullable_fields = set(["instructions", "name", "description", "metadata"])
+        nullable_fields = set(
+            ["instructions", "guardrails", "name", "description", "metadata"]
+        )
         serialized = handler(self)
         m = {}
 

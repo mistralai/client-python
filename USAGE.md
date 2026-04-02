@@ -74,7 +74,7 @@ with Mistral(
     res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-    })
+    }, visibility="workspace")
 
     # Handle response
     print(res)
@@ -99,7 +99,7 @@ async def main():
         res = await mistral.files.upload_async(file={
             "file_name": "example.file",
             "content": open("example.file", "rb"),
-        })
+        }, visibility="workspace")
 
         # Handle response
         print(res)

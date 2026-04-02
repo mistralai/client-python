@@ -5,9 +5,12 @@ from __future__ import annotations
 from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .completionargs import CompletionArgs, CompletionArgsTypedDict
 from .conversationinputs import ConversationInputs, ConversationInputsTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .functiontool import FunctionTool, FunctionToolTypedDict
+from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
+from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
@@ -18,7 +21,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import Field, model_serializer
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -37,6 +40,7 @@ ConversationRequestToolTypedDict = TypeAliasType(
         CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
     ],
 )
 
@@ -44,6 +48,7 @@ ConversationRequestToolTypedDict = TypeAliasType(
 ConversationRequestTool = Annotated[
     Union[
         CodeInterpreterTool,
+        CustomConnector,
         DocumentLibraryTool,
         FunctionTool,
         ImageGenerationTool,
@@ -70,12 +75,12 @@ class ConversationRequestTypedDict(TypedDict):
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
-    tools: NotRequired[List[ConversationRequestToolTypedDict]]
-    r"""List of tools which are available to the model during the conversation."""
+    tools: NotRequired[Nullable[List[ConversationRequestToolTypedDict]]]
     completion_args: NotRequired[Nullable[CompletionArgsTypedDict]]
+    guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
-    metadata: NotRequired[Nullable[Dict[str, Any]]]
+    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
     agent_id: NotRequired[Nullable[str]]
     agent_version: NotRequired[Nullable[ConversationRequestAgentVersionTypedDict]]
     model: NotRequired[Nullable[str]]
@@ -92,16 +97,17 @@ class ConversationRequest(BaseModel):
 
     instructions: OptionalNullable[str] = UNSET
 
-    tools: Optional[List[ConversationRequestTool]] = None
-    r"""List of tools which are available to the model during the conversation."""
+    tools: OptionalNullable[List[ConversationRequestTool]] = UNSET
 
     completion_args: OptionalNullable[CompletionArgs] = UNSET
+
+    guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
     name: OptionalNullable[str] = UNSET
 
     description: OptionalNullable[str] = UNSET
 
-    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    metadata: OptionalNullable[MetadataDict] = UNSET
 
     agent_id: OptionalNullable[str] = UNSET
 
@@ -119,6 +125,7 @@ class ConversationRequest(BaseModel):
                 "instructions",
                 "tools",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",
@@ -132,7 +139,9 @@ class ConversationRequest(BaseModel):
                 "store",
                 "handoff_execution",
                 "instructions",
+                "tools",
                 "completion_args",
+                "guardrails",
                 "name",
                 "description",
                 "metadata",

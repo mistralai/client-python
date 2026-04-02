@@ -30,12 +30,12 @@ class CompletionFineTunedModelTypedDict(TypedDict):
     root_version: str
     archived: bool
     capabilities: FineTunedModelCapabilitiesTypedDict
-    job: str
     object: Literal["model"]
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     max_context_length: NotRequired[int]
     aliases: NotRequired[List[str]]
+    job: NotRequired[Nullable[str]]
     model_type: Literal["completion"]
 
 
@@ -56,8 +56,6 @@ class CompletionFineTunedModel(BaseModel):
 
     capabilities: FineTunedModelCapabilities
 
-    job: str
-
     object: Annotated[
         Annotated[Optional[Literal["model"]], AfterValidator(validate_const("model"))],
         pydantic.Field(alias="object"),
@@ -71,6 +69,8 @@ class CompletionFineTunedModel(BaseModel):
 
     aliases: Optional[List[str]] = None
 
+    job: OptionalNullable[str] = UNSET
+
     model_type: Annotated[
         Annotated[Literal["completion"], AfterValidator(validate_const("completion"))],
         pydantic.Field(alias="model_type"),
@@ -79,9 +79,9 @@ class CompletionFineTunedModel(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "name", "description", "max_context_length", "aliases"]
+            ["object", "name", "description", "max_context_length", "aliases", "job"]
         )
-        nullable_fields = set(["name", "description"])
+        nullable_fields = set(["name", "description", "job"])
         serialized = handler(self)
         m = {}
 

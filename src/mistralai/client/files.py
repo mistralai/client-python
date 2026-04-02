@@ -18,6 +18,10 @@ class Files(BaseSDK):
         self,
         *,
         file: Union[models.File, models.FileTypedDict],
+        expiry: OptionalNullable[int] = UNSET,
+        visibility: Optional[
+            models.FilesAPIRoutesUploadFileFileVisibility
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -41,6 +45,8 @@ class Files(BaseSDK):
             ```bash
             file=@path/to/your/file.jsonl
             ```
+        :param expiry:
+        :param visibility:
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -52,12 +58,17 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
         request = models.MultiPartBodyParams(
+            expiry=expiry,
+            visibility=visibility,
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -120,6 +131,10 @@ class Files(BaseSDK):
         self,
         *,
         file: Union[models.File, models.FileTypedDict],
+        expiry: OptionalNullable[int] = UNSET,
+        visibility: Optional[
+            models.FilesAPIRoutesUploadFileFileVisibility
+        ] = "workspace",
         purpose: Optional[models.FilePurpose] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -143,6 +158,8 @@ class Files(BaseSDK):
             ```bash
             file=@path/to/your/file.jsonl
             ```
+        :param expiry:
+        :param visibility:
         :param purpose:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -154,12 +171,17 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
         request = models.MultiPartBodyParams(
+            expiry=expiry,
+            visibility=visibility,
             purpose=purpose,
             file=utils.get_pydantic_model(file, models.File),
         )
@@ -255,6 +277,9 @@ class Files(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -361,6 +386,9 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -452,6 +480,9 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -535,6 +566,9 @@ class Files(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -620,6 +654,9 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -704,6 +741,9 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -787,6 +827,9 @@ class Files(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -874,6 +917,9 @@ class Files(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 5000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -949,7 +995,7 @@ class Files(BaseSDK):
         r"""Get Signed Url
 
         :param file_id:
-        :param expiry: Number of hours before the url becomes invalid. Defaults to 24h
+        :param expiry: Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -959,6 +1005,9 @@ class Files(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
@@ -1034,7 +1083,7 @@ class Files(BaseSDK):
         r"""Get Signed Url
 
         :param file_id:
-        :param expiry: Number of hours before the url becomes invalid. Defaults to 24h
+        :param expiry: Number of hours before the URL becomes invalid. Defaults to 24h. Must be between 1h and 168h.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1044,6 +1093,9 @@ class Files(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 5000
 
         if server_url is not None:
             base_url = server_url
