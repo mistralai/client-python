@@ -15,6 +15,13 @@ import sys
 from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
 
+# region imports
+from mistralai.extra.workflows.encoding.config import WorkflowEncodingConfig
+from mistralai.client._hooks.workflow_encoding_hook import (
+    configure_workflow_encoding as _configure_workflow_encoding,
+)
+# endregion imports
+
 if TYPE_CHECKING:
     from mistralai.client.agents import Agents
     from mistralai.client.audio import Audio
@@ -227,3 +234,20 @@ class Mistral(BaseSDK):
         ):
             await self.sdk_configuration.async_client.aclose()
         self.sdk_configuration.async_client = None
+
+    # region sdk-class-body
+    def configure_workflow_encoding(
+        self,
+        config: WorkflowEncodingConfig,
+        namespace: str | None = None,
+    ) -> "Mistral":
+        """Configure workflow payload encoding for this SDK instance.
+        This enables encryption and/or blob storage offloading for workflow payloads.
+        """
+        if not namespace:
+            whoami_response = self.workflows.workers.whoami()
+            namespace = whoami_response.namespace
+        _configure_workflow_encoding(config, namespace)
+        return self
+
+    # endregion sdk-class-body
