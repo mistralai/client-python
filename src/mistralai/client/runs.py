@@ -117,7 +117,7 @@ class Runs(BaseSDK):
             results = JSONPath("$.executions").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit = request.page_size if not request.page_size is None else 50
+            limit = request.page_size if isinstance(request.page_size, int) else 50
             if len(results[0]) < limit:
                 return None
 
@@ -128,6 +128,9 @@ class Runs(BaseSDK):
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -262,7 +265,7 @@ class Runs(BaseSDK):
             results = JSONPath("$.executions").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit = request.page_size if not request.page_size is None else 50
+            limit = request.page_size if isinstance(request.page_size, int) else 50
             if len(results[0]) < limit:
                 return empty_result()
 
@@ -273,6 +276,9 @@ class Runs(BaseSDK):
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None

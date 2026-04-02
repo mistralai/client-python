@@ -149,7 +149,7 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit = request.limit if not request.limit is None else 50
+            limit = request.limit if isinstance(request.limit, int) else 50
             if len(results[0]) < limit:
                 return None
 
@@ -161,6 +161,9 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -291,7 +294,7 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit = request.limit if not request.limit is None else 50
+            limit = request.limit if isinstance(request.limit, int) else 50
             if len(results[0]) < limit:
                 return empty_result()
 
@@ -303,6 +306,9 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None

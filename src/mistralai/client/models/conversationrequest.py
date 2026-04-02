@@ -20,7 +20,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import Field, model_serializer
+from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -71,7 +74,7 @@ ConversationRequestAgentVersion = TypeAliasType(
 
 class ConversationRequestTypedDict(TypedDict):
     inputs: ConversationInputsTypedDict
-    stream: NotRequired[bool]
+    stream: Literal[False]
     store: NotRequired[Nullable[bool]]
     handoff_execution: NotRequired[Nullable[ConversationRequestHandoffExecution]]
     instructions: NotRequired[Nullable[str]]
@@ -89,7 +92,10 @@ class ConversationRequestTypedDict(TypedDict):
 class ConversationRequest(BaseModel):
     inputs: ConversationInputs
 
-    stream: Optional[bool] = False
+    stream: Annotated[
+        Annotated[Optional[Literal[False]], AfterValidator(validate_const(False))],
+        pydantic.Field(alias="stream"),
+    ] = False
 
     store: OptionalNullable[bool] = UNSET
 
@@ -155,7 +161,7 @@ class ConversationRequest(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -170,3 +176,9 @@ class ConversationRequest(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    ConversationRequest.model_rebuild()
+except NameError:
+    pass

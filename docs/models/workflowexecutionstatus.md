@@ -1,15 +1,24 @@
 # WorkflowExecutionStatus
 
+## Example Usage
+
+```python
+from mistralai.client.models import WorkflowExecutionStatus
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: WorkflowExecutionStatus = "RUNNING"
+```
+
 
 ## Values
 
-| Name                   | Value                  |
-| ---------------------- | ---------------------- |
-| `RUNNING`              | RUNNING                |
-| `COMPLETED`            | COMPLETED              |
-| `FAILED`               | FAILED                 |
-| `CANCELED`             | CANCELED               |
-| `TERMINATED`           | TERMINATED             |
-| `CONTINUED_AS_NEW`     | CONTINUED_AS_NEW       |
-| `TIMED_OUT`            | TIMED_OUT              |
-| `RETRYING_AFTER_ERROR` | RETRYING_AFTER_ERROR   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"RUNNING"`
+- `"COMPLETED"`
+- `"FAILED"`
+- `"CANCELED"`
+- `"TERMINATED"`
+- `"CONTINUED_AS_NEW"`
+- `"TIMED_OUT"`
+- `"RETRYING_AFTER_ERROR"`

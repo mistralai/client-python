@@ -1,14 +1,23 @@
 # BaseFieldDefinitionType
 
+## Example Usage
+
+```python
+from mistralai.client.models import BaseFieldDefinitionType
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: BaseFieldDefinitionType = "ENUM"
+```
+
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `ENUM`      | ENUM        |
-| `TEXT`      | TEXT        |
-| `INT`       | INT         |
-| `FLOAT`     | FLOAT       |
-| `BOOL`      | BOOL        |
-| `TIMESTAMP` | TIMESTAMP   |
-| `ARRAY`     | ARRAY       |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"ENUM"`
+- `"TEXT"`
+- `"INT"`
+- `"FLOAT"`
+- `"BOOL"`
+- `"TIMESTAMP"`
+- `"ARRAY"`
