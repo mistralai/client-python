@@ -12,6 +12,7 @@ from mistralai.client.models import (
     ToolMessage,
     UserMessage,
 )
+from mistralai.client.models.chatcompletionrequest import ChatCompletionRequestTool
 
 # Assuming we have the following data
 data: dict[str, list[Any]] = {
@@ -48,7 +49,7 @@ names_to_functions = {
     "retrieve_payment_date": functools.partial(retrieve_payment_date, data=data),
 }
 
-tools: list[Tool] = [
+tools: list[ChatCompletionRequestTool] = [
     Tool(
         function=Function(
             name="retrieve_payment_status",
