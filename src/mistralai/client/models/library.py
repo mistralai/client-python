@@ -10,8 +10,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class LibraryTypedDict(TypedDict):
@@ -63,7 +64,12 @@ class Library(BaseModel):
 
     explicit_workspace_members_count: OptionalNullable[int] = UNSET
 
-    org_sharing_role: OptionalNullable[str] = UNSET
+    org_sharing_role: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     generated_name: OptionalNullable[str] = UNSET
     r"""Generated Name"""
