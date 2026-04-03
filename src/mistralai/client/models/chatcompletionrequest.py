@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
+from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
@@ -14,6 +18,8 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
+from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
+from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -61,6 +67,31 @@ ChatCompletionRequestMessage = Annotated[
 ]
 
 
+ChatCompletionRequestToolTypedDict = TypeAliasType(
+    "ChatCompletionRequestToolTypedDict",
+    Union[
+        ToolTypedDict,
+        WebSearchToolTypedDict,
+        WebSearchPremiumToolTypedDict,
+        CodeInterpreterToolTypedDict,
+        ImageGenerationToolTypedDict,
+        DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
+    ],
+)
+
+
+ChatCompletionRequestTool = Union[
+    Tool,
+    WebSearchTool,
+    WebSearchPremiumTool,
+    CodeInterpreterTool,
+    ImageGenerationTool,
+    DocumentLibraryTool,
+    CustomConnector,
+]
+
+
 ChatCompletionRequestToolChoiceTypedDict = TypeAliasType(
     "ChatCompletionRequestToolChoiceTypedDict",
     Union[ToolChoiceTypedDict, ToolChoiceEnum],
@@ -94,7 +125,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
-    tools: NotRequired[Nullable[List[ToolTypedDict]]]
+    tools: NotRequired[Nullable[List[ChatCompletionRequestToolTypedDict]]]
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
     tool_choice: NotRequired[ChatCompletionRequestToolChoiceTypedDict]
     r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
@@ -146,7 +177,7 @@ class ChatCompletionRequest(BaseModel):
     response_format: Optional[ResponseFormat] = None
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
-    tools: OptionalNullable[List[Tool]] = UNSET
+    tools: OptionalNullable[List[ChatCompletionRequestTool]] = UNSET
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
 
     tool_choice: Optional[ChatCompletionRequestToolChoice] = None
