@@ -33,8 +33,8 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
         :param metadata:
         :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
@@ -48,6 +48,9 @@ class Embeddings(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -143,8 +146,8 @@ class Embeddings(BaseSDK):
 
         Embeddings
 
-        :param model: ID of the model to use.
-        :param inputs: Text to embed.
+        :param model: The ID of the model to be used for embedding.
+        :param inputs: The text content to be embedded, can be a string or an array of strings for fast processing in bulk.
         :param metadata:
         :param output_dimension: The dimension of the output embeddings when feature available. If not provided, a default output dimension will be used.
         :param output_dtype:
@@ -158,6 +161,9 @@ class Embeddings(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url

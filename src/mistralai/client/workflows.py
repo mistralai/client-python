@@ -20,6 +20,7 @@ from typing_extensions import deprecated
 
 # region imports
 import asyncio
+from pydantic import BaseModel
 import time
 # endregion imports
 
@@ -55,7 +56,7 @@ class Workflows(BaseSDK):
     def execute_workflow_and_wait(
         self,
         workflow_identifier: str,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -68,7 +69,7 @@ class Workflows(BaseSDK):
 
         Args:
             workflow_identifier: The workflow name or ID.
-            input: Input parameters for the workflow
+            input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
@@ -152,7 +153,7 @@ class Workflows(BaseSDK):
     async def execute_workflow_and_wait_async(
         self,
         workflow_identifier: str,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -165,7 +166,7 @@ class Workflows(BaseSDK):
 
         Args:
             workflow_identifier: The workflow name or ID.
-            input: Input parameters for the workflow
+            input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
@@ -282,6 +283,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -419,6 +423,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -570,6 +577,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -687,6 +697,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -803,6 +816,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -931,6 +947,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -1063,6 +1082,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1194,6 +1216,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1304,6 +1329,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1391,6 +1419,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -1485,6 +1516,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -1592,6 +1626,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1696,6 +1733,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1792,6 +1832,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1884,6 +1927,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -1972,6 +2018,9 @@ class Workflows(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -2059,6 +2108,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
@@ -2149,6 +2201,9 @@ class Workflows(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 30000
 
         if server_url is not None:
             base_url = server_url
