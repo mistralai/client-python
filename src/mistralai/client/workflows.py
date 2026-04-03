@@ -14,7 +14,6 @@ from mistralai.client.schedules import Schedules
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from mistralai.client.workers import Workers
 from mistralai.client.workflows_events import WorkflowsEvents
 from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 from typing_extensions import deprecated
@@ -30,7 +29,6 @@ class Workflows(BaseSDK):
     metrics: Metrics
     runs: Runs
     schedules: Schedules
-    workers: Workers
     events: WorkflowsEvents
     deployments: Deployments
 
@@ -46,7 +44,6 @@ class Workflows(BaseSDK):
         self.metrics = Metrics(self.sdk_configuration, parent_ref=self.parent_ref)
         self.runs = Runs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.schedules = Schedules(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.workers = Workers(self.sdk_configuration, parent_ref=self.parent_ref)
         self.events = WorkflowsEvents(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
@@ -354,7 +351,7 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit = request.limit if not request.limit is None else 50
+            limit = request.limit if isinstance(request.limit, int) else 50
             if len(results[0]) < limit:
                 return None
 
@@ -366,6 +363,9 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -493,7 +493,7 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit = request.limit if not request.limit is None else 50
+            limit = request.limit if isinstance(request.limit, int) else 50
             if len(results[0]) < limit:
                 return empty_result()
 
@@ -505,6 +505,9 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -766,7 +769,7 @@ class Workflows(BaseSDK):
         *,
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -784,7 +787,7 @@ class Workflows(BaseSDK):
 
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -894,7 +897,7 @@ class Workflows(BaseSDK):
         *,
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -912,7 +915,7 @@ class Workflows(BaseSDK):
 
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -1025,7 +1028,7 @@ class Workflows(BaseSDK):
         *,
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -1043,7 +1046,7 @@ class Workflows(BaseSDK):
 
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
@@ -1156,7 +1159,7 @@ class Workflows(BaseSDK):
         *,
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
-        input: OptionalNullable[Dict[str, Any]] = UNSET,
+        input: OptionalNullable[Any] = UNSET,
         encoded_input: OptionalNullable[
             Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
         ] = UNSET,
@@ -1174,7 +1177,7 @@ class Workflows(BaseSDK):
 
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
-        :param input: The input to the workflow. This should be a dictionary that matches the workflow's input schema.
+        :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
         :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.

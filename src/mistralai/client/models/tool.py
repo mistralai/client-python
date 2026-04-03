@@ -3,35 +3,32 @@
 
 from __future__ import annotations
 from .function import Function, FunctionTypedDict
-from .tooltypes import ToolTypes
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from mistralai.client.types import BaseModel, UnrecognizedStr
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal, Union
+from typing_extensions import Annotated, TypedDict
 
 
 class ToolTypedDict(TypedDict):
     function: FunctionTypedDict
-    type: NotRequired[ToolTypes]
+    type: Union[Literal["function"], UnrecognizedStr]
 
 
 class Tool(BaseModel):
     function: Function
 
-    type: Optional[ToolTypes] = None
+    type: Annotated[
+        Annotated[
+            Union[Literal["function"], UnrecognizedStr],
+            AfterValidator(validate_const("function")),
+        ],
+        pydantic.Field(alias="type"),
+    ] = "function"
 
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["type"])
-        serialized = handler(self)
-        m = {}
 
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
+try:
+    Tool.model_rebuild()
+except NameError:
+    pass
