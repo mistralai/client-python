@@ -560,7 +560,7 @@ wheels = [
 
 [[package]]
 name = "mistralai"
-version = "2.2.0"
+version = "2.2.1"
 source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },
