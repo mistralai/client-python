@@ -122,7 +122,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionRequestTool],
+                List[models.ChatCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -181,6 +184,9 @@ class Chat(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -201,7 +207,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -304,7 +312,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionRequestTool],
+                List[models.ChatCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -363,6 +374,9 @@ class Chat(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -383,7 +397,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -486,7 +502,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionStreamRequestTool],
+                List[models.ChatCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -547,6 +566,9 @@ class Chat(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -567,7 +589,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
@@ -678,7 +702,10 @@ class Chat(BaseSDK):
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionStreamRequestTool],
+                List[models.ChatCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -739,6 +766,9 @@ class Chat(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 30000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -759,7 +789,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
