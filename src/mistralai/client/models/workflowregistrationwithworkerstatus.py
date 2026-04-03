@@ -14,21 +14,24 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WorkflowRegistrationWithWorkerStatusTypedDict(TypedDict):
     id: str
     r"""Unique identifier of the workflow registration"""
-    task_queue: str
-    r"""Project name of the workflow"""
     definition: WorkflowCodeDefinitionTypedDict
     workflow_id: str
     r"""Workflow ID of the workflow"""
     active: bool
     r"""Whether the workflow registration is active"""
+    deployment_id: NotRequired[Nullable[str]]
+    r"""Deployment ID this registration belongs to"""
+    task_queue: NotRequired[Nullable[str]]
+    r"""Deprecated. Use deployment_id instead. Will be removed in a future release."""
     workflow: NotRequired[Nullable[WorkflowTypedDict]]
     r"""Workflow of the workflow registration"""
     compatible_with_chat_assistant: NotRequired[bool]
@@ -39,9 +42,6 @@ class WorkflowRegistrationWithWorkerStatus(BaseModel):
     id: str
     r"""Unique identifier of the workflow registration"""
 
-    task_queue: str
-    r"""Project name of the workflow"""
-
     definition: WorkflowCodeDefinition
 
     workflow_id: str
@@ -49,6 +49,17 @@ class WorkflowRegistrationWithWorkerStatus(BaseModel):
 
     active: bool
     r"""Whether the workflow registration is active"""
+
+    deployment_id: OptionalNullable[str] = UNSET
+    r"""Deployment ID this registration belongs to"""
+
+    task_queue: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated. Use deployment_id instead. Will be removed in a future release."""
 
     workflow: OptionalNullable[Workflow] = UNSET
     r"""Workflow of the workflow registration"""
@@ -58,8 +69,15 @@ class WorkflowRegistrationWithWorkerStatus(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["workflow", "compatible_with_chat_assistant"])
-        nullable_fields = set(["workflow"])
+        optional_fields = set(
+            [
+                "deployment_id",
+                "task_queue",
+                "workflow",
+                "compatible_with_chat_assistant",
+            ]
+        )
+        nullable_fields = set(["deployment_id", "task_queue", "workflow"])
         serialized = handler(self)
         m = {}
 
