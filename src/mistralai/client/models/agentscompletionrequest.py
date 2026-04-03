@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
+from .customconnector import CustomConnector, CustomConnectorTypedDict
+from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
@@ -14,6 +18,8 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
+from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
+from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -61,6 +67,31 @@ AgentsCompletionRequestMessage = Annotated[
 ]
 
 
+AgentsCompletionRequestToolTypedDict = TypeAliasType(
+    "AgentsCompletionRequestToolTypedDict",
+    Union[
+        ToolTypedDict,
+        WebSearchToolTypedDict,
+        WebSearchPremiumToolTypedDict,
+        CodeInterpreterToolTypedDict,
+        ImageGenerationToolTypedDict,
+        DocumentLibraryToolTypedDict,
+        CustomConnectorTypedDict,
+    ],
+)
+
+
+AgentsCompletionRequestTool = Union[
+    Tool,
+    WebSearchTool,
+    WebSearchPremiumTool,
+    CodeInterpreterTool,
+    ImageGenerationTool,
+    DocumentLibraryTool,
+    CustomConnector,
+]
+
+
 AgentsCompletionRequestToolChoiceTypedDict = TypeAliasType(
     "AgentsCompletionRequestToolChoiceTypedDict",
     Union[ToolChoiceTypedDict, ToolChoiceEnum],
@@ -88,7 +119,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
-    tools: NotRequired[Nullable[List[ToolTypedDict]]]
+    tools: NotRequired[Nullable[List[AgentsCompletionRequestToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
     presence_penalty: NotRequired[float]
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
@@ -129,7 +160,7 @@ class AgentsCompletionRequest(BaseModel):
     response_format: Optional[ResponseFormat] = None
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
-    tools: OptionalNullable[List[Tool]] = UNSET
+    tools: OptionalNullable[List[AgentsCompletionRequestTool]] = UNSET
 
     tool_choice: Optional[AgentsCompletionRequestToolChoice] = None
 

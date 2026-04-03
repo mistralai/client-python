@@ -730,10 +730,6 @@ print(res.choices[0].message.content)
 * [schedule_workflow](docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
 * [unschedule_workflow](docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
 
-#### [Workflows.Workers](docs/sdks/workers/README.md)
-
-* [whoami](docs/sdks/workers/README.md#whoami) - Get Worker Info
-
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
@@ -944,8 +940,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 103 of 169 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 169 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 103 of 168 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 168 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
