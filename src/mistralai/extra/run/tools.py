@@ -3,7 +3,7 @@ import itertools
 import json
 import logging
 from dataclasses import dataclass
-from typing import Any, Callable, ForwardRef, Sequence, cast, get_type_hints
+from typing import Annotated, Any, Callable, ForwardRef, Sequence, cast, get_type_hints
 
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 from griffe import (
@@ -17,6 +17,7 @@ from opentelemetry import trace
 from opentelemetry.trace import Status, StatusCode
 from pydantic import Field, create_model
 from pydantic.fields import FieldInfo
+from pydantic_core import PydanticUndefined as _PYDANTIC_UNDEFINED
 
 from mistralai.client.models import (
     Function,
@@ -95,7 +96,7 @@ def _get_function_parameters(
         param_annotations[param.name] = type_hints.get(param.name)
 
     # resolve all params into Field and create the parameters schema
-    fields: dict[str, tuple[type, FieldInfo]] = {}
+    fields: dict[str, Any] = {}
     for p in params_from_sig:
         default = p.default if p.default is not inspect.Parameter.empty else ...
         annotation = (
@@ -127,15 +128,25 @@ def _get_function_parameters(
                 if isinstance(annotation, ForwardRef):
                     annotation = param_annotations[p.name]
 
-        # no Field
+        description = param_descriptions[p.name] or None
+
         if field_info is None:
             if default is ...:
-                field_info = Field()
+                field_info = Field(description=description)
             else:
-                field_info = Field(default=default)
-
-        field_info.description = param_descriptions[p.name]
-        fields[p.name] = (cast(type, annotation), field_info)
+                field_info = Field(default=default, description=description)
+            fields[p.name] = (cast(type, annotation), field_info)
+        elif description:
+            typed = Annotated[  # type: ignore[valid-type]
+                cast(type, annotation), field_info, Field(description=description)
+            ]
+            raw_default = field_info.default
+            if raw_default is not _PYDANTIC_UNDEFINED:
+                fields[p.name] = (typed, raw_default)
+            else:
+                fields[p.name] = (typed, ...)
+        else:
+            fields[p.name] = (cast(type, annotation), field_info)
 
     schema = create_model("_", **fields).model_json_schema()  # type: ignore[call-overload]
     schema.pop("title", None)
