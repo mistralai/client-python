@@ -3,6 +3,10 @@
 
 from __future__ import annotations
 from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+from .ocrpageconfidencescores import (
+    OCRPageConfidenceScores,
+    OCRPageConfidenceScoresTypedDict,
+)
 from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
 from .ocrtableobject import OCRTableObject, OCRTableObjectTypedDict
 from mistralai.client.types import (
@@ -34,6 +38,8 @@ class OCRPageObjectTypedDict(TypedDict):
     r"""Header of the page"""
     footer: NotRequired[Nullable[str]]
     r"""Footer of the page"""
+    confidence_scores: NotRequired[Nullable[OCRPageConfidenceScoresTypedDict]]
+    r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
 
 
 class OCRPageObject(BaseModel):
@@ -61,10 +67,15 @@ class OCRPageObject(BaseModel):
     footer: OptionalNullable[str] = UNSET
     r"""Footer of the page"""
 
+    confidence_scores: OptionalNullable[OCRPageConfidenceScores] = UNSET
+    r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tables", "hyperlinks", "header", "footer"])
-        nullable_fields = set(["header", "footer", "dimensions"])
+        optional_fields = set(
+            ["tables", "hyperlinks", "header", "footer", "confidence_scores"]
+        )
+        nullable_fields = set(["header", "footer", "dimensions", "confidence_scores"])
         serialized = handler(self)
         m = {}
 
