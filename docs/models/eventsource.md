@@ -12,3 +12,4 @@ value: EventSource = "DATABASE"
 
 - `"DATABASE"`
 - `"LIVE"`
+- `"HYBRID"`
