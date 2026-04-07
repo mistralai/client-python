@@ -3,9 +3,10 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from mistralai.client.types import BaseModel, UnrecognizedStr
-from typing import Literal, Union
-from typing_extensions import TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
+from pydantic import model_serializer
+from typing import List, Literal, Optional, Union
+from typing_extensions import NotRequired, TypedDict
 
 
 ChatCompletionChoiceFinishReason = Union[
@@ -22,13 +23,32 @@ ChatCompletionChoiceFinishReason = Union[
 
 class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
-    message: AssistantMessageTypedDict
     finish_reason: ChatCompletionChoiceFinishReason
+    message: NotRequired[AssistantMessageTypedDict]
+    messages: NotRequired[List[AssistantMessageTypedDict]]
 
 
 class ChatCompletionChoice(BaseModel):
     index: int
 
-    message: AssistantMessage
-
     finish_reason: ChatCompletionChoiceFinishReason
+
+    message: Optional[AssistantMessage] = None
+
+    messages: Optional[List[AssistantMessage]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["message", "messages"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
