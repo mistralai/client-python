@@ -1,12 +1,12 @@
-# ChatCompletionChoiceFinishReason
+# ChatCompletionChoiceFinishReason2
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import ChatCompletionChoiceFinishReason
+from mistralai.client.models import ChatCompletionChoiceFinishReason2
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ChatCompletionChoiceFinishReason = "stop"
+value: ChatCompletionChoiceFinishReason2 = "stop"
 ```
 
 
