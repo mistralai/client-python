@@ -1387,14 +1387,22 @@ if TYPE_CHECKING:
         ObservabilityErrorDetail,
         ObservabilityErrorDetailTypedDict,
     )
+    from .ocrconfidencescore import OCRConfidenceScore, OCRConfidenceScoreTypedDict
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+    from .ocrpageconfidencescores import (
+        OCRPageConfidenceScores,
+        OCRPageConfidenceScoresTypedDict,
+    )
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
     from .ocrrequest import (
+        ConfidenceScoresGranularity,
         DocumentUnion,
         DocumentUnionTypedDict,
         OCRRequest,
         OCRRequestTypedDict,
+        Pages,
+        PagesTypedDict,
         TableFormat,
     )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
@@ -2341,6 +2349,7 @@ __all__ = [
     "CompletionResponseStreamChoiceTypedDict",
     "CompletionTrainingParameters",
     "CompletionTrainingParametersTypedDict",
+    "ConfidenceScoresGranularity",
     "Confirmation",
     "Connector",
     "ConnectorCallToolRequest",
@@ -2990,8 +2999,12 @@ __all__ = [
     "NetworkEncodedInputTypedDict",
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
+    "OCRConfidenceScore",
+    "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
+    "OCRPageConfidenceScores",
+    "OCRPageConfidenceScoresTypedDict",
     "OCRPageDimensions",
     "OCRPageDimensionsTypedDict",
     "OCRPageObject",
@@ -3016,6 +3029,8 @@ __all__ = [
     "OrderBy",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
+    "Pages",
+    "PagesTypedDict",
     "PaginatedConnectors",
     "PaginatedConnectorsTypedDict",
     "PaginatedResultCampaignPreview",
@@ -4467,16 +4482,23 @@ _dynamic_imports: dict[str, str] = {
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
+    "OCRConfidenceScore": ".ocrconfidencescore",
+    "OCRConfidenceScoreTypedDict": ".ocrconfidencescore",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
+    "OCRPageConfidenceScores": ".ocrpageconfidencescores",
+    "OCRPageConfidenceScoresTypedDict": ".ocrpageconfidencescores",
     "OCRPageDimensions": ".ocrpagedimensions",
     "OCRPageDimensionsTypedDict": ".ocrpagedimensions",
     "OCRPageObject": ".ocrpageobject",
     "OCRPageObjectTypedDict": ".ocrpageobject",
+    "ConfidenceScoresGranularity": ".ocrrequest",
     "DocumentUnion": ".ocrrequest",
     "DocumentUnionTypedDict": ".ocrrequest",
     "OCRRequest": ".ocrrequest",
     "OCRRequestTypedDict": ".ocrrequest",
+    "Pages": ".ocrrequest",
+    "PagesTypedDict": ".ocrrequest",
     "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
