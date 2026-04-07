@@ -8,4 +8,5 @@ from typing import Literal
 EventSource = Literal[
     "DATABASE",
     "LIVE",
+    "HYBRID",
 ]
