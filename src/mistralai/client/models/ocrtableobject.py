@@ -2,10 +2,19 @@
 # @generated-id: d74dd0d2ddac
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UnrecognizedStr
+from .ocrconfidencescore import OCRConfidenceScore, OCRConfidenceScoreTypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    UnrecognizedStr,
+)
 import pydantic
-from typing import Literal, Union
-from typing_extensions import Annotated, TypedDict
+from pydantic import model_serializer
+from typing import List, Literal, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 Format = Union[
@@ -25,6 +34,8 @@ class OCRTableObjectTypedDict(TypedDict):
     r"""Content of the table in the given format"""
     format_: Format
     r"""Format of the table"""
+    word_confidence_scores: NotRequired[Nullable[List[OCRConfidenceScoreTypedDict]]]
+    r"""Per-word confidence scores for the table content. Returned when confidence_scores_granularity is set to 'word'."""
 
 
 class OCRTableObject(BaseModel):
@@ -36,6 +47,34 @@ class OCRTableObject(BaseModel):
 
     format_: Annotated[Format, pydantic.Field(alias="format")]
     r"""Format of the table"""
+
+    word_confidence_scores: OptionalNullable[List[OCRConfidenceScore]] = UNSET
+    r"""Per-word confidence scores for the table content. Returned when confidence_scores_granularity is set to 'word'."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["word_confidence_scores"])
+        nullable_fields = set(["word_confidence_scores"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
 
 
 try:
