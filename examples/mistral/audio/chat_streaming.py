@@ -19,7 +19,8 @@ def main():
         print(f"Uploaded audio file, id={file.id}")
         signed_url = client.files.get_signed_url(file_id=file.id)
     try:
-        chat_response = client.chat.stream(
+        chat_response = client.chat.complete(
+            stream=True,
             model=model,
             messages=[
                 UserMessage(

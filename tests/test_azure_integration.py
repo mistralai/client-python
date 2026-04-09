@@ -240,7 +240,8 @@ class TestAzureChatStream:
 
     def test_basic_stream(self, azure_client):
         """Test streaming returns chunks with content."""
-        stream = azure_client.chat.stream(
+        stream = azure_client.chat.complete(
+            stream=True,
             model=AZURE_MODEL,
             messages=[
                 {"role": "user", "content": "Say 'hello' and nothing else."}
@@ -259,7 +260,8 @@ class TestAzureChatStream:
 
     def test_stream_with_max_tokens(self, azure_client):
         """Test streaming respects max_tokens truncation."""
-        stream = azure_client.chat.stream(
+        stream = azure_client.chat.complete(
+            stream=True,
             model=AZURE_MODEL,
             messages=[
                 {"role": "user", "content": "Count from 1 to 100."}
@@ -281,7 +283,8 @@ class TestAzureChatStream:
 
     def test_stream_finish_reason(self, azure_client):
         """Test that the last chunk has a finish_reason."""
-        stream = azure_client.chat.stream(
+        stream = azure_client.chat.complete(
+            stream=True,
             model=AZURE_MODEL,
             messages=[
                 {"role": "user", "content": "Say 'hi'."}
@@ -302,7 +305,8 @@ class TestAzureChatStream:
 
     def test_stream_tool_call(self, azure_client):
         """Test tool call via streaming, collecting tool_call delta chunks."""
-        stream = azure_client.chat.stream(
+        stream = azure_client.chat.complete(
+            stream=True,
             model=AZURE_MODEL,
             messages=[
                 {"role": "user", "content": "What is the weather in Paris?"}
@@ -409,7 +413,8 @@ class TestAzureChatStreamAsync:
     @pytest.mark.asyncio
     async def test_basic_stream_async(self, azure_client):
         """Test async streaming returns chunks with content."""
-        stream = await azure_client.chat.stream_async(
+        stream = await azure_client.chat.complete_async(
+            stream=True,
             model=AZURE_MODEL,
             messages=[
                 {"role": "user", "content": "Say 'hello' and nothing else."}

@@ -14,8 +14,9 @@ async def main():
     client = Mistral(api_key=api_key)
 
     print("Chat response:")
-    response = await client.chat.stream_async(
+    response = await client.chat.complete_async(
         model=model,
+        stream=True,
         messages=[
             UserMessage(content="What is the best French cheese?give the best 50")
         ],

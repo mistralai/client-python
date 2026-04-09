@@ -150,8 +150,8 @@ To see this help: /help
             f"Running inference with model: {self.model}, temperature: {self.temperature}"
         )
         logger.debug(f"Sending messages: {self.messages}")
-        for chunk in self.client.chat.stream(
-            model=self.model, temperature=self.temperature, messages=self.messages
+        for chunk in self.client.chat.complete(
+            model=self.model, temperature=self.temperature, stream=True, messages=self.messages
         ):
             response = chunk.data.choices[0].delta.content
             if response is not None:
