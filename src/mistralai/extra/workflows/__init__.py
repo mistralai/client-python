@@ -6,6 +6,7 @@ from .encoding import (
     BlobStorageConfig,
     StorageProvider,
     EncryptedStrField,
+    configure_workflow_encoding,
 )
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "BlobStorageConfig",
     "StorageProvider",
     "EncryptedStrField",
+    "configure_workflow_encoding",
 ]

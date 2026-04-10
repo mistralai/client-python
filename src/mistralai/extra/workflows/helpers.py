@@ -1,13 +1,15 @@
-from typing import Mapping, Optional
+from typing import TYPE_CHECKING, Mapping, Optional
 
 from pydantic import BaseModel
 
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks.types import HookContext
-from mistralai.client.sdk import Mistral
 from mistralai.client.types.basemodel import UNSET, OptionalNullable
 from mistralai.client.utils.security import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
+
+if TYPE_CHECKING:
+    from mistralai.client.sdk import Mistral
 
 
 class WorkerInfo(BaseModel):
@@ -16,7 +18,7 @@ class WorkerInfo(BaseModel):
 
 
 async def get_scheduler_namespace(
-    client: Mistral,
+    client: "Mistral",
     *,
     retries: OptionalNullable[utils.RetryConfig] = UNSET,
     server_url: Optional[str] = None,
