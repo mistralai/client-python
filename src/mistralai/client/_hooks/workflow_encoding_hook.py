@@ -222,7 +222,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
 
         except Exception as e:
             logger.error("WorkflowEncodingHook: Failed to encode input: %s", e)
-            return request
+            raise
 
     def after_success(
         self,
@@ -265,4 +265,4 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
             )
         except Exception as e:
             logger.error("WorkflowEncodingHook: Failed to decode result: %s", e)
-            return response
+            raise

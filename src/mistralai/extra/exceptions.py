@@ -11,6 +11,10 @@ class MistralClientException(Exception):
 class WorkflowPayloadOffloadingException(MistralClientException):
     """Workflow payload offloading exception"""
 
+
+class WorkflowPayloadEncryptionException(MistralClientException):
+    """Workflow payload encryption exception"""
+
 class RunException(MistralClientException):
     """Conversation run errors."""
 

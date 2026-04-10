@@ -28,6 +28,7 @@ from mistralai.extra.workflows.encoding.config import (
     PayloadEncryptionConfig,
     PayloadEncryptionMode,
     PayloadOffloadingConfig,
+    WorkflowEncodingConfig,
 )
 from .storage.blob_storage import get_blob_storage
 from .storage.blob_storage_impl import BlobNotFoundError
@@ -38,7 +39,10 @@ from mistralai.extra.workflows.encoding.models import (
     NetworkEncodedResult,
     WorkflowContext,
 )
-from mistralai.extra.exceptions import WorkflowPayloadOffloadingException
+from mistralai.extra.exceptions import (
+    WorkflowPayloadEncryptionException,
+    WorkflowPayloadOffloadingException,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -64,16 +68,15 @@ class PayloadEncoder:
 
     def __init__(
         self,
-        offloading_config: PayloadOffloadingConfig,
-        encryption_config: PayloadEncryptionConfig,
+        encoding_config: WorkflowEncodingConfig,
     ) -> None:
-        self.offloading_config = offloading_config
+        self.offloading_config = encoding_config.payload_offloading
         if self.offloading_config.enabled and not self.offloading_config.storage_config:
             raise WorkflowPayloadOffloadingException(
                 "Blob storage config is not set for workflow payload encoding"
             )
 
-        self.encryption_config = encryption_config
+        self.encryption_config = encoding_config.payload_encryption
         if self.encryption_config.mode != PayloadEncryptionMode.NONE:
             if not _HAS_CRYPTO:
                 raise ImportError(
@@ -86,8 +89,8 @@ class PayloadEncoder:
                 else None
             )
             if not main_key:
-                raise WorkflowPayloadOffloadingException(
-                    "Encryption key is not set for workflow payload encoding"
+                raise WorkflowPayloadEncryptionException(
+                    "You must configure payload encryption key"
                 )
             self.encryptor_main = AESGCM(bytes.fromhex(main_key))
             secondary_key_secret = self.encryption_config.secondary_key
@@ -111,12 +114,18 @@ class PayloadEncoder:
         )
 
     def _encrypt(self, data: bytes) -> bytes:
-        assert self.encryptor_main, "Encryptor is not set"
+        if self.encryptor_main is None:
+            raise WorkflowPayloadEncryptionException(
+                "You must configure payload encryption"
+            )
         nonce = os.urandom(self._NONCE_SIZE)
         return nonce + self.encryptor_main.encrypt(nonce, data, None)
 
     def _decrypt(self, data: bytes) -> bytes:
-        assert self.encryptor_main, "Encryptor is not set"
+        if self.encryptor_main is None:
+            raise WorkflowPayloadEncryptionException(
+                "You must configure payload encryption"
+            )
         try:
             return self.encryptor_main.decrypt(
                 data[: self._NONCE_SIZE], data[self._NONCE_SIZE :], None
@@ -133,43 +142,47 @@ class PayloadEncoder:
                 except InvalidTag:
                     pass
             logger.error("Could not decrypt payload", exc_info=main_exc)
-            raise WorkflowPayloadOffloadingException("Failed to decrypt payload")
+            raise WorkflowPayloadEncryptionException(
+                "Failed to decrypt payload"
+            ) from main_exc
 
     async def _handle_offloading(
         self, data: bytes, context: Optional[WorkflowContext]
     ) -> tuple[bytes, bool]:
-        assert self.offloading_config.storage_config, (
-            "Blob storage config is not set for workflow payload encoding"
-        )
+        if self.offloading_config.storage_config is None:
+            raise WorkflowPayloadOffloadingException(
+                "You must configure payload offloading storage"
+            )
 
-        if len(data) >= self.offloading_config.min_size_bytes:
-            if not context:
-                logger.error(
-                    "Payload offloading required but no context was provided. Cannot proceed with offloading..."
-                )
-                return data, False
+        if len(data) < self.offloading_config.min_size_bytes:
+            return data, False
 
-            # Hash the content to have a uniq idempotent key for this payload
-            blob_key = f"sha256:{hashlib.sha256(data).hexdigest()}"
-            payload_key = f"{self.blob_storage_key_prefix(context)}/{blob_key}"
-            async with get_blob_storage(
-                self.offloading_config.storage_config
-            ) as blob_storage:
-                blob = None
-                try:
-                    blob = await blob_storage.get_blob_properties(payload_key)
-                except BlobNotFoundError:
-                    pass
+        if not context:
+            logger.error(
+                "Payload offloading required but no context was provided. Cannot proceed with offloading..."
+            )
+            return data, False
 
-                if not blob:
-                    logger.debug("Offloading payload")
-                    await blob_storage.upload_blob(key=payload_key, content=data)
-                else:
-                    logger.debug("Offloaded payload exists already")
+        # Hash the content to have a uniq idempotent key for this payload
+        blob_key = f"sha256:{hashlib.sha256(data).hexdigest()}"
+        payload_key = f"{self.blob_storage_key_prefix(context)}/{blob_key}"
+        async with get_blob_storage(
+            self.offloading_config.storage_config
+        ) as blob_storage:
+            blob = None
+            try:
+                blob = await blob_storage.get_blob_properties(payload_key)
+            except BlobNotFoundError:
+                pass
 
-                data = OffloadedPayloadData(key=payload_key).model_dump_json().encode()
-                return data, True
-        return data, False
+            if not blob:
+                logger.debug("Offloading payload")
+                await blob_storage.upload_blob(key=payload_key, content=data)
+            else:
+                logger.debug("Offloaded payload exists already")
+
+            data = OffloadedPayloadData(key=payload_key).model_dump_json().encode()
+            return data, True
 
     @staticmethod
     def _extract_encrypted_fields(data: Any = None) -> list[dict[str, Any]]:
