@@ -98,7 +98,7 @@ class Conversations(BaseSDK):
         from mistralai.extra.run.tools import get_function_calls  # pylint: disable=import-outside-toplevel
 
         # Check if inputs contain deferred responses - process them
-        pending_tool_confirmations: Optional[List[models.ToolCallConfirmation]] = None
+        pending_tool_confirmations = None
         if inputs and isinstance(inputs, list):
             deferred_inputs = typing.cast(
                 List[DeferredToolCallResponse],
@@ -240,7 +240,7 @@ class Conversations(BaseSDK):
         from mistralai.extra.run.tools import get_function_calls  # pylint: disable=import-outside-toplevel
 
         # Check if inputs contain deferred responses - process them
-        pending_tool_confirmations: Optional[List[models.ToolCallConfirmation]] = None
+        pending_tool_confirmations = None
         if inputs and isinstance(inputs, list):
             deferred_inputs = typing.cast(
                 List[DeferredToolCallResponse],
