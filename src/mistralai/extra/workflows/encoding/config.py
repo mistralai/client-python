@@ -10,7 +10,6 @@ class StorageProvider(str, Enum):
 
 
 class BlobStorageConfig(BaseModel):
-    enabled: bool = False
     storage_provider: StorageProvider = StorageProvider.S3
     prefix: Optional[str] = None
 
@@ -30,19 +29,17 @@ class BlobStorageConfig(BaseModel):
 
 
 class PayloadOffloadingConfig(BaseModel):
-    enabled: bool = False
     storage_config: Optional[BlobStorageConfig] = None
     min_size_bytes: int = 1024 * 1024  # 1MB
 
 
 class PayloadEncryptionMode(str, Enum):
-    NONE = "none"
     FULL = "full"
     PARTIAL = "partial"
 
 
 class PayloadEncryptionConfig(BaseModel):
-    mode: PayloadEncryptionMode = PayloadEncryptionMode.NONE
+    mode: PayloadEncryptionMode
 
     # If both keys are provided, the main key will be used for encryption and both keys will be used for decryption
     # to support key rotation.
@@ -51,5 +48,5 @@ class PayloadEncryptionConfig(BaseModel):
 
 
 class WorkflowEncodingConfig(BaseModel):
-    payload_offloading: PayloadOffloadingConfig = PayloadOffloadingConfig()
-    payload_encryption: PayloadEncryptionConfig = PayloadEncryptionConfig()
+    payload_offloading: PayloadOffloadingConfig | None = None
+    payload_encryption: PayloadEncryptionConfig | None = None

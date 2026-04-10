@@ -71,13 +71,16 @@ class PayloadEncoder:
         encoding_config: WorkflowEncodingConfig,
     ) -> None:
         self.offloading_config = encoding_config.payload_offloading
-        if self.offloading_config.enabled and not self.offloading_config.storage_config:
+        if (
+            self.offloading_config is not None
+            and not self.offloading_config.storage_config
+        ):
             raise WorkflowPayloadOffloadingException(
                 "Blob storage config is not set for workflow payload encoding"
             )
 
         self.encryption_config = encoding_config.payload_encryption
-        if self.encryption_config.mode != PayloadEncryptionMode.NONE:
+        if self.encryption_config is not None:
             if not _HAS_CRYPTO:
                 raise ImportError(
                     "Encryption support requires cryptography. "
@@ -238,16 +241,20 @@ class PayloadEncoder:
 
         encoding_options = []
 
-        if self.offloading_config.enabled:
+        if self.offloading_config is not None:
             data, offloaded = await self._handle_offloading(data, context)
             if offloaded:
                 encoding_options.append(EncodedPayloadOptions.OFFLOADED)
 
-        if self.encryption_config.mode == PayloadEncryptionMode.FULL:
+        if (
+            self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.FULL
+        ):
             data = self._encrypt(data)
             encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
         elif (
-            self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
+            self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
             and EncodedPayloadOptions.OFFLOADED not in encoding_options
         ):
             # Do not partially encrypt offloaded payload (fields not in the payload anymore)
@@ -268,7 +275,7 @@ class PayloadEncoder:
                 data, _ = await self._partially_decrypt_fields(data)
             elif option == EncodedPayloadOptions.OFFLOADED:
                 if (
-                    not self.offloading_config.enabled
+                    self.offloading_config is None
                     or not self.offloading_config.storage_config
                 ):
                     raise WorkflowPayloadOffloadingException(
