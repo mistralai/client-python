@@ -95,6 +95,7 @@ messages: list[ChatCompletionRequestMessage] = [
 
 response = client.chat.complete(model=model, messages=messages, tools=tools, temperature=0)
 
+assert response.choices[0].message is not None
 print(response.choices[0].message.content)
 
 messages.append(AssistantMessage(content=response.choices[0].message.content))
@@ -102,6 +103,7 @@ messages.append(UserMessage(content="My transaction ID is T1001."))
 
 response = client.chat.complete(model=model, messages=messages, tools=tools, temperature=0)
 
+assert response.choices[0].message is not None
 tool_calls = response.choices[0].message.tool_calls
 if not tool_calls:
     raise RuntimeError("Expected tool calls")
@@ -130,4 +132,5 @@ print(messages)
 
 response = client.chat.complete(model=model, messages=messages, tools=tools, temperature=0)
 
+assert response.choices[0].message is not None
 print(f"{response.choices[0].message.content}")
