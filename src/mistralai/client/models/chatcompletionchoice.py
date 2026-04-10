@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
+from .deltamessage import DeltaMessage, DeltaMessageTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
@@ -25,7 +26,7 @@ class ChatCompletionChoiceTypedDict(TypedDict):
     index: int
     finish_reason: ChatCompletionChoiceFinishReason
     message: NotRequired[AssistantMessageTypedDict]
-    messages: NotRequired[List[AssistantMessageTypedDict]]
+    messages: NotRequired[List[DeltaMessageTypedDict]]
 
 
 class ChatCompletionChoice(BaseModel):
@@ -35,7 +36,7 @@ class ChatCompletionChoice(BaseModel):
 
     message: Optional[AssistantMessage] = None
 
-    messages: Optional[List[AssistantMessage]] = None
+    messages: Optional[List[DeltaMessage]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
