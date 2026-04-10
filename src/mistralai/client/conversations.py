@@ -291,6 +291,8 @@ class Conversations(BaseSDK):
         ]:
             nonlocal pending_tool_confirmations
             nonlocal pending_tool_confirmations
+            nonlocal pending_tool_confirmations
+            nonlocal pending_tool_confirmations
             current_entries = input_entries
             while True:
                 received_event_tracker: defaultdict[
