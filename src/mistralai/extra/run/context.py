@@ -52,7 +52,9 @@ class AgentRequestKwargs(typing.TypedDict):
 class ModelRequestKwargs(typing.TypedDict):
     model: str
     instructions: OptionalNullable[str]
-    tools: OptionalNullable[list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]]
+    tools: OptionalNullable[
+        list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]
+    ]
     completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict]
 
 
@@ -78,6 +80,9 @@ class RunContext:
     _exit_stack: AsyncExitStack = field(init=False)
     _callable_tools: dict[str, RunTool] = field(init=False, default_factory=dict)
     _mcp_clients: list[MCPClientProtocol] = field(init=False, default_factory=list)
+    _tool_configurations: dict[str, dict[str, bool]] = field(
+        init=False, default_factory=dict
+    )
 
     conversation_id: str | None = field(default=None)
     model: str | None = field(default=None)
@@ -99,7 +104,14 @@ class RunContext:
         for mcp_client in self._mcp_clients:
             await mcp_client.aclose()
 
-    def register_func(self, func: Callable):
+    def requires_confirmation(self, tool_name: str) -> bool:
+        """Check if tool requires confirmation. Default: False."""
+        config = self._tool_configurations.get(tool_name)
+        if config is None:
+            return False
+        return config.get("requires_confirmation", False)
+
+    def register_func(self, func: Callable, requires_confirmation: bool = False):
         """Add a function to the context."""
         if not inspect.isfunction(func):
             raise RunException(
@@ -119,6 +131,10 @@ class RunContext:
                 tool=create_tool_call(func),
             )
 
+        self._tool_configurations[func.__name__] = {
+            "requires_confirmation": requires_confirmation,
+        }
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             logger.info(f"Executing {func.__name__}")
@@ -126,24 +142,63 @@ class RunContext:
 
         return wrapper
 
-    async def register_mcp_clients(self, mcp_clients: list[MCPClientProtocol]) -> None:
+    async def register_mcp_clients(
+        self,
+        mcp_clients: list[MCPClientProtocol],
+        tool_configurations: list[dict[str, list[str]] | None] | None = None,
+    ) -> None:
         """Registering multiple MCP clients at the same time in the same asyncio.Task."""
-        for mcp_client in mcp_clients:
-            await self.register_mcp_client(mcp_client)
+        for i, mcp_client in enumerate(mcp_clients):
+            tool_configuration = tool_configurations[i] if tool_configurations else None
+            await self.register_mcp_client(
+                mcp_client, tool_configuration=tool_configuration
+            )
 
-    async def register_mcp_client(self, mcp_client: MCPClientProtocol) -> None:
+    async def register_mcp_client(
+        self,
+        mcp_client: MCPClientProtocol,
+        tool_configuration: dict[str, list[str]] | None = None,
+    ) -> None:
         """Add a MCP client to the context."""
         await mcp_client.initialize(exit_stack=self._exit_stack)
         tools = await mcp_client.get_tools()
+
+        include = (
+            set(tool_configuration.get("include", [])) if tool_configuration else set()
+        )
+        exclude = (
+            set(tool_configuration.get("exclude", [])) if tool_configuration else set()
+        )
+        requires_confirmation_list = (
+            set(tool_configuration.get("requires_confirmation", []))
+            if tool_configuration
+            else set()
+        )
+
         for tool in tools:
+            tool_name = tool.function.name
+
+            if include:
+                if tool_name not in include:
+                    continue
+            elif exclude:
+                if tool_name in exclude:
+                    continue
+
             logger.info(
-                f"Adding tool {tool.function.name} from {mcp_client._name or 'mcp client'}"
+                f"Adding tool {tool_name} from {mcp_client._name or 'mcp client'}"
             )
-            self._callable_tools[tool.function.name] = RunMCPTool(
-                name=tool.function.name,
+            self._callable_tools[tool_name] = RunMCPTool(
+                name=tool_name,
                 tool=tool,
                 mcp_client=mcp_client,
             )
+
+            if tool_configuration is not None:
+                self._tool_configurations[tool_name] = {
+                    "requires_confirmation": tool_name in requires_confirmation_list,
+                }
+
         self._mcp_clients.append(mcp_client)
 
     async def execute_function_calls(
@@ -213,8 +268,12 @@ class RunContext:
 
     async def prepare_model_request(
         self,
-        tools: OptionalNullable[list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]] = UNSET,
-        completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict] = UNSET,
+        tools: OptionalNullable[
+            list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]
+        ] = UNSET,
+        completion_args: OptionalNullable[
+            CompletionArgs | CompletionArgsTypedDict
+        ] = UNSET,
         instructions: OptionalNullable[str] = None,
     ) -> ModelRequestKwargs:
         if self.model is None:
@@ -254,11 +313,11 @@ async def _validate_run(
     run_ctx: RunContext,
     inputs: ConversationInputs | ConversationInputsTypedDict,
     instructions: OptionalNullable[str] = UNSET,
-    tools: OptionalNullable[list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]] = UNSET,
+    tools: OptionalNullable[
+        list[ConversationRequestTool] | list[ConversationRequestToolTypedDict]
+    ] = UNSET,
     completion_args: OptionalNullable[CompletionArgs | CompletionArgsTypedDict] = UNSET,
-) -> tuple[
-    AgentRequestKwargs | ModelRequestKwargs, RunResult, list[InputEntries]
-]:
+) -> tuple[AgentRequestKwargs | ModelRequestKwargs, RunResult, list[InputEntries]]:
     input_entries: list[InputEntries] = []
     if isinstance(inputs, str):
         input_entries.append(MessageInputEntry(role="user", content=inputs))
@@ -268,6 +327,8 @@ async def _validate_run(
                 input_entries.append(
                     pydantic.TypeAdapter(InputEntries).validate_python(input)
                 )
+            elif isinstance(input, FunctionResultEntry):
+                input_entries.append(input)
     run_result = RunResult(
         input_entries=input_entries,
         output_model=run_ctx.output_format,
