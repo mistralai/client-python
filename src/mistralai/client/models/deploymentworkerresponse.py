@@ -14,6 +14,8 @@ class DeploymentWorkerResponseTypedDict(TypedDict):
     r"""When the worker first registered"""
     updated_at: datetime
     r"""When the worker last registered"""
+    is_active: bool
+    r"""Whether this worker's liveness key is currently alive"""
 
 
 class DeploymentWorkerResponse(BaseModel):
@@ -25,3 +27,6 @@ class DeploymentWorkerResponse(BaseModel):
 
     updated_at: datetime
     r"""When the worker last registered"""
+
+    is_active: bool
+    r"""Whether this worker's liveness key is currently alive"""
