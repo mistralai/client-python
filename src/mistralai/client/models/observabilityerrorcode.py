@@ -54,6 +54,9 @@ ObservabilityErrorCode = Union[
         "TEMPLATE_SYNTAX_ERROR",
         "PROJECT_NAME_ALREADY_EXISTS",
         "EVALUATION_NAME_ALREADY_EXISTS",
+        "TRACES_FILTER_QUERY_PARSE_ERROR",
+        "TRACE_NOT_FOUND",
+        "SPAN_NOT_FOUND",
     ],
     UnrecognizedStr,
 ]
