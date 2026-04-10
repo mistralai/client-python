@@ -3,7 +3,7 @@ import concurrent.futures
 import json
 import logging
 import re
-from typing import Any, Dict, Optional, Union
+from typing import Any, Coroutine, Dict, Optional, TypeVar, Union
 import uuid
 
 import httpx
@@ -37,8 +37,7 @@ def configure_workflow_encoding(
     """Configure workflow payload encoding by creating a PayloadEncoder.
     """
     _workflow_config.payload_encoder = PayloadEncoder(
-        offloading_config=config.payload_offloading,
-        encryption_config=config.payload_encryption,
+        encoding_config=config,
     )
     _workflow_config.namespace = namespace
 
@@ -84,12 +83,15 @@ OPERATIONS_DECODE_RESULT = {
 SCHEDULE_CORRELATION_ID_PLACEHOLDER = "__scheduled_workflow__"
 
 
-def _run_async(coro: Any) -> Any:
+_T = TypeVar("_T")
+
+
+def _run_async(coro: Coroutine[Any, Any, _T]) -> _T:
     """Run an async coroutine in a sync context."""
     try:
         asyncio.get_running_loop()
         with concurrent.futures.ThreadPoolExecutor() as pool:
-            future = pool.submit(asyncio.run, coro)
+            future: concurrent.futures.Future[_T] = pool.submit(asyncio.run, coro)
             return future.result()
     except RuntimeError:
         return asyncio.run(coro)
