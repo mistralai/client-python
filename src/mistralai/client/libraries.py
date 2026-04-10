@@ -37,6 +37,8 @@ class Libraries(BaseSDK):
         *,
         page_size: Optional[int] = 100,
         page: Optional[int] = 0,
+        search: OptionalNullable[str] = UNSET,
+        filter_owned_by_me: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -48,6 +50,8 @@ class Libraries(BaseSDK):
 
         :param page_size:
         :param page:
+        :param search: Case-insensitive search on the library name.
+        :param filter_owned_by_me: Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -69,6 +73,8 @@ class Libraries(BaseSDK):
         request = models.LibrariesListV1Request(
             page_size=page_size,
             page=page,
+            search=search,
+            filter_owned_by_me=filter_owned_by_me,
         )
 
         req = self._build_request(
@@ -133,6 +139,8 @@ class Libraries(BaseSDK):
         *,
         page_size: Optional[int] = 100,
         page: Optional[int] = 0,
+        search: OptionalNullable[str] = UNSET,
+        filter_owned_by_me: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -144,6 +152,8 @@ class Libraries(BaseSDK):
 
         :param page_size:
         :param page:
+        :param search: Case-insensitive search on the library name.
+        :param filter_owned_by_me: Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -165,6 +175,8 @@ class Libraries(BaseSDK):
         request = models.LibrariesListV1Request(
             page_size=page_size,
             page=page,
+            search=search,
+            filter_owned_by_me=filter_owned_by_me,
         )
 
         req = self._build_request_async(

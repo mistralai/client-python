@@ -12,7 +12,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Union
+from typing import Any, Dict, List, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -30,6 +30,10 @@ class DeltaMessageTypedDict(TypedDict):
     role: NotRequired[Nullable[str]]
     content: NotRequired[Nullable[DeltaMessageContentTypedDict]]
     tool_calls: NotRequired[Nullable[List[ToolCallTypedDict]]]
+    tool_call_id: NotRequired[Nullable[str]]
+    index: NotRequired[Nullable[int]]
+    r"""If the completion returns multiple messages, this is to specify which message this delta is for."""
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class DeltaMessage(BaseModel):
@@ -39,10 +43,21 @@ class DeltaMessage(BaseModel):
 
     tool_calls: OptionalNullable[List[ToolCall]] = UNSET
 
+    tool_call_id: OptionalNullable[str] = UNSET
+
+    index: OptionalNullable[int] = UNSET
+    r"""If the completion returns multiple messages, this is to specify which message this delta is for."""
+
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["role", "content", "tool_calls"])
-        nullable_fields = set(["role", "content", "tool_calls"])
+        optional_fields = set(
+            ["role", "content", "tool_calls", "tool_call_id", "index", "metadata"]
+        )
+        nullable_fields = set(
+            ["role", "content", "tool_calls", "tool_call_id", "index", "metadata"]
+        )
         serialized = handler(self)
         m = {}
 
