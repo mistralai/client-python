@@ -2,7 +2,13 @@
 # @generated-id: 2d9b1b4deeb0
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
 from typing import Optional
@@ -12,6 +18,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class LibrariesListV1RequestTypedDict(TypedDict):
     page_size: NotRequired[int]
     page: NotRequired[int]
+    search: NotRequired[Nullable[str]]
+    r"""Case-insensitive search on the library name."""
+    filter_owned_by_me: NotRequired[Nullable[bool]]
+    r"""Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter."""
 
 
 class LibrariesListV1Request(BaseModel):
@@ -25,18 +35,39 @@ class LibrariesListV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 0
 
+    search: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Case-insensitive search on the library name."""
+
+    filter_owned_by_me: Annotated[
+        OptionalNullable[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["page_size", "page"])
+        optional_fields = set(["page_size", "page", "search", "filter_owned_by_me"])
+        nullable_fields = set(["search", "filter_owned_by_me"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
