@@ -62,7 +62,7 @@ async def get_blob_storage(
 
     if blob_storage_config.storage_provider == StorageProvider.AZURE:
         try:
-            from ._azure import AzureBlobStorage
+            from ._azure import AzureBlobStorage  # type: ignore[import-untyped]
         except ImportError as e:
             raise ImportError(
                 "Azure Blob Storage support requires azure-storage-blob. "
@@ -90,7 +90,7 @@ async def get_blob_storage(
 
     elif blob_storage_config.storage_provider == StorageProvider.GCS:
         try:
-            from ._gcs import GCSBlobStorage
+            from ._gcs import GCSBlobStorage  # type: ignore[import-untyped]
         except ImportError as e:
             raise ImportError(
                 "Google Cloud Storage support requires gcloud-aio-storage. "
@@ -108,7 +108,7 @@ async def get_blob_storage(
 
     elif blob_storage_config.storage_provider == StorageProvider.S3:
         try:
-            from ._s3 import S3BlobStorage
+            from ._s3 import S3BlobStorage  # type: ignore[import-untyped]
         except ImportError as e:
             raise ImportError(
                 "AWS S3 support requires aioboto3. "
