@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, overload
+import uuid
+from typing import TYPE_CHECKING
 
 from .config import WorkflowEncodingConfig
 
@@ -6,26 +7,23 @@ if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
 
 
-@overload
-async def configure_workflow_encoding(
-    config: WorkflowEncodingConfig,
-    *,
-    namespace: str,
-) -> None: ...
+def generate_two_part_id(
+    primary_seed: str | None = None, secondary_seed: str | None = None
+) -> str:
+    """Generates a unique ID composed of two parts derived from seeds."""
+    if not primary_seed:
+        primary_seed = uuid.uuid4().hex
+    if not secondary_seed:
+        secondary_seed = uuid.uuid4().hex
+    first_part = uuid.uuid5(uuid.NAMESPACE_DNS, primary_seed).hex
+    second_part = uuid.uuid5(uuid.NAMESPACE_DNS, secondary_seed).hex
+    return f"{first_part}{second_part}".replace("-", "")
 
 
-@overload
 async def configure_workflow_encoding(
     config: WorkflowEncodingConfig,
     *,
     client: "Mistral",
-) -> None: ...
-
-
-async def configure_workflow_encoding(
-    config: WorkflowEncodingConfig,
-    *,
-    client: "Mistral | None" = None,
     namespace: str | None = None,
 ) -> None:
     """Configure workflow payload encoding for the SDK.
@@ -34,7 +32,7 @@ async def configure_workflow_encoding(
 
     Args:
         config: The workflow encoding configuration.
-        client: The Mistral client instance. Required if namespace is not provided.
+        client: The Mistral client instance.
         namespace: The workflow namespace. If not provided, it will be fetched
             from the scheduler using the client.
     """
@@ -43,9 +41,7 @@ async def configure_workflow_encoding(
     )
 
     if not namespace:
-        if not client:
-            raise ValueError("client is required when namespace is not provided")
         from mistralai.extra.workflows.helpers import get_scheduler_namespace
 
         namespace = await get_scheduler_namespace(client)
-    _configure_workflow_encoding(config, namespace)
+    _configure_workflow_encoding(config, namespace, client.sdk_configuration)

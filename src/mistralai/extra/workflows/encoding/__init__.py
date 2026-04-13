@@ -8,7 +8,7 @@ from .config import (
 )
 from .models import EncryptedStrField
 from .payload_encoder import PayloadEncoder
-from .helpers import configure_workflow_encoding
+from .helpers import configure_workflow_encoding, generate_two_part_id
 
 __all__ = [
     "WorkflowEncodingConfig",
@@ -20,4 +20,5 @@ __all__ = [
     "EncryptedStrField",
     "PayloadEncoder",
     "configure_workflow_encoding",
+    "generate_two_part_id",
 ]

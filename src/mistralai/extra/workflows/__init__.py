@@ -7,6 +7,7 @@ from .encoding import (
     StorageProvider,
     EncryptedStrField,
     configure_workflow_encoding,
+    generate_two_part_id,
 )
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "StorageProvider",
     "EncryptedStrField",
     "configure_workflow_encoding",
+    "generate_two_part_id",
 ]

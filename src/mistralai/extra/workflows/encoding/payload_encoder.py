@@ -30,8 +30,7 @@ from mistralai.extra.workflows.encoding.config import (
     PayloadOffloadingConfig,
     WorkflowEncodingConfig,
 )
-from .storage.blob_storage import get_blob_storage
-from .storage.blob_storage_impl import BlobNotFoundError
+from .storage.blob_storage import get_blob_storage, BlobNotFoundError
 from mistralai.extra.workflows.encoding.models import (
     EncodedPayloadOptions,
     EncryptableFieldTypes,
@@ -60,8 +59,8 @@ class PayloadEncoder:
     BLOB_STORAGE_KEY_PREFIX = "temporal-payload"
     _NONCE_SIZE = 12
 
-    offloading_config: PayloadOffloadingConfig
-    encryption_config: PayloadEncryptionConfig
+    offloading_config: Optional[PayloadOffloadingConfig]
+    encryption_config: Optional[PayloadEncryptionConfig]
 
     encryptor_main: Optional[AESGCM] = None
     encryptor_secondary: Optional[AESGCM] = None
@@ -152,7 +151,7 @@ class PayloadEncoder:
     async def _handle_offloading(
         self, data: bytes, context: Optional[WorkflowContext]
     ) -> tuple[bytes, bool]:
-        if self.offloading_config.storage_config is None:
+        if self.offloading_config is None or self.offloading_config.storage_config is None:
             raise WorkflowPayloadOffloadingException(
                 "You must configure payload offloading storage"
             )

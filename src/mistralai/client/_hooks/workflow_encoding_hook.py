@@ -1,10 +1,10 @@
 import asyncio
-import concurrent.futures
 import json
 import logging
 import re
-from typing import Any, Coroutine, Dict, Optional, TypeVar, Union
 import uuid
+import weakref
+from typing import Any, Coroutine, Dict, Optional, TypeVar, Union
 
 import httpx
 
@@ -14,42 +14,61 @@ from .types import (
     BeforeRequestContext,
     BeforeRequestHook,
 )
+from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.extra.workflows.encoding.config import WorkflowEncodingConfig
+from mistralai.extra.workflows.encoding.helpers import generate_two_part_id
 from mistralai.extra.workflows.encoding.models import WorkflowContext
 from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
 
 logger = logging.getLogger(__name__)
 
+# Attribute name for storing config ID on SDKConfiguration
+_ENCODING_CONFIG_ID_ATTR = "_workflow_encoding_config_id"
+
 
 class _WorkflowEncodingConfig:
-    def __init__(self) -> None:
-        self.payload_encoder: Optional[PayloadEncoder] = None
-        self.namespace: Optional[str] = None
+    def __init__(
+        self, payload_encoder: PayloadEncoder, namespace: str
+    ) -> None:
+        self.payload_encoder = payload_encoder
+        self.namespace = namespace
 
 
-_workflow_config = _WorkflowEncodingConfig()
+# Per-client configs keyed by UUID
+_workflow_configs: Dict[str, _WorkflowEncodingConfig] = {}
+
+
+def _cleanup_config(config_id: str) -> None:
+    """Remove config when client is garbage collected."""
+    _workflow_configs.pop(config_id, None)
 
 
 def configure_workflow_encoding(
     config: WorkflowEncodingConfig,
     namespace: str,
+    sdk_config: SDKConfiguration,
 ) -> None:
-    """Configure workflow payload encoding by creating a PayloadEncoder.
-    """
-    _workflow_config.payload_encoder = PayloadEncoder(
-        encoding_config=config,
+    """Configure workflow payload encoding for a specific client."""
+    # Get or create config ID for this client
+    config_id = getattr(sdk_config, _ENCODING_CONFIG_ID_ATTR, None)
+    if config_id is None:
+        config_id = str(uuid.uuid4())
+        setattr(sdk_config, _ENCODING_CONFIG_ID_ATTR, config_id)
+        # Register cleanup when SDKConfiguration is garbage collected
+        weakref.finalize(sdk_config, _cleanup_config, config_id)
+
+    _workflow_configs[config_id] = _WorkflowEncodingConfig(
+        payload_encoder=PayloadEncoder(encoding_config=config),
+        namespace=namespace,
     )
-    _workflow_config.namespace = namespace
 
 
-def get_workflow_payload_encoder() -> Optional[PayloadEncoder]:
-    """Get the current workflow payload encoder."""
-    return _workflow_config.payload_encoder
-
-
-def get_workflow_namespace() -> Optional[str]:
-    """Get the configured workflow namespace."""
-    return _workflow_config.namespace
+def _get_encoding_config(sdk_config: SDKConfiguration) -> Optional[_WorkflowEncodingConfig]:
+    """Get workflow encoding config for a client."""
+    config_id = getattr(sdk_config, _ENCODING_CONFIG_ID_ATTR, None)
+    if config_id is None:
+        return None
+    return _workflow_configs.get(config_id)
 
 
 EXECUTE_WORKFLOW_OPERATION_ID = (
@@ -90,10 +109,13 @@ def _run_async(coro: Coroutine[Any, Any, _T]) -> _T:
     """Run an async coroutine in a sync context."""
     try:
         asyncio.get_running_loop()
+        # Already in async context - run in a separate thread with new loop
+        import concurrent.futures
         with concurrent.futures.ThreadPoolExecutor() as pool:
             future: concurrent.futures.Future[_T] = pool.submit(asyncio.run, coro)
             return future.result()
     except RuntimeError:
+        # No running loop - safe to use asyncio.run
         return asyncio.run(coro)
 
 
@@ -121,17 +143,6 @@ def _extract_execution_id_from_body(body: Dict[str, Any]) -> Optional[str]:
     return body.get("execution_id")
 
 
-def _generate_two_part_id(
-    primary_seed: str | None, secondary_seed: str | None = None
-) -> str:
-    """Generates a unique ID composed of two parts derived from seeds."""
-    if not primary_seed:
-        primary_seed = uuid.uuid4().hex
-    if not secondary_seed:
-        secondary_seed = uuid.uuid4().hex
-    first_part = uuid.uuid5(uuid.NAMESPACE_DNS, primary_seed).hex
-    second_part = uuid.uuid5(uuid.NAMESPACE_DNS, secondary_seed).hex
-    return f"{first_part}{second_part}".replace("-", "")
 
 
 class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
@@ -150,9 +161,8 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         request: httpx.Request,
     ) -> Union[httpx.Request, Exception]:
         """Intercept requests to encode workflow input payloads."""
-        encoder = get_workflow_payload_encoder()
-        namespace = get_workflow_namespace()
-        if not encoder or not namespace:
+        encoding_config = _get_encoding_config(hook_ctx.config)
+        if not encoding_config:
             return request
 
         if hook_ctx.operation_id not in OPERATIONS_ENCODE_INPUT:
@@ -174,7 +184,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
 
             if not execution_id and hook_ctx.operation_id in EXECUTE_OPERATIONS:
                 seed = _extract_workflow_identifier_from_execute_url(str(request.url))
-                execution_id = _generate_two_part_id(seed)
+                execution_id = generate_two_part_id(seed)
                 body["execution_id"] = execution_id
 
             if (
@@ -189,7 +199,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 )
 
             context = WorkflowContext(
-                namespace=namespace,
+                namespace=encoding_config.namespace,
                 execution_id=execution_id,
             )
 
@@ -198,7 +208,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
             )
 
             encoded_input = _run_async(
-                encoder.encode_network_input(input_data, context)
+                encoding_config.payload_encoder.encode_network_input(input_data, context)
             )
 
             # Update body based on operation type:
@@ -232,8 +242,8 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         response: httpx.Response,
     ) -> Union[httpx.Response, Exception]:
         """Intercept responses to decode workflow result payloads."""
-        encoder = get_workflow_payload_encoder()
-        if not encoder:
+        encoding_config = _get_encoding_config(hook_ctx.config)
+        if not encoding_config:
             return response
 
         if hook_ctx.operation_id not in OPERATIONS_DECODE_RESULT:
@@ -246,14 +256,14 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         try:
             body = json.loads(response.content)
             result = body.get("result")
-            if result is None or not encoder.check_is_payload_encoded(result):
+            if result is None or not encoding_config.payload_encoder.check_is_payload_encoded(result):
                 return response
 
             logger.debug(
                 "WorkflowEncodingHook: Decoding result for %s", hook_ctx.operation_id
             )
 
-            decoded_result = _run_async(encoder.decode_network_result(result))
+            decoded_result = _run_async(encoding_config.payload_encoder.decode_network_result(result))
 
             body["result"] = decoded_result
             new_content = json.dumps(body).encode("utf-8")
