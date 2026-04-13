@@ -1,4 +1,5 @@
 import asyncio
+import concurrent.futures
 import json
 import logging
 import re
@@ -110,7 +111,6 @@ def _run_async(coro: Coroutine[Any, Any, _T]) -> _T:
     try:
         asyncio.get_running_loop()
         # Already in async context - run in a separate thread with new loop
-        import concurrent.futures
         with concurrent.futures.ThreadPoolExecutor() as pool:
             future: concurrent.futures.Future[_T] = pool.submit(asyncio.run, coro)
             return future.result()
