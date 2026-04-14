@@ -27,7 +27,7 @@ echo "-> running on examples"
 uv run mypy examples/ \
   --exclude 'audio/' || ERRORS=1
 echo "-> running on extra"
-uv run mypy src/mistralai/extra/ || ERRORS=1
+uv run --all-extras mypy src/mistralai/extra/ || ERRORS=1
 echo "-> running on hooks"
 uv run mypy src/mistralai/client/_hooks/ \
   --exclude __init__.py --exclude sdkhooks.py --exclude types.py || ERRORS=1
@@ -48,7 +48,7 @@ echo "Running pyright..."
 # TODO: Uncomment once the examples are fixed
 # uv run pyright examples/ || ERRORS=1
 echo "-> running on extra"
-uv run pyright src/mistralai/extra/ || ERRORS=1
+uv run --all-extras pyright src/mistralai/extra/ || ERRORS=1
 echo "-> running on hooks"
 uv run pyright src/mistralai/client/_hooks/ || ERRORS=1
 echo "-> running on azure hooks"
