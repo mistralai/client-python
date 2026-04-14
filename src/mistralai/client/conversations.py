@@ -289,6 +289,7 @@ class Conversations(BaseSDK):
         async def run_generator() -> AsyncGenerator[
             Union[RunResultEvents, RunResult], None
         ]:
+            nonlocal pending_tool_confirmations
             current_entries = input_entries
             while True:
                 received_event_tracker: defaultdict[
