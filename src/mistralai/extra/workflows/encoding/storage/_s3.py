@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any, cast
 
-import aioboto3  # type: ignore[import-not-found,import-untyped]
-from botocore.exceptions import ClientError  # type: ignore[import-not-found,import-untyped]
+import aioboto3  # type: ignore[import-untyped]
+from botocore.exceptions import ClientError  # type: ignore[import-untyped]
 
 from .blob_storage import BlobNotFoundError, BlobStorage
 

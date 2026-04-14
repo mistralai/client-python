@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any, cast
 
-import aiohttp  # type: ignore[import-not-found,import-untyped]
-from gcloud.aio.storage import Storage  # type: ignore[import-not-found,import-untyped]
+import aiohttp
+from gcloud.aio.storage import Storage
 
 from .blob_storage import BlobNotFoundError, BlobStorage
 

@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from typing import Any, cast
 
-from azure.core.exceptions import ResourceNotFoundError  # type: ignore[import-not-found,import-untyped]
-from azure.storage.blob.aio import BlobServiceClient  # type: ignore[import-not-found,import-untyped]
-
+from azure.core.exceptions import ResourceNotFoundError
+from azure.storage.blob.aio import BlobServiceClient
 from .blob_storage import BlobNotFoundError, BlobStorage
 
 
