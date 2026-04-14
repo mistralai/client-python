@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.761.1
   generationVersion: 2.879.6
-  releaseVersion: 2.3.2
-  configChecksum: c93d1019e9a3a1a37a0c7d7bf48aa381
+  releaseVersion: 2.3.6
+  configChecksum: 95068806fbe0942ab6561ca540458fc9
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 87bc3ff0-98ad-4b9d-9b68-f8eb30116ac5
-  pristine_commit_hash: 8b68490f4bb48a091c4b0e16a738af9e7ff83490
-  pristine_tree_hash: b87817d13d249439af787f92e305f67aeaa2ef27
+  generation_id: 6d0c183b-fffd-4345-bc10-c73b69c91605
+  pristine_commit_hash: 731e3f6f8d8451435e03d69da2dbe80bb13412f6
+  pristine_tree_hash: df3f3821a4a083ea62b654833f022a2df2c149ac
 features:
   python:
     acceptHeaders: 3.0.0
@@ -61,7 +61,6 @@ trackedFiles:
     id: 89aa447020cd
     last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
     pristine_git_object: 8d79f0abb72526f1fb34a4c03e5bba612c6ba2ae
-    deleted: true
   USAGE.md:
     id: 3aed33ce6e6f
     last_write_checksum: sha1:d172deb3ee1630f16b279de22aec1f8f68d7565f
@@ -3228,8 +3227,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:dca0e0738b2373b2584935344961ec24f471cfc3
-    pristine_git_object: aa5d0670adfd0d8f55285e170ea83e032364276f
+    last_write_checksum: sha1:2d58e5f157ee7ec7ba8a5bfc2726bcb56555d3b6
+    pristine_git_object: 0e124f2202191d3a222b9a2abe6a91ee036adc01
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:0c417e7a0bf9dfc523dbabee816b73d7a4d52f1d
@@ -3284,8 +3283,8 @@ trackedFiles:
     pristine_git_object: fc9d6319b4d321e21a7b7d73515f9d13b9ac8a2a
   src/mistralai/client/conversations.py:
     id: 40692a878064
-    last_write_checksum: sha1:3e52c3d1441c9f276ff03bd6ed6fd74b6752ab1a
-    pristine_git_object: 1e48d6c421cc6428c247d0643df3324f866be4e0
+    last_write_checksum: sha1:44b01585b9cbca3c9696c40b817529e76d6e7c32
+    pristine_git_object: a9887a9a95308cad10cbaa2593b8552159cb0dca
   src/mistralai/client/datasets.py:
     id: e5a6ae2a2d85
     last_write_checksum: sha1:52f8dc6df7430622882b02e8d01d8da02e4e998f
@@ -8312,57 +8311,6 @@ examples:
           application/json: {"scheduler_url": "https://closed-passport.info/", "namespace": "<value>", "tls": false}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `mistral.chat.complete()`:  `response.choices[].messages[]` **Changed** (Breaking ⚠️)
-  * `mistral.agents.complete()`:  `response.choices[].messages[]` **Changed** (Breaking ⚠️)
-  * `mistral.fim.complete()`:  `response.choices[].messages[]` **Changed** (Breaking ⚠️)
-  * `mistral.beta.observability.datasets.delete()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.delete()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.chat_completion_events.judge()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.chat_completion_events.fields.list()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.chat_completion_events.fields.fetch_options()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.chat_completion_events.fields.fetch_option_counts()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.create()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.list()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.fetch()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.delete()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.update()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.judges.judge_conversation()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.create()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.list()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.fetch()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.list_records()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.fetch_status()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.campaigns.list_events()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.create()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.list()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.fetch()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.libraries.list()`:  `request` **Changed**
-  * `mistral.beta.observability.chat_completion_events.fetch_similar_events()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.update()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.update_properties()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.import_from_campaign()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.import_from_explorer()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.import_from_file()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.import_from_playground()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.import_from_dataset_records()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.export_to_jsonl()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.fetch_task()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.list_tasks()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.fetch()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.delete()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.bulk_delete()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.judge()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.records.update_payload()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.datasets.create_record()`:  `error.detail.error_code` **Changed**
-  * `mistral.beta.observability.chat_completion_events.fetch()`:  `error.detail.error_code` **Changed**
-  * `mistral.chat.stream()`:  `response.[].data.choices[].delta` **Changed**
-  * `mistral.beta.observability.chat_completion_events.search_ids()`:  `error.detail.error_code` **Changed**
-  * `mistral.fim.stream()`:  `response.[].data.choices[].delta` **Changed**
-  * `mistral.beta.observability.chat_completion_events.search()`:  `error.detail.error_code` **Changed**
-  * `mistral.agents.stream()`:  `response.[].data.choices[].delta` **Changed**
-  * `mistral.workflows.deployments.get_deployment()`:  `response.workers[].is_active` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
