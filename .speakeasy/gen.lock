@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.761.1
   generationVersion: 2.879.6
-  releaseVersion: 2.4.0rc2
-  configChecksum: 822435916f81748b2fc9580eb43029ee
+  releaseVersion: 2.4.0
+  configChecksum: 106560b01230037a615e45a3ba82c612
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 28d59996-4b5a-4d01-9a4c-2f017c2f02d2
-  pristine_commit_hash: 71f89c2b6ffddde030e27860f3138de5956489a5
-  pristine_tree_hash: 9a2ffa6a1c37abcafb0dd112c54454601e8befd4
+  generation_id: 02d6816b-7e5c-4764-b044-5ce0c3d87ede
+  pristine_commit_hash: bcb4cb005b45b822f3b3d8b50ccd4e507683f167
+  pristine_tree_hash: 47ff262921294673a501861304400d77fabb4d3d
 features:
   python:
     acceptHeaders: 3.0.0
@@ -3228,8 +3228,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:212442f71ec672052f966583b23b124b225607eb
-    pristine_git_object: 6796d39df27a7d7f8be41dd3c613e9c95aa2e717
+    last_write_checksum: sha1:62503452c03fc40a489df46113bd64d8fb407c56
+    pristine_git_object: aa3edd4f8d0b89c2c9890781320b44a52340e511
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:0c417e7a0bf9dfc523dbabee816b73d7a4d52f1d
