@@ -197,6 +197,9 @@ class TestOtelTracing(unittest.TestCase):
         self.assertNotIsInstance(hooked_request, Exception)
         assert isinstance(hooked_request, httpx.Request)
 
+        # Link response to request, as httpx.Client.send() does in real usage.
+        response.request = hooked_request
+
         result = hook.after_success(AfterSuccessContext(hook_ctx), response)
         self.assertNotIsInstance(result, Exception)
 
@@ -228,6 +231,9 @@ class TestOtelTracing(unittest.TestCase):
         hooked_request = hook.before_request(BeforeRequestContext(hook_ctx), request)
         self.assertNotIsInstance(hooked_request, Exception)
         assert isinstance(hooked_request, httpx.Request)
+
+        # Link response to request, as httpx.Client.send() does in real usage.
+        response.request = hooked_request
 
         result = hook.after_error(AfterErrorContext(hook_ctx), response, error)
         self.assertNotIsInstance(result, Exception)
