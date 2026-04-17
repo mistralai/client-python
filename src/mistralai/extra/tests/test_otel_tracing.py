@@ -142,8 +142,8 @@ def _make_streaming_httpx_response(sse_body: bytes) -> httpx.Response:
 
 
 def _parse_json_list(span_attr):
-    """Parse a span attribute containing a list of JSON-encoded strings."""
-    return [json.loads(m) for m in span_attr]
+    """Parse a span attribute containing a JSON-encoded array string."""
+    return json.loads(span_attr)
 
 
 # -- Tests ---------------------------------------------------------------------

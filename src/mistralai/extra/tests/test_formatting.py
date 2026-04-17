@@ -1,24 +1,18 @@
-"""Unit tests for the OTEL serialization helpers.
+"""Unit tests for the OTEL formatting helpers.
 
 Each test covers a single function with both happy-path and edge-case inputs.
-The functions are pure (dict → str/list), so no OTEL setup is needed.
+The functions are pure (dict -> dict/list), so no OTEL setup is needed.
 """
 
-import json
 import unittest
 
-from mistralai.extra.observability.serialization import (
+from mistralai.extra.observability.formatting import (
     _content_to_parts,
     _tool_calls_to_parts,
-    serialize_input_message,
-    serialize_output_message,
-    serialize_tool_definition,
+    format_input_message,
+    format_output_message,
+    format_tool_definition,
 )
-
-
-def _parse(json_str: str):
-    """Shorthand: parse a JSON string returned by a serialize_* function."""
-    return json.loads(json_str)
 
 
 class TestContentToParts(unittest.TestCase):
@@ -98,7 +92,7 @@ class TestContentToParts(unittest.TestCase):
         )
 
     def test_thinking_chunk_missing_thinking_field(self):
-        """Empty string default → str("") fallback."""
+        """Empty string default -> str("") fallback."""
         chunk = {"type": "thinking"}
         self.assertEqual(
             _content_to_parts([chunk]),
@@ -195,7 +189,7 @@ class TestToolCallsToParts(unittest.TestCase):
         )
 
     def test_missing_function(self):
-        """No function key → empty name."""
+        """No function key -> empty name."""
         tc = {"id": "1"}
         self.assertListEqual(
             _tool_calls_to_parts([tc]),
@@ -210,11 +204,11 @@ class TestToolCallsToParts(unittest.TestCase):
         )
 
 
-class TestSerializeInputMessage(unittest.TestCase):
+class TestFormatInputMessage(unittest.TestCase):
     # -- Happy paths (role-based messages) ------------------------------------
 
     def test_user_message(self):
-        result = _parse(serialize_input_message({"role": "user", "content": "hi"}))
+        result = format_input_message({"role": "user", "content": "hi"})
         self.assertDictEqual(
             result,
             {
@@ -224,9 +218,7 @@ class TestSerializeInputMessage(unittest.TestCase):
         )
 
     def test_system_message(self):
-        result = _parse(
-            serialize_input_message({"role": "system", "content": "be helpful"})
-        )
+        result = format_input_message({"role": "system", "content": "be helpful"})
         self.assertDictEqual(
             result,
             {
@@ -241,7 +233,7 @@ class TestSerializeInputMessage(unittest.TestCase):
             "content": "",
             "tool_calls": [{"id": "tc1", "function": {"name": "f", "arguments": "{}"}}],
         }
-        result = _parse(serialize_input_message(msg))
+        result = format_input_message(msg)
         self.assertEqual(result["role"], "assistant")
         # text part from content + tool_call part
         self.assertListEqual(
@@ -251,7 +243,7 @@ class TestSerializeInputMessage(unittest.TestCase):
 
     def test_tool_message(self):
         msg = {"role": "tool", "content": "22C sunny", "tool_call_id": "tc1"}
-        result = _parse(serialize_input_message(msg))
+        result = format_input_message(msg)
         self.assertDictEqual(
             result,
             {
@@ -264,7 +256,7 @@ class TestSerializeInputMessage(unittest.TestCase):
 
     def test_tool_message_without_tool_call_id(self):
         msg = {"role": "tool", "content": "result"}
-        result = _parse(serialize_input_message(msg))
+        result = format_input_message(msg)
         self.assertNotIn("id", result["parts"][0])
 
     # -- Conversation entry: function.result ----------------------------------
@@ -275,7 +267,7 @@ class TestSerializeInputMessage(unittest.TestCase):
             "result": '{"status": "ok"}',
             "tool_call_id": "tc1",
         }
-        result = _parse(serialize_input_message(msg))
+        result = format_input_message(msg)
         self.assertDictEqual(
             result,
             {
@@ -292,13 +284,13 @@ class TestSerializeInputMessage(unittest.TestCase):
 
     def test_function_result_entry_without_tool_call_id(self):
         msg = {"type": "function.result", "result": "data"}
-        result = _parse(serialize_input_message(msg))
+        result = format_input_message(msg)
         self.assertNotIn("id", result["parts"][0])
 
     # -- Edge cases -----------------------------------------------------------
 
     def test_missing_role_defaults_to_unknown(self):
-        result = _parse(serialize_input_message({"content": "orphan"}))
+        result = format_input_message({"content": "orphan"})
         self.assertDictEqual(
             result,
             {
@@ -308,17 +300,17 @@ class TestSerializeInputMessage(unittest.TestCase):
         )
 
     def test_no_content_no_tool_calls(self):
-        result = _parse(serialize_input_message({"role": "user"}))
+        result = format_input_message({"role": "user"})
         self.assertDictEqual(result, {"role": "user", "parts": []})
 
 
-class TestSerializeOutputMessage(unittest.TestCase):
+class TestFormatOutputMessage(unittest.TestCase):
     def test_simple_assistant_response(self):
         choice = {
             "message": {"role": "assistant", "content": "hello"},
             "finish_reason": "stop",
         }
-        result = _parse(serialize_output_message(choice))
+        result = format_output_message(choice)
         self.assertDictEqual(
             result,
             {
@@ -339,7 +331,7 @@ class TestSerializeOutputMessage(unittest.TestCase):
             },
             "finish_reason": "tool_calls",
         }
-        result = _parse(serialize_output_message(choice))
+        result = format_output_message(choice)
         self.assertEqual(result["finish_reason"], "tool_calls")
         self.assertListEqual(
             [p["type"] for p in result["parts"]],
@@ -347,7 +339,7 @@ class TestSerializeOutputMessage(unittest.TestCase):
         )
 
     def test_missing_message(self):
-        result = _parse(serialize_output_message({}))
+        result = format_output_message({})
         self.assertDictEqual(
             result,
             {
@@ -358,7 +350,7 @@ class TestSerializeOutputMessage(unittest.TestCase):
         )
 
     def test_message_is_none(self):
-        result = _parse(serialize_output_message({"message": None}))
+        result = format_output_message({"message": None})
         self.assertDictEqual(
             result,
             {
@@ -370,7 +362,7 @@ class TestSerializeOutputMessage(unittest.TestCase):
 
     def test_defaults_role_to_assistant(self):
         choice = {"message": {"content": "hi"}, "finish_reason": "stop"}
-        result = _parse(serialize_output_message(choice))
+        result = format_output_message(choice)
         self.assertDictEqual(
             result,
             {
@@ -381,7 +373,7 @@ class TestSerializeOutputMessage(unittest.TestCase):
         )
 
 
-class TestSerializeToolDefinition(unittest.TestCase):
+class TestFormatToolDefinition(unittest.TestCase):
     def test_full_definition(self):
         tool = {
             "type": "function",
@@ -391,11 +383,11 @@ class TestSerializeToolDefinition(unittest.TestCase):
                 "parameters": {"type": "object", "properties": {}},
             },
         }
-        serialized = serialize_tool_definition(tool)
-        self.assertIsNotNone(serialized)
-        assert serialized is not None
+        result = format_tool_definition(tool)
+        self.assertIsNotNone(result)
+        assert result is not None
         self.assertDictEqual(
-            _parse(serialized),
+            result,
             {
                 "type": "function",
                 "name": "get_weather",
@@ -407,11 +399,11 @@ class TestSerializeToolDefinition(unittest.TestCase):
     def test_minimal_definition(self):
         """Only name, no description or parameters."""
         tool = {"function": {"name": "f"}}
-        serialized = serialize_tool_definition(tool)
-        self.assertIsNotNone(serialized)
-        assert serialized is not None
+        result = format_tool_definition(tool)
+        self.assertIsNotNone(result)
+        assert result is not None
         self.assertDictEqual(
-            _parse(serialized),
+            result,
             {
                 "type": "function",
                 "name": "f",
@@ -419,23 +411,23 @@ class TestSerializeToolDefinition(unittest.TestCase):
         )
 
     def test_missing_function_returns_none(self):
-        self.assertIsNone(serialize_tool_definition({"type": "function"}))
+        self.assertIsNone(format_tool_definition({"type": "function"}))
 
     def test_empty_function_returns_none(self):
-        self.assertIsNone(serialize_tool_definition({"function": {}}))
+        self.assertIsNone(format_tool_definition({"function": {}}))
 
     def test_missing_name_returns_none(self):
         self.assertIsNone(
-            serialize_tool_definition({"function": {"description": "no name"}})
+            format_tool_definition({"function": {"description": "no name"}})
         )
 
     def test_custom_type_preserved(self):
         tool = {"type": "custom_tool", "function": {"name": "f"}}
-        serialized = serialize_tool_definition(tool)
-        self.assertIsNotNone(serialized)
-        assert serialized is not None
+        result = format_tool_definition(tool)
+        self.assertIsNotNone(result)
+        assert result is not None
         self.assertDictEqual(
-            _parse(serialized),
+            result,
             {
                 "type": "custom_tool",
                 "name": "f",
