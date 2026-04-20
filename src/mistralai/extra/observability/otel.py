@@ -23,10 +23,10 @@ from opentelemetry import propagate, trace
 from opentelemetry.baggage import get_baggage
 from opentelemetry.trace import Span, Status, StatusCode, Tracer, set_span_in_context
 
-from .serialization import (
-    serialize_input_message,
-    serialize_output_message,
-    serialize_tool_definition,
+from .formatting import (
+    format_input_message,
+    format_output_message,
+    format_tool_definition,
 )
 from .streaming import accumulate_chunks_to_response_dict, parse_sse_chunks
 
@@ -185,18 +185,20 @@ def _enrich_request_genai_attrs(
     # Chat/agent completion API uses messages in request body; conversation API uses inputs
     input_messages = request_body.get("messages") or request_body.get("inputs")
     if isinstance(input_messages, str):
-        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = [
-            serialize_input_message({"role": "user", "content": input_messages})
-        ]
+        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = json.dumps(
+            [format_input_message({"role": "user", "content": input_messages})]
+        )
     elif isinstance(input_messages, list):
-        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = list(
-            map(serialize_input_message, input_messages)
+        attributes[gen_ai_attributes.GEN_AI_INPUT_MESSAGES] = json.dumps(
+            list(map(format_input_message, input_messages))
         )
     # Tool definitions
     if tools := request_body.get("tools"):
-        attributes[gen_ai_attributes.GEN_AI_TOOL_DEFINITIONS] = list(
-            filter(None, map(serialize_tool_definition, tools))
-        )
+        formatted_tools = list(filter(None, map(format_tool_definition, tools)))
+        if formatted_tools:
+            attributes[gen_ai_attributes.GEN_AI_TOOL_DEFINITIONS] = json.dumps(
+                formatted_tools
+            )
     # TODO: For agent start conversation, add agent id and version attributes here ?
 
     set_available_attributes(span, attributes)
@@ -244,8 +246,8 @@ def _enrich_response_genai_attrs(
     if finish_reasons:
         attributes[gen_ai_attributes.GEN_AI_RESPONSE_FINISH_REASONS] = finish_reasons
     if choices:
-        attributes[gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES] = list(
-            map(serialize_output_message, choices)
+        attributes[gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES] = json.dumps(
+            list(map(format_output_message, choices))
         )
 
     # Usage
@@ -305,7 +307,8 @@ def _create_tool_execution_child_span(
         if isinstance(tool_arguments, str)
         else (json.dumps(tool_arguments) if tool_arguments else None),
         gen_ai_attributes.GEN_AI_TOOL_CALL_RESULT: tool_result
-        and json.dumps(tool_result),
+        if isinstance(tool_result, str)
+        else (json.dumps(tool_result) if tool_result else None),
         gen_ai_attributes.GEN_AI_TOOL_NAME: output.get("name"),
         gen_ai_attributes.GEN_AI_TOOL_TYPE: "extension",
     }
@@ -338,9 +341,9 @@ def _create_message_output_child_span(
         gen_ai_attributes.GEN_AI_RESPONSE_ID: output.get("id"),
         gen_ai_attributes.GEN_AI_AGENT_ID: output.get("agent_id"),
         gen_ai_attributes.GEN_AI_RESPONSE_MODEL: output.get("model"),
-        gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES: [
-            serialize_output_message(choice_wrapper)
-        ],
+        gen_ai_attributes.GEN_AI_OUTPUT_MESSAGES: json.dumps(
+            [format_output_message(choice_wrapper)]
+        ),
     }
     set_available_attributes(child_span, message_attributes)
     child_span.end(end_time=end_ns)

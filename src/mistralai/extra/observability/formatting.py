@@ -1,7 +1,9 @@
-"""Serialization helpers for converting Mistral API payloads to OTEL GenAI convention formats.
+"""Formatting helpers for converting Mistral API payloads to OTEL GenAI convention formats.
 
-These are pure functions with no OTEL dependencies — they transform dicts to JSON strings
+These are pure functions with no OTEL dependencies — they transform dicts to dicts
 matching the GenAI semantic convention schemas for input/output messages and tool definitions.
+The caller is responsible for the final JSON serialization (single json.dumps on the whole
+collection) before setting span attributes.
 
 Schemas:
 - Input messages: https://github.com/open-telemetry/semantic-conventions/blob/main/docs/gen-ai/gen-ai-input-messages.json
@@ -9,7 +11,6 @@ Schemas:
 - Tool definitions: https://github.com/Cirilla-zmh/semantic-conventions/blob/cc4d07e7e56b80e9aa5904a3d524c134699da37f/docs/gen-ai/gen-ai-tool-definitions.json
 """
 
-import json
 from typing import Any
 
 
@@ -72,8 +73,8 @@ def _tool_calls_to_parts(tool_calls: list[dict] | None) -> list[dict]:
     return parts
 
 
-def serialize_input_message(message: dict[str, Any]) -> str:
-    """Serialize a single input message per the OTEL GenAI convention.
+def format_input_message(message: dict[str, Any]) -> dict[str, Any]:
+    """Format a single input message per the OTEL GenAI convention.
 
     Schema: https://github.com/open-telemetry/semantic-conventions/blob/main/docs/gen-ai/gen-ai-input-messages.json
     ChatMessage: {role (required), parts (required), name?}
@@ -89,7 +90,7 @@ def serialize_input_message(message: dict[str, Any]) -> str:
         part: dict = {"type": "tool_call_response", "response": message.get("result")}
         if (tool_call_id := message.get("tool_call_id")) is not None:
             part["id"] = tool_call_id
-        return json.dumps({"role": "tool", "parts": [part]})
+        return {"role": "tool", "parts": [part]}
 
     # TODO: may need to handle other types for conversations (e.g. agent handoff)
 
@@ -109,11 +110,11 @@ def serialize_input_message(message: dict[str, Any]) -> str:
         parts.extend(_content_to_parts(message.get("content")))
         parts.extend(_tool_calls_to_parts(message.get("tool_calls")))
 
-    return json.dumps({"role": role, "parts": parts})
+    return {"role": role, "parts": parts}
 
 
-def serialize_output_message(choice: dict[str, Any]) -> str:
-    """Serialize a single output choice/message per the OTEL GenAI convention.
+def format_output_message(choice: dict[str, Any]) -> dict[str, Any]:
+    """Format a single output choice/message per the OTEL GenAI convention.
 
     Schema: https://github.com/open-telemetry/semantic-conventions/blob/main/docs/gen-ai/gen-ai-output-messages.json
     OutputMessage: {role (required), parts (required), finish_reason (required), name?}
@@ -123,16 +124,14 @@ def serialize_output_message(choice: dict[str, Any]) -> str:
     parts.extend(_content_to_parts(message.get("content")))
     parts.extend(_tool_calls_to_parts(message.get("tool_calls")))
 
-    return json.dumps(
-        {
-            "role": message.get("role", "assistant"),
-            "parts": parts,
-            "finish_reason": choice.get("finish_reason", ""),
-        }
-    )
+    return {
+        "role": message.get("role", "assistant"),
+        "parts": parts,
+        "finish_reason": choice.get("finish_reason", ""),
+    }
 
 
-def serialize_tool_definition(tool: dict[str, Any]) -> str | None:
+def format_tool_definition(tool: dict[str, Any]) -> dict[str, Any] | None:
     """Flatten a Mistral tool definition to the OTEL GenAI convention schema.
 
     Mistral format:  {"type": "function", "function": {"name": ..., "description": ..., "parameters": ...}}
@@ -148,9 +147,9 @@ def serialize_tool_definition(tool: dict[str, Any]) -> str | None:
     name = func.get("name")
     if not name:
         return None
-    serialized: dict = {"type": type, "name": name}
+    formatted: dict = {"type": type, "name": name}
     if (description := func.get("description")) is not None:
-        serialized["description"] = description
+        formatted["description"] = description
     if (parameters := func.get("parameters")) is not None:
-        serialized["parameters"] = parameters
-    return json.dumps(serialized)
+        formatted["parameters"] = parameters
+    return formatted
