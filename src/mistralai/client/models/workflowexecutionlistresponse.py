@@ -19,6 +19,8 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class WorkflowExecutionListResponseTypedDict(TypedDict):
+    r"""Deprecated: use WorkflowRunListResponse instead. Will be removed in the next major version."""
+
     executions: List[WorkflowExecutionWithoutResultResponseTypedDict]
     r"""A list of workflow executions"""
     next_page_token: NotRequired[Nullable[str]]
@@ -26,6 +28,8 @@ class WorkflowExecutionListResponseTypedDict(TypedDict):
 
 
 class WorkflowExecutionListResponse(BaseModel):
+    r"""Deprecated: use WorkflowRunListResponse instead. Will be removed in the next major version."""
+
     executions: List[WorkflowExecutionWithoutResultResponse]
     r"""A list of workflow executions"""
 

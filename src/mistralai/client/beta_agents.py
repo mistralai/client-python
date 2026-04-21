@@ -33,9 +33,7 @@ class BetaAgents(BaseSDK):
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -89,9 +87,7 @@ class BetaAgents(BaseSDK):
             name=name,
             description=description,
             handoffs=handoffs,
-            metadata=utils.get_pydantic_model(
-                metadata, OptionalNullable[models.MetadataDict]
-            ),
+            metadata=metadata,
             version_message=version_message,
         )
 
@@ -175,9 +171,7 @@ class BetaAgents(BaseSDK):
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -231,9 +225,7 @@ class BetaAgents(BaseSDK):
             name=name,
             description=description,
             handoffs=handoffs,
-            metadata=utils.get_pydantic_model(
-                metadata, OptionalNullable[models.MetadataDict]
-            ),
+            metadata=metadata,
             version_message=version_message,
         )
 
@@ -749,9 +741,7 @@ class BetaAgents(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -810,9 +800,7 @@ class BetaAgents(BaseSDK):
                 description=description,
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
-                metadata=utils.get_pydantic_model(
-                    metadata, OptionalNullable[models.MetadataDict]
-                ),
+                metadata=metadata,
                 version_message=version_message,
             ),
         )
@@ -903,9 +891,7 @@ class BetaAgents(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -964,9 +950,7 @@ class BetaAgents(BaseSDK):
                 description=description,
                 handoffs=handoffs,
                 deployment_chat=deployment_chat,
-                metadata=utils.get_pydantic_model(
-                    metadata, OptionalNullable[models.MetadataDict]
-                ),
+                metadata=metadata,
                 version_message=version_message,
             ),
         )

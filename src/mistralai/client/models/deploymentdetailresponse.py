@@ -2,14 +2,22 @@
 # @generated-id: 7f4a17a1c7ca
 
 from __future__ import annotations
+from .deploymentlocation import DeploymentLocation, DeploymentLocationTypedDict
 from .deploymentworkerresponse import (
     DeploymentWorkerResponse,
     DeploymentWorkerResponseTypedDict,
 )
 from datetime import datetime
-from mistralai.client.types import BaseModel
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
+from pydantic import model_serializer
 from typing import List
-from typing_extensions import TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class DeploymentDetailResponseTypedDict(TypedDict):
@@ -25,6 +33,8 @@ class DeploymentDetailResponseTypedDict(TypedDict):
     r"""When the deployment was last updated"""
     workers: List[DeploymentWorkerResponseTypedDict]
     r"""Workers registered for the deployment"""
+    location: NotRequired[Nullable[DeploymentLocationTypedDict]]
+    r"""Where the deployment is running"""
 
 
 class DeploymentDetailResponse(BaseModel):
@@ -45,3 +55,31 @@ class DeploymentDetailResponse(BaseModel):
 
     workers: List[DeploymentWorkerResponse]
     r"""Workers registered for the deployment"""
+
+    location: OptionalNullable[DeploymentLocation] = UNSET
+    r"""Where the deployment is running"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["location"])
+        nullable_fields = set(["location"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m

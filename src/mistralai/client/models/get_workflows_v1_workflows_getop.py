@@ -22,7 +22,7 @@ class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
     include_shared: NotRequired[bool]
     r"""Whether to include shared workflows"""
     available_in_chat_assistant: NotRequired[Nullable[bool]]
-    r"""Whether to only return workflows compatible with chat assistant"""
+    r"""Whether to only return workflows available in chat assistant"""
     archived: NotRequired[Nullable[bool]]
     r"""Filter by archived state. False=exclude archived, True=only archived, None=include all"""
     cursor: NotRequired[Nullable[str]]
@@ -48,7 +48,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
         OptionalNullable[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Whether to only return workflows compatible with chat assistant"""
+    r"""Whether to only return workflows available in chat assistant"""
 
     archived: Annotated[
         OptionalNullable[bool],

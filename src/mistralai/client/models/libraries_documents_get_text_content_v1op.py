@@ -2,14 +2,23 @@
 # @generated-id: 1ca4e0c41321
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from typing_extensions import Annotated, TypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
+from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
+from pydantic import model_serializer
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class LibrariesDocumentsGetTextContentV1RequestTypedDict(TypedDict):
     library_id: str
     document_id: str
+    page_start: NotRequired[Nullable[int]]
+    page_end: NotRequired[Nullable[int]]
 
 
 class LibrariesDocumentsGetTextContentV1Request(BaseModel):
@@ -20,3 +29,38 @@ class LibrariesDocumentsGetTextContentV1Request(BaseModel):
     document_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+
+    page_start: Annotated[
+        OptionalNullable[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
+    page_end: Annotated[
+        OptionalNullable[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["page_start", "page_end"])
+        nullable_fields = set(["page_start", "page_end"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m

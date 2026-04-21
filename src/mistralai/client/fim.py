@@ -19,15 +19,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionRequestStop,
                 models.FIMCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -150,15 +150,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionRequestStop,
                 models.FIMCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -281,15 +281,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionStreamRequestStop,
                 models.FIMCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -420,15 +420,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionStreamRequestStop,
                 models.FIMCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,

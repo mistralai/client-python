@@ -264,7 +264,7 @@ with Mistral(
 
 ### Response
 
-**[str](../../models/responsegetvoicesampleaudiov1audiovoicesvoiceidsampleget.md)**
+**[httpx.Response](../../models/.md)**
 
 ### Errors
 
