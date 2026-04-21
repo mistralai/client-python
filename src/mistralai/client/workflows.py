@@ -57,26 +57,40 @@ class Workflows(BaseSDK):
         self,
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
+        encoded_input: OptionalNullable[
+            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
+        ] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        task_queue: OptionalNullable[str] = UNSET,
         polling_interval: int = 5,
         max_attempts: Optional[int] = None,
         use_api_sync: bool = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
         """Execute a workflow and wait for its completion.
 
         Args:
             workflow_identifier: The workflow name or ID.
             input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
+            encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
+            task_queue: Deprecated. Use deployment_name instead.
             polling_interval: Seconds between status checks when polling
             max_attempts: Maximum number of polling attempts when polling (None for unlimited)
             use_api_sync: Whether to use the API's built-in sync execution capability
             timeout_seconds: Maximum time to wait in seconds when using API sync
+            retries: Override the default retry configuration for this method
+            server_url: Override the default server URL for this method
+            timeout_ms: Override the default request timeout configuration for this method in milliseconds
+            http_headers: Additional headers to set or replace on requests.
 
         Returns:
             The workflow result directly
@@ -90,20 +104,32 @@ class Workflows(BaseSDK):
             response = self.execute_workflow(
                 workflow_identifier=workflow_identifier,
                 input=input,
+                encoded_input=encoded_input,
                 execution_id=execution_id,
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                task_queue=task_queue,
                 deployment_name=deployment_name,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
             return response.result
         # Use polling method
         execution = self.execute_workflow(
             workflow_identifier=workflow_identifier,
             input=input,
+            encoded_input=encoded_input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
+            task_queue=task_queue,
             deployment_name=deployment_name,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
         )
 
         # Wait for completion
@@ -154,26 +180,40 @@ class Workflows(BaseSDK):
         self,
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
+        encoded_input: OptionalNullable[
+            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
+        ] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        task_queue: OptionalNullable[str] = UNSET,
         polling_interval: int = 5,
         max_attempts: Optional[int] = None,
         use_api_sync: bool = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
         """Execute a workflow and wait for its completion (async version).
 
         Args:
             workflow_identifier: The workflow name or ID.
             input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
+            encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
+            task_queue: Deprecated. Use deployment_name instead.
             polling_interval: Seconds between status checks when polling
             max_attempts: Maximum number of polling attempts when polling (None for unlimited)
             use_api_sync: Whether to use the API's built-in sync execution capability
             timeout_seconds: Maximum time to wait in seconds when using API sync
+            retries: Override the default retry configuration for this method
+            server_url: Override the default server URL for this method
+            timeout_ms: Override the default request timeout configuration for this method in milliseconds
+            http_headers: Additional headers to set or replace on requests.
 
         Returns:
             The workflow result directly
@@ -187,11 +227,17 @@ class Workflows(BaseSDK):
             response = await self.execute_workflow_async(
                 workflow_identifier=workflow_identifier,
                 input=input,
+                encoded_input=encoded_input,
                 execution_id=execution_id,
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                task_queue=task_queue,
                 deployment_name=deployment_name,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
             return response.result
 
@@ -199,9 +245,15 @@ class Workflows(BaseSDK):
         execution = await self.execute_workflow_async(
             workflow_identifier=workflow_identifier,
             input=input,
+            encoded_input=encoded_input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
+            task_queue=task_queue,
             deployment_name=deployment_name,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
         )
 
         # Wait for completion
