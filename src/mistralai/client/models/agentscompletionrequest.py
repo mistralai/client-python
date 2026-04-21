@@ -112,7 +112,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
-    stop: NotRequired[AgentsCompletionRequestStopTypedDict]
+    stop: NotRequired[Nullable[AgentsCompletionRequestStopTypedDict]]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
@@ -121,9 +121,9 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
     tools: NotRequired[Nullable[List[AgentsCompletionRequestToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
-    presence_penalty: NotRequired[float]
+    presence_penalty: NotRequired[Nullable[float]]
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
-    frequency_penalty: NotRequired[float]
+    frequency_penalty: NotRequired[Nullable[float]]
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
@@ -149,7 +149,7 @@ class AgentsCompletionRequest(BaseModel):
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
 
-    stop: Optional[AgentsCompletionRequestStop] = None
+    stop: OptionalNullable[AgentsCompletionRequestStop] = UNSET
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
     random_seed: OptionalNullable[int] = UNSET
@@ -164,10 +164,10 @@ class AgentsCompletionRequest(BaseModel):
 
     tool_choice: Optional[AgentsCompletionRequestToolChoice] = None
 
-    presence_penalty: Optional[float] = None
+    presence_penalty: OptionalNullable[float] = UNSET
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
 
-    frequency_penalty: Optional[float] = None
+    frequency_penalty: OptionalNullable[float] = UNSET
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
     n: OptionalNullable[int] = UNSET
@@ -210,9 +210,12 @@ class AgentsCompletionRequest(BaseModel):
         nullable_fields = set(
             [
                 "max_tokens",
+                "stop",
                 "random_seed",
                 "metadata",
                 "tools",
+                "presence_penalty",
+                "frequency_penalty",
                 "n",
                 "reasoning_effort",
                 "prompt_mode",

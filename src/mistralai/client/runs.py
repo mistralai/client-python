@@ -23,6 +23,7 @@ class Runs(BaseSDK):
                 models.ListRunsV1WorkflowsRunsGetStatusTypedDict,
             ]
         ] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -35,6 +36,7 @@ class Runs(BaseSDK):
         :param workflow_identifier: Filter by workflow name or id
         :param search: Search by workflow name, display name or id
         :param status: Filter by workflow status
+        :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -59,6 +61,7 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             search=search,
             status=status,
+            user_id=user_id,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -125,6 +128,7 @@ class Runs(BaseSDK):
                 workflow_identifier=workflow_identifier,
                 search=search,
                 status=status,
+                user_id=user_id,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
@@ -166,6 +170,7 @@ class Runs(BaseSDK):
                 models.ListRunsV1WorkflowsRunsGetStatusTypedDict,
             ]
         ] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -178,6 +183,7 @@ class Runs(BaseSDK):
         :param workflow_identifier: Filter by workflow name or id
         :param search: Search by workflow name, display name or id
         :param status: Filter by workflow status
+        :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -202,6 +208,7 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             search=search,
             status=status,
+            user_id=user_id,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -273,6 +280,7 @@ class Runs(BaseSDK):
                 workflow_identifier=workflow_identifier,
                 search=search,
                 status=status,
+                user_id=user_id,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,

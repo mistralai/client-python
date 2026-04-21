@@ -1,7 +1,5 @@
 # InstructRequest
 
-A valid request to be tokenized
-
 
 ## Fields
 

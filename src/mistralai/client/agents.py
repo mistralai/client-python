@@ -23,12 +23,12 @@ class Agents(BaseSDK):
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.AgentsCompletionRequestStop,
                 models.AgentsCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -46,8 +46,8 @@ class Agents(BaseSDK):
                 models.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -204,12 +204,12 @@ class Agents(BaseSDK):
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.AgentsCompletionRequestStop,
                 models.AgentsCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -227,8 +227,8 @@ class Agents(BaseSDK):
                 models.AgentsCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -385,12 +385,12 @@ class Agents(BaseSDK):
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.AgentsCompletionStreamRequestStop,
                 models.AgentsCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -408,8 +408,8 @@ class Agents(BaseSDK):
                 models.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -576,12 +576,12 @@ class Agents(BaseSDK):
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.AgentsCompletionStreamRequestStop,
                 models.AgentsCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -599,8 +599,8 @@ class Agents(BaseSDK):
                 models.AgentsCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]

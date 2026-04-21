@@ -2,7 +2,6 @@
 # @generated-id: cf3bc148e629
 
 from __future__ import annotations
-from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .speechoutputformat import SpeechOutputFormat
 from mistralai.client.types import (
     BaseModel,
@@ -21,7 +20,7 @@ class SpeechRequestTypedDict(TypedDict):
     input: str
     r"""Text to generate a speech from"""
     model: NotRequired[Nullable[str]]
-    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     stream: NotRequired[bool]
     voice_id: NotRequired[Nullable[str]]
     r"""The preset or custom voice to use for generating the speech."""
@@ -41,7 +40,7 @@ class SpeechRequest(BaseModel):
 
     model: OptionalNullable[str] = UNSET
 
-    metadata: OptionalNullable[MetadataDict] = UNSET
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
     stream: Optional[bool] = False
 

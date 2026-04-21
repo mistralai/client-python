@@ -111,7 +111,7 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
     stream: NotRequired[bool]
-    stop: NotRequired[AgentsCompletionStreamRequestStopTypedDict]
+    stop: NotRequired[Nullable[AgentsCompletionStreamRequestStopTypedDict]]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
@@ -120,9 +120,9 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
     tools: NotRequired[Nullable[List[AgentsCompletionStreamRequestToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionStreamRequestToolChoiceTypedDict]
-    presence_penalty: NotRequired[float]
+    presence_penalty: NotRequired[Nullable[float]]
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
-    frequency_penalty: NotRequired[float]
+    frequency_penalty: NotRequired[Nullable[float]]
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
@@ -147,7 +147,7 @@ class AgentsCompletionStreamRequest(BaseModel):
 
     stream: Optional[bool] = True
 
-    stop: Optional[AgentsCompletionStreamRequestStop] = None
+    stop: OptionalNullable[AgentsCompletionStreamRequestStop] = UNSET
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
     random_seed: OptionalNullable[int] = UNSET
@@ -162,10 +162,10 @@ class AgentsCompletionStreamRequest(BaseModel):
 
     tool_choice: Optional[AgentsCompletionStreamRequestToolChoice] = None
 
-    presence_penalty: Optional[float] = None
+    presence_penalty: OptionalNullable[float] = UNSET
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
 
-    frequency_penalty: Optional[float] = None
+    frequency_penalty: OptionalNullable[float] = UNSET
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
     n: OptionalNullable[int] = UNSET
@@ -208,9 +208,12 @@ class AgentsCompletionStreamRequest(BaseModel):
         nullable_fields = set(
             [
                 "max_tokens",
+                "stop",
                 "random_seed",
                 "metadata",
                 "tools",
+                "presence_penalty",
+                "frequency_penalty",
                 "n",
                 "reasoning_effort",
                 "prompt_mode",

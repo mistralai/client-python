@@ -32,6 +32,8 @@ class WorkflowCodeDefinitionTypedDict(TypedDict):
     r"""Whether the workflow enforces deterministic execution"""
     execution_timeout: NotRequired[float]
     r"""Maximum total execution time including retries and continue-as-new"""
+    plugin_metadata: NotRequired[Nullable[Dict[str, Any]]]
+    r"""Plugin-specific metadata (e.g. connector declarations)"""
 
 
 class WorkflowCodeDefinition(BaseModel):
@@ -56,6 +58,9 @@ class WorkflowCodeDefinition(BaseModel):
     execution_timeout: Optional[float] = None
     r"""Maximum total execution time including retries and continue-as-new"""
 
+    plugin_metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    r"""Plugin-specific metadata (e.g. connector declarations)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -66,9 +71,10 @@ class WorkflowCodeDefinition(BaseModel):
                 "updates",
                 "enforce_determinism",
                 "execution_timeout",
+                "plugin_metadata",
             ]
         )
-        nullable_fields = set(["output_schema"])
+        nullable_fields = set(["output_schema", "plugin_metadata"])
         serialized = handler(self)
         m = {}
 

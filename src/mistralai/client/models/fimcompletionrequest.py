@@ -33,13 +33,13 @@ class FIMCompletionRequestTypedDict(TypedDict):
     r"""The text/code to complete."""
     temperature: NotRequired[Nullable[float]]
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
-    top_p: NotRequired[float]
+    top_p: NotRequired[Nullable[float]]
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
-    stop: NotRequired[FIMCompletionRequestStopTypedDict]
+    stop: NotRequired[Nullable[FIMCompletionRequestStopTypedDict]]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
@@ -60,7 +60,7 @@ class FIMCompletionRequest(BaseModel):
     temperature: OptionalNullable[float] = UNSET
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
 
-    top_p: Optional[float] = 1
+    top_p: OptionalNullable[float] = UNSET
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
 
     max_tokens: OptionalNullable[int] = UNSET
@@ -69,7 +69,7 @@ class FIMCompletionRequest(BaseModel):
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
 
-    stop: Optional[FIMCompletionRequestStop] = None
+    stop: OptionalNullable[FIMCompletionRequestStop] = UNSET
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
     random_seed: OptionalNullable[int] = UNSET
@@ -101,7 +101,9 @@ class FIMCompletionRequest(BaseModel):
         nullable_fields = set(
             [
                 "temperature",
+                "top_p",
                 "max_tokens",
+                "stop",
                 "random_seed",
                 "metadata",
                 "suffix",
