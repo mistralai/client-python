@@ -116,25 +116,6 @@ class Conversations(BaseSDK):
                 if not pending_tool_confirmations:
                     pending_tool_confirmations = None
 
-        # Check if inputs contain deferred responses - process them
-        pending_tool_confirmations = None
-        if inputs and isinstance(inputs, list):
-            deferred_inputs = typing.cast(
-                List[DeferredToolCallResponse],
-                [i for i in inputs if _is_deferred_response(i)],
-            )
-            other_inputs = typing.cast(
-                List[InputEntries], [i for i in inputs if not _is_deferred_response(i)]
-            )
-            if deferred_inputs:
-                (
-                    processed,
-                    pending_tool_confirmations,
-                ) = await _process_deferred_responses(run_ctx, deferred_inputs)
-                inputs = other_inputs + processed
-                if not pending_tool_confirmations:
-                    pending_tool_confirmations = None
-
         with tracer.start_as_current_span(GenAISpanEnum.VALIDATE_RUN.value):
             req, run_result, input_entries = await _validate_run(
                 beta_client=Beta(self.sdk_configuration),
@@ -289,7 +270,6 @@ class Conversations(BaseSDK):
         async def run_generator() -> AsyncGenerator[
             Union[RunResultEvents, RunResult], None
         ]:
-            nonlocal pending_tool_confirmations
             nonlocal pending_tool_confirmations
             current_entries = input_entries
             while True:
