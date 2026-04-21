@@ -57,9 +57,6 @@ class Workflows(BaseSDK):
         self,
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -78,7 +75,6 @@ class Workflows(BaseSDK):
         Args:
             workflow_identifier: The workflow name or ID.
             input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-            encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
@@ -104,7 +100,6 @@ class Workflows(BaseSDK):
             response = self.execute_workflow(
                 workflow_identifier=workflow_identifier,
                 input=input,
-                encoded_input=encoded_input,
                 execution_id=execution_id,
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
@@ -121,7 +116,6 @@ class Workflows(BaseSDK):
         execution = self.execute_workflow(
             workflow_identifier=workflow_identifier,
             input=input,
-            encoded_input=encoded_input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
             task_queue=task_queue,
@@ -180,9 +174,6 @@ class Workflows(BaseSDK):
         self,
         workflow_identifier: str,
         input: OptionalNullable[Dict[str, Any] | BaseModel] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         execution_id: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -201,7 +192,6 @@ class Workflows(BaseSDK):
         Args:
             workflow_identifier: The workflow name or ID.
             input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-            encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
             execution_id: Optional custom execution ID
             deployment_name: Name of the deployment to route this execution to
             custom_tracing_attributes: Custom tracing attributes
@@ -227,7 +217,6 @@ class Workflows(BaseSDK):
             response = await self.execute_workflow_async(
                 workflow_identifier=workflow_identifier,
                 input=input,
-                encoded_input=encoded_input,
                 execution_id=execution_id,
                 wait_for_result=True,
                 timeout_seconds=timeout_seconds,
@@ -245,7 +234,6 @@ class Workflows(BaseSDK):
         execution = await self.execute_workflow_async(
             workflow_identifier=workflow_identifier,
             input=input,
-            encoded_input=encoded_input,
             execution_id=execution_id,
             custom_tracing_attributes=custom_tracing_attributes,
             task_queue=task_queue,
