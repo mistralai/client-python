@@ -2,16 +2,17 @@
 # @generated-id: 5e3448a39a40
 
 from __future__ import annotations
-from typing import Union
+from typing import Any, List, Union
 from typing_extensions import TypeAliasType
 
 
 WorkflowExecutionTraceSummaryAttributesValuesTypedDict = TypeAliasType(
     "WorkflowExecutionTraceSummaryAttributesValuesTypedDict",
-    Union[str, int, float, bool],
+    Union[str, int, float, bool, List[Any]],
 )
 
 
 WorkflowExecutionTraceSummaryAttributesValues = TypeAliasType(
-    "WorkflowExecutionTraceSummaryAttributesValues", Union[str, int, float, bool]
+    "WorkflowExecutionTraceSummaryAttributesValues",
+    Union[str, int, float, bool, List[Any]],
 )

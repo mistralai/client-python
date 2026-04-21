@@ -24,6 +24,7 @@ BaseFieldDefinitionType = Union[
         "BOOL",
         "TIMESTAMP",
         "ARRAY",
+        "MAP",
     ],
     UnrecognizedStr,
 ]

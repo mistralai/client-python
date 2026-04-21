@@ -1,5 +1,7 @@
 # WorkflowExecutionListResponse
 
+Deprecated: use WorkflowRunListResponse instead. Will be removed in the next major version.
+
 
 ## Fields
 

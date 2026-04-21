@@ -205,6 +205,11 @@ if TYPE_CHECKING:
         AudioTranscriptionRequestStreamTypedDict,
     )
     from .authdata import AuthData, AuthDataTypedDict
+    from .authenticationconfiguration import (
+        AuthenticationConfiguration,
+        AuthenticationConfigurationTypedDict,
+    )
+    from .authenticationtype import AuthenticationType
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
@@ -384,22 +389,58 @@ if TYPE_CHECKING:
         CompletionTrainingParameters,
         CompletionTrainingParametersTypedDict,
     )
+    from .connectioncredentials import (
+        ConnectionCredentials,
+        ConnectionCredentialsTypedDict,
+    )
     from .connector import Connector, ConnectorTypedDict
     from .connector_call_tool_v1op import (
         ConnectorCallToolV1Request,
         ConnectorCallToolV1RequestTypedDict,
     )
+    from .connector_create_or_update_organization_credentials_v1op import (
+        ConnectorCreateOrUpdateOrganizationCredentialsV1Request,
+        ConnectorCreateOrUpdateOrganizationCredentialsV1RequestTypedDict,
+    )
+    from .connector_create_or_update_user_credentials_v1op import (
+        ConnectorCreateOrUpdateUserCredentialsV1Request,
+        ConnectorCreateOrUpdateUserCredentialsV1RequestTypedDict,
+    )
+    from .connector_create_or_update_workspace_credentials_v1op import (
+        ConnectorCreateOrUpdateWorkspaceCredentialsV1Request,
+        ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict,
+    )
+    from .connector_delete_organization_credentials_v1op import (
+        ConnectorDeleteOrganizationCredentialsV1Request,
+        ConnectorDeleteOrganizationCredentialsV1RequestTypedDict,
+    )
+    from .connector_delete_user_credentials_v1op import (
+        ConnectorDeleteUserCredentialsV1Request,
+        ConnectorDeleteUserCredentialsV1RequestTypedDict,
+    )
     from .connector_delete_v1op import (
         ConnectorDeleteV1Request,
         ConnectorDeleteV1RequestTypedDict,
+    )
+    from .connector_delete_workspace_credentials_v1op import (
+        ConnectorDeleteWorkspaceCredentialsV1Request,
+        ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict,
     )
     from .connector_get_auth_url_v1op import (
         ConnectorGetAuthURLV1Request,
         ConnectorGetAuthURLV1RequestTypedDict,
     )
+    from .connector_get_authentication_methods_v1op import (
+        ConnectorGetAuthenticationMethodsV1Request,
+        ConnectorGetAuthenticationMethodsV1RequestTypedDict,
+    )
     from .connector_get_v1op import (
         ConnectorGetV1Request,
         ConnectorGetV1RequestTypedDict,
+    )
+    from .connector_list_organization_credentials_v1op import (
+        ConnectorListOrganizationCredentialsV1Request,
+        ConnectorListOrganizationCredentialsV1RequestTypedDict,
     )
     from .connector_list_tools_v1op import (
         ConnectorListToolsV1Request,
@@ -407,13 +448,25 @@ if TYPE_CHECKING:
         ResponseConnectorListToolsV1,
         ResponseConnectorListToolsV1TypedDict,
     )
+    from .connector_list_user_credentials_v1op import (
+        ConnectorListUserCredentialsV1Request,
+        ConnectorListUserCredentialsV1RequestTypedDict,
+    )
     from .connector_list_v1op import (
         ConnectorListV1Request,
         ConnectorListV1RequestTypedDict,
     )
+    from .connector_list_workspace_credentials_v1op import (
+        ConnectorListWorkspaceCredentialsV1Request,
+        ConnectorListWorkspaceCredentialsV1RequestTypedDict,
+    )
     from .connector_update_v1op import (
         ConnectorUpdateV1Request,
         ConnectorUpdateV1RequestTypedDict,
+    )
+    from .connectorauthenticationheader import (
+        ConnectorAuthenticationHeader,
+        ConnectorAuthenticationHeaderTypedDict,
     )
     from .connectorcalltoolrequest import (
         ConnectorCallToolRequest,
@@ -568,6 +621,11 @@ if TYPE_CHECKING:
         CreateLibraryRequest,
         CreateLibraryRequestTypedDict,
     )
+    from .credentialscreateorupdate import (
+        CredentialsCreateOrUpdate,
+        CredentialsCreateOrUpdateTypedDict,
+    )
+    from .credentialsresponse import CredentialsResponse, CredentialsResponseTypedDict
     from .customconnector import (
         Authorization,
         AuthorizationTypedDict,
@@ -1024,6 +1082,10 @@ if TYPE_CHECKING:
         ImportDatasetFromPlaygroundRequest,
         ImportDatasetFromPlaygroundRequestTypedDict,
     )
+    from .ingestionpipelineconfiguration import (
+        IngestionPipelineConfiguration,
+        IngestionPipelineConfigurationTypedDict,
+    )
     from .inputentries import InputEntries, InputEntriesTypedDict
     from .inputs import Inputs, InputsTypedDict
     from .instructrequest import (
@@ -1381,6 +1443,7 @@ if TYPE_CHECKING:
     from .moderationobject import ModerationObject, ModerationObjectTypedDict
     from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
     from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
+    from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
@@ -1460,6 +1523,10 @@ if TYPE_CHECKING:
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
     from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
+    from .publicauthenticationmethod import (
+        PublicAuthenticationMethod,
+        PublicAuthenticationMethodTypedDict,
+    )
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict,
@@ -1659,6 +1726,18 @@ if TYPE_CHECKING:
         TempoTraceAttributeTypedDict,
         TempoTraceAttributeValue,
         TempoTraceAttributeValueTypedDict,
+    )
+    from .tempotraceattributearraycontainer import (
+        TempoTraceAttributeArrayContainer,
+        TempoTraceAttributeArrayContainerTypedDict,
+    )
+    from .tempotraceattributearrayelement import (
+        TempoTraceAttributeArrayElement,
+        TempoTraceAttributeArrayElementTypedDict,
+    )
+    from .tempotraceattributearrayvalue import (
+        TempoTraceAttributeArrayValue,
+        TempoTraceAttributeArrayValueTypedDict,
     )
     from .tempotraceattributeboolvalue import (
         TempoTraceAttributeBoolValue,
@@ -2217,6 +2296,9 @@ __all__ = [
     "AuthDataTypedDict",
     "AuthURLResponse",
     "AuthURLResponseTypedDict",
+    "AuthenticationConfiguration",
+    "AuthenticationConfigurationTypedDict",
+    "AuthenticationType",
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
@@ -2351,21 +2433,45 @@ __all__ = [
     "CompletionTrainingParametersTypedDict",
     "ConfidenceScoresGranularity",
     "Confirmation",
+    "ConnectionCredentials",
+    "ConnectionCredentialsTypedDict",
     "Connector",
+    "ConnectorAuthenticationHeader",
+    "ConnectorAuthenticationHeaderTypedDict",
     "ConnectorCallToolRequest",
     "ConnectorCallToolRequestTypedDict",
     "ConnectorCallToolV1Request",
     "ConnectorCallToolV1RequestTypedDict",
+    "ConnectorCreateOrUpdateOrganizationCredentialsV1Request",
+    "ConnectorCreateOrUpdateOrganizationCredentialsV1RequestTypedDict",
+    "ConnectorCreateOrUpdateUserCredentialsV1Request",
+    "ConnectorCreateOrUpdateUserCredentialsV1RequestTypedDict",
+    "ConnectorCreateOrUpdateWorkspaceCredentialsV1Request",
+    "ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict",
+    "ConnectorDeleteOrganizationCredentialsV1Request",
+    "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict",
+    "ConnectorDeleteUserCredentialsV1Request",
+    "ConnectorDeleteUserCredentialsV1RequestTypedDict",
     "ConnectorDeleteV1Request",
     "ConnectorDeleteV1RequestTypedDict",
+    "ConnectorDeleteWorkspaceCredentialsV1Request",
+    "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict",
     "ConnectorGetAuthURLV1Request",
     "ConnectorGetAuthURLV1RequestTypedDict",
+    "ConnectorGetAuthenticationMethodsV1Request",
+    "ConnectorGetAuthenticationMethodsV1RequestTypedDict",
     "ConnectorGetV1Request",
     "ConnectorGetV1RequestTypedDict",
+    "ConnectorListOrganizationCredentialsV1Request",
+    "ConnectorListOrganizationCredentialsV1RequestTypedDict",
     "ConnectorListToolsV1Request",
     "ConnectorListToolsV1RequestTypedDict",
+    "ConnectorListUserCredentialsV1Request",
+    "ConnectorListUserCredentialsV1RequestTypedDict",
     "ConnectorListV1Request",
     "ConnectorListV1RequestTypedDict",
+    "ConnectorListWorkspaceCredentialsV1Request",
+    "ConnectorListWorkspaceCredentialsV1RequestTypedDict",
     "ConnectorTool",
     "ConnectorToolCallMetadata",
     "ConnectorToolCallMetadataTypedDict",
@@ -2468,6 +2574,10 @@ __all__ = [
     "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
+    "CredentialsCreateOrUpdate",
+    "CredentialsCreateOrUpdateTypedDict",
+    "CredentialsResponse",
+    "CredentialsResponseTypedDict",
     "CustomConnector",
     "CustomConnectorTypedDict",
     "CustomTaskCanceledAttributes",
@@ -2758,6 +2868,8 @@ __all__ = [
     "ImportDatasetFromFileRequestTypedDict",
     "ImportDatasetFromPlaygroundRequest",
     "ImportDatasetFromPlaygroundRequestTypedDict",
+    "IngestionPipelineConfiguration",
+    "IngestionPipelineConfigurationTypedDict",
     "InputEntries",
     "InputEntriesTypedDict",
     "Inputs",
@@ -2997,8 +3109,10 @@ __all__ = [
     "MultiPartBodyParamsTypedDict",
     "NetworkEncodedInput",
     "NetworkEncodedInputTypedDict",
+    "OAuth2Token",
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
+    "OAuth2TokenTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
@@ -3068,6 +3182,8 @@ __all__ = [
     "ProcessingStatusTypedDict",
     "PromptTokensDetails",
     "PromptTokensDetailsTypedDict",
+    "PublicAuthenticationMethod",
+    "PublicAuthenticationMethodTypedDict",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -3228,6 +3344,12 @@ __all__ = [
     "TempoGetTraceResponse",
     "TempoGetTraceResponseTypedDict",
     "TempoTraceAttribute",
+    "TempoTraceAttributeArrayContainer",
+    "TempoTraceAttributeArrayContainerTypedDict",
+    "TempoTraceAttributeArrayElement",
+    "TempoTraceAttributeArrayElementTypedDict",
+    "TempoTraceAttributeArrayValue",
+    "TempoTraceAttributeArrayValueTypedDict",
     "TempoTraceAttributeBoolValue",
     "TempoTraceAttributeBoolValueTypedDict",
     "TempoTraceAttributeIntValue",
@@ -3660,6 +3782,9 @@ _dynamic_imports: dict[str, str] = {
     "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "AuthData": ".authdata",
     "AuthDataTypedDict": ".authdata",
+    "AuthenticationConfiguration": ".authenticationconfiguration",
+    "AuthenticationConfigurationTypedDict": ".authenticationconfiguration",
+    "AuthenticationType": ".authenticationtype",
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
@@ -3799,24 +3924,48 @@ _dynamic_imports: dict[str, str] = {
     "CompletionResponseStreamChoiceTypedDict": ".completionresponsestreamchoice",
     "CompletionTrainingParameters": ".completiontrainingparameters",
     "CompletionTrainingParametersTypedDict": ".completiontrainingparameters",
+    "ConnectionCredentials": ".connectioncredentials",
+    "ConnectionCredentialsTypedDict": ".connectioncredentials",
     "Connector": ".connector",
     "ConnectorTypedDict": ".connector",
     "ConnectorCallToolV1Request": ".connector_call_tool_v1op",
     "ConnectorCallToolV1RequestTypedDict": ".connector_call_tool_v1op",
+    "ConnectorCreateOrUpdateOrganizationCredentialsV1Request": ".connector_create_or_update_organization_credentials_v1op",
+    "ConnectorCreateOrUpdateOrganizationCredentialsV1RequestTypedDict": ".connector_create_or_update_organization_credentials_v1op",
+    "ConnectorCreateOrUpdateUserCredentialsV1Request": ".connector_create_or_update_user_credentials_v1op",
+    "ConnectorCreateOrUpdateUserCredentialsV1RequestTypedDict": ".connector_create_or_update_user_credentials_v1op",
+    "ConnectorCreateOrUpdateWorkspaceCredentialsV1Request": ".connector_create_or_update_workspace_credentials_v1op",
+    "ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict": ".connector_create_or_update_workspace_credentials_v1op",
+    "ConnectorDeleteOrganizationCredentialsV1Request": ".connector_delete_organization_credentials_v1op",
+    "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict": ".connector_delete_organization_credentials_v1op",
+    "ConnectorDeleteUserCredentialsV1Request": ".connector_delete_user_credentials_v1op",
+    "ConnectorDeleteUserCredentialsV1RequestTypedDict": ".connector_delete_user_credentials_v1op",
     "ConnectorDeleteV1Request": ".connector_delete_v1op",
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
+    "ConnectorDeleteWorkspaceCredentialsV1Request": ".connector_delete_workspace_credentials_v1op",
+    "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict": ".connector_delete_workspace_credentials_v1op",
     "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
+    "ConnectorGetAuthenticationMethodsV1Request": ".connector_get_authentication_methods_v1op",
+    "ConnectorGetAuthenticationMethodsV1RequestTypedDict": ".connector_get_authentication_methods_v1op",
     "ConnectorGetV1Request": ".connector_get_v1op",
     "ConnectorGetV1RequestTypedDict": ".connector_get_v1op",
+    "ConnectorListOrganizationCredentialsV1Request": ".connector_list_organization_credentials_v1op",
+    "ConnectorListOrganizationCredentialsV1RequestTypedDict": ".connector_list_organization_credentials_v1op",
     "ConnectorListToolsV1Request": ".connector_list_tools_v1op",
     "ConnectorListToolsV1RequestTypedDict": ".connector_list_tools_v1op",
     "ResponseConnectorListToolsV1": ".connector_list_tools_v1op",
     "ResponseConnectorListToolsV1TypedDict": ".connector_list_tools_v1op",
+    "ConnectorListUserCredentialsV1Request": ".connector_list_user_credentials_v1op",
+    "ConnectorListUserCredentialsV1RequestTypedDict": ".connector_list_user_credentials_v1op",
     "ConnectorListV1Request": ".connector_list_v1op",
     "ConnectorListV1RequestTypedDict": ".connector_list_v1op",
+    "ConnectorListWorkspaceCredentialsV1Request": ".connector_list_workspace_credentials_v1op",
+    "ConnectorListWorkspaceCredentialsV1RequestTypedDict": ".connector_list_workspace_credentials_v1op",
     "ConnectorUpdateV1Request": ".connector_update_v1op",
     "ConnectorUpdateV1RequestTypedDict": ".connector_update_v1op",
+    "ConnectorAuthenticationHeader": ".connectorauthenticationheader",
+    "ConnectorAuthenticationHeaderTypedDict": ".connectorauthenticationheader",
     "ConnectorCallToolRequest": ".connectorcalltoolrequest",
     "ConnectorCallToolRequestTypedDict": ".connectorcalltoolrequest",
     "ConnectorsQueryFilters": ".connectorsqueryfilters",
@@ -3923,6 +4072,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateJudgeRequestTypedDict": ".createjudgerequest",
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
+    "CredentialsCreateOrUpdate": ".credentialscreateorupdate",
+    "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
+    "CredentialsResponse": ".credentialsresponse",
+    "CredentialsResponseTypedDict": ".credentialsresponse",
     "Authorization": ".customconnector",
     "AuthorizationTypedDict": ".customconnector",
     "CustomConnector": ".customconnector",
@@ -4223,6 +4376,8 @@ _dynamic_imports: dict[str, str] = {
     "ImportDatasetFromFileRequestTypedDict": ".importdatasetfromfilerequest",
     "ImportDatasetFromPlaygroundRequest": ".importdatasetfromplaygroundrequest",
     "ImportDatasetFromPlaygroundRequestTypedDict": ".importdatasetfromplaygroundrequest",
+    "IngestionPipelineConfiguration": ".ingestionpipelineconfiguration",
+    "IngestionPipelineConfigurationTypedDict": ".ingestionpipelineconfiguration",
     "InputEntries": ".inputentries",
     "InputEntriesTypedDict": ".inputentries",
     "Inputs": ".inputs",
@@ -4477,6 +4632,8 @@ _dynamic_imports: dict[str, str] = {
     "ModerationResponseTypedDict": ".moderationresponse",
     "NetworkEncodedInput": ".networkencodedinput",
     "NetworkEncodedInputTypedDict": ".networkencodedinput",
+    "OAuth2Token": ".oauth2token",
+    "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
     "ObservabilityErrorCode": ".observabilityerrorcode",
@@ -4544,6 +4701,8 @@ _dynamic_imports: dict[str, str] = {
     "ProcessStatus": ".processstatus",
     "PromptTokensDetails": ".prompttokensdetails",
     "PromptTokensDetailsTypedDict": ".prompttokensdetails",
+    "PublicAuthenticationMethod": ".publicauthenticationmethod",
+    "PublicAuthenticationMethodTypedDict": ".publicauthenticationmethod",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -4692,6 +4851,12 @@ _dynamic_imports: dict[str, str] = {
     "TempoTraceAttributeTypedDict": ".tempotraceattribute",
     "TempoTraceAttributeValue": ".tempotraceattribute",
     "TempoTraceAttributeValueTypedDict": ".tempotraceattribute",
+    "TempoTraceAttributeArrayContainer": ".tempotraceattributearraycontainer",
+    "TempoTraceAttributeArrayContainerTypedDict": ".tempotraceattributearraycontainer",
+    "TempoTraceAttributeArrayElement": ".tempotraceattributearrayelement",
+    "TempoTraceAttributeArrayElementTypedDict": ".tempotraceattributearrayelement",
+    "TempoTraceAttributeArrayValue": ".tempotraceattributearrayvalue",
+    "TempoTraceAttributeArrayValueTypedDict": ".tempotraceattributearrayvalue",
     "TempoTraceAttributeBoolValue": ".tempotraceattributeboolvalue",
     "TempoTraceAttributeBoolValueTypedDict": ".tempotraceattributeboolvalue",
     "TempoTraceAttributeIntValue": ".tempotraceattributeintvalue",
