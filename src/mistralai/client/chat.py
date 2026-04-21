@@ -107,15 +107,15 @@ class Chat(BaseSDK):
             List[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionRequestStop,
                 models.ChatCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -133,8 +133,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -297,15 +297,15 @@ class Chat(BaseSDK):
             List[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionRequestStop,
                 models.ChatCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -323,8 +323,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -487,15 +487,15 @@ class Chat(BaseSDK):
             List[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionStreamRequestStop,
                 models.ChatCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -513,8 +513,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -687,15 +687,15 @@ class Chat(BaseSDK):
             List[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionStreamRequestStop,
                 models.ChatCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
@@ -713,8 +713,8 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]

@@ -41,6 +41,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Search by workflow name, display name or id"""
     status: NotRequired[Nullable[ListRunsV1WorkflowsRunsGetStatusTypedDict]]
     r"""Filter by workflow status"""
+    user_id: NotRequired[Nullable[str]]
+    r"""Filter by user id. Use 'current' to filter by the authenticated user"""
     page_size: NotRequired[int]
     r"""Number of items per page"""
     next_page_token: NotRequired[Nullable[str]]
@@ -66,6 +68,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by workflow status"""
 
+    user_id: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by user id. Use 'current' to filter by the authenticated user"""
+
     page_size: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -81,10 +89,17 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["workflow_identifier", "search", "status", "page_size", "next_page_token"]
+            [
+                "workflow_identifier",
+                "search",
+                "status",
+                "user_id",
+                "page_size",
+                "next_page_token",
+            ]
         )
         nullable_fields = set(
-            ["workflow_identifier", "search", "status", "next_page_token"]
+            ["workflow_identifier", "search", "status", "user_id", "next_page_token"]
         )
         serialized = handler(self)
         m = {}

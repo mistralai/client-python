@@ -242,6 +242,7 @@ class Libraries(BaseSDK):
         name: str,
         description: OptionalNullable[str] = UNSET,
         chunk_size: OptionalNullable[int] = UNSET,
+        owner_type: OptionalNullable[models.OwnerType] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -254,6 +255,7 @@ class Libraries(BaseSDK):
         :param name:
         :param description:
         :param chunk_size:
+        :param owner_type: Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -276,6 +278,7 @@ class Libraries(BaseSDK):
             name=name,
             description=description,
             chunk_size=chunk_size,
+            owner_type=owner_type,
         )
 
         req = self._build_request(
@@ -344,6 +347,7 @@ class Libraries(BaseSDK):
         name: str,
         description: OptionalNullable[str] = UNSET,
         chunk_size: OptionalNullable[int] = UNSET,
+        owner_type: OptionalNullable[models.OwnerType] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -356,6 +360,7 @@ class Libraries(BaseSDK):
         :param name:
         :param description:
         :param chunk_size:
+        :param owner_type: Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -378,6 +383,7 @@ class Libraries(BaseSDK):
             name=name,
             description=description,
             chunk_size=chunk_size,
+            owner_type=owner_type,
         )
 
         req = self._build_request_async(

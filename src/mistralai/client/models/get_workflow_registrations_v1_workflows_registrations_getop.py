@@ -31,7 +31,7 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict(TypedD
     with_workflow: NotRequired[bool]
     r"""Whether to include the workflow definition"""
     available_in_chat_assistant: NotRequired[Nullable[bool]]
-    r"""Whether to only return workflows compatible with chat assistant"""
+    r"""Whether to only return workflows available in chat assistant"""
     limit: NotRequired[int]
     r"""The maximum number of workflows versions to return"""
     cursor: NotRequired[Nullable[str]]
@@ -85,7 +85,7 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequest(BaseModel):
         OptionalNullable[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Whether to only return workflows compatible with chat assistant"""
+    r"""Whether to only return workflows available in chat assistant"""
 
     limit: Annotated[
         Optional[int],

@@ -2,6 +2,10 @@
 # @generated-id: 7d0ec3402dc0
 
 from __future__ import annotations
+from .tempotraceattributearrayvalue import (
+    TempoTraceAttributeArrayValue,
+    TempoTraceAttributeArrayValueTypedDict,
+)
 from .tempotraceattributeboolvalue import (
     TempoTraceAttributeBoolValue,
     TempoTraceAttributeBoolValueTypedDict,
@@ -25,6 +29,7 @@ TempoTraceAttributeValueTypedDict = TypeAliasType(
         TempoTraceAttributeStringValueTypedDict,
         TempoTraceAttributeIntValueTypedDict,
         TempoTraceAttributeBoolValueTypedDict,
+        TempoTraceAttributeArrayValueTypedDict,
     ],
 )
 r"""The value of the attribute"""
@@ -36,6 +41,7 @@ TempoTraceAttributeValue = TypeAliasType(
         TempoTraceAttributeStringValue,
         TempoTraceAttributeIntValue,
         TempoTraceAttributeBoolValue,
+        TempoTraceAttributeArrayValue,
     ],
 )
 r"""The value of the attribute"""

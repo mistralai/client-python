@@ -28,6 +28,8 @@ class WorkflowExecutionRequestTypedDict(TypedDict):
     timeout_seconds: NotRequired[Nullable[float]]
     r"""Maximum time to wait for completion when wait_for_result is true."""
     custom_tracing_attributes: NotRequired[Nullable[Dict[str, str]]]
+    extensions: NotRequired[Nullable[Dict[str, Any]]]
+    r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
     task_queue: NotRequired[Nullable[str]]
     r"""Deprecated. Use deployment_name instead."""
     deployment_name: NotRequired[Nullable[str]]
@@ -52,6 +54,9 @@ class WorkflowExecutionRequest(BaseModel):
 
     custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET
 
+    extensions: OptionalNullable[Dict[str, Any]] = UNSET
+    r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
+
     task_queue: Annotated[
         OptionalNullable[str],
         pydantic.Field(
@@ -73,6 +78,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "wait_for_result",
                 "timeout_seconds",
                 "custom_tracing_attributes",
+                "extensions",
                 "task_queue",
                 "deployment_name",
             ]
@@ -84,6 +90,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "encoded_input",
                 "timeout_seconds",
                 "custom_tracing_attributes",
+                "extensions",
                 "task_queue",
                 "deployment_name",
             ]

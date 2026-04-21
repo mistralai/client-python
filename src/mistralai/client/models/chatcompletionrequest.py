@@ -112,13 +112,13 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""The prompt(s) to generate completions for, encoded as a list of dict with role and content."""
     temperature: NotRequired[Nullable[float]]
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
-    top_p: NotRequired[float]
+    top_p: NotRequired[Nullable[float]]
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
     max_tokens: NotRequired[Nullable[int]]
     r"""The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."""
     stream: NotRequired[bool]
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
-    stop: NotRequired[ChatCompletionRequestStopTypedDict]
+    stop: NotRequired[Nullable[ChatCompletionRequestStopTypedDict]]
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
     random_seed: NotRequired[Nullable[int]]
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
@@ -129,9 +129,9 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
     tool_choice: NotRequired[ChatCompletionRequestToolChoiceTypedDict]
     r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
-    presence_penalty: NotRequired[float]
+    presence_penalty: NotRequired[Nullable[float]]
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
-    frequency_penalty: NotRequired[float]
+    frequency_penalty: NotRequired[Nullable[float]]
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
@@ -157,7 +157,7 @@ class ChatCompletionRequest(BaseModel):
     temperature: OptionalNullable[float] = UNSET
     r"""What sampling temperature to use, we recommend between 0.0 and 0.7. Higher values like 0.7 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both. The default value varies depending on the model you are targeting. Call the `/models` endpoint to retrieve the appropriate value."""
 
-    top_p: Optional[float] = None
+    top_p: OptionalNullable[float] = UNSET
     r"""Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."""
 
     max_tokens: OptionalNullable[int] = UNSET
@@ -166,7 +166,7 @@ class ChatCompletionRequest(BaseModel):
     stream: Optional[bool] = False
     r"""Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."""
 
-    stop: Optional[ChatCompletionRequestStop] = None
+    stop: OptionalNullable[ChatCompletionRequestStop] = UNSET
     r"""Stop generation if this token is detected. Or if one of these tokens is detected when providing an array"""
 
     random_seed: OptionalNullable[int] = UNSET
@@ -183,10 +183,10 @@ class ChatCompletionRequest(BaseModel):
     tool_choice: Optional[ChatCompletionRequestToolChoice] = None
     r"""Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool."""
 
-    presence_penalty: Optional[float] = None
+    presence_penalty: OptionalNullable[float] = UNSET
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
 
-    frequency_penalty: Optional[float] = None
+    frequency_penalty: OptionalNullable[float] = UNSET
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
     n: OptionalNullable[int] = UNSET
@@ -236,10 +236,14 @@ class ChatCompletionRequest(BaseModel):
         nullable_fields = set(
             [
                 "temperature",
+                "top_p",
                 "max_tokens",
+                "stop",
                 "random_seed",
                 "metadata",
                 "tools",
+                "presence_penalty",
+                "frequency_penalty",
                 "n",
                 "reasoning_effort",
                 "prompt_mode",

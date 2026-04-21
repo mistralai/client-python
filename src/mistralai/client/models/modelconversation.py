@@ -9,7 +9,6 @@ from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDi
 from .functiontool import FunctionTool, FunctionToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
 from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
-from .metadatadict import MetadataDict, MetadataDictTypedDict
 from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
 from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from datetime import datetime
@@ -26,7 +25,7 @@ from mistralai.client.utils.unions import parse_open_union
 import pydantic
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import AfterValidator, BeforeValidator
-from typing import Any, List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -104,7 +103,7 @@ class ModelConversationTypedDict(TypedDict):
     r"""Name given to the conversation."""
     description: NotRequired[Nullable[str]]
     r"""Description of the what the conversation is about."""
-    metadata: NotRequired[Nullable[MetadataDictTypedDict]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Custom metadata for the conversation."""
     object: Literal["conversation"]
 
@@ -135,7 +134,7 @@ class ModelConversation(BaseModel):
     description: OptionalNullable[str] = UNSET
     r"""Description of the what the conversation is about."""
 
-    metadata: OptionalNullable[MetadataDict] = UNSET
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Custom metadata for the conversation."""
 
     object: Annotated[
