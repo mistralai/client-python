@@ -789,6 +789,7 @@ class Workflows(BaseSDK):
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -805,6 +806,7 @@ class Workflows(BaseSDK):
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -836,6 +838,7 @@ class Workflows(BaseSDK):
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -920,6 +923,7 @@ class Workflows(BaseSDK):
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -936,6 +940,7 @@ class Workflows(BaseSDK):
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -967,6 +972,7 @@ class Workflows(BaseSDK):
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1054,6 +1060,7 @@ class Workflows(BaseSDK):
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1070,6 +1077,7 @@ class Workflows(BaseSDK):
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1101,6 +1109,7 @@ class Workflows(BaseSDK):
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1188,6 +1197,7 @@ class Workflows(BaseSDK):
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1204,6 +1214,7 @@ class Workflows(BaseSDK):
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1235,6 +1246,7 @@ class Workflows(BaseSDK):
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),

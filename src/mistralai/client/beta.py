@@ -8,6 +8,7 @@ from mistralai.client.connectors import Connectors
 from mistralai.client.conversations import Conversations
 from mistralai.client.libraries import Libraries
 from mistralai.client.observability import Observability
+from mistralai.client.rag import Rag
 from typing import Optional
 
 
@@ -21,6 +22,7 @@ class Beta(BaseSDK):
     observability: Observability
     connectors: Connectors
     r"""(beta) Connectors API - manage your connectors"""
+    rag: Rag
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -39,3 +41,4 @@ class Beta(BaseSDK):
             self.sdk_configuration, parent_ref=self.parent_ref
         )
         self.connectors = Connectors(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.rag = Rag(self.sdk_configuration, parent_ref=self.parent_ref)

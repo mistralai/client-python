@@ -2,7 +2,6 @@
 # @generated-id: 1a4facac922d
 
 from __future__ import annotations
-from .connectortool import ConnectorTool, ConnectorToolTypedDict
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -12,7 +11,6 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -24,7 +22,6 @@ class ConnectorTypedDict(TypedDict):
     modified_at: datetime
     server: NotRequired[Nullable[str]]
     auth_type: NotRequired[Nullable[str]]
-    tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
 
 
 class Connector(BaseModel):
@@ -42,12 +39,10 @@ class Connector(BaseModel):
 
     auth_type: OptionalNullable[str] = UNSET
 
-    tools: OptionalNullable[List[ConnectorTool]] = UNSET
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["server", "auth_type", "tools"])
-        nullable_fields = set(["server", "auth_type", "tools"])
+        optional_fields = set(["server", "auth_type"])
+        nullable_fields = set(["server", "auth_type"])
         serialized = handler(self)
         m = {}
 

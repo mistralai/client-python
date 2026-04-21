@@ -17,6 +17,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ConnectorGetAuthURLV1RequestTypedDict(TypedDict):
     connector_id_or_name: str
     app_return_url: NotRequired[Nullable[str]]
+    credentials_name: NotRequired[Nullable[str]]
 
 
 class ConnectorGetAuthURLV1Request(BaseModel):
@@ -29,10 +30,15 @@ class ConnectorGetAuthURLV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    credentials_name: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["app_return_url"])
-        nullable_fields = set(["app_return_url"])
+        optional_fields = set(["app_return_url", "credentials_name"])
+        nullable_fields = set(["app_return_url", "credentials_name"])
         serialized = handler(self)
         m = {}
 

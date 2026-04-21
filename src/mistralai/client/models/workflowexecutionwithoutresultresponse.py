@@ -30,6 +30,8 @@ class WorkflowExecutionWithoutResultResponseTypedDict(TypedDict):
     r"""The end time of the workflow execution, if available"""
     parent_execution_id: NotRequired[Nullable[str]]
     r"""The parent execution ID of the workflow execution"""
+    run_id: NotRequired[Nullable[str]]
+    r"""The unique run identifier (database UUID)"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
 
@@ -56,14 +58,17 @@ class WorkflowExecutionWithoutResultResponse(BaseModel):
     parent_execution_id: OptionalNullable[str] = UNSET
     r"""The parent execution ID of the workflow execution"""
 
+    run_id: OptionalNullable[str] = UNSET
+    r"""The unique run identifier (database UUID)"""
+
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["parent_execution_id", "total_duration_ms"])
+        optional_fields = set(["parent_execution_id", "run_id", "total_duration_ms"])
         nullable_fields = set(
-            ["parent_execution_id", "status", "end_time", "total_duration_ms"]
+            ["parent_execution_id", "run_id", "status", "end_time", "total_duration_ms"]
         )
         serialized = handler(self)
         m = {}

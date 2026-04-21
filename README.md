@@ -515,6 +515,16 @@ print(res.choices[0].message.content)
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
+* [get_authentication_methods](docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
+* [list_organization_credentials](docs/sdks/connectors/README.md#list_organization_credentials) - List organization credentials for a connector.
+* [create_or_update_organization_credentials](docs/sdks/connectors/README.md#create_or_update_organization_credentials) - Create or update organization credentials for a connector.
+* [list_workspace_credentials](docs/sdks/connectors/README.md#list_workspace_credentials) - List workspace credentials for a connector.
+* [create_or_update_workspace_credentials](docs/sdks/connectors/README.md#create_or_update_workspace_credentials) - Create or update workspace credentials for a connector.
+* [list_user_credentials](docs/sdks/connectors/README.md#list_user_credentials) - List user credentials for a connector.
+* [create_or_update_user_credentials](docs/sdks/connectors/README.md#create_or_update_user_credentials) - Create or update user credentials for a connector.
+* [delete_organization_credentials](docs/sdks/connectors/README.md#delete_organization_credentials) - Delete organization credentials for a connector.
+* [delete_workspace_credentials](docs/sdks/connectors/README.md#delete_workspace_credentials) - Delete workspace credentials for a connector.
+* [delete_user_credentials](docs/sdks/connectors/README.md#delete_user_credentials) - Delete user credentials for a connector.
 * [get](docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](docs/sdks/connectors/README.md#update) - Update a connector.
 * [delete](docs/sdks/connectors/README.md#delete) - Delete a connector.
@@ -618,6 +628,10 @@ print(res.choices[0].message.content)
 * [delete](docs/sdks/judges/README.md#delete) - Delete a judge
 * [update](docs/sdks/judges/README.md#update) - Update a judge
 * [judge_conversation](docs/sdks/judges/README.md#judge_conversation) - Run a saved judge on a conversation
+
+### [Beta.Rag.IngestionPipelineConfigurations](docs/sdks/ingestionpipelineconfigurations/README.md)
+
+* [list](docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -940,8 +954,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 103 of 168 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 168 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 112 of 179 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 179 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
