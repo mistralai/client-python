@@ -45,7 +45,7 @@ jobs:
       speakeasy_version: ${{ needs.resolve-speakeasy-version.outputs.version }}
       target: mistralai-sdk
     secrets:
-      github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      github_access_token: ${{ secrets.CLIENT_PIPELINE }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
 
@@ -56,7 +56,7 @@ jobs:
       - name: Find PR branch
         id: find-pr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.CLIENT_PIPELINE }}
         run: |
           PR_BRANCH=$(gh pr list --repo ${{ github.repository }} --author "app/github-actions" \
             --json headRefName,updatedAt --jq 'sort_by(.updatedAt) | reverse | .[0].headRefName // empty')
