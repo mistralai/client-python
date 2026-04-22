@@ -1,3 +1,16 @@
+from .connector_auth import (
+    ConnectorAuthTaskState,
+    ConnectorBindings,
+    ConnectorExtensions,
+    WorkflowExtensions,
+    execute_with_connector_auth_async,
+)
+from .connector_helpers import (
+    build_connector_extensions,
+    on_auth_required,
+    run_workflow_with_connectors,
+)
+from .connector_slot import ConnectorSlot
 from .encoding import (
     WorkflowEncodingConfig,
     PayloadOffloadingConfig,
@@ -11,6 +24,15 @@ from .encoding import (
 )
 
 __all__ = [
+    "ConnectorAuthTaskState",
+    "ConnectorBindings",
+    "ConnectorExtensions",
+    "ConnectorSlot",
+    "WorkflowExtensions",
+    "build_connector_extensions",
+    "execute_with_connector_auth_async",
+    "on_auth_required",
+    "run_workflow_with_connectors",
     "WorkflowEncodingConfig",
     "PayloadOffloadingConfig",
     "PayloadEncryptionConfig",
