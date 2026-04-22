@@ -46,7 +46,6 @@ from typing import (
     Callable,
     Dict,
     List,
-    Literal,
     Optional,
     Sequence,
 )
@@ -79,44 +78,21 @@ _MAX_RECONNECT_ATTEMPTS = 10
 
 
 class ConnectorAuthTaskState(BaseModel):
-    """State emitted by a ``connector-auth`` custom task when it needs OAuth.
+    """State emitted by a ``connector_auth`` custom task when it needs OAuth.
 
     Attributes:
         connector_name: Identifier of the connector requiring authentication.
-        status: Current state of the auth flow.
+        connector_id: Server-side connector ID.
+        credentials_name: Optional named credential set used for this connector.
         auth_url: URL the user should visit to complete authentication.
         message: Optional human-readable context about the auth request.
     """
 
     connector_name: str
     connector_id: str
-    status: Literal[
-        "waiting_for_auth",
-        "connected",
-        "access_denied",
-        "timed_out",
-        "error",
-    ]
+    credentials_name: Optional[str] = None
     auth_url: Optional[str] = None
     message: Optional[str] = None
-
-
-class ConnectorBindings(BaseModel):
-    """Connector bindings passed within extensions."""
-
-    bindings: List[ConnectorSlot]
-
-
-class ConnectorExtensions(BaseModel):
-    """The ``mistralai`` key within workflow extensions."""
-
-    connectors: ConnectorBindings
-
-
-class WorkflowExtensions(BaseModel):
-    """Top-level extensions dict forwarded to ``execute_workflow_async``."""
-
-    mistralai: ConnectorExtensions
 
 
 async def execute_with_connector_auth_async(
@@ -131,7 +107,6 @@ async def execute_with_connector_auth_async(
     task_queue: Optional[str] = None,
     deployment_name: Optional[str] = None,
     connectors: Sequence[ConnectorSlot] = (),
-    extensions: Optional[Dict[str, Any]] = None,
     polling_interval: float = 2,
     max_polling_attempts: Optional[int] = None,
 ) -> WorkflowExecutionResponse:
@@ -151,11 +126,7 @@ async def execute_with_connector_auth_async(
         task_queue: Optional task queue name (deprecated upstream).
         deployment_name: Optional deployment target.
         connectors: Typed connector slots that declare which connectors
-            the workflow needs.  Converted to the ``extensions`` dict
-            automatically.
-        extensions: Additional plugin-specific data to propagate into
-            ``WorkflowContext.extensions`` at execution time.  Merged
-            with connector bindings from *connectors*.
+            the workflow needs.
         polling_interval: Seconds between status polls after the event
             stream ends.
         max_polling_attempts: Maximum number of polling iterations before
@@ -170,7 +141,7 @@ async def execute_with_connector_auth_async(
     """
     input_dict = _serialize_input(input_data)
 
-    merged_extensions = _build_extensions(connectors, extensions)
+    extensions = _build_connector_extensions(connectors)
 
     execute_kwargs: Dict[str, Any] = dict(
         workflow_identifier=workflow_identifier,
@@ -179,8 +150,8 @@ async def execute_with_connector_auth_async(
         task_queue=task_queue,
         deployment_name=deployment_name,
     )
-    if merged_extensions is not None:
-        execute_kwargs["extensions"] = merged_extensions
+    if extensions is not None:
+        execute_kwargs["extensions"] = extensions
 
     execution = await client.workflows.execute_workflow_async(**execute_kwargs)
     exec_id = execution.execution_id
@@ -205,30 +176,19 @@ def _serialize_input(input_data: Any) -> Optional[Dict[str, Any]]:
     return input_data
 
 
-def _build_extensions(
+def _build_connector_extensions(
     connectors: Sequence[ConnectorSlot],
-    extra: Optional[Dict[str, Any]],
 ) -> Optional[Dict[str, Any]]:
-    """Merge connector slot bindings with any additional extensions."""
-    if not connectors and not extra:
-        return None
+    """Build the extensions dict from connector slots.
 
-    result: Dict[str, Any] = dict(extra) if extra else {}
-    if connectors:
-        ext = WorkflowExtensions(
-            mistralai=ConnectorExtensions(
-                connectors=ConnectorBindings(
-                    bindings=list(connectors),
-                ),
-            ),
-        )
-        ext_dict = ext.model_dump(mode="json", exclude_none=True)
-        # Merge: connector bindings go under result["mistralai"]["connectors"]
-        mistralai = result.setdefault("mistralai", {})
-        existing_bindings = mistralai.get("connectors", {}).get("bindings", [])
-        new_bindings = ext_dict["mistralai"]["connectors"]["bindings"]
-        mistralai["connectors"] = {"bindings": existing_bindings + new_bindings}
-    return result
+    Connectors are passed to the API via ``extensions.mistralai.connectors``.
+    """
+    if not connectors:
+        return None
+    bindings = [
+        slot.model_dump(mode="json", exclude_none=True) for slot in connectors
+    ]
+    return {"mistralai": {"connectors": {"bindings": bindings}}}
 
 
 async def _stream_and_handle_auth(
@@ -265,7 +225,7 @@ async def _stream_and_handle_auth(
 
                     if not isinstance(event, CustomTaskStartedResponse):
                         continue
-                    if event.attributes.custom_task_type != "connector-auth":
+                    if event.attributes.custom_task_type != "connector_auth":
                         continue
 
                     payload_value = (
@@ -273,10 +233,7 @@ async def _stream_and_handle_auth(
                         if event.attributes.payload is not None
                         else None
                     )
-                    if (
-                        not isinstance(payload_value, dict)
-                        or payload_value.get("status") != "waiting_for_auth"
-                    ):
+                    if not isinstance(payload_value, dict):
                         continue
 
                     state = ConnectorAuthTaskState.model_validate(payload_value)
