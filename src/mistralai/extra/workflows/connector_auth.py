@@ -45,7 +45,6 @@ from typing import (
     Awaitable,
     Callable,
     Dict,
-    List,
     Optional,
     Sequence,
 )
