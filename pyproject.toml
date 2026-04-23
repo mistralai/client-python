@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "2.4.1"
+version = "2.4.2"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
