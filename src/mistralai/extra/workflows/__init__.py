@@ -2,10 +2,6 @@ from .connector_auth import (
     ConnectorAuthTaskState,
     execute_with_connector_auth_async,
 )
-from .connector_helpers import (
-    on_auth_required,
-    run_workflow_with_connectors,
-)
 from .connector_slot import (
     ConnectorBindings,
     ConnectorExtension,
@@ -31,8 +27,6 @@ __all__ = [
     "ConnectorSlot",
     "WorkflowExtensions",
     "execute_with_connector_auth_async",
-    "on_auth_required",
-    "run_workflow_with_connectors",
     "WorkflowEncodingConfig",
     "PayloadOffloadingConfig",
     "PayloadEncryptionConfig",

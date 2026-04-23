@@ -138,9 +138,7 @@ async def execute_with_connector_auth_async(
         TimeoutError: If *max_polling_attempts* is set and exceeded.
     """
     extensions = (
-        WorkflowExtensions.from_connectors(connectors).to_dict()
-        if connectors
-        else None
+        WorkflowExtensions.from_connectors(connectors).to_dict() if connectors else None
     )
 
     execute_kwargs: Dict[str, Any] = dict(
@@ -223,8 +221,6 @@ async def _stream_and_handle_auth(
                 else:
                     # Stream exhausted without a terminal event — retry.
                     continue
-            # Terminal event received.
-            return
         except (ConnectionError, httpx.RemoteProtocolError):
             logger.debug(
                 "Event stream connection lost, reconnecting "
@@ -233,6 +229,12 @@ async def _stream_and_handle_auth(
                 attempt,
             )
             await asyncio.sleep(min(2**attempt, 30))
+    else:
+        logger.warning(
+            "Exhausted %d reconnect attempts for event stream (execution_id=%s)",
+            _MAX_RECONNECT_ATTEMPTS,
+            exec_id,
+        )
 
 
 async def _poll_until_done(

@@ -16,18 +16,10 @@ class ConnectorSlot(BaseModel):
 
     Example::
 
-        from mistralai.extra.workflows import ConnectorSlot, run_workflow_with_connectors
+        from mistralai.extra.workflows import ConnectorSlot
 
         gmail = ConnectorSlot(connector_name="gmail")
         notion = ConnectorSlot(connector_name="notion", credentials_name="work-account")
-
-        await run_workflow_with_connectors(
-            "my-workflow",
-            input_data=payload,
-            connectors=[gmail, notion],
-            api_key="...",
-            server_url="...",
-        )
     """
 
     connector_name: str
@@ -57,9 +49,7 @@ class WorkflowExtensions(BaseModel):
     mistralai: ConnectorExtension
 
     @classmethod
-    def from_connectors(
-        cls, connectors: Sequence[ConnectorSlot]
-    ) -> WorkflowExtensions:
+    def from_connectors(cls, connectors: Sequence[ConnectorSlot]) -> WorkflowExtensions:
         """Build extensions from a sequence of connector slots."""
         return cls(
             mistralai=ConnectorExtension(
