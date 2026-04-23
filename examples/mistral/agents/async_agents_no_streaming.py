@@ -24,7 +24,6 @@ async def main():
         chat_response = await client.agents.complete_async(
             agent_id=agent.id,
             messages=[UserMessage(content="What is the best French cheese?")],
-            timeout_ms=120000,
         )
 
         print(chat_response.choices[0].message.content)
