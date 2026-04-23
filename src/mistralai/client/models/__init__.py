@@ -209,7 +209,6 @@ if TYPE_CHECKING:
         AuthenticationConfiguration,
         AuthenticationConfigurationTypedDict,
     )
-    from .authenticationtype import AuthenticationType
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
@@ -1465,6 +1464,7 @@ if TYPE_CHECKING:
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
+    from .outboundauthenticationtype import OutboundAuthenticationType
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
     from .paginatedconnectors import PaginatedConnectors, PaginatedConnectorsTypedDict
     from .paginatedresultcampaignpreview import (
@@ -2292,7 +2292,6 @@ __all__ = [
     "AuthURLResponseTypedDict",
     "AuthenticationConfiguration",
     "AuthenticationConfigurationTypedDict",
-    "AuthenticationType",
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
@@ -3128,6 +3127,7 @@ __all__ = [
     "Or",
     "OrTypedDict",
     "OrderBy",
+    "OutboundAuthenticationType",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
     "OwnerType",
@@ -3772,7 +3772,6 @@ _dynamic_imports: dict[str, str] = {
     "AuthDataTypedDict": ".authdata",
     "AuthenticationConfiguration": ".authenticationconfiguration",
     "AuthenticationConfigurationTypedDict": ".authenticationconfiguration",
-    "AuthenticationType": ".authenticationtype",
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
@@ -4646,6 +4645,7 @@ _dynamic_imports: dict[str, str] = {
     "OCRTableObjectTypedDict": ".ocrtableobject",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
+    "OutboundAuthenticationType": ".outboundauthenticationtype",
     "OutputContentChunks": ".outputcontentchunks",
     "OutputContentChunksTypedDict": ".outputcontentchunks",
     "PaginatedConnectors": ".paginatedconnectors",

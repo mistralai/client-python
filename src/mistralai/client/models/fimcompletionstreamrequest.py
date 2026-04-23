@@ -47,6 +47,7 @@ class FIMCompletionStreamRequestTypedDict(TypedDict):
     r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
     min_tokens: NotRequired[Nullable[int]]
     r"""The minimum number of tokens to generate in the completion."""
+    prompt_cache_key: NotRequired[Nullable[str]]
 
 
 class FIMCompletionStreamRequest(BaseModel):
@@ -81,6 +82,8 @@ class FIMCompletionStreamRequest(BaseModel):
     min_tokens: OptionalNullable[int] = UNSET
     r"""The minimum number of tokens to generate in the completion."""
 
+    prompt_cache_key: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -94,6 +97,7 @@ class FIMCompletionStreamRequest(BaseModel):
                 "metadata",
                 "suffix",
                 "min_tokens",
+                "prompt_cache_key",
             ]
         )
         nullable_fields = set(
@@ -106,6 +110,7 @@ class FIMCompletionStreamRequest(BaseModel):
                 "metadata",
                 "suffix",
                 "min_tokens",
+                "prompt_cache_key",
             ]
         )
         serialized = handler(self)

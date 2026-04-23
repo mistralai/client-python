@@ -58,6 +58,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -83,6 +84,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -131,6 +133,7 @@ class Agents(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             agent_id=agent_id,
         )
 
@@ -239,6 +242,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -264,6 +268,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -312,6 +317,7 @@ class Agents(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             agent_id=agent_id,
         )
 
@@ -420,6 +426,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -447,6 +454,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -495,6 +503,7 @@ class Agents(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             agent_id=agent_id,
         )
 
@@ -611,6 +620,7 @@ class Agents(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -638,6 +648,7 @@ class Agents(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -686,6 +697,7 @@ class Agents(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             agent_id=agent_id,
         )
 

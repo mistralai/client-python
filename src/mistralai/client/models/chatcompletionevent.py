@@ -14,12 +14,13 @@ from typing_extensions import TypeAliasType, TypedDict
 
 ChatCompletionEventExtraFieldsTypedDict = TypeAliasType(
     "ChatCompletionEventExtraFieldsTypedDict",
-    Union[bool, int, float, str, datetime, List[str]],
+    Union[bool, int, float, str, datetime, List[str], Dict[str, str]],
 )
 
 
 ChatCompletionEventExtraFields = TypeAliasType(
-    "ChatCompletionEventExtraFields", Union[bool, int, float, str, datetime, List[str]]
+    "ChatCompletionEventExtraFields",
+    Union[bool, int, float, str, datetime, List[str], Dict[str, str]],
 )
 
 

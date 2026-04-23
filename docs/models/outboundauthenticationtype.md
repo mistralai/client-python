@@ -1,12 +1,12 @@
-# AuthenticationType
+# OutboundAuthenticationType
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import AuthenticationType
+from mistralai.client.models import OutboundAuthenticationType
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: AuthenticationType = "oauth2"
+value: OutboundAuthenticationType = "oauth2"
 ```
 
 

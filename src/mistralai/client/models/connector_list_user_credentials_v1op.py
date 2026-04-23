@@ -2,7 +2,7 @@
 # @generated-id: 106e8fba762d
 
 from __future__ import annotations
-from .authenticationtype import AuthenticationType
+from .outboundauthenticationtype import OutboundAuthenticationType
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -18,7 +18,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ConnectorListUserCredentialsV1RequestTypedDict(TypedDict):
     connector_id_or_name: str
-    auth_type: NotRequired[Nullable[AuthenticationType]]
+    auth_type: NotRequired[Nullable[OutboundAuthenticationType]]
     fetch_default: NotRequired[bool]
 
 
@@ -28,7 +28,7 @@ class ConnectorListUserCredentialsV1Request(BaseModel):
     ]
 
     auth_type: Annotated[
-        OptionalNullable[AuthenticationType],
+        OptionalNullable[OutboundAuthenticationType],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 

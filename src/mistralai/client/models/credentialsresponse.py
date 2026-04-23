@@ -6,7 +6,7 @@ from .authenticationconfiguration import (
     AuthenticationConfiguration,
     AuthenticationConfigurationTypedDict,
 )
-from .authenticationtype import AuthenticationType
+from .outboundauthenticationtype import OutboundAuthenticationType
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -15,13 +15,15 @@ from typing_extensions import NotRequired, TypedDict
 
 class CredentialsResponseTypedDict(TypedDict):
     credentials: List[AuthenticationConfigurationTypedDict]
-    connector_preset_credentials_for_auth: NotRequired[List[AuthenticationType]]
+    connector_preset_credentials_for_auth: NotRequired[List[OutboundAuthenticationType]]
 
 
 class CredentialsResponse(BaseModel):
     credentials: List[AuthenticationConfiguration]
 
-    connector_preset_credentials_for_auth: Optional[List[AuthenticationType]] = None
+    connector_preset_credentials_for_auth: Optional[
+        List[OutboundAuthenticationType]
+    ] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -23,6 +23,8 @@ class CreateConnectorRequestTypedDict(TypedDict):
     r"""The description of the connector."""
     server: str
     r"""The url of the MCP server."""
+    title: NotRequired[Nullable[str]]
+    r"""Optional human-readable title for the connector."""
     icon_url: NotRequired[Nullable[str]]
     r"""The optional url of the icon you want to associate to the connector."""
     visibility: NotRequired[ResourceVisibility]
@@ -44,6 +46,9 @@ class CreateConnectorRequest(BaseModel):
     server: str
     r"""The url of the MCP server."""
 
+    title: OptionalNullable[str] = UNSET
+    r"""Optional human-readable title for the connector."""
+
     icon_url: OptionalNullable[str] = UNSET
     r"""The optional url of the icon you want to associate to the connector."""
 
@@ -61,9 +66,11 @@ class CreateConnectorRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["icon_url", "visibility", "headers", "auth_data", "system_prompt"]
+            ["title", "icon_url", "visibility", "headers", "auth_data", "system_prompt"]
         )
-        nullable_fields = set(["icon_url", "headers", "auth_data", "system_prompt"])
+        nullable_fields = set(
+            ["title", "icon_url", "headers", "auth_data", "system_prompt"]
+        )
         serialized = handler(self)
         m = {}
 
