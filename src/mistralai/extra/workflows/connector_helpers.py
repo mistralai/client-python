@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 async def on_auth_required(state: ConnectorAuthTaskState) -> None:
-    """Default callback: opens the OAuth URL in the browser and waits."""
+    """Default callback: opens the OAuth URL in the browser."""
     if state.auth_url:
         logger.info(
             "Auth required — opening browser (connector=%s, auth_url=%s)",
@@ -39,7 +39,6 @@ async def on_auth_required(state: ConnectorAuthTaskState) -> None:
             "Auth required — authenticate the connector manually (connector=%s)",
             state.connector_name,
         )
-    input("Press Enter after completing the OAuth flow...")
 
 
 async def run_workflow_with_connectors(

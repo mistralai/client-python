@@ -144,7 +144,7 @@ async def execute_with_connector_auth_async(
 
     execute_kwargs: Dict[str, Any] = dict(
         workflow_identifier=workflow_identifier,
-        input_=input_dict,
+        input=input_dict,
         execution_id=execution_id,
         task_queue=task_queue,
         deployment_name=deployment_name,
