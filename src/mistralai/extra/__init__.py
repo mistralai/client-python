@@ -6,11 +6,6 @@ from .struct_chat import (
 )
 from .utils import response_format_from_pydantic_model
 from .utils.response_format import CustomPydanticModel
-from .workflows import (
-    ConnectorAuthTaskState,
-    ConnectorSlot,
-    execute_with_connector_auth_async,
-)
 
 if TYPE_CHECKING:
     from .realtime import (
@@ -49,10 +44,7 @@ def __getattr__(name: str):
 
 
 __all__ = [
-    "ConnectorAuthTaskState",
-    "ConnectorSlot",
     "convert_to_parsed_chat_completion_response",
-    "execute_with_connector_auth_async",
     "response_format_from_pydantic_model",
     "CustomPydanticModel",
     "ParsedChatCompletionResponse",
