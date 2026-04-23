@@ -142,6 +142,7 @@ class ChatCompletionStreamRequestTypedDict(TypedDict):
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
+    prompt_cache_key: NotRequired[Nullable[str]]
     safe_prompt: NotRequired[bool]
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -203,6 +204,8 @@ class ChatCompletionStreamRequest(BaseModel):
 
     guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
+    prompt_cache_key: OptionalNullable[str] = UNSET
+
     safe_prompt: Optional[bool] = None
     r"""Whether to inject a safety prompt before all conversations."""
 
@@ -228,6 +231,7 @@ class ChatCompletionStreamRequest(BaseModel):
                 "reasoning_effort",
                 "prompt_mode",
                 "guardrails",
+                "prompt_cache_key",
                 "safe_prompt",
             ]
         )
@@ -246,6 +250,7 @@ class ChatCompletionStreamRequest(BaseModel):
                 "reasoning_effort",
                 "prompt_mode",
                 "guardrails",
+                "prompt_cache_key",
             ]
         )
         serialized = handler(self)

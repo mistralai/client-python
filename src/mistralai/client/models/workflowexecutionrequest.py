@@ -2,7 +2,6 @@
 # @generated-id: 806340497ed4
 
 from __future__ import annotations
-from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -21,8 +20,6 @@ class WorkflowExecutionRequestTypedDict(TypedDict):
     r"""Allows you to specify a custom execution ID. If not provided, a random ID will be generated."""
     input: NotRequired[Nullable[Any]]
     r"""The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema."""
-    encoded_input: NotRequired[Nullable[NetworkEncodedInputTypedDict]]
-    r"""Encoded input to the workflow, used when payload encoding is enabled."""
     wait_for_result: NotRequired[bool]
     r"""If true, wait for the workflow to complete and return the result directly."""
     timeout_seconds: NotRequired[Nullable[float]]
@@ -42,9 +39,6 @@ class WorkflowExecutionRequest(BaseModel):
 
     input: OptionalNullable[Any] = UNSET
     r"""The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema."""
-
-    encoded_input: OptionalNullable[NetworkEncodedInput] = UNSET
-    r"""Encoded input to the workflow, used when payload encoding is enabled."""
 
     wait_for_result: Optional[bool] = False
     r"""If true, wait for the workflow to complete and return the result directly."""
@@ -74,7 +68,6 @@ class WorkflowExecutionRequest(BaseModel):
             [
                 "execution_id",
                 "input",
-                "encoded_input",
                 "wait_for_result",
                 "timeout_seconds",
                 "custom_tracing_attributes",
@@ -87,7 +80,6 @@ class WorkflowExecutionRequest(BaseModel):
             [
                 "execution_id",
                 "input",
-                "encoded_input",
                 "timeout_seconds",
                 "custom_tracing_attributes",
                 "extensions",

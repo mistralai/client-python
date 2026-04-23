@@ -2,11 +2,11 @@
 # @generated-id: 545ab7f24523
 
 from __future__ import annotations
-from .authenticationtype import AuthenticationType
 from .connectorauthenticationheader import (
     ConnectorAuthenticationHeader,
     ConnectorAuthenticationHeaderTypedDict,
 )
+from .outboundauthenticationtype import OutboundAuthenticationType
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -22,14 +22,14 @@ from typing_extensions import NotRequired, TypedDict
 class PublicAuthenticationMethodTypedDict(TypedDict):
     r"""Public view of an authentication method, without secrets."""
 
-    method_type: AuthenticationType
+    method_type: OutboundAuthenticationType
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
 
 
 class PublicAuthenticationMethod(BaseModel):
     r"""Public view of an authentication method, without secrets."""
 
-    method_type: AuthenticationType
+    method_type: OutboundAuthenticationType
 
     headers: OptionalNullable[List[ConnectorAuthenticationHeader]] = UNSET
 
