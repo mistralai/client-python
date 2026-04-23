@@ -21,7 +21,6 @@ Example::
 
     async def prompt_user(state: ConnectorAuthTaskState) -> None:
         print(f"Please authenticate: {state.auth_url}")
-        input("Press Enter when done...")
 
     gmail = ConnectorSlot(connector_name="gmail")
 
@@ -60,7 +59,7 @@ from mistralai.client.models import (
     WorkflowExecutionResponse,
 )
 
-from .connector_slot import ConnectorSlot
+from .connector_slot import ConnectorSlot, WorkflowExtensions
 
 if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
@@ -138,13 +137,15 @@ async def execute_with_connector_auth_async(
         RuntimeError: If the workflow finishes with a non-COMPLETED status.
         TimeoutError: If *max_polling_attempts* is set and exceeded.
     """
-    input_dict = _serialize_input(input_data)
-
-    extensions = _build_connector_extensions(connectors)
+    extensions = (
+        WorkflowExtensions.from_connectors(connectors).to_dict()
+        if connectors
+        else None
+    )
 
     execute_kwargs: Dict[str, Any] = dict(
         workflow_identifier=workflow_identifier,
-        input=input_dict,
+        input=input_data,
         execution_id=execution_id,
         task_queue=task_queue,
         deployment_name=deployment_name,
@@ -165,29 +166,6 @@ async def execute_with_connector_auth_async(
 # ---------------------------------------------------------------------------
 # Internal helpers
 # ---------------------------------------------------------------------------
-
-
-def _serialize_input(input_data: Any) -> Optional[Dict[str, Any]]:
-    if input_data is None:
-        return None
-    if hasattr(input_data, "model_dump"):
-        return input_data.model_dump(mode="json")
-    return input_data
-
-
-def _build_connector_extensions(
-    connectors: Sequence[ConnectorSlot],
-) -> Optional[Dict[str, Any]]:
-    """Build the extensions dict from connector slots.
-
-    Connectors are passed to the API via ``extensions.mistralai.connectors``.
-    """
-    if not connectors:
-        return None
-    bindings = [
-        slot.model_dump(mode="json", exclude_none=True) for slot in connectors
-    ]
-    return {"mistralai": {"connectors": {"bindings": bindings}}}
 
 
 async def _stream_and_handle_auth(
