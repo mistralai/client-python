@@ -16,6 +16,8 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class UpdateConnectorRequestTypedDict(TypedDict):
+    title: NotRequired[Nullable[str]]
+    r"""Optional human-readable title for the connector."""
     name: NotRequired[Nullable[str]]
     r"""The name of the connector."""
     description: NotRequired[Nullable[str]]
@@ -37,6 +39,9 @@ class UpdateConnectorRequestTypedDict(TypedDict):
 
 
 class UpdateConnectorRequest(BaseModel):
+    title: OptionalNullable[str] = UNSET
+    r"""Optional human-readable title for the connector."""
+
     name: OptionalNullable[str] = UNSET
     r"""The name of the connector."""
 
@@ -68,6 +73,7 @@ class UpdateConnectorRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "title",
                 "name",
                 "description",
                 "icon_url",
@@ -81,6 +87,7 @@ class UpdateConnectorRequest(BaseModel):
         )
         nullable_fields = set(
             [
+                "title",
                 "name",
                 "description",
                 "icon_url",

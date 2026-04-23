@@ -134,6 +134,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     prompt_mode: NotRequired[Nullable[MistralPromptMode]]
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
+    prompt_cache_key: NotRequired[Nullable[str]]
 
 
 class AgentsCompletionRequest(BaseModel):
@@ -185,6 +186,8 @@ class AgentsCompletionRequest(BaseModel):
 
     guardrails: OptionalNullable[List[GuardrailConfig]] = UNSET
 
+    prompt_cache_key: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -205,6 +208,7 @@ class AgentsCompletionRequest(BaseModel):
                 "reasoning_effort",
                 "prompt_mode",
                 "guardrails",
+                "prompt_cache_key",
             ]
         )
         nullable_fields = set(
@@ -220,6 +224,7 @@ class AgentsCompletionRequest(BaseModel):
                 "reasoning_effort",
                 "prompt_mode",
                 "guardrails",
+                "prompt_cache_key",
             ]
         )
         serialized = handler(self)
