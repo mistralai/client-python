@@ -109,7 +109,7 @@ class CompletionFineTuningJobTypedDict(TypedDict):
     fine_tuned_model: NotRequired[Nullable[str]]
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
-    r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
+    r"""Optional user-provided string inserted into the fine-tuned model name to help identify it. For example, a suffix of `\"my-great-model\"` produces a name like `ft:open-mistral-7b:abcd1234:20260101:my-great-model:efgh5678`."""
     integrations: NotRequired[
         Nullable[List[CompletionFineTuningJobIntegrationTypedDict]]
     ]
@@ -157,7 +157,7 @@ class CompletionFineTuningJob(BaseModel):
     r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
 
     suffix: OptionalNullable[str] = UNSET
-    r"""Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."""
+    r"""Optional user-provided string inserted into the fine-tuned model name to help identify it. For example, a suffix of `\"my-great-model\"` produces a name like `ft:open-mistral-7b:abcd1234:20260101:my-great-model:efgh5678`."""
 
     integrations: OptionalNullable[List[CompletionFineTuningJobIntegration]] = UNSET
     r"""A list of integrations enabled for your fine-tuning job."""

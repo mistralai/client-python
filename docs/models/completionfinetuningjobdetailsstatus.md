@@ -1,5 +1,7 @@
 # CompletionFineTuningJobDetailsStatus
 
+The current status of the fine-tuning job.
+
 ## Example Usage
 
 ```python

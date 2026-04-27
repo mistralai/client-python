@@ -610,6 +610,10 @@ if TYPE_CHECKING:
         CreateGithubRepositoryRequest,
         CreateGithubRepositoryRequestTypedDict,
     )
+    from .createingestionpipelineconfigurationrequest import (
+        CreateIngestionPipelineConfigurationRequest,
+        CreateIngestionPipelineConfigurationRequestTypedDict,
+    )
     from .createjudgerequest import (
         CreateJudgeRequest,
         CreateJudgeRequestOutput,
@@ -2561,6 +2565,8 @@ __all__ = [
     "CreateFineTuningJobRequestTypedDict",
     "CreateGithubRepositoryRequest",
     "CreateGithubRepositoryRequestTypedDict",
+    "CreateIngestionPipelineConfigurationRequest",
+    "CreateIngestionPipelineConfigurationRequestTypedDict",
     "CreateJudgeRequest",
     "CreateJudgeRequestOutput",
     "CreateJudgeRequestOutputTypedDict",
@@ -4053,6 +4059,8 @@ _dynamic_imports: dict[str, str] = {
     "HyperparametersTypedDict": ".createfinetuningjobrequest",
     "CreateGithubRepositoryRequest": ".creategithubrepositoryrequest",
     "CreateGithubRepositoryRequestTypedDict": ".creategithubrepositoryrequest",
+    "CreateIngestionPipelineConfigurationRequest": ".createingestionpipelineconfigurationrequest",
+    "CreateIngestionPipelineConfigurationRequestTypedDict": ".createingestionpipelineconfigurationrequest",
     "CreateJudgeRequest": ".createjudgerequest",
     "CreateJudgeRequestOutput": ".createjudgerequest",
     "CreateJudgeRequestOutputTypedDict": ".createjudgerequest",
