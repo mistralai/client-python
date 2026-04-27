@@ -55,7 +55,6 @@ class OCRRequestTypedDict(TypedDict):
     model: Nullable[str]
     document: DocumentUnionTypedDict
     r"""Document to run OCR on"""
-    id: NotRequired[str]
     pages: NotRequired[Nullable[PagesTypedDict]]
     r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
     include_image_base64: NotRequired[Nullable[bool]]
@@ -82,8 +81,6 @@ class OCRRequest(BaseModel):
 
     document: DocumentUnion
     r"""Document to run OCR on"""
-
-    id: Optional[str] = None
 
     pages: OptionalNullable[Pages] = UNSET
     r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
@@ -119,7 +116,6 @@ class OCRRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "id",
                 "pages",
                 "include_image_base64",
                 "image_limit",

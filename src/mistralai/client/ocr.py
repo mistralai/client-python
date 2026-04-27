@@ -18,7 +18,6 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
-        id: Optional[str] = None,
         pages: OptionalNullable[Union[models.Pages, models.PagesTypedDict]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
@@ -45,7 +44,6 @@ class Ocr(BaseSDK):
 
         :param model:
         :param document: Document to run OCR on
-        :param id:
         :param pages: Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0.
         :param include_image_base64: Include image URLs in response
         :param image_limit: Max images to extract
@@ -77,7 +75,6 @@ class Ocr(BaseSDK):
 
         request = models.OCRRequest(
             model=model,
-            id=id,
             document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,
@@ -161,7 +158,6 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[models.DocumentUnion, models.DocumentUnionTypedDict],
-        id: Optional[str] = None,
         pages: OptionalNullable[Union[models.Pages, models.PagesTypedDict]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
@@ -188,7 +184,6 @@ class Ocr(BaseSDK):
 
         :param model:
         :param document: Document to run OCR on
-        :param id:
         :param pages: Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0.
         :param include_image_base64: Include image URLs in response
         :param image_limit: Max images to extract
@@ -220,7 +215,6 @@ class Ocr(BaseSDK):
 
         request = models.OCRRequest(
             model=model,
-            id=id,
             document=utils.get_pydantic_model(document, models.DocumentUnion),
             pages=pages,
             include_image_base64=include_image_base64,

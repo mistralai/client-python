@@ -256,7 +256,12 @@ class BatchJobs(BaseSDK):
         Create a new batch job, it will be queued for processing.
 
         :param endpoint:
-        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
+        :param input_files: A list of `.jsonl` files for batch inference.
+            Each line must be a JSON object with a `body` field containing the request payload:
+            ```json
+            {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}}
+            {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}}
+            ```
         :param requests:
         :param model: The model to be used for batch inference.
         :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.
@@ -368,7 +373,12 @@ class BatchJobs(BaseSDK):
         Create a new batch job, it will be queued for processing.
 
         :param endpoint:
-        :param input_files: The list of input files to be used for batch inference, these files should be `jsonl` files, containing the input data corresponding to the bory request for the batch inference in a \"body\" field. An example of such file is the following: ```json {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}} {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}} ```
+        :param input_files: A list of `.jsonl` files for batch inference.
+            Each line must be a JSON object with a `body` field containing the request payload:
+            ```json
+            {\"custom_id\": \"0\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French cheese?\"}]}}
+            {\"custom_id\": \"1\", \"body\": {\"max_tokens\": 100, \"messages\": [{\"role\": \"user\", \"content\": \"What is the best French wine?\"}]}}
+            ```
         :param requests:
         :param model: The model to be used for batch inference.
         :param agent_id: In case you want to use a specific agent from the **deprecated** agents api for batch inference, you can specify the agent ID here.

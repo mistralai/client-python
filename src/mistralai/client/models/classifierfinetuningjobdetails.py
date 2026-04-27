@@ -48,6 +48,7 @@ ClassifierFineTuningJobDetailsStatus = Union[
     ],
     UnrecognizedStr,
 ]
+r"""The current status of the fine-tuning job."""
 
 
 ClassifierFineTuningJobDetailsIntegrationTypedDict = WandbIntegrationResultTypedDict
@@ -73,24 +74,36 @@ ClassifierFineTuningJobDetailsIntegration = WandbIntegrationResult
 
 class ClassifierFineTuningJobDetailsTypedDict(TypedDict):
     id: str
+    r"""The ID of the job."""
     auto_start: bool
     model: str
     status: ClassifierFineTuningJobDetailsStatus
+    r"""The current status of the fine-tuning job."""
     created_at: int
+    r"""The UNIX timestamp (in seconds) for when the fine-tuning job was created."""
     modified_at: int
+    r"""The UNIX timestamp (in seconds) for when the fine-tuning job was last modified."""
     training_files: List[str]
+    r"""A list containing the IDs of uploaded files that contain training data."""
     hyperparameters: ClassifierTrainingParametersTypedDict
     classifier_targets: List[ClassifierTargetResultTypedDict]
     validation_files: NotRequired[Nullable[List[str]]]
+    r"""A list containing the IDs of uploaded files that contain validation data."""
     object: Literal["job"]
+    r"""The object type of the fine-tuning job."""
     fine_tuned_model: NotRequired[Nullable[str]]
+    r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
     suffix: NotRequired[Nullable[str]]
+    r"""Optional user-provided string inserted into the fine-tuned model name to help identify it. For example, a suffix of `\"my-great-model\"` produces a name like `ft:open-mistral-7b:abcd1234:20260101:my-great-model:efgh5678`."""
     integrations: NotRequired[
         Nullable[List[ClassifierFineTuningJobDetailsIntegrationTypedDict]]
     ]
+    r"""A list of integrations enabled for your fine-tuning job."""
     trained_tokens: NotRequired[Nullable[int]]
+    r"""Total number of tokens trained."""
     metadata: NotRequired[Nullable[JobMetadataTypedDict]]
     job_type: Literal["classifier"]
+    r"""The type of job (`FT` for fine-tuning)."""
     events: NotRequired[List[EventTypedDict]]
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
     checkpoints: NotRequired[List[CheckpointTypedDict]]
@@ -98,39 +111,50 @@ class ClassifierFineTuningJobDetailsTypedDict(TypedDict):
 
 class ClassifierFineTuningJobDetails(BaseModel):
     id: str
+    r"""The ID of the job."""
 
     auto_start: bool
 
     model: str
 
     status: ClassifierFineTuningJobDetailsStatus
+    r"""The current status of the fine-tuning job."""
 
     created_at: int
+    r"""The UNIX timestamp (in seconds) for when the fine-tuning job was created."""
 
     modified_at: int
+    r"""The UNIX timestamp (in seconds) for when the fine-tuning job was last modified."""
 
     training_files: List[str]
+    r"""A list containing the IDs of uploaded files that contain training data."""
 
     hyperparameters: ClassifierTrainingParameters
 
     classifier_targets: List[ClassifierTargetResult]
 
     validation_files: OptionalNullable[List[str]] = UNSET
+    r"""A list containing the IDs of uploaded files that contain validation data."""
 
     object: Annotated[
         Annotated[Optional[Literal["job"]], AfterValidator(validate_const("job"))],
         pydantic.Field(alias="object"),
     ] = "job"
+    r"""The object type of the fine-tuning job."""
 
     fine_tuned_model: OptionalNullable[str] = UNSET
+    r"""The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running."""
 
     suffix: OptionalNullable[str] = UNSET
+    r"""Optional user-provided string inserted into the fine-tuned model name to help identify it. For example, a suffix of `\"my-great-model\"` produces a name like `ft:open-mistral-7b:abcd1234:20260101:my-great-model:efgh5678`."""
 
     integrations: OptionalNullable[List[ClassifierFineTuningJobDetailsIntegration]] = (
         UNSET
     )
+    r"""A list of integrations enabled for your fine-tuning job."""
 
     trained_tokens: OptionalNullable[int] = UNSET
+    r"""Total number of tokens trained."""
 
     metadata: OptionalNullable[JobMetadata] = UNSET
 
@@ -138,6 +162,7 @@ class ClassifierFineTuningJobDetails(BaseModel):
         Annotated[Literal["classifier"], AfterValidator(validate_const("classifier"))],
         pydantic.Field(alias="job_type"),
     ] = "classifier"
+    r"""The type of job (`FT` for fine-tuning)."""
 
     events: Optional[List[Event]] = None
     r"""Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."""
