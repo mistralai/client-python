@@ -7,6 +7,7 @@ from jsonpath import JSONPath
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.deployments import Deployments
+from mistralai.client.events import Events
 from mistralai.client.executions import Executions
 from mistralai.client.metrics import Metrics
 from mistralai.client.runs import Runs
@@ -14,7 +15,6 @@ from mistralai.client.schedules import Schedules
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from mistralai.client.workflows_events import WorkflowsEvents
 from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
@@ -30,7 +30,7 @@ class Workflows(BaseSDK):
     metrics: Metrics
     runs: Runs
     schedules: Schedules
-    events: WorkflowsEvents
+    events: Events
     deployments: Deployments
 
     def __init__(
@@ -45,9 +45,7 @@ class Workflows(BaseSDK):
         self.metrics = Metrics(self.sdk_configuration, parent_ref=self.parent_ref)
         self.runs = Runs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.schedules = Schedules(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.events = WorkflowsEvents(
-            self.sdk_configuration, parent_ref=self.parent_ref
-        )
+        self.events = Events(self.sdk_configuration, parent_ref=self.parent_ref)
         self.deployments = Deployments(
             self.sdk_configuration, parent_ref=self.parent_ref
         )

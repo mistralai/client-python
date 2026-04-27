@@ -1,4 +1,4 @@
-# Events
+# Workflows.Events
 
 ## Overview
 
@@ -23,7 +23,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.events.get_stream_events(scope="*", activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
+    res = mistral.workflows.events.get_stream_events(scope="*", activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
 
     with res as event_stream:
         for event in event_stream:
@@ -77,7 +77,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.events.get_workflow_events(limit=100)
+    res = mistral.workflows.events.get_workflow_events(limit=100)
 
     # Handle response
     print(res)

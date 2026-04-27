@@ -23,7 +23,6 @@ if TYPE_CHECKING:
     from mistralai.client.chat import Chat
     from mistralai.client.classifiers import Classifiers
     from mistralai.client.embeddings import Embeddings
-    from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
     from mistralai.client.fine_tuning import FineTuning
@@ -56,7 +55,6 @@ class Mistral(BaseSDK):
     ocr: "Ocr"
     r"""OCR API"""
     workflows: "Workflows"
-    events: "Events"
     _sub_sdk_map = {
         "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
@@ -71,7 +69,6 @@ class Mistral(BaseSDK):
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
         "workflows": ("mistralai.client.workflows", "Workflows"),
-        "events": ("mistralai.client.events", "Events"),
     }
 
     def __init__(
