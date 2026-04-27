@@ -23,9 +23,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Union[Literal[False], None] = None,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -59,9 +57,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Literal[True],
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -94,9 +90,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Optional[bool] = False,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -138,9 +132,7 @@ class Speech(BaseSDK):
 
         request = models.SpeechRequest(
             model=model,
-            metadata=utils.get_pydantic_model(
-                metadata, OptionalNullable[models.MetadataDict]
-            ),
+            metadata=metadata,
             stream=stream,
             voice_id=voice_id,
             ref_audio=ref_audio,
@@ -227,9 +219,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Union[Literal[False], None] = None,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -263,9 +253,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Literal[True],
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -298,9 +286,7 @@ class Speech(BaseSDK):
         *,
         input: str,
         model: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[
-            Union[models.MetadataDict, models.MetadataDictTypedDict]
-        ] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Optional[bool] = False,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
@@ -342,9 +328,7 @@ class Speech(BaseSDK):
 
         request = models.SpeechRequest(
             model=model,
-            metadata=utils.get_pydantic_model(
-                metadata, OptionalNullable[models.MetadataDict]
-            ),
+            metadata=metadata,
             stream=stream,
             voice_id=voice_id,
             ref_audio=ref_audio,

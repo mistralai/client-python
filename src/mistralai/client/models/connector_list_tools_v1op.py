@@ -4,7 +4,13 @@
 from __future__ import annotations
 from .connectortool import ConnectorTool, ConnectorToolTypedDict
 from .mcptool import MCPTool, MCPToolTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional, Union
@@ -18,6 +24,7 @@ class ConnectorListToolsV1RequestTypedDict(TypedDict):
     refresh: NotRequired[bool]
     pretty: NotRequired[bool]
     r"""Return a simplified payload with only name, description, annotations, and a compact inputSchema."""
+    credentials_name: NotRequired[Nullable[str]]
 
 
 class ConnectorListToolsV1Request(BaseModel):
@@ -46,18 +53,34 @@ class ConnectorListToolsV1Request(BaseModel):
     ] = False
     r"""Return a simplified payload with only name, description, annotations, and a compact inputSchema."""
 
+    credentials_name: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["page", "page_size", "refresh", "pretty"])
+        optional_fields = set(
+            ["page", "page_size", "refresh", "pretty", "credentials_name"]
+        )
+        nullable_fields = set(["credentials_name"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

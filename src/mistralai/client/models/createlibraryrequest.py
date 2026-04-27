@@ -10,13 +10,22 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Literal
 from typing_extensions import NotRequired, TypedDict
+
+
+OwnerType = Literal[
+    "User",
+    "Workspace",
+]
 
 
 class CreateLibraryRequestTypedDict(TypedDict):
     name: str
     description: NotRequired[Nullable[str]]
     chunk_size: NotRequired[Nullable[int]]
+    owner_type: NotRequired[Nullable[OwnerType]]
+    r"""Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries."""
 
 
 class CreateLibraryRequest(BaseModel):
@@ -26,10 +35,13 @@ class CreateLibraryRequest(BaseModel):
 
     chunk_size: OptionalNullable[int] = UNSET
 
+    owner_type: OptionalNullable[OwnerType] = UNSET
+    r"""Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "chunk_size"])
-        nullable_fields = set(["description", "chunk_size"])
+        optional_fields = set(["description", "chunk_size", "owner_type"])
+        nullable_fields = set(["description", "chunk_size", "owner_type"])
         serialized = handler(self)
         m = {}
 

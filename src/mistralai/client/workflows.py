@@ -270,7 +270,7 @@ class Workflows(BaseSDK):
 
         :param active_only: Whether to only return active workflows
         :param include_shared: Whether to include shared workflows
-        :param available_in_chat_assistant: Whether to only return workflows compatible with chat assistant
+        :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
@@ -410,7 +410,7 @@ class Workflows(BaseSDK):
 
         :param active_only: Whether to only return active workflows
         :param include_shared: Whether to include shared workflows
-        :param available_in_chat_assistant: Whether to only return workflows compatible with chat assistant
+        :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
@@ -564,7 +564,7 @@ class Workflows(BaseSDK):
         :param workflow_search: The workflow name to filter by
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
-        :param available_in_chat_assistant: Whether to only return workflows compatible with chat assistant
+        :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param limit: The maximum number of workflows versions to return
         :param cursor: The cursor for pagination
         :param retries: Override the default retry configuration for this method
@@ -684,7 +684,7 @@ class Workflows(BaseSDK):
         :param workflow_search: The workflow name to filter by
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
-        :param available_in_chat_assistant: Whether to only return workflows compatible with chat assistant
+        :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param limit: The maximum number of workflows versions to return
         :param cursor: The cursor for pagination
         :param retries: Override the default retry configuration for this method
@@ -783,12 +783,10 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -801,10 +799,10 @@ class Workflows(BaseSDK):
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -830,12 +828,10 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -914,12 +910,10 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -932,10 +926,10 @@ class Workflows(BaseSDK):
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -961,12 +955,10 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1048,12 +1040,10 @@ class Workflows(BaseSDK):
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1066,10 +1056,10 @@ class Workflows(BaseSDK):
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1095,12 +1085,10 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1182,12 +1170,10 @@ class Workflows(BaseSDK):
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1200,10 +1186,10 @@ class Workflows(BaseSDK):
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
+        :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1229,12 +1215,10 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
+                extensions=extensions,
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),

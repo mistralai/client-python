@@ -12,9 +12,9 @@ class DeleteModelResponseTypedDict(TypedDict):
     id: str
     r"""The ID of the deleted model."""
     object: NotRequired[str]
-    r"""The object type that was deleted"""
+    r"""The object type that was deleted."""
     deleted: NotRequired[bool]
-    r"""The deletion status"""
+    r"""The deletion status."""
 
 
 class DeleteModelResponse(BaseModel):
@@ -22,10 +22,10 @@ class DeleteModelResponse(BaseModel):
     r"""The ID of the deleted model."""
 
     object: Optional[str] = "model"
-    r"""The object type that was deleted"""
+    r"""The object type that was deleted."""
 
     deleted: Optional[bool] = True
-    r"""The deletion status"""
+    r"""The deletion status."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

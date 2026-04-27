@@ -1068,6 +1068,8 @@ class Documents(BaseSDK):
         *,
         library_id: str,
         document_id: str,
+        page_start: OptionalNullable[int] = UNSET,
+        page_end: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1079,6 +1081,8 @@ class Documents(BaseSDK):
 
         :param library_id:
         :param document_id:
+        :param page_start:
+        :param page_end:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1100,6 +1104,8 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
+            page_start=page_start,
+            page_end=page_end,
         )
 
         req = self._build_request(
@@ -1164,6 +1170,8 @@ class Documents(BaseSDK):
         *,
         library_id: str,
         document_id: str,
+        page_start: OptionalNullable[int] = UNSET,
+        page_end: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1175,6 +1183,8 @@ class Documents(BaseSDK):
 
         :param library_id:
         :param document_id:
+        :param page_start:
+        :param page_end:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1196,6 +1206,8 @@ class Documents(BaseSDK):
         request = models.LibrariesDocumentsGetTextContentV1Request(
             library_id=library_id,
             document_id=document_id,
+            page_start=page_start,
+            page_end=page_end,
         )
 
         req = self._build_request_async(

@@ -3,8 +3,15 @@
 
 from __future__ import annotations
 from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
-from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
+from pydantic import model_serializer
+from typing_extensions import NotRequired, TypedDict
 
 
 class WorkflowExecutionStartedAttributesResponseTypedDict(TypedDict):
@@ -19,6 +26,8 @@ class WorkflowExecutionStartedAttributesResponseTypedDict(TypedDict):
 
     Used for complete state snapshots or final results.
     """
+    display_name: NotRequired[Nullable[str]]
+    r"""The user-friendly display name of the workflow, if available."""
 
 
 class WorkflowExecutionStartedAttributesResponse(BaseModel):
@@ -35,3 +44,31 @@ class WorkflowExecutionStartedAttributesResponse(BaseModel):
 
     Used for complete state snapshots or final results.
     """
+
+    display_name: OptionalNullable[str] = UNSET
+    r"""The user-friendly display name of the workflow, if available."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["display_name"])
+        nullable_fields = set(["display_name"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
