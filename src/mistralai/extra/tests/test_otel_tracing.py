@@ -279,7 +279,16 @@ class TestOtelTracing(unittest.TestCase):
                     finish_reason="stop",
                 ),
             ],
-            usage=UsageInfo(prompt_tokens=20, completion_tokens=25, total_tokens=45),
+            usage=UsageInfo.model_validate(
+                {
+                    "prompt_tokens": 20,
+                    "completion_tokens": 25,
+                    "total_tokens": 45,
+                    "prompt_tokens_details": {
+                        "cached_tokens": 12,
+                    },
+                }
+            ),
         )
 
         self._run_hook_lifecycle(
@@ -308,6 +317,7 @@ class TestOtelTracing(unittest.TestCase):
                 "gen_ai.response.finish_reasons": ("stop",),
                 "gen_ai.usage.input_tokens": 20,
                 "gen_ai.usage.output_tokens": 25,
+                "gen_ai.usage.cache_read.input_tokens": 12,
             },
         )
 
@@ -1397,8 +1407,13 @@ class TestOtelTracing(unittest.TestCase):
                             finish_reason="stop",
                         ),
                     ],
-                    usage=UsageInfo(
-                        prompt_tokens=20, completion_tokens=8, total_tokens=28
+                    usage=UsageInfo.model_validate(
+                        {
+                            "prompt_tokens": 20,
+                            "completion_tokens": 8,
+                            "total_tokens": 28,
+                            "num_cached_tokens": 10,
+                        }
                     ),
                 ),
             ),
@@ -1426,6 +1441,7 @@ class TestOtelTracing(unittest.TestCase):
                 "gen_ai.response.model": "mistral-large-latest",
                 "gen_ai.usage.input_tokens": 20,
                 "gen_ai.usage.output_tokens": 8,
+                "gen_ai.usage.cache_read.input_tokens": 10,
                 "gen_ai.response.finish_reasons": ("stop",),
             },
         )
