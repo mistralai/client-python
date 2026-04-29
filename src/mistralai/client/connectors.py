@@ -19,6 +19,7 @@ class Connectors(BaseSDK):
         name: str,
         description: str,
         server: str,
+        title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -38,6 +39,7 @@ class Connectors(BaseSDK):
         :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
         :param description: The description of the connector.
         :param server: The url of the MCP server.
+        :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
@@ -63,6 +65,7 @@ class Connectors(BaseSDK):
 
         request = models.CreateConnectorRequest(
             name=name,
+            title=title,
             description=description,
             icon_url=icon_url,
             visibility=visibility,
@@ -140,6 +143,7 @@ class Connectors(BaseSDK):
         name: str,
         description: str,
         server: str,
+        title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
@@ -159,6 +163,7 @@ class Connectors(BaseSDK):
         :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
         :param description: The description of the connector.
         :param server: The url of the MCP server.
+        :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
@@ -184,6 +189,7 @@ class Connectors(BaseSDK):
 
         request = models.CreateConnectorRequest(
             name=name,
+            title=title,
             description=description,
             icon_url=icon_url,
             visibility=visibility,
@@ -1283,7 +1289,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1382,7 +1388,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1711,7 +1717,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1810,7 +1816,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2139,7 +2145,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2238,7 +2244,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -3341,6 +3347,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id: str,
+        title: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
@@ -3362,6 +3369,7 @@ class Connectors(BaseSDK):
         Update a connector by its ID.
 
         :param connector_id:
+        :param title: Optional human-readable title for the connector.
         :param name: The name of the connector.
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
@@ -3392,6 +3400,7 @@ class Connectors(BaseSDK):
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
             update_connector_request=models.UpdateConnectorRequest(
+                title=title,
                 name=name,
                 description=description,
                 icon_url=icon_url,
@@ -3474,6 +3483,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id: str,
+        title: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
@@ -3495,6 +3505,7 @@ class Connectors(BaseSDK):
         Update a connector by its ID.
 
         :param connector_id:
+        :param title: Optional human-readable title for the connector.
         :param name: The name of the connector.
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
@@ -3525,6 +3536,7 @@ class Connectors(BaseSDK):
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
             update_connector_request=models.UpdateConnectorRequest(
+                title=title,
                 name=name,
                 description=description,
                 icon_url=icon_url,

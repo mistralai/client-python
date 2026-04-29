@@ -145,6 +145,7 @@ class Chat(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -173,6 +174,7 @@ class Chat(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -225,6 +227,7 @@ class Chat(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             safe_prompt=safe_prompt,
         )
 
@@ -335,6 +338,7 @@ class Chat(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -363,6 +367,7 @@ class Chat(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -415,6 +420,7 @@ class Chat(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             safe_prompt=safe_prompt,
         )
 
@@ -525,6 +531,7 @@ class Chat(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -555,6 +562,7 @@ class Chat(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -607,6 +615,7 @@ class Chat(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             safe_prompt=safe_prompt,
         )
 
@@ -725,6 +734,7 @@ class Chat(BaseSDK):
         guardrails: OptionalNullable[
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -755,6 +765,7 @@ class Chat(BaseSDK):
         :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
+        :param prompt_cache_key:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -807,6 +818,7 @@ class Chat(BaseSDK):
             guardrails=utils.get_pydantic_model(
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
+            prompt_cache_key=prompt_cache_key,
             safe_prompt=safe_prompt,
         )
 

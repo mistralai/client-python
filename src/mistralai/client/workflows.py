@@ -823,9 +823,6 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -842,7 +839,6 @@ class Workflows(BaseSDK):
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
@@ -872,9 +868,6 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
@@ -957,9 +950,6 @@ class Workflows(BaseSDK):
         workflow_identifier: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -976,7 +966,6 @@ class Workflows(BaseSDK):
         :param workflow_identifier:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
@@ -1006,9 +995,6 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
@@ -1094,9 +1080,6 @@ class Workflows(BaseSDK):
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -1113,7 +1096,6 @@ class Workflows(BaseSDK):
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
@@ -1143,9 +1125,6 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,
@@ -1231,9 +1210,6 @@ class Workflows(BaseSDK):
         workflow_registration_id: str,
         execution_id: OptionalNullable[str] = UNSET,
         input: OptionalNullable[Any] = UNSET,
-        encoded_input: OptionalNullable[
-            Union[models.NetworkEncodedInput, models.NetworkEncodedInputTypedDict]
-        ] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
@@ -1250,7 +1226,6 @@ class Workflows(BaseSDK):
         :param workflow_registration_id:
         :param execution_id: Allows you to specify a custom execution ID. If not provided, a random ID will be generated.
         :param input: The input to the workflow. This should be a dictionary or a BaseModel that matches the workflow's input schema.
-        :param encoded_input: Encoded input to the workflow, used when payload encoding is enabled.
         :param wait_for_result: If true, wait for the workflow to complete and return the result directly.
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
@@ -1280,9 +1255,6 @@ class Workflows(BaseSDK):
             workflow_execution_request=models.WorkflowExecutionRequest(
                 execution_id=execution_id,
                 input=input,
-                encoded_input=utils.get_pydantic_model(
-                    encoded_input, OptionalNullable[models.NetworkEncodedInput]
-                ),
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
                 custom_tracing_attributes=custom_tracing_attributes,

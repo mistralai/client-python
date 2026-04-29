@@ -32,6 +32,7 @@ class Fim(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -52,6 +53,7 @@ class Fim(BaseSDK):
         :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -82,6 +84,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
+            prompt_cache_key=prompt_cache_key,
         )
 
         req = self._build_request(
@@ -163,6 +166,7 @@ class Fim(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -183,6 +187,7 @@ class Fim(BaseSDK):
         :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -213,6 +218,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
+            prompt_cache_key=prompt_cache_key,
         )
 
         req = self._build_request_async(
@@ -294,6 +300,7 @@ class Fim(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -314,6 +321,7 @@ class Fim(BaseSDK):
         :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -344,6 +352,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
+            prompt_cache_key=prompt_cache_key,
         )
 
         req = self._build_request(
@@ -433,6 +442,7 @@ class Fim(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -453,6 +463,7 @@ class Fim(BaseSDK):
         :param metadata:
         :param suffix: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         :param min_tokens: The minimum number of tokens to generate in the completion.
+        :param prompt_cache_key:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -483,6 +494,7 @@ class Fim(BaseSDK):
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
+            prompt_cache_key=prompt_cache_key,
         )
 
         req = self._build_request_async(

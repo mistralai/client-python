@@ -20,6 +20,7 @@ class ConnectorTypedDict(TypedDict):
     description: str
     created_at: datetime
     modified_at: datetime
+    title: NotRequired[Nullable[str]]
     server: NotRequired[Nullable[str]]
     auth_type: NotRequired[Nullable[str]]
 
@@ -35,14 +36,16 @@ class Connector(BaseModel):
 
     modified_at: datetime
 
+    title: OptionalNullable[str] = UNSET
+
     server: OptionalNullable[str] = UNSET
 
     auth_type: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["server", "auth_type"])
-        nullable_fields = set(["server", "auth_type"])
+        optional_fields = set(["title", "server", "auth_type"])
+        nullable_fields = set(["title", "server", "auth_type"])
         serialized = handler(self)
         m = {}
 

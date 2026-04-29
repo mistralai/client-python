@@ -15,26 +15,38 @@ from typing_extensions import NotRequired, TypedDict
 
 class JobMetadataTypedDict(TypedDict):
     expected_duration_seconds: NotRequired[Nullable[int]]
+    r"""The approximated time (in seconds) for the fine-tuning process to complete."""
     cost: NotRequired[Nullable[float]]
+    r"""The cost of the fine-tuning job."""
     cost_currency: NotRequired[Nullable[str]]
+    r"""The currency used for the fine-tuning job cost."""
     train_tokens_per_step: NotRequired[Nullable[int]]
+    r"""The number of tokens consumed by one training step."""
     train_tokens: NotRequired[Nullable[int]]
+    r"""The total number of tokens used during the fine-tuning process."""
     data_tokens: NotRequired[Nullable[int]]
+    r"""The total number of tokens in the training dataset."""
     estimated_start_time: NotRequired[Nullable[int]]
 
 
 class JobMetadata(BaseModel):
     expected_duration_seconds: OptionalNullable[int] = UNSET
+    r"""The approximated time (in seconds) for the fine-tuning process to complete."""
 
     cost: OptionalNullable[float] = UNSET
+    r"""The cost of the fine-tuning job."""
 
     cost_currency: OptionalNullable[str] = UNSET
+    r"""The currency used for the fine-tuning job cost."""
 
     train_tokens_per_step: OptionalNullable[int] = UNSET
+    r"""The number of tokens consumed by one training step."""
 
     train_tokens: OptionalNullable[int] = UNSET
+    r"""The total number of tokens used during the fine-tuning process."""
 
     data_tokens: OptionalNullable[int] = UNSET
+    r"""The total number of tokens in the training dataset."""
 
     estimated_start_time: OptionalNullable[int] = UNSET
 

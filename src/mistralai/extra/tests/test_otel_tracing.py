@@ -1467,7 +1467,7 @@ class TestOtelTracing(unittest.TestCase):
             tool=FunctionTool(function=Function(name="get_weather", parameters={})),
         )
 
-        result = asyncio.get_event_loop().run_until_complete(
+        result = asyncio.run(
             create_function_result(function_call, run_tool)
         )
         self.assertEqual(result.tool_call_id, "tc-001")
@@ -1509,7 +1509,7 @@ class TestOtelTracing(unittest.TestCase):
             tool=FunctionTool(function=Function(name="failing_tool", parameters={})),
         )
 
-        asyncio.get_event_loop().run_until_complete(
+        asyncio.run(
             create_function_result(function_call, run_tool, continue_on_fn_error=True)
         )
 
