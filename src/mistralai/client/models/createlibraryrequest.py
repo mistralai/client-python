@@ -24,6 +24,7 @@ class CreateLibraryRequestTypedDict(TypedDict):
     name: str
     description: NotRequired[Nullable[str]]
     chunk_size: NotRequired[Nullable[int]]
+    r"""The size of the chunks (in characters) to split document text into. Must be between 256 and 32768."""
     owner_type: NotRequired[Nullable[OwnerType]]
     r"""Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries."""
 
@@ -34,6 +35,7 @@ class CreateLibraryRequest(BaseModel):
     description: OptionalNullable[str] = UNSET
 
     chunk_size: OptionalNullable[int] = UNSET
+    r"""The size of the chunks (in characters) to split document text into. Must be between 256 and 32768."""
 
     owner_type: OptionalNullable[OwnerType] = UNSET
     r"""Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries."""

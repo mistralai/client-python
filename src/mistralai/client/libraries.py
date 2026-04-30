@@ -63,7 +63,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -165,7 +165,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -254,7 +254,7 @@ class Libraries(BaseSDK):
 
         :param name:
         :param description:
-        :param chunk_size:
+        :param chunk_size: The size of the chunks (in characters) to split document text into. Must be between 256 and 32768.
         :param owner_type: Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -267,7 +267,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -359,7 +359,7 @@ class Libraries(BaseSDK):
 
         :param name:
         :param description:
-        :param chunk_size:
+        :param chunk_size: The size of the chunks (in characters) to split document text into. Must be between 256 and 32768.
         :param owner_type: Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -372,7 +372,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -471,7 +471,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -564,7 +564,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -657,7 +657,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -750,7 +750,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -822,7 +822,7 @@ class Libraries(BaseSDK):
         self,
         *,
         library_id: str,
-        name: OptionalNullable[str] = UNSET,
+        name: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -847,7 +847,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -930,7 +930,7 @@ class Libraries(BaseSDK):
         self,
         *,
         library_id: str,
-        name: OptionalNullable[str] = UNSET,
+        name: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -955,7 +955,7 @@ class Libraries(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url

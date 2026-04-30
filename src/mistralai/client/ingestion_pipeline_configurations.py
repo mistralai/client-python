@@ -2,12 +2,13 @@
 # @generated-id: f5a994272058
 
 from .basesdk import BaseSDK
+from datetime import datetime
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Dict, List, Mapping, Optional
 
 
 class IngestionPipelineConfigurations(BaseSDK):
@@ -34,7 +35,7 @@ class IngestionPipelineConfigurations(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -116,7 +117,7 @@ class IngestionPipelineConfigurations(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -179,6 +180,7 @@ class IngestionPipelineConfigurations(BaseSDK):
         self,
         *,
         name: str,
+        pipeline_composition: OptionalNullable[Dict[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -189,6 +191,7 @@ class IngestionPipelineConfigurations(BaseSDK):
         Register an ingestion configuration.
 
         :param name:
+        :param pipeline_composition:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -200,7 +203,7 @@ class IngestionPipelineConfigurations(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -209,6 +212,7 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         request = models.CreateIngestionPipelineConfigurationRequest(
             name=name,
+            pipeline_composition=pipeline_composition,
         )
 
         req = self._build_request(
@@ -281,6 +285,7 @@ class IngestionPipelineConfigurations(BaseSDK):
         self,
         *,
         name: str,
+        pipeline_composition: OptionalNullable[Dict[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -291,6 +296,7 @@ class IngestionPipelineConfigurations(BaseSDK):
         Register an ingestion configuration.
 
         :param name:
+        :param pipeline_composition:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -302,7 +308,7 @@ class IngestionPipelineConfigurations(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -311,6 +317,7 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         request = models.CreateIngestionPipelineConfigurationRequest(
             name=name,
+            pipeline_composition=pipeline_composition,
         )
 
         req = self._build_request_async(
@@ -350,6 +357,218 @@ class IngestionPipelineConfigurations(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="register_config_v1_rag_ingestion_pipeline_configurations_put",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.IngestionPipelineConfiguration, http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def update_run_info(
+        self,
+        *,
+        id: str,
+        execution_time: datetime,
+        chunks_count: int,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.IngestionPipelineConfiguration:
+        r"""Update Run Info
+
+        :param id:
+        :param execution_time:
+        :param chunks_count:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest(
+                id=id,
+                update_run_info=models.UpdateRunInfo(
+                    execution_time=execution_time,
+                    chunks_count=chunks_count,
+                ),
+            )
+        )
+
+        req = self._build_request(
+            method="PUT",
+            path="/v1/rag/ingestion_pipeline_configurations/{id}/run_info",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.update_run_info, False, False, "json", models.UpdateRunInfo
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="update_run_info_v1_rag_ingestion_pipeline_configurations__id__run_info_put",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.IngestionPipelineConfiguration, http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def update_run_info_async(
+        self,
+        *,
+        id: str,
+        execution_time: datetime,
+        chunks_count: int,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.IngestionPipelineConfiguration:
+        r"""Update Run Info
+
+        :param id:
+        :param execution_time:
+        :param chunks_count:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest(
+                id=id,
+                update_run_info=models.UpdateRunInfo(
+                    execution_time=execution_time,
+                    chunks_count=chunks_count,
+                ),
+            )
+        )
+
+        req = self._build_request_async(
+            method="PUT",
+            path="/v1/rag/ingestion_pipeline_configurations/{id}/run_info",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.update_run_info, False, False, "json", models.UpdateRunInfo
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="update_run_info_v1_rag_ingestion_pipeline_configurations__id__run_info_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
