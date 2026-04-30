@@ -1497,6 +1497,10 @@ if TYPE_CHECKING:
     )
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .paginationresponse import PaginationResponse, PaginationResponseTypedDict
+    from .pause_schedule_v1_workflows_schedules_schedule_id_pause_postop import (
+        PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest,
+        PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict,
+    )
     from .post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop import (
         PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest,
         PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict,
@@ -1605,6 +1609,10 @@ if TYPE_CHECKING:
         ResponseStartedEvent,
         ResponseStartedEventTypedDict,
     )
+    from .resume_schedule_v1_workflows_schedules_schedule_id_resume_postop import (
+        ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest,
+        ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict,
+    )
     from .retrieve_model_v1_models_model_id_getop import (
         ResponseRetrieveModelV1ModelsModelIDGet,
         ResponseRetrieveModelV1ModelsModelIDGetTypedDict,
@@ -1626,10 +1634,18 @@ if TYPE_CHECKING:
         ScheduleDefinitionOutput,
         ScheduleDefinitionOutputTypedDict,
     )
+    from .schedulefutureexecution import (
+        ScheduleFutureExecution,
+        ScheduleFutureExecutionTypedDict,
+    )
     from .scheduleinterval import ScheduleInterval, ScheduleIntervalTypedDict
     from .scheduleoverlappolicy import ScheduleOverlapPolicy
     from .schedulepolicy import SchedulePolicy, SchedulePolicyTypedDict
     from .schedulerange import ScheduleRange, ScheduleRangeTypedDict
+    from .schedulerecentexecution import (
+        ScheduleRecentExecution,
+        ScheduleRecentExecutionTypedDict,
+    )
     from .searchchatcompletioneventidsrequest import (
         SearchChatCompletionEventIdsRequest,
         SearchChatCompletionEventIdsRequestTypedDict,
@@ -1894,6 +1910,10 @@ if TYPE_CHECKING:
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict,
     )
+    from .update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop import (
+        UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest,
+        UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict,
+    )
     from .update_voice_v1_audio_voices_voice_id_patchop import (
         UpdateVoiceV1AudioVoicesVoiceIDPatchRequest,
         UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict,
@@ -1952,6 +1972,7 @@ if TYPE_CHECKING:
         UpdateLibraryRequestTypedDict,
     )
     from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
+    from .updateruninfo import UpdateRunInfo, UpdateRunInfoTypedDict
     from .updateworkflowresponse import (
         UpdateWorkflowResponse,
         UpdateWorkflowResponseTypedDict,
@@ -2117,6 +2138,10 @@ if TYPE_CHECKING:
     from .workflowschedulelistresponse import (
         WorkflowScheduleListResponse,
         WorkflowScheduleListResponseTypedDict,
+    )
+    from .workflowschedulepauserequest import (
+        WorkflowSchedulePauseRequest,
+        WorkflowSchedulePauseRequestTypedDict,
     )
     from .workflowschedulerequest import (
         WorkflowScheduleRequest,
@@ -3157,6 +3182,8 @@ __all__ = [
     "PaginationInfoTypedDict",
     "PaginationResponse",
     "PaginationResponseTypedDict",
+    "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest",
+    "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict",
     "Payload",
     "PayloadTypedDict",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest",
@@ -3246,6 +3273,8 @@ __all__ = [
     "ResponseTypedDict",
     "ResponseV1ConversationsGet",
     "ResponseV1ConversationsGetTypedDict",
+    "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest",
+    "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
     "Role",
@@ -3262,6 +3291,8 @@ __all__ = [
     "ScheduleDefinitionOutput",
     "ScheduleDefinitionOutputTypedDict",
     "ScheduleDefinitionTypedDict",
+    "ScheduleFutureExecution",
+    "ScheduleFutureExecutionTypedDict",
     "ScheduleInterval",
     "ScheduleIntervalTypedDict",
     "ScheduleOverlapPolicy",
@@ -3269,6 +3300,8 @@ __all__ = [
     "SchedulePolicyTypedDict",
     "ScheduleRange",
     "ScheduleRangeTypedDict",
+    "ScheduleRecentExecution",
+    "ScheduleRecentExecutionTypedDict",
     "Scope",
     "SearchChatCompletionEventIdsRequest",
     "SearchChatCompletionEventIdsRequestTypedDict",
@@ -3519,6 +3552,10 @@ __all__ = [
     "UpdateLibraryRequestTypedDict",
     "UpdateModelRequest",
     "UpdateModelRequestTypedDict",
+    "UpdateRunInfo",
+    "UpdateRunInfoTypedDict",
+    "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest",
+    "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest",
@@ -3627,6 +3664,8 @@ __all__ = [
     "WorkflowRegistrationWithWorkerStatusTypedDict",
     "WorkflowScheduleListResponse",
     "WorkflowScheduleListResponseTypedDict",
+    "WorkflowSchedulePauseRequest",
+    "WorkflowSchedulePauseRequestTypedDict",
     "WorkflowScheduleRequest",
     "WorkflowScheduleRequestTypedDict",
     "WorkflowScheduleResponse",
@@ -4674,6 +4713,8 @@ _dynamic_imports: dict[str, str] = {
     "PaginationInfoTypedDict": ".paginationinfo",
     "PaginationResponse": ".paginationresponse",
     "PaginationResponseTypedDict": ".paginationresponse",
+    "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
+    "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest": ".post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict": ".post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop",
     "PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest": ".post_dataset_records_from_dataset_v1_observability_datasets_dataset_id_imports_from_dataset_postop",
@@ -4747,6 +4788,8 @@ _dynamic_imports: dict[str, str] = {
     "ResponseFormats": ".responseformats",
     "ResponseStartedEvent": ".responsestartedevent",
     "ResponseStartedEventTypedDict": ".responsestartedevent",
+    "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest": ".resume_schedule_v1_workflows_schedules_schedule_id_resume_postop",
+    "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict": ".resume_schedule_v1_workflows_schedules_schedule_id_resume_postop",
     "ResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",
     "ResponseRetrieveModelV1ModelsModelIDGetTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
@@ -4764,6 +4807,8 @@ _dynamic_imports: dict[str, str] = {
     "ScheduleDefinitionTypedDict": ".scheduledefinition",
     "ScheduleDefinitionOutput": ".scheduledefinitionoutput",
     "ScheduleDefinitionOutputTypedDict": ".scheduledefinitionoutput",
+    "ScheduleFutureExecution": ".schedulefutureexecution",
+    "ScheduleFutureExecutionTypedDict": ".schedulefutureexecution",
     "ScheduleInterval": ".scheduleinterval",
     "ScheduleIntervalTypedDict": ".scheduleinterval",
     "ScheduleOverlapPolicy": ".scheduleoverlappolicy",
@@ -4771,6 +4816,8 @@ _dynamic_imports: dict[str, str] = {
     "SchedulePolicyTypedDict": ".schedulepolicy",
     "ScheduleRange": ".schedulerange",
     "ScheduleRangeTypedDict": ".schedulerange",
+    "ScheduleRecentExecution": ".schedulerecentexecution",
+    "ScheduleRecentExecutionTypedDict": ".schedulerecentexecution",
     "SearchChatCompletionEventIdsRequest": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsRequestTypedDict": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsResponse": ".searchchatcompletioneventidsresponse",
@@ -4969,6 +5016,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
+    "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
+    "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest": ".update_workflow_execution_v1_workflows_executions_execution_id_updates_postop",
@@ -5005,6 +5054,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateLibraryRequestTypedDict": ".updatelibraryrequest",
     "UpdateModelRequest": ".updatemodelrequest",
     "UpdateModelRequestTypedDict": ".updatemodelrequest",
+    "UpdateRunInfo": ".updateruninfo",
+    "UpdateRunInfoTypedDict": ".updateruninfo",
     "UpdateWorkflowResponse": ".updateworkflowresponse",
     "UpdateWorkflowResponseTypedDict": ".updateworkflowresponse",
     "UsageInfo": ".usageinfo",
@@ -5111,6 +5162,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowRegistrationWithWorkerStatusTypedDict": ".workflowregistrationwithworkerstatus",
     "WorkflowScheduleListResponse": ".workflowschedulelistresponse",
     "WorkflowScheduleListResponseTypedDict": ".workflowschedulelistresponse",
+    "WorkflowSchedulePauseRequest": ".workflowschedulepauserequest",
+    "WorkflowSchedulePauseRequestTypedDict": ".workflowschedulepauserequest",
     "WorkflowScheduleRequest": ".workflowschedulerequest",
     "WorkflowScheduleRequestTypedDict": ".workflowschedulerequest",
     "WorkflowScheduleResponse": ".workflowscheduleresponse",

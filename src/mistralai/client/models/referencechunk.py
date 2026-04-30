@@ -11,10 +11,10 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-ReferenceIDTypedDict = TypeAliasType("ReferenceIDTypedDict", Union[str, int])
+ReferenceIDTypedDict = TypeAliasType("ReferenceIDTypedDict", Union[int, str])
 
 
-ReferenceID = TypeAliasType("ReferenceID", Union[str, int])
+ReferenceID = TypeAliasType("ReferenceID", Union[int, str])
 
 
 class ReferenceChunkTypedDict(TypedDict):

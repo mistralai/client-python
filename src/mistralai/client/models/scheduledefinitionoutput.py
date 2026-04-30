@@ -3,8 +3,16 @@
 
 from __future__ import annotations
 from .schedulecalendar import ScheduleCalendar, ScheduleCalendarTypedDict
+from .schedulefutureexecution import (
+    ScheduleFutureExecution,
+    ScheduleFutureExecutionTypedDict,
+)
 from .scheduleinterval import ScheduleInterval, ScheduleIntervalTypedDict
 from .schedulepolicy import SchedulePolicy, SchedulePolicyTypedDict
+from .schedulerecentexecution import (
+    ScheduleRecentExecution,
+    ScheduleRecentExecutionTypedDict,
+)
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -28,6 +36,10 @@ class ScheduleDefinitionOutputTypedDict(TypedDict):
     r"""Input to provide to the workflow when starting it."""
     schedule_id: str
     r"""Unique identifier for the schedule."""
+    workflow_name: str
+    r"""Name of the workflow this schedule triggers."""
+    paused: bool
+    r"""Whether the schedule is currently paused."""
     calendars: NotRequired[List[ScheduleCalendarTypedDict]]
     r"""Calendar-based specification of times."""
     intervals: NotRequired[List[ScheduleIntervalTypedDict]]
@@ -50,6 +62,14 @@ class ScheduleDefinitionOutputTypedDict(TypedDict):
     time_zone_name: NotRequired[Nullable[str]]
     r"""IANA time zone name, for example ``US/Central``."""
     policy: NotRequired[SchedulePolicyTypedDict]
+    remaining_executions: NotRequired[Nullable[int]]
+    r"""Remaining workflow executions before this schedule stops triggering automatically. null means unlimited; 0 means the limit has been reached and the schedule is exhausted."""
+    note: NotRequired[Nullable[str]]
+    r"""Human-readable note associated with the current pause or resume state."""
+    future_executions: NotRequired[List[ScheduleFutureExecutionTypedDict]]
+    r"""Upcoming scheduled executions (10 next executions, earliest first)."""
+    recent_executions: NotRequired[List[ScheduleRecentExecutionTypedDict]]
+    r"""Most recent scheduled executions (10 most recent, newest last)."""
 
 
 class ScheduleDefinitionOutput(BaseModel):
@@ -63,6 +83,12 @@ class ScheduleDefinitionOutput(BaseModel):
 
     schedule_id: str
     r"""Unique identifier for the schedule."""
+
+    workflow_name: str
+    r"""Name of the workflow this schedule triggers."""
+
+    paused: bool
+    r"""Whether the schedule is currently paused."""
 
     calendars: Optional[List[ScheduleCalendar]] = None
     r"""Calendar-based specification of times."""
@@ -95,6 +121,18 @@ class ScheduleDefinitionOutput(BaseModel):
 
     policy: Optional[SchedulePolicy] = None
 
+    remaining_executions: OptionalNullable[int] = UNSET
+    r"""Remaining workflow executions before this schedule stops triggering automatically. null means unlimited; 0 means the limit has been reached and the schedule is exhausted."""
+
+    note: OptionalNullable[str] = UNSET
+    r"""Human-readable note associated with the current pause or resume state."""
+
+    future_executions: Optional[List[ScheduleFutureExecution]] = None
+    r"""Upcoming scheduled executions (10 next executions, earliest first)."""
+
+    recent_executions: Optional[List[ScheduleRecentExecution]] = None
+    r"""Most recent scheduled executions (10 most recent, newest last)."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -108,9 +146,22 @@ class ScheduleDefinitionOutput(BaseModel):
                 "jitter",
                 "time_zone_name",
                 "policy",
+                "remaining_executions",
+                "note",
+                "future_executions",
+                "recent_executions",
             ]
         )
-        nullable_fields = set(["start_at", "end_at", "jitter", "time_zone_name"])
+        nullable_fields = set(
+            [
+                "start_at",
+                "end_at",
+                "jitter",
+                "time_zone_name",
+                "remaining_executions",
+                "note",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
