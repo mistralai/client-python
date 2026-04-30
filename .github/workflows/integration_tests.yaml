@@ -1,0 +1,45 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+
+      - name: Set up Python
+        uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+
+      - name: Run Azure integration tests
+        env:
+          AZURE_API_KEY: ${{ secrets.AZURE_API_KEY }}
+          AZURE_SERVER_URL: ${{ secrets.AZURE_SERVER_URL }}
+          AZURE_MODEL: ${{ secrets.AZURE_MODEL }}
+          AZURE_OCR_MODEL: ${{ secrets.AZURE_OCR_MODEL }}
+          AZURE_API_VERSION: ${{ secrets.AZURE_API_VERSION || '2024-05-01-preview' }}
+        run: |
+          uv run pytest tests/test_azure_integration.py -v --tb=short
+
+      - name: Run GCP integration tests
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ secrets.GCP_REGION || 'us-central1' }}
+          GCP_MODEL: ${{ secrets.GCP_MODEL || 'mistral-small-2503' }}
+          GCP_FIM_MODEL: ${{ secrets.GCP_FIM_MODEL || 'codestral-2' }}
+        run: |
+          uv run pytest tests/test_gcp_integration.py -v --tb=short
