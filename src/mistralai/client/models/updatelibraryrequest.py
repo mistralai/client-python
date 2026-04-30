@@ -10,23 +10,24 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class UpdateLibraryRequestTypedDict(TypedDict):
-    name: NotRequired[Nullable[str]]
+    name: NotRequired[str]
     description: NotRequired[Nullable[str]]
 
 
 class UpdateLibraryRequest(BaseModel):
-    name: OptionalNullable[str] = UNSET
+    name: Optional[str] = None
 
     description: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["name", "description"])
-        nullable_fields = set(["name", "description"])
+        nullable_fields = set(["description"])
         serialized = handler(self)
         m = {}
 

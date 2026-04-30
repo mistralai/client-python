@@ -11,7 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -32,19 +32,19 @@ Attributes = TypeAliasType(
 
 
 class UpdateDocumentRequestTypedDict(TypedDict):
-    name: NotRequired[Nullable[str]]
+    name: NotRequired[str]
     attributes: NotRequired[Nullable[Dict[str, AttributesTypedDict]]]
 
 
 class UpdateDocumentRequest(BaseModel):
-    name: OptionalNullable[str] = UNSET
+    name: Optional[str] = None
 
     attributes: OptionalNullable[Dict[str, Attributes]] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["name", "attributes"])
-        nullable_fields = set(["name", "attributes"])
+        nullable_fields = set(["attributes"])
         serialized = handler(self)
         m = {}
 

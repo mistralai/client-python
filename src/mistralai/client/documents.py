@@ -50,7 +50,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -161,7 +161,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -270,7 +270,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -379,7 +379,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -480,7 +480,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -576,7 +576,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -650,7 +650,7 @@ class Documents(BaseSDK):
         *,
         library_id: str,
         document_id: str,
-        name: OptionalNullable[str] = UNSET,
+        name: Optional[str] = None,
         attributes: OptionalNullable[
             Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
         ] = UNSET,
@@ -678,7 +678,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -763,7 +763,7 @@ class Documents(BaseSDK):
         *,
         library_id: str,
         document_id: str,
-        name: OptionalNullable[str] = UNSET,
+        name: Optional[str] = None,
         attributes: OptionalNullable[
             Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
         ] = UNSET,
@@ -791,7 +791,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -898,7 +898,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -994,7 +994,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1094,7 +1094,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1196,7 +1196,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1294,7 +1294,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1390,7 +1390,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1486,7 +1486,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1582,7 +1582,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1678,7 +1678,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1774,7 +1774,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1870,7 +1870,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -1966,7 +1966,7 @@ class Documents(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 30000
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url

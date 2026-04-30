@@ -633,6 +633,7 @@ print(res.choices[0].message.content)
 
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 * [register](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
+* [update_run_info](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
 
 ### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
@@ -744,6 +745,8 @@ print(res.choices[0].message.content)
 * [get_schedules](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#get_schedules) - Get Schedules
 * [schedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
 * [unschedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
+* [pause_schedule](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#pause_schedule) - Pause Schedule
+* [resume_schedule](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#resume_schedule) - Resume Schedule
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -955,8 +958,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 113 of 180 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 180 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 116 of 183 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 183 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
