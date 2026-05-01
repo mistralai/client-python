@@ -45,6 +45,7 @@ class AzureBlobStorage(BlobStorage):
                 self.connection_string
             )
         else:
+            assert self.account_url is not None
             self._credential = DefaultAzureCredential()
             self._service_client = BlobServiceClient(
                 self.account_url, credential=self._credential
