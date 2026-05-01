@@ -32,6 +32,7 @@ realtime = [
 
 workflow_payload_offloading_azure = [
     "azure-storage-blob[aio]>=12.28.0,<13.0.0",
+    "azure-identity[aio]>=1.25.0,<2.0.0",
 ]
 workflow_payload_offloading_gcs = [
     "gcloud-aio-storage>=9.3.0,<10.0.0",
