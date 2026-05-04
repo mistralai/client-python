@@ -16,7 +16,6 @@ from mistralai.client import Mistral
 from mistralai.client.models import (
     AssistantMessage,
     TextChunk,
-    ThinkChunk,
     UserMessage,
 )
 
