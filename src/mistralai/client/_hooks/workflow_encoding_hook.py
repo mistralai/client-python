@@ -109,6 +109,7 @@ OPERATIONS_DECODE_EVENTS = {
 # Streaming operations that return SSE event data that may need decryption
 OPERATIONS_DECODE_EVENTS_STREAM = {
     "get_stream_events_v1_workflows_events_stream_get",
+    "stream_v1_workflows_executions__execution_id__stream_get",
 }
 
 SCHEDULE_CORRELATION_ID_PLACEHOLDER = "__scheduled_workflow__"
