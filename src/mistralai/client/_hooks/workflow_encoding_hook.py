@@ -5,9 +5,10 @@ import logging
 import re
 import uuid
 import weakref
-from typing import Any, Coroutine, Dict, Optional, TypeVar, Union
+from typing import Any, AsyncIterator, Coroutine, Dict, Optional, TypeVar, Union
 
 import httpx
+from httpx._types import AsyncByteStream
 
 from .types import (
     AfterSuccessContext,
@@ -103,7 +104,11 @@ OPERATIONS_DECODE_RESULT = {
 # Operations that return event data that may need decryption
 OPERATIONS_DECODE_EVENTS = {
     "get_workflow_events_v1_workflows_events_list_get",
-    "get_workflow_execution_history_v1_workflows_executions__execution_id__history_get",
+}
+
+# Streaming operations that return SSE event data that may need decryption
+OPERATIONS_DECODE_EVENTS_STREAM = {
+    "get_stream_events_v1_workflows_events_stream_get",
 }
 
 SCHEDULE_CORRELATION_ID_PLACEHOLDER = "__scheduled_workflow__"
@@ -164,8 +169,7 @@ async def _decrypt_event_attributes(
     attributes: Dict[str, Any],
     payload_encoder: PayloadEncoder,
 ) -> Dict[str, Any]:
-    """Decrypt payload fields in event attributes.
-    """
+    """Decrypt payload fields in event attributes."""
     for field_name, field_value in attributes.items():
         if not _is_payload_type(field_value):
             continue
@@ -198,6 +202,90 @@ async def _decrypt_events_in_response(
             )
 
     return body
+
+
+def _decrypt_sse_line(line: bytes, payload_encoder: PayloadEncoder) -> bytes:
+    """Decrypt event payloads in an SSE data line."""
+    if not line.startswith(b"data:"):
+        return line
+
+    try:
+        data_part = line[5:].strip()
+        if not data_part:
+            return line
+
+        event_wrapper = json.loads(data_part)
+        data = event_wrapper.get("data")
+        if not isinstance(data, dict):
+            return line
+
+        attributes = data.get("attributes")
+        if not isinstance(attributes, dict):
+            return line
+
+        # Decrypt in place - _decrypt_event_attributes modifies attributes dict
+        _run_async(_decrypt_event_attributes(attributes, payload_encoder))
+
+        return b"data: " + json.dumps(event_wrapper).encode("utf-8")
+    except (json.JSONDecodeError, Exception) as e:
+        logger.debug("SSE line decryption failed: %s", e)
+        return line
+
+
+class _DecryptingAsyncByteStream(AsyncByteStream):
+    """Async byte stream wrapper that decrypts SSE event payloads."""
+
+    def __init__(self, original_stream: Any, payload_encoder: PayloadEncoder):
+        self._original = original_stream
+        self._payload_encoder = payload_encoder
+        self._buffer = b""
+
+    async def __aiter__(self) -> AsyncIterator[bytes]:
+        async for chunk in self._original:
+            for processed in self._process_chunk(chunk):
+                yield processed
+        # Flush remaining buffer
+        if self._buffer:
+            yield _decrypt_sse_line(self._buffer, self._payload_encoder)
+
+    def _process_chunk(self, chunk: bytes):
+        self._buffer += chunk
+        lines = self._buffer.split(b"\n")
+        # Keep last incomplete line in buffer
+        self._buffer = lines[-1]
+        for line in lines[:-1]:
+            yield _decrypt_sse_line(line, self._payload_encoder) + b"\n"
+
+    async def aclose(self) -> None:
+        if hasattr(self._original, "aclose"):
+            await self._original.aclose()
+
+
+def _wrap_sse_response_with_decryption(
+    response: httpx.Response,
+    payload_encoder: PayloadEncoder,
+) -> httpx.Response:
+    """Wrap an SSE response to decrypt event payloads as they stream.
+
+    Creates a new response with a custom stream that decrypts payloads on-the-fly.
+    """
+    # Get the original stream from the response
+    original_stream = response.stream
+
+    # Create wrapped stream
+    decrypting_stream = _DecryptingAsyncByteStream(original_stream, payload_encoder)
+
+    # Create new response with wrapped stream
+    # Use internal _content to avoid reading stream
+    new_response = httpx.Response(
+        status_code=response.status_code,
+        headers=response.headers,
+        stream=decrypting_stream,
+        request=response.request,
+        extensions=response.extensions,
+    )
+
+    return new_response
 
 
 class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
@@ -300,6 +388,15 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
             return response
 
         content_type = response.headers.get("content-type", "")
+
+        # Handle SSE stream decryption
+        if hook_ctx.operation_id in OPERATIONS_DECODE_EVENTS_STREAM:
+            if "text/event-stream" in content_type:
+                return _wrap_sse_response_with_decryption(
+                    response, encoding_config.payload_encoder
+                )
+            return response
+
         if "application/json" not in content_type:
             return response
 
