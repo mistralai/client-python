@@ -13,11 +13,7 @@
 import os
 
 from mistralai.client import Mistral
-from mistralai.client.models import (
-    AssistantMessage,
-    TextChunk,
-    UserMessage,
-)
+from mistralai.client.models import TextChunk, UserMessage
 
 MODEL = "mistral-medium-3-5"
 TURNS = [
@@ -49,17 +45,18 @@ def main():
             reasoning_effort="high",
             temperature=0.7,
         )
-        content = response.choices[0].message.content
+        message = response.choices[0].message
         usage = response.usage
         total_prompt += usage.prompt_tokens
         total_completion += usage.completion_tokens
 
         print(
             f"turn {i}: prompt={usage.prompt_tokens:>4} "
-            f"completion={usage.completion_tokens:>4}  -> {final_text(content)}"
+            f"completion={usage.completion_tokens:>4}  -> {final_text(message.content)}"
         )
-        # Replay the full assistant content (ThinkChunks included).
-        messages.append(AssistantMessage(content=content))
+        # Append the full assistant message back into history so the
+        # ThinkChunks are preserved across turns.
+        messages.append(message)
 
     print(
         f"TOTAL: prompt={total_prompt} completion={total_completion} "
