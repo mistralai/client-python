@@ -7,17 +7,13 @@
 import json
 import os
 
-import httpx
-
 from mistralai.client import Mistral
 from mistralai.client.models import UserMessage
 
 
 def main():
-    client = Mistral(
-        api_key=os.environ["MISTRAL_API_KEY"],
-        client=httpx.Client(timeout=httpx.Timeout(300.0)),
-    )
+    # Bump request timeout because reasoning runs can be long.
+    client = Mistral(api_key=os.environ["MISTRAL_API_KEY"], timeout_ms=300_000)
 
     prompt = "What is 12 * 14? Answer in one short sentence."
 

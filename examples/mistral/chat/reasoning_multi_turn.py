@@ -2,20 +2,15 @@
 
 # Multi-turn conversation with a reasoning model.
 #
-# When the assistant returns a list of chunks (ThinkChunk + TextChunk),
-# you must choose what to put back into `messages` for the next turn.
-# This example runs the same 3-turn math chain with two strategies and
-# prints the resulting token usage so you can see the tradeoff:
+# IMPORTANT: for Mistral Medium 3.5, always replay the assistant turn
+# back into `messages` with its ThinkChunks intact. Dropping the
+# reasoning trace across turns DEGRADES the model's performance.
 #
-#   A) keep ThinkChunks  -> the prompt grows fast as reasoning accumulates
-#   B) drop ThinkChunks  -> only the final answer is replayed
-#
-# Both produce the correct answer here. Pick based on whether your task
-# benefits from the model seeing its prior reasoning.
+# This example runs a 3-turn math chain and prints per-turn token
+# usage. The prompt grows as the reasoning trace accumulates; that
+# growth is expected.
 
 import os
-
-import httpx
 
 from mistralai.client import Mistral
 from mistralai.client.models import (
@@ -39,22 +34,13 @@ def final_text(content):
     return "".join(c.text for c in (content or []) if isinstance(c, TextChunk))
 
 
-def keep_thinking(content):
-    return content
+def main():
+    # Bump request timeout because reasoning runs can be long.
+    client = Mistral(api_key=os.environ["MISTRAL_API_KEY"], timeout_ms=300_000)
 
-
-def drop_thinking(content):
-    if isinstance(content, str):
-        return content
-    return [c for c in (content or []) if not isinstance(c, ThinkChunk)]
-
-
-def run_chain(client, label, build_history):
-    print(f"\n========== {label} ==========")
     messages = []
     total_prompt = 0
     total_completion = 0
-    last_answer = ""
 
     for i, user_text in enumerate(TURNS, start=1):
         messages.append(UserMessage(content=user_text))
@@ -68,28 +54,18 @@ def run_chain(client, label, build_history):
         usage = response.usage
         total_prompt += usage.prompt_tokens
         total_completion += usage.completion_tokens
-        last_answer = final_text(content)
 
         print(
             f"turn {i}: prompt={usage.prompt_tokens:>4} "
-            f"completion={usage.completion_tokens:>4}  -> {last_answer}"
+            f"completion={usage.completion_tokens:>4}  -> {final_text(content)}"
         )
-        messages.append(AssistantMessage(content=build_history(content)))
+        # Replay the full assistant content (ThinkChunks included).
+        messages.append(AssistantMessage(content=content))
 
     print(
         f"TOTAL: prompt={total_prompt} completion={total_completion} "
         f"(sum {total_prompt + total_completion})"
     )
-
-
-def main():
-    client = Mistral(
-        api_key=os.environ["MISTRAL_API_KEY"],
-        client=httpx.Client(timeout=httpx.Timeout(300.0)),
-    )
-
-    run_chain(client, "A) keep ThinkChunks across turns", keep_thinking)
-    run_chain(client, "B) drop ThinkChunks across turns", drop_thinking)
 
 
 if __name__ == "__main__":
