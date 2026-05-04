@@ -263,6 +263,23 @@ class PayloadEncoder:
 
         return data, encoding_options
 
+    async def encode_payload_content_full(
+        self, data: Union[bytes, str]
+    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
+        """Encrypt payload with full encryption, regardless of configured mode.
+
+        This is used for payloads like json_patch that don't contain EncryptedStrField
+        markers and must always use full encryption to avoid leaking sensitive data.
+        """
+        if isinstance(data, str):
+            data = data.encode()
+
+        if self.encryption_config is None:
+            return data, []
+
+        encrypted_data = self._encrypt(data)
+        return encrypted_data, [EncodedPayloadOptions.ENCRYPTED]
+
     async def decode_payload_content(
         self, data: bytes, encoding_options: List[EncodedPayloadOptions]
     ) -> bytes:
@@ -293,6 +310,32 @@ class PayloadEncoder:
                 )
 
         return data
+
+    async def decode_event_payload(
+        self, payload_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Decrypt an event payload's value if it has encoding_options.
+
+        Args:
+            payload_data: Dict with 'type', 'value', and 'encoding_options' fields
+
+        Returns:
+            Dict with decrypted 'value' and empty 'encoding_options'
+        """
+        encoding_options_strs = payload_data.get("encoding_options", [])
+        if not encoding_options_strs:
+            return payload_data
+
+        encoding_options = [EncodedPayloadOptions(opt) for opt in encoding_options_strs]
+        encrypted_bytes = base64.b64decode(payload_data["value"])
+        decrypted_bytes = await self.decode_payload_content(encrypted_bytes, encoding_options)
+        decrypted_value = json.loads(decrypted_bytes)
+
+        return {
+            "type": payload_data["type"],
+            "value": decrypted_value,
+            "encoding_options": [],
+        }
 
     async def encode_network_input(
         self, data: Optional[Dict[str, Any]], context: WorkflowContext

@@ -28,9 +28,7 @@ _ENCODING_CONFIG_ID_ATTR = "_workflow_encoding_config_id"
 
 
 class _WorkflowEncodingConfig:
-    def __init__(
-        self, payload_encoder: PayloadEncoder, namespace: str
-    ) -> None:
+    def __init__(self, payload_encoder: PayloadEncoder, namespace: str) -> None:
         self.payload_encoder = payload_encoder
         self.namespace = namespace
 
@@ -64,7 +62,9 @@ def configure_workflow_encoding(
     )
 
 
-def _get_encoding_config(sdk_config: SDKConfiguration) -> Optional[_WorkflowEncodingConfig]:
+def _get_encoding_config(
+    sdk_config: SDKConfiguration,
+) -> Optional[_WorkflowEncodingConfig]:
     """Get workflow encoding config for a client."""
     config_id = getattr(sdk_config, _ENCODING_CONFIG_ID_ATTR, None)
     if config_id is None:
@@ -100,7 +100,24 @@ OPERATIONS_DECODE_RESULT = {
     "update_workflow_execution_v1_workflows_executions__execution_id__updates_post",
 }
 
+# Operations that return event data that may need decryption
+OPERATIONS_DECODE_EVENTS = {
+    "get_workflow_events_v1_workflows_events_list_get",
+    "get_workflow_execution_history_v1_workflows_executions__execution_id__history_get",
+}
+
 SCHEDULE_CORRELATION_ID_PLACEHOLDER = "__scheduled_workflow__"
+
+
+def _is_payload_type(value: Any) -> bool:
+    """Check if a value is a JSONPayload or JSONPatchPayload by its structure.
+
+    Payload types have: {"type": "json" | "json_patch", "value": ...}
+    """
+    if not isinstance(value, dict):
+        return False
+    payload_type = value.get("type")
+    return payload_type in ("json", "json_patch") and "value" in value
 
 
 _T = TypeVar("_T")
@@ -143,6 +160,47 @@ def _extract_execution_id_from_body(body: Dict[str, Any]) -> Optional[str]:
     return body.get("execution_id")
 
 
+async def _decrypt_event_attributes(
+    attributes: Dict[str, Any],
+    payload_encoder: PayloadEncoder,
+) -> Dict[str, Any]:
+    """Decrypt payload fields in event attributes.
+
+    Identifies encryptable fields by their type structure (JSONPayload or JSONPatchPayload)
+    rather than by field name.
+    """
+    for field_name, field_value in attributes.items():
+        if not _is_payload_type(field_value):
+            continue
+
+        # Check if it has encoding_options (meaning it's encrypted)
+        if not field_value.get("encoding_options"):
+            continue
+
+        # Decrypt the payload
+        decrypted = await payload_encoder.decode_event_payload(field_value)
+        attributes[field_name] = decrypted
+
+    return attributes
+
+
+async def _decrypt_events_in_response(
+    body: Dict[str, Any],
+    payload_encoder: PayloadEncoder,
+) -> Dict[str, Any]:
+    """Decrypt payload fields in events within a response body."""
+    events = body.get("events", [])
+    if not events:
+        return body
+
+    for event in events:
+        attributes = event.get("attributes")
+        if isinstance(attributes, dict):
+            event["attributes"] = await _decrypt_event_attributes(
+                attributes, payload_encoder
+            )
+
+    return body
 
 
 class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
@@ -208,7 +266,9 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
             )
 
             encoded_input = _run_async(
-                encoding_config.payload_encoder.encode_network_input(input_data, context)
+                encoding_config.payload_encoder.encode_network_input(
+                    input_data, context
+                )
             )
 
             # Update body based on operation type:
@@ -241,40 +301,83 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         hook_ctx: AfterSuccessContext,
         response: httpx.Response,
     ) -> Union[httpx.Response, Exception]:
-        """Intercept responses to decode workflow result payloads."""
+        """Intercept responses to decode workflow result payloads and event payloads."""
+        logger.debug(
+            "WorkflowEncodingHook.after_success called for %s",
+            hook_ctx.operation_id,
+        )
         encoding_config = _get_encoding_config(hook_ctx.config)
         if not encoding_config:
-            return response
-
-        if hook_ctx.operation_id not in OPERATIONS_DECODE_RESULT:
+            logger.debug(
+                "WorkflowEncodingHook: No encoding config for %s",
+                hook_ctx.operation_id,
+            )
             return response
 
         content_type = response.headers.get("content-type", "")
         if "application/json" not in content_type:
             return response
 
-        try:
-            body = json.loads(response.content)
-            result = body.get("result")
-            if result is None or not encoding_config.payload_encoder.check_is_payload_encoded(result):
-                return response
+        # Handle workflow result decoding
+        if hook_ctx.operation_id in OPERATIONS_DECODE_RESULT:
+            try:
+                body = json.loads(response.content)
+                result = body.get("result")
+                if (
+                    result is None
+                    or not encoding_config.payload_encoder.check_is_payload_encoded(
+                        result
+                    )
+                ):
+                    return response
 
-            logger.debug(
-                "WorkflowEncodingHook: Decoding result for %s", hook_ctx.operation_id
-            )
+                logger.debug(
+                    "WorkflowEncodingHook: Decoding result for %s",
+                    hook_ctx.operation_id,
+                )
 
-            decoded_result = _run_async(encoding_config.payload_encoder.decode_network_result(result))
+                decoded_result = _run_async(
+                    encoding_config.payload_encoder.decode_network_result(result)
+                )
 
-            body["result"] = decoded_result
-            new_content = json.dumps(body).encode("utf-8")
+                body["result"] = decoded_result
+                new_content = json.dumps(body).encode("utf-8")
 
-            return httpx.Response(
-                status_code=response.status_code,
-                headers=response.headers,
-                content=new_content,
-                request=response.request,
-                extensions=response.extensions,
-            )
-        except Exception as e:
-            logger.error("WorkflowEncodingHook: Failed to decode result: %s", e)
-            raise
+                return httpx.Response(
+                    status_code=response.status_code,
+                    headers=response.headers,
+                    content=new_content,
+                    request=response.request,
+                    extensions=response.extensions,
+                )
+            except Exception as e:
+                logger.error("WorkflowEncodingHook: Failed to decode result: %s", e)
+                raise
+
+        # Handle event payload decoding
+        if hook_ctx.operation_id in OPERATIONS_DECODE_EVENTS:
+            try:
+                body = json.loads(response.content)
+
+                logger.debug(
+                    "WorkflowEncodingHook: Decoding events for %s",
+                    hook_ctx.operation_id,
+                )
+
+                body = _run_async(
+                    _decrypt_events_in_response(body, encoding_config.payload_encoder)
+                )
+                new_content = json.dumps(body).encode("utf-8")
+
+                return httpx.Response(
+                    status_code=response.status_code,
+                    headers=response.headers,
+                    content=new_content,
+                    request=response.request,
+                    extensions=response.extensions,
+                )
+            except Exception as e:
+                logger.error("WorkflowEncodingHook: Failed to decode events: %s", e)
+                raise
+
+        return response
