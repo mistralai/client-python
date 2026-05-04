@@ -165,9 +165,6 @@ async def _decrypt_event_attributes(
     payload_encoder: PayloadEncoder,
 ) -> Dict[str, Any]:
     """Decrypt payload fields in event attributes.
-
-    Identifies encryptable fields by their type structure (JSONPayload or JSONPatchPayload)
-    rather than by field name.
     """
     for field_name, field_value in attributes.items():
         if not _is_payload_type(field_value):
@@ -261,10 +258,6 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 execution_id=execution_id,
             )
 
-            logger.debug(
-                "WorkflowEncodingHook: Encoding input for %s", hook_ctx.operation_id
-            )
-
             encoded_input = _run_async(
                 encoding_config.payload_encoder.encode_network_input(
                     input_data, context
@@ -302,16 +295,8 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         response: httpx.Response,
     ) -> Union[httpx.Response, Exception]:
         """Intercept responses to decode workflow result payloads and event payloads."""
-        logger.debug(
-            "WorkflowEncodingHook.after_success called for %s",
-            hook_ctx.operation_id,
-        )
         encoding_config = _get_encoding_config(hook_ctx.config)
         if not encoding_config:
-            logger.debug(
-                "WorkflowEncodingHook: No encoding config for %s",
-                hook_ctx.operation_id,
-            )
             return response
 
         content_type = response.headers.get("content-type", "")
@@ -330,11 +315,6 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                     )
                 ):
                     return response
-
-                logger.debug(
-                    "WorkflowEncodingHook: Decoding result for %s",
-                    hook_ctx.operation_id,
-                )
 
                 decoded_result = _run_async(
                     encoding_config.payload_encoder.decode_network_result(result)
@@ -358,12 +338,6 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
         if hook_ctx.operation_id in OPERATIONS_DECODE_EVENTS:
             try:
                 body = json.loads(response.content)
-
-                logger.debug(
-                    "WorkflowEncodingHook: Decoding events for %s",
-                    hook_ctx.operation_id,
-                )
-
                 body = _run_async(
                     _decrypt_events_in_response(body, encoding_config.payload_encoder)
                 )
