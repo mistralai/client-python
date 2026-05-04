@@ -263,13 +263,17 @@ class PayloadEncoder:
 
         return data, encoding_options
 
-    async def encode_payload_content_full(
-        self, data: Union[bytes, str]
+    async def encode_event_payload_content(
+        self, data: Union[bytes, str], force_full_encryption: bool = False
     ) -> tuple[bytes, list[EncodedPayloadOptions]]:
-        """Encrypt payload with full encryption, regardless of configured mode.
+        """Encrypt event payload content.
 
-        This is used for payloads like json_patch that don't contain EncryptedStrField
-        markers and must always use full encryption to avoid leaking sensitive data.
+        Unlike encode_payload_content, this only handles encryption (no offloading).
+
+        Args:
+            data: The payload data to encrypt.
+            force_full_encryption: Force full encryption regardless of configured mode.
+                Use for payloads like json_patch that don't support partial encryption.
         """
         if isinstance(data, str):
             data = data.encode()
@@ -277,8 +281,16 @@ class PayloadEncoder:
         if self.encryption_config is None:
             return data, []
 
-        encrypted_data = self._encrypt(data)
-        return encrypted_data, [EncodedPayloadOptions.ENCRYPTED]
+        if force_full_encryption or self.encryption_config.mode == PayloadEncryptionMode.FULL:
+            encrypted_data = self._encrypt(data)
+            return encrypted_data, [EncodedPayloadOptions.ENCRYPTED]
+
+        # Partial encryption mode
+        data, partially_encrypted = await self._partially_encrypt_fields(data)
+        if partially_encrypted:
+            return data, [EncodedPayloadOptions.PARTIALLY_ENCRYPTED]
+
+        return data, []
 
     async def decode_payload_content(
         self, data: bytes, encoding_options: List[EncodedPayloadOptions]
