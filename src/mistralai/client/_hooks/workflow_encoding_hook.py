@@ -407,33 +407,31 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 body = json.loads(response.content)
                 result = body.get("result")
                 if (
-                    result is None
-                    or not encoding_config.payload_encoder.check_is_payload_encoded(
+                    result is not None
+                    and encoding_config.payload_encoder.check_is_payload_encoded(
                         result
                     )
                 ):
-                    return response
+                    decoded_result = _run_async(
+                        encoding_config.payload_encoder.decode_network_result(result)
+                    )
 
-                decoded_result = _run_async(
-                    encoding_config.payload_encoder.decode_network_result(result)
-                )
+                    body["result"] = decoded_result
+                    new_content = json.dumps(body).encode("utf-8")
 
-                body["result"] = decoded_result
-                new_content = json.dumps(body).encode("utf-8")
-
-                return httpx.Response(
-                    status_code=response.status_code,
-                    headers=response.headers,
-                    content=new_content,
-                    request=response.request,
-                    extensions=response.extensions,
-                )
+                    response = httpx.Response(
+                        status_code=response.status_code,
+                        headers=response.headers,
+                        content=new_content,
+                        request=response.request,
+                        extensions=response.extensions,
+                    )
             except Exception as e:
                 logger.error("WorkflowEncodingHook: Failed to decode result: %s", e)
                 raise
 
         # Handle event payload decoding
-        if hook_ctx.operation_id in OPERATIONS_DECODE_EVENTS:
+        elif hook_ctx.operation_id in OPERATIONS_DECODE_EVENTS:
             try:
                 body = json.loads(response.content)
                 body = _run_async(
@@ -441,7 +439,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 )
                 new_content = json.dumps(body).encode("utf-8")
 
-                return httpx.Response(
+                response = httpx.Response(
                     status_code=response.status_code,
                     headers=response.headers,
                     content=new_content,
