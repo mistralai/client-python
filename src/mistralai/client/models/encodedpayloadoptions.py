@@ -2,11 +2,15 @@
 # @generated-id: 97955ebc2eb9
 
 from __future__ import annotations
-from typing import Literal
+from mistralai.client.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-EncodedPayloadOptions = Literal[
-    "offloaded",
-    "encrypted",
-    "encrypted-partial",
+EncodedPayloadOptions = Union[
+    Literal[
+        "offloaded",
+        "encrypted",
+        "encrypted-partial",
+    ],
+    UnrecognizedStr,
 ]
