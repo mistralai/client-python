@@ -2,6 +2,7 @@ import logging
 from typing import Optional, Tuple, Union
 
 import httpx
+from opentelemetry import trace
 from opentelemetry.trace import Span
 
 from mistralai.extra.observability.otel import (
@@ -27,6 +28,7 @@ _SPAN_EXT_KEY = "_tracing_span"
 
 class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
     def __init__(self) -> None:
+        self.tracer_provider: Optional[trace.TracerProvider] = None
         self.tracing_enabled, self.tracer = get_or_create_otel_tracer()
 
     def before_request(
@@ -34,7 +36,9 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
     ) -> Union[httpx.Request, Exception]:
         # Refresh tracer/provider per request so tracing can be enabled if the
         # application configures OpenTelemetry after the client is instantiated.
-        self.tracing_enabled, self.tracer = get_or_create_otel_tracer()
+        self.tracing_enabled, self.tracer = get_or_create_otel_tracer(
+            provider=self.tracer_provider,
+        )
         request, span = get_traced_request_and_span(
             tracing_enabled=self.tracing_enabled,
             tracer=self.tracer,
