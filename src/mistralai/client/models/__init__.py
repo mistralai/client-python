@@ -1170,9 +1170,13 @@ if TYPE_CHECKING:
     from .jsonpatchpayloadresponse import (
         JSONPatchPayloadResponse,
         JSONPatchPayloadResponseTypedDict,
-        JSONPatchPayloadResponseValue,
-        JSONPatchPayloadResponseValueTypedDict,
-        UnknownJSONPatchPayloadResponseValue,
+    )
+    from .jsonpatchpayloadvalue import (
+        JSONPatchPayloadValue,
+        JSONPatchPayloadValue1,
+        JSONPatchPayloadValue1TypedDict,
+        JSONPatchPayloadValueTypedDict,
+        UnknownJSONPatchPayloadValue1,
     )
     from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
@@ -2910,8 +2914,10 @@ __all__ = [
     "JSONPatchAppendTypedDict",
     "JSONPatchPayloadResponse",
     "JSONPatchPayloadResponseTypedDict",
-    "JSONPatchPayloadResponseValue",
-    "JSONPatchPayloadResponseValueTypedDict",
+    "JSONPatchPayloadValue",
+    "JSONPatchPayloadValue1",
+    "JSONPatchPayloadValue1TypedDict",
+    "JSONPatchPayloadValueTypedDict",
     "JSONPatchRemove",
     "JSONPatchRemoveTypedDict",
     "JSONPatchReplace",
@@ -3500,7 +3506,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownJSONPatchPayloadResponseValue",
+    "UnknownJSONPatchPayloadValue1",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse",
@@ -4472,9 +4478,11 @@ _dynamic_imports: dict[str, str] = {
     "JSONPatchAppendTypedDict": ".jsonpatchappend",
     "JSONPatchPayloadResponse": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadResponseTypedDict": ".jsonpatchpayloadresponse",
-    "JSONPatchPayloadResponseValue": ".jsonpatchpayloadresponse",
-    "JSONPatchPayloadResponseValueTypedDict": ".jsonpatchpayloadresponse",
-    "UnknownJSONPatchPayloadResponseValue": ".jsonpatchpayloadresponse",
+    "JSONPatchPayloadValue": ".jsonpatchpayloadvalue",
+    "JSONPatchPayloadValue1": ".jsonpatchpayloadvalue",
+    "JSONPatchPayloadValue1TypedDict": ".jsonpatchpayloadvalue",
+    "JSONPatchPayloadValueTypedDict": ".jsonpatchpayloadvalue",
+    "UnknownJSONPatchPayloadValue1": ".jsonpatchpayloadvalue",
     "JSONPatchRemove": ".jsonpatchremove",
     "JSONPatchRemoveTypedDict": ".jsonpatchremove",
     "JSONPatchReplace": ".jsonpatchreplace",

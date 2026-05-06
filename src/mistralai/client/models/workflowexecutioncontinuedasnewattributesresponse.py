@@ -20,6 +20,8 @@ class WorkflowExecutionContinuedAsNewAttributesResponseTypedDict(TypedDict):
     r"""A payload containing arbitrary JSON data.
 
     Used for complete state snapshots or final results.
+    When encrypted, the value field contains base64-encoded encrypted data
+    and encoding_options indicates the type of encryption applied.
     """
 
 
@@ -39,4 +41,6 @@ class WorkflowExecutionContinuedAsNewAttributesResponse(BaseModel):
     r"""A payload containing arbitrary JSON data.
 
     Used for complete state snapshots or final results.
+    When encrypted, the value field contains base64-encoded encrypted data
+    and encoding_options indicates the type of encryption applied.
     """
