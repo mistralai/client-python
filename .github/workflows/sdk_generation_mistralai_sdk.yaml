@@ -44,6 +44,7 @@ jobs:
       set_version: ${{ github.event.inputs.set_version }}
       speakeasy_version: ${{ needs.resolve-speakeasy-version.outputs.version }}
       target: mistralai-sdk
+      feature_branch: speakeasy-sdk-regen-${{ github.run_id }}
     secrets:
       github_access_token: ${{ secrets.CLIENT_PIPELINE }}
       pypi_token: ${{ secrets.PYPI_TOKEN }}
@@ -57,10 +58,12 @@ jobs:
         id: find-pr
         env:
           GH_TOKEN: ${{ secrets.CLIENT_PIPELINE }}
+          SPEAKEASY_BRANCH: speakeasy-sdk-regen-${{ github.run_id }}
         run: |
-          PR_BRANCH=$(gh pr list --repo ${{ github.repository }} --author "app/github-actions" \
-            --json headRefName,updatedAt --jq 'sort_by(.updatedAt) | reverse | .[0].headRefName // empty')
-          echo "branch=$PR_BRANCH" >> $GITHUB_OUTPUT
+          set -euo pipefail
+          PR_BRANCH="$SPEAKEASY_BRANCH"
+          echo "Using Speakeasy generated branch: $PR_BRANCH"
+          echo "branch=$PR_BRANCH" >> "$GITHUB_OUTPUT"
 
       - name: Checkout PR branch
         if: steps.find-pr.outputs.branch != ''
