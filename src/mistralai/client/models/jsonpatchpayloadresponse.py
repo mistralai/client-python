@@ -2,78 +2,28 @@
 # @generated-id: 1b39f46f529f
 
 from __future__ import annotations
-from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
-from .jsonpatchappend import JSONPatchAppend, JSONPatchAppendTypedDict
-from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
-from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
-from functools import partial
-from mistralai.client.types import BaseModel
+from .encodedpayloadoptions import EncodedPayloadOptions
+from .jsonpatchpayloadvalue import JSONPatchPayloadValue, JSONPatchPayloadValueTypedDict
+from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
 from mistralai.client.utils import validate_const
-from mistralai.client.utils.unions import parse_open_union
 import pydantic
-from pydantic import ConfigDict
-from pydantic.functional_validators import AfterValidator, BeforeValidator
-from typing import Any, List, Literal, Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
-
-
-JSONPatchPayloadResponseValueTypedDict = TypeAliasType(
-    "JSONPatchPayloadResponseValueTypedDict",
-    Union[
-        JSONPatchAppendTypedDict,
-        JSONPatchAddTypedDict,
-        JSONPatchReplaceTypedDict,
-        JSONPatchRemoveTypedDict,
-    ],
-)
-
-
-class UnknownJSONPatchPayloadResponseValue(BaseModel):
-    r"""A JSONPatchPayloadResponseValue variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    op: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_JSON_PATCH_PAYLOAD_RESPONSE_VALUE_VARIANTS: dict[str, Any] = {
-    "add": JSONPatchAdd,
-    "append": JSONPatchAppend,
-    "remove": JSONPatchRemove,
-    "replace": JSONPatchReplace,
-}
-
-
-JSONPatchPayloadResponseValue = Annotated[
-    Union[
-        JSONPatchAdd,
-        JSONPatchAppend,
-        JSONPatchRemove,
-        JSONPatchReplace,
-        UnknownJSONPatchPayloadResponseValue,
-    ],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="op",
-            variants=_JSON_PATCH_PAYLOAD_RESPONSE_VALUE_VARIANTS,
-            unknown_cls=UnknownJSONPatchPayloadResponseValue,
-            union_name="JSONPatchPayloadResponseValue",
-        )
-    ),
-]
+from pydantic import model_serializer
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class JSONPatchPayloadResponseTypedDict(TypedDict):
     r"""A payload containing a list of JSON Patch operations.
 
     Used for streaming incremental updates to workflow state.
+    When encrypted, the value field contains base64-encoded encrypted data
+    and encoding_options indicates the type of encryption applied.
     """
 
-    value: List[JSONPatchPayloadResponseValueTypedDict]
-    r"""The list of JSON Patch operations to apply in order."""
+    value: JSONPatchPayloadValueTypedDict
+    encoding_options: Nullable[List[EncodedPayloadOptions]]
+    r"""Encoding options applied to the payload."""
     type: Literal["json_patch"]
     r"""Discriminator indicating this is a JSON Patch payload."""
 
@@ -82,16 +32,34 @@ class JSONPatchPayloadResponse(BaseModel):
     r"""A payload containing a list of JSON Patch operations.
 
     Used for streaming incremental updates to workflow state.
+    When encrypted, the value field contains base64-encoded encrypted data
+    and encoding_options indicates the type of encryption applied.
     """
 
-    value: List[JSONPatchPayloadResponseValue]
-    r"""The list of JSON Patch operations to apply in order."""
+    value: JSONPatchPayloadValue
+
+    encoding_options: Nullable[List[EncodedPayloadOptions]]
+    r"""Encoding options applied to the payload."""
 
     type: Annotated[
         Annotated[Literal["json_patch"], AfterValidator(validate_const("json_patch"))],
         pydantic.Field(alias="type"),
     ] = "json_patch"
     r"""Discriminator indicating this is a JSON Patch payload."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
 
 
 try:
