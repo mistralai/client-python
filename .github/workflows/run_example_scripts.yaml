@@ -48,3 +48,16 @@ jobs:
           ./scripts/run_examples.sh
         env:
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
+
+  run_examples_required:
+    runs-on: ubuntu-latest
+    needs: run_examples
+    if: ${{ always() }}
+
+    steps:
+      - name: Require all example jobs to pass
+        run: |
+          if [ "${{ needs.run_examples.result }}" != "success" ]; then
+            echo "Expected all run_examples matrix jobs to pass, got: ${{ needs.run_examples.result }}"
+            exit 1
+          fi
