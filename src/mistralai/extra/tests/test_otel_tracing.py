@@ -1711,5 +1711,129 @@ class TestOtelTracing(unittest.TestCase):
         )
 
 
+class TestPerInstanceTracerProvider(unittest.TestCase):
+    """Tests for per-instance tracer_provider support via set_tracer_provider."""
+
+    def test_custom_provider_captures_spans(self):
+        """Spans go to the instance-specific exporter, not the global provider."""
+        # Create a standalone provider with its own exporter
+        custom_exporter = InMemorySpanExporter()
+        custom_provider = TracerProvider()
+        custom_provider.add_span_processor(SimpleSpanProcessor(custom_exporter))
+
+        # Clear the global exporter to ensure spans don't land there
+        _EXPORTER.clear()
+
+        # Set the custom provider on the hook directly (as set_tracer_provider does)
+        hook = TracingHook()
+        hook.tracer_provider = custom_provider
+
+        hook_ctx = _make_hook_context("chat_completion")
+
+        request_body = _dump(
+            ChatCompletionRequest(
+                model="mistral-small-latest",
+                messages=[UserMessage(content="hello")],
+            )
+        )
+        request = _make_httpx_request(request_body)
+
+        result = hook.before_request(BeforeRequestContext(hook_ctx), request)
+        assert isinstance(result, httpx.Request)
+
+        response_body = _dump(
+            ChatCompletionResponse(
+                id="custom-prov-1",
+                object="chat.completion",
+                model="mistral-small-latest",
+                created=1234567890,
+                choices=[
+                    ChatCompletionChoice(
+                        index=0,
+                        message=AssistantMessage(content="hi"),
+                        finish_reason="stop",
+                    )
+                ],
+                usage=UsageInfo(prompt_tokens=5, completion_tokens=3, total_tokens=8),
+            )
+        )
+        response = _make_httpx_response(response_body)
+        response.request = result
+        hook.after_success(AfterSuccessContext(hook_ctx), response)
+
+        # Spans should be in the custom exporter
+        custom_spans = custom_exporter.get_finished_spans()
+        self.assertEqual(len(custom_spans), 1)
+        self.assertEqual(custom_spans[0].attributes.get("gen_ai.request.model"), "mistral-small-latest")
+
+        # Global exporter should NOT have received the span
+        global_spans = [
+            s for s in _EXPORTER.get_finished_spans()
+            if s.attributes.get("gen_ai.response.id") == "custom-prov-1"
+        ]
+        self.assertEqual(len(global_spans), 0)
+
+    def test_fallback_to_global_provider(self):
+        """When tracer_provider is None (default), spans go to the global provider."""
+        _EXPORTER.clear()
+
+        hook = TracingHook()
+        # tracer_provider defaults to None — should use global provider
+        self.assertIsNone(hook.tracer_provider)
+
+        hook_ctx = _make_hook_context("chat_completion")
+
+        request_body = _dump(
+            ChatCompletionRequest(
+                model="mistral-small-latest",
+                messages=[UserMessage(content="fallback test")],
+            )
+        )
+        request = _make_httpx_request(request_body)
+        result = hook.before_request(BeforeRequestContext(hook_ctx), request)
+        assert isinstance(result, httpx.Request)
+
+        response_body = _dump(
+            ChatCompletionResponse(
+                id="fallback-1",
+                object="chat.completion",
+                model="mistral-small-latest",
+                created=1234567890,
+                choices=[
+                    ChatCompletionChoice(
+                        index=0,
+                        message=AssistantMessage(content="response"),
+                        finish_reason="stop",
+                    )
+                ],
+                usage=UsageInfo(prompt_tokens=5, completion_tokens=3, total_tokens=8),
+            )
+        )
+        response = _make_httpx_response(response_body)
+        response.request = result
+        hook.after_success(AfterSuccessContext(hook_ctx), response)
+
+        # Spans should be in the global exporter
+        global_spans = [
+            s for s in _EXPORTER.get_finished_spans()
+            if s.attributes.get("gen_ai.response.id") == "fallback-1"
+        ]
+        self.assertEqual(len(global_spans), 1)
+
+    def test_set_tracer_provider_helper(self):
+        """set_tracer_provider(client, provider) sets the provider on the TracingHook."""
+        from mistralai.extra.observability import set_tracer_provider
+
+        custom_provider = TracerProvider()
+        client = Mistral(api_key="test-key")
+        set_tracer_provider(client, custom_provider)
+
+        # Verify the TracingHook now has the custom provider
+        hooks = client.sdk_configuration.__dict__["_hooks"]
+        tracing_hooks = [h for h in hooks.before_request_hooks if isinstance(h, TracingHook)]
+        self.assertEqual(len(tracing_hooks), 1)
+        self.assertIs(tracing_hooks[0].tracer_provider, custom_provider)
+
+
 if __name__ == "__main__":
     unittest.main()

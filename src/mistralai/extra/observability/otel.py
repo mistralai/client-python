@@ -417,25 +417,30 @@ def _enrich_span_from_response(
         _enrich_ocr(span, response_data)
 
 
-def get_or_create_otel_tracer() -> tuple[bool, Tracer]:
+def get_or_create_otel_tracer(
+    provider: trace.TracerProvider | None = None,
+) -> tuple[bool, Tracer]:
     """
-    Get a tracer from the current TracerProvider.
+    Get a tracer from the given or global TracerProvider.
 
-    The SDK does not set up its own TracerProvider - it relies on the application
-    to configure OpenTelemetry. This follows OTEL best practices where:
-    - Libraries/SDKs get tracers from the global provider
-    - Applications configure the TracerProvider
+    When *provider* is supplied (per-instance tracer provider), the tracer is
+    obtained from it directly.  Otherwise the global provider is used, following
+    the standard OTEL library convention.
 
-    If no TracerProvider is configured, the ProxyTracerProvider (default) will
-    return a NoOp tracer, effectively disabling tracing. Once the application
-    sets up a real TracerProvider, subsequent spans will be recorded.
+    If no TracerProvider is configured (neither custom nor global), the
+    ProxyTracerProvider (default) will return a NoOp tracer, effectively
+    disabling tracing.
 
     Returns:
         Tuple[bool, Tracer]: (tracing_enabled, tracer)
             - tracing_enabled is True if a real TracerProvider is configured
             - tracer is always valid (may be NoOp if no provider configured)
     """
-    tracer_provider = trace.get_tracer_provider()
+    if provider is not None:
+        tracer_provider = provider
+    else:
+        tracer_provider = trace.get_tracer_provider()
+
     tracer = tracer_provider.get_tracer(MISTRAL_SDK_OTEL_TRACER_NAME)
 
     # Tracing is considered enabled if we have a real TracerProvider (not the default proxy)
