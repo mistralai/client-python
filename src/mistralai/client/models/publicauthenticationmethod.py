@@ -23,6 +23,7 @@ class PublicAuthenticationMethodTypedDict(TypedDict):
     r"""Public view of an authentication method, without secrets."""
 
     method_type: OutboundAuthenticationType
+    has_default_credentials: bool
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
 
 
@@ -30,6 +31,8 @@ class PublicAuthenticationMethod(BaseModel):
     r"""Public view of an authentication method, without secrets."""
 
     method_type: OutboundAuthenticationType
+
+    has_default_credentials: bool
 
     headers: OptionalNullable[List[ConnectorAuthenticationHeader]] = UNSET
 

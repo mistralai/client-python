@@ -1,4 +1,4 @@
-# JSONPatchPayloadResponseValue
+# JSONPatch
 
 
 ## Supported Types
