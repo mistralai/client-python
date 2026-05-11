@@ -10,6 +10,7 @@
 * [upload](#upload) - Upload a new document.
 * [get](#get) - Retrieve the metadata of a specific document.
 * [update](#update) - Update the metadata of a specific document.
+* [~~libraries_documents_update_v1~~](#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
 * [delete](#delete) - Delete a document.
 * [text_content](#text_content) - Retrieve the text content of a specific document.
 * [status](#status) - Retrieve the processing status of a specific document.
@@ -42,16 +43,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `search`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `filters_attributes`                                                | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `sort_by`                                                           | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `sort_order`                                                        | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                                                                                                                | Type                                                                                                                                                                                     | Required                                                                                                                                                                                 | Description                                                                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `library_id`                                                                                                                                                                             | *str*                                                                                                                                                                                    | :heavy_check_mark:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `search`                                                                                                                                                                                 | *OptionalNullable[str]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `page_size`                                                                                                                                                                              | *Optional[int]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `page`                                                                                                                                                                                   | *Optional[int]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `filters_attributes`                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                       | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated: this parameter will be removed in a future version. |
+| `sort_by`                                                                                                                                                                                | *Optional[str]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `sort_order`                                                                                                                                                                             | *Optional[str]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
+| `retries`                                                                                                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                       | Configuration to override the default retry behavior of the client.                                                                                                                      |
 
 ### Response
 
@@ -153,7 +154,54 @@ with Mistral(
 
 ## update
 
+Given a library and a document in that library, update the name and/or attributes of that document.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_documents_patch_v1" method="patch" path="/v1/libraries/{library_id}/documents/{document_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.documents.update(library_id="2a41249e-52ca-4436-b755-25ce3a9bfb53", document_id="bc26fa54-e5d9-4269-bedf-86bed5471c7d")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `library_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `document_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `name`                                                               | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `attributes`                                                         | Dict[str, [models.Attributes](../../models/attributes.md)]           | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `expires_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | If set, the document will be automatically deleted after this date.  |
+| `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
+
+### Response
+
+**[models.Document](../../models/document.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## ~~libraries_documents_update_v1~~
+
 Given a library and a document in that library, update the name of that document.
+
+> :warning: **DEPRECATED**: Use the PATCH method instead. This PUT endpoint will be removed in a future version..
 
 ### Example Usage
 
@@ -167,7 +215,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.libraries.documents.update(library_id="3ddd8d93-dca5-4a6d-980d-173226c35742", document_id="2a25e44c-b160-40ca-b5c2-b65fb2fcae34")
+    res = mistral.beta.libraries.documents.libraries_documents_update_v1(library_id="3ddd8d93-dca5-4a6d-980d-173226c35742", document_id="2a25e44c-b160-40ca-b5c2-b65fb2fcae34")
 
     # Handle response
     print(res)
@@ -176,13 +224,14 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `document_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `name`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `attributes`                                                        | Dict[str, [models.Attributes](../../models/attributes.md)]          | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `library_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `document_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `name`                                                               | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `attributes`                                                         | Dict[str, [models.Attributes](../../models/attributes.md)]           | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `expires_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | If set, the document will be automatically deleted after this date.  |
+| `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
 
 ### Response
 
