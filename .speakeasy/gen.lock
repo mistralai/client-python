@@ -61,7 +61,6 @@ trackedFiles:
     id: 89aa447020cd
     last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
     pristine_git_object: 8d79f0abb72526f1fb34a4c03e5bba612c6ba2ae
-    deleted: true
   USAGE.md:
     id: 3aed33ce6e6f
     last_write_checksum: sha1:d172deb3ee1630f16b279de22aec1f8f68d7565f
@@ -9053,7 +9052,6 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.beta.connectors.list()`:  `request.query_filters` **Changed** (Breaking ⚠️)\n* `mistral.beta.connectors.get()`:  `request.fetch_connection_secrets` **Removed** (Breaking ⚠️)\n* `mistral.workflows.schedules.get_schedule()`: **Added**\n* `mistral.workflows.schedules.update_schedule()`: **Added**\n* `mistral.beta.connectors.activate_for_workspace()`: **Added**\n* `mistral.beta.connectors.deactivate_for_workspace()`: **Added**\n* `mistral.beta.connectors.activate_for_user()`: **Added**\n* `mistral.beta.connectors.deactivate_for_user()`: **Added**\n* `mistral.beta.rag.search_indexes.list()`: **Added**\n* `mistral.beta.rag.search_indexes.register()`: **Added**\n* `mistral.beta.libraries.libraries_update_v1()`: **Added**\n* `mistral.beta.connectors.deactivate_for_organization()`: **Added**\n* `mistral.beta.libraries.documents.list()`:  `response.data[].expires_at` **Added**\n* `mistral.beta.libraries.documents.upload()`:  `response.expires_at` **Added**\n* `mistral.beta.libraries.documents.get()`:  `response.expires_at` **Added**\n* `mistral.beta.libraries.documents.update()`: \n  *  `request.expires_at` **Added**\n  *  `response.expires_at` **Added**\n* `mistral.beta.connectors.activate_for_organization()`: **Added**\n* `mistral.beta.connectors.list_organization_credentials()`:  `response.credentials[].scope` **Added**\n* `mistral.beta.connectors.list_workspace_credentials()`:  `response.credentials[].scope` **Added**\n* `mistral.beta.connectors.list_user_credentials()`:  `response.credentials[].scope` **Added**\n* `mistral.beta.libraries.documents.libraries_documents_update_v1()`: **Added**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
