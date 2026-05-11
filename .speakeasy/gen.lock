@@ -8887,7 +8887,6 @@ examples:
           application/json: {}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.beta.libraries.libraries_update_v1()`: **Added**\n* `mistral.beta.libraries.documents.libraries_documents_update_v1()`: **Added**\n* `mistral.beta.rag.search_indexes.list()`: **Added**\n* `mistral.beta.rag.search_indexes.register()`: **Added**\n* `mistral.workflows.schedules.update_schedule()`: **Added**\n* `mistral.beta.libraries.documents.list()`:  `response.data[].expires_at` **Added**\n* `mistral.beta.libraries.documents.upload()`:  `response.expires_at` **Added**\n* `mistral.beta.libraries.documents.get()`:  `response.expires_at` **Added**\n* `mistral.beta.libraries.documents.update()`: \n  *  `request.expires_at` **Added**\n  *  `response.expires_at` **Added**\n* `mistral.beta.connectors.list_organization_credentials()`:  `response.credentials[].scope` **Added**\n* `mistral.beta.connectors.list_workspace_credentials()`:  `response.credentials[].scope` **Added**\n* `mistral.beta.connectors.list_user_credentials()`:  `response.credentials[].scope` **Added**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
