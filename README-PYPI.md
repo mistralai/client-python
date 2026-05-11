@@ -550,6 +550,7 @@ print(res.choices[0].message.content)
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#get) - Detailed information about a specific Library.
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#delete) - Delete a library and all of it's document.
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#update) - Update a library.
+* [~~libraries_update_v1~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/libraries/README.md#libraries_update_v1) - Update a library. :warning: **Deprecated**
 
 #### [Beta.Libraries.Accesses](https://github.com/mistralai/client-python/blob/main/docs/sdks/accesses/README.md)
 
@@ -563,6 +564,7 @@ print(res.choices[0].message.content)
 * [upload](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#upload) - Upload a new document.
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
+* [~~libraries_documents_update_v1~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#delete) - Delete a document.
 * [text_content](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#text_content) - Retrieve the text content of a specific document.
 * [status](https://github.com/mistralai/client-python/blob/main/docs/sdks/documents/README.md#status) - Retrieve the processing status of a specific document.
@@ -634,6 +636,11 @@ print(res.choices[0].message.content)
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 * [register](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
 * [update_run_info](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
+
+### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md)
+
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#list) - Get Search Indexes
+* [register](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#register) - Register Search Index
 
 ### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
@@ -745,6 +752,7 @@ print(res.choices[0].message.content)
 * [get_schedules](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#get_schedules) - Get Schedules
 * [schedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
 * [unschedule_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
+* [update_schedule](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#update_schedule) - Update Schedule
 * [pause_schedule](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#pause_schedule) - Pause Schedule
 * [resume_schedule](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md#resume_schedule) - Resume Schedule
 
@@ -958,8 +966,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 116 of 183 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 183 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 120 of 188 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 188 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
