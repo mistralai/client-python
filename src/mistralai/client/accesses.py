@@ -85,7 +85,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -178,7 +178,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -288,7 +288,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -398,7 +398,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -433,7 +433,7 @@ class Accesses(BaseSDK):
     ) -> models.Sharing:
         r"""Delete an access level.
 
-        Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
+        Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours. Warning: the response will change from 200 (returning the deleted sharing) to 204 No Content in a future version.
 
         :param library_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
@@ -505,7 +505,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -540,7 +540,7 @@ class Accesses(BaseSDK):
     ) -> models.Sharing:
         r"""Delete an access level.
 
-        Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours.
+        Given a library id, you can delete the access level of an entity. An owner cannot delete it's own access. You have to be the owner of the library to delete an acces other than yours. Warning: the response will change from 200 (returning the deleted sharing) to 204 No Content in a future version.
 
         :param library_id:
         :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
@@ -612,7 +612,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
