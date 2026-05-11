@@ -11,9 +11,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import Any, Dict
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DocumentTypedDict(TypedDict):
@@ -37,6 +38,8 @@ class DocumentTypedDict(TypedDict):
     tokens_processing_summary: NotRequired[Nullable[int]]
     url: NotRequired[Nullable[str]]
     attributes: NotRequired[Nullable[Dict[str, Any]]]
+    expires_at: NotRequired[Nullable[datetime]]
+    r"""If set, the document will be automatically deleted after this date."""
 
 
 class Document(BaseModel):
@@ -44,7 +47,12 @@ class Document(BaseModel):
 
     library_id: str
 
-    hash: Nullable[str]
+    hash: Annotated[
+        Nullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
 
     mime_type: Nullable[str]
 
@@ -62,7 +70,12 @@ class Document(BaseModel):
 
     uploaded_by_type: str
 
-    processing_status: str
+    processing_status: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
 
     tokens_processing_total: int
 
@@ -72,13 +85,26 @@ class Document(BaseModel):
 
     number_of_pages: OptionalNullable[int] = UNSET
 
-    tokens_processing_main_content: OptionalNullable[int] = UNSET
+    tokens_processing_main_content: Annotated[
+        OptionalNullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
-    tokens_processing_summary: OptionalNullable[int] = UNSET
+    tokens_processing_summary: Annotated[
+        OptionalNullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     url: OptionalNullable[str] = UNSET
 
     attributes: OptionalNullable[Dict[str, Any]] = UNSET
+
+    expires_at: OptionalNullable[datetime] = UNSET
+    r"""If set, the document will be automatically deleted after this date."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -91,6 +117,7 @@ class Document(BaseModel):
                 "tokens_processing_summary",
                 "url",
                 "attributes",
+                "expires_at",
             ]
         )
         nullable_fields = set(
@@ -107,6 +134,7 @@ class Document(BaseModel):
                 "tokens_processing_summary",
                 "url",
                 "attributes",
+                "expires_at",
             ]
         )
         serialized = handler(self)
