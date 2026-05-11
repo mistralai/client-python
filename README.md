@@ -513,6 +513,12 @@ print(res.choices[0].message.content)
 * [create](docs/sdks/connectors/README.md#create) - Create a new connector.
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
+* [activate_for_organization](docs/sdks/connectors/README.md#activate_for_organization) - Activate a connector for an organization.
+* [deactivate_for_organization](docs/sdks/connectors/README.md#deactivate_for_organization) - Deactivate a connector for an organization.
+* [activate_for_workspace](docs/sdks/connectors/README.md#activate_for_workspace) - Activate a connector for a workspace.
+* [deactivate_for_workspace](docs/sdks/connectors/README.md#deactivate_for_workspace) - Deactivate a connector for a workspace.
+* [activate_for_user](docs/sdks/connectors/README.md#activate_for_user) - Activate a connector for the current user.
+* [deactivate_for_user](docs/sdks/connectors/README.md#deactivate_for_user) - Deactivate a connector for the current user.
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get_authentication_methods](docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
@@ -550,6 +556,7 @@ print(res.choices[0].message.content)
 * [get](docs/sdks/libraries/README.md#get) - Detailed information about a specific Library.
 * [delete](docs/sdks/libraries/README.md#delete) - Delete a library and all of it's document.
 * [update](docs/sdks/libraries/README.md#update) - Update a library.
+* [~~libraries_update_v1~~](docs/sdks/libraries/README.md#libraries_update_v1) - Update a library. :warning: **Deprecated**
 
 #### [Beta.Libraries.Accesses](docs/sdks/accesses/README.md)
 
@@ -563,6 +570,7 @@ print(res.choices[0].message.content)
 * [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
 * [get](docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
 * [update](docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
+* [~~libraries_documents_update_v1~~](docs/sdks/documents/README.md#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
 * [delete](docs/sdks/documents/README.md#delete) - Delete a document.
 * [text_content](docs/sdks/documents/README.md#text_content) - Retrieve the text content of a specific document.
 * [status](docs/sdks/documents/README.md#status) - Retrieve the processing status of a specific document.
@@ -634,6 +642,11 @@ print(res.choices[0].message.content)
 * [list](docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 * [register](docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
 * [update_run_info](docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
+
+### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
+
+* [list](docs/sdks/searchindexes/README.md#list) - Get Search Indexes
+* [register](docs/sdks/searchindexes/README.md#register) - Register Search Index
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -744,7 +757,9 @@ print(res.choices[0].message.content)
 
 * [get_schedules](docs/sdks/schedules/README.md#get_schedules) - Get Schedules
 * [schedule_workflow](docs/sdks/schedules/README.md#schedule_workflow) - Schedule Workflow
+* [get_schedule](docs/sdks/schedules/README.md#get_schedule) - Get Schedule
 * [unschedule_workflow](docs/sdks/schedules/README.md#unschedule_workflow) - Unschedule Workflow
+* [update_schedule](docs/sdks/schedules/README.md#update_schedule) - Update Schedule
 * [pause_schedule](docs/sdks/schedules/README.md#pause_schedule) - Pause Schedule
 * [resume_schedule](docs/sdks/schedules/README.md#resume_schedule) - Resume Schedule
 
@@ -958,8 +973,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 116 of 183 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 183 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 127 of 195 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 195 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
