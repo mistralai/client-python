@@ -10,8 +10,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SharingDeleteTypedDict(TypedDict):
@@ -29,7 +30,12 @@ class SharingDelete(BaseModel):
     share_with_type: EntityType
     r"""The type of entity, used to share a library."""
 
-    org_id: OptionalNullable[str] = UNSET
+    org_id: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

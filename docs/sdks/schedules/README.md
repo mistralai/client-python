@@ -6,7 +6,9 @@
 
 * [get_schedules](#get_schedules) - Get Schedules
 * [schedule_workflow](#schedule_workflow) - Schedule Workflow
+* [get_schedule](#get_schedule) - Get Schedule
 * [unschedule_workflow](#unschedule_workflow) - Unschedule Workflow
+* [update_schedule](#update_schedule) - Update Schedule
 * [pause_schedule](#pause_schedule) - Pause Schedule
 * [resume_schedule](#resume_schedule) - Resume Schedule
 
@@ -98,6 +100,47 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## get_schedule
+
+Get Schedule
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_schedule_v1_workflows_schedules__schedule_id__get" method="get" path="/v1/workflows/schedules/{schedule_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.schedules.get_schedule(schedule_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `schedule_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ScheduleDefinitionOutput](../../models/scheduledefinitionoutput.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## unschedule_workflow
 
 Unschedule Workflow
@@ -126,6 +169,48 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `schedule_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## update_schedule
+
+Update Schedule
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="update_schedule_v1_workflows_schedules__schedule_id__patch" method="patch" path="/v1/workflows/schedules/{schedule_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.schedules.update_schedule(schedule_id="<id>", schedule={})
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                             | Type                                                                                                                                                                                                                  | Required                                                                                                                                                                                                              | Description                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schedule_id`                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                                                    | N/A                                                                                                                                                                                                                   |
+| `schedule`                                                                                                                                                                                                            | [models.PartialScheduleDefinition](../../models/partialscheduledefinition.md)                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                    | Schedule definition for partial updates.<br/><br/>All fields are optional (inherited from _ScheduleRequestBase). Only explicitly-set<br/>fields are applied during an update; unset fields preserve the existing schedule values. |
+| `retries`                                                                                                                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                    | Configuration to override the default retry behavior of the client.                                                                                                                                                   |
+
+### Response
+
+**[models.WorkflowScheduleResponse](../../models/workflowscheduleresponse.md)**
 
 ### Errors
 
