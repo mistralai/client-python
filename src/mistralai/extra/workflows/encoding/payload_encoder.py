@@ -339,6 +339,21 @@ class PayloadEncoder:
             return payload_data
 
         encoding_options = [EncodedPayloadOptions(opt) for opt in encoding_options_strs]
+
+        # Handle selective encryption for json_patch payloads
+        if (
+            EncodedPayloadOptions.PARTIALLY_ENCRYPTED in encoding_options
+            and payload_data.get("type") == "json_patch"
+            and isinstance(payload_data.get("value"), list)
+        ):
+            decrypted_patches = self._decrypt_json_patch_selective(payload_data["value"])
+            return {
+                "type": payload_data["type"],
+                "value": decrypted_patches,
+                "encoding_options": [],
+            }
+
+        # Standard full encryption (base64 string value)
         encrypted_bytes = base64.b64decode(payload_data["value"])
         decrypted_bytes = await self.decode_payload_content(encrypted_bytes, encoding_options)
         decrypted_value = json.loads(decrypted_bytes)
@@ -348,6 +363,26 @@ class PayloadEncoder:
             "value": decrypted_value,
             "encoding_options": [],
         }
+
+    _ENCRYPTED_PATCH_KEY = "__encrypted__"
+
+    def _decrypt_json_patch_selective(self, patches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Decrypt patches with EncryptedPatchValue wrapper (dict with __encrypted__ key)."""
+        decrypted = []
+        for patch in patches:
+            patch_value = patch.get("value")
+
+            if isinstance(patch_value, dict) and self._ENCRYPTED_PATCH_KEY in patch_value:
+                encrypted_b64 = patch_value[self._ENCRYPTED_PATCH_KEY]
+                encrypted_data = base64.b64decode(encrypted_b64)
+                decrypted_bytes = self._decrypt(encrypted_data)
+                decrypted.append({
+                    **patch,
+                    "value": json.loads(decrypted_bytes),
+                })
+            else:
+                decrypted.append(patch)
+        return decrypted
 
     async def encode_network_input(
         self, data: Optional[Dict[str, Any]], context: WorkflowContext
