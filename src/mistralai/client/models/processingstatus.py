@@ -4,7 +4,8 @@
 from __future__ import annotations
 from .processstatus import ProcessStatus
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ProcessingStatusTypedDict(TypedDict):
@@ -18,4 +19,9 @@ class ProcessingStatus(BaseModel):
 
     process_status: ProcessStatus
 
-    processing_status: str
+    processing_status: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]

@@ -9,6 +9,12 @@
 * [create](#create) - Create a new connector.
 * [list](#list) - List all connectors.
 * [get_auth_url](#get_auth_url) - Get the auth URL for a connector.
+* [activate_for_organization](#activate_for_organization) - Activate a connector for an organization.
+* [deactivate_for_organization](#deactivate_for_organization) - Deactivate a connector for an organization.
+* [activate_for_workspace](#activate_for_workspace) - Activate a connector for a workspace.
+* [deactivate_for_workspace](#deactivate_for_workspace) - Deactivate a connector for a workspace.
+* [activate_for_user](#activate_for_user) - Activate a connector for the current user.
+* [deactivate_for_user](#deactivate_for_user) - Deactivate a connector for the current user.
 * [call_tool](#call_tool) - Call Connector Tool
 * [list_tools](#list_tools) - List tools for a connector.
 * [get_authentication_methods](#get_authentication_methods) - Get authentication methods for a connector.
@@ -152,6 +158,264 @@ with Mistral(
 ### Response
 
 **[models.AuthURLResponse](../../models/authurlresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## activate_for_organization
+
+Enable a connector at the organization level so all members can use it.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_activate_for_organization_v1" method="post" path="/v1/connectors/{connector_id}/organization/activate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.activate_for_organization(connector_id="a91bb4ec-caab-4cf2-be03-84b8343f4643")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `connector_id`                                                                        | *str*                                                                                 | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `requires_confirmation`                                                               | [OptionalNullable[models.RequiresConfirmation]](../../models/requiresconfirmation.md) | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `skip_confirmation`                                                                   | [OptionalNullable[models.SkipConfirmation]](../../models/skipconfirmation.md)         | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `include`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `exclude`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## deactivate_for_organization
+
+Disable a connector at the organization level.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_deactivate_for_organization_v1" method="post" path="/v1/connectors/{connector_id}/organization/deactivate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.deactivate_for_organization(connector_id="8f4c1089-2a37-44b3-a3c4-830ca7a0e439")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## activate_for_workspace
+
+Enable a connector at the workspace level so all members of the workspace can use it.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_activate_for_workspace_v1" method="post" path="/v1/connectors/{connector_id}/workspace/activate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.activate_for_workspace(connector_id="2adfa8af-3618-41a9-8980-e5ea1486e58e")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `connector_id`                                                                        | *str*                                                                                 | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `requires_confirmation`                                                               | [OptionalNullable[models.RequiresConfirmation]](../../models/requiresconfirmation.md) | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `skip_confirmation`                                                                   | [OptionalNullable[models.SkipConfirmation]](../../models/skipconfirmation.md)         | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `include`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `exclude`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## deactivate_for_workspace
+
+Disable a connector at the workspace level.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_deactivate_for_workspace_v1" method="post" path="/v1/connectors/{connector_id}/workspace/deactivate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.deactivate_for_workspace(connector_id="15b00e98-a9e7-4582-b0fc-87d28c3dac04")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## activate_for_user
+
+Enable a connector for the calling user only.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_activate_for_user_v1" method="post" path="/v1/connectors/{connector_id}/user/activate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.activate_for_user(connector_id="cd4fb4d2-de68-451f-8f2a-57fe39b33d96")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `connector_id`                                                                        | *str*                                                                                 | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `requires_confirmation`                                                               | [OptionalNullable[models.RequiresConfirmation]](../../models/requiresconfirmation.md) | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `skip_confirmation`                                                                   | [OptionalNullable[models.SkipConfirmation]](../../models/skipconfirmation.md)         | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `include`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `exclude`                                                                             | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## deactivate_for_user
+
+Disable a connector for the calling user only.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_deactivate_for_user_v1" method="post" path="/v1/connectors/{connector_id}/user/deactivate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.deactivate_for_user(connector_id="99c6ed86-e6bb-40ed-b6ee-d22ba791a68f")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
 
 ### Errors
 
@@ -693,7 +957,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.connectors.get(connector_id_or_name="<value>", fetch_customer_data=False, fetch_connection_secrets=False)
+    res = mistral.beta.connectors.get(connector_id_or_name="<value>", fetch_customer_data=False)
 
     # Handle response
     print(res)
@@ -706,7 +970,6 @@ with Mistral(
 | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `connector_id_or_name`                                                                  | *str*                                                                                   | :heavy_check_mark:                                                                      | N/A                                                                                     |
 | `fetch_customer_data`                                                                   | *Optional[bool]*                                                                        | :heavy_minus_sign:                                                                      | Fetch the customer data associated with the connector (e.g. customer secrets / config). |
-| `fetch_connection_secrets`                                                              | *Optional[bool]*                                                                        | :heavy_minus_sign:                                                                      | Fetch the general connection secrets associated with the connector.                     |
 | `retries`                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                        | :heavy_minus_sign:                                                                      | Configuration to override the default retry behavior of the client.                     |
 
 ### Response
