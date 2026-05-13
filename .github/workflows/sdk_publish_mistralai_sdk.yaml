@@ -23,8 +23,4 @@ jobs:
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
-    secrets:
-      github_access_token: ${{ secrets.CLIENT_PIPELINE }}
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+    uses: ./.github/workflows/_speakeasy_sdk_publish.yaml

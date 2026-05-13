@@ -37,7 +37,7 @@ jobs:
 
   generate:
     needs: resolve-speakeasy-version
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
+    uses: ./.github/workflows/_speakeasy_workflow_executor.yaml
     with:
       force: ${{ github.event.inputs.force }}
       mode: pr
@@ -45,10 +45,6 @@ jobs:
       speakeasy_version: ${{ needs.resolve-speakeasy-version.outputs.version }}
       target: mistralai-gcp-sdk
       feature_branch: speakeasy-sdk-regen-${{ github.run_id }}
-    secrets:
-      github_access_token: ${{ secrets.CLIENT_PIPELINE }}
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
 
   align-version:
     needs: generate
