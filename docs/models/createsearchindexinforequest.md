@@ -1,0 +1,10 @@
+# CreateSearchIndexInfoRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `document_count`                                                                                       | *OptionalNullable[int]*                                                                                | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `status`                                                                                               | [Optional[models.CreateSearchIndexInfoRequestStatus]](../models/createsearchindexinforequeststatus.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `index`                                                                                                | [models.CreateSearchIndexInfoRequestIndex](../models/createsearchindexinforequestindex.md)             | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
