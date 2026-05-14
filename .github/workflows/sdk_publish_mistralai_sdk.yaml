@@ -1,9 +1,7 @@
 name: Publish MISTRALAI-SDK
 permissions:
-  checks: write
-  contents: write
-  pull-requests: write
-  statuses: write
+  contents: read
+  id-token: write
 "on":
   workflow_dispatch:
     inputs:
@@ -15,16 +13,66 @@ permissions:
     branches:
       - main
     paths:
-      - RELEASES.md
-      - "*/RELEASES.md"
+      - "**/RELEASES.md"
 jobs:
   publish:
+    name: Publish Python SDKs to PyPI
     # Auto-publish on push to main branch; require manual confirmation for workflow_dispatch
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
-    secrets:
-      github_access_token: ${{ secrets.CLIENT_PIPELINE }}
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+    runs-on: ubuntu-latest
+    environment:
+      name: public-sdk
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+
+      - name: Build mistralai
+        run: |
+          python scripts/prepare_readme.py
+          uv build --sdist --wheel --out-dir dist/mistralai
+
+      - name: Publish mistralai to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
+        with:
+          packages-dir: dist/mistralai/
+          print-hash: true
+          verbose: true
+          skip-existing: true
+
+      - name: Build mistralai-azure
+        working-directory: packages/azure
+        run: |
+          python scripts/prepare_readme.py
+          uv build --sdist --wheel --out-dir ../../dist/mistralai-azure
+
+      - name: Publish mistralai-azure to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
+        with:
+          packages-dir: dist/mistralai-azure/
+          print-hash: true
+          verbose: true
+          skip-existing: true
+
+      - name: Build mistralai-gcp
+        working-directory: packages/gcp
+        run: |
+          python scripts/prepare_readme.py
+          uv build --sdist --wheel --out-dir ../../dist/mistralai-gcp
+
+      - name: Publish mistralai-gcp to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
+        with:
+          packages-dir: dist/mistralai-gcp/
+          print-hash: true
+          verbose: true
+          skip-existing: true
