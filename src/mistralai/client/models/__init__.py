@@ -1237,6 +1237,7 @@ if TYPE_CHECKING:
         JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict,
         UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
     )
+    from .jsonpatch import JSONPatch, JSONPatchTypedDict, UnknownJSONPatch
     from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
     from .jsonpatchappend import (
         JSONPatchAppend,
@@ -1254,11 +1255,6 @@ if TYPE_CHECKING:
     )
     from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
-    from .jsonpatchresponse import (
-        JSONPatchResponse,
-        JSONPatchResponseTypedDict,
-        UnknownJSONPatchResponse,
-    )
     from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .judge import (
@@ -3130,6 +3126,7 @@ __all__ = [
     "InstructRequestMessage",
     "InstructRequestMessageTypedDict",
     "InstructRequestTypedDict",
+    "JSONPatch",
     "JSONPatchAdd",
     "JSONPatchAddTypedDict",
     "JSONPatchAppend",
@@ -3144,8 +3141,7 @@ __all__ = [
     "JSONPatchRemoveTypedDict",
     "JSONPatchReplace",
     "JSONPatchReplaceTypedDict",
-    "JSONPatchResponse",
-    "JSONPatchResponseTypedDict",
+    "JSONPatchTypedDict",
     "JSONPayloadResponse",
     "JSONPayloadResponseTypedDict",
     "JSONSchema",
@@ -3799,7 +3795,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownJSONPatchResponse",
+    "UnknownJSONPatch",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse",
@@ -4815,6 +4811,9 @@ _dynamic_imports: dict[str, str] = {
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "JSONPatch": ".jsonpatch",
+    "JSONPatchTypedDict": ".jsonpatch",
+    "UnknownJSONPatch": ".jsonpatch",
     "JSONPatchAdd": ".jsonpatchadd",
     "JSONPatchAddTypedDict": ".jsonpatchadd",
     "JSONPatchAppend": ".jsonpatchappend",
@@ -4829,9 +4828,6 @@ _dynamic_imports: dict[str, str] = {
     "JSONPatchRemoveTypedDict": ".jsonpatchremove",
     "JSONPatchReplace": ".jsonpatchreplace",
     "JSONPatchReplaceTypedDict": ".jsonpatchreplace",
-    "JSONPatchResponse": ".jsonpatchresponse",
-    "JSONPatchResponseTypedDict": ".jsonpatchresponse",
-    "UnknownJSONPatchResponse": ".jsonpatchresponse",
     "JSONPayloadResponse": ".jsonpayloadresponse",
     "JSONPayloadResponseTypedDict": ".jsonpayloadresponse",
     "JSONSchema": ".jsonschema",

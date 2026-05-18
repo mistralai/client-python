@@ -2,17 +2,16 @@
 # @generated-id: 6cf0e3599e2c
 
 from __future__ import annotations
-from .jsonpatchresponse import JSONPatchResponse, JSONPatchResponseTypedDict
+from .jsonpatch import JSONPatch, JSONPatchTypedDict
 from typing import List, Union
 from typing_extensions import TypeAliasType
 
 
 JSONPatchPayloadValueResponseTypedDict = TypeAliasType(
-    "JSONPatchPayloadValueResponseTypedDict",
-    Union[List[JSONPatchResponseTypedDict], str],
+    "JSONPatchPayloadValueResponseTypedDict", Union[List[JSONPatchTypedDict], str]
 )
 
 
 JSONPatchPayloadValueResponse = TypeAliasType(
-    "JSONPatchPayloadValueResponse", Union[List[JSONPatchResponse], str]
+    "JSONPatchPayloadValueResponse", Union[List[JSONPatch], str]
 )

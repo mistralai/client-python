@@ -1,4 +1,4 @@
-# JSONPatchResponse
+# JSONPatch
 
 
 ## Supported Types
