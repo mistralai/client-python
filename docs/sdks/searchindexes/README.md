@@ -62,7 +62,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.search_indexes.register(index={
+    res = mistral.beta.rag.search_indexes.register(name="<value>", index={
         "type": "vespa",
         "k8s_cluster": "<value>",
         "k8s_namespace": "<value>",
@@ -79,6 +79,7 @@ with Mistral(
 
 | Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                    | *str*                                                                                                     | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
 | `index`                                                                                                   | [models.CreateSearchIndexInfoRequestIndex](../../models/createsearchindexinforequestindex.md)             | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
 | `document_count`                                                                                          | *OptionalNullable[int]*                                                                                   | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
 | `status`                                                                                                  | [Optional[models.CreateSearchIndexInfoRequestStatus]](../../models/createsearchindexinforequeststatus.md) | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |

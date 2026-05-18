@@ -1,12 +1,12 @@
-# ToolType
+# ConnectionConfigType
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import ToolType
+from mistralai.client.models import ConnectionConfigType
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ToolType = "rag"
+value: ConnectionConfigType = "mcp"
 ```
 
 
@@ -14,7 +14,6 @@ value: ToolType = "rag"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"rag"`
-- `"image"`
-- `"code"`
-- `"event"`
+- `"mcp"`
+- `"turbine"`
+- `"eolienne"`

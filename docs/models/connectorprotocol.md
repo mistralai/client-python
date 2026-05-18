@@ -1,12 +1,12 @@
-# Visibility
+# ConnectorProtocol
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import Visibility
+from mistralai.client.models import ConnectorProtocol
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Visibility = "model"
+value: ConnectorProtocol = "mcp"
 ```
 
 
@@ -14,5 +14,5 @@ value: Visibility = "model"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"model"`
-- `"app"`
+- `"mcp"`
+- `"http"`

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
+from .connectorprotocol import ConnectorProtocol
 from .resourcevisibility import ResourceVisibility
 from mistralai.client.types import (
     BaseModel,
@@ -28,6 +29,8 @@ class CreateConnectorRequestTypedDict(TypedDict):
     icon_url: NotRequired[Nullable[str]]
     r"""The optional url of the icon you want to associate to the connector."""
     visibility: NotRequired[ResourceVisibility]
+    protocol: NotRequired[Nullable[ConnectorProtocol]]
+    r"""Protocol of the connector."""
     headers: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
@@ -54,6 +57,9 @@ class CreateConnectorRequest(BaseModel):
 
     visibility: Optional[ResourceVisibility] = None
 
+    protocol: OptionalNullable[ConnectorProtocol] = UNSET
+    r"""Protocol of the connector."""
+
     headers: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
 
@@ -66,10 +72,18 @@ class CreateConnectorRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["title", "icon_url", "visibility", "headers", "auth_data", "system_prompt"]
+            [
+                "title",
+                "icon_url",
+                "visibility",
+                "protocol",
+                "headers",
+                "auth_data",
+                "system_prompt",
+            ]
         )
         nullable_fields = set(
-            ["title", "icon_url", "headers", "auth_data", "system_prompt"]
+            ["title", "icon_url", "protocol", "headers", "auth_data", "system_prompt"]
         )
         serialized = handler(self)
         m = {}

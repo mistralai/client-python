@@ -3,14 +3,17 @@
 
 from __future__ import annotations
 from .toolproperties import ToolProperties, ToolPropertiesTypedDict
-from mistralai.client.types import BaseModel
+from mistralai.client.types import BaseModel, UnrecognizedStr
 from typing import List, Literal, Union
 from typing_extensions import TypeAliasType, TypedDict
 
 
-LogicalExpressionType = Literal[
-    "and",
-    "or",
+LogicalExpressionType = Union[
+    Literal[
+        "and",
+        "or",
+    ],
+    UnrecognizedStr,
 ]
 
 

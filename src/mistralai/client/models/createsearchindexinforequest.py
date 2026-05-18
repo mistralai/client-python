@@ -31,12 +31,15 @@ CreateSearchIndexInfoRequestIndex = CreateVespaSearchIndexInfoRequest
 
 
 class CreateSearchIndexInfoRequestTypedDict(TypedDict):
+    name: str
     index: CreateSearchIndexInfoRequestIndexTypedDict
     document_count: NotRequired[Nullable[int]]
     status: NotRequired[CreateSearchIndexInfoRequestStatus]
 
 
 class CreateSearchIndexInfoRequest(BaseModel):
+    name: str
+
     index: CreateSearchIndexInfoRequestIndex
 
     document_count: OptionalNullable[int] = UNSET

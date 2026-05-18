@@ -170,6 +170,7 @@ class SearchIndexes(BaseSDK):
     def register(
         self,
         *,
+        name: str,
         index: Union[
             models.CreateSearchIndexInfoRequestIndex,
             models.CreateSearchIndexInfoRequestIndexTypedDict,
@@ -183,6 +184,7 @@ class SearchIndexes(BaseSDK):
     ) -> models.SearchIndexResponse:
         r"""Register Search Index
 
+        :param name:
         :param index:
         :param document_count:
         :param status:
@@ -205,6 +207,7 @@ class SearchIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateSearchIndexInfoRequest(
+            name=name,
             document_count=document_count,
             status=status,
             index=utils.get_pydantic_model(
@@ -275,6 +278,7 @@ class SearchIndexes(BaseSDK):
     async def register_async(
         self,
         *,
+        name: str,
         index: Union[
             models.CreateSearchIndexInfoRequestIndex,
             models.CreateSearchIndexInfoRequestIndexTypedDict,
@@ -288,6 +292,7 @@ class SearchIndexes(BaseSDK):
     ) -> models.SearchIndexResponse:
         r"""Register Search Index
 
+        :param name:
         :param index:
         :param document_count:
         :param status:
@@ -310,6 +315,7 @@ class SearchIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateSearchIndexInfoRequest(
+            name=name,
             document_count=document_count,
             status=status,
             index=utils.get_pydantic_model(
