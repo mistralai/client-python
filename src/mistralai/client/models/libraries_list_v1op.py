@@ -10,6 +10,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -21,7 +22,7 @@ class LibrariesListV1RequestTypedDict(TypedDict):
     search: NotRequired[Nullable[str]]
     r"""Case-insensitive search on the library name."""
     filter_owned_by_me: NotRequired[Nullable[bool]]
-    r"""Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter."""
+    r"""Deprecated: this parameter will be removed in a future version."""
 
 
 class LibrariesListV1Request(BaseModel):
@@ -43,9 +44,12 @@ class LibrariesListV1Request(BaseModel):
 
     filter_owned_by_me: Annotated[
         OptionalNullable[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Filter libraries by whether they were created by the current authenticated identity. Set to true for created by me, false for only libraries shared with me, or None to disable this filter."""
+    r"""Deprecated: this parameter will be removed in a future version."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
