@@ -1165,14 +1165,16 @@ if TYPE_CHECKING:
         JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict,
         UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
     )
+    from .jsonpatch import JSONPatch, JSONPatchTypedDict, UnknownJSONPatch
     from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
     from .jsonpatchappend import JSONPatchAppend, JSONPatchAppendTypedDict
     from .jsonpatchpayloadresponse import (
         JSONPatchPayloadResponse,
         JSONPatchPayloadResponseTypedDict,
-        JSONPatchPayloadResponseValue,
-        JSONPatchPayloadResponseValueTypedDict,
-        UnknownJSONPatchPayloadResponseValue,
+    )
+    from .jsonpatchpayloadvalueresponse import (
+        JSONPatchPayloadValueResponse,
+        JSONPatchPayloadValueResponseTypedDict,
     )
     from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
@@ -2904,18 +2906,20 @@ __all__ = [
     "InstructRequestMessage",
     "InstructRequestMessageTypedDict",
     "InstructRequestTypedDict",
+    "JSONPatch",
     "JSONPatchAdd",
     "JSONPatchAddTypedDict",
     "JSONPatchAppend",
     "JSONPatchAppendTypedDict",
     "JSONPatchPayloadResponse",
     "JSONPatchPayloadResponseTypedDict",
-    "JSONPatchPayloadResponseValue",
-    "JSONPatchPayloadResponseValueTypedDict",
+    "JSONPatchPayloadValueResponse",
+    "JSONPatchPayloadValueResponseTypedDict",
     "JSONPatchRemove",
     "JSONPatchRemoveTypedDict",
     "JSONPatchReplace",
     "JSONPatchReplaceTypedDict",
+    "JSONPatchTypedDict",
     "JSONPayloadResponse",
     "JSONPayloadResponseTypedDict",
     "JSONSchema",
@@ -3500,7 +3504,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownJSONPatchPayloadResponseValue",
+    "UnknownJSONPatch",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse",
@@ -4466,15 +4470,17 @@ _dynamic_imports: dict[str, str] = {
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
+    "JSONPatch": ".jsonpatch",
+    "JSONPatchTypedDict": ".jsonpatch",
+    "UnknownJSONPatch": ".jsonpatch",
     "JSONPatchAdd": ".jsonpatchadd",
     "JSONPatchAddTypedDict": ".jsonpatchadd",
     "JSONPatchAppend": ".jsonpatchappend",
     "JSONPatchAppendTypedDict": ".jsonpatchappend",
     "JSONPatchPayloadResponse": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadResponseTypedDict": ".jsonpatchpayloadresponse",
-    "JSONPatchPayloadResponseValue": ".jsonpatchpayloadresponse",
-    "JSONPatchPayloadResponseValueTypedDict": ".jsonpatchpayloadresponse",
-    "UnknownJSONPatchPayloadResponseValue": ".jsonpatchpayloadresponse",
+    "JSONPatchPayloadValueResponse": ".jsonpatchpayloadvalueresponse",
+    "JSONPatchPayloadValueResponseTypedDict": ".jsonpatchpayloadvalueresponse",
     "JSONPatchRemove": ".jsonpatchremove",
     "JSONPatchRemoveTypedDict": ".jsonpatchremove",
     "JSONPatchReplace": ".jsonpatchreplace",
