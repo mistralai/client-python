@@ -364,16 +364,17 @@ class PayloadEncoder:
             "encoding_options": [],
         }
 
-    _ENCRYPTED_PATCH_KEY = "__encrypted__"
+    _ENCRYPTED_PATCH_TYPE = "__encrypted__"
 
     def _decrypt_json_patch_selective(self, patches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Decrypt patches with EncryptedPatchValue wrapper (dict with __encrypted__ key)."""
+        """Decrypt patches with EncryptedPatchValue wrapper: {type: "__encrypted__", value: "base64..."}."""
         decrypted = []
         for patch in patches:
             patch_value = patch.get("value")
 
-            if isinstance(patch_value, dict) and self._ENCRYPTED_PATCH_KEY in patch_value:
-                encrypted_b64 = patch_value[self._ENCRYPTED_PATCH_KEY]
+            # EncryptedPatchValue format: {"type": "__encrypted__", "value": "base64-encrypted-data"}
+            if isinstance(patch_value, dict) and patch_value.get("type") == self._ENCRYPTED_PATCH_TYPE:
+                encrypted_b64 = patch_value.get("value", "")
                 encrypted_data = base64.b64decode(encrypted_b64)
                 decrypted_bytes = self._decrypt(encrypted_data)
                 decrypted.append({
