@@ -22,6 +22,7 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
@@ -42,6 +43,7 @@ class Connectors(BaseSDK):
         :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param protocol: Protocol of the connector.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
@@ -69,6 +71,7 @@ class Connectors(BaseSDK):
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            protocol=protocol,
             server=server,
             headers=headers,
             auth_data=utils.get_pydantic_model(
@@ -146,6 +149,7 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
@@ -166,6 +170,7 @@ class Connectors(BaseSDK):
         :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param protocol: Protocol of the connector.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
@@ -193,6 +198,7 @@ class Connectors(BaseSDK):
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            protocol=protocol,
             server=server,
             headers=headers,
             auth_data=utils.get_pydantic_model(
@@ -651,6 +657,1296 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.AuthURLResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def activate_for_organization(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for an organization.
+
+        Enable a connector at the organization level so all members can use it.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForOrganizationV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/organization/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def activate_for_organization_async(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for an organization.
+
+        Enable a connector at the organization level so all members can use it.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForOrganizationV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/organization/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def deactivate_for_organization(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for an organization.
+
+        Disable a connector at the organization level.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/organization/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def deactivate_for_organization_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for an organization.
+
+        Disable a connector at the organization level.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/organization/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def activate_for_workspace(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for a workspace.
+
+        Enable a connector at the workspace level so all members of the workspace can use it.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForWorkspaceV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/workspace/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_workspace_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def activate_for_workspace_async(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for a workspace.
+
+        Enable a connector at the workspace level so all members of the workspace can use it.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForWorkspaceV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/workspace/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_workspace_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def deactivate_for_workspace(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for a workspace.
+
+        Disable a connector at the workspace level.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForWorkspaceV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/workspace/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_workspace_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def deactivate_for_workspace_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for a workspace.
+
+        Disable a connector at the workspace level.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForWorkspaceV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/workspace/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_workspace_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def activate_for_user(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for the current user.
+
+        Enable a connector for the calling user only.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForUserV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/user/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_user_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def activate_for_user_async(
+        self,
+        *,
+        connector_id: str,
+        requires_confirmation: OptionalNullable[
+            Union[models.RequiresConfirmation, models.RequiresConfirmationTypedDict]
+        ] = UNSET,
+        skip_confirmation: OptionalNullable[
+            Union[models.SkipConfirmation, models.SkipConfirmationTypedDict]
+        ] = UNSET,
+        include: OptionalNullable[List[str]] = UNSET,
+        exclude: OptionalNullable[List[str]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Activate a connector for the current user.
+
+        Enable a connector for the calling user only.
+
+        :param connector_id:
+        :param requires_confirmation:
+        :param skip_confirmation:
+        :param include:
+        :param exclude:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorActivateForUserV1Request(
+            connector_id=connector_id,
+            tool_execution_configuration=models.ToolExecutionConfiguration(
+                requires_confirmation=utils.get_pydantic_model(
+                    requires_confirmation, OptionalNullable[models.RequiresConfirmation]
+                ),
+                skip_confirmation=utils.get_pydantic_model(
+                    skip_confirmation, OptionalNullable[models.SkipConfirmation]
+                ),
+                include=include,
+                exclude=exclude,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/user/activate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.tool_execution_configuration if request is not None else None,
+                True,
+                True,
+                "json",
+                OptionalNullable[models.ToolExecutionConfiguration],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_activate_for_user_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def deactivate_for_user(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for the current user.
+
+        Disable a connector for the calling user only.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForUserV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id}/user/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_user_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def deactivate_for_user_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Deactivate a connector for the current user.
+
+        Disable a connector for the calling user only.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorDeactivateForUserV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id}/user/deactivate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_deactivate_for_user_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3150,7 +4446,6 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         fetch_customer_data: Optional[bool] = False,
-        fetch_connection_secrets: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3162,7 +4457,6 @@ class Connectors(BaseSDK):
 
         :param connector_id_or_name:
         :param fetch_customer_data: Fetch the customer data associated with the connector (e.g. customer secrets / config).
-        :param fetch_connection_secrets: Fetch the general connection secrets associated with the connector.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3183,7 +4477,6 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorGetV1Request(
             fetch_customer_data=fetch_customer_data,
-            fetch_connection_secrets=fetch_connection_secrets,
             connector_id_or_name=connector_id_or_name,
         )
 
@@ -3249,7 +4542,6 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         fetch_customer_data: Optional[bool] = False,
-        fetch_connection_secrets: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3261,7 +4553,6 @@ class Connectors(BaseSDK):
 
         :param connector_id_or_name:
         :param fetch_customer_data: Fetch the customer data associated with the connector (e.g. customer secrets / config).
-        :param fetch_connection_secrets: Fetch the general connection secrets associated with the connector.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3282,7 +4573,6 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorGetV1Request(
             fetch_customer_data=fetch_customer_data,
-            fetch_connection_secrets=fetch_connection_secrets,
             connector_id_or_name=connector_id_or_name,
         )
 
@@ -3352,6 +4642,7 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -3374,6 +4665,7 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
+        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -3405,6 +4697,7 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
+                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,
@@ -3488,6 +4781,7 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -3510,6 +4804,7 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
+        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -3541,6 +4836,7 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
+                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,

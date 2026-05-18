@@ -9,6 +9,13 @@ from .filtergroup import (
     Or,
     OrTypedDict,
 )
+from .logicalexpression import (
+    Expression,
+    ExpressionTypedDict,
+    LogicalExpression,
+    LogicalExpressionType,
+    LogicalExpressionTypedDict,
+)
 from typing import Any, TYPE_CHECKING
 
 from mistralai.client.utils.dynamic_imports import lazy_getattr, lazy_dir
@@ -348,6 +355,15 @@ if TYPE_CHECKING:
         ClassifierTrainingParameters,
         ClassifierTrainingParametersTypedDict,
     )
+    from .clientcapabilities import ClientCapabilities, ClientCapabilitiesTypedDict
+    from .clienttaskscapability import (
+        ClientTasksCapability,
+        ClientTasksCapabilityTypedDict,
+    )
+    from .clienttasksrequestscapability import (
+        ClientTasksRequestsCapability,
+        ClientTasksRequestsCapabilityTypedDict,
+    )
     from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
     from .completionargs import CompletionArgs, CompletionArgsTypedDict
     from .completionargsstop import CompletionArgsStop, CompletionArgsStopTypedDict
@@ -388,11 +404,28 @@ if TYPE_CHECKING:
         CompletionTrainingParameters,
         CompletionTrainingParametersTypedDict,
     )
+    from .connectionconfigtype import ConnectionConfigType
     from .connectioncredentials import (
         ConnectionCredentials,
         ConnectionCredentialsTypedDict,
     )
+    from .connectionpreference import (
+        ConnectionPreference,
+        ConnectionPreferenceTypedDict,
+    )
     from .connector import Connector, ConnectorTypedDict
+    from .connector_activate_for_organization_v1op import (
+        ConnectorActivateForOrganizationV1Request,
+        ConnectorActivateForOrganizationV1RequestTypedDict,
+    )
+    from .connector_activate_for_user_v1op import (
+        ConnectorActivateForUserV1Request,
+        ConnectorActivateForUserV1RequestTypedDict,
+    )
+    from .connector_activate_for_workspace_v1op import (
+        ConnectorActivateForWorkspaceV1Request,
+        ConnectorActivateForWorkspaceV1RequestTypedDict,
+    )
     from .connector_call_tool_v1op import (
         ConnectorCallToolV1Request,
         ConnectorCallToolV1RequestTypedDict,
@@ -408,6 +441,18 @@ if TYPE_CHECKING:
     from .connector_create_or_update_workspace_credentials_v1op import (
         ConnectorCreateOrUpdateWorkspaceCredentialsV1Request,
         ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict,
+    )
+    from .connector_deactivate_for_organization_v1op import (
+        ConnectorDeactivateForOrganizationV1Request,
+        ConnectorDeactivateForOrganizationV1RequestTypedDict,
+    )
+    from .connector_deactivate_for_user_v1op import (
+        ConnectorDeactivateForUserV1Request,
+        ConnectorDeactivateForUserV1RequestTypedDict,
+    )
+    from .connector_deactivate_for_workspace_v1op import (
+        ConnectorDeactivateForWorkspaceV1Request,
+        ConnectorDeactivateForWorkspaceV1RequestTypedDict,
     )
     from .connector_delete_organization_credentials_v1op import (
         ConnectorDeleteOrganizationCredentialsV1Request,
@@ -471,6 +516,8 @@ if TYPE_CHECKING:
         ConnectorCallToolRequest,
         ConnectorCallToolRequestTypedDict,
     )
+    from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
+    from .connectorprotocol import ConnectorProtocol
     from .connectorsqueryfilters import (
         ConnectorsQueryFilters,
         ConnectorsQueryFiltersTypedDict,
@@ -492,6 +539,7 @@ if TYPE_CHECKING:
         ConnectorToolResultMetadata,
         ConnectorToolResultMetadataTypedDict,
     )
+    from .consumertype import ConsumerType
     from .contentchunk import ContentChunk, ContentChunkTypedDict, UnknownContentChunk
     from .conversationappendrequest import (
         ConversationAppendRequest,
@@ -625,6 +673,21 @@ if TYPE_CHECKING:
         CreateLibraryRequestTypedDict,
         OwnerType,
     )
+    from .createsearchindexinforequest import (
+        CreateSearchIndexInfoRequest,
+        CreateSearchIndexInfoRequestIndex,
+        CreateSearchIndexInfoRequestIndexTypedDict,
+        CreateSearchIndexInfoRequestStatus,
+        CreateSearchIndexInfoRequestTypedDict,
+    )
+    from .createvespaschemarequest import (
+        CreateVespaSchemaRequest,
+        CreateVespaSchemaRequestTypedDict,
+    )
+    from .createvespasearchindexinforequest import (
+        CreateVespaSearchIndexInfoRequest,
+        CreateVespaSearchIndexInfoRequestTypedDict,
+    )
     from .credentialscreateorupdate import (
         CredentialsCreateOrUpdate,
         CredentialsCreateOrUpdateTypedDict,
@@ -750,6 +813,10 @@ if TYPE_CHECKING:
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
     from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
+    from .elicitationcapability import (
+        ElicitationCapability,
+        ElicitationCapabilityTypedDict,
+    )
     from .embeddedresource import (
         EmbeddedResource,
         EmbeddedResourceTypedDict,
@@ -770,6 +837,7 @@ if TYPE_CHECKING:
     )
     from .encodedpayloadoptions import EncodedPayloadOptions
     from .encodingformat import EncodingFormat
+    from .encryptedpatchvalue import EncryptedPatchValue, EncryptedPatchValueTypedDict
     from .entitytype import EntityType
     from .event import Event, EventTypedDict
     from .eventprogressstatus import EventProgressStatus
@@ -985,6 +1053,10 @@ if TYPE_CHECKING:
         GetRunV1WorkflowsRunsRunIDGetRequest,
         GetRunV1WorkflowsRunsRunIDGetRequestTypedDict,
     )
+    from .get_schedule_v1_workflows_schedules_schedule_id_getop import (
+        GetScheduleV1WorkflowsSchedulesScheduleIDGetRequest,
+        GetScheduleV1WorkflowsSchedulesScheduleIDGetRequestTypedDict,
+    )
     from .get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop import (
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest,
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict,
@@ -1165,9 +1237,13 @@ if TYPE_CHECKING:
         JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict,
         UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse,
     )
-    from .jsonpatch import JSONPatch, JSONPatchTypedDict, UnknownJSONPatch
     from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
-    from .jsonpatchappend import JSONPatchAppend, JSONPatchAppendTypedDict
+    from .jsonpatchappend import (
+        JSONPatchAppend,
+        JSONPatchAppendTypedDict,
+        JSONPatchAppendValue,
+        JSONPatchAppendValueTypedDict,
+    )
     from .jsonpatchpayloadresponse import (
         JSONPatchPayloadResponse,
         JSONPatchPayloadResponseTypedDict,
@@ -1178,6 +1254,11 @@ if TYPE_CHECKING:
     )
     from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
+    from .jsonpatchresponse import (
+        JSONPatchResponse,
+        JSONPatchResponseTypedDict,
+        UnknownJSONPatchResponse,
+    )
     from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .judge import (
@@ -1258,6 +1339,10 @@ if TYPE_CHECKING:
         LibrariesDocumentsListV1Request,
         LibrariesDocumentsListV1RequestTypedDict,
     )
+    from .libraries_documents_patch_v1op import (
+        LibrariesDocumentsPatchV1Request,
+        LibrariesDocumentsPatchV1RequestTypedDict,
+    )
     from .libraries_documents_reprocess_v1op import (
         LibrariesDocumentsReprocessV1Request,
         LibrariesDocumentsReprocessV1RequestTypedDict,
@@ -1279,6 +1364,10 @@ if TYPE_CHECKING:
     from .libraries_list_v1op import (
         LibrariesListV1Request,
         LibrariesListV1RequestTypedDict,
+    )
+    from .libraries_patch_v1op import (
+        LibrariesPatchV1Request,
+        LibrariesPatchV1RequestTypedDict,
     )
     from .libraries_share_create_v1op import (
         LibrariesShareCreateV1Request,
@@ -1371,10 +1460,36 @@ if TYPE_CHECKING:
         ListWorkflowEventResponseTypedDict,
     )
     from .locationtype import LocationType
+    from .mcpprompt import MCPPrompt, MCPPromptTypedDict
+    from .mcpresource import MCPResource, MCPResourceTypedDict
+    from .mcpserverauthenticationrequirement import (
+        MCPServerAuthenticationRequirement,
+        MCPServerAuthenticationRequirementTypedDict,
+    )
+    from .mcpservercard import (
+        MCPServerCard,
+        MCPServerCardTypedDict,
+        Prompts,
+        PromptsTypedDict,
+        Resources,
+        ResourcesTypedDict,
+        Tools,
+        ToolsTypedDict,
+    )
+    from .mcpservercardmeta import MCPServerCardMeta, MCPServerCardMetaTypedDict
     from .mcpservericon import MCPServerIcon, MCPServerIconTypedDict
+    from .mcpserverremote import (
+        MCPServerRemote,
+        MCPServerRemoteType,
+        MCPServerRemoteTypedDict,
+    )
+    from .mcpserverremoteheader import (
+        MCPServerRemoteHeader,
+        MCPServerRemoteHeaderTypedDict,
+    )
+    from .mcpserverrepository import MCPServerRepository, MCPServerRepositoryTypedDict
     from .mcptool import MCPTool, MCPToolTypedDict
     from .mcptoolmeta import MCPToolMeta, MCPToolMetaTypedDict
-    from .mcpuitoolmeta import MCPUIToolMeta, MCPUIToolMetaTypedDict, Visibility
     from .messageentries import MessageEntries, MessageEntriesTypedDict
     from .messageinputcontentchunks import (
         MessageInputContentChunks,
@@ -1499,6 +1614,10 @@ if TYPE_CHECKING:
     )
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .paginationresponse import PaginationResponse, PaginationResponseTypedDict
+    from .partialscheduledefinition import (
+        PartialScheduleDefinition,
+        PartialScheduleDefinitionTypedDict,
+    )
     from .pause_schedule_v1_workflows_schedules_schedule_id_pause_postop import (
         PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest,
         PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict,
@@ -1526,10 +1645,16 @@ if TYPE_CHECKING:
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
+    from .promptargument import PromptArgument, PromptArgumentTypedDict
+    from .promptscapability import PromptsCapability, PromptsCapabilityTypedDict
     from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
     from .publicauthenticationmethod import (
         PublicAuthenticationMethod,
         PublicAuthenticationMethodTypedDict,
+    )
+    from .publicconnectionconfig import (
+        PublicConnectionConfig,
+        PublicConnectionConfigTypedDict,
     )
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
@@ -1602,6 +1727,8 @@ if TYPE_CHECKING:
     )
     from .resetinvocationbody import ResetInvocationBody, ResetInvocationBodyTypedDict
     from .resourcelink import ResourceLink, ResourceLinkTypedDict
+    from .resourcescapability import ResourcesCapability, ResourcesCapabilityTypedDict
+    from .resourcetype import ResourceType
     from .resourcevisibility import ResourceVisibility
     from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
     from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
@@ -1623,7 +1750,9 @@ if TYPE_CHECKING:
         UnknownResponseRetrieveModelV1ModelsModelIDGet,
     )
     from .roles import Roles
+    from .rootscapability import RootsCapability, RootsCapabilityTypedDict
     from .sampletype import SampleType
+    from .samplingcapability import SamplingCapability, SamplingCapabilityTypedDict
     from .scalarmetric import (
         ScalarMetric,
         ScalarMetricTypedDict,
@@ -1664,7 +1793,25 @@ if TYPE_CHECKING:
         SearchChatCompletionEventsResponse,
         SearchChatCompletionEventsResponseTypedDict,
     )
+    from .searchindexresponse import (
+        SearchIndexResponse,
+        SearchIndexResponseIndex,
+        SearchIndexResponseIndexTypedDict,
+        SearchIndexResponseStatus,
+        SearchIndexResponseTypedDict,
+        UnknownSearchIndexResponseIndex,
+    )
     from .security import Security, SecurityTypedDict
+    from .servercapabilities import ServerCapabilities, ServerCapabilitiesTypedDict
+    from .serverlocale import ServerLocale, ServerLocaleTypedDict
+    from .servertaskscapability import (
+        ServerTasksCapability,
+        ServerTasksCapabilityTypedDict,
+    )
+    from .servertasksrequestscapability import (
+        ServerTasksRequestsCapability,
+        ServerTasksRequestsCapabilityTypedDict,
+    )
     from .shareenum import ShareEnum
     from .sharing import Sharing, SharingTypedDict
     from .sharingdelete import SharingDelete, SharingDeleteTypedDict
@@ -1732,6 +1879,18 @@ if TYPE_CHECKING:
     from .systemmessagecontentchunks import (
         SystemMessageContentChunks,
         SystemMessageContentChunksTypedDict,
+    )
+    from .taskselicitationcapability import (
+        TasksElicitationCapability,
+        TasksElicitationCapabilityTypedDict,
+    )
+    from .taskssamplingcapability import (
+        TasksSamplingCapability,
+        TasksSamplingCapabilityTypedDict,
+    )
+    from .taskstoolscapability import (
+        TasksToolsCapability,
+        TasksToolsCapabilityTypedDict,
     )
     from .tempogettraceresponse import (
         TempoGetTraceResponse,
@@ -1806,6 +1965,14 @@ if TYPE_CHECKING:
     from .toolchoiceenum import ToolChoiceEnum
     from .toolconfiguration import ToolConfiguration, ToolConfigurationTypedDict
     from .toolexecution import TaskSupport, ToolExecution, ToolExecutionTypedDict
+    from .toolexecutionconfiguration import (
+        RequiresConfirmation,
+        RequiresConfirmationTypedDict,
+        SkipConfirmation,
+        SkipConfirmationTypedDict,
+        ToolExecutionConfiguration,
+        ToolExecutionConfigurationTypedDict,
+    )
     from .toolexecutiondeltaevent import (
         ToolExecutionDeltaEvent,
         ToolExecutionDeltaEventName,
@@ -1842,13 +2009,14 @@ if TYPE_CHECKING:
         ToolMessageContentTypedDict,
         ToolMessageTypedDict,
     )
+    from .toolproperties import ToolProperties, ToolPropertiesTypedDict
     from .toolreferencechunk import (
         ToolReferenceChunk,
         ToolReferenceChunkTool,
         ToolReferenceChunkToolTypedDict,
         ToolReferenceChunkTypedDict,
     )
-    from .tooltype import ToolType
+    from .toolscapability import ToolsCapability, ToolsCapabilityTypedDict
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
         TranscriptionResponse,
@@ -1882,8 +2050,7 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDelta,
         TranscriptionStreamTextDeltaTypedDict,
     )
-    from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
-    from .turbinetoolmeta import TurbineToolMeta, TurbineToolMetaTypedDict
+    from .turbinemeta import TurbineMeta, TurbineMetaTypedDict
     from .unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop import (
         UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest,
         UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict,
@@ -1915,6 +2082,10 @@ if TYPE_CHECKING:
     from .update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop import (
         UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest,
         UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict,
+    )
+    from .update_schedule_v1_workflows_schedules_schedule_id_patchop import (
+        UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest,
+        UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict,
     )
     from .update_voice_v1_audio_voices_voice_id_patchop import (
         UpdateVoiceV1AudioVoicesVoiceIDPatchRequest,
@@ -1995,6 +2166,12 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
+    from .vespaschemaresponse import VespaSchemaResponse, VespaSchemaResponseTypedDict
+    from .vespasearchindexinforesponse import (
+        VespaSearchIndexInfoResponse,
+        VespaSearchIndexInfoResponseTypedDict,
+    )
+    from .voiceappearance import VoiceAppearance, VoiceAppearanceTypedDict
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
     from .voiceresponse import VoiceResponse, VoiceResponseTypedDict
@@ -2153,6 +2330,10 @@ if TYPE_CHECKING:
         WorkflowScheduleResponse,
         WorkflowScheduleResponseTypedDict,
     )
+    from .workflowscheduleupdaterequest import (
+        WorkflowScheduleUpdateRequest,
+        WorkflowScheduleUpdateRequestTypedDict,
+    )
     from .workflowtaskfailedattributes import (
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
@@ -2187,6 +2368,7 @@ if TYPE_CHECKING:
         WorkflowWithWorkerStatusTypedDict,
     )  # Pydantic models with forward references
 FilterGroup.model_rebuild()
+LogicalExpression.model_rebuild()
 
 
 __all__ = [
@@ -2424,6 +2606,12 @@ __all__ = [
     "ClassifierTargetTypedDict",
     "ClassifierTrainingParameters",
     "ClassifierTrainingParametersTypedDict",
+    "ClientCapabilities",
+    "ClientCapabilitiesTypedDict",
+    "ClientTasksCapability",
+    "ClientTasksCapabilityTypedDict",
+    "ClientTasksRequestsCapability",
+    "ClientTasksRequestsCapabilityTypedDict",
     "CodeInterpreterTool",
     "CodeInterpreterToolTypedDict",
     "CompletionArgs",
@@ -2457,9 +2645,18 @@ __all__ = [
     "CompletionTrainingParametersTypedDict",
     "ConfidenceScoresGranularity",
     "Confirmation",
+    "ConnectionConfigType",
     "ConnectionCredentials",
     "ConnectionCredentialsTypedDict",
+    "ConnectionPreference",
+    "ConnectionPreferenceTypedDict",
     "Connector",
+    "ConnectorActivateForOrganizationV1Request",
+    "ConnectorActivateForOrganizationV1RequestTypedDict",
+    "ConnectorActivateForUserV1Request",
+    "ConnectorActivateForUserV1RequestTypedDict",
+    "ConnectorActivateForWorkspaceV1Request",
+    "ConnectorActivateForWorkspaceV1RequestTypedDict",
     "ConnectorAuthenticationHeader",
     "ConnectorAuthenticationHeaderTypedDict",
     "ConnectorCallToolRequest",
@@ -2472,6 +2669,12 @@ __all__ = [
     "ConnectorCreateOrUpdateUserCredentialsV1RequestTypedDict",
     "ConnectorCreateOrUpdateWorkspaceCredentialsV1Request",
     "ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict",
+    "ConnectorDeactivateForOrganizationV1Request",
+    "ConnectorDeactivateForOrganizationV1RequestTypedDict",
+    "ConnectorDeactivateForUserV1Request",
+    "ConnectorDeactivateForUserV1RequestTypedDict",
+    "ConnectorDeactivateForWorkspaceV1Request",
+    "ConnectorDeactivateForWorkspaceV1RequestTypedDict",
     "ConnectorDeleteOrganizationCredentialsV1Request",
     "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict",
     "ConnectorDeleteUserCredentialsV1Request",
@@ -2496,6 +2699,9 @@ __all__ = [
     "ConnectorListV1RequestTypedDict",
     "ConnectorListWorkspaceCredentialsV1Request",
     "ConnectorListWorkspaceCredentialsV1RequestTypedDict",
+    "ConnectorLocale",
+    "ConnectorLocaleTypedDict",
+    "ConnectorProtocol",
     "ConnectorTool",
     "ConnectorToolCallMetadata",
     "ConnectorToolCallMetadataTypedDict",
@@ -2513,6 +2719,7 @@ __all__ = [
     "ConnectorUpdateV1RequestTypedDict",
     "ConnectorsQueryFilters",
     "ConnectorsQueryFiltersTypedDict",
+    "ConsumerType",
     "ContentChunk",
     "ContentChunkTypedDict",
     "Context",
@@ -2600,6 +2807,15 @@ __all__ = [
     "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
+    "CreateSearchIndexInfoRequest",
+    "CreateSearchIndexInfoRequestIndex",
+    "CreateSearchIndexInfoRequestIndexTypedDict",
+    "CreateSearchIndexInfoRequestStatus",
+    "CreateSearchIndexInfoRequestTypedDict",
+    "CreateVespaSchemaRequest",
+    "CreateVespaSchemaRequestTypedDict",
+    "CreateVespaSearchIndexInfoRequest",
+    "CreateVespaSearchIndexInfoRequestTypedDict",
     "CredentialsCreateOrUpdate",
     "CredentialsCreateOrUpdateTypedDict",
     "CredentialsResponse",
@@ -2684,6 +2900,8 @@ __all__ = [
     "DocumentUnionTypedDict",
     "DocumentUpload",
     "DocumentUploadTypedDict",
+    "ElicitationCapability",
+    "ElicitationCapabilityTypedDict",
     "EmbeddedResource",
     "EmbeddedResourceTypedDict",
     "EmbeddingDtype",
@@ -2697,6 +2915,8 @@ __all__ = [
     "EmbeddingResponseTypedDict",
     "EncodedPayloadOptions",
     "EncodingFormat",
+    "EncryptedPatchValue",
+    "EncryptedPatchValueTypedDict",
     "EntityType",
     "Entry",
     "EntryTypedDict",
@@ -2715,6 +2935,8 @@ __all__ = [
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict",
+    "Expression",
+    "ExpressionTypedDict",
     "FIMCompletionRequest",
     "FIMCompletionRequestStop",
     "FIMCompletionRequestStopTypedDict",
@@ -2833,6 +3055,8 @@ __all__ = [
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict",
     "GetRunV1WorkflowsRunsRunIDGetRequest",
     "GetRunV1WorkflowsRunsRunIDGetRequestTypedDict",
+    "GetScheduleV1WorkflowsSchedulesScheduleIDGetRequest",
+    "GetScheduleV1WorkflowsSchedulesScheduleIDGetRequestTypedDict",
     "GetSignedURLResponse",
     "GetSignedURLResponseTypedDict",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest",
@@ -2906,11 +3130,12 @@ __all__ = [
     "InstructRequestMessage",
     "InstructRequestMessageTypedDict",
     "InstructRequestTypedDict",
-    "JSONPatch",
     "JSONPatchAdd",
     "JSONPatchAddTypedDict",
     "JSONPatchAppend",
     "JSONPatchAppendTypedDict",
+    "JSONPatchAppendValue",
+    "JSONPatchAppendValueTypedDict",
     "JSONPatchPayloadResponse",
     "JSONPatchPayloadResponseTypedDict",
     "JSONPatchPayloadValueResponse",
@@ -2919,7 +3144,8 @@ __all__ = [
     "JSONPatchRemoveTypedDict",
     "JSONPatchReplace",
     "JSONPatchReplaceTypedDict",
-    "JSONPatchTypedDict",
+    "JSONPatchResponse",
+    "JSONPatchResponseTypedDict",
     "JSONPayloadResponse",
     "JSONPayloadResponseTypedDict",
     "JSONSchema",
@@ -3002,6 +3228,8 @@ __all__ = [
     "LibrariesDocumentsGetV1RequestTypedDict",
     "LibrariesDocumentsListV1Request",
     "LibrariesDocumentsListV1RequestTypedDict",
+    "LibrariesDocumentsPatchV1Request",
+    "LibrariesDocumentsPatchV1RequestTypedDict",
     "LibrariesDocumentsReprocessV1Request",
     "LibrariesDocumentsReprocessV1RequestTypedDict",
     "LibrariesDocumentsUpdateV1Request",
@@ -3012,6 +3240,8 @@ __all__ = [
     "LibrariesGetV1RequestTypedDict",
     "LibrariesListV1Request",
     "LibrariesListV1RequestTypedDict",
+    "LibrariesPatchV1Request",
+    "LibrariesPatchV1RequestTypedDict",
     "LibrariesShareCreateV1Request",
     "LibrariesShareCreateV1RequestTypedDict",
     "LibrariesShareDeleteV1Request",
@@ -3070,14 +3300,32 @@ __all__ = [
     "Loc",
     "LocTypedDict",
     "LocationType",
+    "LogicalExpression",
+    "LogicalExpressionType",
+    "LogicalExpressionTypedDict",
+    "MCPPrompt",
+    "MCPPromptTypedDict",
+    "MCPResource",
+    "MCPResourceTypedDict",
+    "MCPServerAuthenticationRequirement",
+    "MCPServerAuthenticationRequirementTypedDict",
+    "MCPServerCard",
+    "MCPServerCardMeta",
+    "MCPServerCardMetaTypedDict",
+    "MCPServerCardTypedDict",
     "MCPServerIcon",
     "MCPServerIconTypedDict",
+    "MCPServerRemote",
+    "MCPServerRemoteHeader",
+    "MCPServerRemoteHeaderTypedDict",
+    "MCPServerRemoteType",
+    "MCPServerRemoteTypedDict",
+    "MCPServerRepository",
+    "MCPServerRepositoryTypedDict",
     "MCPTool",
     "MCPToolMeta",
     "MCPToolMetaTypedDict",
     "MCPToolTypedDict",
-    "MCPUIToolMeta",
-    "MCPUIToolMetaTypedDict",
     "MessageEntries",
     "MessageEntriesTypedDict",
     "MessageInputContentChunks",
@@ -3186,6 +3434,8 @@ __all__ = [
     "PaginationInfoTypedDict",
     "PaginationResponse",
     "PaginationResponseTypedDict",
+    "PartialScheduleDefinition",
+    "PartialScheduleDefinitionTypedDict",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict",
     "Payload",
@@ -3205,10 +3455,18 @@ __all__ = [
     "ProcessStatus",
     "ProcessingStatus",
     "ProcessingStatusTypedDict",
+    "PromptArgument",
+    "PromptArgumentTypedDict",
     "PromptTokensDetails",
     "PromptTokensDetailsTypedDict",
+    "Prompts",
+    "PromptsCapability",
+    "PromptsCapabilityTypedDict",
+    "PromptsTypedDict",
     "PublicAuthenticationMethod",
     "PublicAuthenticationMethodTypedDict",
+    "PublicConnectionConfig",
+    "PublicConnectionConfigTypedDict",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -3247,6 +3505,8 @@ __all__ = [
     "ReferenceID",
     "ReferenceIDTypedDict",
     "RequestSource",
+    "RequiresConfirmation",
+    "RequiresConfirmationTypedDict",
     "ResetInvocationBody",
     "ResetInvocationBodyTypedDict",
     "ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequest",
@@ -3254,8 +3514,13 @@ __all__ = [
     "Resource",
     "ResourceLink",
     "ResourceLinkTypedDict",
+    "ResourceType",
     "ResourceTypedDict",
     "ResourceVisibility",
+    "Resources",
+    "ResourcesCapability",
+    "ResourcesCapabilityTypedDict",
+    "ResourcesTypedDict",
     "Response",
     "ResponseConnectorListToolsV1",
     "ResponseConnectorListToolsV1TypedDict",
@@ -3283,8 +3548,12 @@ __all__ = [
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
     "Role",
     "Roles",
+    "RootsCapability",
+    "RootsCapabilityTypedDict",
     "SSETypes",
     "SampleType",
+    "SamplingCapability",
+    "SamplingCapabilityTypedDict",
     "ScalarMetric",
     "ScalarMetricTypedDict",
     "ScalarMetricValue",
@@ -3315,8 +3584,21 @@ __all__ = [
     "SearchChatCompletionEventsRequestTypedDict",
     "SearchChatCompletionEventsResponse",
     "SearchChatCompletionEventsResponseTypedDict",
+    "SearchIndexResponse",
+    "SearchIndexResponseIndex",
+    "SearchIndexResponseIndexTypedDict",
+    "SearchIndexResponseStatus",
+    "SearchIndexResponseTypedDict",
     "Security",
     "SecurityTypedDict",
+    "ServerCapabilities",
+    "ServerCapabilitiesTypedDict",
+    "ServerLocale",
+    "ServerLocaleTypedDict",
+    "ServerTasksCapability",
+    "ServerTasksCapabilityTypedDict",
+    "ServerTasksRequestsCapability",
+    "ServerTasksRequestsCapabilityTypedDict",
     "ShareEnum",
     "Sharing",
     "SharingDelete",
@@ -3336,6 +3618,8 @@ __all__ = [
     "SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequestTypedDict",
     "SignalWorkflowResponse",
     "SignalWorkflowResponseTypedDict",
+    "SkipConfirmation",
+    "SkipConfirmationTypedDict",
     "Source",
     "SpeechOutputFormat",
     "SpeechRequest",
@@ -3372,6 +3656,12 @@ __all__ = [
     "SystemMessageTypedDict",
     "TableFormat",
     "TaskSupport",
+    "TasksElicitationCapability",
+    "TasksElicitationCapabilityTypedDict",
+    "TasksSamplingCapability",
+    "TasksSamplingCapabilityTypedDict",
+    "TasksToolsCapability",
+    "TasksToolsCapabilityTypedDict",
     "TempoGetTraceResponse",
     "TempoGetTraceResponseTypedDict",
     "TempoTraceAttribute",
@@ -3435,6 +3725,8 @@ __all__ = [
     "ToolConfiguration",
     "ToolConfigurationTypedDict",
     "ToolExecution",
+    "ToolExecutionConfiguration",
+    "ToolExecutionConfigurationTypedDict",
     "ToolExecutionDeltaEvent",
     "ToolExecutionDeltaEventName",
     "ToolExecutionDeltaEventNameTypedDict",
@@ -3460,12 +3752,17 @@ __all__ = [
     "ToolMessageContent",
     "ToolMessageContentTypedDict",
     "ToolMessageTypedDict",
+    "ToolProperties",
+    "ToolPropertiesTypedDict",
     "ToolReferenceChunk",
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkTypedDict",
-    "ToolType",
     "ToolTypedDict",
+    "Tools",
+    "ToolsCapability",
+    "ToolsCapabilityTypedDict",
+    "ToolsTypedDict",
     "TrainingFile",
     "TrainingFileTypedDict",
     "TranscriptionResponse",
@@ -3485,10 +3782,8 @@ __all__ = [
     "TranscriptionStreamSegmentDeltaTypedDict",
     "TranscriptionStreamTextDelta",
     "TranscriptionStreamTextDeltaTypedDict",
-    "TurbineToolLocale",
-    "TurbineToolLocaleTypedDict",
-    "TurbineToolMeta",
-    "TurbineToolMetaTypedDict",
+    "TurbineMeta",
+    "TurbineMetaTypedDict",
     "UnarchiveModelResponse",
     "UnarchiveModelResponseTypedDict",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest",
@@ -3504,7 +3799,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownJSONPatch",
+    "UnknownJSONPatchResponse",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningStartFineTuningJobResponse",
@@ -3516,6 +3811,7 @@ __all__ = [
     "UnknownPayload",
     "UnknownResponse",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
+    "UnknownSearchIndexResponseIndex",
     "UnknownSpeechV1AudioSpeechPostData",
     "UnknownTranscriptionStreamEventsData",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
@@ -3560,6 +3856,8 @@ __all__ = [
     "UpdateRunInfoTypedDict",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict",
+    "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest",
+    "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest",
@@ -3578,7 +3876,12 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
-    "Visibility",
+    "VespaSchemaResponse",
+    "VespaSchemaResponseTypedDict",
+    "VespaSearchIndexInfoResponse",
+    "VespaSearchIndexInfoResponseTypedDict",
+    "VoiceAppearance",
+    "VoiceAppearanceTypedDict",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
     "VoiceListResponse",
@@ -3674,6 +3977,8 @@ __all__ = [
     "WorkflowScheduleRequestTypedDict",
     "WorkflowScheduleResponse",
     "WorkflowScheduleResponseTypedDict",
+    "WorkflowScheduleUpdateRequest",
+    "WorkflowScheduleUpdateRequestTypedDict",
     "WorkflowTaskFailedAttributes",
     "WorkflowTaskFailedAttributesTypedDict",
     "WorkflowTaskFailedResponse",
@@ -3925,6 +4230,12 @@ _dynamic_imports: dict[str, str] = {
     "ClassifierTargetResultTypedDict": ".classifiertargetresult",
     "ClassifierTrainingParameters": ".classifiertrainingparameters",
     "ClassifierTrainingParametersTypedDict": ".classifiertrainingparameters",
+    "ClientCapabilities": ".clientcapabilities",
+    "ClientCapabilitiesTypedDict": ".clientcapabilities",
+    "ClientTasksCapability": ".clienttaskscapability",
+    "ClientTasksCapabilityTypedDict": ".clienttaskscapability",
+    "ClientTasksRequestsCapability": ".clienttasksrequestscapability",
+    "ClientTasksRequestsCapabilityTypedDict": ".clienttasksrequestscapability",
     "CodeInterpreterTool": ".codeinterpretertool",
     "CodeInterpreterToolTypedDict": ".codeinterpretertool",
     "CompletionArgs": ".completionargs",
@@ -3960,10 +4271,19 @@ _dynamic_imports: dict[str, str] = {
     "CompletionResponseStreamChoiceTypedDict": ".completionresponsestreamchoice",
     "CompletionTrainingParameters": ".completiontrainingparameters",
     "CompletionTrainingParametersTypedDict": ".completiontrainingparameters",
+    "ConnectionConfigType": ".connectionconfigtype",
     "ConnectionCredentials": ".connectioncredentials",
     "ConnectionCredentialsTypedDict": ".connectioncredentials",
+    "ConnectionPreference": ".connectionpreference",
+    "ConnectionPreferenceTypedDict": ".connectionpreference",
     "Connector": ".connector",
     "ConnectorTypedDict": ".connector",
+    "ConnectorActivateForOrganizationV1Request": ".connector_activate_for_organization_v1op",
+    "ConnectorActivateForOrganizationV1RequestTypedDict": ".connector_activate_for_organization_v1op",
+    "ConnectorActivateForUserV1Request": ".connector_activate_for_user_v1op",
+    "ConnectorActivateForUserV1RequestTypedDict": ".connector_activate_for_user_v1op",
+    "ConnectorActivateForWorkspaceV1Request": ".connector_activate_for_workspace_v1op",
+    "ConnectorActivateForWorkspaceV1RequestTypedDict": ".connector_activate_for_workspace_v1op",
     "ConnectorCallToolV1Request": ".connector_call_tool_v1op",
     "ConnectorCallToolV1RequestTypedDict": ".connector_call_tool_v1op",
     "ConnectorCreateOrUpdateOrganizationCredentialsV1Request": ".connector_create_or_update_organization_credentials_v1op",
@@ -3972,6 +4292,12 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorCreateOrUpdateUserCredentialsV1RequestTypedDict": ".connector_create_or_update_user_credentials_v1op",
     "ConnectorCreateOrUpdateWorkspaceCredentialsV1Request": ".connector_create_or_update_workspace_credentials_v1op",
     "ConnectorCreateOrUpdateWorkspaceCredentialsV1RequestTypedDict": ".connector_create_or_update_workspace_credentials_v1op",
+    "ConnectorDeactivateForOrganizationV1Request": ".connector_deactivate_for_organization_v1op",
+    "ConnectorDeactivateForOrganizationV1RequestTypedDict": ".connector_deactivate_for_organization_v1op",
+    "ConnectorDeactivateForUserV1Request": ".connector_deactivate_for_user_v1op",
+    "ConnectorDeactivateForUserV1RequestTypedDict": ".connector_deactivate_for_user_v1op",
+    "ConnectorDeactivateForWorkspaceV1Request": ".connector_deactivate_for_workspace_v1op",
+    "ConnectorDeactivateForWorkspaceV1RequestTypedDict": ".connector_deactivate_for_workspace_v1op",
     "ConnectorDeleteOrganizationCredentialsV1Request": ".connector_delete_organization_credentials_v1op",
     "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict": ".connector_delete_organization_credentials_v1op",
     "ConnectorDeleteUserCredentialsV1Request": ".connector_delete_user_credentials_v1op",
@@ -4004,6 +4330,9 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorAuthenticationHeaderTypedDict": ".connectorauthenticationheader",
     "ConnectorCallToolRequest": ".connectorcalltoolrequest",
     "ConnectorCallToolRequestTypedDict": ".connectorcalltoolrequest",
+    "ConnectorLocale": ".connectorlocale",
+    "ConnectorLocaleTypedDict": ".connectorlocale",
+    "ConnectorProtocol": ".connectorprotocol",
     "ConnectorsQueryFilters": ".connectorsqueryfilters",
     "ConnectorsQueryFiltersTypedDict": ".connectorsqueryfilters",
     "ConnectorTool": ".connectortool",
@@ -4019,6 +4348,7 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorToolLocaleTypedDict": ".connectortoollocale",
     "ConnectorToolResultMetadata": ".connectortoolresultmetadata",
     "ConnectorToolResultMetadataTypedDict": ".connectortoolresultmetadata",
+    "ConsumerType": ".consumertype",
     "ContentChunk": ".contentchunk",
     "ContentChunkTypedDict": ".contentchunk",
     "UnknownContentChunk": ".contentchunk",
@@ -4111,6 +4441,15 @@ _dynamic_imports: dict[str, str] = {
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
     "OwnerType": ".createlibraryrequest",
+    "CreateSearchIndexInfoRequest": ".createsearchindexinforequest",
+    "CreateSearchIndexInfoRequestIndex": ".createsearchindexinforequest",
+    "CreateSearchIndexInfoRequestIndexTypedDict": ".createsearchindexinforequest",
+    "CreateSearchIndexInfoRequestStatus": ".createsearchindexinforequest",
+    "CreateSearchIndexInfoRequestTypedDict": ".createsearchindexinforequest",
+    "CreateVespaSchemaRequest": ".createvespaschemarequest",
+    "CreateVespaSchemaRequestTypedDict": ".createvespaschemarequest",
+    "CreateVespaSearchIndexInfoRequest": ".createvespasearchindexinforequest",
+    "CreateVespaSearchIndexInfoRequestTypedDict": ".createvespasearchindexinforequest",
     "CredentialsCreateOrUpdate": ".credentialscreateorupdate",
     "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
     "CredentialsResponse": ".credentialsresponse",
@@ -4197,6 +4536,8 @@ _dynamic_imports: dict[str, str] = {
     "DocumentTextContentTypedDict": ".documenttextcontent",
     "DocumentURLChunk": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
+    "ElicitationCapability": ".elicitationcapability",
+    "ElicitationCapabilityTypedDict": ".elicitationcapability",
     "EmbeddedResource": ".embeddedresource",
     "EmbeddedResourceTypedDict": ".embeddedresource",
     "Resource": ".embeddedresource",
@@ -4212,6 +4553,8 @@ _dynamic_imports: dict[str, str] = {
     "EmbeddingResponseDataTypedDict": ".embeddingresponsedata",
     "EncodedPayloadOptions": ".encodedpayloadoptions",
     "EncodingFormat": ".encodingformat",
+    "EncryptedPatchValue": ".encryptedpatchvalue",
+    "EncryptedPatchValueTypedDict": ".encryptedpatchvalue",
     "EntityType": ".entitytype",
     "Event": ".event",
     "EventTypedDict": ".event",
@@ -4353,6 +4696,8 @@ _dynamic_imports: dict[str, str] = {
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunV1WorkflowsRunsRunIDGetRequest": ".get_run_v1_workflows_runs_run_id_getop",
     "GetRunV1WorkflowsRunsRunIDGetRequestTypedDict": ".get_run_v1_workflows_runs_run_id_getop",
+    "GetScheduleV1WorkflowsSchedulesScheduleIDGetRequest": ".get_schedule_v1_workflows_schedules_schedule_id_getop",
+    "GetScheduleV1WorkflowsSchedulesScheduleIDGetRequestTypedDict": ".get_schedule_v1_workflows_schedules_schedule_id_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest": ".get_stream_events_v1_workflows_events_stream_getop",
@@ -4470,13 +4815,12 @@ _dynamic_imports: dict[str, str] = {
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse": ".jobs_api_routes_fine_tuning_update_fine_tuned_modelop",
-    "JSONPatch": ".jsonpatch",
-    "JSONPatchTypedDict": ".jsonpatch",
-    "UnknownJSONPatch": ".jsonpatch",
     "JSONPatchAdd": ".jsonpatchadd",
     "JSONPatchAddTypedDict": ".jsonpatchadd",
     "JSONPatchAppend": ".jsonpatchappend",
     "JSONPatchAppendTypedDict": ".jsonpatchappend",
+    "JSONPatchAppendValue": ".jsonpatchappend",
+    "JSONPatchAppendValueTypedDict": ".jsonpatchappend",
     "JSONPatchPayloadResponse": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadResponseTypedDict": ".jsonpatchpayloadresponse",
     "JSONPatchPayloadValueResponse": ".jsonpatchpayloadvalueresponse",
@@ -4485,6 +4829,9 @@ _dynamic_imports: dict[str, str] = {
     "JSONPatchRemoveTypedDict": ".jsonpatchremove",
     "JSONPatchReplace": ".jsonpatchreplace",
     "JSONPatchReplaceTypedDict": ".jsonpatchreplace",
+    "JSONPatchResponse": ".jsonpatchresponse",
+    "JSONPatchResponseTypedDict": ".jsonpatchresponse",
+    "UnknownJSONPatchResponse": ".jsonpatchresponse",
     "JSONPayloadResponse": ".jsonpayloadresponse",
     "JSONPayloadResponseTypedDict": ".jsonpayloadresponse",
     "JSONSchema": ".jsonschema",
@@ -4535,6 +4882,8 @@ _dynamic_imports: dict[str, str] = {
     "LibrariesDocumentsGetV1RequestTypedDict": ".libraries_documents_get_v1op",
     "LibrariesDocumentsListV1Request": ".libraries_documents_list_v1op",
     "LibrariesDocumentsListV1RequestTypedDict": ".libraries_documents_list_v1op",
+    "LibrariesDocumentsPatchV1Request": ".libraries_documents_patch_v1op",
+    "LibrariesDocumentsPatchV1RequestTypedDict": ".libraries_documents_patch_v1op",
     "LibrariesDocumentsReprocessV1Request": ".libraries_documents_reprocess_v1op",
     "LibrariesDocumentsReprocessV1RequestTypedDict": ".libraries_documents_reprocess_v1op",
     "LibrariesDocumentsUpdateV1Request": ".libraries_documents_update_v1op",
@@ -4547,6 +4896,8 @@ _dynamic_imports: dict[str, str] = {
     "LibrariesGetV1RequestTypedDict": ".libraries_get_v1op",
     "LibrariesListV1Request": ".libraries_list_v1op",
     "LibrariesListV1RequestTypedDict": ".libraries_list_v1op",
+    "LibrariesPatchV1Request": ".libraries_patch_v1op",
+    "LibrariesPatchV1RequestTypedDict": ".libraries_patch_v1op",
     "LibrariesShareCreateV1Request": ".libraries_share_create_v1op",
     "LibrariesShareCreateV1RequestTypedDict": ".libraries_share_create_v1op",
     "LibrariesShareDeleteV1Request": ".libraries_share_delete_v1op",
@@ -4604,15 +4955,35 @@ _dynamic_imports: dict[str, str] = {
     "ListWorkflowEventResponseEventTypedDict": ".listworkfloweventresponse",
     "ListWorkflowEventResponseTypedDict": ".listworkfloweventresponse",
     "LocationType": ".locationtype",
+    "MCPPrompt": ".mcpprompt",
+    "MCPPromptTypedDict": ".mcpprompt",
+    "MCPResource": ".mcpresource",
+    "MCPResourceTypedDict": ".mcpresource",
+    "MCPServerAuthenticationRequirement": ".mcpserverauthenticationrequirement",
+    "MCPServerAuthenticationRequirementTypedDict": ".mcpserverauthenticationrequirement",
+    "MCPServerCard": ".mcpservercard",
+    "MCPServerCardTypedDict": ".mcpservercard",
+    "Prompts": ".mcpservercard",
+    "PromptsTypedDict": ".mcpservercard",
+    "Resources": ".mcpservercard",
+    "ResourcesTypedDict": ".mcpservercard",
+    "Tools": ".mcpservercard",
+    "ToolsTypedDict": ".mcpservercard",
+    "MCPServerCardMeta": ".mcpservercardmeta",
+    "MCPServerCardMetaTypedDict": ".mcpservercardmeta",
     "MCPServerIcon": ".mcpservericon",
     "MCPServerIconTypedDict": ".mcpservericon",
+    "MCPServerRemote": ".mcpserverremote",
+    "MCPServerRemoteType": ".mcpserverremote",
+    "MCPServerRemoteTypedDict": ".mcpserverremote",
+    "MCPServerRemoteHeader": ".mcpserverremoteheader",
+    "MCPServerRemoteHeaderTypedDict": ".mcpserverremoteheader",
+    "MCPServerRepository": ".mcpserverrepository",
+    "MCPServerRepositoryTypedDict": ".mcpserverrepository",
     "MCPTool": ".mcptool",
     "MCPToolTypedDict": ".mcptool",
     "MCPToolMeta": ".mcptoolmeta",
     "MCPToolMetaTypedDict": ".mcptoolmeta",
-    "MCPUIToolMeta": ".mcpuitoolmeta",
-    "MCPUIToolMetaTypedDict": ".mcpuitoolmeta",
-    "Visibility": ".mcpuitoolmeta",
     "MessageEntries": ".messageentries",
     "MessageEntriesTypedDict": ".messageentries",
     "MessageInputContentChunks": ".messageinputcontentchunks",
@@ -4719,6 +5090,8 @@ _dynamic_imports: dict[str, str] = {
     "PaginationInfoTypedDict": ".paginationinfo",
     "PaginationResponse": ".paginationresponse",
     "PaginationResponseTypedDict": ".paginationresponse",
+    "PartialScheduleDefinition": ".partialscheduledefinition",
+    "PartialScheduleDefinitionTypedDict": ".partialscheduledefinition",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest": ".post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop",
@@ -4736,10 +5109,16 @@ _dynamic_imports: dict[str, str] = {
     "ProcessingStatus": ".processingstatus",
     "ProcessingStatusTypedDict": ".processingstatus",
     "ProcessStatus": ".processstatus",
+    "PromptArgument": ".promptargument",
+    "PromptArgumentTypedDict": ".promptargument",
+    "PromptsCapability": ".promptscapability",
+    "PromptsCapabilityTypedDict": ".promptscapability",
     "PromptTokensDetails": ".prompttokensdetails",
     "PromptTokensDetailsTypedDict": ".prompttokensdetails",
     "PublicAuthenticationMethod": ".publicauthenticationmethod",
     "PublicAuthenticationMethodTypedDict": ".publicauthenticationmethod",
+    "PublicConnectionConfig": ".publicconnectionconfig",
+    "PublicConnectionConfigTypedDict": ".publicconnectionconfig",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -4784,6 +5163,9 @@ _dynamic_imports: dict[str, str] = {
     "ResetInvocationBodyTypedDict": ".resetinvocationbody",
     "ResourceLink": ".resourcelink",
     "ResourceLinkTypedDict": ".resourcelink",
+    "ResourcesCapability": ".resourcescapability",
+    "ResourcesCapabilityTypedDict": ".resourcescapability",
+    "ResourceType": ".resourcetype",
     "ResourceVisibility": ".resourcevisibility",
     "ResponseDoneEvent": ".responsedoneevent",
     "ResponseDoneEventTypedDict": ".responsedoneevent",
@@ -4802,7 +5184,11 @@ _dynamic_imports: dict[str, str] = {
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",
     "Roles": ".roles",
+    "RootsCapability": ".rootscapability",
+    "RootsCapabilityTypedDict": ".rootscapability",
     "SampleType": ".sampletype",
+    "SamplingCapability": ".samplingcapability",
+    "SamplingCapabilityTypedDict": ".samplingcapability",
     "ScalarMetric": ".scalarmetric",
     "ScalarMetricTypedDict": ".scalarmetric",
     "ScalarMetricValue": ".scalarmetric",
@@ -4832,8 +5218,22 @@ _dynamic_imports: dict[str, str] = {
     "SearchChatCompletionEventsRequestTypedDict": ".searchchatcompletioneventsrequest",
     "SearchChatCompletionEventsResponse": ".searchchatcompletioneventsresponse",
     "SearchChatCompletionEventsResponseTypedDict": ".searchchatcompletioneventsresponse",
+    "SearchIndexResponse": ".searchindexresponse",
+    "SearchIndexResponseIndex": ".searchindexresponse",
+    "SearchIndexResponseIndexTypedDict": ".searchindexresponse",
+    "SearchIndexResponseStatus": ".searchindexresponse",
+    "SearchIndexResponseTypedDict": ".searchindexresponse",
+    "UnknownSearchIndexResponseIndex": ".searchindexresponse",
     "Security": ".security",
     "SecurityTypedDict": ".security",
+    "ServerCapabilities": ".servercapabilities",
+    "ServerCapabilitiesTypedDict": ".servercapabilities",
+    "ServerLocale": ".serverlocale",
+    "ServerLocaleTypedDict": ".serverlocale",
+    "ServerTasksCapability": ".servertaskscapability",
+    "ServerTasksCapabilityTypedDict": ".servertaskscapability",
+    "ServerTasksRequestsCapability": ".servertasksrequestscapability",
+    "ServerTasksRequestsCapabilityTypedDict": ".servertasksrequestscapability",
     "ShareEnum": ".shareenum",
     "Sharing": ".sharing",
     "SharingTypedDict": ".sharing",
@@ -4888,6 +5288,12 @@ _dynamic_imports: dict[str, str] = {
     "SystemMessageTypedDict": ".systemmessage",
     "SystemMessageContentChunks": ".systemmessagecontentchunks",
     "SystemMessageContentChunksTypedDict": ".systemmessagecontentchunks",
+    "TasksElicitationCapability": ".taskselicitationcapability",
+    "TasksElicitationCapabilityTypedDict": ".taskselicitationcapability",
+    "TasksSamplingCapability": ".taskssamplingcapability",
+    "TasksSamplingCapabilityTypedDict": ".taskssamplingcapability",
+    "TasksToolsCapability": ".taskstoolscapability",
+    "TasksToolsCapabilityTypedDict": ".taskstoolscapability",
     "TempoGetTraceResponse": ".tempogettraceresponse",
     "TempoGetTraceResponseTypedDict": ".tempogettraceresponse",
     "TempoTraceAttribute": ".tempotraceattribute",
@@ -4955,6 +5361,12 @@ _dynamic_imports: dict[str, str] = {
     "TaskSupport": ".toolexecution",
     "ToolExecution": ".toolexecution",
     "ToolExecutionTypedDict": ".toolexecution",
+    "RequiresConfirmation": ".toolexecutionconfiguration",
+    "RequiresConfirmationTypedDict": ".toolexecutionconfiguration",
+    "SkipConfirmation": ".toolexecutionconfiguration",
+    "SkipConfirmationTypedDict": ".toolexecutionconfiguration",
+    "ToolExecutionConfiguration": ".toolexecutionconfiguration",
+    "ToolExecutionConfigurationTypedDict": ".toolexecutionconfiguration",
     "ToolExecutionDeltaEvent": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventName": ".toolexecutiondeltaevent",
     "ToolExecutionDeltaEventNameTypedDict": ".toolexecutiondeltaevent",
@@ -4979,11 +5391,14 @@ _dynamic_imports: dict[str, str] = {
     "ToolMessageContent": ".toolmessage",
     "ToolMessageContentTypedDict": ".toolmessage",
     "ToolMessageTypedDict": ".toolmessage",
+    "ToolProperties": ".toolproperties",
+    "ToolPropertiesTypedDict": ".toolproperties",
     "ToolReferenceChunk": ".toolreferencechunk",
     "ToolReferenceChunkTool": ".toolreferencechunk",
     "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
-    "ToolType": ".tooltype",
+    "ToolsCapability": ".toolscapability",
+    "ToolsCapabilityTypedDict": ".toolscapability",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
     "TranscriptionResponse": ".transcriptionresponse",
@@ -5004,10 +5419,8 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamSegmentDeltaTypedDict": ".transcriptionstreamsegmentdelta",
     "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
-    "TurbineToolLocale": ".turbinetoollocale",
-    "TurbineToolLocaleTypedDict": ".turbinetoollocale",
-    "TurbineToolMeta": ".turbinetoolmeta",
-    "TurbineToolMetaTypedDict": ".turbinetoolmeta",
+    "TurbineMeta": ".turbinemeta",
+    "TurbineMetaTypedDict": ".turbinemeta",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
@@ -5024,6 +5437,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
+    "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest": ".update_schedule_v1_workflows_schedules_schedule_id_patchop",
+    "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict": ".update_schedule_v1_workflows_schedules_schedule_id_patchop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest": ".update_workflow_execution_v1_workflows_executions_execution_id_updates_postop",
@@ -5078,6 +5493,12 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
+    "VespaSchemaResponse": ".vespaschemaresponse",
+    "VespaSchemaResponseTypedDict": ".vespaschemaresponse",
+    "VespaSearchIndexInfoResponse": ".vespasearchindexinforesponse",
+    "VespaSearchIndexInfoResponseTypedDict": ".vespasearchindexinforesponse",
+    "VoiceAppearance": ".voiceappearance",
+    "VoiceAppearanceTypedDict": ".voiceappearance",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
     "VoiceListResponse": ".voicelistresponse",
@@ -5174,6 +5595,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleRequestTypedDict": ".workflowschedulerequest",
     "WorkflowScheduleResponse": ".workflowscheduleresponse",
     "WorkflowScheduleResponseTypedDict": ".workflowscheduleresponse",
+    "WorkflowScheduleUpdateRequest": ".workflowscheduleupdaterequest",
+    "WorkflowScheduleUpdateRequestTypedDict": ".workflowscheduleupdaterequest",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",

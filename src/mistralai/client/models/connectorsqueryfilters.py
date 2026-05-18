@@ -2,6 +2,7 @@
 # @generated-id: 3b9fc81aa726
 
 from __future__ import annotations
+from .connectorprotocol import ConnectorProtocol
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,30 +12,29 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata
 from pydantic import model_serializer
-from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ConnectorsQueryFiltersTypedDict(TypedDict):
     active: NotRequired[Nullable[bool]]
     r"""Filter for active connectors for a given user, workspace and organization."""
-    fetch_connection_secrets: NotRequired[bool]
-    r"""Fetch connection secrets."""
+    protocol: NotRequired[Nullable[ConnectorProtocol]]
+    r"""Filter connectors by protocol."""
 
 
 class ConnectorsQueryFilters(BaseModel):
     active: Annotated[OptionalNullable[bool], FieldMetadata(query=True)] = UNSET
     r"""Filter for active connectors for a given user, workspace and organization."""
 
-    fetch_connection_secrets: Annotated[Optional[bool], FieldMetadata(query=True)] = (
-        False
-    )
-    r"""Fetch connection secrets."""
+    protocol: Annotated[
+        OptionalNullable[ConnectorProtocol], FieldMetadata(query=True)
+    ] = UNSET
+    r"""Filter connectors by protocol."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["active", "fetch_connection_secrets"])
-        nullable_fields = set(["active"])
+        optional_fields = set(["active", "protocol"])
+        nullable_fields = set(["active", "protocol"])
         serialized = handler(self)
         m = {}
 

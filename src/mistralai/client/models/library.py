@@ -52,17 +52,42 @@ class Library(BaseModel):
 
     nb_documents: int
 
-    chunk_size: Nullable[int]
+    chunk_size: Annotated[
+        Nullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
 
-    emoji: OptionalNullable[str] = UNSET
+    emoji: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     description: OptionalNullable[str] = UNSET
 
-    generated_description: OptionalNullable[str] = UNSET
+    generated_description: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
-    explicit_user_members_count: OptionalNullable[int] = UNSET
+    explicit_user_members_count: Annotated[
+        OptionalNullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
-    explicit_workspace_members_count: OptionalNullable[int] = UNSET
+    explicit_workspace_members_count: Annotated[
+        OptionalNullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     org_sharing_role: Annotated[
         OptionalNullable[str],
@@ -71,7 +96,12 @@ class Library(BaseModel):
         ),
     ] = UNSET
 
-    generated_name: OptionalNullable[str] = UNSET
+    generated_name: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
     r"""Generated Name"""
 
     @model_serializer(mode="wrap")
