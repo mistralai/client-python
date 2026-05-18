@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `List[models.JSONPatch]`
+### `List[models.JSONPatchResponse]`
 
 ```python
-value: List[models.JSONPatch] = /* values here */
+value: List[models.JSONPatchResponse] = /* values here */
 ```
 
 ### `str`

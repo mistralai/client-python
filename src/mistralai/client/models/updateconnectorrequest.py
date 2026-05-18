@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
+from .connectorprotocol import ConnectorProtocol
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -26,6 +27,8 @@ class UpdateConnectorRequestTypedDict(TypedDict):
     r"""The optional url of the icon you want to associate to the connector."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
+    protocol: NotRequired[Nullable[ConnectorProtocol]]
+    r"""Protocol of the connector."""
     connection_config: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional new connection config."""
     connection_secrets: NotRequired[Nullable[Dict[str, Any]]]
@@ -54,6 +57,9 @@ class UpdateConnectorRequest(BaseModel):
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
 
+    protocol: OptionalNullable[ConnectorProtocol] = UNSET
+    r"""Protocol of the connector."""
+
     connection_config: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional new connection config."""
 
@@ -78,6 +84,7 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
+                "protocol",
                 "connection_config",
                 "connection_secrets",
                 "server",
@@ -92,6 +99,7 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
+                "protocol",
                 "connection_config",
                 "connection_secrets",
                 "server",

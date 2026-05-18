@@ -22,6 +22,7 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
@@ -42,6 +43,7 @@ class Connectors(BaseSDK):
         :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param protocol: Protocol of the connector.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
@@ -69,6 +71,7 @@ class Connectors(BaseSDK):
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            protocol=protocol,
             server=server,
             headers=headers,
             auth_data=utils.get_pydantic_model(
@@ -146,6 +149,7 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.ResourceVisibility] = None,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
@@ -166,6 +170,7 @@ class Connectors(BaseSDK):
         :param title: Optional human-readable title for the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param visibility:
+        :param protocol: Protocol of the connector.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
         :param system_prompt: Optional system prompt for the connector.
@@ -193,6 +198,7 @@ class Connectors(BaseSDK):
             description=description,
             icon_url=icon_url,
             visibility=visibility,
+            protocol=protocol,
             server=server,
             headers=headers,
             auth_data=utils.get_pydantic_model(
@@ -4636,6 +4642,7 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -4658,6 +4665,7 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
+        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -4689,6 +4697,7 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
+                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,
@@ -4772,6 +4781,7 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
+        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -4794,6 +4804,7 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
+        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -4825,6 +4836,7 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
+                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,

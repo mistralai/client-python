@@ -45,6 +45,7 @@ SearchIndexResponseIndex = VespaSearchIndexInfoResponse
 
 class SearchIndexResponseTypedDict(TypedDict):
     id: str
+    name: str
     creator_id: str
     document_count: int
     status: SearchIndexResponseStatus
@@ -55,6 +56,8 @@ class SearchIndexResponseTypedDict(TypedDict):
 
 class SearchIndexResponse(BaseModel):
     id: str
+
+    name: str
 
     creator_id: str
 

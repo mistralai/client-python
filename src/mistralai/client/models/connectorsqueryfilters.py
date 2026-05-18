@@ -2,6 +2,7 @@
 # @generated-id: 3b9fc81aa726
 
 from __future__ import annotations
+from .connectorprotocol import ConnectorProtocol
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -17,16 +18,23 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ConnectorsQueryFiltersTypedDict(TypedDict):
     active: NotRequired[Nullable[bool]]
     r"""Filter for active connectors for a given user, workspace and organization."""
+    protocol: NotRequired[Nullable[ConnectorProtocol]]
+    r"""Filter connectors by protocol."""
 
 
 class ConnectorsQueryFilters(BaseModel):
     active: Annotated[OptionalNullable[bool], FieldMetadata(query=True)] = UNSET
     r"""Filter for active connectors for a given user, workspace and organization."""
 
+    protocol: Annotated[
+        OptionalNullable[ConnectorProtocol], FieldMetadata(query=True)
+    ] = UNSET
+    r"""Filter connectors by protocol."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["active"])
-        nullable_fields = set(["active"])
+        optional_fields = set(["active", "protocol"])
+        nullable_fields = set(["active", "protocol"])
         serialized = handler(self)
         m = {}
 
