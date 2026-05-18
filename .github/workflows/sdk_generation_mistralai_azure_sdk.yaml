@@ -53,7 +53,7 @@ jobs:
   align-version:
     needs: generate
     runs-on: ubuntu-latest
-    environment: public-sdk
+    environment: publish
     steps:
       - name: Find PR branch
         id: find-pr
