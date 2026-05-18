@@ -10,6 +10,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -21,6 +22,7 @@ class LibrariesDocumentsListV1RequestTypedDict(TypedDict):
     page_size: NotRequired[int]
     page: NotRequired[int]
     filters_attributes: NotRequired[Nullable[str]]
+    r"""Deprecated: this parameter will be removed in a future version."""
     sort_by: NotRequired[str]
     sort_order: NotRequired[str]
 
@@ -47,8 +49,12 @@ class LibrariesDocumentsListV1Request(BaseModel):
 
     filters_attributes: Annotated[
         OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
+    r"""Deprecated: this parameter will be removed in a future version."""
 
     sort_by: Annotated[
         Optional[str],
