@@ -21,7 +21,7 @@ jobs:
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: public-sdk
     steps:
