@@ -55,10 +55,6 @@ class EncodedPayload(BaseModel):
     encoding_options: list[EncodedPayloadOptions] = Field(
         description="The encoding of the payload", default=[]
     )
-    encoding_metadata: dict[str, str] = Field(
-        description="Additional metadata required to decode the payload",
-        default_factory=dict,
-    )
     payload: bytes = Field(description="The encoded payload")
 
 
@@ -66,10 +62,6 @@ class NetworkEncodedBase(BaseModel):
     b64payload: str = Field(description="The encoded payload")
     encoding_options: list[EncodedPayloadOptions] = Field(
         description="The encoding of the payload", default=[]
-    )
-    encoding_metadata: dict[str, str] = Field(
-        description="Additional metadata required to decode the payload",
-        default_factory=dict,
     )
 
     def get_payload(self) -> bytes:
@@ -85,7 +77,6 @@ class NetworkEncodedInput(NetworkEncodedBase):
         return EncodedPayload(
             payload=base64.b64decode(self.b64payload),
             encoding_options=self.encoding_options,
-            encoding_metadata=self.encoding_metadata,
             context=WorkflowContext(
                 namespace=namespace,
                 execution_id=execution_id,
@@ -98,19 +89,16 @@ class NetworkEncodedInput(NetworkEncodedBase):
         return NetworkEncodedInput(
             b64payload=base64.b64encode(encoded_payload.payload).decode("utf-8"),
             encoding_options=encoded_payload.encoding_options,
-            encoding_metadata=encoded_payload.encoding_metadata,
         )
 
     @staticmethod
     def from_data(
         data: bytes,
         encoding_options: list[EncodedPayloadOptions],
-        encoding_metadata: dict[str, str] | None = None,
     ) -> "NetworkEncodedInput":
         return NetworkEncodedInput(
             b64payload=base64.b64encode(data).decode("utf-8"),
             encoding_options=encoding_options,
-            encoding_metadata=encoding_metadata or {},
         )
 
 
@@ -120,5 +108,4 @@ class NetworkEncodedResult(NetworkEncodedBase):
         return NetworkEncodedResult(
             b64payload=base64.b64encode(encoded_payload.payload).decode("utf-8"),
             encoding_options=encoded_payload.encoding_options,
-            encoding_metadata=encoded_payload.encoding_metadata,
         )

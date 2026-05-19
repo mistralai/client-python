@@ -170,7 +170,6 @@ async def test_payload_encoder_compresses_network_inputs():
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert encoded.encoding_metadata == {}
 
     compressed_payload = json.loads(encoded.get_payload())
     assert compressed_payload["algorithm_config"] == {"algorithm": "zstd", "level": 3}
@@ -192,7 +191,6 @@ async def test_payload_encoder_skips_compression_below_min_size():
     )
 
     assert encoded.encoding_options == []
-    assert encoded.encoding_metadata == {}
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
 
@@ -212,7 +210,6 @@ async def test_payload_encoder_skips_compression_when_not_smaller():
     )
 
     assert encoded.encoding_options == []
-    assert encoded.encoding_metadata == {}
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
 
@@ -227,7 +224,6 @@ async def test_payload_encoder_skips_compression_without_config():
     )
 
     assert encoded.encoding_options == []
-    assert encoded.encoding_metadata == {}
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
 
@@ -259,7 +255,6 @@ async def test_payload_encoder_compression_can_prevent_offloading(monkeypatch):
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert encoded.encoding_metadata == {}
     assert storage.blobs == {}
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
@@ -523,7 +518,6 @@ async def test_payload_encoder_compression_offloading_encryption_roundtrip(
     )
 
     assert encoded.encoding_options == expected_options
-    assert encoded.encoding_metadata == {}
     assert len(storage.blobs) == 1
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
@@ -548,7 +542,6 @@ async def test_payload_encoder_does_not_partially_encrypt_when_no_marked_fields(
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert encoded.encoding_metadata == {}
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
 
@@ -567,14 +560,8 @@ async def test_payload_encoder_event_payload_orders_compression_before_full_encr
     encoder = PayloadEncoder(encoding_config=config)
     payload = json.dumps({"data": "x" * 20_000}).encode()
 
-    (
-        encoded,
-        encoding_options,
-        encoding_metadata,
-    ) = await encoder.encode_event_payload_content(payload)
-    decoded = await encoder.decode_payload_content(
-        encoded, encoding_options, encoding_metadata
-    )
+    encoded, encoding_options = await encoder.encode_event_payload_content(payload)
+    decoded = await encoder.decode_payload_content(encoded, encoding_options)
 
     assert encoding_options == [
         EncodedPayloadOptions.COMPRESSED,

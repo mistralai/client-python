@@ -262,7 +262,7 @@ class PayloadEncoder:
 
     async def encode_payload_content(
         self, data: Union[bytes, str], context: Optional[WorkflowContext]
-    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, str]]:
+    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
         """Handle payload encoding.
 
         Encoding options are appended in the exact order in which transforms are
@@ -272,7 +272,6 @@ class PayloadEncoder:
             data = data.encode()
 
         encoding_options: list[EncodedPayloadOptions] = []
-        encoding_metadata: dict[str, str] = {}
 
         # Partial encryption needs the original JSON fields. It must run before
         # compression or offloading, which make field-level markers unavailable.
@@ -305,11 +304,11 @@ class PayloadEncoder:
             data = self._encrypt(data)
             encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
 
-        return data, encoding_options, encoding_metadata
+        return data, encoding_options
 
     async def encode_event_payload_content(
         self, data: Union[bytes, str], force_full_encryption: bool = False
-    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, str]]:
+    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
         """Encode event payload content.
 
         Unlike encode_payload_content, this only handles in-payload transforms
@@ -324,7 +323,6 @@ class PayloadEncoder:
             data = data.encode()
 
         encoding_options: list[EncodedPayloadOptions] = []
-        encoding_metadata: dict[str, str] = {}
 
         # Partial encryption needs JSON bytes; compression should happen before
         # full encryption because encrypted bytes are intentionally high entropy.
@@ -348,13 +346,12 @@ class PayloadEncoder:
             data = self._encrypt(data)
             encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
 
-        return data, encoding_options, encoding_metadata
+        return data, encoding_options
 
     async def decode_payload_content(
         self,
         data: bytes,
         encoding_options: List[EncodedPayloadOptions],
-        encoding_metadata: dict[str, str] | None = None,
     ) -> bytes:
         # Decode in the exact reverse order of the encoding_options wire list.
         for option in reversed(encoding_options):
@@ -403,9 +400,8 @@ class PayloadEncoder:
 
         encoding_options = [EncodedPayloadOptions(opt) for opt in encoding_options_strs]
         encrypted_bytes = base64.b64decode(payload_data["value"])
-        encoding_metadata = payload_data.get("encoding_metadata", {})
         decrypted_bytes = await self.decode_payload_content(
-            encrypted_bytes, encoding_options, encoding_metadata
+            encrypted_bytes, encoding_options
         )
         decrypted_value = json.loads(decrypted_bytes)
 
@@ -421,14 +417,10 @@ class PayloadEncoder:
         """This method MUST be called to format every payload send to Mistral Workflows control plane
         to ensure a proper encoding of the payload.
         """
-        (
-            encoded_data,
-            encoding_options,
-            encoding_metadata,
-        ) = await self.encode_payload_content(to_json(data), context)
-        network_input = NetworkEncodedInput.from_data(
-            encoded_data, encoding_options, encoding_metadata
+        encoded_data, encoding_options = await self.encode_payload_content(
+            to_json(data), context
         )
+        network_input = NetworkEncodedInput.from_data(encoded_data, encoding_options)
         return network_input
 
     async def decode_network_result(self, data: Any) -> Any:
@@ -444,7 +436,6 @@ class PayloadEncoder:
         byte_results = await self.decode_payload_content(
             network_encoded_payload.get_payload(),
             network_encoded_payload.encoding_options,
-            network_encoded_payload.encoding_metadata,
         )
         try:
             return from_json(byte_results)
