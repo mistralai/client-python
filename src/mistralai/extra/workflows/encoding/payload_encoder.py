@@ -306,48 +306,6 @@ class PayloadEncoder:
 
         return data, encoding_options
 
-    async def encode_event_payload_content(
-        self, data: Union[bytes, str], force_full_encryption: bool = False
-    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
-        """Encode event payload content.
-
-        Unlike encode_payload_content, this only handles in-payload transforms
-        (partial/full encryption and compression), never blob offloading.
-
-        Args:
-            data: The payload data to encrypt.
-            force_full_encryption: Force full encryption regardless of configured mode.
-                Use for payloads like json_patch that don't support partial encryption.
-        """
-        if isinstance(data, str):
-            data = data.encode()
-
-        encoding_options: list[EncodedPayloadOptions] = []
-
-        # Partial encryption needs JSON bytes; compression should happen before
-        # full encryption because encrypted bytes are intentionally high entropy.
-        if (
-            not force_full_encryption
-            and self.encryption_config is not None
-            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
-        ):
-            data, partially_encrypted = await self._partially_encrypt_fields(data)
-            if partially_encrypted:
-                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
-
-        data, compressed = self._compress(data)
-        if compressed:
-            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
-
-        if self.encryption_config is not None and (
-            force_full_encryption
-            or self.encryption_config.mode == PayloadEncryptionMode.FULL
-        ):
-            data = self._encrypt(data)
-            encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
-
-        return data, encoding_options
-
     async def decode_payload_content(
         self,
         data: bytes,

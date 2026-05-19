@@ -21,11 +21,6 @@ _ALGORITHM_CONFIG_ADAPTER: TypeAdapter[AlgorithmConfig] = TypeAdapter(AlgorithmC
 class Compressor(ABC):
     @property
     @abstractmethod
-    def tag(self) -> str:
-        """Wire tag stored in encoding options to identify the algorithm."""
-
-    @property
-    @abstractmethod
     def algorithm_config(self) -> AlgorithmConfig:
         """Algorithm config stored with compressed bytes for config-independent decoding."""
 
@@ -41,15 +36,11 @@ def _require_zstandard() -> ModuleType:
         return import_module("zstandard")
     except ImportError:
         raise WorkflowPayloadCompressionException(
-            "Payload compression requires installing mistralai[workflow-payload-compression]"
+            "Payload compression requires installing mistralai[workflow_payload_compression]"
         ) from None
 
 
 class ZstdCompressor(Compressor):
-    @property
-    def tag(self) -> str:
-        return "zstd"
-
     @property
     def algorithm_config(self) -> AlgorithmConfig:
         return self._config

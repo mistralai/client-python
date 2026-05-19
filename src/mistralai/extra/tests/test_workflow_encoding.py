@@ -544,27 +544,3 @@ async def test_payload_encoder_does_not_partially_encrypt_when_no_marked_fields(
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
-
-
-@pytest.mark.asyncio
-async def test_payload_encoder_event_payload_orders_compression_before_full_encryption():
-    config = WorkflowEncodingConfig(
-        payload_encryption=PayloadEncryptionConfig(
-            mode=PayloadEncryptionMode.FULL,
-            main_key=SecretStr("0" * 64),
-        ),
-        payload_compression=PayloadCompressionConfig(
-            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
-        ),
-    )
-    encoder = PayloadEncoder(encoding_config=config)
-    payload = json.dumps({"data": "x" * 20_000}).encode()
-
-    encoded, encoding_options = await encoder.encode_event_payload_content(payload)
-    decoded = await encoder.decode_payload_content(encoded, encoding_options)
-
-    assert encoding_options == [
-        EncodedPayloadOptions.COMPRESSED,
-        EncodedPayloadOptions.ENCRYPTED,
-    ]
-    assert decoded == payload
