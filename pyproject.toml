@@ -48,6 +48,9 @@ workflow_payload_offloading = [
 workflow_payload_encryption = [
     "cryptography>=41.0.0,<47.0.0",
 ]
+workflow_payload_compression = [
+    "zstandard>=0.25.0,<0.26",
+]
 
 
 [project.urls]
@@ -69,6 +72,7 @@ dev = [
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
     "websockets >=13.0",
+    "zstandard>=0.25.0,<0.26",
 ]
 lint = [
     "ruff>=0.11.10,<0.12",

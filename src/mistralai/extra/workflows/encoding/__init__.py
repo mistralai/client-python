@@ -1,20 +1,26 @@
 from .config import (
-    WorkflowEncodingConfig,
-    PayloadOffloadingConfig,
+    AlgorithmConfig,
+    BlobStorageConfig,
+    PayloadCompressionConfig,
     PayloadEncryptionConfig,
     PayloadEncryptionMode,
-    BlobStorageConfig,
+    PayloadOffloadingConfig,
     StorageProvider,
+    WorkflowEncodingConfig,
+    ZstdCompressionConfig,
 )
 from .models import EncryptedStrField
 from .payload_encoder import PayloadEncoder
 from .helpers import configure_workflow_encoding, generate_two_part_id
 
 __all__ = [
+    "AlgorithmConfig",
     "WorkflowEncodingConfig",
     "PayloadOffloadingConfig",
     "PayloadEncryptionConfig",
     "PayloadEncryptionMode",
+    "PayloadCompressionConfig",
+    "ZstdCompressionConfig",
     "BlobStorageConfig",
     "StorageProvider",
     "EncryptedStrField",

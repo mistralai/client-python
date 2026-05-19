@@ -1,8 +1,11 @@
 """Tests for workflow encoding configuration lifecycle."""
 
+import base64
 import gc
+import json
 
 import pytest
+import zstandard
 from pydantic import SecretStr
 
 from mistralai.client import Mistral
@@ -12,10 +15,24 @@ from mistralai.client._hooks.workflow_encoding_hook import (
     configure_workflow_encoding,
 )
 from mistralai.extra.workflows import (
-    WorkflowEncodingConfig,
+    BlobStorageConfig,
+    EncryptedStrField,
+    PayloadCompressionConfig,
     PayloadEncryptionConfig,
     PayloadEncryptionMode,
+    PayloadOffloadingConfig,
+    StorageProvider,
+    WorkflowEncodingConfig,
+    ZstdCompressionConfig,
 )
+from mistralai.extra.exceptions import WorkflowPayloadCompressionException
+from mistralai.extra.workflows.encoding.models import (
+    EncodedPayloadOptions,
+    NetworkEncodedInput,
+    WorkflowContext,
+)
+from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
+from mistralai.extra.tests.fixtures.workflow_encoding import InMemoryBlobStorage
 
 
 @pytest.fixture
@@ -29,7 +46,9 @@ def encryption_config() -> WorkflowEncodingConfig:
     )
 
 
-def test_payload_encoder_cleanup_on_client_gc(encryption_config: WorkflowEncodingConfig):
+def test_payload_encoder_cleanup_on_client_gc(
+    encryption_config: WorkflowEncodingConfig,
+):
     """Test that PayloadEncoder is cleaned up when client is garbage collected."""
     initial_config_count = len(_workflow_configs)
 
@@ -56,7 +75,9 @@ def test_payload_encoder_cleanup_on_client_gc(encryption_config: WorkflowEncodin
     assert len(_workflow_configs) == initial_config_count
 
 
-def test_multiple_clients_independent_configs(encryption_config: WorkflowEncodingConfig):
+def test_multiple_clients_independent_configs(
+    encryption_config: WorkflowEncodingConfig,
+):
     """Test that multiple clients have independent configs."""
     initial_config_count = len(_workflow_configs)
 
@@ -132,3 +153,431 @@ def test_reconfigure_same_client(encryption_config: WorkflowEncodingConfig):
     del client
     gc.collect()
     assert config_id not in _workflow_configs
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_compresses_network_inputs():
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        )
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert encoded.encoding_metadata == {}
+
+    compressed_payload = json.loads(encoded.get_payload())
+    assert compressed_payload["algorithm_config"] == {"algorithm": "zstd", "level": 3}
+
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_skips_compression_below_min_size():
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(min_size_bytes=1_000_000)
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == []
+    assert encoded.encoding_metadata == {}
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_skips_compression_when_not_smaller():
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        )
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {"d": "x"}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == []
+    assert encoded.encoding_metadata == {}
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_skips_compression_without_config():
+    encoder = PayloadEncoder(encoding_config=WorkflowEncodingConfig())
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == []
+    assert encoded.encoding_metadata == {}
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_compression_can_prevent_offloading(monkeypatch):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        ),
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1_000,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert encoded.encoding_metadata == {}
+    assert storage.blobs == {}
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "decoder_config",
+    [
+        WorkflowEncodingConfig(),
+        WorkflowEncodingConfig(
+            payload_compression=PayloadCompressionConfig(
+                min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=1)
+            )
+        ),
+    ],
+)
+async def test_payload_encoder_decodes_compressed_payload_with_decoder_config(
+    decoder_config: WorkflowEncodingConfig,
+):
+    encoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(
+            payload_compression=PayloadCompressionConfig(
+                min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=22)
+            )
+        )
+    )
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    compressed_payload = json.loads(encoded.get_payload())
+    decoded = await PayloadEncoder(decoder_config).decode_network_result(
+        encoded.model_dump(mode="json")
+    )
+
+    assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert compressed_payload["algorithm_config"] == {"algorithm": "zstd", "level": 22}
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("encryption_mode", "expected_options"),
+    [
+        (
+            PayloadEncryptionMode.PARTIAL,
+            [EncodedPayloadOptions.PARTIALLY_ENCRYPTED, EncodedPayloadOptions.COMPRESSED],
+        ),
+        (
+            PayloadEncryptionMode.FULL,
+            [EncodedPayloadOptions.COMPRESSED, EncodedPayloadOptions.ENCRYPTED],
+        ),
+    ],
+)
+async def test_payload_encoder_decodes_encrypted_compressed_payload_with_different_level(
+    encryption_mode: PayloadEncryptionMode,
+    expected_options: list[EncodedPayloadOptions],
+):
+    encryption_config = PayloadEncryptionConfig(
+        mode=encryption_mode,
+        main_key=SecretStr("0" * 64),
+    )
+    encoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(
+            payload_encryption=encryption_config,
+            payload_compression=PayloadCompressionConfig(
+                min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=10)
+            ),
+        )
+    )
+    decoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(
+            payload_encryption=encryption_config,
+            payload_compression=PayloadCompressionConfig(
+                min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=1)
+            ),
+        )
+    )
+    payload = {
+        "data": "x" * 20_000,
+        "secret": EncryptedStrField(data="secret value").model_dump(),
+    }
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    decoded = await decoder.decode_network_result(encoded.model_dump(mode="json"))
+
+    assert encoded.encoding_options == expected_options
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_decodes_with_tampered_compression_level():
+    encoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(
+            payload_compression=PayloadCompressionConfig(
+                min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=22)
+            )
+        )
+    )
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    compressed_payload = json.loads(encoded.get_payload())
+    compressed_payload["algorithm_config"]["level"] = 1
+    tampered = NetworkEncodedInput.from_data(
+        json.dumps(compressed_payload).encode(), encoded.encoding_options
+    )
+
+    decoded = await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
+        tampered.model_dump(mode="json")
+    )
+
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "compressed_payload",
+    [
+        b"not-json",
+        b'{"algorithm_config":{"algorithm":"lz4","level":1},"b64data":"AAAA"}',
+        b'{"algorithm_config":{"level":3},"b64data":"AAAA"}',
+    ],
+)
+async def test_payload_encoder_invalid_compressed_payload_is_error(
+    compressed_payload: bytes,
+):
+    encoded = NetworkEncodedInput.from_data(
+        compressed_payload, [EncodedPayloadOptions.COMPRESSED]
+    )
+
+    with pytest.raises(WorkflowPayloadCompressionException, match="Invalid compressed payload"):
+        await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
+            encoded.model_dump(mode="json")
+        )
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_corrupted_compressed_data_is_error():
+    encoded = NetworkEncodedInput.from_data(
+        json.dumps(
+            {
+                "algorithm_config": {"algorithm": "zstd", "level": 3},
+                "b64data": base64.b64encode(b"corrupted-data").decode(),
+            }
+        ).encode(),
+        [EncodedPayloadOptions.COMPRESSED],
+    )
+
+    with pytest.raises(zstandard.ZstdError):
+        await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
+            encoded.model_dump(mode="json")
+        )
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_partially_encrypts_before_offloading(monkeypatch):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=PayloadEncryptionMode.PARTIAL,
+            main_key=SecretStr("0" * 64),
+        ),
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {
+        "data": "plain value",
+        "secret": EncryptedStrField(data="secret value").model_dump(),
+    }
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    offloaded_payload = json.loads(encoded.get_payload())
+    offloaded_bytes = storage.blobs[offloaded_payload["key"]]
+
+    assert encoded.encoding_options == [
+        EncodedPayloadOptions.PARTIALLY_ENCRYPTED,
+        EncodedPayloadOptions.OFFLOADED,
+    ]
+    assert b"plain value" in offloaded_bytes
+    assert b"secret value" not in offloaded_bytes
+
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("encryption_mode", "expected_options"),
+    [
+        (
+            PayloadEncryptionMode.PARTIAL,
+            [
+                EncodedPayloadOptions.PARTIALLY_ENCRYPTED,
+                EncodedPayloadOptions.COMPRESSED,
+                EncodedPayloadOptions.OFFLOADED,
+            ],
+        ),
+        (
+            PayloadEncryptionMode.FULL,
+            [
+                EncodedPayloadOptions.COMPRESSED,
+                EncodedPayloadOptions.OFFLOADED,
+                EncodedPayloadOptions.ENCRYPTED,
+            ],
+        ),
+    ],
+)
+async def test_payload_encoder_compression_offloading_encryption_roundtrip(
+    monkeypatch,
+    encryption_mode: PayloadEncryptionMode,
+    expected_options: list[EncodedPayloadOptions],
+):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=encryption_mode,
+            main_key=SecretStr("0" * 64),
+        ),
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        ),
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {
+        "data": "x" * 20_000,
+        "secret": EncryptedStrField(data="secret value").model_dump(),
+    }
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == expected_options
+    assert encoded.encoding_metadata == {}
+    assert len(storage.blobs) == 1
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_does_not_partially_encrypt_when_no_marked_fields():
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=PayloadEncryptionMode.PARTIAL,
+            main_key=SecretStr("0" * 64),
+        ),
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = {"data": "x" * 20_000}
+
+    encoded = await encoder.encode_network_input(
+        payload, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert encoded.encoding_metadata == {}
+    decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
+    assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_event_payload_orders_compression_before_full_encryption():
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=PayloadEncryptionMode.FULL,
+            main_key=SecretStr("0" * 64),
+        ),
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    payload = json.dumps({"data": "x" * 20_000}).encode()
+
+    (
+        encoded,
+        encoding_options,
+        encoding_metadata,
+    ) = await encoder.encode_event_payload_content(payload)
+    decoded = await encoder.decode_payload_content(
+        encoded, encoding_options, encoding_metadata
+    )
+
+    assert encoding_options == [
+        EncodedPayloadOptions.COMPRESSED,
+        EncodedPayloadOptions.ENCRYPTED,
+    ]
+    assert decoded == payload

@@ -30,8 +30,13 @@ from mistralai.extra.workflows.encoding.config import (
     PayloadOffloadingConfig,
     WorkflowEncodingConfig,
 )
+from mistralai.extra.workflows.encoding.payload_compressor import (
+    build_compressor,
+    decompress_payload,
+)
 from .storage.blob_storage import get_blob_storage, BlobNotFoundError
 from mistralai.extra.workflows.encoding.models import (
+    CompressedPayloadData,
     EncodedPayloadOptions,
     EncryptableFieldTypes,
     NetworkEncodedInput,
@@ -52,8 +57,9 @@ class OffloadedPayloadData(BaseModel):
 
 class PayloadEncoder:
     """This class is in charge of payload encoding/decoding operations such as:
+    - Field-level or full-payload encryption
+    - Compression
     - Blob storage offloading
-    - Encryption
     """
 
     BLOB_STORAGE_KEY_PREFIX = "temporal-payload"
@@ -78,6 +84,8 @@ class PayloadEncoder:
                 "Blob storage config is not set for workflow payload encoding"
             )
 
+        self.compression_config = encoding_config.payload_compression
+        self.compressor = build_compressor(self.compression_config)
         self.encryption_config = encoding_config.payload_encryption
         if self.encryption_config is not None:
             if not _HAS_CRYPTO:
@@ -151,7 +159,10 @@ class PayloadEncoder:
     async def _handle_offloading(
         self, data: bytes, context: Optional[WorkflowContext]
     ) -> tuple[bytes, bool]:
-        if self.offloading_config is None or self.offloading_config.storage_config is None:
+        if (
+            self.offloading_config is None
+            or self.offloading_config.storage_config is None
+        ):
             raise WorkflowPayloadOffloadingException(
                 "You must configure payload offloading storage"
             )
@@ -228,47 +239,81 @@ class PayloadEncoder:
 
         return json.dumps(obj).encode(), len(encrypted_fields) > 0
 
+    def _compress(self, data: bytes) -> tuple[bytes, bool]:
+        if (
+            self.compression_config is None
+            or len(data) < self.compression_config.min_size_bytes
+        ):
+            return data, False
+        assert self.compressor is not None, (
+            "This should never be reached: compression is enabled in config "
+            "but PayloadEncoder.__init__ did not build a compressor"
+        )
+        compressed = self.compressor.compress(data)
+        if len(compressed) >= len(data):
+            return data, False
+        compressed_payload = CompressedPayloadData.from_data(
+            compressed, self.compressor.algorithm_config
+        )
+        return compressed_payload.model_dump_json().encode(), True
+
+    def _decompress(self, data: bytes) -> bytes:
+        return decompress_payload(data)
+
     async def encode_payload_content(
         self, data: Union[bytes, str], context: Optional[WorkflowContext]
-    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
-        """Handle payload encoding:
-        - Payload offloading (if context provided)
-        - Encryption
+    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, str]]:
+        """Handle payload encoding.
+
+        Encoding options are appended in the exact order in which transforms are
+        applied; decode_payload_content reverses that list to restore the data.
         """
         if isinstance(data, str):
             data = data.encode()
 
-        encoding_options = []
+        encoding_options: list[EncodedPayloadOptions] = []
+        encoding_metadata: dict[str, str] = {}
+
+        # Partial encryption needs the original JSON fields. It must run before
+        # compression or offloading, which make field-level markers unavailable.
+        if (
+            self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
+        ):
+            data, partially_encrypted = await self._partially_encrypt_fields(data)
+            if partially_encrypted:
+                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
+
+        # Compress before offloading so the offloading threshold applies to the
+        # bytes that would otherwise cross the network, not to the raw JSON size.
+        data, compressed = self._compress(data)
+        if compressed:
+            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
 
         if self.offloading_config is not None:
             data, offloaded = await self._handle_offloading(data, context)
             if offloaded:
                 encoding_options.append(EncodedPayloadOptions.OFFLOADED)
 
+        # Full encryption intentionally remains the final transform. If the
+        # payload was offloaded, this encrypts the small blob-reference envelope
+        # rather than the blob bytes.
         if (
             self.encryption_config is not None
             and self.encryption_config.mode == PayloadEncryptionMode.FULL
         ):
             data = self._encrypt(data)
             encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
-        elif (
-            self.encryption_config is not None
-            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
-            and EncodedPayloadOptions.OFFLOADED not in encoding_options
-        ):
-            # Do not partially encrypt offloaded payload (fields not in the payload anymore)
-            data, partially_encrypted = await self._partially_encrypt_fields(data)
-            if partially_encrypted:
-                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
 
-        return data, encoding_options
+        return data, encoding_options, encoding_metadata
 
     async def encode_event_payload_content(
         self, data: Union[bytes, str], force_full_encryption: bool = False
-    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
-        """Encrypt event payload content.
+    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, str]]:
+        """Encode event payload content.
 
-        Unlike encode_payload_content, this only handles encryption (no offloading).
+        Unlike encode_payload_content, this only handles in-payload transforms
+        (partial/full encryption and compression), never blob offloading.
 
         Args:
             data: The payload data to encrypt.
@@ -278,29 +323,47 @@ class PayloadEncoder:
         if isinstance(data, str):
             data = data.encode()
 
-        if self.encryption_config is None:
-            return data, []
+        encoding_options: list[EncodedPayloadOptions] = []
+        encoding_metadata: dict[str, str] = {}
 
-        if force_full_encryption or self.encryption_config.mode == PayloadEncryptionMode.FULL:
-            encrypted_data = self._encrypt(data)
-            return encrypted_data, [EncodedPayloadOptions.ENCRYPTED]
+        # Partial encryption needs JSON bytes; compression should happen before
+        # full encryption because encrypted bytes are intentionally high entropy.
+        if (
+            not force_full_encryption
+            and self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
+        ):
+            data, partially_encrypted = await self._partially_encrypt_fields(data)
+            if partially_encrypted:
+                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
 
-        # Partial encryption mode
-        data, partially_encrypted = await self._partially_encrypt_fields(data)
-        if partially_encrypted:
-            return data, [EncodedPayloadOptions.PARTIALLY_ENCRYPTED]
+        data, compressed = self._compress(data)
+        if compressed:
+            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
 
-        return data, []
+        if self.encryption_config is not None and (
+            force_full_encryption
+            or self.encryption_config.mode == PayloadEncryptionMode.FULL
+        ):
+            data = self._encrypt(data)
+            encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
+
+        return data, encoding_options, encoding_metadata
 
     async def decode_payload_content(
-        self, data: bytes, encoding_options: List[EncodedPayloadOptions]
+        self,
+        data: bytes,
+        encoding_options: List[EncodedPayloadOptions],
+        encoding_metadata: dict[str, str] | None = None,
     ) -> bytes:
-        # Decode in the reverse order of encoding
+        # Decode in the exact reverse order of the encoding_options wire list.
         for option in reversed(encoding_options):
             if option == EncodedPayloadOptions.ENCRYPTED:
                 data = self._decrypt(data)
             elif option == EncodedPayloadOptions.PARTIALLY_ENCRYPTED:
                 data, _ = await self._partially_decrypt_fields(data)
+            elif option == EncodedPayloadOptions.COMPRESSED:
+                data = self._decompress(data)
             elif option == EncodedPayloadOptions.OFFLOADED:
                 if (
                     self.offloading_config is None
@@ -340,7 +403,10 @@ class PayloadEncoder:
 
         encoding_options = [EncodedPayloadOptions(opt) for opt in encoding_options_strs]
         encrypted_bytes = base64.b64decode(payload_data["value"])
-        decrypted_bytes = await self.decode_payload_content(encrypted_bytes, encoding_options)
+        encoding_metadata = payload_data.get("encoding_metadata", {})
+        decrypted_bytes = await self.decode_payload_content(
+            encrypted_bytes, encoding_options, encoding_metadata
+        )
         decrypted_value = json.loads(decrypted_bytes)
 
         return {
@@ -355,10 +421,14 @@ class PayloadEncoder:
         """This method MUST be called to format every payload send to Mistral Workflows control plane
         to ensure a proper encoding of the payload.
         """
-        encoded_data, encoding_options = await self.encode_payload_content(
-            to_json(data), context
+        (
+            encoded_data,
+            encoding_options,
+            encoding_metadata,
+        ) = await self.encode_payload_content(to_json(data), context)
+        network_input = NetworkEncodedInput.from_data(
+            encoded_data, encoding_options, encoding_metadata
         )
-        network_input = NetworkEncodedInput.from_data(encoded_data, encoding_options)
         return network_input
 
     async def decode_network_result(self, data: Any) -> Any:
@@ -374,6 +444,7 @@ class PayloadEncoder:
         byte_results = await self.decode_payload_content(
             network_encoded_payload.get_payload(),
             network_encoded_payload.encoding_options,
+            network_encoded_payload.encoding_metadata,
         )
         try:
             return from_json(byte_results)
