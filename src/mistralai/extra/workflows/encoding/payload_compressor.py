@@ -13,16 +13,16 @@ from mistralai.extra.workflows.encoding.config import (
     PayloadCompressionConfig,
     ZstdCompressionConfig,
 )
-from mistralai.extra.workflows.encoding.models import CompressedPayloadData
 
 _ALGORITHM_CONFIG_ADAPTER: TypeAdapter[AlgorithmConfig] = TypeAdapter(AlgorithmConfig)
+_COMPRESSION_METADATA_KEY = "compression"
 
 
 class Compressor(ABC):
     @property
     @abstractmethod
     def algorithm_config(self) -> AlgorithmConfig:
-        """Algorithm config stored with compressed bytes for config-independent decoding."""
+        """Algorithm config stored with metadata for config-independent decoding."""
 
     @abstractmethod
     def compress(self, data: bytes) -> bytes: ...
@@ -86,14 +86,22 @@ def build_compressor(
     )
 
 
-def decompress_payload(data: bytes) -> bytes:
+def compression_metadata(compressor: Compressor) -> dict[str, object]:
+    return {
+        _COMPRESSION_METADATA_KEY: compressor.algorithm_config.model_dump(mode="json")
+    }
+
+
+def compressor_from_metadata(metadata: dict[str, object]) -> Compressor:
+    config = metadata.get(_COMPRESSION_METADATA_KEY)
+    if not isinstance(config, dict):
+        raise WorkflowPayloadCompressionException(
+            "Missing compression config in payload metadata"
+        )
     try:
-        compressed_payload = CompressedPayloadData.model_validate_json(data)
+        algo_config = _ALGORITHM_CONFIG_ADAPTER.validate_python(config)
     except ValidationError as exc:
         raise WorkflowPayloadCompressionException(
-            f"Invalid compressed payload: {exc}"
+            f"Invalid compression config in payload metadata: {exc}"
         ) from exc
-    compressor = _build_compressor_for_config(
-        compressed_payload.algorithm_config.model_dump_json()
-    )
-    return compressor.decompress(compressed_payload.get_data())
+    return _build_compressor_for_config(algo_config.model_dump_json())

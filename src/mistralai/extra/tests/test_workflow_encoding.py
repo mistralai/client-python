@@ -1,6 +1,5 @@
 """Tests for workflow encoding configuration lifecycle."""
 
-import base64
 import gc
 import json
 
@@ -170,9 +169,10 @@ async def test_payload_encoder_compresses_network_inputs():
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-
-    compressed_payload = json.loads(encoded.get_payload())
-    assert compressed_payload["algorithm_config"] == {"algorithm": "zstd", "level": 3}
+    assert encoded.encoding_metadata == {
+        "compression": {"algorithm": "zstd", "level": 3}
+    }
+    assert not encoded.get_payload().startswith(b"{")
 
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
@@ -287,13 +287,14 @@ async def test_payload_encoder_decodes_compressed_payload_with_decoder_config(
     encoded = await encoder.encode_network_input(
         payload, WorkflowContext(namespace="test", execution_id="exec")
     )
-    compressed_payload = json.loads(encoded.get_payload())
     decoded = await PayloadEncoder(decoder_config).decode_network_result(
         encoded.model_dump(mode="json")
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert compressed_payload["algorithm_config"] == {"algorithm": "zstd", "level": 22}
+    assert encoded.encoding_metadata == {
+        "compression": {"algorithm": "zstd", "level": 22}
+    }
     assert decoded == payload
 
 
@@ -363,10 +364,10 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     encoded = await encoder.encode_network_input(
         payload, WorkflowContext(namespace="test", execution_id="exec")
     )
-    compressed_payload = json.loads(encoded.get_payload())
-    compressed_payload["algorithm_config"]["level"] = 1
     tampered = NetworkEncodedInput.from_data(
-        json.dumps(compressed_payload).encode(), encoded.encoding_options
+        encoded.get_payload(),
+        encoded.encoding_options,
+        {"compression": {"algorithm": "zstd", "level": 1}},
     )
 
     decoded = await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
@@ -378,21 +379,21 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "compressed_payload",
+    "encoding_metadata",
     [
-        b"not-json",
-        b'{"algorithm_config":{"algorithm":"lz4","level":1},"b64data":"AAAA"}',
-        b'{"algorithm_config":{"level":3},"b64data":"AAAA"}',
+        {},
+        {"compression": {"algorithm": "lz4", "level": 1}},
+        {"compression": {"level": 3}},
     ],
 )
-async def test_payload_encoder_invalid_compressed_payload_is_error(
-    compressed_payload: bytes,
+async def test_payload_encoder_invalid_compression_metadata_is_error(
+    encoding_metadata: dict[str, object],
 ):
     encoded = NetworkEncodedInput.from_data(
-        compressed_payload, [EncodedPayloadOptions.COMPRESSED]
+        b"compressed-data", [EncodedPayloadOptions.COMPRESSED], encoding_metadata
     )
 
-    with pytest.raises(WorkflowPayloadCompressionException, match="Invalid compressed payload"):
+    with pytest.raises(WorkflowPayloadCompressionException):
         await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
             encoded.model_dump(mode="json")
         )
@@ -401,13 +402,9 @@ async def test_payload_encoder_invalid_compressed_payload_is_error(
 @pytest.mark.asyncio
 async def test_payload_encoder_corrupted_compressed_data_is_error():
     encoded = NetworkEncodedInput.from_data(
-        json.dumps(
-            {
-                "algorithm_config": {"algorithm": "zstd", "level": 3},
-                "b64data": base64.b64encode(b"corrupted-data").decode(),
-            }
-        ).encode(),
+        b"corrupted-data",
         [EncodedPayloadOptions.COMPRESSED],
+        {"compression": {"algorithm": "zstd", "level": 3}},
     )
 
     with pytest.raises(zstandard.ZstdError):
