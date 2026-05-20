@@ -1,6 +1,5 @@
 """Tests for workflow encoding configuration lifecycle."""
 
-import base64
 import gc
 import json
 
@@ -38,18 +37,23 @@ from mistralai.extra.workflows.encoding.payload_encoder import (
 from mistralai.extra.tests.fixtures.workflow_encoding import InMemoryBlobStorage
 
 
+_COMPRESSED_TEST_PAYLOAD = CompressedPayloadData.from_payload(
+    b"compressed-data", ZstdCompressionConfig(level=3)
+)
+
+
 def _compressed_payload_json(
-    compression: dict[str, object],
-    payload: bytes = b"compressed-data",
+    compressed_payload: CompressedPayloadData,
     *,
+    invalid_compression: dict[str, object] | None = None,
     invalid_base64: bool = False,
 ) -> bytes:
-    b64payload = base64.b64encode(payload).decode("utf-8")
+    payload_data = compressed_payload.model_dump(mode="json")
+    if invalid_compression is not None:
+        payload_data["compression"] = invalid_compression
     if invalid_base64:
-        b64payload = f"{b64payload}!"
-    return json.dumps(
-        {"compression": compression, "b64payload": b64payload}
-    ).encode()
+        payload_data["b64payload"] = f"{payload_data['b64payload']}!"
+    return json.dumps(payload_data).encode()
 
 
 @pytest.fixture
@@ -468,11 +472,15 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     "compressed_payload",
     [
         b"compressed-data",
-        _compressed_payload_json({"algorithm": "lz4", "level": 1}),
-        _compressed_payload_json({"level": 3}),
         _compressed_payload_json(
-            {"algorithm": "zstd", "level": 3}, invalid_base64=True
+            _COMPRESSED_TEST_PAYLOAD,
+            invalid_compression={"algorithm": "lz4", "level": 1},
         ),
+        _compressed_payload_json(
+            _COMPRESSED_TEST_PAYLOAD,
+            invalid_compression={"level": 3},
+        ),
+        _compressed_payload_json(_COMPRESSED_TEST_PAYLOAD, invalid_base64=True),
     ],
 )
 async def test_payload_encoder_invalid_compressed_payload_is_error(
