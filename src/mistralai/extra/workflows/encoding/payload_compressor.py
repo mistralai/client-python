@@ -15,7 +15,6 @@ from mistralai.extra.workflows.encoding.config import (
 )
 
 _ALGORITHM_CONFIG_ADAPTER: TypeAdapter[AlgorithmConfig] = TypeAdapter(AlgorithmConfig)
-_COMPRESSION_METADATA_KEY = "compression"
 
 
 class Compressor(ABC):
@@ -60,6 +59,14 @@ class ZstdCompressor(Compressor):
         return result
 
 
+def compressor_from_config(algo_config: AlgorithmConfig) -> Compressor:
+    if isinstance(algo_config, ZstdCompressionConfig):
+        return ZstdCompressor(algo_config)
+    raise WorkflowPayloadCompressionException(
+        f"Unsupported compression algorithm: {algo_config.algorithm!r}"
+    )
+
+
 @lru_cache(maxsize=8)
 def _build_compressor_for_config(config_json: str) -> Compressor:
     try:
@@ -69,11 +76,7 @@ def _build_compressor_for_config(config_json: str) -> Compressor:
             f"Invalid compression config in payload: {exc}"
         ) from exc
 
-    if isinstance(algo_config, ZstdCompressionConfig):
-        return ZstdCompressor(algo_config)
-    raise WorkflowPayloadCompressionException(
-        f"Unsupported compression algorithm: {algo_config.algorithm!r}"
-    )
+    return compressor_from_config(algo_config)
 
 
 def build_compressor(
@@ -84,24 +87,3 @@ def build_compressor(
     return _build_compressor_for_config(
         compression_config.algorithm_config.model_dump_json()
     )
-
-
-def compression_metadata(compressor: Compressor) -> dict[str, object]:
-    return {
-        _COMPRESSION_METADATA_KEY: compressor.algorithm_config.model_dump(mode="json")
-    }
-
-
-def compressor_from_metadata(metadata: dict[str, object]) -> Compressor:
-    config = metadata.get(_COMPRESSION_METADATA_KEY)
-    if not isinstance(config, dict):
-        raise WorkflowPayloadCompressionException(
-            "Missing compression config in payload metadata"
-        )
-    try:
-        algo_config = _ALGORITHM_CONFIG_ADAPTER.validate_python(config)
-    except ValidationError as exc:
-        raise WorkflowPayloadCompressionException(
-            f"Invalid compression config in payload metadata: {exc}"
-        ) from exc
-    return _build_compressor_for_config(algo_config.model_dump_json())

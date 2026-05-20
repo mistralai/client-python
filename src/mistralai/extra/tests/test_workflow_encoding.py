@@ -30,8 +30,30 @@ from mistralai.extra.workflows.encoding.models import (
     NetworkEncodedInput,
     WorkflowContext,
 )
-from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
+from mistralai.extra.workflows.encoding.payload_encoder import (
+    CompressedPayloadData,
+    PayloadEncoder,
+)
 from mistralai.extra.tests.fixtures.workflow_encoding import InMemoryBlobStorage
+
+
+_COMPRESSED_TEST_PAYLOAD = CompressedPayloadData.from_payload(
+    b"compressed-data", ZstdCompressionConfig(level=3)
+)
+
+
+def _compressed_payload_json(
+    compressed_payload: CompressedPayloadData,
+    *,
+    invalid_compression: dict[str, object] | None = None,
+    invalid_base64: bool = False,
+) -> bytes:
+    payload_data = compressed_payload.model_dump(mode="json")
+    if invalid_compression is not None:
+        payload_data["compression"] = invalid_compression
+    if invalid_base64:
+        payload_data["b64payload"] = f"{payload_data['b64payload']}!"
+    return json.dumps(payload_data).encode()
 
 
 @pytest.fixture
@@ -169,13 +191,75 @@ async def test_payload_encoder_compresses_network_inputs():
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert encoded.encoding_metadata == {
-        "compression": {"algorithm": "zstd", "level": 3}
-    }
-    assert not encoded.get_payload().startswith(b"{")
+    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    assert compressed_payload.compression == ZstdCompressionConfig(level=3)
 
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
     assert decoded == payload
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_content_keeps_two_value_contract_for_compression():
+    # Workflow workers use this low-level API directly from their Temporal codec.
+    # Keep compression self-describing without changing the two-value contract.
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        )
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    raw = json.dumps({"data": "x" * 20_000}).encode()
+
+    encoded_data, encoding_options = await encoder.encode_payload_content(
+        raw, WorkflowContext(namespace="test", execution_id="exec")
+    )
+
+    assert isinstance(encoded_data, bytes)
+    assert encoding_options == [EncodedPayloadOptions.COMPRESSED]
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_wraps_compression_config_in_payload_content():
+    # Temporal metadata only carries encoding_options, so compressed bytes must
+    # include the algorithm config needed to decode them independently.
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        )
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    raw = json.dumps({"data": "x" * 20_000}).encode()
+
+    encoded_data, encoding_options = await encoder.encode_payload_content(
+        raw, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    compressed_payload = CompressedPayloadData.model_validate_json(encoded_data)
+
+    assert encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert compressed_payload.compression == ZstdCompressionConfig(level=3)
+    assert compressed_payload.get_payload() != raw
+
+
+@pytest.mark.asyncio
+async def test_payload_encoder_decodes_compressed_payload_content_without_metadata():
+    # This mirrors Temporal payload decoding, where the codec passes only bytes
+    # plus encoding_options back into PayloadEncoder.
+    config = WorkflowEncodingConfig(
+        payload_compression=PayloadCompressionConfig(
+            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        )
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    raw = json.dumps({"data": "x" * 20_000}).encode()
+
+    encoded_data, encoding_options = await encoder.encode_payload_content(
+        raw, WorkflowContext(namespace="test", execution_id="exec")
+    )
+    decoded = await PayloadEncoder(WorkflowEncodingConfig()).decode_payload_content(
+        encoded_data, encoding_options
+    )
+
+    assert decoded == raw
 
 
 @pytest.mark.asyncio
@@ -292,9 +376,8 @@ async def test_payload_encoder_decodes_compressed_payload_with_decoder_config(
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    assert encoded.encoding_metadata == {
-        "compression": {"algorithm": "zstd", "level": 22}
-    }
+    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    assert compressed_payload.compression == ZstdCompressionConfig(level=22)
     assert decoded == payload
 
 
@@ -355,6 +438,8 @@ async def test_payload_encoder_decodes_encrypted_compressed_payload_with_differe
 
 @pytest.mark.asyncio
 async def test_payload_encoder_decodes_with_tampered_compression_level():
+    # Zstd decompression must depend on the frame data, not on the compression
+    # level that was used when the payload was encoded.
     encoder = PayloadEncoder(
         encoding_config=WorkflowEncodingConfig(
             payload_compression=PayloadCompressionConfig(
@@ -367,10 +452,12 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     encoded = await encoder.encode_network_input(
         payload, WorkflowContext(namespace="test", execution_id="exec")
     )
+    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    tampered_payload = compressed_payload.model_copy(
+        update={"compression": ZstdCompressionConfig(level=1)}
+    )
     tampered = NetworkEncodedInput.from_data(
-        encoded.get_payload(),
-        encoded.encoding_options,
-        {"compression": {"algorithm": "zstd", "level": 1}},
+        tampered_payload.model_dump_json().encode(), encoded.encoding_options
     )
 
     decoded = await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
@@ -382,18 +469,25 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "encoding_metadata",
+    "compressed_payload",
     [
-        {},
-        {"compression": {"algorithm": "lz4", "level": 1}},
-        {"compression": {"level": 3}},
+        b"compressed-data",
+        _compressed_payload_json(
+            _COMPRESSED_TEST_PAYLOAD,
+            invalid_compression={"algorithm": "lz4", "level": 1},
+        ),
+        _compressed_payload_json(
+            _COMPRESSED_TEST_PAYLOAD,
+            invalid_compression={"level": 3},
+        ),
+        _compressed_payload_json(_COMPRESSED_TEST_PAYLOAD, invalid_base64=True),
     ],
 )
-async def test_payload_encoder_invalid_compression_metadata_is_error(
-    encoding_metadata: dict[str, object],
+async def test_payload_encoder_invalid_compressed_payload_is_error(
+    compressed_payload: bytes,
 ):
     encoded = NetworkEncodedInput.from_data(
-        b"compressed-data", [EncodedPayloadOptions.COMPRESSED], encoding_metadata
+        compressed_payload, [EncodedPayloadOptions.COMPRESSED]
     )
 
     with pytest.raises(WorkflowPayloadCompressionException):
@@ -404,10 +498,12 @@ async def test_payload_encoder_invalid_compression_metadata_is_error(
 
 @pytest.mark.asyncio
 async def test_payload_encoder_corrupted_compressed_data_is_error():
+    compressed_payload = CompressedPayloadData.from_payload(
+        b"corrupted-data", ZstdCompressionConfig(level=3)
+    )
     encoded = NetworkEncodedInput.from_data(
-        b"corrupted-data",
+        compressed_payload.model_dump_json().encode(),
         [EncodedPayloadOptions.COMPRESSED],
-        {"compression": {"algorithm": "zstd", "level": 3}},
     )
 
     with pytest.raises(zstandard.ZstdError):
@@ -571,18 +667,15 @@ async def test_payload_encoder_encodes_event_content_without_offloading():
     )
     payload = json.dumps({"data": "x" * 20_000}).encode()
 
-    encoded, encoding_options, encoding_metadata = await encoder.encode_payload_content(
+    encoded, encoding_options = await encoder.encode_payload_content(
         payload,
         allow_offloading=False,
         force_full_encryption=True,
     )
-    decoded = await decoder.decode_payload_content(
-        encoded, encoding_options, encoding_metadata
-    )
+    decoded = await decoder.decode_payload_content(encoded, encoding_options)
 
     assert encoding_options == [
         EncodedPayloadOptions.COMPRESSED,
         EncodedPayloadOptions.ENCRYPTED,
     ]
-    assert encoding_metadata == {"compression": {"algorithm": "zstd", "level": 3}}
     assert decoded == payload
