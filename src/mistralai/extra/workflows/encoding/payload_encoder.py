@@ -312,6 +312,39 @@ class PayloadEncoder:
 
         return data, encoding_options, encoding_metadata
 
+    async def encode_event_payload_content(
+        self, data: Union[bytes, str], force_full_encryption: bool = False
+    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, object]]:
+        """Encode event payload content without blob offloading."""
+        if isinstance(data, str):
+            data = data.encode()
+
+        encoding_options: list[EncodedPayloadOptions] = []
+        encoding_metadata: dict[str, object] = {}
+
+        if (
+            not force_full_encryption
+            and self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
+        ):
+            data, partially_encrypted = await self._partially_encrypt_fields(data)
+            if partially_encrypted:
+                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
+
+        data, compressed = self._compress(data)
+        if compressed:
+            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
+            encoding_metadata.update(self._compression_metadata())
+
+        if self.encryption_config is not None and (
+            force_full_encryption
+            or self.encryption_config.mode == PayloadEncryptionMode.FULL
+        ):
+            data = self._encrypt(data)
+            encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
+
+        return data, encoding_options, encoding_metadata
+
     async def decode_payload_content(
         self,
         data: bytes,
