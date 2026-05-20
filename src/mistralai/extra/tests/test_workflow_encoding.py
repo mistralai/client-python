@@ -1,5 +1,6 @@
 """Tests for workflow encoding configuration lifecycle."""
 
+import base64
 import gc
 import json
 
@@ -35,6 +36,20 @@ from mistralai.extra.workflows.encoding.payload_encoder import (
     PayloadEncoder,
 )
 from mistralai.extra.tests.fixtures.workflow_encoding import InMemoryBlobStorage
+
+
+def _compressed_payload_json(
+    compression: dict[str, object],
+    payload: bytes = b"compressed-data",
+    *,
+    invalid_base64: bool = False,
+) -> bytes:
+    b64payload = base64.b64encode(payload).decode("utf-8")
+    if invalid_base64:
+        b64payload = f"{b64payload}!"
+    return json.dumps(
+        {"compression": compression, "b64payload": b64payload}
+    ).encode()
 
 
 @pytest.fixture
@@ -181,6 +196,8 @@ async def test_payload_encoder_compresses_network_inputs():
 
 @pytest.mark.asyncio
 async def test_payload_encoder_content_keeps_two_value_contract_for_compression():
+    # Workflow workers use this low-level API directly from their Temporal codec.
+    # Keep compression self-describing without changing the two-value contract.
     config = WorkflowEncodingConfig(
         payload_compression=PayloadCompressionConfig(
             min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
@@ -199,6 +216,8 @@ async def test_payload_encoder_content_keeps_two_value_contract_for_compression(
 
 @pytest.mark.asyncio
 async def test_payload_encoder_wraps_compression_config_in_payload_content():
+    # Temporal metadata only carries encoding_options, so compressed bytes must
+    # include the algorithm config needed to decode them independently.
     config = WorkflowEncodingConfig(
         payload_compression=PayloadCompressionConfig(
             min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
@@ -219,6 +238,8 @@ async def test_payload_encoder_wraps_compression_config_in_payload_content():
 
 @pytest.mark.asyncio
 async def test_payload_encoder_decodes_compressed_payload_content_without_metadata():
+    # This mirrors Temporal payload decoding, where the codec passes only bytes
+    # plus encoding_options back into PayloadEncoder.
     config = WorkflowEncodingConfig(
         payload_compression=PayloadCompressionConfig(
             min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
@@ -413,6 +434,8 @@ async def test_payload_encoder_decodes_encrypted_compressed_payload_with_differe
 
 @pytest.mark.asyncio
 async def test_payload_encoder_decodes_with_tampered_compression_level():
+    # Zstd decompression must depend on the frame data, not on the compression
+    # level that was used when the payload was encoded.
     encoder = PayloadEncoder(
         encoding_config=WorkflowEncodingConfig(
             payload_compression=PayloadCompressionConfig(
@@ -445,18 +468,11 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     "compressed_payload",
     [
         b"compressed-data",
-        json.dumps(
-            {
-                "compression": {"algorithm": "lz4", "level": 1},
-                "b64payload": "Y29tcHJlc3NlZC1kYXRh",
-            }
-        ).encode(),
-        json.dumps(
-            {"compression": {"level": 3}, "b64payload": "Y29tcHJlc3NlZC1kYXRh"}
-        ).encode(),
-        json.dumps(
-            {"compression": {"algorithm": "zstd", "level": 3}, "b64payload": "***"}
-        ).encode(),
+        _compressed_payload_json({"algorithm": "lz4", "level": 1}),
+        _compressed_payload_json({"level": 3}),
+        _compressed_payload_json(
+            {"algorithm": "zstd", "level": 3}, invalid_base64=True
+        ),
     ],
 )
 async def test_payload_encoder_invalid_compressed_payload_is_error(
