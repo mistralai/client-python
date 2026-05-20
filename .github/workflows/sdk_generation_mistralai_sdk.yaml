@@ -16,7 +16,7 @@ permissions:
         type: string
 jobs:
   resolve-speakeasy-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       version: ${{ steps.resolve.outputs.version }}
     steps:
@@ -32,53 +32,79 @@ jobs:
             echo "Could not resolve speakeasyVersion from .speakeasy/workflow.yaml"
             exit 1
           fi
+          # Strip optional leading 'v'
+          VERSION="${VERSION#v}"
           echo "Resolved Speakeasy version: $VERSION"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
   generate:
     needs: resolve-speakeasy-version
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@7951d9dce457425b900b2dd317253499d98c2587 # v15
-    with:
-      force: ${{ github.event.inputs.force }}
-      mode: pr
-      set_version: ${{ github.event.inputs.set_version }}
-      speakeasy_version: ${{ needs.resolve-speakeasy-version.outputs.version }}
-      target: mistralai-sdk
-      feature_branch: speakeasy-sdk-regen-${{ github.run_id }}
-    secrets:
-      github_access_token: ${{ secrets.CLIENT_PIPELINE }}
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+    runs-on: ubuntu-24.04
+    environment: publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CLIENT_PIPELINE }}
+
+      - name: Install Speakeasy CLI
+        env:
+          VERSION: ${{ needs.resolve-speakeasy-version.outputs.version }}
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/07977787cc394cb30b418a591b3332e40e209be1/install.sh | sh
+          speakeasy --version
+
+      - name: Run SDK generation
+        env:
+          INPUT_GITHUB_ACCESS_TOKEN: ${{ secrets.CLIENT_PIPELINE }}
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+          INPUT_MODE: pr
+          INPUT_FORCE: ${{ github.event.inputs.force }}
+          INPUT_TARGET: mistralai-sdk
+          INPUT_SET_VERSION: ${{ github.event.inputs.set_version }}
+          INPUT_FEATURE_BRANCH: ${{ format('speakeasy/mistralai-sdk-{0}-{1}', github.run_id, github.run_attempt) }}
+          INPUT_CLI_ENVIRONMENT_VARIABLES: |
+            NODE_OPTIONS=--max-old-space-size=4096
+        run: speakeasy ci generate
 
   align-version:
     needs: generate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: publish
     steps:
-      - name: Find PR branch
-        id: find-pr
+      - name: Compute expected PR branch
+        id: branch
+        run: |
+          BRANCH="${{ format('speakeasy/mistralai-sdk-{0}-{1}', github.run_id, github.run_attempt) }}"
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Check PR branch exists
+        id: branch-exists
         env:
           GH_TOKEN: ${{ secrets.CLIENT_PIPELINE }}
-          SPEAKEASY_BRANCH: speakeasy-sdk-regen-${{ github.run_id }}
         run: |
           set -euo pipefail
-          PR_BRANCH="$SPEAKEASY_BRANCH"
-          echo "Using Speakeasy generated branch: $PR_BRANCH"
-          echo "branch=$PR_BRANCH" >> "$GITHUB_OUTPUT"
+          if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "${{ steps.branch.outputs.name }}" | grep -q .; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Branch not found: ${{ steps.branch.outputs.name }}. Skipping alignment."
+          fi
 
       - name: Checkout PR branch
-        if: steps.find-pr.outputs.branch != ''
+        if: steps.branch-exists.outputs.exists == 'true'
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          ref: ${{ steps.find-pr.outputs.branch }}
+          ref: ${{ steps.branch.outputs.name }}
           token: ${{ secrets.CLIENT_PIPELINE }}
 
       - name: Install uv
-        if: steps.find-pr.outputs.branch != ''
+        if: steps.branch-exists.outputs.exists == 'true'
         uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
       - name: Align version using uv
-        if: steps.find-pr.outputs.branch != ''
+        if: steps.branch-exists.outputs.exists == 'true'
         run: |
           set -euo pipefail
 
@@ -99,7 +125,7 @@ jobs:
           uv version "$VERSION"
 
       - name: Commit and push
-        if: steps.find-pr.outputs.branch != ''
+        if: steps.branch-exists.outputs.exists == 'true'
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
