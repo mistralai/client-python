@@ -265,7 +265,12 @@ class PayloadEncoder:
         return compressor_from_metadata(encoding_metadata).decompress(data)
 
     async def encode_payload_content(
-        self, data: Union[bytes, str], context: Optional[WorkflowContext]
+        self,
+        data: Union[bytes, str],
+        context: Optional[WorkflowContext] = None,
+        *,
+        allow_offloading: bool = True,
+        force_full_encryption: bool = False,
     ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, object]]:
         """Handle payload encoding.
 
@@ -281,7 +286,8 @@ class PayloadEncoder:
         # Partial encryption needs the original JSON fields. It must run before
         # compression or offloading, which make field-level markers unavailable.
         if (
-            self.encryption_config is not None
+            not force_full_encryption
+            and self.encryption_config is not None
             and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
         ):
             data, partially_encrypted = await self._partially_encrypt_fields(data)
@@ -295,7 +301,7 @@ class PayloadEncoder:
             encoding_options.append(EncodedPayloadOptions.COMPRESSED)
             encoding_metadata.update(self._compression_metadata())
 
-        if self.offloading_config is not None:
+        if allow_offloading and self.offloading_config is not None:
             data, offloaded = await self._handle_offloading(data, context)
             if offloaded:
                 encoding_options.append(EncodedPayloadOptions.OFFLOADED)
@@ -303,39 +309,6 @@ class PayloadEncoder:
         # Full encryption intentionally remains the final transform. If the
         # payload was offloaded, this encrypts the small blob-reference envelope
         # rather than the blob bytes.
-        if (
-            self.encryption_config is not None
-            and self.encryption_config.mode == PayloadEncryptionMode.FULL
-        ):
-            data = self._encrypt(data)
-            encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
-
-        return data, encoding_options, encoding_metadata
-
-    async def encode_event_payload_content(
-        self, data: Union[bytes, str], force_full_encryption: bool = False
-    ) -> tuple[bytes, list[EncodedPayloadOptions], dict[str, object]]:
-        """Encode event payload content without blob offloading."""
-        if isinstance(data, str):
-            data = data.encode()
-
-        encoding_options: list[EncodedPayloadOptions] = []
-        encoding_metadata: dict[str, object] = {}
-
-        if (
-            not force_full_encryption
-            and self.encryption_config is not None
-            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
-        ):
-            data, partially_encrypted = await self._partially_encrypt_fields(data)
-            if partially_encrypted:
-                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
-
-        data, compressed = self._compress(data)
-        if compressed:
-            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
-            encoding_metadata.update(self._compression_metadata())
-
         if self.encryption_config is not None and (
             force_full_encryption
             or self.encryption_config.mode == PayloadEncryptionMode.FULL

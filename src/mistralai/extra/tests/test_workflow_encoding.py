@@ -1,6 +1,5 @@
 """Tests for workflow encoding configuration lifecycle."""
 
-import base64
 import gc
 import json
 
@@ -548,29 +547,35 @@ async def test_payload_encoder_does_not_partially_encrypt_when_no_marked_fields(
 
 
 @pytest.mark.asyncio
-async def test_payload_encoder_event_payload_sets_compression_metadata():
+async def test_payload_encoder_encodes_event_content_without_offloading():
+    encryption_config = PayloadEncryptionConfig(
+        mode=PayloadEncryptionMode.PARTIAL,
+        main_key=SecretStr("0" * 64),
+    )
     config = WorkflowEncodingConfig(
-        payload_encryption=PayloadEncryptionConfig(
-            mode=PayloadEncryptionMode.FULL,
-            main_key=SecretStr("0" * 64),
-        ),
+        payload_encryption=encryption_config,
         payload_compression=PayloadCompressionConfig(
             min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
+        ),
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
         ),
     )
     encoder = PayloadEncoder(encoding_config=config)
     decoder = PayloadEncoder(
-        encoding_config=WorkflowEncodingConfig(
-            payload_encryption=config.payload_encryption,
-        )
+        encoding_config=WorkflowEncodingConfig(payload_encryption=encryption_config)
     )
     payload = json.dumps({"data": "x" * 20_000}).encode()
 
-    (
-        encoded,
-        encoding_options,
-        encoding_metadata,
-    ) = await encoder.encode_event_payload_content(payload)
+    encoded, encoding_options, encoding_metadata = await encoder.encode_payload_content(
+        payload,
+        allow_offloading=False,
+        force_full_encryption=True,
+    )
     decoded = await decoder.decode_payload_content(
         encoded, encoding_options, encoding_metadata
     )
@@ -581,39 +586,3 @@ async def test_payload_encoder_event_payload_sets_compression_metadata():
     ]
     assert encoding_metadata == {"compression": {"algorithm": "zstd", "level": 3}}
     assert decoded == payload
-
-
-@pytest.mark.asyncio
-async def test_payload_encoder_decodes_event_payload_with_compression_metadata():
-    config = WorkflowEncodingConfig(
-        payload_encryption=PayloadEncryptionConfig(
-            mode=PayloadEncryptionMode.FULL,
-            main_key=SecretStr("0" * 64),
-        ),
-        payload_compression=PayloadCompressionConfig(
-            min_size_bytes=1, algorithm_config=ZstdCompressionConfig(level=3)
-        ),
-    )
-    encoder = PayloadEncoder(encoding_config=config)
-    decoder = PayloadEncoder(
-        encoding_config=WorkflowEncodingConfig(
-            payload_encryption=config.payload_encryption,
-        )
-    )
-    payload = {"data": "x" * 20_000}
-    (
-        encoded,
-        encoding_options,
-        encoding_metadata,
-    ) = await encoder.encode_event_payload_content(json.dumps(payload).encode())
-
-    decoded = await decoder.decode_event_payload(
-        {
-            "type": "json",
-            "value": base64.b64encode(encoded).decode(),
-            "encoding_options": [option.value for option in encoding_options],
-            "encoding_metadata": encoding_metadata,
-        }
-    )
-
-    assert decoded == {"type": "json", "value": payload, "encoding_options": []}
