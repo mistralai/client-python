@@ -65,8 +65,8 @@ async def get_blob_storage(
             from ._azure import AzureBlobStorage  # type: ignore[import-untyped]
         except ImportError as e:
             raise ImportError(
-                "Azure Blob Storage support requires azure-storage-blob. "
-                "Install it with: pip install 'mistralai[workflow_payload_offloading_azure]'"
+                "Azure Blob Storage support requires azure-storage-blob and azure-identity. "
+                "Install with: pip install 'mistralai[workflow_payload_offloading_azure]'"
             ) from e
 
         if not blob_storage_config.container_name:
@@ -78,14 +78,11 @@ async def get_blob_storage(
             if blob_storage_config.azure_connection_string
             else None
         )
-        if not azure_conn_str:
-            raise WorkflowPayloadOffloadingException(
-                "azure_connection_string is required for Azure blob storage"
-            )
         storage = AzureBlobStorage(
             container_name=blob_storage_config.container_name,
             azure_connection_string=azure_conn_str,
             prefix=prefix,
+            azure_storage_account_url=blob_storage_config.azure_storage_account_url,
         )
 
     elif blob_storage_config.storage_provider == StorageProvider.GCS:

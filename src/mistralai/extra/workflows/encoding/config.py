@@ -16,6 +16,7 @@ class BlobStorageConfig(BaseModel):
     # Azure settings
     container_name: Optional[str] = None
     azure_connection_string: Optional[SecretStr] = None
+    azure_storage_account_url: Optional[str] = None
 
     # GCS settings
     bucket_id: Optional[str] = None
