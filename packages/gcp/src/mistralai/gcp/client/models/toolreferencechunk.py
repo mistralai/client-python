@@ -17,14 +17,18 @@ from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-ToolUnionTypedDict = TypeAliasType("ToolUnionTypedDict", Union[BuiltInConnectors, str])
+ToolReferenceChunkToolTypedDict = TypeAliasType(
+    "ToolReferenceChunkToolTypedDict", Union[BuiltInConnectors, str]
+)
 
 
-ToolUnion = TypeAliasType("ToolUnion", Union[BuiltInConnectors, str])
+ToolReferenceChunkTool = TypeAliasType(
+    "ToolReferenceChunkTool", Union[BuiltInConnectors, str]
+)
 
 
 class ToolReferenceChunkTypedDict(TypedDict):
-    tool: ToolUnionTypedDict
+    tool: ToolReferenceChunkToolTypedDict
     title: str
     type: Literal["tool_reference"]
     url: NotRequired[Nullable[str]]
@@ -33,7 +37,7 @@ class ToolReferenceChunkTypedDict(TypedDict):
 
 
 class ToolReferenceChunk(BaseModel):
-    tool: ToolUnion
+    tool: ToolReferenceChunkTool
 
     title: str
 
@@ -60,7 +64,7 @@ class ToolReferenceChunk(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

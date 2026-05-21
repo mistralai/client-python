@@ -1,12 +1,12 @@
-# ToolUnion
+# ReferenceID
 
 
 ## Supported Types
 
-### `models.BuiltInConnectors`
+### `int`
 
 ```python
-value: models.BuiltInConnectors = /* values here */
+value: int = /* values here */
 ```
 
 ### `str`
