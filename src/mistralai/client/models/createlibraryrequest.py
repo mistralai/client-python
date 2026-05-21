@@ -9,9 +9,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import Literal
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 OwnerType = Literal[
@@ -34,7 +35,12 @@ class CreateLibraryRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    chunk_size: OptionalNullable[int] = UNSET
+    chunk_size: Annotated[
+        OptionalNullable[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
     r"""The size of the chunks (in characters) to split document text into. Must be between 256 and 32768."""
 
     owner_type: OptionalNullable[OwnerType] = UNSET
