@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, List, Mapping, Optional, Union
 
 
 class Voices(BaseSDK):
@@ -90,7 +90,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -189,7 +189,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -221,6 +221,10 @@ class Voices(BaseSDK):
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        appearance: OptionalNullable[
+            Union[models.VoiceAppearance, models.VoiceAppearanceTypedDict]
+        ] = UNSET,
         retention_notice: Optional[int] = 30,
         sample_filename: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -240,6 +244,8 @@ class Voices(BaseSDK):
         :param age:
         :param tags:
         :param color:
+        :param description:
+        :param appearance:
         :param retention_notice:
         :param sample_filename: Original filename for extension detection
         :param retries: Override the default retry configuration for this method
@@ -268,6 +274,10 @@ class Voices(BaseSDK):
             age=age,
             tags=tags,
             color=color,
+            description=description,
+            appearance=utils.get_pydantic_model(
+                appearance, OptionalNullable[models.VoiceAppearance]
+            ),
             retention_notice=retention_notice,
             sample_audio=sample_audio,
             sample_filename=sample_filename,
@@ -312,7 +322,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -344,6 +354,10 @@ class Voices(BaseSDK):
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        appearance: OptionalNullable[
+            Union[models.VoiceAppearance, models.VoiceAppearanceTypedDict]
+        ] = UNSET,
         retention_notice: Optional[int] = 30,
         sample_filename: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -363,6 +377,8 @@ class Voices(BaseSDK):
         :param age:
         :param tags:
         :param color:
+        :param description:
+        :param appearance:
         :param retention_notice:
         :param sample_filename: Original filename for extension detection
         :param retries: Override the default retry configuration for this method
@@ -391,6 +407,10 @@ class Voices(BaseSDK):
             age=age,
             tags=tags,
             color=color,
+            description=description,
+            appearance=utils.get_pydantic_model(
+                appearance, OptionalNullable[models.VoiceAppearance]
+            ),
             retention_notice=retention_notice,
             sample_audio=sample_audio,
             sample_filename=sample_filename,
@@ -435,7 +455,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -528,7 +548,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -621,7 +641,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -651,6 +671,10 @@ class Voices(BaseSDK):
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        appearance: OptionalNullable[
+            Union[models.VoiceAppearance, models.VoiceAppearanceTypedDict]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -666,6 +690,8 @@ class Voices(BaseSDK):
         :param gender:
         :param age:
         :param tags:
+        :param description:
+        :param appearance:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -692,6 +718,10 @@ class Voices(BaseSDK):
                 gender=gender,
                 age=age,
                 tags=tags,
+                description=description,
+                appearance=utils.get_pydantic_model(
+                    appearance, OptionalNullable[models.VoiceAppearance]
+                ),
             ),
         )
 
@@ -738,7 +768,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -768,6 +798,10 @@ class Voices(BaseSDK):
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        appearance: OptionalNullable[
+            Union[models.VoiceAppearance, models.VoiceAppearanceTypedDict]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -783,6 +817,8 @@ class Voices(BaseSDK):
         :param gender:
         :param age:
         :param tags:
+        :param description:
+        :param appearance:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -809,6 +845,10 @@ class Voices(BaseSDK):
                 gender=gender,
                 age=age,
                 tags=tags,
+                description=description,
+                appearance=utils.get_pydantic_model(
+                    appearance, OptionalNullable[models.VoiceAppearance]
+                ),
             ),
         )
 
@@ -855,7 +895,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -948,7 +988,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1041,7 +1081,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1134,7 +1174,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
@@ -1230,7 +1270,7 @@ class Voices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
