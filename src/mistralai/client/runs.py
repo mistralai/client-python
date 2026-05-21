@@ -102,7 +102,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -120,8 +120,8 @@ class Runs(BaseSDK):
             results = JSONPath("$.executions").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit = request.page_size if isinstance(request.page_size, int) else 50
-            if len(results[0]) < limit:
+            limit_ = request.page_size if isinstance(request.page_size, int) else 50
+            if len(results[0]) < limit_:
                 return None
 
             return self.list_runs(
@@ -249,7 +249,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -272,8 +272,8 @@ class Runs(BaseSDK):
             results = JSONPath("$.executions").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit = request.page_size if isinstance(request.page_size, int) else 50
-            if len(results[0]) < limit:
+            limit_ = request.page_size if isinstance(request.page_size, int) else 50
+            if len(results[0]) < limit_:
                 return empty_result()
 
             return self.list_runs_async(
@@ -381,7 +381,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -472,7 +472,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -566,7 +566,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -660,7 +660,7 @@ class Runs(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

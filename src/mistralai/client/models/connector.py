@@ -2,6 +2,25 @@
 # @generated-id: 1a4facac922d
 
 from __future__ import annotations
+from .authenticationconfiguration import (
+    AuthenticationConfiguration,
+    AuthenticationConfigurationTypedDict,
+)
+from .connectionpreference import ConnectionPreference, ConnectionPreferenceTypedDict
+from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
+from .connectorprotocol import ConnectorProtocol
+from .connectortool import ConnectorTool, ConnectorToolTypedDict
+from .mcpservercard import MCPServerCard, MCPServerCardTypedDict
+from .publicauthenticationmethod import (
+    PublicAuthenticationMethod,
+    PublicAuthenticationMethodTypedDict,
+)
+from .publicconnectionconfig import (
+    PublicConnectionConfig,
+    PublicConnectionConfigTypedDict,
+)
+from .resourcetype import ResourceType
+from .resourcevisibility import ResourceVisibility
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -11,6 +30,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -20,9 +40,30 @@ class ConnectorTypedDict(TypedDict):
     description: str
     created_at: datetime
     modified_at: datetime
+    owner_type: ResourceType
+    visibility: ResourceVisibility
+    private_tool_execution: bool
     title: NotRequired[Nullable[str]]
     server: NotRequired[Nullable[str]]
-    auth_type: NotRequired[Nullable[str]]
+    protocol: NotRequired[ConnectorProtocol]
+    icon_url: NotRequired[Nullable[str]]
+    server_card: NotRequired[Nullable[MCPServerCardTypedDict]]
+    owner_id: NotRequired[Nullable[str]]
+    locale: NotRequired[Nullable[ConnectorLocaleTypedDict]]
+    system_prompt: NotRequired[Nullable[str]]
+    supported_auth_methods: NotRequired[
+        Nullable[List[PublicAuthenticationMethodTypedDict]]
+    ]
+    connection_preferences: NotRequired[Nullable[List[ConnectionPreferenceTypedDict]]]
+    connection_credentials: NotRequired[
+        Nullable[List[AuthenticationConfigurationTypedDict]]
+    ]
+    active: NotRequired[Nullable[bool]]
+    mistral: NotRequired[bool]
+    is_authenticated: NotRequired[Nullable[bool]]
+    tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
+    system_prompt_route: NotRequired[Nullable[str]]
+    connection_config: NotRequired[Nullable[PublicConnectionConfigTypedDict]]
 
 
 class Connector(BaseModel):
@@ -36,16 +77,88 @@ class Connector(BaseModel):
 
     modified_at: datetime
 
+    owner_type: ResourceType
+
+    visibility: ResourceVisibility
+
+    private_tool_execution: bool
+
     title: OptionalNullable[str] = UNSET
 
     server: OptionalNullable[str] = UNSET
 
-    auth_type: OptionalNullable[str] = UNSET
+    protocol: Optional[ConnectorProtocol] = None
+
+    icon_url: OptionalNullable[str] = UNSET
+
+    server_card: OptionalNullable[MCPServerCard] = UNSET
+
+    owner_id: OptionalNullable[str] = UNSET
+
+    locale: OptionalNullable[ConnectorLocale] = UNSET
+
+    system_prompt: OptionalNullable[str] = UNSET
+
+    supported_auth_methods: OptionalNullable[List[PublicAuthenticationMethod]] = UNSET
+
+    connection_preferences: OptionalNullable[List[ConnectionPreference]] = UNSET
+
+    connection_credentials: OptionalNullable[List[AuthenticationConfiguration]] = UNSET
+
+    active: OptionalNullable[bool] = UNSET
+
+    mistral: Optional[bool] = False
+
+    is_authenticated: OptionalNullable[bool] = UNSET
+
+    tools: OptionalNullable[List[ConnectorTool]] = UNSET
+
+    system_prompt_route: OptionalNullable[str] = UNSET
+
+    connection_config: OptionalNullable[PublicConnectionConfig] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["title", "server", "auth_type"])
-        nullable_fields = set(["title", "server", "auth_type"])
+        optional_fields = set(
+            [
+                "title",
+                "server",
+                "protocol",
+                "icon_url",
+                "server_card",
+                "owner_id",
+                "locale",
+                "system_prompt",
+                "supported_auth_methods",
+                "connection_preferences",
+                "connection_credentials",
+                "active",
+                "mistral",
+                "is_authenticated",
+                "tools",
+                "system_prompt_route",
+                "connection_config",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "title",
+                "server",
+                "icon_url",
+                "server_card",
+                "owner_id",
+                "locale",
+                "system_prompt",
+                "supported_auth_methods",
+                "connection_preferences",
+                "connection_credentials",
+                "active",
+                "is_authenticated",
+                "tools",
+                "system_prompt_route",
+                "connection_config",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
