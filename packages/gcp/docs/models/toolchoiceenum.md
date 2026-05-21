@@ -1,11 +1,16 @@
 # ToolChoiceEnum
 
+## Example Usage
+
+```python
+from mistralai.gcp.client.models import ToolChoiceEnum
+value: ToolChoiceEnum = "auto"
+```
+
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `AUTO`     | auto       |
-| `NONE`     | none       |
-| `ANY`      | any        |
-| `REQUIRED` | required   |
+- `"auto"`
+- `"none"`
+- `"any"`
+- `"required"`

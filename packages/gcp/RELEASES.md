@@ -39,3 +39,13 @@ Based on:
 - [python v2.0.0] packages/gcp
 ### Releases
 - [PyPI v2.0.0] https://pypi.org/project/mistralai-gcp/2.0.0 - packages/gcp
+
+## 2026-05-21 09:18:32
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.763.2 (2.884.4) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.1.0] packages/gcp
+### Releases
+- [PyPI v2.1.0] https://pypi.org/project/mistralai-gcp/2.1.0 - packages/gcp
