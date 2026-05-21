@@ -14,6 +14,7 @@ dependencies = [
     "opentelemetry-api (>=1.33.1,<2.0.0)",
     "opentelemetry-semantic-conventions (>=0.60b1,<0.61)",
     "jsonpath-python >=1.0.6", # required for speakeasy generated path with pagination
+    "msgpack>=1.1.0,<2.0.0",
 ]
 
 [project.optional-dependencies]
@@ -49,6 +50,9 @@ workflow_payload_offloading = [
 workflow_payload_encryption = [
     "cryptography>=41.0.0,<47.0.0",
 ]
+workflow_payload_compression = [
+    "zstandard>=0.25.0,<0.26",
+]
 
 
 [project.urls]
@@ -70,6 +74,7 @@ dev = [
     "griffe>=1.7.3,<2",
     "authlib>=1.5.2,<2",
     "websockets >=13.0",
+    "zstandard>=0.25.0,<0.26",
 ]
 lint = [
     "ruff>=0.11.10,<0.12",
@@ -137,6 +142,7 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = [
     "jsonpath.*",
+    "msgpack.*",
     "typing_inspect.*",
     "authlib.*",
     "websockets.*",

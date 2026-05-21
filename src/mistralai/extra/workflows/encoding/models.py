@@ -9,6 +9,7 @@ class EncodedPayloadOptions(str, Enum):
     OFFLOADED = "offloaded"
     ENCRYPTED = "encrypted"
     PARTIALLY_ENCRYPTED = "encrypted-partial"
+    COMPRESSED = "compressed"
 
 
 class EncryptableFieldTypes(str, Enum):
@@ -73,7 +74,8 @@ class NetworkEncodedInput(NetworkEncodedBase):
 
     @staticmethod
     def from_data(
-        data: bytes, encoding_options: list[EncodedPayloadOptions]
+        data: bytes,
+        encoding_options: list[EncodedPayloadOptions],
     ) -> "NetworkEncodedInput":
         return NetworkEncodedInput(
             b64payload=base64.b64encode(data).decode("utf-8"),
