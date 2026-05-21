@@ -34,6 +34,8 @@ Attributes = TypeAliasType(
 class UpdateDocumentRequestTypedDict(TypedDict):
     name: NotRequired[str]
     attributes: NotRequired[Nullable[Dict[str, AttributesTypedDict]]]
+    expires_at: NotRequired[Nullable[datetime]]
+    r"""If set, the document will be automatically deleted after this date."""
 
 
 class UpdateDocumentRequest(BaseModel):
@@ -41,10 +43,13 @@ class UpdateDocumentRequest(BaseModel):
 
     attributes: OptionalNullable[Dict[str, Attributes]] = UNSET
 
+    expires_at: OptionalNullable[datetime] = UNSET
+    r"""If set, the document will be automatically deleted after this date."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["name", "attributes"])
-        nullable_fields = set(["attributes"])
+        optional_fields = set(["name", "attributes", "expires_at"])
+        nullable_fields = set(["attributes", "expires_at"])
         serialized = handler(self)
         m = {}
 
