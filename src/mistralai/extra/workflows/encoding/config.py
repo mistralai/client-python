@@ -59,7 +59,7 @@ AlgorithmConfig = Annotated[
 
 
 class PayloadCompressionConfig(BaseModel):
-    min_size_bytes: int = 1024 * 1024  # 1MB
+    min_size_bytes: int = 1024  # 1KB
     algorithm_config: AlgorithmConfig = Field(default_factory=ZstdCompressionConfig)
 
 

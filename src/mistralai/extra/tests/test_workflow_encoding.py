@@ -191,7 +191,9 @@ async def test_payload_encoder_compresses_network_inputs():
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    compressed_payload = CompressedPayloadData.model_validate_json(
+        encoded.get_payload()
+    )
     assert compressed_payload.compression == ZstdCompressionConfig(level=3)
 
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
@@ -300,7 +302,9 @@ async def test_payload_encoder_skips_compression_when_not_smaller():
 
 @pytest.mark.asyncio
 async def test_payload_encoder_skips_compression_without_config():
-    encoder = PayloadEncoder(encoding_config=WorkflowEncodingConfig())
+    encoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(payload_compression=None)
+    )
     payload = {"data": "x" * 20_000}
 
     encoded = await encoder.encode_network_input(
@@ -376,7 +380,9 @@ async def test_payload_encoder_decodes_compressed_payload_with_decoder_config(
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    compressed_payload = CompressedPayloadData.model_validate_json(
+        encoded.get_payload()
+    )
     assert compressed_payload.compression == ZstdCompressionConfig(level=22)
     assert decoded == payload
 
@@ -452,7 +458,9 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     encoded = await encoder.encode_network_input(
         payload, WorkflowContext(namespace="test", execution_id="exec")
     )
-    compressed_payload = CompressedPayloadData.model_validate_json(encoded.get_payload())
+    compressed_payload = CompressedPayloadData.model_validate_json(
+        encoded.get_payload()
+    )
     tampered_payload = compressed_payload.model_copy(
         update={"compression": ZstdCompressionConfig(level=1)}
     )
