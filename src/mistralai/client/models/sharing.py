@@ -9,8 +9,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SharingTypedDict(TypedDict):
@@ -25,7 +26,12 @@ class SharingTypedDict(TypedDict):
 class Sharing(BaseModel):
     library_id: str
 
-    org_id: str
+    org_id: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
 
     role: str
 
@@ -33,7 +39,12 @@ class Sharing(BaseModel):
 
     share_with_uuid: Nullable[str]
 
-    user_id: OptionalNullable[str] = UNSET
+    user_id: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

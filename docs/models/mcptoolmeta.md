@@ -1,14 +1,17 @@
 # MCPToolMeta
 
-Typed _meta for MCP tools.
-
-Only the 'ui' field is typed. Other fields are allowed via extra="allow".
-
 
 ## Fields
 
 | Field                                                                    | Type                                                                     | Required                                                                 | Description                                                              |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
-| `ui`                                                                     | [OptionalNullable[models.MCPUIToolMeta]](../models/mcpuitoolmeta.md)     | :heavy_minus_sign:                                                       | N/A                                                                      |
-| `ai_mistral_turbine`                                                     | [OptionalNullable[models.TurbineToolMeta]](../models/turbinetoolmeta.md) | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `name`                                                                   | *str*                                                                    | :heavy_check_mark:                                                       | N/A                                                                      |
+| `title`                                                                  | *OptionalNullable[str]*                                                  | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `description`                                                            | *OptionalNullable[str]*                                                  | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `input_schema`                                                           | Dict[str, *Any*]                                                         | :heavy_check_mark:                                                       | N/A                                                                      |
+| `output_schema`                                                          | Dict[str, *Any*]                                                         | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `icons`                                                                  | List[[models.MCPServerIcon](../models/mcpservericon.md)]                 | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `annotations`                                                            | [OptionalNullable[models.ToolAnnotations]](../models/toolannotations.md) | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `meta`                                                                   | [OptionalNullable[models.MCPToolMeta]](../models/mcptoolmeta.md)         | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `execution`                                                              | [OptionalNullable[models.ToolExecution]](../models/toolexecution.md)     | :heavy_minus_sign:                                                       | N/A                                                                      |
 | `__pydantic_extra__`                                                     | Dict[str, *Any*]                                                         | :heavy_minus_sign:                                                       | N/A                                                                      |
