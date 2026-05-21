@@ -4,7 +4,6 @@
 **/.speakeasy/temp/
 **/.speakeasy/logs/
 .speakeasy/reports
-README-PYPI.md
 .venv/
 venv/
 src/*.egg-info/
