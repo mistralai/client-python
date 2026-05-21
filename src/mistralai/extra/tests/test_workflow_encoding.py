@@ -2,6 +2,7 @@
 
 import gc
 import json
+from typing import cast
 
 import msgpack
 import pytest
@@ -57,7 +58,7 @@ def _compressed_payload_msgpack(
         payload_data["compression"] = invalid_compression
     if invalid_payload is not None:
         payload_data["payload"] = invalid_payload
-    return msgpack.packb(payload_data, use_bin_type=True)
+    return cast(bytes, msgpack.packb(payload_data, use_bin_type=True))
 
 
 @pytest.fixture

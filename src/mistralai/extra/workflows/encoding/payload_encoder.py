@@ -7,7 +7,7 @@ import json
 import logging
 import os
 import urllib.parse
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union, cast
 
 import msgpack
 from pydantic import BaseModel, ValidationError
@@ -84,12 +84,15 @@ class CompressedPayloadData(BaseModel):
             ) from exc
 
     def to_msgpack(self) -> bytes:
-        return msgpack.packb(
-            {
-                "compression": self.compression.model_dump(mode="json"),
-                "payload": self.payload,
-            },
-            use_bin_type=True,
+        return cast(
+            bytes,
+            msgpack.packb(
+                {
+                    "compression": self.compression.model_dump(mode="json"),
+                    "payload": self.payload,
+                },
+                use_bin_type=True,
+            ),
         )
 
     def get_payload(self) -> bytes:
