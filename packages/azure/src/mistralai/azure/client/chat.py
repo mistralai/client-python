@@ -21,22 +21,25 @@ class Chat(BaseSDK):
         ],
         model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionStreamRequestStop,
                 models.ChatCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionStreamRequestTool],
+                List[models.ChatCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -44,14 +47,18 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -79,7 +86,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -90,6 +99,9 @@ class Chat(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -111,7 +123,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
@@ -122,13 +136,17 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             safe_prompt=safe_prompt,
         )
 
         req = self._build_request(
             method="POST",
-            path="/chat/completions#stream",
+            path="/models/chat/completions#stream",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -163,7 +181,7 @@ class Chat(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
@@ -201,22 +219,25 @@ class Chat(BaseSDK):
         ],
         model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionStreamRequestStop,
                 models.ChatCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionStreamRequestTool],
+                List[models.ChatCompletionStreamRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -224,14 +245,18 @@ class Chat(BaseSDK):
                 models.ChatCompletionStreamRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -259,7 +284,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -270,6 +297,9 @@ class Chat(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -291,7 +321,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionStreamRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionStreamRequestToolChoice]
             ),
@@ -302,13 +334,17 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             safe_prompt=safe_prompt,
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/chat/completions#stream",
+            path="/models/chat/completions#stream",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -343,7 +379,7 @@ class Chat(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
@@ -381,22 +417,25 @@ class Chat(BaseSDK):
         ],
         model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionRequestStop,
                 models.ChatCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionRequestTool],
+                List[models.ChatCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -404,14 +443,18 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -437,7 +480,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -448,6 +493,9 @@ class Chat(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -469,7 +517,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -480,13 +530,17 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             safe_prompt=safe_prompt,
         )
 
         req = self._build_request(
             method="POST",
-            path="/chat/completions",
+            path="/models/chat/completions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -521,7 +575,7 @@ class Chat(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -551,22 +605,25 @@ class Chat(BaseSDK):
         ],
         model: Optional[str] = "azureai",
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = None,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.ChatCompletionRequestStop,
                 models.ChatCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
-            Union[List[models.Tool], List[models.ToolTypedDict]]
+            Union[
+                List[models.ChatCompletionRequestTool],
+                List[models.ChatCompletionRequestToolTypedDict],
+            ]
         ] = UNSET,
         tool_choice: Optional[
             Union[
@@ -574,14 +631,18 @@ class Chat(BaseSDK):
                 models.ChatCompletionRequestToolChoiceTypedDict,
             ]
         ] = None,
-        presence_penalty: Optional[float] = None,
-        frequency_penalty: Optional[float] = None,
+        presence_penalty: OptionalNullable[float] = UNSET,
+        frequency_penalty: OptionalNullable[float] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
         ] = None,
         parallel_tool_calls: Optional[bool] = None,
+        reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
+        guardrails: OptionalNullable[
+            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+        ] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -607,7 +668,9 @@ class Chat(BaseSDK):
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
+        :param reasoning_effort:
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
+        :param guardrails:
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -618,6 +681,9 @@ class Chat(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -639,7 +705,9 @@ class Chat(BaseSDK):
             response_format=utils.get_pydantic_model(
                 response_format, Optional[models.ResponseFormat]
             ),
-            tools=utils.get_pydantic_model(tools, OptionalNullable[List[models.Tool]]),
+            tools=utils.get_pydantic_model(
+                tools, OptionalNullable[List[models.ChatCompletionRequestTool]]
+            ),
             tool_choice=utils.get_pydantic_model(
                 tool_choice, Optional[models.ChatCompletionRequestToolChoice]
             ),
@@ -650,13 +718,17 @@ class Chat(BaseSDK):
                 prediction, Optional[models.Prediction]
             ),
             parallel_tool_calls=parallel_tool_calls,
+            reasoning_effort=reasoning_effort,
             prompt_mode=prompt_mode,
+            guardrails=utils.get_pydantic_model(
+                guardrails, OptionalNullable[List[models.GuardrailConfig]]
+            ),
             safe_prompt=safe_prompt,
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/chat/completions",
+            path="/models/chat/completions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -691,7 +763,7 @@ class Chat(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

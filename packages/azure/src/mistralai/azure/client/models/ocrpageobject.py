@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+from .ocrpageconfidencescores import (
+    OCRPageConfidenceScores,
+    OCRPageConfidenceScoresTypedDict,
+)
 from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
 from .ocrtableobject import OCRTableObject, OCRTableObjectTypedDict
 from mistralai.azure.client.types import (
@@ -33,6 +37,8 @@ class OCRPageObjectTypedDict(TypedDict):
     r"""Header of the page"""
     footer: NotRequired[Nullable[str]]
     r"""Footer of the page"""
+    confidence_scores: NotRequired[Nullable[OCRPageConfidenceScoresTypedDict]]
+    r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
 
 
 class OCRPageObject(BaseModel):
@@ -60,16 +66,21 @@ class OCRPageObject(BaseModel):
     footer: OptionalNullable[str] = UNSET
     r"""Footer of the page"""
 
+    confidence_scores: OptionalNullable[OCRPageConfidenceScores] = UNSET
+    r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["tables", "hyperlinks", "header", "footer"])
-        nullable_fields = set(["header", "footer", "dimensions"])
+        optional_fields = set(
+            ["tables", "hyperlinks", "header", "footer", "confidence_scores"]
+        )
+        nullable_fields = set(["header", "footer", "dimensions", "confidence_scores"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
