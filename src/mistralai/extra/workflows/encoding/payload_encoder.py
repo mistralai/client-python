@@ -9,6 +9,7 @@ import os
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
+import msgpack
 from pydantic import BaseModel, ValidationError
 
 if TYPE_CHECKING:
@@ -32,7 +33,6 @@ from mistralai.extra.workflows.encoding.config import (
     WorkflowEncodingConfig,
 )
 from mistralai.extra.workflows.encoding.payload_compressor import (
-    _require_msgpack,
     build_compressor,
     compressor_from_config,
 )
@@ -70,7 +70,6 @@ class CompressedPayloadData(BaseModel):
 
     @classmethod
     def from_msgpack(cls, data: bytes) -> "CompressedPayloadData":
-        msgpack = _require_msgpack()
         try:
             unpacked = msgpack.unpackb(data, raw=False)
         except Exception as exc:
@@ -85,7 +84,6 @@ class CompressedPayloadData(BaseModel):
             ) from exc
 
     def to_msgpack(self) -> bytes:
-        msgpack = _require_msgpack()
         return msgpack.packb(
             {
                 "compression": self.compression.model_dump(mode="json"),
