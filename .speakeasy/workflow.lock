@@ -1,12 +1,12 @@
-speakeasyVersion: 1.761.1
+speakeasyVersion: 1.763.2
 sources:
     mistral-azure-source:
         sourceNamespace: mistral-openapi-azure
-        sourceRevisionDigest: sha256:a6918148cb6fdd9108b7bef0ef41fe5c9e79b18c65c0b52fc4d2afecf6db2d4d
-        sourceBlobDigest: sha256:dded6b429a29c2889469b10d19aecd41be2db06cde1a8408510120c8abfd9553
+        sourceRevisionDigest: sha256:faccd49c0a52252b8dfcc666a6a1ba3fa5c7eb36f93c58c9b49547c98a254918
+        sourceBlobDigest: sha256:b6f756ef1d57d93defe29a9f6789c746bd0c3b09e3f9e5fa0344ddf9ca47e5d7
         tags:
             - latest
-            - speakeasy-sdk-regen-1773084953
+            - speakeasy-mistralai-azure-sdk-26235657262-1
     mistral-google-cloud-source:
         sourceNamespace: mistral-openapi-google-cloud
         sourceRevisionDigest: sha256:b2406e82ec4ce411afc0c307d5a037c7737388bcc696bbb41884fe54e22831c9
@@ -24,10 +24,10 @@ targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
         sourceNamespace: mistral-openapi-azure
-        sourceRevisionDigest: sha256:a6918148cb6fdd9108b7bef0ef41fe5c9e79b18c65c0b52fc4d2afecf6db2d4d
-        sourceBlobDigest: sha256:dded6b429a29c2889469b10d19aecd41be2db06cde1a8408510120c8abfd9553
+        sourceRevisionDigest: sha256:faccd49c0a52252b8dfcc666a6a1ba3fa5c7eb36f93c58c9b49547c98a254918
+        sourceBlobDigest: sha256:b6f756ef1d57d93defe29a9f6789c746bd0c3b09e3f9e5fa0344ddf9ca47e5d7
         codeSamplesNamespace: mistral-openapi-azure-code-samples
-        codeSamplesRevisionDigest: sha256:b7620f11d5669423730c5790ef4a72bba3ab46dd453e6685edf420053abbcb30
+        codeSamplesRevisionDigest: sha256:25daba3868f1dbaafb379e8f9ce2dd344b8bd33a326b509d61742ecbf8275fef
     mistralai-gcp-sdk:
         source: mistral-google-cloud-source
         sourceNamespace: mistral-openapi-google-cloud
@@ -44,7 +44,7 @@ targets:
         codeSamplesRevisionDigest: sha256:95c443855a95966259bd108beec0cbdb8238f6f753dc4b021bf833d398e86c0c
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: 1.761.1
+    speakeasyVersion: 1.763.2
     sources:
         mistral-azure-source:
             inputs:
