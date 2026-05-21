@@ -2,25 +2,38 @@
 # @generated-id: d3b4fe452390
 
 from .basesdk import BaseSDK
+from jsonpath import JSONPath
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 
 
 class Schedules(BaseSDK):
     def get_schedules(
         self,
         *,
+        workflow_name: OptionalNullable[str] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
+        status: OptionalNullable[
+            models.GetSchedulesV1WorkflowsSchedulesGetStatus
+        ] = UNSET,
+        page_size: OptionalNullable[int] = UNSET,
+        next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.WorkflowScheduleListResponse:
+    ) -> Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]:
         r"""Get Schedules
 
+        :param workflow_name: Filter by workflow name
+        :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
+        :param status: Filter by schedule status: 'active' or 'paused'
+        :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
+        :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -38,12 +51,21 @@ class Schedules(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetSchedulesV1WorkflowsSchedulesGetRequest(
+            workflow_name=workflow_name,
+            user_id=user_id,
+            status=status,
+            page_size=page_size,
+            next_page_token=next_page_token,
+        )
+
         req = self._build_request(
             method="GET",
             path="/v1/workflows/schedules",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -74,14 +96,53 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.WorkflowScheduleListResponse, http_res
+        def next_func() -> Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]:
+            body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
+
+            next_cursor = JSONPath("$.next_page_token").parse(body)
+
+            if len(next_cursor) == 0:
+                return None
+
+            next_cursor = next_cursor[0]
+            if next_cursor is None or str(next_cursor).strip() == "":
+                return None
+            results = JSONPath("$.schedules").parse(body)
+            if len(results) == 0 or len(results[0]) == 0:
+                return None
+            limit = request.page_size if isinstance(request.page_size, int) else 0
+            if len(results[0]) < limit:
+                return None
+
+            return self.get_schedules(
+                workflow_name=workflow_name,
+                user_id=user_id,
+                status=status,
+                page_size=page_size,
+                next_page_token=next_cursor,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return models.GetSchedulesV1WorkflowsSchedulesGetResponse(
+                result=unmarshal_json_response(
+                    models.WorkflowScheduleListResponse, http_res
+                ),
+                next=next_func,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -94,13 +155,25 @@ class Schedules(BaseSDK):
     async def get_schedules_async(
         self,
         *,
+        workflow_name: OptionalNullable[str] = UNSET,
+        user_id: OptionalNullable[str] = UNSET,
+        status: OptionalNullable[
+            models.GetSchedulesV1WorkflowsSchedulesGetStatus
+        ] = UNSET,
+        page_size: OptionalNullable[int] = UNSET,
+        next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.WorkflowScheduleListResponse:
+    ) -> Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]:
         r"""Get Schedules
 
+        :param workflow_name: Filter by workflow name
+        :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
+        :param status: Filter by schedule status: 'active' or 'paused'
+        :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
+        :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -118,12 +191,21 @@ class Schedules(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetSchedulesV1WorkflowsSchedulesGetRequest(
+            workflow_name=workflow_name,
+            user_id=user_id,
+            status=status,
+            page_size=page_size,
+            next_page_token=next_page_token,
+        )
+
         req = self._build_request_async(
             method="GET",
             path="/v1/workflows/schedules",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -154,14 +236,58 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["4XX", "5XX"],
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.WorkflowScheduleListResponse, http_res
+        def next_func() -> (
+            Awaitable[Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]]
+        ):
+            body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
+
+            async def empty_result():
+                return None
+
+            next_cursor = JSONPath("$.next_page_token").parse(body)
+
+            if len(next_cursor) == 0:
+                return empty_result()
+
+            next_cursor = next_cursor[0]
+            if next_cursor is None or str(next_cursor).strip() == "":
+                return empty_result()
+            results = JSONPath("$.schedules").parse(body)
+            if len(results) == 0 or len(results[0]) == 0:
+                return empty_result()
+            limit = request.page_size if isinstance(request.page_size, int) else 0
+            if len(results[0]) < limit:
+                return empty_result()
+
+            return self.get_schedules_async(
+                workflow_name=workflow_name,
+                user_id=user_id,
+                status=status,
+                page_size=page_size,
+                next_page_token=next_cursor,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
             )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return models.GetSchedulesV1WorkflowsSchedulesGetResponse(
+                result=unmarshal_json_response(
+                    models.WorkflowScheduleListResponse, http_res
+                ),
+                next=next_func,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -405,6 +531,188 @@ class Schedules(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
+    def get_schedule(
+        self,
+        *,
+        schedule_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ScheduleDefinitionOutput:
+        r"""Get Schedule
+
+        :param schedule_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetScheduleV1WorkflowsSchedulesScheduleIDGetRequest(
+            schedule_id=schedule_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/workflows/schedules/{schedule_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_schedule_v1_workflows_schedules__schedule_id__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.ScheduleDefinitionOutput, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_schedule_async(
+        self,
+        *,
+        schedule_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ScheduleDefinitionOutput:
+        r"""Get Schedule
+
+        :param schedule_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetScheduleV1WorkflowsSchedulesScheduleIDGetRequest(
+            schedule_id=schedule_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/workflows/schedules/{schedule_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_schedule_v1_workflows_schedules__schedule_id__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.ScheduleDefinitionOutput, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
     def unschedule_workflow(
         self,
         *,
@@ -573,6 +881,226 @@ class Schedules(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def update_schedule(
+        self,
+        *,
+        schedule_id: str,
+        schedule: Union[
+            models.PartialScheduleDefinition, models.PartialScheduleDefinitionTypedDict
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.WorkflowScheduleResponse:
+        r"""Update Schedule
+
+        :param schedule_id:
+        :param schedule: Schedule definition for partial updates.
+
+            All fields are optional (inherited from _ScheduleRequestBase). Only explicitly-set
+            fields are applied during an update; unset fields preserve the existing schedule values.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest(
+            schedule_id=schedule_id,
+            workflow_schedule_update_request=models.WorkflowScheduleUpdateRequest(
+                schedule=utils.get_pydantic_model(
+                    schedule, models.PartialScheduleDefinition
+                ),
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/v1/workflows/schedules/{schedule_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.workflow_schedule_update_request,
+                False,
+                False,
+                "json",
+                models.WorkflowScheduleUpdateRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="update_schedule_v1_workflows_schedules__schedule_id__patch",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.WorkflowScheduleResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def update_schedule_async(
+        self,
+        *,
+        schedule_id: str,
+        schedule: Union[
+            models.PartialScheduleDefinition, models.PartialScheduleDefinitionTypedDict
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.WorkflowScheduleResponse:
+        r"""Update Schedule
+
+        :param schedule_id:
+        :param schedule: Schedule definition for partial updates.
+
+            All fields are optional (inherited from _ScheduleRequestBase). Only explicitly-set
+            fields are applied during an update; unset fields preserve the existing schedule values.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest(
+            schedule_id=schedule_id,
+            workflow_schedule_update_request=models.WorkflowScheduleUpdateRequest(
+                schedule=utils.get_pydantic_model(
+                    schedule, models.PartialScheduleDefinition
+                ),
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/v1/workflows/schedules/{schedule_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.workflow_schedule_update_request,
+                False,
+                False,
+                "json",
+                models.WorkflowScheduleUpdateRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="update_schedule_v1_workflows_schedules__schedule_id__patch",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.WorkflowScheduleResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
