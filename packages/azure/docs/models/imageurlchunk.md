@@ -1,6 +1,6 @@
 # ImageURLChunk
 
-{"type":"image_url","image_url":{"url":"data:image/png;base64,iVBORw0
+{"type":"image_url","image_url":"data:image/png;base64,iVBORw0"}
 
 
 ## Fields
