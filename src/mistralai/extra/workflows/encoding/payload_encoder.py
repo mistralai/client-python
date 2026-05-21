@@ -44,6 +44,7 @@ from mistralai.extra.workflows.encoding.models import (
     NetworkEncodedResult,
     WorkflowContext,
 )
+from mistralai.client.models.jsonpatchpayloadresponse import JSONPatchPayloadResponse
 from mistralai.extra.exceptions import (
     WorkflowPayloadCompressionException,
     WorkflowPayloadEncryptionException,
@@ -344,6 +345,16 @@ class PayloadEncoder:
 
         return data, encoding_options
 
+    async def encode_event_payload_content(
+        self, data: Union[bytes, str], force_full_encryption: bool = False
+    ) -> tuple[bytes, list[EncodedPayloadOptions]]:
+        """Encode event payload content without offloading."""
+        return await self.encode_payload_content(
+            data,
+            allow_offloading=False,
+            force_full_encryption=force_full_encryption,
+        )
+
     async def decode_payload_content(
         self,
         data: bytes,
@@ -396,6 +407,24 @@ class PayloadEncoder:
             return payload_data
 
         encoding_options = [EncodedPayloadOptions(opt) for opt in encoding_options_strs]
+
+        # Handle selective encryption for json_patch payloads
+        if EncodedPayloadOptions.PARTIALLY_ENCRYPTED in encoding_options:
+            try:
+                payload = JSONPatchPayloadResponse.model_validate(payload_data)
+                if isinstance(payload.value, list):
+                    decrypted_patches = self._decrypt_json_patch_selective(
+                        [p.model_dump() for p in payload.value]
+                    )
+                    return {
+                        "type": payload.type,
+                        "value": decrypted_patches,
+                        "encoding_options": [],
+                    }
+            except ValidationError:
+                pass  # Not a json_patch payload, fall through to full decryption
+
+        # Standard full encryption (base64 string value)
         encrypted_bytes = base64.b64decode(payload_data["value"])
         decrypted_bytes = await self.decode_payload_content(
             encrypted_bytes,
@@ -409,6 +438,34 @@ class PayloadEncoder:
             "value": decrypted_value,
             "encoding_options": [],
         }
+
+    _ENCRYPTED_PATCH_TYPE = "__encrypted__"
+
+    def _decrypt_json_patch_selective(
+        self, patches: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Decrypt patches with EncryptedPatchValue wrapper: {type: "__encrypted__", value: "base64..."}."""
+        decrypted = []
+        for patch in patches:
+            patch_value = patch.get("value")
+
+            # EncryptedPatchValue format: {"type": "__encrypted__", "value": "base64-encrypted-data"}
+            if (
+                isinstance(patch_value, dict)
+                and patch_value.get("type") == self._ENCRYPTED_PATCH_TYPE
+            ):
+                encrypted_b64 = patch_value.get("value", "")
+                encrypted_data = base64.b64decode(encrypted_b64)
+                decrypted_bytes = self._decrypt(encrypted_data)
+                decrypted.append(
+                    {
+                        **patch,
+                        "value": json.loads(decrypted_bytes),
+                    }
+                )
+            else:
+                decrypted.append(patch)
+        return decrypted
 
     async def encode_network_input(
         self, data: Optional[Dict[str, Any]], context: WorkflowContext
