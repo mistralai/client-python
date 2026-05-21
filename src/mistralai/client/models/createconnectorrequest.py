@@ -11,9 +11,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateConnectorRequestTypedDict(TypedDict):
@@ -23,6 +26,7 @@ class CreateConnectorRequestTypedDict(TypedDict):
     r"""The description of the connector."""
     server: str
     r"""The url of the MCP server."""
+    protocol: Literal["mcp"]
     title: NotRequired[Nullable[str]]
     r"""Optional human-readable title for the connector."""
     icon_url: NotRequired[Nullable[str]]
@@ -46,6 +50,11 @@ class CreateConnectorRequest(BaseModel):
     server: str
     r"""The url of the MCP server."""
 
+    protocol: Annotated[
+        Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
+        pydantic.Field(alias="protocol"),
+    ] = "mcp"
+
     title: OptionalNullable[str] = UNSET
     r"""Optional human-readable title for the connector."""
 
@@ -66,7 +75,15 @@ class CreateConnectorRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["title", "icon_url", "visibility", "headers", "auth_data", "system_prompt"]
+            [
+                "protocol",
+                "title",
+                "icon_url",
+                "visibility",
+                "headers",
+                "auth_data",
+                "system_prompt",
+            ]
         )
         nullable_fields = set(
             ["title", "icon_url", "headers", "auth_data", "system_prompt"]
@@ -91,3 +108,9 @@ class CreateConnectorRequest(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    CreateConnectorRequest.model_rebuild()
+except NameError:
+    pass
