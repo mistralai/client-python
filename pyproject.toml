@@ -14,6 +14,7 @@ dependencies = [
     "opentelemetry-api (>=1.33.1,<2.0.0)",
     "opentelemetry-semantic-conventions (>=0.60b1,<0.61)",
     "jsonpath-python >=1.0.6", # required for speakeasy generated path with pagination
+    "msgpack>=1.1.0,<2.0.0",
 ]
 
 [project.optional-dependencies]
@@ -141,6 +142,7 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = [
     "jsonpath.*",
+    "msgpack.*",
     "typing_inspect.*",
     "authlib.*",
     "websockets.*",

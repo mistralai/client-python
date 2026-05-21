@@ -3,6 +3,7 @@
 import gc
 import json
 
+import msgpack
 import pytest
 import zstandard
 from pydantic import SecretStr
@@ -42,18 +43,21 @@ _COMPRESSED_TEST_PAYLOAD = CompressedPayloadData.from_payload(
 )
 
 
-def _compressed_payload_json(
+def _compressed_payload_msgpack(
     compressed_payload: CompressedPayloadData,
     *,
     invalid_compression: dict[str, object] | None = None,
-    invalid_base64: bool = False,
+    invalid_payload: object | None = None,
 ) -> bytes:
-    payload_data = compressed_payload.model_dump(mode="json")
+    payload_data: dict[str, object] = {
+        "compression": compressed_payload.compression.model_dump(mode="json"),
+        "payload": compressed_payload.payload,
+    }
     if invalid_compression is not None:
         payload_data["compression"] = invalid_compression
-    if invalid_base64:
-        payload_data["b64payload"] = f"{payload_data['b64payload']}!"
-    return json.dumps(payload_data).encode()
+    if invalid_payload is not None:
+        payload_data["payload"] = invalid_payload
+    return msgpack.packb(payload_data, use_bin_type=True)
 
 
 @pytest.fixture
@@ -191,9 +195,7 @@ async def test_payload_encoder_compresses_network_inputs():
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    compressed_payload = CompressedPayloadData.model_validate_json(
-        encoded.get_payload()
-    )
+    compressed_payload = CompressedPayloadData.from_msgpack(encoded.get_payload())
     assert compressed_payload.compression == ZstdCompressionConfig(level=3)
 
     decoded = await encoder.decode_network_result(encoded.model_dump(mode="json"))
@@ -235,7 +237,7 @@ async def test_payload_encoder_wraps_compression_config_in_payload_content():
     encoded_data, encoding_options = await encoder.encode_payload_content(
         raw, WorkflowContext(namespace="test", execution_id="exec")
     )
-    compressed_payload = CompressedPayloadData.model_validate_json(encoded_data)
+    compressed_payload = CompressedPayloadData.from_msgpack(encoded_data)
 
     assert encoding_options == [EncodedPayloadOptions.COMPRESSED]
     assert compressed_payload.compression == ZstdCompressionConfig(level=3)
@@ -380,9 +382,7 @@ async def test_payload_encoder_decodes_compressed_payload_with_decoder_config(
     )
 
     assert encoded.encoding_options == [EncodedPayloadOptions.COMPRESSED]
-    compressed_payload = CompressedPayloadData.model_validate_json(
-        encoded.get_payload()
-    )
+    compressed_payload = CompressedPayloadData.from_msgpack(encoded.get_payload())
     assert compressed_payload.compression == ZstdCompressionConfig(level=22)
     assert decoded == payload
 
@@ -458,14 +458,12 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     encoded = await encoder.encode_network_input(
         payload, WorkflowContext(namespace="test", execution_id="exec")
     )
-    compressed_payload = CompressedPayloadData.model_validate_json(
-        encoded.get_payload()
-    )
+    compressed_payload = CompressedPayloadData.from_msgpack(encoded.get_payload())
     tampered_payload = compressed_payload.model_copy(
         update={"compression": ZstdCompressionConfig(level=1)}
     )
     tampered = NetworkEncodedInput.from_data(
-        tampered_payload.model_dump_json().encode(), encoded.encoding_options
+        tampered_payload.to_msgpack(), encoded.encoding_options
     )
 
     decoded = await PayloadEncoder(WorkflowEncodingConfig()).decode_network_result(
@@ -480,15 +478,18 @@ async def test_payload_encoder_decodes_with_tampered_compression_level():
     "compressed_payload",
     [
         b"compressed-data",
-        _compressed_payload_json(
+        _compressed_payload_msgpack(
             _COMPRESSED_TEST_PAYLOAD,
             invalid_compression={"algorithm": "lz4", "level": 1},
         ),
-        _compressed_payload_json(
+        _compressed_payload_msgpack(
             _COMPRESSED_TEST_PAYLOAD,
             invalid_compression={"level": 3},
         ),
-        _compressed_payload_json(_COMPRESSED_TEST_PAYLOAD, invalid_base64=True),
+        _compressed_payload_msgpack(
+            _COMPRESSED_TEST_PAYLOAD,
+            invalid_payload=123,
+        ),
     ],
 )
 async def test_payload_encoder_invalid_compressed_payload_is_error(
@@ -510,7 +511,7 @@ async def test_payload_encoder_corrupted_compressed_data_is_error():
         b"corrupted-data", ZstdCompressionConfig(level=3)
     )
     encoded = NetworkEncodedInput.from_data(
-        compressed_payload.model_dump_json().encode(),
+        compressed_payload.to_msgpack(),
         [EncodedPayloadOptions.COMPRESSED],
     )
 

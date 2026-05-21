@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import base64
-import binascii
 import functools
 import hashlib
 import json
@@ -10,6 +9,7 @@ import os
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
+import msgpack
 from pydantic import BaseModel, ValidationError
 
 if TYPE_CHECKING:
@@ -60,24 +60,40 @@ class OffloadedPayloadData(BaseModel):
 
 class CompressedPayloadData(BaseModel):
     compression: AlgorithmConfig
-    b64payload: str
+    payload: bytes
 
     @classmethod
     def from_payload(
         cls, payload: bytes, compression: AlgorithmConfig
     ) -> "CompressedPayloadData":
-        return cls(
-            compression=compression,
-            b64payload=base64.b64encode(payload).decode("utf-8"),
-        )
+        return cls(compression=compression, payload=payload)
 
-    def get_payload(self) -> bytes:
+    @classmethod
+    def from_msgpack(cls, data: bytes) -> "CompressedPayloadData":
         try:
-            return base64.b64decode(self.b64payload, validate=True)
-        except binascii.Error as exc:
+            unpacked = msgpack.unpackb(data, raw=False)
+        except Exception as exc:
             raise WorkflowPayloadCompressionException(
                 "Invalid compressed payload data"
             ) from exc
+        try:
+            return cls.model_validate(unpacked)
+        except ValidationError as exc:
+            raise WorkflowPayloadCompressionException(
+                "Invalid compressed payload metadata"
+            ) from exc
+
+    def to_msgpack(self) -> bytes:
+        return msgpack.packb(
+            {
+                "compression": self.compression.model_dump(mode="json"),
+                "payload": self.payload,
+            },
+            use_bin_type=True,
+        )
+
+    def get_payload(self) -> bytes:
+        return self.payload
 
 
 class PayloadEncoder:
@@ -280,15 +296,10 @@ class PayloadEncoder:
         compressed_payload = CompressedPayloadData.from_payload(
             compressed, self.compressor.algorithm_config
         )
-        return compressed_payload.model_dump_json().encode(), True
+        return compressed_payload.to_msgpack(), True
 
     def _decompress(self, data: bytes) -> bytes:
-        try:
-            compressed_payload = CompressedPayloadData.model_validate_json(data)
-        except ValidationError as exc:
-            raise WorkflowPayloadCompressionException(
-                "Invalid compressed payload metadata"
-            ) from exc
+        compressed_payload = CompressedPayloadData.from_msgpack(data)
         return compressor_from_config(compressed_payload.compression).decompress(
             compressed_payload.get_payload()
         )
@@ -359,7 +370,6 @@ class PayloadEncoder:
         self,
         data: bytes,
         encoding_options: List[EncodedPayloadOptions],
-        encoding_metadata: dict[str, object] | None = None,
     ) -> bytes:
         # Decode in the exact reverse order of the encoding_options wire list.
         for option in reversed(encoding_options):
@@ -429,7 +439,6 @@ class PayloadEncoder:
         decrypted_bytes = await self.decode_payload_content(
             encrypted_bytes,
             encoding_options,
-            payload_data.get("encoding_metadata", {}),
         )
         decrypted_value = json.loads(decrypted_bytes)
 
@@ -492,7 +501,6 @@ class PayloadEncoder:
         byte_results = await self.decode_payload_content(
             network_encoded_payload.get_payload(),
             network_encoded_payload.encoding_options,
-            network_encoded_payload.encoding_metadata,
         )
         try:
             return from_json(byte_results)
