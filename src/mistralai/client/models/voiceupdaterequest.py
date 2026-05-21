@@ -2,6 +2,7 @@
 # @generated-id: 798f8ff225de
 
 from __future__ import annotations
+from .voiceappearance import VoiceAppearance, VoiceAppearanceTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -22,6 +23,8 @@ class VoiceUpdateRequestTypedDict(TypedDict):
     gender: NotRequired[Nullable[str]]
     age: NotRequired[Nullable[int]]
     tags: NotRequired[Nullable[List[str]]]
+    description: NotRequired[Nullable[str]]
+    appearance: NotRequired[Nullable[VoiceAppearanceTypedDict]]
 
 
 class VoiceUpdateRequest(BaseModel):
@@ -37,10 +40,18 @@ class VoiceUpdateRequest(BaseModel):
 
     tags: OptionalNullable[List[str]] = UNSET
 
+    description: OptionalNullable[str] = UNSET
+
+    appearance: OptionalNullable[VoiceAppearance] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["name", "languages", "gender", "age", "tags"])
-        nullable_fields = set(["name", "languages", "gender", "age", "tags"])
+        optional_fields = set(
+            ["name", "languages", "gender", "age", "tags", "description", "appearance"]
+        )
+        nullable_fields = set(
+            ["name", "languages", "gender", "age", "tags", "description", "appearance"]
+        )
         serialized = handler(self)
         m = {}
 
