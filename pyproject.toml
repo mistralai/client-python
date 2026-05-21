@@ -78,6 +78,7 @@ lint = [
 ]
 
 [tool.uv]
+exclude-newer = "7 days"
 default-groups = [
     "dev",
     "lint",

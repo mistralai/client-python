@@ -20,6 +20,9 @@ dev = [
     "pytest-asyncio>=0.23.7,<0.24",
 ]
 
+[tool.uv]
+exclude-newer = "7 days"
+
 [tool.setuptools.package-data]
 "*" = ["py.typed", "src/mistralai/azure/client/py.typed"]
 
