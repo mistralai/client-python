@@ -103,6 +103,11 @@ jobs:
         if: steps.branch-exists.outputs.exists == 'true'
         uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
+      - name: Generate README-PYPI.md
+        if: steps.branch-exists.outputs.exists == 'true'
+        working-directory: packages/gcp
+        run: uv run python scripts/prepare_readme.py
+
       - name: Align version using uv
         if: steps.branch-exists.outputs.exists == 'true'
         run: |
