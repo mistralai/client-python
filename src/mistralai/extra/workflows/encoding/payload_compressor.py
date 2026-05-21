@@ -39,6 +39,15 @@ def _require_zstandard() -> ModuleType:
         ) from None
 
 
+def _require_msgpack() -> ModuleType:
+    try:
+        return import_module("msgpack")
+    except ImportError:
+        raise WorkflowPayloadCompressionException(
+            "Payload compression requires installing mistralai[workflow_payload_compression]"
+        ) from None
+
+
 class ZstdCompressor(Compressor):
     @property
     def algorithm_config(self) -> AlgorithmConfig:

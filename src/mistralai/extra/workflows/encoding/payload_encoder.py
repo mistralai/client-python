@@ -32,6 +32,7 @@ from mistralai.extra.workflows.encoding.config import (
     WorkflowEncodingConfig,
 )
 from mistralai.extra.workflows.encoding.payload_compressor import (
+    _require_msgpack,
     build_compressor,
     compressor_from_config,
 )
@@ -55,15 +56,6 @@ logger = logging.getLogger(__name__)
 
 class OffloadedPayloadData(BaseModel):
     key: str
-
-
-def _require_msgpack() -> Any:
-    try:
-        return __import__("msgpack")
-    except ImportError:
-        raise WorkflowPayloadCompressionException(
-            "Payload compression requires installing mistralai[workflow_payload_compression]"
-        ) from None
 
 
 class CompressedPayloadData(BaseModel):
