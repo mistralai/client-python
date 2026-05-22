@@ -80,7 +80,6 @@ CHAT_STREAM_PARAMS = [
 OCR_PROCESS_PARAMS = [
     ("model", _EMPTY),
     ("document", _EMPTY),
-    ("id", None),
     ("pages", UNSET),
     ("include_image_base64", UNSET),
     ("image_limit", UNSET),
