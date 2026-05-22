@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from .functioncall import FunctionCall, FunctionCallTypedDict
-from .tooltypes import ToolTypes
 from mistralai.azure.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import Optional
@@ -12,7 +11,7 @@ from typing_extensions import NotRequired, TypedDict
 class ToolCallTypedDict(TypedDict):
     function: FunctionCallTypedDict
     id: NotRequired[str]
-    type: NotRequired[ToolTypes]
+    type: NotRequired[str]
     index: NotRequired[int]
 
 
@@ -21,7 +20,7 @@ class ToolCall(BaseModel):
 
     id: Optional[str] = "null"
 
-    type: Optional[ToolTypes] = None
+    type: Optional[str] = None
 
     index: Optional[int] = 0
 
@@ -33,7 +32,7 @@ class ToolCall(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
