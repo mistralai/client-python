@@ -4,7 +4,13 @@ from __future__ import annotations
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from .toolreferencechunk import ToolReferenceChunk, ToolReferenceChunkTypedDict
-from mistralai.gcp.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.gcp.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.gcp.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
@@ -27,6 +33,8 @@ Thinking = TypeAliasType(
 class ThinkChunkTypedDict(TypedDict):
     thinking: List[ThinkingTypedDict]
     type: Literal["thinking"]
+    signature: NotRequired[Nullable[str]]
+    r"""Signature to replay some reasoning blocks across turns."""
     closed: NotRequired[bool]
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
 
@@ -39,21 +47,33 @@ class ThinkChunk(BaseModel):
         pydantic.Field(alias="type"),
     ] = "thinking"
 
+    signature: OptionalNullable[str] = UNSET
+    r"""Signature to replay some reasoning blocks across turns."""
+
     closed: Optional[bool] = None
     r"""Whether the thinking chunk is closed or not. Currently only used for prefixing."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["closed"])
+        optional_fields = set(["signature", "closed"])
+        nullable_fields = set(["signature"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

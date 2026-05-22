@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from .functionname import FunctionName, FunctionNameTypedDict
-from .tooltypes import ToolTypes
 from mistralai.gcp.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import Optional
@@ -14,7 +13,7 @@ class ToolChoiceTypedDict(TypedDict):
 
     function: FunctionNameTypedDict
     r"""this restriction of `Function` is used to select a specific function to call"""
-    type: NotRequired[ToolTypes]
+    type: NotRequired[str]
 
 
 class ToolChoice(BaseModel):
@@ -23,7 +22,7 @@ class ToolChoice(BaseModel):
     function: FunctionName
     r"""this restriction of `Function` is used to select a specific function to call"""
 
-    type: Optional[ToolTypes] = None
+    type: Optional[str] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -33,7 +32,7 @@ class ToolChoice(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
