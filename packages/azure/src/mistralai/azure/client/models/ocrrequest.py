@@ -28,9 +28,23 @@ Document = TypeAliasType("Document", Union[FileChunk, ImageURLChunk, DocumentURL
 r"""Document to run OCR on"""
 
 
+PagesTypedDict = TypeAliasType("PagesTypedDict", Union[str, List[int]])
+r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
+
+
+Pages = TypeAliasType("Pages", Union[str, List[int]])
+r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
+
+
 TableFormat = Literal[
     "markdown",
     "html",
+]
+
+
+ConfidenceScoresGranularity = Literal[
+    "word",
+    "page",
 ]
 
 
@@ -38,9 +52,8 @@ class OCRRequestTypedDict(TypedDict):
     model: Nullable[str]
     document: DocumentTypedDict
     r"""Document to run OCR on"""
-    id: NotRequired[str]
-    pages: NotRequired[Nullable[List[int]]]
-    r"""Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0"""
+    pages: NotRequired[Nullable[PagesTypedDict]]
+    r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
     include_image_base64: NotRequired[Nullable[bool]]
     r"""Include image URLs in response"""
     image_limit: NotRequired[Nullable[int]]
@@ -56,6 +69,8 @@ class OCRRequestTypedDict(TypedDict):
     table_format: NotRequired[Nullable[TableFormat]]
     extract_header: NotRequired[bool]
     extract_footer: NotRequired[bool]
+    confidence_scores_granularity: NotRequired[Nullable[ConfidenceScoresGranularity]]
+    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
 
 
 class OCRRequest(BaseModel):
@@ -64,10 +79,8 @@ class OCRRequest(BaseModel):
     document: Document
     r"""Document to run OCR on"""
 
-    id: Optional[str] = None
-
-    pages: OptionalNullable[List[int]] = UNSET
-    r"""Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0"""
+    pages: OptionalNullable[Pages] = UNSET
+    r"""Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0."""
 
     include_image_base64: OptionalNullable[bool] = UNSET
     r"""Include image URLs in response"""
@@ -93,11 +106,13 @@ class OCRRequest(BaseModel):
 
     extract_footer: Optional[bool] = None
 
+    confidence_scores_granularity: OptionalNullable[ConfidenceScoresGranularity] = UNSET
+    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "id",
                 "pages",
                 "include_image_base64",
                 "image_limit",
@@ -108,6 +123,7 @@ class OCRRequest(BaseModel):
                 "table_format",
                 "extract_header",
                 "extract_footer",
+                "confidence_scores_granularity",
             ]
         )
         nullable_fields = set(
@@ -121,6 +137,7 @@ class OCRRequest(BaseModel):
                 "document_annotation_format",
                 "document_annotation_prompt",
                 "table_format",
+                "confidence_scores_granularity",
             ]
         )
         serialized = handler(self)
@@ -128,7 +145,7 @@ class OCRRequest(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

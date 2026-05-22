@@ -5,7 +5,7 @@ from mistralai.azure.client import errors, models, utils
 from mistralai.azure.client._hooks import HookContext
 from mistralai.azure.client.types import Nullable, OptionalNullable, UNSET
 from mistralai.azure.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Mapping, Optional, Union
 
 
 class Ocr(BaseSDK):
@@ -14,8 +14,7 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[models.Document, models.DocumentTypedDict],
-        id: Optional[str] = None,
-        pages: OptionalNullable[List[int]] = UNSET,
+        pages: OptionalNullable[Union[models.Pages, models.PagesTypedDict]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
@@ -29,6 +28,9 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        confidence_scores_granularity: OptionalNullable[
+            models.ConfidenceScoresGranularity
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -38,8 +40,7 @@ class Ocr(BaseSDK):
 
         :param model:
         :param document: Document to run OCR on
-        :param id:
-        :param pages: Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0
+        :param pages: Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0.
         :param include_image_base64: Include image URLs in response
         :param image_limit: Max images to extract
         :param image_min_size: Minimum height and width of image to extract
@@ -49,6 +50,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -59,6 +61,9 @@ class Ocr(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 60000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -66,7 +71,6 @@ class Ocr(BaseSDK):
 
         request = models.OCRRequest(
             model=model,
-            id=id,
             document=utils.get_pydantic_model(document, models.Document),
             pages=pages,
             include_image_base64=include_image_base64,
@@ -82,11 +86,12 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            confidence_scores_granularity=confidence_scores_granularity,
         )
 
         req = self._build_request(
             method="POST",
-            path="/ocr",
+            path="/providers/mistral/azure/ocr",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -121,7 +126,7 @@ class Ocr(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -147,8 +152,7 @@ class Ocr(BaseSDK):
         *,
         model: Nullable[str],
         document: Union[models.Document, models.DocumentTypedDict],
-        id: Optional[str] = None,
-        pages: OptionalNullable[List[int]] = UNSET,
+        pages: OptionalNullable[Union[models.Pages, models.PagesTypedDict]] = UNSET,
         include_image_base64: OptionalNullable[bool] = UNSET,
         image_limit: OptionalNullable[int] = UNSET,
         image_min_size: OptionalNullable[int] = UNSET,
@@ -162,6 +166,9 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        confidence_scores_granularity: OptionalNullable[
+            models.ConfidenceScoresGranularity
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -171,8 +178,7 @@ class Ocr(BaseSDK):
 
         :param model:
         :param document: Document to run OCR on
-        :param id:
-        :param pages: Specific pages user wants to process in various formats: single number, range, or list of both. Starts from 0
+        :param pages: Specific pages to process. Accepts a list of integers or a string of comma-separated numbers and ranges (e.g. '0,1,2' or '0-5' or '0,2-4'). Page numbers start from 0.
         :param include_image_base64: Include image URLs in response
         :param image_limit: Max images to extract
         :param image_min_size: Minimum height and width of image to extract
@@ -182,6 +188,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -192,6 +199,9 @@ class Ocr(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 60000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -199,7 +209,6 @@ class Ocr(BaseSDK):
 
         request = models.OCRRequest(
             model=model,
-            id=id,
             document=utils.get_pydantic_model(document, models.Document),
             pages=pages,
             include_image_base64=include_image_base64,
@@ -215,11 +224,12 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            confidence_scores_granularity=confidence_scores_granularity,
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/ocr",
+            path="/providers/mistral/azure/ocr",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -254,7 +264,7 @@ class Ocr(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
