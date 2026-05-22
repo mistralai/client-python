@@ -2,6 +2,7 @@
 # @generated-id: 97b5056c29fb
 
 from __future__ import annotations
+from .consumertype import ConsumerType
 from .outboundauthenticationtype import OutboundAuthenticationType
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -12,6 +13,7 @@ from typing_extensions import NotRequired, TypedDict
 class AuthenticationConfigurationTypedDict(TypedDict):
     name: str
     authentication_type: OutboundAuthenticationType
+    scope: ConsumerType
     is_default: NotRequired[bool]
 
 
@@ -19,6 +21,8 @@ class AuthenticationConfiguration(BaseModel):
     name: str
 
     authentication_type: OutboundAuthenticationType
+
+    scope: ConsumerType
 
     is_default: Optional[bool] = False
 
