@@ -1,5 +1,6 @@
 import logging
-from typing import Optional, Tuple, Union
+import weakref
+from typing import Any, Optional, Tuple, Union
 
 import httpx
 from opentelemetry import trace
@@ -11,6 +12,7 @@ from mistralai.extra.observability.otel import (
     get_traced_request_and_span,
     get_traced_response,
 )
+from mistralai.extra.observability.telemetry import configure_telemetry_for_hook
 from .types import (
     AfterErrorContext,
     AfterErrorHook,
@@ -29,11 +31,19 @@ _SPAN_EXT_KEY = "_tracing_span"
 class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
     def __init__(self) -> None:
         self.tracer_provider: Optional[trace.TracerProvider] = None
+        self._auto_telemetry_provider: Optional[Any] = None
+        self._telemetry_finalizer: Optional[weakref.finalize] = None
+        self._telemetry_auto_disabled: bool = False
         self.tracing_enabled, self.tracer = get_or_create_otel_tracer()
 
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
+        configure_telemetry_for_hook(
+            self,
+            hook_ctx.config,
+            respect_global_provider=True,
+        )
         # Refresh tracer/provider per request so tracing can be enabled if the
         # application configures OpenTelemetry after the client is instantiated.
         self.tracing_enabled, self.tracer = get_or_create_otel_tracer(

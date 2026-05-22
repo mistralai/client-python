@@ -4,6 +4,12 @@ from typing import TYPE_CHECKING
 from opentelemetry import trace as otel_trace
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
+from .telemetry import (
+    TelemetryConfigurationError,
+    configure_telemetry,
+    resolve_telemetry_enabled,
+    set_tracing_hook_provider,
+)
 
 if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
@@ -34,22 +40,13 @@ def set_tracer_provider(
         client = Mistral(api_key="...")
         set_tracer_provider(client, TracerProvider())
     """
-    from mistralai.client._hooks.tracing import TracingHook
-
-    hooks = getattr(client.sdk_configuration, "_hooks", None)
-    if hooks is None:
-        raise ValueError(
-            "Cannot set tracer_provider: SDK hooks not initialised on this client."
-        )
-
-    for hook in hooks.before_request_hooks:
-        if isinstance(hook, TracingHook):
-            hook.tracer_provider = provider
-            return
-
-    raise ValueError(
-        "Cannot set tracer_provider: TracingHook not found in the client's hooks."
-    )
+    set_tracing_hook_provider(client, provider)
 
 
-__all__ = ["trace", "set_tracer_provider"]
+__all__ = [
+    "TelemetryConfigurationError",
+    "configure_telemetry",
+    "resolve_telemetry_enabled",
+    "set_tracer_provider",
+    "trace",
+]

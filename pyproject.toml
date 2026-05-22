@@ -29,6 +29,10 @@ agents = [
 realtime = [
     "websockets >=13.0",
 ]
+telemetry = [
+    "opentelemetry-sdk (>=1.33.1,<2.0.0)",
+    "opentelemetry-exporter-otlp-proto-http (>=1.33.1,<2.0.0)",
+]
 
 workflow_payload_offloading_azure = [
     "azure-storage-blob[aio]>=12.28.0,<13.0.0",
@@ -65,6 +69,7 @@ dev = [
     "mypy==1.15.0",
     "msgpack>=1.1.0,<2.0.0",
     "opentelemetry-sdk (>=1.33.1,<2.0.0)",
+    "opentelemetry-exporter-otlp-proto-http (>=1.33.1,<2.0.0)",
     "pylint==3.2.3",
     "pytest>=8.2.2,<9",
     "pytest-asyncio>=0.23.7,<0.24",
