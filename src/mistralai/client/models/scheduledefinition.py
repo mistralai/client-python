@@ -51,10 +51,10 @@ class ScheduleDefinitionTypedDict(TypedDict):
     time_zone_name: NotRequired[Nullable[str]]
     r"""IANA time zone name, for example ``US/Central``."""
     policy: NotRequired[SchedulePolicyTypedDict]
-    schedule_id: NotRequired[Nullable[str]]
-    r"""Unique identifier for the schedule."""
     max_executions: NotRequired[Nullable[int]]
     r"""Maximum number of times this schedule will trigger a workflow execution. Once this limit is reached, no further executions are triggered automatically. null means unlimited."""
+    schedule_id: NotRequired[Nullable[str]]
+    r"""Unique identifier for the schedule."""
 
 
 class ScheduleDefinition(BaseModel):
@@ -100,11 +100,11 @@ class ScheduleDefinition(BaseModel):
 
     policy: Optional[SchedulePolicy] = None
 
-    schedule_id: OptionalNullable[str] = UNSET
-    r"""Unique identifier for the schedule."""
-
     max_executions: OptionalNullable[int] = UNSET
     r"""Maximum number of times this schedule will trigger a workflow execution. Once this limit is reached, no further executions are triggered automatically. null means unlimited."""
+
+    schedule_id: OptionalNullable[str] = UNSET
+    r"""Unique identifier for the schedule."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -119,8 +119,8 @@ class ScheduleDefinition(BaseModel):
                 "jitter",
                 "time_zone_name",
                 "policy",
-                "schedule_id",
                 "max_executions",
+                "schedule_id",
             ]
         )
         nullable_fields = set(
@@ -129,8 +129,8 @@ class ScheduleDefinition(BaseModel):
                 "end_at",
                 "jitter",
                 "time_zone_name",
-                "schedule_id",
                 "max_executions",
+                "schedule_id",
             ]
         )
         serialized = handler(self)
