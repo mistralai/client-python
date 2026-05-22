@@ -1,0 +1,15 @@
+# SearchIndexResponse
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `id`                                                                       | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `creator_id`                                                               | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `document_count`                                                           | *int*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `status`                                                                   | [models.SearchIndexResponseStatus](../models/searchindexresponsestatus.md) | :heavy_check_mark:                                                         | N/A                                                                        |
+| `created_at`                                                               | [date](https://docs.python.org/3/library/datetime.html#date-objects)       | :heavy_check_mark:                                                         | N/A                                                                        |
+| `modified_at`                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects)       | :heavy_check_mark:                                                         | N/A                                                                        |
+| `index`                                                                    | [models.SearchIndexResponseIndex](../models/searchindexresponseindex.md)   | :heavy_check_mark:                                                         | N/A                                                                        |

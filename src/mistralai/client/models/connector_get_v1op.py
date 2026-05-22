@@ -11,10 +11,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ConnectorGetV1RequestTypedDict(TypedDict):
     connector_id_or_name: str
+    fetch_user_data: NotRequired[bool]
+    r"""Fetch the user-level data associated with the connector (e.g. connection credentials)."""
     fetch_customer_data: NotRequired[bool]
     r"""Fetch the customer data associated with the connector (e.g. customer secrets / config)."""
-    fetch_connection_secrets: NotRequired[bool]
-    r"""Fetch the general connection secrets associated with the connector."""
 
 
 class ConnectorGetV1Request(BaseModel):
@@ -22,21 +22,21 @@ class ConnectorGetV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
+    fetch_user_data: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Fetch the user-level data associated with the connector (e.g. connection credentials)."""
+
     fetch_customer_data: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = False
     r"""Fetch the customer data associated with the connector (e.g. customer secrets / config)."""
 
-    fetch_connection_secrets: Annotated[
-        Optional[bool],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = False
-    r"""Fetch the general connection secrets associated with the connector."""
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["fetch_customer_data", "fetch_connection_secrets"])
+        optional_fields = set(["fetch_user_data", "fetch_customer_data"])
         serialized = handler(self)
         m = {}
 
