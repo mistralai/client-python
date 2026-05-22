@@ -13,7 +13,7 @@ permissions:
     branches:
       - main
     paths:
-      - "**/RELEASES.md"
+      - RELEASES.md
 jobs:
   publish:
     name: Publish Python SDKs to PyPI
