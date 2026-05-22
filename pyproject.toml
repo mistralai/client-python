@@ -1,0 +1,56 @@
+[project]
+name = "mistralai"
+version = "2.4.6"
+description = "Python Client SDK for the Mistral AI API."
+authors = [{ name = "Mistral" },]
+readme = "README-PYPI.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpcore >=1.0.9",
+    "httpx >=0.28.1",
+    "jsonpath-python >=1.0.6",
+    "pydantic >=2.11.2",
+]
+urls.repository = "https://github.com/mistralai/client-python.git"
+
+[dependency-groups]
+dev = [
+    "mypy ==1.15.0",
+    "pylint ==3.2.3",
+    "pyright ==1.1.398",
+    "pytest (>=8.2.2,<9.0.0)",
+    "pytest-asyncio (>=0.23.7,<0.24.0)",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["src"]
+
+[tool.mypy]
+disable_error_code = "misc"
+explicit_package_bases = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = "typing_inspect"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "jsonpath"
+ignore_missing_imports = true
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+
