@@ -5,6 +5,7 @@ from typing import Any, TYPE_CHECKING
 from mistralai.azure.client.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
+    from .apikeyauth import APIKeyAuth, APIKeyAuthTypedDict
     from .assistantmessage import (
         AssistantMessage,
         AssistantMessageContent,
@@ -23,8 +24,10 @@ if TYPE_CHECKING:
         ChatCompletionRequestMessageTypedDict,
         ChatCompletionRequestStop,
         ChatCompletionRequestStopTypedDict,
+        ChatCompletionRequestTool,
         ChatCompletionRequestToolChoice,
         ChatCompletionRequestToolChoiceTypedDict,
+        ChatCompletionRequestToolTypedDict,
         ChatCompletionRequestTypedDict,
     )
     from .chatcompletionresponse import (
@@ -37,10 +40,13 @@ if TYPE_CHECKING:
         ChatCompletionStreamRequestMessageTypedDict,
         ChatCompletionStreamRequestStop,
         ChatCompletionStreamRequestStopTypedDict,
+        ChatCompletionStreamRequestTool,
         ChatCompletionStreamRequestToolChoice,
         ChatCompletionStreamRequestToolChoiceTypedDict,
+        ChatCompletionStreamRequestToolTypedDict,
         ChatCompletionStreamRequestTypedDict,
     )
+    from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
     from .completionchunk import CompletionChunk, CompletionChunkTypedDict
     from .completionevent import CompletionEvent, CompletionEventTypedDict
     from .completionresponsestreamchoice import (
@@ -49,12 +55,19 @@ if TYPE_CHECKING:
         CompletionResponseStreamChoiceTypedDict,
     )
     from .contentchunk import ContentChunk, ContentChunkTypedDict, UnknownContentChunk
+    from .customconnector import (
+        Authorization,
+        AuthorizationTypedDict,
+        CustomConnector,
+        CustomConnectorTypedDict,
+    )
     from .deltamessage import (
         DeltaMessage,
         DeltaMessageContent,
         DeltaMessageContentTypedDict,
         DeltaMessageTypedDict,
     )
+    from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
     from .filechunk import FileChunk, FileChunkTypedDict
     from .function import Function, FunctionTypedDict
@@ -65,7 +78,9 @@ if TYPE_CHECKING:
         FunctionCallTypedDict,
     )
     from .functionname import FunctionName, FunctionNameTypedDict
+    from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .imagedetail import ImageDetail
+    from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
     from .imageurl import ImageURL, ImageURLTypedDict
     from .imageurlchunk import (
         ImageURLChunk,
@@ -75,21 +90,53 @@ if TYPE_CHECKING:
     )
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
     from .mistralpromptmode import MistralPromptMode
+    from .moderationllmaction import ModerationLLMAction
+    from .moderationllmv1categorythresholds import (
+        ModerationLlmv1CategoryThresholds,
+        ModerationLlmv1CategoryThresholdsTypedDict,
+    )
+    from .moderationllmv1config import (
+        ModerationLlmv1Config,
+        ModerationLlmv1ConfigTypedDict,
+    )
+    from .moderationllmv2categorythresholds import (
+        ModerationLlmv2CategoryThresholds,
+        ModerationLlmv2CategoryThresholdsTypedDict,
+    )
+    from .moderationllmv2config import (
+        ModerationLlmv2Config,
+        ModerationLlmv2ConfigTypedDict,
+    )
+    from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
+    from .ocrconfidencescore import OCRConfidenceScore, OCRConfidenceScoreTypedDict
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+    from .ocrpageconfidencescores import (
+        OCRPageConfidenceScores,
+        OCRPageConfidenceScoresTypedDict,
+    )
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
     from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
     from .ocrrequest import (
+        ConfidenceScoresGranularity,
         Document,
         DocumentTypedDict,
         OCRRequest,
         OCRRequestTypedDict,
+        Pages,
+        PagesTypedDict,
         TableFormat,
     )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
-    from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
+    from .reasoningeffort import ReasoningEffort
+    from .referencechunk import (
+        ReferenceChunk,
+        ReferenceChunkTypedDict,
+        ReferenceID,
+        ReferenceIDTypedDict,
+    )
     from .responseformat import ResponseFormat, ResponseFormatTypedDict
     from .responseformats import ResponseFormats
     from .security import Security, SecurityTypedDict
@@ -109,6 +156,7 @@ if TYPE_CHECKING:
     from .toolcall import ToolCall, ToolCallTypedDict
     from .toolchoice import ToolChoice, ToolChoiceTypedDict
     from .toolchoiceenum import ToolChoiceEnum
+    from .toolconfiguration import ToolConfiguration, ToolConfigurationTypedDict
     from .toolmessage import (
         ToolMessage,
         ToolMessageContent,
@@ -117,11 +165,10 @@ if TYPE_CHECKING:
     )
     from .toolreferencechunk import (
         ToolReferenceChunk,
+        ToolReferenceChunkTool,
+        ToolReferenceChunkToolTypedDict,
         ToolReferenceChunkTypedDict,
-        ToolUnion,
-        ToolUnionTypedDict,
     )
-    from .tooltypes import ToolTypes
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usermessage import (
         UserMessage,
@@ -137,14 +184,23 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
+    from .websearchpremiumtool import (
+        WebSearchPremiumTool,
+        WebSearchPremiumToolTypedDict,
+    )
+    from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 
 __all__ = [
+    "APIKeyAuth",
+    "APIKeyAuthTypedDict",
     "Arguments",
     "ArgumentsTypedDict",
     "AssistantMessage",
     "AssistantMessageContent",
     "AssistantMessageContentTypedDict",
     "AssistantMessageTypedDict",
+    "Authorization",
+    "AuthorizationTypedDict",
     "BuiltInConnectors",
     "ChatCompletionChoice",
     "ChatCompletionChoiceFinishReason",
@@ -154,8 +210,10 @@ __all__ = [
     "ChatCompletionRequestMessageTypedDict",
     "ChatCompletionRequestStop",
     "ChatCompletionRequestStopTypedDict",
+    "ChatCompletionRequestTool",
     "ChatCompletionRequestToolChoice",
     "ChatCompletionRequestToolChoiceTypedDict",
+    "ChatCompletionRequestToolTypedDict",
     "ChatCompletionRequestTypedDict",
     "ChatCompletionResponse",
     "ChatCompletionResponseTypedDict",
@@ -164,9 +222,13 @@ __all__ = [
     "ChatCompletionStreamRequestMessageTypedDict",
     "ChatCompletionStreamRequestStop",
     "ChatCompletionStreamRequestStopTypedDict",
+    "ChatCompletionStreamRequestTool",
     "ChatCompletionStreamRequestToolChoice",
     "ChatCompletionStreamRequestToolChoiceTypedDict",
+    "ChatCompletionStreamRequestToolTypedDict",
     "ChatCompletionStreamRequestTypedDict",
+    "CodeInterpreterTool",
+    "CodeInterpreterToolTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
     "CompletionEvent",
@@ -174,15 +236,20 @@ __all__ = [
     "CompletionResponseStreamChoice",
     "CompletionResponseStreamChoiceFinishReason",
     "CompletionResponseStreamChoiceTypedDict",
+    "ConfidenceScoresGranularity",
     "ContentChunk",
     "ContentChunkTypedDict",
     "Context",
     "ContextTypedDict",
+    "CustomConnector",
+    "CustomConnectorTypedDict",
     "DeltaMessage",
     "DeltaMessageContent",
     "DeltaMessageContentTypedDict",
     "DeltaMessageTypedDict",
     "Document",
+    "DocumentLibraryTool",
+    "DocumentLibraryToolTypedDict",
     "DocumentTypedDict",
     "DocumentURLChunk",
     "DocumentURLChunkTypedDict",
@@ -195,7 +262,11 @@ __all__ = [
     "FunctionName",
     "FunctionNameTypedDict",
     "FunctionTypedDict",
+    "GuardrailConfig",
+    "GuardrailConfigTypedDict",
     "ImageDetail",
+    "ImageGenerationTool",
+    "ImageGenerationToolTypedDict",
     "ImageURL",
     "ImageURLChunk",
     "ImageURLChunkTypedDict",
@@ -207,8 +278,23 @@ __all__ = [
     "Loc",
     "LocTypedDict",
     "MistralPromptMode",
+    "ModerationLLMAction",
+    "ModerationLlmv1CategoryThresholds",
+    "ModerationLlmv1CategoryThresholdsTypedDict",
+    "ModerationLlmv1Config",
+    "ModerationLlmv1ConfigTypedDict",
+    "ModerationLlmv2CategoryThresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict",
+    "ModerationLlmv2Config",
+    "ModerationLlmv2ConfigTypedDict",
+    "OAuth2TokenAuth",
+    "OAuth2TokenAuthTypedDict",
+    "OCRConfidenceScore",
+    "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
+    "OCRPageConfidenceScores",
+    "OCRPageConfidenceScoresTypedDict",
     "OCRPageDimensions",
     "OCRPageDimensionsTypedDict",
     "OCRPageObject",
@@ -221,10 +307,15 @@ __all__ = [
     "OCRTableObjectTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
+    "Pages",
+    "PagesTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "ReasoningEffort",
     "ReferenceChunk",
     "ReferenceChunkTypedDict",
+    "ReferenceID",
+    "ReferenceIDTypedDict",
     "ResponseFormat",
     "ResponseFormatTypedDict",
     "ResponseFormats",
@@ -249,16 +340,17 @@ __all__ = [
     "ToolChoice",
     "ToolChoiceEnum",
     "ToolChoiceTypedDict",
+    "ToolConfiguration",
+    "ToolConfigurationTypedDict",
     "ToolMessage",
     "ToolMessageContent",
     "ToolMessageContentTypedDict",
     "ToolMessageTypedDict",
     "ToolReferenceChunk",
+    "ToolReferenceChunkTool",
+    "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
-    "ToolTypes",
-    "ToolUnion",
-    "ToolUnionTypedDict",
     "UnknownContentChunk",
     "UsageInfo",
     "UsageInfoTypedDict",
@@ -268,9 +360,15 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
+    "WebSearchPremiumTool",
+    "WebSearchPremiumToolTypedDict",
+    "WebSearchTool",
+    "WebSearchToolTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
+    "APIKeyAuth": ".apikeyauth",
+    "APIKeyAuthTypedDict": ".apikeyauth",
     "AssistantMessage": ".assistantmessage",
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
@@ -284,8 +382,10 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionRequestMessageTypedDict": ".chatcompletionrequest",
     "ChatCompletionRequestStop": ".chatcompletionrequest",
     "ChatCompletionRequestStopTypedDict": ".chatcompletionrequest",
+    "ChatCompletionRequestTool": ".chatcompletionrequest",
     "ChatCompletionRequestToolChoice": ".chatcompletionrequest",
     "ChatCompletionRequestToolChoiceTypedDict": ".chatcompletionrequest",
+    "ChatCompletionRequestToolTypedDict": ".chatcompletionrequest",
     "ChatCompletionRequestTypedDict": ".chatcompletionrequest",
     "ChatCompletionResponse": ".chatcompletionresponse",
     "ChatCompletionResponseTypedDict": ".chatcompletionresponse",
@@ -294,9 +394,13 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionStreamRequestMessageTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestStop": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestStopTypedDict": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestTool": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolChoice": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolChoiceTypedDict": ".chatcompletionstreamrequest",
+    "ChatCompletionStreamRequestToolTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestTypedDict": ".chatcompletionstreamrequest",
+    "CodeInterpreterTool": ".codeinterpretertool",
+    "CodeInterpreterToolTypedDict": ".codeinterpretertool",
     "CompletionChunk": ".completionchunk",
     "CompletionChunkTypedDict": ".completionchunk",
     "CompletionEvent": ".completionevent",
@@ -307,10 +411,16 @@ _dynamic_imports: dict[str, str] = {
     "ContentChunk": ".contentchunk",
     "ContentChunkTypedDict": ".contentchunk",
     "UnknownContentChunk": ".contentchunk",
+    "Authorization": ".customconnector",
+    "AuthorizationTypedDict": ".customconnector",
+    "CustomConnector": ".customconnector",
+    "CustomConnectorTypedDict": ".customconnector",
     "DeltaMessage": ".deltamessage",
     "DeltaMessageContent": ".deltamessage",
     "DeltaMessageContentTypedDict": ".deltamessage",
     "DeltaMessageTypedDict": ".deltamessage",
+    "DocumentLibraryTool": ".documentlibrarytool",
+    "DocumentLibraryToolTypedDict": ".documentlibrarytool",
     "DocumentURLChunk": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
     "FileChunk": ".filechunk",
@@ -323,7 +433,11 @@ _dynamic_imports: dict[str, str] = {
     "FunctionCallTypedDict": ".functioncall",
     "FunctionName": ".functionname",
     "FunctionNameTypedDict": ".functionname",
+    "GuardrailConfig": ".guardrailconfig",
+    "GuardrailConfigTypedDict": ".guardrailconfig",
     "ImageDetail": ".imagedetail",
+    "ImageGenerationTool": ".imagegenerationtool",
+    "ImageGenerationToolTypedDict": ".imagegenerationtool",
     "ImageURL": ".imageurl",
     "ImageURLTypedDict": ".imageurl",
     "ImageURLChunk": ".imageurlchunk",
@@ -333,16 +447,34 @@ _dynamic_imports: dict[str, str] = {
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
     "MistralPromptMode": ".mistralpromptmode",
+    "ModerationLLMAction": ".moderationllmaction",
+    "ModerationLlmv1CategoryThresholds": ".moderationllmv1categorythresholds",
+    "ModerationLlmv1CategoryThresholdsTypedDict": ".moderationllmv1categorythresholds",
+    "ModerationLlmv1Config": ".moderationllmv1config",
+    "ModerationLlmv1ConfigTypedDict": ".moderationllmv1config",
+    "ModerationLlmv2CategoryThresholds": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2CategoryThresholdsTypedDict": ".moderationllmv2categorythresholds",
+    "ModerationLlmv2Config": ".moderationllmv2config",
+    "ModerationLlmv2ConfigTypedDict": ".moderationllmv2config",
+    "OAuth2TokenAuth": ".oauth2tokenauth",
+    "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
+    "OCRConfidenceScore": ".ocrconfidencescore",
+    "OCRConfidenceScoreTypedDict": ".ocrconfidencescore",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
+    "OCRPageConfidenceScores": ".ocrpageconfidencescores",
+    "OCRPageConfidenceScoresTypedDict": ".ocrpageconfidencescores",
     "OCRPageDimensions": ".ocrpagedimensions",
     "OCRPageDimensionsTypedDict": ".ocrpagedimensions",
     "OCRPageObject": ".ocrpageobject",
     "OCRPageObjectTypedDict": ".ocrpageobject",
+    "ConfidenceScoresGranularity": ".ocrrequest",
     "Document": ".ocrrequest",
     "DocumentTypedDict": ".ocrrequest",
     "OCRRequest": ".ocrrequest",
     "OCRRequestTypedDict": ".ocrrequest",
+    "Pages": ".ocrrequest",
+    "PagesTypedDict": ".ocrrequest",
     "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
@@ -353,8 +485,11 @@ _dynamic_imports: dict[str, str] = {
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "Prediction": ".prediction",
     "PredictionTypedDict": ".prediction",
+    "ReasoningEffort": ".reasoningeffort",
     "ReferenceChunk": ".referencechunk",
     "ReferenceChunkTypedDict": ".referencechunk",
+    "ReferenceID": ".referencechunk",
+    "ReferenceIDTypedDict": ".referencechunk",
     "ResponseFormat": ".responseformat",
     "ResponseFormatTypedDict": ".responseformat",
     "ResponseFormats": ".responseformats",
@@ -379,15 +514,16 @@ _dynamic_imports: dict[str, str] = {
     "ToolChoice": ".toolchoice",
     "ToolChoiceTypedDict": ".toolchoice",
     "ToolChoiceEnum": ".toolchoiceenum",
+    "ToolConfiguration": ".toolconfiguration",
+    "ToolConfigurationTypedDict": ".toolconfiguration",
     "ToolMessage": ".toolmessage",
     "ToolMessageContent": ".toolmessage",
     "ToolMessageContentTypedDict": ".toolmessage",
     "ToolMessageTypedDict": ".toolmessage",
     "ToolReferenceChunk": ".toolreferencechunk",
+    "ToolReferenceChunkTool": ".toolreferencechunk",
+    "ToolReferenceChunkToolTypedDict": ".toolreferencechunk",
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
-    "ToolUnion": ".toolreferencechunk",
-    "ToolUnionTypedDict": ".toolreferencechunk",
-    "ToolTypes": ".tooltypes",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
     "UserMessage": ".usermessage",
@@ -400,6 +536,10 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
+    "WebSearchPremiumTool": ".websearchpremiumtool",
+    "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
+    "WebSearchTool": ".websearchtool",
+    "WebSearchToolTypedDict": ".websearchtool",
 }
 
 

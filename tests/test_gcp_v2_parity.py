@@ -51,17 +51,17 @@ CHAT_COMPLETE_PARAMS = [
     ("model", _EMPTY),
     ("messages", _EMPTY),
     ("temperature", UNSET),
-    ("top_p", None),
+    ("top_p", UNSET),
     ("max_tokens", UNSET),
     ("stream", False),
-    ("stop", None),
+    ("stop", UNSET),
     ("random_seed", UNSET),
     ("metadata", UNSET),
     ("response_format", None),
     ("tools", UNSET),
     ("tool_choice", None),
-    ("presence_penalty", None),
-    ("frequency_penalty", None),
+    ("presence_penalty", UNSET),
+    ("frequency_penalty", UNSET),
     ("n", UNSET),
     ("prediction", None),
     ("parallel_tool_calls", None),
@@ -81,10 +81,10 @@ FIM_COMPLETE_PARAMS = [
     ("model", _EMPTY),
     ("prompt", _EMPTY),
     ("temperature", UNSET),
-    ("top_p", 1),
+    ("top_p", UNSET),
     ("max_tokens", UNSET),
     ("stream", False),
-    ("stop", None),
+    ("stop", UNSET),
     ("random_seed", UNSET),
     ("metadata", UNSET),
     ("suffix", UNSET),
@@ -298,13 +298,13 @@ class TestGCPFim:
         sig = inspect.signature(Fim.stream)
         assert sig.parameters["stream"].default is True
 
-    def test_complete_top_p_defaults_to_1(self):
+    def test_complete_top_p_defaults_to_unset(self):
         sig = inspect.signature(Fim.complete)
-        assert sig.parameters["top_p"].default == 1
+        assert sig.parameters["top_p"].default == UNSET
 
-    def test_stream_top_p_defaults_to_1(self):
+    def test_stream_top_p_defaults_to_unset(self):
         sig = inspect.signature(Fim.stream)
-        assert sig.parameters["top_p"].default == 1
+        assert sig.parameters["top_p"].default == UNSET
 
 
 class TestGCPCoverage:

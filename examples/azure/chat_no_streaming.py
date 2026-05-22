@@ -19,4 +19,5 @@ messages: list[ChatCompletionRequestMessage] = [
     UserMessage(content="What is the capital of France?"),
 ]
 res = client.chat.complete(model=AZURE_MODEL, messages=messages)
-print(res.choices[0].message.content)
+if res.choices and res.choices[0].message:
+    print(res.choices[0].message.content)
