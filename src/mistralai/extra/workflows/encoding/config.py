@@ -67,8 +67,4 @@ class PayloadCompressionConfig(BaseModel):
 class WorkflowEncodingConfig(BaseModel):
     payload_offloading: PayloadOffloadingConfig | None = None
     payload_encryption: PayloadEncryptionConfig | None = None
-    # TEMPORARY: default compression on to validate in staging preview.
-    # TODO: revert to None and wire through WorkerConfig env vars once validated.
-    payload_compression: PayloadCompressionConfig | None = Field(
-        default_factory=PayloadCompressionConfig
-    )
+    payload_compression: PayloadCompressionConfig | None = None

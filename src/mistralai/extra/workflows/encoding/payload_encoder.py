@@ -313,7 +313,6 @@ class PayloadEncoder:
         context: Optional[WorkflowContext] = None,
         *,
         allow_offloading: bool = True,
-        force_full_encryption: bool = False,
     ) -> tuple[bytes, list[EncodedPayloadOptions]]:
         """Handle payload encoding.
 
@@ -328,8 +327,7 @@ class PayloadEncoder:
         # Partial encryption needs the original JSON fields. It must run before
         # compression or offloading, which make field-level markers unavailable.
         if (
-            not force_full_encryption
-            and self.encryption_config is not None
+            self.encryption_config is not None
             and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
         ):
             data, partially_encrypted = await self._partially_encrypt_fields(data)
@@ -350,9 +348,9 @@ class PayloadEncoder:
         # Full encryption intentionally remains the final transform. If the
         # payload was offloaded, this encrypts the small blob-reference envelope
         # rather than the blob bytes.
-        if self.encryption_config is not None and (
-            force_full_encryption
-            or self.encryption_config.mode == PayloadEncryptionMode.FULL
+        if (
+            self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.FULL
         ):
             data = self._encrypt(data)
             encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
@@ -360,14 +358,10 @@ class PayloadEncoder:
         return data, encoding_options
 
     async def encode_event_payload_content(
-        self, data: Union[bytes, str], force_full_encryption: bool = False
+        self, data: Union[bytes, str]
     ) -> tuple[bytes, list[EncodedPayloadOptions]]:
         """Encode event payload content without offloading."""
-        return await self.encode_payload_content(
-            data,
-            allow_offloading=False,
-            force_full_encryption=force_full_encryption,
-        )
+        return await self.encode_payload_content(data, allow_offloading=False)
 
     async def decode_payload_content(
         self,
