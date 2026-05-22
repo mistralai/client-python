@@ -11,6 +11,8 @@
 * [get_workflow](#get_workflow) - Get Workflow
 * [update_workflow](#update_workflow) - Update Workflow
 * [get_workflow_registration](#get_workflow_registration) - Get Workflow Registration
+* [bulk_archive_workflows](#bulk_archive_workflows) - Bulk Archive Workflows
+* [bulk_unarchive_workflows](#bulk_unarchive_workflows) - Bulk Unarchive Workflows
 * [archive_workflow](#archive_workflow) - Archive Workflow
 * [unarchive_workflow](#unarchive_workflow) - Unarchive Workflow
 
@@ -332,6 +334,88 @@ with Mistral(
 ### Response
 
 **[models.WorkflowRegistrationGetResponse](../../models/workflowregistrationgetresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## bulk_archive_workflows
+
+Bulk Archive Workflows
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="bulk_archive_workflows_v1_workflows_archive_put" method="put" path="/v1/workflows/archive" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.bulk_archive_workflows(workflow_ids=[])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `workflow_ids`                                                      | List[*str*]                                                         | :heavy_check_mark:                                                  | List of workflow IDs to archive                                     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.WorkflowBulkArchiveResponse](../../models/workflowbulkarchiveresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## bulk_unarchive_workflows
+
+Bulk Unarchive Workflows
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="bulk_unarchive_workflows_v1_workflows_unarchive_put" method="put" path="/v1/workflows/unarchive" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.bulk_unarchive_workflows(workflow_ids=[])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `workflow_ids`                                                      | List[*str*]                                                         | :heavy_check_mark:                                                  | List of workflow IDs to unarchive                                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.WorkflowBulkUnarchiveResponse](../../models/workflowbulkunarchiveresponse.md)**
 
 ### Errors
 
