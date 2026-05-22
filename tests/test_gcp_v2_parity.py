@@ -298,13 +298,13 @@ class TestGCPFim:
         sig = inspect.signature(Fim.stream)
         assert sig.parameters["stream"].default is True
 
-    def test_complete_top_p_defaults_to_1(self):
+    def test_complete_top_p_defaults_to_unset(self):
         sig = inspect.signature(Fim.complete)
-        assert sig.parameters["top_p"].default == 1
+        assert sig.parameters["top_p"].default == UNSET
 
-    def test_stream_top_p_defaults_to_1(self):
+    def test_stream_top_p_defaults_to_unset(self):
         sig = inspect.signature(Fim.stream)
-        assert sig.parameters["top_p"].default == 1
+        assert sig.parameters["top_p"].default == UNSET
 
 
 class TestGCPCoverage:
