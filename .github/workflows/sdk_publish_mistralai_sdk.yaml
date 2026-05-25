@@ -48,31 +48,3 @@ jobs:
           print-hash: true
           verbose: true
           skip-existing: true
-
-      - name: Build mistralai-azure
-        working-directory: packages/azure
-        run: |
-          python scripts/prepare_readme.py
-          uv build --sdist --wheel --out-dir ../../dist/mistralai-azure
-
-      - name: Publish mistralai-azure to PyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
-        with:
-          packages-dir: dist/mistralai-azure/
-          print-hash: true
-          verbose: true
-          skip-existing: true
-
-      - name: Build mistralai-gcp
-        working-directory: packages/gcp
-        run: |
-          python scripts/prepare_readme.py
-          uv build --sdist --wheel --out-dir ../../dist/mistralai-gcp
-
-      - name: Publish mistralai-gcp to PyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
-        with:
-          packages-dir: dist/mistralai-gcp/
-          print-hash: true
-          verbose: true
-          skip-existing: true
