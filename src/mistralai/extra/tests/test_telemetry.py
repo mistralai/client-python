@@ -51,6 +51,18 @@ def _get_tracing_hook(client: "Mistral") -> TracingHook:
     return tracing_hooks[0]
 
 
+def _configure_for_hook(
+    client: "Mistral",
+    telemetry: bool | None = None,
+) -> bool:
+    """Helper to call configure_telemetry_for_hook via a client."""
+    return configure_telemetry_for_hook(
+        _get_tracing_hook(client),
+        client.sdk_configuration,
+        telemetry=telemetry,
+    )
+
+
 class FakeProvider:
     def __init__(self):
         self.shutdown_called = False
@@ -141,7 +153,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 return_value=provider,
             ) as create_provider:
                 client = _make_client(api_key="test-key")
-                configured = configure_telemetry(client, telemetry=True)
+                configured = configure_telemetry(client)
 
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
@@ -150,19 +162,19 @@ class TestTelemetryConfiguration(unittest.TestCase):
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
 
-    def test_explicit_false_overrides_env_true(self):
+    def test_internal_explicit_false_overrides_env_true(self):
         with patch.dict(os.environ, {MISTRAL_SDK_TELEMETRY_ENV: "true"}, clear=True):
             with patch(
                 "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
             ) as create_provider:
                 client = _make_client(api_key="test-key")
-                configured = configure_telemetry(client, telemetry=False)
+                configured = _configure_for_hook(client, telemetry=False)
 
         self.assertFalse(configured)
         create_provider.assert_not_called()
         self.assertIsNone(_get_tracing_hook(client).tracer_provider)
 
-    def test_explicit_false_disables_auto_telemetry_provider(self):
+    def test_internal_explicit_false_disables_auto_telemetry_provider(self):
         provider = FakeProvider()
 
         with patch.dict(os.environ, {}, clear=True):
@@ -171,8 +183,8 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 return_value=provider,
             ):
                 client = _make_client(api_key="test-key")
-                configure_telemetry(client, telemetry=True)
-                configured = configure_telemetry(client, telemetry=False)
+                configure_telemetry(client)
+                configured = _configure_for_hook(client, telemetry=False)
 
         self.assertFalse(configured)
         self.assertTrue(provider.shutdown_called)
@@ -191,7 +203,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 return_value=provider,
             ) as create_provider:
                 client = _make_client(api_key=None)
-                configured = configure_telemetry(client)
+                configured = _configure_for_hook(client)
 
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
@@ -215,7 +227,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                     return_value=provider,
                 ) as create_provider:
                     client = _make_client(api_key=None)
-                    configured = configure_telemetry(client, telemetry=True)
+                    configured = configure_telemetry(client)
 
         self.assertTrue(configured)
         resolve_api_key.assert_not_called()
@@ -241,7 +253,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                     return_value=provider,
                 ) as create_provider:
                     client = _make_client(api_key=None)
-                    configured = configure_telemetry(client)
+                    configured = _configure_for_hook(client)
 
         self.assertTrue(configured)
         resolve_api_key.assert_not_called()
@@ -263,7 +275,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                     TelemetryConfigurationError,
                     r"mistralai\[telemetry\]",
                 ):
-                    configure_telemetry(client, telemetry=True)
+                    configure_telemetry(client)
 
     def test_manual_provider_replaces_auto_telemetry_provider(self):
         provider = FakeProvider()
@@ -275,7 +287,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 return_value=provider,
             ):
                 client = _make_client(api_key="test-key")
-                configure_telemetry(client, telemetry=True)
+                configure_telemetry(client)
 
         set_tracer_provider(client, manual_provider)
 

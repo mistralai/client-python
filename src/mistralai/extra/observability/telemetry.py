@@ -81,14 +81,15 @@ def _has_otel_exporter_endpoint_env() -> bool:
     )
 
 
-def configure_telemetry(
-    client: "Mistral",
-    telemetry: bool | None = None,
-) -> bool:
+def configure_telemetry(client: "Mistral") -> bool:
     """Configure an isolated telemetry provider for a Mistral client.
 
+    Calling configure_telemetry(client) explicitly enables SDK telemetry.
+    Environment and SDKConfiguration-based auto-resolution are handled by the
+    request hook.
+
     Returns True when telemetry is enabled and a provider is attached. Returns
-    False when telemetry is disabled or a non-telemetry provider is already set.
+    False when a non-telemetry provider is already set.
     """
     hooks = getattr(client.sdk_configuration, "_hooks", None)
     if hooks is None:
@@ -97,7 +98,7 @@ def configure_telemetry(
     return configure_telemetry_for_hook(
         _get_tracing_hook(hooks),
         client.sdk_configuration,
-        telemetry=telemetry,
+        telemetry=True,
         finalizer_owner=client,
     )
 
@@ -111,11 +112,12 @@ def configure_telemetry_for_hook(
 ) -> bool:
     """Configure telemetry for a tracing hook when the user has opted in."""
     # Fast path: already resolved and no explicit override requested.
-    if telemetry is None:
-        if hook._auto_telemetry_provider is not None:
-            return True
-        if hook._telemetry_auto_disabled:
-            return False
+    if hook._auto_telemetry_provider is not None and telemetry is not False:
+        return True
+    if telemetry is False and hook._auto_telemetry_provider is None:
+        return False
+    if telemetry is None and hook._telemetry_auto_disabled:
+        return False
 
     telemetry_setting = telemetry
     if telemetry_setting is None:
