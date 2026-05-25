@@ -1041,7 +1041,6 @@ dependencies = [
     { name = "eval-type-backport" },
     { name = "httpx" },
     { name = "jsonpath-python" },
-    { name = "msgpack" },
     { name = "opentelemetry-api" },
     { name = "opentelemetry-semantic-conventions" },
     { name = "pydantic" },
@@ -1063,6 +1062,7 @@ realtime = [
     { name = "websockets" },
 ]
 workflow-payload-compression = [
+    { name = "msgpack" },
     { name = "zstandard" },
 ]
 workflow-payload-encryption = [
@@ -1091,6 +1091,7 @@ dev = [
     { name = "griffe" },
     { name = "invoke" },
     { name = "mcp" },
+    { name = "msgpack" },
     { name = "mypy" },
     { name = "opentelemetry-sdk" },
     { name = "pylint" },
@@ -1126,7 +1127,7 @@ requires-dist = [
     { name = "mistralai", extras = ["workflow-payload-offloading-azure"], marker = "extra == 'workflow-payload-offloading'" },
     { name = "mistralai", extras = ["workflow-payload-offloading-gcs"], marker = "extra == 'workflow-payload-offloading'" },
     { name = "mistralai", extras = ["workflow-payload-offloading-s3"], marker = "extra == 'workflow-payload-offloading'" },
-    { name = "msgpack", specifier = ">=1.1.0,<2.0.0" },
+    { name = "msgpack", marker = "extra == 'workflow-payload-compression'", specifier = ">=1.1.0,<2.0.0" },
     { name = "opentelemetry-api", specifier = ">=1.33.1,<2.0.0" },
     { name = "opentelemetry-semantic-conventions", specifier = ">=0.60b1,<0.61" },
     { name = "pydantic", specifier = ">=2.11.2" },
@@ -1144,6 +1145,7 @@ dev = [
     { name = "griffe", specifier = ">=1.7.3,<2" },
     { name = "invoke", specifier = ">=2.2.0,<3" },
     { name = "mcp", specifier = ">=1.0,<2" },
+    { name = "msgpack", specifier = ">=1.1.0,<2.0.0" },
     { name = "mypy", specifier = "==1.15.0" },
     { name = "opentelemetry-sdk", specifier = ">=1.33.1,<2.0.0" },
     { name = "pylint", specifier = "==3.2.3" },

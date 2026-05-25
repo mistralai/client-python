@@ -3,13 +3,14 @@ from __future__ import annotations
 import base64
 import functools
 import hashlib
+from importlib import import_module
 import json
 import logging
 import os
+from types import ModuleType
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union, cast
 
-import msgpack
 from pydantic import BaseModel, ValidationError
 
 if TYPE_CHECKING:
@@ -58,6 +59,15 @@ class OffloadedPayloadData(BaseModel):
     key: str
 
 
+def _require_msgpack() -> ModuleType:
+    try:
+        return import_module("msgpack")
+    except ImportError:
+        raise WorkflowPayloadCompressionException(
+            "Payload compression requires installing mistralai[workflow_payload_compression]"
+        ) from None
+
+
 class CompressedPayloadData(BaseModel):
     compression: AlgorithmConfig
     payload: bytes
@@ -70,6 +80,7 @@ class CompressedPayloadData(BaseModel):
 
     @classmethod
     def from_msgpack(cls, data: bytes) -> "CompressedPayloadData":
+        msgpack = _require_msgpack()
         try:
             unpacked = msgpack.unpackb(data, raw=False)
         except Exception as exc:
@@ -84,6 +95,7 @@ class CompressedPayloadData(BaseModel):
             ) from exc
 
     def to_msgpack(self) -> bytes:
+        msgpack = _require_msgpack()
         return cast(
             bytes,
             msgpack.packb(
