@@ -13,7 +13,7 @@ permissions:
     branches:
       - main
     paths:
-      - "**/RELEASES.md"
+      - RELEASES.md
 jobs:
   publish:
     name: Publish Python SDKs to PyPI
@@ -23,7 +23,7 @@ jobs:
       (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
     runs-on: ubuntu-24.04
     environment:
-      name: public-sdk
+      name: publish
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -45,34 +45,6 @@ jobs:
         uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
         with:
           packages-dir: dist/mistralai/
-          print-hash: true
-          verbose: true
-          skip-existing: true
-
-      - name: Build mistralai-azure
-        working-directory: packages/azure
-        run: |
-          python scripts/prepare_readme.py
-          uv build --sdist --wheel --out-dir ../../dist/mistralai-azure
-
-      - name: Publish mistralai-azure to PyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
-        with:
-          packages-dir: dist/mistralai-azure/
-          print-hash: true
-          verbose: true
-          skip-existing: true
-
-      - name: Build mistralai-gcp
-        working-directory: packages/gcp
-        run: |
-          python scripts/prepare_readme.py
-          uv build --sdist --wheel --out-dir ../../dist/mistralai-gcp
-
-      - name: Publish mistralai-gcp to PyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13
-        with:
-          packages-dir: dist/mistralai-gcp/
           print-hash: true
           verbose: true
           skip-existing: true

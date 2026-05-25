@@ -1,0 +1,9 @@
+# ConnectorActivateForOrganizationV1Request
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `connector_id`                                                                                 | *str*                                                                                          | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `tool_execution_configuration`                                                                 | [OptionalNullable[models.ToolExecutionConfiguration]](../models/toolexecutionconfiguration.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

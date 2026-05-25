@@ -2,6 +2,7 @@
 # @generated-id: 9a1752117dec
 
 from __future__ import annotations
+from .voiceappearance import VoiceAppearance, VoiceAppearanceTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -26,6 +27,8 @@ class VoiceCreateRequestTypedDict(TypedDict):
     age: NotRequired[Nullable[int]]
     tags: NotRequired[Nullable[List[str]]]
     color: NotRequired[Nullable[str]]
+    description: NotRequired[Nullable[str]]
+    appearance: NotRequired[Nullable[VoiceAppearanceTypedDict]]
     retention_notice: NotRequired[int]
     sample_filename: NotRequired[Nullable[str]]
     r"""Original filename for extension detection"""
@@ -51,6 +54,10 @@ class VoiceCreateRequest(BaseModel):
 
     color: OptionalNullable[str] = UNSET
 
+    description: OptionalNullable[str] = UNSET
+
+    appearance: OptionalNullable[VoiceAppearance] = UNSET
+
     retention_notice: Optional[int] = 30
 
     sample_filename: OptionalNullable[str] = UNSET
@@ -66,12 +73,23 @@ class VoiceCreateRequest(BaseModel):
                 "age",
                 "tags",
                 "color",
+                "description",
+                "appearance",
                 "retention_notice",
                 "sample_filename",
             ]
         )
         nullable_fields = set(
-            ["slug", "gender", "age", "tags", "color", "sample_filename"]
+            [
+                "slug",
+                "gender",
+                "age",
+                "tags",
+                "color",
+                "description",
+                "appearance",
+                "sample_filename",
+            ]
         )
         serialized = handler(self)
         m = {}

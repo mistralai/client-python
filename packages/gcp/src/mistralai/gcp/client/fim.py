@@ -18,15 +18,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionStreamRequestStop,
                 models.FIMCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -61,6 +61,9 @@ class Fim(BaseSDK):
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
 
+        if timeout_ms is None:
+            timeout_ms = 60000
+
         if server_url is not None:
             base_url = server_url
         else:
@@ -117,7 +120,7 @@ class Fim(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
@@ -152,15 +155,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = True,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionStreamRequestStop,
                 models.FIMCompletionStreamRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -194,6 +197,9 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -251,7 +257,7 @@ class Fim(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=True,
             retry_config=retry_config,
         )
@@ -286,15 +292,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionRequestStop,
                 models.FIMCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -328,6 +334,9 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -385,7 +394,7 @@ class Fim(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -412,15 +421,15 @@ class Fim(BaseSDK):
         model: str,
         prompt: str,
         temperature: OptionalNullable[float] = UNSET,
-        top_p: Optional[float] = 1,
+        top_p: OptionalNullable[float] = UNSET,
         max_tokens: OptionalNullable[int] = UNSET,
         stream: Optional[bool] = False,
-        stop: Optional[
+        stop: OptionalNullable[
             Union[
                 models.FIMCompletionRequestStop,
                 models.FIMCompletionRequestStopTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
@@ -454,6 +463,9 @@ class Fim(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 60000
 
         if server_url is not None:
             base_url = server_url
@@ -511,7 +523,7 @@ class Fim(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

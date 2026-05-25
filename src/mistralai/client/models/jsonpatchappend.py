@@ -2,19 +2,32 @@
 # @generated-id: 61801f21f4b0
 
 from __future__ import annotations
+from .encryptedpatchvalue import EncryptedPatchValue, EncryptedPatchValueTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic.functional_validators import AfterValidator
-from typing import Literal
-from typing_extensions import Annotated, TypedDict
+from typing import Literal, Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
+
+
+JSONPatchAppendValueTypedDict = TypeAliasType(
+    "JSONPatchAppendValueTypedDict", Union[EncryptedPatchValueTypedDict, str]
+)
+r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
+
+
+JSONPatchAppendValue = TypeAliasType(
+    "JSONPatchAppendValue", Union[EncryptedPatchValue, str]
+)
+r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
 
 
 class JSONPatchAppendTypedDict(TypedDict):
     path: str
     r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
-    value: str
-    r"""The value to use for the operation. A string to append to the existing value"""
+    value: JSONPatchAppendValueTypedDict
+    r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
     op: Literal["append"]
     r"""'append' is an extension for efficient string concatenation in streaming scenarios."""
 
@@ -23,8 +36,8 @@ class JSONPatchAppend(BaseModel):
     path: str
     r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
 
-    value: str
-    r"""The value to use for the operation. A string to append to the existing value"""
+    value: JSONPatchAppendValue
+    r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
 
     op: Annotated[
         Annotated[Literal["append"], AfterValidator(validate_const("append"))],
