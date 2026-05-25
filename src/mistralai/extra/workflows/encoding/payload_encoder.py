@@ -358,10 +358,41 @@ class PayloadEncoder:
         return data, encoding_options
 
     async def encode_event_payload_content(
-        self, data: Union[bytes, str]
+        self, data: Union[bytes, str], force_full_encryption: bool = False
     ) -> tuple[bytes, list[EncodedPayloadOptions]]:
-        """Encode event payload content without offloading."""
-        return await self.encode_payload_content(data, allow_offloading=False)
+        """Encode workflow event payload content without blob offloading.
+
+        Event payloads may be emitted before event upload support is wired into
+        this SDK. Keep this path separate from network input encoding so future
+        event producers can compress and encrypt events without accidentally
+        offloading them.
+        """
+        if isinstance(data, str):
+            data = data.encode()
+
+        encoding_options: list[EncodedPayloadOptions] = []
+
+        if (
+            not force_full_encryption
+            and self.encryption_config is not None
+            and self.encryption_config.mode == PayloadEncryptionMode.PARTIAL
+        ):
+            data, partially_encrypted = await self._partially_encrypt_fields(data)
+            if partially_encrypted:
+                encoding_options.append(EncodedPayloadOptions.PARTIALLY_ENCRYPTED)
+
+        data, compressed = self._compress(data)
+        if compressed:
+            encoding_options.append(EncodedPayloadOptions.COMPRESSED)
+
+        if self.encryption_config is not None and (
+            force_full_encryption
+            or self.encryption_config.mode == PayloadEncryptionMode.FULL
+        ):
+            data = self._encrypt(data)
+            encoding_options.append(EncodedPayloadOptions.ENCRYPTED)
+
+        return data, encoding_options
 
     async def decode_payload_content(
         self,

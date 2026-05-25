@@ -677,8 +677,14 @@ async def test_payload_encoder_encodes_event_content_without_offloading():
     )
     payload = json.dumps({"data": "x" * 20_000}).encode()
 
-    encoded, encoding_options = await encoder.encode_event_payload_content(payload)
+    encoded, encoding_options = await encoder.encode_event_payload_content(
+        payload,
+        force_full_encryption=True,
+    )
     decoded = await decoder.decode_payload_content(encoded, encoding_options)
 
-    assert encoding_options == [EncodedPayloadOptions.COMPRESSED]
+    assert encoding_options == [
+        EncodedPayloadOptions.COMPRESSED,
+        EncodedPayloadOptions.ENCRYPTED,
+    ]
     assert decoded == payload
