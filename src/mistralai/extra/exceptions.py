@@ -28,6 +28,10 @@ class WorkflowPayloadEncryptionException(MistralClientException):
     """Workflow payload encryption exception"""
 
 
+class WorkflowPayloadCompressionException(MistralClientException):
+    """Workflow payload compression exception"""
+
+
 class RunException(MistralClientException):
     """Conversation run errors."""
 
