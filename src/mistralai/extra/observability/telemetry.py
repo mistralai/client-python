@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import weakref
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final, Literal
 
 from opentelemetry import trace as otel_trace
 
@@ -24,51 +25,82 @@ MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
 MISTRAL_TELEMETRY_ENDPOINT = "https://api.mistral.ai/telemetry/v1/traces"
 OTEL_EXPORTER_OTLP_ENDPOINT_ENV = "OTEL_EXPORTER_OTLP_ENDPOINT"
 OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV = "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"
+TELEMETRY_PROVIDER_DEDICATED: Final[Literal["dedicated"]] = "dedicated"
+TELEMETRY_PROVIDER_GLOBAL: Final[Literal["global"]] = "global"
 
-_TRUE_VALUES = {"1", "true", "yes", "on"}
-_FALSE_VALUES = {"0", "false", "no", "off"}
+_DISABLED_VALUE = "false"
+_PROVIDER_VALUES = {TELEMETRY_PROVIDER_DEDICATED, TELEMETRY_PROVIDER_GLOBAL}
+
+TelemetryProviderMode = Literal["dedicated", "global"]
+TelemetrySetting = bool | str | None
+
+logger = logging.getLogger(__name__)
 
 
 class TelemetryConfigurationError(RuntimeError):
     """Raised when opt-in telemetry cannot be configured."""
 
 
-def resolve_telemetry_enabled(telemetry: bool | None = None) -> bool:
-    """Resolve the telemetry opt-in flag from an explicit value or environment."""
-    return _resolve_telemetry_configuration(telemetry)[0]
-
-
 def _resolve_telemetry_configuration(
-    telemetry: bool | None = None,
-) -> tuple[bool, bool]:
-    """Return whether telemetry is enabled and whether to use OTel env config."""
-    use_otel_env_exporter = _has_otel_exporter_endpoint_env()
-    if telemetry is not None:
-        return telemetry, telemetry and use_otel_env_exporter
+    telemetry: TelemetrySetting = None,
+) -> tuple[TelemetryProviderMode | None, bool]:
+    """Return telemetry provider mode and whether to use OTel env config."""
+    mode = (
+        _resolve_telemetry_mode(telemetry)
+        if telemetry is not None
+        else _resolve_mistral_telemetry_env()
+    )
+    return (
+        mode,
+        mode == TELEMETRY_PROVIDER_DEDICATED
+        and _has_otel_exporter_endpoint_env(),
+    )
 
-    env_telemetry = _resolve_mistral_telemetry_env()
-    if env_telemetry is not None:
-        return env_telemetry, env_telemetry and use_otel_env_exporter
 
-    return False, False
+def _resolve_telemetry_mode(value: bool | str) -> TelemetryProviderMode | None:
+    if isinstance(value, bool):
+        return TELEMETRY_PROVIDER_DEDICATED if value else None
+
+    normalized = value.strip().lower()
+    if normalized == TELEMETRY_PROVIDER_DEDICATED:
+        return TELEMETRY_PROVIDER_DEDICATED
+    if normalized == TELEMETRY_PROVIDER_GLOBAL:
+        return TELEMETRY_PROVIDER_GLOBAL
+    if normalized == _DISABLED_VALUE:
+        return None
+
+    accepted_values = ", ".join(sorted(_PROVIDER_VALUES | {_DISABLED_VALUE}))
+    raise TelemetryConfigurationError(
+        f"Invalid telemetry setting {value!r}. Expected one of: {accepted_values}."
+    )
 
 
-def _resolve_mistral_telemetry_env() -> bool | None:
+def _resolve_provider_mode(value: str) -> TelemetryProviderMode:
+    normalized = value.strip().lower()
+    if normalized == TELEMETRY_PROVIDER_DEDICATED:
+        return TELEMETRY_PROVIDER_DEDICATED
+    if normalized == TELEMETRY_PROVIDER_GLOBAL:
+        return TELEMETRY_PROVIDER_GLOBAL
+
+    accepted_values = ", ".join(sorted(_PROVIDER_VALUES))
+    raise TelemetryConfigurationError(
+        f"Invalid telemetry provider {value!r}. Expected one of: {accepted_values}."
+    )
+
+
+def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
     env_value = os.getenv(MISTRAL_SDK_TELEMETRY_ENV)
     if env_value is None or env_value == "":
         return None
 
-    normalized = env_value.strip().lower()
-    if normalized in _TRUE_VALUES:
-        return True
-    if normalized in _FALSE_VALUES:
-        return False
-
-    accepted_values = ", ".join(sorted(_TRUE_VALUES | _FALSE_VALUES))
-    raise TelemetryConfigurationError(
-        f"Invalid {MISTRAL_SDK_TELEMETRY_ENV}={env_value!r}. "
-        f"Expected one of: {accepted_values}."
-    )
+    try:
+        return _resolve_telemetry_mode(env_value)
+    except TelemetryConfigurationError as exc:
+        accepted_values = ", ".join(sorted(_PROVIDER_VALUES | {_DISABLED_VALUE}))
+        raise TelemetryConfigurationError(
+            f"Invalid {MISTRAL_SDK_TELEMETRY_ENV}={env_value!r}. "
+            f"Expected one of: {accepted_values}."
+        ) from exc
 
 
 def _has_otel_exporter_endpoint_env() -> bool:
@@ -81,73 +113,104 @@ def _has_otel_exporter_endpoint_env() -> bool:
     )
 
 
-def configure_telemetry(client: "Mistral") -> bool:
-    """Configure an isolated telemetry provider for a Mistral client.
+def configure_telemetry(
+    client: "Mistral",
+    provider: str | otel_trace.TracerProvider = TELEMETRY_PROVIDER_DEDICATED,
+) -> bool:
+    """Configure telemetry provider mode for a Mistral client.
 
-    Calling configure_telemetry(client) explicitly enables SDK telemetry.
-    Environment and SDKConfiguration-based auto-resolution are handled by the
-    request hook.
-
-    Returns True when telemetry is enabled and a provider is attached. Returns
-    False when a non-telemetry provider is already set.
+    By default, this creates an SDK-owned telemetry provider/exporter. Passing
+    provider="global" clears the per-client provider so SDK spans use the
+    global OpenTelemetry provider. Passing a TracerProvider attaches it to this
+    client without taking ownership of its lifecycle.
     """
     hooks = getattr(client.sdk_configuration, "_hooks", None)
     if hooks is None:
         raise ValueError("Cannot configure telemetry: SDK hooks not initialised.")
 
-    return configure_telemetry_for_hook(
-        _get_tracing_hook(hooks),
-        client.sdk_configuration,
-        telemetry=True,
-        finalizer_owner=client,
-    )
+    hook = _get_tracing_hook(hooks)
+    if isinstance(provider, str):
+        provider_mode = _resolve_provider_mode(provider)
+        if provider_mode == TELEMETRY_PROVIDER_GLOBAL:
+            return _use_global_tracer_provider(hook, replace_existing=True)
+
+        return configure_telemetry_for_hook(
+            hook,
+            client.sdk_configuration,
+            telemetry=provider_mode,
+            finalizer_owner=client,
+            replace_existing=True,
+        )
+
+    if isinstance(provider, bool):
+        raise TelemetryConfigurationError(
+            "Invalid telemetry provider bool. Expected 'dedicated', 'global', "
+            "or an OpenTelemetry TracerProvider."
+        )
+
+    _attach_custom_tracer_provider(hook, provider)
+    return True
 
 
 def configure_telemetry_for_hook(
     hook: "TracingHook",
     sdk_config: "SDKConfiguration",
-    telemetry: bool | None = None,
+    telemetry: TelemetrySetting = None,
     finalizer_owner: Any | None = None,
     respect_global_provider: bool = False,
+    replace_existing: bool = False,
 ) -> bool:
     """Configure telemetry for a tracing hook when the user has opted in."""
     # Fast path: already resolved and no explicit override requested.
-    if hook._auto_telemetry_provider is not None and telemetry is not False:
+    if hook._auto_telemetry_provider is not None and telemetry is None:
         return True
-    if telemetry is False and hook._auto_telemetry_provider is None:
-        return False
     if telemetry is None and hook._telemetry_auto_disabled:
         return False
 
     telemetry_setting = telemetry
     if telemetry_setting is None:
         config_setting = getattr(sdk_config, "telemetry", None)
-        telemetry_setting = config_setting if isinstance(config_setting, bool) else None
+        telemetry_setting = (
+            config_setting if isinstance(config_setting, (bool, str)) else None
+        )
     using_env_setting = telemetry_setting is None
 
-    telemetry_enabled, use_otel_env_exporter = _resolve_telemetry_configuration(
+    provider_mode, use_otel_env_exporter = _resolve_telemetry_configuration(
         telemetry_setting
     )
-    if not telemetry_enabled:
-        if telemetry_setting is False:
-            _shutdown_telemetry_provider(hook)
-            hook._telemetry_auto_disabled = False
-        elif using_env_setting:
-            hook._telemetry_auto_disabled = True
+    if provider_mode is None:
+        _shutdown_telemetry_provider(hook)
+        hook._telemetry_auto_disabled = True
         return False
 
+    if provider_mode == TELEMETRY_PROVIDER_GLOBAL:
+        return _use_global_tracer_provider(
+            hook,
+            replace_existing=replace_existing or not using_env_setting,
+        )
+
     if (
-        respect_global_provider
+        provider_mode == TELEMETRY_PROVIDER_DEDICATED
+        and respect_global_provider
         and using_env_setting
         and _has_real_global_tracer_provider()
     ):
+        logger.debug(
+            "Skipping Mistral SDK telemetry auto-configuration because a global "
+            "OpenTelemetry provider is already configured. Call "
+            "configure_telemetry(client, provider='dedicated') to attach an "
+            "SDK-owned provider for this client."
+        )
+        hook._telemetry_auto_disabled = True
         return False
 
     if hook._auto_telemetry_provider is not None:
         return True
 
     if hook.tracer_provider is not None:
-        return False
+        if not replace_existing:
+            return False
+        hook.tracer_provider = None
 
     api_key = (
         None
@@ -160,22 +223,6 @@ def configure_telemetry_for_hook(
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
     return True
-
-
-def set_tracing_hook_provider(
-    client: "Mistral",
-    provider: otel_trace.TracerProvider,
-) -> None:
-    """Attach a provider to the client's tracing hook, replacing auto telemetry."""
-    hooks = getattr(client.sdk_configuration, "_hooks", None)
-    if hooks is None:
-        raise ValueError(
-            "Cannot set tracer_provider: SDK hooks not initialised on this client."
-        )
-
-    hook = _get_tracing_hook(hooks)
-    _shutdown_telemetry_provider(hook)
-    hook.tracer_provider = provider
 
 
 def _get_tracing_hook(hooks: Any) -> "TracingHook":
@@ -278,6 +325,33 @@ def _attach_telemetry_provider(
     hook._telemetry_finalizer = weakref.finalize(
         finalizer_owner, provider.shutdown
     )
+
+
+def _attach_custom_tracer_provider(
+    hook: "TracingHook",
+    provider: otel_trace.TracerProvider,
+) -> None:
+    _shutdown_telemetry_provider(hook)
+    hook.tracer_provider = provider
+    hook._telemetry_auto_disabled = False
+
+
+def _use_global_tracer_provider(
+    hook: "TracingHook",
+    *,
+    replace_existing: bool,
+) -> bool:
+    if (
+        hook.tracer_provider is not None
+        and hook._auto_telemetry_provider is None
+        and not replace_existing
+    ):
+        return False
+
+    _shutdown_telemetry_provider(hook)
+    hook.tracer_provider = None
+    hook._telemetry_auto_disabled = True
+    return True
 
 
 def _shutdown_telemetry_provider(hook: "TracingHook") -> None:
