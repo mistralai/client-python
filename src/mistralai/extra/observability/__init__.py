@@ -4,6 +4,10 @@ from typing import TYPE_CHECKING
 from opentelemetry import trace as otel_trace
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
+from .telemetry import (
+    TelemetryConfigurationError,
+    configure_telemetry,
+)
 
 if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
@@ -25,6 +29,9 @@ def set_tracer_provider(
     When set, all SDK spans produced by *client* will be emitted through
     *provider* instead of the global TracerProvider.
 
+    This helper is kept for compatibility. New code can call
+    configure_telemetry(client, provider=provider) directly.
+
     Usage::
 
         from opentelemetry.sdk.trace import TracerProvider
@@ -34,22 +41,12 @@ def set_tracer_provider(
         client = Mistral(api_key="...")
         set_tracer_provider(client, TracerProvider())
     """
-    from mistralai.client._hooks.tracing import TracingHook
-
-    hooks = getattr(client.sdk_configuration, "_hooks", None)
-    if hooks is None:
-        raise ValueError(
-            "Cannot set tracer_provider: SDK hooks not initialised on this client."
-        )
-
-    for hook in hooks.before_request_hooks:
-        if isinstance(hook, TracingHook):
-            hook.tracer_provider = provider
-            return
-
-    raise ValueError(
-        "Cannot set tracer_provider: TracingHook not found in the client's hooks."
-    )
+    configure_telemetry(client, provider=provider)
 
 
-__all__ = ["trace", "set_tracer_provider"]
+__all__ = [
+    "TelemetryConfigurationError",
+    "configure_telemetry",
+    "set_tracer_provider",
+    "trace",
+]
