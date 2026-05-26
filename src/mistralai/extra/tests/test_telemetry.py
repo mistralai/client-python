@@ -14,8 +14,7 @@ from mistralai.extra.observability import configure_telemetry, set_tracer_provid
 from mistralai.extra.observability.telemetry import (
     MISTRAL_TELEMETRY_ENDPOINT,
     MISTRAL_SDK_TELEMETRY_ENV,
-    OTEL_EXPORTER_OTLP_ENDPOINT_ENV,
-    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV,
+    MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
     TelemetryConfigurationError,
     _create_telemetry_tracer_provider,
     configure_telemetry_for_hook,
@@ -132,7 +131,6 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            use_otel_env_exporter=False,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
 
@@ -150,10 +148,10 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertIsNone(hook.tracer_provider)
         self.assertTrue(hook._telemetry_auto_disabled)
 
-    def test_otel_endpoint_env_does_not_enable_telemetry(self):
+    def test_standard_otel_endpoint_env_does_not_enable_telemetry(self):
         endpoint_env_values = {
-            OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV: "http://collector:4318/v1/traces",
-            OTEL_EXPORTER_OTLP_ENDPOINT_ENV: "http://collector:4318",
+            "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "http://collector:4318/v1/traces",
+            "OTEL_EXPORTER_OTLP_ENDPOINT": "http://collector:4318",
         }
 
         for env_name, env_value in endpoint_env_values.items():
@@ -196,7 +194,6 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            use_otel_env_exporter=False,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
 
@@ -214,7 +211,6 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            use_otel_env_exporter=False,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
 
@@ -365,58 +361,45 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="env-key",
-            use_otel_env_exporter=False,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
 
-    def test_otel_endpoint_env_configures_without_mistral_api_key(self):
-        provider = FakeProvider()
+    def test_standard_otel_endpoint_env_does_not_avoid_mistral_api_key(self):
         env = {
-            OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV: "http://collector:4318/v1/traces",
+            "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "http://collector:4318/v1/traces",
         }
 
         with patch.dict(os.environ, env, clear=True):
             with patch(
-                "mistralai.extra.observability.telemetry._resolve_api_key_from_security"
-            ) as resolve_api_key:
-                with patch(
-                    "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
-                    return_value=provider,
-                ) as create_provider:
-                    client = _make_client(api_key=None)
-                    configured = configure_telemetry(client)
+                "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
+            ) as create_provider:
+                client = _make_client(api_key=None)
+                with self.assertRaisesRegex(
+                    TelemetryConfigurationError,
+                    "Mistral telemetry requires an API key",
+                ):
+                    configure_telemetry(client)
 
-        self.assertTrue(configured)
-        resolve_api_key.assert_not_called()
-        create_provider.assert_called_once_with(
-            api_key=None,
-            use_otel_env_exporter=True,
-        )
-        self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
+        create_provider.assert_not_called()
 
-    def test_env_dedicated_prefers_otel_endpoint_env_over_mistral_endpoint(self):
+    def test_env_dedicated_ignores_standard_otel_endpoint_env(self):
         provider = FakeProvider()
         env = {
             MISTRAL_SDK_TELEMETRY_ENV: "dedicated",
-            OTEL_EXPORTER_OTLP_ENDPOINT_ENV: "http://collector:4318",
+            "OTEL_EXPORTER_OTLP_ENDPOINT": "http://collector:4318",
         }
 
         with patch.dict(os.environ, env, clear=True):
             with patch(
-                "mistralai.extra.observability.telemetry._resolve_api_key_from_security"
-            ) as resolve_api_key:
-                with patch(
-                    "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
-                    return_value=provider,
-                ) as create_provider:
-                    client = _make_client(api_key=None)
-                    configured = _configure_for_hook(client)
+                "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
+                return_value=provider,
+            ) as create_provider:
+                client = _make_client(api_key="test-key")
+                configured = _configure_for_hook(client)
 
         self.assertTrue(configured)
-        resolve_api_key.assert_not_called()
         create_provider.assert_called_once_with(
-            api_key=None,
-            use_otel_env_exporter=True,
+            api_key="test-key",
         )
 
     def test_sdk_config_global_uses_global_provider_mode(self):
@@ -546,7 +529,6 @@ class TestTelemetryConfiguration(unittest.TestCase):
         ):
             provider = _create_telemetry_tracer_provider(
                 api_key="test-key",
-                use_otel_env_exporter=False,
             )
 
         self.assertIsInstance(provider, FakeTracerProvider)
@@ -560,7 +542,8 @@ class TestTelemetryConfiguration(unittest.TestCase):
             },
         )
 
-    def test_otel_env_exporter_uses_exporter_environment_defaults(self):
+    def test_mistral_endpoint_env_overrides_default_endpoint(self):
+        custom_endpoint = "http://collector:4318/v1/traces"
         with patch(
             "mistralai.extra.observability.telemetry._load_otel_sdk",
             return_value=(
@@ -570,15 +553,23 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 FakeTracerProvider,
             ),
         ):
-            provider = _create_telemetry_tracer_provider(
-                api_key=None,
-                use_otel_env_exporter=True,
-            )
+            with patch.dict(
+                os.environ,
+                {MISTRAL_OTLP_TRACES_ENDPOINT_ENV: custom_endpoint},
+                clear=True,
+            ):
+                provider = _create_telemetry_tracer_provider(api_key="test-key")
 
         self.assertIsInstance(provider, FakeTracerProvider)
         self.assertEqual(len(FakeExporter.instances), 1)
         self.assertEqual(FakeExporter.instances[0].args, ())
-        self.assertEqual(FakeExporter.instances[0].kwargs, {})
+        self.assertEqual(
+            FakeExporter.instances[0].kwargs,
+            {
+                "endpoint": custom_endpoint,
+                "headers": {"Authorization": "Bearer test-key"},
+            },
+        )
 
 
 if __name__ == "__main__":

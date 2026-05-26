@@ -23,8 +23,7 @@ if TYPE_CHECKING:
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
 MISTRAL_TELEMETRY_ENDPOINT = "https://api.mistral.ai/telemetry/v1/traces"
-OTEL_EXPORTER_OTLP_ENDPOINT_ENV = "OTEL_EXPORTER_OTLP_ENDPOINT"
-OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV = "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"
+MISTRAL_OTLP_TRACES_ENDPOINT_ENV = "MISTRAL_OTLP_TRACES_ENDPOINT"
 TELEMETRY_PROVIDER_DEDICATED: Final[Literal["dedicated"]] = "dedicated"
 TELEMETRY_PROVIDER_GLOBAL: Final[Literal["global"]] = "global"
 
@@ -39,22 +38,6 @@ logger = logging.getLogger(__name__)
 
 class TelemetryConfigurationError(RuntimeError):
     """Raised when opt-in telemetry cannot be configured."""
-
-
-def _resolve_telemetry_configuration(
-    telemetry: TelemetrySetting = None,
-) -> tuple[TelemetryProviderMode | None, bool]:
-    """Return telemetry provider mode and whether to use OTel env config."""
-    mode = (
-        _resolve_telemetry_mode(telemetry)
-        if telemetry is not None
-        else _resolve_mistral_telemetry_env()
-    )
-    return (
-        mode,
-        mode == TELEMETRY_PROVIDER_DEDICATED
-        and _has_otel_exporter_endpoint_env(),
-    )
 
 
 def _resolve_telemetry_mode(value: bool | str) -> TelemetryProviderMode | None:
@@ -101,16 +84,6 @@ def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
             f"Invalid {MISTRAL_SDK_TELEMETRY_ENV}={env_value!r}. "
             f"Expected one of: {accepted_values}."
         ) from exc
-
-
-def _has_otel_exporter_endpoint_env() -> bool:
-    return any(
-        bool(os.getenv(env_name, "").strip())
-        for env_name in (
-            OTEL_EXPORTER_OTLP_TRACES_ENDPOINT_ENV,
-            OTEL_EXPORTER_OTLP_ENDPOINT_ENV,
-        )
-    )
 
 
 def configure_telemetry(
@@ -175,8 +148,10 @@ def configure_telemetry_for_hook(
         )
     using_env_setting = telemetry_setting is None
 
-    provider_mode, use_otel_env_exporter = _resolve_telemetry_configuration(
-        telemetry_setting
+    provider_mode = (
+        _resolve_telemetry_mode(telemetry_setting)
+        if telemetry_setting is not None
+        else _resolve_mistral_telemetry_env()
     )
     if provider_mode is None:
         _shutdown_telemetry_provider(hook)
@@ -212,14 +187,9 @@ def configure_telemetry_for_hook(
             return False
         hook.tracer_provider = None
 
-    api_key = (
-        None
-        if use_otel_env_exporter
-        else _resolve_api_key_from_security(getattr(sdk_config, "security", None))
-    )
+    api_key = _resolve_api_key_from_security(getattr(sdk_config, "security", None))
     provider = _create_telemetry_tracer_provider(
         api_key=api_key,
-        use_otel_env_exporter=use_otel_env_exporter,
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
     return True
@@ -260,7 +230,6 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
-    use_otel_env_exporter: bool,
 ) -> "SDKTracerProvider":
     (
         batch_span_processor_cls,
@@ -269,18 +238,15 @@ def _create_telemetry_tracer_provider(
         tracer_provider_cls,
     ) = _load_otel_sdk()
 
-    if use_otel_env_exporter:
-        exporter = otlp_span_exporter_cls()
-    else:
-        if api_key is None:
-            raise TelemetryConfigurationError(
-                "Mistral telemetry requires an API key. Pass api_key=... to the "
-                "client or set MISTRAL_API_KEY."
-            )
-        exporter = otlp_span_exporter_cls(
-            endpoint=MISTRAL_TELEMETRY_ENDPOINT,
-            headers={"Authorization": _as_bearer_token(api_key)},
+    if api_key is None:
+        raise TelemetryConfigurationError(
+            "Mistral telemetry requires an API key. Pass api_key=... to the "
+            "client or set MISTRAL_API_KEY."
         )
+    exporter = otlp_span_exporter_cls(
+        endpoint=_resolve_mistral_telemetry_endpoint(),
+        headers={"Authorization": _as_bearer_token(api_key)},
+    )
     provider = tracer_provider_cls(
         resource=resource_cls.create({"service.name": OTEL_SERVICE_NAME})
     )
@@ -304,6 +270,13 @@ def _load_otel_sdk():
         ) from exc
 
     return BatchSpanProcessor, OTLPSpanExporter, Resource, TracerProvider
+
+
+def _resolve_mistral_telemetry_endpoint() -> str:
+    return os.getenv(
+        MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
+        MISTRAL_TELEMETRY_ENDPOINT,
+    ).strip() or MISTRAL_TELEMETRY_ENDPOINT
 
 
 def _has_real_global_tracer_provider() -> bool:
