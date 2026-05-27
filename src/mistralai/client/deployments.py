@@ -16,6 +16,10 @@ class Deployments(BaseSDK):
         *,
         active_only: Optional[bool] = True,
         workflow_name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        limit: OptionalNullable[int] = UNSET,
+        cursor: OptionalNullable[str] = UNSET,
+        workspace_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -25,6 +29,10 @@ class Deployments(BaseSDK):
 
         :param active_only:
         :param workflow_name:
+        :param search: Filter deployments by name or ID prefix
+        :param limit: Maximum number of deployments to return
+        :param cursor: Cursor from a previous response for pagination
+        :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -46,6 +54,10 @@ class Deployments(BaseSDK):
         request = models.ListDeploymentsV1WorkflowsDeploymentsGetRequest(
             active_only=active_only,
             workflow_name=workflow_name,
+            search=search,
+            limit=limit,
+            cursor=cursor,
+            workspace_id=workspace_id,
         )
 
         req = self._build_request(
@@ -110,6 +122,10 @@ class Deployments(BaseSDK):
         *,
         active_only: Optional[bool] = True,
         workflow_name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        limit: OptionalNullable[int] = UNSET,
+        cursor: OptionalNullable[str] = UNSET,
+        workspace_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -119,6 +135,10 @@ class Deployments(BaseSDK):
 
         :param active_only:
         :param workflow_name:
+        :param search: Filter deployments by name or ID prefix
+        :param limit: Maximum number of deployments to return
+        :param cursor: Cursor from a previous response for pagination
+        :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -140,6 +160,10 @@ class Deployments(BaseSDK):
         request = models.ListDeploymentsV1WorkflowsDeploymentsGetRequest(
             active_only=active_only,
             workflow_name=workflow_name,
+            search=search,
+            limit=limit,
+            cursor=cursor,
+            workspace_id=workspace_id,
         )
 
         req = self._build_request_async(

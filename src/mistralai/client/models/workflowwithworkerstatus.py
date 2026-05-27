@@ -11,7 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -41,6 +41,8 @@ class WorkflowWithWorkerStatusTypedDict(TypedDict):
     r"""Whether the workflow must run associated to a user's identity"""
     archived: NotRequired[bool]
     r"""Whether the workflow is archived"""
+    tags: NotRequired[List[str]]
+    r"""Tags for filtering and discovery"""
 
 
 class WorkflowWithWorkerStatus(BaseModel):
@@ -82,6 +84,9 @@ class WorkflowWithWorkerStatus(BaseModel):
     archived: Optional[bool] = False
     r"""Whether the workflow is archived"""
 
+    tags: Optional[List[str]] = None
+    r"""Tags for filtering and discovery"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -92,6 +97,7 @@ class WorkflowWithWorkerStatus(BaseModel):
                 "is_technical",
                 "on_behalf_of",
                 "archived",
+                "tags",
             ]
         )
         nullable_fields = set(["description", "shared_namespace"])

@@ -2,7 +2,6 @@
 # @generated-id: 24138e419fae
 
 from __future__ import annotations
-from .voiceappearance import VoiceAppearance, VoiceAppearanceTypedDict
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -30,8 +29,8 @@ class VoiceResponseTypedDict(TypedDict):
     tags: NotRequired[Nullable[List[str]]]
     color: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
-    appearance: NotRequired[Nullable[VoiceAppearanceTypedDict]]
     retention_notice: NotRequired[int]
+    trimmed_seconds: NotRequired[Nullable[float]]
 
 
 class VoiceResponse(BaseModel):
@@ -59,9 +58,9 @@ class VoiceResponse(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
-    appearance: OptionalNullable[VoiceAppearance] = UNSET
-
     retention_notice: Optional[int] = 30
+
+    trimmed_seconds: OptionalNullable[float] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -74,8 +73,8 @@ class VoiceResponse(BaseModel):
                 "tags",
                 "color",
                 "description",
-                "appearance",
                 "retention_notice",
+                "trimmed_seconds",
             ]
         )
         nullable_fields = set(
@@ -86,8 +85,8 @@ class VoiceResponse(BaseModel):
                 "tags",
                 "color",
                 "description",
-                "appearance",
                 "user_id",
+                "trimmed_seconds",
             ]
         )
         serialized = handler(self)

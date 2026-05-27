@@ -472,7 +472,9 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         app_return_url: OptionalNullable[str] = UNSET,
+        method_type: Optional[models.OutboundAuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
+        bind_connection_to: Optional[models.BindConnectionTo] = "user",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -484,7 +486,9 @@ class Connectors(BaseSDK):
 
         :param connector_id_or_name:
         :param app_return_url:
+        :param method_type: Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app').
         :param credentials_name:
+        :param bind_connection_to:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -505,7 +509,9 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorGetAuthURLV1Request(
             app_return_url=app_return_url,
+            method_type=method_type,
             credentials_name=credentials_name,
+            bind_connection_to=bind_connection_to,
             connector_id_or_name=connector_id_or_name,
         )
 
@@ -571,7 +577,9 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         app_return_url: OptionalNullable[str] = UNSET,
+        method_type: Optional[models.OutboundAuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
+        bind_connection_to: Optional[models.BindConnectionTo] = "user",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -583,7 +591,9 @@ class Connectors(BaseSDK):
 
         :param connector_id_or_name:
         :param app_return_url:
+        :param method_type: Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app').
         :param credentials_name:
+        :param bind_connection_to:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -604,7 +614,9 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorGetAuthURLV1Request(
             app_return_url=app_return_url,
+            method_type=method_type,
             credentials_name=credentials_name,
+            bind_connection_to=bind_connection_to,
             connector_id_or_name=connector_id_or_name,
         )
 
@@ -4642,7 +4654,6 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
-        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -4665,7 +4676,6 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
-        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -4697,7 +4707,6 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
-                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,
@@ -4781,7 +4790,6 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
-        protocol: OptionalNullable[models.ConnectorProtocol] = UNSET,
         connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
         connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
@@ -4804,7 +4812,6 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
-        :param protocol: Protocol of the connector.
         :param connection_config: Optional new connection config.
         :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
@@ -4836,7 +4843,6 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
-                protocol=protocol,
                 connection_config=connection_config,
                 connection_secrets=connection_secrets,
                 server=server,

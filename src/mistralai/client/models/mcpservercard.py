@@ -6,10 +6,10 @@ from .clientcapabilities import ClientCapabilities, ClientCapabilitiesTypedDict
 from .mcpprompt import MCPPrompt, MCPPromptTypedDict
 from .mcpresource import MCPResource, MCPResourceTypedDict
 from .mcpservercardmeta import MCPServerCardMeta, MCPServerCardMetaTypedDict
+from .mcpservercardtool import MCPServerCardTool, MCPServerCardToolTypedDict
 from .mcpservericon import MCPServerIcon, MCPServerIconTypedDict
 from .mcpserverremote import MCPServerRemote, MCPServerRemoteTypedDict
 from .mcpserverrepository import MCPServerRepository, MCPServerRepositoryTypedDict
-from .mcptoolmeta import MCPToolMeta, MCPToolMetaTypedDict
 from .servercapabilities import ServerCapabilities, ServerCapabilitiesTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -32,10 +32,12 @@ ResourcesTypedDict = TypeAliasType(
 Resources = TypeAliasType("Resources", Union[str, List[MCPResource]])
 
 
-ToolsTypedDict = TypeAliasType("ToolsTypedDict", Union[str, List[MCPToolMetaTypedDict]])
+ToolsTypedDict = TypeAliasType(
+    "ToolsTypedDict", Union[str, List[MCPServerCardToolTypedDict]]
+)
 
 
-Tools = TypeAliasType("Tools", Union[str, List[MCPToolMeta]])
+Tools = TypeAliasType("Tools", Union[str, List[MCPServerCardTool]])
 
 
 PromptsTypedDict = TypeAliasType(

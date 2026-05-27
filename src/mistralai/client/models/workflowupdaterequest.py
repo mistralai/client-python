@@ -10,6 +10,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -20,6 +21,8 @@ class WorkflowUpdateRequestTypedDict(TypedDict):
     r"""New description value"""
     available_in_chat_assistant: NotRequired[Nullable[bool]]
     r"""Whether to make the workflow available in the chat assistant"""
+    tags: NotRequired[Nullable[List[str]]]
+    r"""New tags. Replaces the existing tag list."""
 
 
 class WorkflowUpdateRequest(BaseModel):
@@ -32,13 +35,16 @@ class WorkflowUpdateRequest(BaseModel):
     available_in_chat_assistant: OptionalNullable[bool] = UNSET
     r"""Whether to make the workflow available in the chat assistant"""
 
+    tags: OptionalNullable[List[str]] = UNSET
+    r"""New tags. Replaces the existing tag list."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["display_name", "description", "available_in_chat_assistant"]
+            ["display_name", "description", "available_in_chat_assistant", "tags"]
         )
         nullable_fields = set(
-            ["display_name", "description", "available_in_chat_assistant"]
+            ["display_name", "description", "available_in_chat_assistant", "tags"]
         )
         serialized = handler(self)
         m = {}

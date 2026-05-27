@@ -11,7 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -26,6 +26,8 @@ class WorkflowBasicDefinitionTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     r"""A description of the workflow"""
     metadata: NotRequired[WorkflowMetadataTypedDict]
+    tags: NotRequired[List[str]]
+    r"""Workflow tags"""
 
 
 class WorkflowBasicDefinition(BaseModel):
@@ -45,9 +47,12 @@ class WorkflowBasicDefinition(BaseModel):
 
     metadata: Optional[WorkflowMetadata] = None
 
+    tags: Optional[List[str]] = None
+    r"""Workflow tags"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "metadata"])
+        optional_fields = set(["description", "metadata", "tags"])
         nullable_fields = set(["description"])
         serialized = handler(self)
         m = {}
