@@ -9,7 +9,11 @@ from typing import Literal, Union
 ReasoningEffort = Union[
     Literal[
         "none",
+        "minimal",
+        "low",
+        "medium",
         "high",
+        "xhigh",
     ],
     UnrecognizedStr,
 ]

@@ -299,6 +299,7 @@ class Workflows(BaseSDK):
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
+        tags: OptionalNullable[List[str]] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -312,6 +313,7 @@ class Workflows(BaseSDK):
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
+        :param tags: Filter to workflows tagged with all listed tags (AND).
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
         :param retries: Override the default retry configuration for this method
@@ -337,6 +339,7 @@ class Workflows(BaseSDK):
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
             archived=archived,
+            tags=tags,
             cursor=cursor,
             limit=limit,
         )
@@ -404,6 +407,7 @@ class Workflows(BaseSDK):
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
                 archived=archived,
+                tags=tags,
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
@@ -439,6 +443,7 @@ class Workflows(BaseSDK):
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
+        tags: OptionalNullable[List[str]] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -452,6 +457,7 @@ class Workflows(BaseSDK):
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
+        :param tags: Filter to workflows tagged with all listed tags (AND).
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
         :param retries: Override the default retry configuration for this method
@@ -477,6 +483,7 @@ class Workflows(BaseSDK):
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
             archived=archived,
+            tags=tags,
             cursor=cursor,
             limit=limit,
         )
@@ -549,6 +556,7 @@ class Workflows(BaseSDK):
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
                 archived=archived,
+                tags=tags,
                 cursor=next_cursor,
                 limit=limit,
                 retries=retries,
@@ -1520,6 +1528,7 @@ class Workflows(BaseSDK):
         display_name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        tags: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1531,6 +1540,7 @@ class Workflows(BaseSDK):
         :param display_name: New display name value
         :param description: New description value
         :param available_in_chat_assistant: Whether to make the workflow available in the chat assistant
+        :param tags: New tags. Replaces the existing tag list.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1555,6 +1565,7 @@ class Workflows(BaseSDK):
                 display_name=display_name,
                 description=description,
                 available_in_chat_assistant=available_in_chat_assistant,
+                tags=tags,
             ),
         )
 
@@ -1629,6 +1640,7 @@ class Workflows(BaseSDK):
         display_name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        tags: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1640,6 +1652,7 @@ class Workflows(BaseSDK):
         :param display_name: New display name value
         :param description: New description value
         :param available_in_chat_assistant: Whether to make the workflow available in the chat assistant
+        :param tags: New tags. Replaces the existing tag list.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1664,6 +1677,7 @@ class Workflows(BaseSDK):
                 display_name=display_name,
                 description=description,
                 available_in_chat_assistant=available_in_chat_assistant,
+                tags=tags,
             ),
         )
 

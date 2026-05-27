@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
-from .connectorprotocol import ConnectorProtocol
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,9 +10,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateConnectorRequestTypedDict(TypedDict):
@@ -27,12 +29,11 @@ class UpdateConnectorRequestTypedDict(TypedDict):
     r"""The optional url of the icon you want to associate to the connector."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
-    protocol: NotRequired[Nullable[ConnectorProtocol]]
-    r"""Protocol of the connector."""
     connection_config: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional new connection config."""
     connection_secrets: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional new connection secrets"""
+    protocol: Literal["mcp"]
     server: NotRequired[Nullable[str]]
     r"""New server url for your mcp connector."""
     headers: NotRequired[Nullable[Dict[str, Any]]]
@@ -57,14 +58,16 @@ class UpdateConnectorRequest(BaseModel):
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
 
-    protocol: OptionalNullable[ConnectorProtocol] = UNSET
-    r"""Protocol of the connector."""
-
     connection_config: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional new connection config."""
 
     connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional new connection secrets"""
+
+    protocol: Annotated[
+        Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
+        pydantic.Field(alias="protocol"),
+    ] = "mcp"
 
     server: OptionalNullable[str] = UNSET
     r"""New server url for your mcp connector."""
@@ -84,9 +87,9 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "protocol",
                 "connection_config",
                 "connection_secrets",
+                "protocol",
                 "server",
                 "headers",
                 "auth_data",
@@ -99,7 +102,6 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "protocol",
                 "connection_config",
                 "connection_secrets",
                 "server",
@@ -127,3 +129,9 @@ class UpdateConnectorRequest(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    UpdateConnectorRequest.model_rebuild()
+except NameError:
+    pass

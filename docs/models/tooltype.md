@@ -1,12 +1,12 @@
-# ReasoningEffort
+# ToolType
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import ReasoningEffort
+from mistralai.client.models import ToolType
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ReasoningEffort = "none"
+value: ToolType = "rag"
 ```
 
 
@@ -14,9 +14,7 @@ value: ReasoningEffort = "none"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"none"`
-- `"minimal"`
-- `"low"`
-- `"medium"`
-- `"high"`
-- `"xhigh"`
+- `"rag"`
+- `"image"`
+- `"code"`
+- `"event"`

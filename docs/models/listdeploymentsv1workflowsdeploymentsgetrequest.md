@@ -3,7 +3,11 @@
 
 ## Fields
 
-| Field                   | Type                    | Required                | Description             |
-| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| `active_only`           | *Optional[bool]*        | :heavy_minus_sign:      | N/A                     |
-| `workflow_name`         | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
+| Field                                                                   | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `active_only`                                                           | *Optional[bool]*                                                        | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `workflow_name`                                                         | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `search`                                                                | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | Filter deployments by name or ID prefix                                 |
+| `limit`                                                                 | *OptionalNullable[int]*                                                 | :heavy_minus_sign:                                                      | Maximum number of deployments to return                                 |
+| `cursor`                                                                | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | Cursor from a previous response for pagination                          |
+| `workspace_id`                                                          | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | Workspace ID to scope the request to. Defaults to the caller's context. |

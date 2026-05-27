@@ -9,9 +9,9 @@
 value: str = /* values here */
 ```
 
-### `List[models.MCPToolMeta]`
+### `List[models.MCPServerCardTool]`
 
 ```python
-value: List[models.MCPToolMeta] = /* values here */
+value: List[models.MCPServerCardTool] = /* values here */
 ```
 

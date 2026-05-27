@@ -12,7 +12,7 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Awaitable, Callable, Optional, Union
+from typing import Awaitable, Callable, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -25,6 +25,8 @@ class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
     r"""Whether to only return workflows available in chat assistant"""
     archived: NotRequired[Nullable[bool]]
     r"""Filter by archived state. False=exclude archived, True=only archived, None=include all"""
+    tags: NotRequired[Nullable[List[str]]]
+    r"""Filter to workflows tagged with all listed tags (AND)."""
     cursor: NotRequired[Nullable[str]]
     r"""The cursor for pagination"""
     limit: NotRequired[int]
@@ -56,6 +58,12 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by archived state. False=exclude archived, True=only archived, None=include all"""
 
+    tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter to workflows tagged with all listed tags (AND)."""
+
     cursor: Annotated[
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -76,11 +84,14 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
                 "include_shared",
                 "available_in_chat_assistant",
                 "archived",
+                "tags",
                 "cursor",
                 "limit",
             ]
         )
-        nullable_fields = set(["available_in_chat_assistant", "archived", "cursor"])
+        nullable_fields = set(
+            ["available_in_chat_assistant", "archived", "tags", "cursor"]
+        )
         serialized = handler(self)
         m = {}
 
