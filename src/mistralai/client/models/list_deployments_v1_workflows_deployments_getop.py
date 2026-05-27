@@ -18,6 +18,14 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     active_only: NotRequired[bool]
     workflow_name: NotRequired[Nullable[str]]
+    search: NotRequired[Nullable[str]]
+    r"""Filter deployments by name or ID prefix"""
+    limit: NotRequired[Nullable[int]]
+    r"""Maximum number of deployments to return"""
+    cursor: NotRequired[Nullable[str]]
+    r"""Cursor from a previous response for pagination"""
+    workspace_id: NotRequired[Nullable[str]]
+    r"""Workspace ID to scope the request to. Defaults to the caller's context."""
 
 
 class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
@@ -31,10 +39,45 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    search: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter deployments by name or ID prefix"""
+
+    limit: Annotated[
+        OptionalNullable[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Maximum number of deployments to return"""
+
+    cursor: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Cursor from a previous response for pagination"""
+
+    workspace_id: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Workspace ID to scope the request to. Defaults to the caller's context."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["active_only", "workflow_name"])
-        nullable_fields = set(["workflow_name"])
+        optional_fields = set(
+            [
+                "active_only",
+                "workflow_name",
+                "search",
+                "limit",
+                "cursor",
+                "workspace_id",
+            ]
+        )
+        nullable_fields = set(
+            ["workflow_name", "search", "limit", "cursor", "workspace_id"]
+        )
         serialized = handler(self)
         m = {}
 

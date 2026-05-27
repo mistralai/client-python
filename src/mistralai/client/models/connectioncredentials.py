@@ -19,6 +19,7 @@ class ConnectionCredentialsTypedDict(TypedDict):
     oauth: NotRequired[Nullable[OAuth2TokenTypedDict]]
     headers: NotRequired[Nullable[Dict[str, str]]]
     bearer_token: NotRequired[Nullable[str]]
+    github_installation_id: NotRequired[Nullable[str]]
 
 
 class ConnectionCredentials(BaseModel):
@@ -28,10 +29,16 @@ class ConnectionCredentials(BaseModel):
 
     bearer_token: OptionalNullable[str] = UNSET
 
+    github_installation_id: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["oauth", "headers", "bearer_token"])
-        nullable_fields = set(["oauth", "headers", "bearer_token"])
+        optional_fields = set(
+            ["oauth", "headers", "bearer_token", "github_installation_id"]
+        )
+        nullable_fields = set(
+            ["oauth", "headers", "bearer_token", "github_installation_id"]
+        )
         serialized = handler(self)
         m = {}
 

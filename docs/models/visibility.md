@@ -1,12 +1,12 @@
-# ReasoningEffort
+# Visibility
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import ReasoningEffort
+from mistralai.client.models import Visibility
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ReasoningEffort = "none"
+value: Visibility = "model"
 ```
 
 
@@ -14,9 +14,5 @@ value: ReasoningEffort = "none"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"none"`
-- `"minimal"`
-- `"low"`
-- `"medium"`
-- `"high"`
-- `"xhigh"`
+- `"model"`
+- `"app"`

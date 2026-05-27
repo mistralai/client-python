@@ -471,6 +471,7 @@ if TYPE_CHECKING:
         ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict,
     )
     from .connector_get_auth_url_v1op import (
+        BindConnectionTo,
         ConnectorGetAuthURLV1Request,
         ConnectorGetAuthURLV1RequestTypedDict,
     )
@@ -1480,6 +1481,7 @@ if TYPE_CHECKING:
         ToolsTypedDict,
     )
     from .mcpservercardmeta import MCPServerCardMeta, MCPServerCardMetaTypedDict
+    from .mcpservercardtool import MCPServerCardTool, MCPServerCardToolTypedDict
     from .mcpservericon import MCPServerIcon, MCPServerIconTypedDict
     from .mcpserverremote import (
         MCPServerRemote,
@@ -1493,6 +1495,7 @@ if TYPE_CHECKING:
     from .mcpserverrepository import MCPServerRepository, MCPServerRepositoryTypedDict
     from .mcptool import MCPTool, MCPToolTypedDict
     from .mcptoolmeta import MCPToolMeta, MCPToolMetaTypedDict
+    from .mcpuitoolmeta import MCPUIToolMeta, MCPUIToolMetaTypedDict, Visibility
     from .messageentries import MessageEntries, MessageEntriesTypedDict
     from .messageinputcontentchunks import (
         MessageInputContentChunks,
@@ -2020,6 +2023,7 @@ if TYPE_CHECKING:
         ToolReferenceChunkTypedDict,
     )
     from .toolscapability import ToolsCapability, ToolsCapabilityTypedDict
+    from .tooltype import ToolType
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
         TranscriptionResponse,
@@ -2054,6 +2058,8 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDeltaTypedDict,
     )
     from .turbinemeta import TurbineMeta, TurbineMetaTypedDict
+    from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
+    from .turbinetoolmeta import TurbineToolMeta, TurbineToolMetaTypedDict
     from .unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop import (
         UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest,
         UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict,
@@ -2174,7 +2180,6 @@ if TYPE_CHECKING:
         VespaSearchIndexInfoResponse,
         VespaSearchIndexInfoResponseTypedDict,
     )
-    from .voiceappearance import VoiceAppearance, VoiceAppearanceTypedDict
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
     from .voiceresponse import VoiceResponse, VoiceResponseTypedDict
@@ -2546,6 +2551,7 @@ __all__ = [
     "BatchJobTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
+    "BindConnectionTo",
     "BlobResourceContents",
     "BlobResourceContentsTypedDict",
     "BuiltInConnectors",
@@ -3337,6 +3343,8 @@ __all__ = [
     "MCPServerCard",
     "MCPServerCardMeta",
     "MCPServerCardMetaTypedDict",
+    "MCPServerCardTool",
+    "MCPServerCardToolTypedDict",
     "MCPServerCardTypedDict",
     "MCPServerIcon",
     "MCPServerIconTypedDict",
@@ -3351,6 +3359,8 @@ __all__ = [
     "MCPToolMeta",
     "MCPToolMetaTypedDict",
     "MCPToolTypedDict",
+    "MCPUIToolMeta",
+    "MCPUIToolMetaTypedDict",
     "MessageEntries",
     "MessageEntriesTypedDict",
     "MessageInputContentChunks",
@@ -3783,6 +3793,7 @@ __all__ = [
     "ToolReferenceChunkTool",
     "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkTypedDict",
+    "ToolType",
     "ToolTypedDict",
     "Tools",
     "ToolsCapability",
@@ -3809,6 +3820,10 @@ __all__ = [
     "TranscriptionStreamTextDeltaTypedDict",
     "TurbineMeta",
     "TurbineMetaTypedDict",
+    "TurbineToolLocale",
+    "TurbineToolLocaleTypedDict",
+    "TurbineToolMeta",
+    "TurbineToolMetaTypedDict",
     "UnarchiveModelResponse",
     "UnarchiveModelResponseTypedDict",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest",
@@ -3905,8 +3920,7 @@ __all__ = [
     "VespaSchemaResponseTypedDict",
     "VespaSearchIndexInfoResponse",
     "VespaSearchIndexInfoResponseTypedDict",
-    "VoiceAppearance",
-    "VoiceAppearanceTypedDict",
+    "Visibility",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
     "VoiceListResponse",
@@ -4341,6 +4355,7 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1Request": ".connector_delete_workspace_credentials_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict": ".connector_delete_workspace_credentials_v1op",
+    "BindConnectionTo": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthenticationMethodsV1Request": ".connector_get_authentication_methods_v1op",
@@ -5011,6 +5026,8 @@ _dynamic_imports: dict[str, str] = {
     "ToolsTypedDict": ".mcpservercard",
     "MCPServerCardMeta": ".mcpservercardmeta",
     "MCPServerCardMetaTypedDict": ".mcpservercardmeta",
+    "MCPServerCardTool": ".mcpservercardtool",
+    "MCPServerCardToolTypedDict": ".mcpservercardtool",
     "MCPServerIcon": ".mcpservericon",
     "MCPServerIconTypedDict": ".mcpservericon",
     "MCPServerRemote": ".mcpserverremote",
@@ -5024,6 +5041,9 @@ _dynamic_imports: dict[str, str] = {
     "MCPToolTypedDict": ".mcptool",
     "MCPToolMeta": ".mcptoolmeta",
     "MCPToolMetaTypedDict": ".mcptoolmeta",
+    "MCPUIToolMeta": ".mcpuitoolmeta",
+    "MCPUIToolMetaTypedDict": ".mcpuitoolmeta",
+    "Visibility": ".mcpuitoolmeta",
     "MessageEntries": ".messageentries",
     "MessageEntriesTypedDict": ".messageentries",
     "MessageInputContentChunks": ".messageinputcontentchunks",
@@ -5439,6 +5459,7 @@ _dynamic_imports: dict[str, str] = {
     "ToolReferenceChunkTypedDict": ".toolreferencechunk",
     "ToolsCapability": ".toolscapability",
     "ToolsCapabilityTypedDict": ".toolscapability",
+    "ToolType": ".tooltype",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
     "TranscriptionResponse": ".transcriptionresponse",
@@ -5461,6 +5482,10 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "TurbineMeta": ".turbinemeta",
     "TurbineMetaTypedDict": ".turbinemeta",
+    "TurbineToolLocale": ".turbinetoollocale",
+    "TurbineToolLocaleTypedDict": ".turbinetoollocale",
+    "TurbineToolMeta": ".turbinetoolmeta",
+    "TurbineToolMetaTypedDict": ".turbinetoolmeta",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
@@ -5537,8 +5562,6 @@ _dynamic_imports: dict[str, str] = {
     "VespaSchemaResponseTypedDict": ".vespaschemaresponse",
     "VespaSearchIndexInfoResponse": ".vespasearchindexinforesponse",
     "VespaSearchIndexInfoResponseTypedDict": ".vespasearchindexinforesponse",
-    "VoiceAppearance": ".voiceappearance",
-    "VoiceAppearanceTypedDict": ".voiceappearance",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
     "VoiceListResponse": ".voicelistresponse",
