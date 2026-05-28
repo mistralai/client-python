@@ -18,6 +18,7 @@ import json
 import threading
 import unittest
 from datetime import datetime, timezone
+from typing import cast
 from unittest.mock import MagicMock
 
 import httpx
@@ -43,6 +44,7 @@ from mistralai.client.models import (
     AssistantMessage,
     ChatCompletionChoice,
     ChatCompletionRequest,
+    ChatCompletionRequestMessage,
     ChatCompletionResponse,
     CompletionChunk,
     CompletionEvent,
@@ -146,6 +148,10 @@ def _make_streaming_httpx_response(sse_body: bytes) -> httpx.Response:
     )
 
 
+def _make_user_messages(content: str) -> list[ChatCompletionRequestMessage]:
+    return [cast(ChatCompletionRequestMessage, UserMessage(content=content))]
+
+
 class _ChatCompletionTestServer:
     def __init__(self, *, block_until_two_requests: bool = False) -> None:
         self.block_until_two_requests = block_until_two_requests
@@ -224,7 +230,7 @@ class _ChatCompletionTestServer:
     @property
     def url(self) -> str:
         assert self._server is not None
-        host, port = self._server.server_address
+        host, port = cast(tuple[str, int], self._server.server_address)
         return f"http://{host}:{port}"
 
 
@@ -1825,7 +1831,7 @@ class TestOtelTracing(unittest.TestCase):
                 ) as activity_span:
                     client.chat.complete(
                         model="mistral-small-latest",
-                        messages=[{"role": "user", "content": "hello"}],
+                        messages=_make_user_messages("hello"),
                     )
 
                     self.assertEqual(
@@ -1866,11 +1872,11 @@ class TestOtelTracing(unittest.TestCase):
                     return await asyncio.gather(
                         client.chat.complete_async(
                             model="mistral-large-latest",
-                            messages=[{"role": "user", "content": "A"}],
+                            messages=_make_user_messages("A"),
                         ),
                         client.chat.complete_async(
                             model="mistral-small-latest",
-                            messages=[{"role": "user", "content": "B"}],
+                            messages=_make_user_messages("B"),
                         ),
                     )
 
