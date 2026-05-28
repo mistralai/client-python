@@ -68,6 +68,7 @@ dev = [
     "pyyaml>=6.0.2,<7",
     "mypy==1.15.0",
     "msgpack>=1.1.0,<2.0.0",
+    "opentelemetry-instrumentation-httpx (>=0.60b1,<0.61)",
     "opentelemetry-sdk (>=1.33.1,<2.0.0)",
     "opentelemetry-exporter-otlp-proto-http (>=1.33.1,<2.0.0)",
     "pylint==3.2.3",

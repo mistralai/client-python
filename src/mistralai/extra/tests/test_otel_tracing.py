@@ -12,7 +12,10 @@ Fixtures are defined inline using SDK model classes so each test is self-contain
 # pyright: reportArgumentType=false
 
 import asyncio
+from collections import Counter
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import threading
 import unittest
 from datetime import datetime, timezone
 from unittest.mock import MagicMock
@@ -21,6 +24,7 @@ import httpx
 from opentelemetry import context as context_api
 from opentelemetry import trace
 from opentelemetry.baggage import set_baggage
+from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -142,9 +146,101 @@ def _make_streaming_httpx_response(sse_body: bytes) -> httpx.Response:
     )
 
 
+class _ChatCompletionTestServer:
+    def __init__(self, *, block_until_two_requests: bool = False) -> None:
+        self.block_until_two_requests = block_until_two_requests
+        self._server: ThreadingHTTPServer | None = None
+        self._thread: threading.Thread | None = None
+        self._arrived = 0
+        self._lock = threading.Lock()
+        self._gate = threading.Event()
+
+    def _wait_for_second_request_if_needed(self) -> None:
+        if not self.block_until_two_requests:
+            return
+
+        with self._lock:
+            self._arrived += 1
+            arrived = self._arrived
+        if arrived < 2:
+            self._gate.wait(timeout=5)
+        else:
+            self._gate.set()
+
+    @staticmethod
+    def _response_body(model: str) -> bytes:
+        response = _dump(
+            ChatCompletionResponse(
+                id=f"cmpl-{model}",
+                object="chat.completion",
+                model=model,
+                created=1700000000,
+                choices=[
+                    ChatCompletionChoice(
+                        index=0,
+                        message=AssistantMessage(content=f"ok from {model}"),
+                        finish_reason="stop",
+                    )
+                ],
+                usage=UsageInfo(
+                    prompt_tokens=5,
+                    completion_tokens=2,
+                    total_tokens=7,
+                ),
+            )
+        )
+        return json.dumps(response).encode()
+
+    def __enter__(self):
+        owner = self
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_POST(self):
+                content_length = int(self.headers["content-length"])
+                request_body = json.loads(self.rfile.read(content_length))
+                owner._wait_for_second_request_if_needed()
+                data = owner._response_body(request_body["model"])
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.send_header("content-length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+            def log_message(self, format, *args):
+                return
+
+        self._server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
+        self._thread.start()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._server is not None:
+            self._server.shutdown()
+            self._server.server_close()
+        if self._thread is not None:
+            self._thread.join(timeout=5)
+
+    @property
+    def url(self) -> str:
+        assert self._server is not None
+        host, port = self._server.server_address
+        return f"http://{host}:{port}"
+
+
 def _parse_json_list(span_attr):
     """Parse a span attribute containing a JSON-encoded array string."""
     return json.loads(span_attr)
+
+
+def _run_async_for_unittest(awaitable):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        return loop.run_until_complete(awaitable)
+    finally:
+        loop.close()
+        asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 # -- Tests ---------------------------------------------------------------------
@@ -1709,6 +1805,97 @@ class TestOtelTracing(unittest.TestCase):
             ),
             "mistral-small-latest",
         )
+
+    # -- HTTPX auto-instrumentation parenting ---------------------------------
+
+    def test_httpx_auto_instrumented_span_is_child_of_genai_span(self):
+        instrumentor = HTTPXClientInstrumentor()
+        instrumentor.instrument()
+        tracer = trace.get_tracer("test-workflow-parenting")
+
+        try:
+            with _ChatCompletionTestServer() as server, httpx.Client() as http_client:
+                client = Mistral(
+                    api_key="test-key",
+                    client=http_client,
+                    server_url=server.url,
+                )
+                with tracer.start_as_current_span(
+                    "ExecuteActivity:generate_site_diagnostic"
+                ) as activity_span:
+                    client.chat.complete(
+                        model="mistral-small-latest",
+                        messages=[{"role": "user", "content": "hello"}],
+                    )
+
+                    self.assertEqual(
+                        trace.get_current_span().get_span_context().span_id,
+                        activity_span.get_span_context().span_id,
+                    )
+        finally:
+            instrumentor.uninstrument()
+
+        spans = self._get_finished_spans()
+        activity = next(
+            s for s in spans if s.name == "ExecuteActivity:generate_site_diagnostic"
+        )
+        genai = next(s for s in spans if s.name == "chat mistral-small-latest")
+        post = next(s for s in spans if s.name == "POST")
+
+        self.assertEqual(genai.parent.span_id, activity.context.span_id)
+        self.assertEqual(post.parent.span_id, genai.context.span_id)
+
+    def test_concurrent_async_httpx_auto_instrumented_spans_are_genai_children(
+        self,
+    ):
+        instrumentor = HTTPXClientInstrumentor()
+        instrumentor.instrument()
+        tracer = trace.get_tracer("test-workflow-parenting")
+
+        async def _run(server_url: str):
+            async with httpx.AsyncClient() as async_client:
+                client = Mistral(
+                    api_key="test-key",
+                    async_client=async_client,
+                    server_url=server_url,
+                )
+
+                with tracer.start_as_current_span(
+                    "ExecuteActivity:generate_site_diagnostic"
+                ):
+                    return await asyncio.gather(
+                        client.chat.complete_async(
+                            model="mistral-large-latest",
+                            messages=[{"role": "user", "content": "A"}],
+                        ),
+                        client.chat.complete_async(
+                            model="mistral-small-latest",
+                            messages=[{"role": "user", "content": "B"}],
+                        ),
+                    )
+
+        try:
+            with _ChatCompletionTestServer(block_until_two_requests=True) as server:
+                results = _run_async_for_unittest(_run(server.url))
+                self.assertEqual(len(results), 2)
+        finally:
+            instrumentor.uninstrument()
+
+        spans = self._get_finished_spans()
+        activity = next(
+            s for s in spans if s.name == "ExecuteActivity:generate_site_diagnostic"
+        )
+        genai_spans = [s for s in spans if s.name.startswith("chat mistral-")]
+        post_spans = [s for s in spans if s.name == "POST"]
+
+        self.assertEqual(len(genai_spans), 2)
+        self.assertEqual(len(post_spans), 2)
+        for span in genai_spans:
+            self.assertEqual(span.parent.span_id, activity.context.span_id)
+
+        post_parent_counts = Counter(span.parent.span_id for span in post_spans)
+        for span in genai_spans:
+            self.assertEqual(post_parent_counts[span.context.span_id], 1)
 
 
 class TestPerInstanceTracerProvider(unittest.TestCase):
