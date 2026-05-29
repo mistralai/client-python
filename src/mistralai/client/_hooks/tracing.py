@@ -49,6 +49,10 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
+        # The GenAI span is created in this hook, but HTTPX creates its own
+        # auto-instrumented span later inside send(). Wrap the configured
+        # clients so each request's stored GenAI span is current only while
+        # that request is being sent.
         self._ensure_client_send_wrapped(getattr(hook_ctx.config, "client", None))
         self._ensure_async_client_send_wrapped(
             getattr(hook_ctx.config, "async_client", None)

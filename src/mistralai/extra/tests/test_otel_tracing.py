@@ -239,16 +239,6 @@ def _parse_json_list(span_attr):
     return json.loads(span_attr)
 
 
-def _run_async_for_unittest(awaitable):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(awaitable)
-    finally:
-        loop.close()
-        asyncio.set_event_loop(asyncio.new_event_loop())
-
-
 # -- Tests ---------------------------------------------------------------------
 
 
@@ -1777,7 +1767,7 @@ class TestOtelTracing(unittest.TestCase):
                 ),
             )
 
-        results = asyncio.get_event_loop().run_until_complete(_run())
+        results = asyncio.run(_run())
 
         # Both calls must succeed
         self.assertEqual(len(results), 2)
@@ -1851,6 +1841,52 @@ class TestOtelTracing(unittest.TestCase):
         self.assertEqual(genai.parent.span_id, activity.context.span_id)
         self.assertEqual(post.parent.span_id, genai.context.span_id)
 
+    def test_httpx_send_error_ends_genai_span_and_restores_parent_context(self):
+        instrumentor = HTTPXClientInstrumentor()
+        instrumentor.instrument()
+        tracer = trace.get_tracer("test-workflow-parenting")
+
+        def raise_connect_error(request: httpx.Request) -> httpx.Response:
+            raise httpx.ConnectError("connection failed", request=request)
+
+        try:
+            with httpx.Client(
+                transport=httpx.MockTransport(raise_connect_error)
+            ) as http_client:
+                client = Mistral(
+                    api_key="test-key",
+                    client=http_client,
+                    server_url="https://api.mistral.ai",
+                )
+                with tracer.start_as_current_span(
+                    "ExecuteActivity:generate_site_diagnostic"
+                ) as activity_span:
+                    with self.assertRaises(httpx.ConnectError):
+                        client.chat.complete(
+                            model="mistral-small-latest",
+                            messages=_make_user_messages("hello"),
+                        )
+
+                    self.assertEqual(
+                        trace.get_current_span().get_span_context().span_id,
+                        activity_span.get_span_context().span_id,
+                    )
+        finally:
+            instrumentor.uninstrument()
+
+        spans = self._get_finished_spans()
+        activity = next(
+            s for s in spans if s.name == "ExecuteActivity:generate_site_diagnostic"
+        )
+        genai = next(s for s in spans if s.name == "chat mistral-small-latest")
+        post_spans = [s for s in spans if s.name == "POST"]
+
+        self.assertEqual(genai.parent.span_id, activity.context.span_id)
+        self.assertEqual(genai.status.status_code, StatusCode.ERROR)
+        self.assertIn("connection failed", genai.status.description or "")
+        for post_span in post_spans:
+            self.assertEqual(post_span.parent.span_id, genai.context.span_id)
+
     def test_concurrent_async_httpx_auto_instrumented_spans_are_genai_children(
         self,
     ):
@@ -1882,7 +1918,7 @@ class TestOtelTracing(unittest.TestCase):
 
         try:
             with _ChatCompletionTestServer(block_until_two_requests=True) as server:
-                results = _run_async_for_unittest(_run(server.url))
+                results = asyncio.run(_run(server.url))
                 self.assertEqual(len(results), 2)
         finally:
             instrumentor.uninstrument()
