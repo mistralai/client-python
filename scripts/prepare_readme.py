@@ -31,21 +31,27 @@ def _rewrite_relative_links(contents: str, base_url: str) -> str:
     )
 
 
-try:
-    with open("README.md", "r", encoding="utf-8") as fh:
-        readme_contents = fh.read()
-
-    base_url = _build_base_url(GITHUB_URL, BRANCH, REPO_SUBDIR)
-    readme_contents = _rewrite_relative_links(readme_contents, base_url)
-
-    with open("README-PYPI.md", "w", encoding="utf-8") as fh:
-        fh.write(readme_contents)
-except Exception as e:
+def main() -> int:
     try:
-        print("Failed to rewrite README.md to README-PYPI.md, copying original instead")
-        print(e)
-        shutil.copyfile("README.md", "README-PYPI.md")
-    except Exception as ie:
-        print("Failed to copy README.md to README-PYPI.md")
-        print(ie)
-        sys.exit(1)
+        with open("README.md", "r", encoding="utf-8") as fh:
+            readme_contents = fh.read()
+
+        base_url = _build_base_url(GITHUB_URL, BRANCH, REPO_SUBDIR)
+        readme_contents = _rewrite_relative_links(readme_contents, base_url)
+
+        with open("README-PYPI.md", "w", encoding="utf-8") as fh:
+            fh.write(readme_contents)
+    except Exception as e:
+        try:
+            print("Failed to rewrite README.md to README-PYPI.md, copying original instead")
+            print(e)
+            shutil.copyfile("README.md", "README-PYPI.md")
+        except Exception as ie:
+            print("Failed to copy README.md to README-PYPI.md")
+            print(ie)
+            return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
