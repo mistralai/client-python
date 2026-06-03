@@ -3,6 +3,10 @@
 
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
+from .extendedoauthservermetadata import (
+    ExtendedOAuthServerMetadata,
+    ExtendedOAuthServerMetadataTypedDict,
+)
 from .resourcevisibility import ResourceVisibility
 from mistralai.client.types import (
     BaseModel,
@@ -36,6 +40,10 @@ class CreateConnectorRequestTypedDict(TypedDict):
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
     r"""Optional additional authentication data for the connector."""
+    oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
+    r"""Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly."""
+    oauth2_server_metadata_url: NotRequired[Nullable[str]]
+    r"""Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
 
@@ -69,6 +77,12 @@ class CreateConnectorRequest(BaseModel):
     auth_data: OptionalNullable[AuthData] = UNSET
     r"""Optional additional authentication data for the connector."""
 
+    oauth2_server_metadata: OptionalNullable[ExtendedOAuthServerMetadata] = UNSET
+    r"""Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly."""
+
+    oauth2_server_metadata_url: OptionalNullable[str] = UNSET
+    r"""Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata."""
+
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
 
@@ -82,11 +96,21 @@ class CreateConnectorRequest(BaseModel):
                 "visibility",
                 "headers",
                 "auth_data",
+                "oauth2_server_metadata",
+                "oauth2_server_metadata_url",
                 "system_prompt",
             ]
         )
         nullable_fields = set(
-            ["title", "icon_url", "headers", "auth_data", "system_prompt"]
+            [
+                "title",
+                "icon_url",
+                "headers",
+                "auth_data",
+                "oauth2_server_metadata",
+                "oauth2_server_metadata_url",
+                "system_prompt",
+            ]
         )
         serialized = handler(self)
         m = {}

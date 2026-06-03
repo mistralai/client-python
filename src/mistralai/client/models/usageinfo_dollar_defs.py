@@ -2,6 +2,10 @@
 # @generated-id: d543506af998
 
 from __future__ import annotations
+from .completiontokensdetails import (
+    CompletionTokensDetails,
+    CompletionTokensDetailsTypedDict,
+)
 from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -22,6 +26,7 @@ class UsageInfoDollarDefsTypedDict(TypedDict):
     completion_tokens: NotRequired[Nullable[int]]
     request_count: NotRequired[Nullable[int]]
     prompt_tokens_details: NotRequired[Nullable[PromptTokensDetailsTypedDict]]
+    completion_tokens_details: NotRequired[Nullable[CompletionTokensDetailsTypedDict]]
     prompt_token_details: NotRequired[Nullable[PromptTokensDetailsTypedDict]]
     num_cached_tokens: NotRequired[Nullable[int]]
 
@@ -39,6 +44,8 @@ class UsageInfoDollarDefs(BaseModel):
 
     prompt_tokens_details: OptionalNullable[PromptTokensDetails] = UNSET
 
+    completion_tokens_details: OptionalNullable[CompletionTokensDetails] = UNSET
+
     prompt_token_details: OptionalNullable[PromptTokensDetails] = UNSET
 
     num_cached_tokens: OptionalNullable[int] = UNSET
@@ -53,6 +60,7 @@ class UsageInfoDollarDefs(BaseModel):
                 "completion_tokens",
                 "request_count",
                 "prompt_tokens_details",
+                "completion_tokens_details",
                 "prompt_token_details",
                 "num_cached_tokens",
             ]
@@ -63,6 +71,7 @@ class UsageInfoDollarDefs(BaseModel):
                 "completion_tokens",
                 "request_count",
                 "prompt_tokens_details",
+                "completion_tokens_details",
                 "prompt_token_details",
                 "num_cached_tokens",
             ]

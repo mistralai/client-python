@@ -26,6 +26,13 @@ class Connectors(BaseSDK):
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
+        oauth2_server_metadata: OptionalNullable[
+            Union[
+                models.ExtendedOAuthServerMetadata,
+                models.ExtendedOAuthServerMetadataTypedDict,
+            ]
+        ] = UNSET,
+        oauth2_server_metadata_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -44,6 +51,8 @@ class Connectors(BaseSDK):
         :param visibility:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
+        :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
+        :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
         :param system_prompt: Optional system prompt for the connector.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -74,6 +83,11 @@ class Connectors(BaseSDK):
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
+            oauth2_server_metadata=utils.get_pydantic_model(
+                oauth2_server_metadata,
+                OptionalNullable[models.ExtendedOAuthServerMetadata],
+            ),
+            oauth2_server_metadata_url=oauth2_server_metadata_url,
             system_prompt=system_prompt,
         )
 
@@ -150,6 +164,13 @@ class Connectors(BaseSDK):
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
+        oauth2_server_metadata: OptionalNullable[
+            Union[
+                models.ExtendedOAuthServerMetadata,
+                models.ExtendedOAuthServerMetadataTypedDict,
+            ]
+        ] = UNSET,
+        oauth2_server_metadata_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -168,6 +189,8 @@ class Connectors(BaseSDK):
         :param visibility:
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
         :param auth_data: Optional additional authentication data for the connector.
+        :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
+        :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
         :param system_prompt: Optional system prompt for the connector.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -198,6 +221,11 @@ class Connectors(BaseSDK):
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
+            oauth2_server_metadata=utils.get_pydantic_model(
+                oauth2_server_metadata,
+                OptionalNullable[models.ExtendedOAuthServerMetadata],
+            ),
+            oauth2_server_metadata_url=oauth2_server_metadata_url,
             system_prompt=system_prompt,
         )
 

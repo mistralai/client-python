@@ -12,6 +12,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -26,6 +27,8 @@ class DeploymentResponseTypedDict(TypedDict):
     r"""When the deployment was first registered"""
     updated_at: datetime
     r"""When the deployment was last updated"""
+    is_hardened: NotRequired[bool]
+    r"""Whether the deployment has at least one authorized credential"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
     r"""Where the deployment is running"""
 
@@ -46,12 +49,15 @@ class DeploymentResponse(BaseModel):
     updated_at: datetime
     r"""When the deployment was last updated"""
 
+    is_hardened: Optional[bool] = False
+    r"""Whether the deployment has at least one authorized credential"""
+
     location: OptionalNullable[DeploymentLocation] = UNSET
     r"""Where the deployment is running"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["location"])
+        optional_fields = set(["is_hardened", "location"])
         nullable_fields = set(["location"])
         serialized = handler(self)
         m = {}

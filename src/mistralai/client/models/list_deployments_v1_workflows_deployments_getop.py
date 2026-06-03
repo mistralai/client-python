@@ -17,6 +17,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     active_only: NotRequired[bool]
+    is_hardened: NotRequired[Nullable[bool]]
+    r"""Filter deployments by hardened status"""
     workflow_name: NotRequired[Nullable[str]]
     search: NotRequired[Nullable[str]]
     r"""Filter deployments by name or ID prefix"""
@@ -33,6 +35,12 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = True
+
+    is_hardened: Annotated[
+        OptionalNullable[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter deployments by hardened status"""
 
     workflow_name: Annotated[
         OptionalNullable[str],
@@ -68,6 +76,7 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
         optional_fields = set(
             [
                 "active_only",
+                "is_hardened",
                 "workflow_name",
                 "search",
                 "limit",
@@ -76,7 +85,14 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
             ]
         )
         nullable_fields = set(
-            ["workflow_name", "search", "limit", "cursor", "workspace_id"]
+            [
+                "is_hardened",
+                "workflow_name",
+                "search",
+                "limit",
+                "cursor",
+                "workspace_id",
+            ]
         )
         serialized = handler(self)
         m = {}
