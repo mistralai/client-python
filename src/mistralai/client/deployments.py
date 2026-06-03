@@ -15,6 +15,7 @@ class Deployments(BaseSDK):
         self,
         *,
         active_only: Optional[bool] = True,
+        is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         limit: OptionalNullable[int] = UNSET,
@@ -28,6 +29,7 @@ class Deployments(BaseSDK):
         r"""List Deployments
 
         :param active_only:
+        :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
         :param search: Filter deployments by name or ID prefix
         :param limit: Maximum number of deployments to return
@@ -53,6 +55,7 @@ class Deployments(BaseSDK):
 
         request = models.ListDeploymentsV1WorkflowsDeploymentsGetRequest(
             active_only=active_only,
+            is_hardened=is_hardened,
             workflow_name=workflow_name,
             search=search,
             limit=limit,
@@ -121,6 +124,7 @@ class Deployments(BaseSDK):
         self,
         *,
         active_only: Optional[bool] = True,
+        is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         limit: OptionalNullable[int] = UNSET,
@@ -134,6 +138,7 @@ class Deployments(BaseSDK):
         r"""List Deployments
 
         :param active_only:
+        :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
         :param search: Filter deployments by name or ID prefix
         :param limit: Maximum number of deployments to return
@@ -159,6 +164,7 @@ class Deployments(BaseSDK):
 
         request = models.ListDeploymentsV1WorkflowsDeploymentsGetRequest(
             active_only=active_only,
+            is_hardened=is_hardened,
             workflow_name=workflow_name,
             search=search,
             limit=limit,

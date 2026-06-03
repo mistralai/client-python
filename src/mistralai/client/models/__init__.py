@@ -216,6 +216,7 @@ if TYPE_CHECKING:
         AuthenticationConfiguration,
         AuthenticationConfigurationTypedDict,
     )
+    from .authstatus import AuthStatus
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
@@ -399,6 +400,10 @@ if TYPE_CHECKING:
         CompletionResponseStreamChoice,
         CompletionResponseStreamChoiceFinishReason,
         CompletionResponseStreamChoiceTypedDict,
+    )
+    from .completiontokensdetails import (
+        CompletionTokensDetails,
+        CompletionTokensDetailsTypedDict,
     )
     from .completiontrainingparameters import (
         CompletionTrainingParameters,
@@ -694,6 +699,7 @@ if TYPE_CHECKING:
         CredentialsCreateOrUpdateTypedDict,
     )
     from .credentialsresponse import CredentialsResponse, CredentialsResponseTypedDict
+    from .credentialsstatus import CredentialsStatus, CredentialsStatusTypedDict
     from .customconnector import (
         Authorization,
         AuthorizationTypedDict,
@@ -864,6 +870,10 @@ if TYPE_CHECKING:
     from .exportdatasetresponse import (
         ExportDatasetResponse,
         ExportDatasetResponseTypedDict,
+    )
+    from .extendedoauthservermetadata import (
+        ExtendedOAuthServerMetadata,
+        ExtendedOAuthServerMetadataTypedDict,
     )
     from .failure import Failure, FailureTypedDict
     from .feedresultchatcompletioneventpreview import (
@@ -1137,6 +1147,7 @@ if TYPE_CHECKING:
     )
     from .githubrepository import GithubRepository, GithubRepositoryTypedDict
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
+    from .httpstatus import HTTPStatus
     from .imagecontent import ImageContent, ImageContentTypedDict
     from .imagedetail import ImageDetail
     from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDict
@@ -1565,6 +1576,7 @@ if TYPE_CHECKING:
     from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
     from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
+    from .oauthmetadata import OAuthMetadata, OAuthMetadataTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
         ObservabilityErrorDetail,
@@ -2526,6 +2538,7 @@ __all__ = [
     "AudioTranscriptionRequestTypedDict",
     "AuthData",
     "AuthDataTypedDict",
+    "AuthStatus",
     "AuthURLResponse",
     "AuthURLResponseTypedDict",
     "AuthenticationConfiguration",
@@ -2667,6 +2680,8 @@ __all__ = [
     "CompletionResponseStreamChoice",
     "CompletionResponseStreamChoiceFinishReason",
     "CompletionResponseStreamChoiceTypedDict",
+    "CompletionTokensDetails",
+    "CompletionTokensDetailsTypedDict",
     "CompletionTrainingParameters",
     "CompletionTrainingParametersTypedDict",
     "ConfidenceScoresGranularity",
@@ -2846,6 +2861,8 @@ __all__ = [
     "CredentialsCreateOrUpdateTypedDict",
     "CredentialsResponse",
     "CredentialsResponseTypedDict",
+    "CredentialsStatus",
+    "CredentialsStatusTypedDict",
     "CustomConnector",
     "CustomConnectorTypedDict",
     "CustomTaskCanceledAttributes",
@@ -2963,6 +2980,8 @@ __all__ = [
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict",
     "Expression",
     "ExpressionTypedDict",
+    "ExtendedOAuthServerMetadata",
+    "ExtendedOAuthServerMetadataTypedDict",
     "FIMCompletionRequest",
     "FIMCompletionRequestStop",
     "FIMCompletionRequestStopTypedDict",
@@ -3128,6 +3147,7 @@ __all__ = [
     "GithubRepositoryTypedDict",
     "GuardrailConfig",
     "GuardrailConfigTypedDict",
+    "HTTPStatus",
     "Hyperparameters",
     "HyperparametersTypedDict",
     "ImageContent",
@@ -3417,6 +3437,8 @@ __all__ = [
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
     "OAuth2TokenTypedDict",
+    "OAuthMetadata",
+    "OAuthMetadataTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
@@ -4175,6 +4197,7 @@ _dynamic_imports: dict[str, str] = {
     "AuthDataTypedDict": ".authdata",
     "AuthenticationConfiguration": ".authenticationconfiguration",
     "AuthenticationConfigurationTypedDict": ".authenticationconfiguration",
+    "AuthStatus": ".authstatus",
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
@@ -4318,6 +4341,8 @@ _dynamic_imports: dict[str, str] = {
     "CompletionResponseStreamChoice": ".completionresponsestreamchoice",
     "CompletionResponseStreamChoiceFinishReason": ".completionresponsestreamchoice",
     "CompletionResponseStreamChoiceTypedDict": ".completionresponsestreamchoice",
+    "CompletionTokensDetails": ".completiontokensdetails",
+    "CompletionTokensDetailsTypedDict": ".completiontokensdetails",
     "CompletionTrainingParameters": ".completiontrainingparameters",
     "CompletionTrainingParametersTypedDict": ".completiontrainingparameters",
     "ConnectionConfigType": ".connectionconfigtype",
@@ -4504,6 +4529,8 @@ _dynamic_imports: dict[str, str] = {
     "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
     "CredentialsResponse": ".credentialsresponse",
     "CredentialsResponseTypedDict": ".credentialsresponse",
+    "CredentialsStatus": ".credentialsstatus",
+    "CredentialsStatusTypedDict": ".credentialsstatus",
     "Authorization": ".customconnector",
     "AuthorizationTypedDict": ".customconnector",
     "CustomConnector": ".customconnector",
@@ -4625,6 +4652,8 @@ _dynamic_imports: dict[str, str] = {
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
     "ExportDatasetResponseTypedDict": ".exportdatasetresponse",
+    "ExtendedOAuthServerMetadata": ".extendedoauthservermetadata",
+    "ExtendedOAuthServerMetadataTypedDict": ".extendedoauthservermetadata",
     "Failure": ".failure",
     "FailureTypedDict": ".failure",
     "FeedResultChatCompletionEventPreview": ".feedresultchatcompletioneventpreview",
@@ -4796,6 +4825,7 @@ _dynamic_imports: dict[str, str] = {
     "GithubRepositoryTypedDict": ".githubrepository",
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
+    "HTTPStatus": ".httpstatus",
     "ImageContent": ".imagecontent",
     "ImageContentTypedDict": ".imagecontent",
     "ImageDetail": ".imagedetail",
@@ -5101,6 +5131,8 @@ _dynamic_imports: dict[str, str] = {
     "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
+    "OAuthMetadata": ".oauthmetadata",
+    "OAuthMetadataTypedDict": ".oauthmetadata",
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
