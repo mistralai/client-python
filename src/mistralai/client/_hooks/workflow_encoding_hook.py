@@ -24,6 +24,14 @@ from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
 
 logger = logging.getLogger(__name__)
 
+
+def _strip_content_encoding_header(headers: httpx.Headers) -> httpx.Headers:
+    """Remove Content-Encoding header since content is already decompressed by httpx."""
+    return httpx.Headers(
+        [(k, v) for k, v in headers.items() if k.lower() != "content-encoding"]
+    )
+
+
 # Attribute name for storing config ID on SDKConfiguration
 _ENCODING_CONFIG_ID_ATTR = "_workflow_encoding_config_id"
 
@@ -277,10 +285,9 @@ def _wrap_sse_response_with_decryption(
     decrypting_stream = _DecryptingAsyncByteStream(original_stream, payload_encoder)
 
     # Create new response with wrapped stream
-    # Use internal _content to avoid reading stream
     new_response = httpx.Response(
         status_code=response.status_code,
-        headers=response.headers,
+        headers=_strip_content_encoding_header(response.headers),
         stream=decrypting_stream,
         request=response.request,
         extensions=response.extensions,
@@ -417,17 +424,9 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                     body["result"] = decoded_result
                     new_content = json.dumps(body).encode("utf-8")
 
-                    # Remove Content-Encoding header since content is already decompressed
-                    new_headers = httpx.Headers(
-                        [
-                            (k, v)
-                            for k, v in response.headers.items()
-                            if k.lower() != "content-encoding"
-                        ]
-                    )
                     response = httpx.Response(
                         status_code=response.status_code,
-                        headers=new_headers,
+                        headers=_strip_content_encoding_header(response.headers),
                         content=new_content,
                         request=response.request,
                         extensions=response.extensions,
@@ -445,17 +444,9 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 )
                 new_content = json.dumps(body).encode("utf-8")
 
-                # Remove Content-Encoding header since content is already decompressed
-                new_headers = httpx.Headers(
-                    [
-                        (k, v)
-                        for k, v in response.headers.items()
-                        if k.lower() != "content-encoding"
-                    ]
-                )
                 response = httpx.Response(
                     status_code=response.status_code,
-                    headers=new_headers,
+                    headers=_strip_content_encoding_header(response.headers),
                     content=new_content,
                     request=response.request,
                     extensions=response.extensions,
