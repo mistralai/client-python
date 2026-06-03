@@ -408,9 +408,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 result = body.get("result")
                 if (
                     result is not None
-                    and encoding_config.payload_encoder.check_is_payload_encoded(
-                        result
-                    )
+                    and encoding_config.payload_encoder.check_is_payload_encoded(result)
                 ):
                     decoded_result = _run_async(
                         encoding_config.payload_encoder.decode_network_result(result)
@@ -419,9 +417,17 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                     body["result"] = decoded_result
                     new_content = json.dumps(body).encode("utf-8")
 
+                    # Remove Content-Encoding header since content is already decompressed
+                    new_headers = httpx.Headers(
+                        [
+                            (k, v)
+                            for k, v in response.headers.items()
+                            if k.lower() != "content-encoding"
+                        ]
+                    )
                     response = httpx.Response(
                         status_code=response.status_code,
-                        headers=response.headers,
+                        headers=new_headers,
                         content=new_content,
                         request=response.request,
                         extensions=response.extensions,
@@ -439,9 +445,17 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 )
                 new_content = json.dumps(body).encode("utf-8")
 
+                # Remove Content-Encoding header since content is already decompressed
+                new_headers = httpx.Headers(
+                    [
+                        (k, v)
+                        for k, v in response.headers.items()
+                        if k.lower() != "content-encoding"
+                    ]
+                )
                 response = httpx.Response(
                     status_code=response.status_code,
-                    headers=response.headers,
+                    headers=new_headers,
                     content=new_content,
                     request=response.request,
                     extensions=response.extensions,
