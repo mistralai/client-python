@@ -2,6 +2,7 @@
 # @generated-id: 4297d58aeb21
 
 from .basesdk import BaseSDK
+from datetime import datetime
 from jsonpath import JSONPath
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
@@ -23,6 +24,13 @@ class Runs(BaseSDK):
                 models.ListRunsV1WorkflowsRunsGetStatusTypedDict,
             ]
         ] = UNSET,
+        deployment_name: OptionalNullable[str] = UNSET,
+        sort_by: OptionalNullable[models.SortBy] = UNSET,
+        order: Optional[models.ListRunsV1WorkflowsRunsGetOrder] = "desc",
+        start_time_after: OptionalNullable[datetime] = UNSET,
+        start_time_before: OptionalNullable[datetime] = UNSET,
+        end_time_after: OptionalNullable[datetime] = UNSET,
+        end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
@@ -34,8 +42,15 @@ class Runs(BaseSDK):
         r"""List Runs
 
         :param workflow_identifier: Filter by workflow name or id
-        :param search: Search by workflow name, display name or id
+        :param search: Search by workflow name, display name, or ID
         :param status: Filter by workflow status
+        :param deployment_name: Filter by deployment name
+        :param sort_by: Field to sort by
+        :param order: Sort direction
+        :param start_time_after: Include runs with start_time >= value
+        :param start_time_before: Include runs with start_time <= value
+        :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
+        :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -61,6 +76,13 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             search=search,
             status=status,
+            deployment_name=deployment_name,
+            sort_by=sort_by,
+            order=order,
+            start_time_after=start_time_after,
+            start_time_before=start_time_before,
+            end_time_after=end_time_after,
+            end_time_before=end_time_before,
             user_id=user_id,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -128,6 +150,13 @@ class Runs(BaseSDK):
                 workflow_identifier=workflow_identifier,
                 search=search,
                 status=status,
+                deployment_name=deployment_name,
+                sort_by=sort_by,
+                order=order,
+                start_time_after=start_time_after,
+                start_time_before=start_time_before,
+                end_time_after=end_time_after,
+                end_time_before=end_time_before,
                 user_id=user_id,
                 page_size=page_size,
                 next_page_token=next_cursor,
@@ -170,6 +199,13 @@ class Runs(BaseSDK):
                 models.ListRunsV1WorkflowsRunsGetStatusTypedDict,
             ]
         ] = UNSET,
+        deployment_name: OptionalNullable[str] = UNSET,
+        sort_by: OptionalNullable[models.SortBy] = UNSET,
+        order: Optional[models.ListRunsV1WorkflowsRunsGetOrder] = "desc",
+        start_time_after: OptionalNullable[datetime] = UNSET,
+        start_time_before: OptionalNullable[datetime] = UNSET,
+        end_time_after: OptionalNullable[datetime] = UNSET,
+        end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
@@ -181,8 +217,15 @@ class Runs(BaseSDK):
         r"""List Runs
 
         :param workflow_identifier: Filter by workflow name or id
-        :param search: Search by workflow name, display name or id
+        :param search: Search by workflow name, display name, or ID
         :param status: Filter by workflow status
+        :param deployment_name: Filter by deployment name
+        :param sort_by: Field to sort by
+        :param order: Sort direction
+        :param start_time_after: Include runs with start_time >= value
+        :param start_time_before: Include runs with start_time <= value
+        :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
+        :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -208,6 +251,13 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             search=search,
             status=status,
+            deployment_name=deployment_name,
+            sort_by=sort_by,
+            order=order,
+            start_time_after=start_time_after,
+            start_time_before=start_time_before,
+            end_time_after=end_time_after,
+            end_time_before=end_time_before,
             user_id=user_id,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -280,6 +330,13 @@ class Runs(BaseSDK):
                 workflow_identifier=workflow_identifier,
                 search=search,
                 status=status,
+                deployment_name=deployment_name,
+                sort_by=sort_by,
+                order=order,
+                start_time_after=start_time_after,
+                start_time_before=start_time_before,
+                end_time_after=end_time_after,
+                end_time_before=end_time_before,
                 user_id=user_id,
                 page_size=page_size,
                 next_page_token=next_cursor,

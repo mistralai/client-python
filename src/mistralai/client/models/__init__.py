@@ -476,7 +476,6 @@ if TYPE_CHECKING:
         ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict,
     )
     from .connector_get_auth_url_v1op import (
-        BindConnectionTo,
         ConnectorGetAuthURLV1Request,
         ConnectorGetAuthURLV1RequestTypedDict,
     )
@@ -1135,6 +1134,8 @@ if TYPE_CHECKING:
         GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict,
     )
     from .get_workflows_v1_workflows_getop import (
+        DeploymentStatus,
+        GetWorkflowsV1WorkflowsGetOrder,
         GetWorkflowsV1WorkflowsGetRequest,
         GetWorkflowsV1WorkflowsGetRequestTypedDict,
         GetWorkflowsV1WorkflowsGetResponse,
@@ -1410,12 +1411,14 @@ if TYPE_CHECKING:
         ListModelsV1ModelsGetRequestTypedDict,
     )
     from .list_runs_v1_workflows_runs_getop import (
+        ListRunsV1WorkflowsRunsGetOrder,
         ListRunsV1WorkflowsRunsGetRequest,
         ListRunsV1WorkflowsRunsGetRequestTypedDict,
         ListRunsV1WorkflowsRunsGetResponse,
         ListRunsV1WorkflowsRunsGetResponseTypedDict,
         ListRunsV1WorkflowsRunsGetStatus,
         ListRunsV1WorkflowsRunsGetStatusTypedDict,
+        SortBy,
     )
     from .list_voices_v1_audio_voices_getop import (
         ListVoicesV1AudioVoicesGetRequest,
@@ -1576,7 +1579,6 @@ if TYPE_CHECKING:
     from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
     from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
-    from .oauthmetadata import OAuthMetadata, OAuthMetadataTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
         ObservabilityErrorDetail,
@@ -1664,8 +1666,77 @@ if TYPE_CHECKING:
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
     from .promptargument import PromptArgument, PromptArgumentTypedDict
+    from .prompts_create_versionop import (
+        PromptsCreateVersionRequest,
+        PromptsCreateVersionRequestTypedDict,
+        PromptsCreateVersionResponse,
+        PromptsCreateVersionResponseTypedDict,
+    )
+    from .prompts_createop import PromptsCreateResponse, PromptsCreateResponseTypedDict
+    from .prompts_deleteop import (
+        PromptsDeleteRequest,
+        PromptsDeleteRequestTypedDict,
+        PromptsDeleteResponse,
+        PromptsDeleteResponseTypedDict,
+    )
+    from .prompts_getop import (
+        PromptsGetRequest,
+        PromptsGetRequestTypedDict,
+        PromptsGetResponse,
+        PromptsGetResponseTypedDict,
+    )
+    from .prompts_list_versionsop import (
+        PromptsListVersionsRequest,
+        PromptsListVersionsRequestTypedDict,
+        PromptsListVersionsResponse,
+        PromptsListVersionsResponseTypedDict,
+    )
+    from .prompts_listop import (
+        PromptsListRequest,
+        PromptsListRequestTypedDict,
+        PromptsListResponse,
+        PromptsListResponseResult,
+        PromptsListResponseResultTypedDict,
+        PromptsListResponseTypedDict,
+    )
+    from .prompts_update_attributesop import (
+        PromptsUpdateAttributesRequest,
+        PromptsUpdateAttributesRequestTypedDict,
+        PromptsUpdateAttributesResponse,
+        PromptsUpdateAttributesResponseTypedDict,
+    )
+    from .prompts_update_sharing_scopeop import (
+        PromptsUpdateSharingScopeRequest,
+        PromptsUpdateSharingScopeRequestTypedDict,
+        PromptsUpdateSharingScopeResponse,
+        PromptsUpdateSharingScopeResponseTypedDict,
+    )
+    from .prompts_update_version_attributesop import (
+        PromptsUpdateVersionAttributesRequest,
+        PromptsUpdateVersionAttributesRequestTypedDict,
+        PromptsUpdateVersionAttributesResponse,
+        PromptsUpdateVersionAttributesResponseTypedDict,
+    )
     from .promptscapability import PromptsCapability, PromptsCapabilityTypedDict
+    from .promptsinternalservicecreatepromptversionbody import (
+        PromptsInternalServiceCreatePromptVersionBody,
+        PromptsInternalServiceCreatePromptVersionBodyTypedDict,
+    )
+    from .promptsinternalserviceupdatepromptattributesbody import (
+        PromptsInternalServiceUpdatePromptAttributesBody,
+        PromptsInternalServiceUpdatePromptAttributesBodyTypedDict,
+    )
+    from .promptsinternalserviceupdatepromptsharingscopebody import (
+        PromptsInternalServiceUpdatePromptSharingScopeBody,
+        PromptsInternalServiceUpdatePromptSharingScopeBodyTypedDict,
+    )
+    from .promptsinternalserviceupdatepromptversionattributesbody import (
+        PromptsInternalServiceUpdatePromptVersionAttributesBody,
+        PromptsInternalServiceUpdatePromptVersionAttributesBodyTypedDict,
+    )
     from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
+    from .promptvariable import PromptVariable, PromptVariableTypedDict
+    from .protobufany import ProtobufAny, ProtobufAnyTypedDict
     from .publicauthenticationmethod import (
         PublicAuthenticationMethod,
         PublicAuthenticationMethodTypedDict,
@@ -1769,6 +1840,7 @@ if TYPE_CHECKING:
     )
     from .roles import Roles
     from .rootscapability import RootsCapability, RootsCapabilityTypedDict
+    from .rpcstatus import RPCStatus, RPCStatusTypedDict
     from .sampletype import SampleType
     from .samplingcapability import SamplingCapability, SamplingCapabilityTypedDict
     from .scalarmetric import (
@@ -1850,6 +1922,73 @@ if TYPE_CHECKING:
     from .signalworkflowresponse import (
         SignalWorkflowResponse,
         SignalWorkflowResponseTypedDict,
+    )
+    from .skills_create_versionop import (
+        SkillsCreateVersionRequest,
+        SkillsCreateVersionRequestTypedDict,
+        SkillsCreateVersionResponse,
+        SkillsCreateVersionResponseTypedDict,
+    )
+    from .skills_createop import SkillsCreateResponse, SkillsCreateResponseTypedDict
+    from .skills_deleteop import (
+        SkillsDeleteRequest,
+        SkillsDeleteRequestTypedDict,
+        SkillsDeleteResponse,
+        SkillsDeleteResponseTypedDict,
+    )
+    from .skills_getop import (
+        SkillsGetRequest,
+        SkillsGetRequestTypedDict,
+        SkillsGetResponse,
+        SkillsGetResponseTypedDict,
+    )
+    from .skills_list_versionsop import (
+        SkillsListVersionsRequest,
+        SkillsListVersionsRequestTypedDict,
+        SkillsListVersionsResponse,
+        SkillsListVersionsResponseTypedDict,
+    )
+    from .skills_listop import (
+        SkillsListRequest,
+        SkillsListRequestTypedDict,
+        SkillsListResponse,
+        SkillsListResponseResult,
+        SkillsListResponseResultTypedDict,
+        SkillsListResponseTypedDict,
+    )
+    from .skills_update_attributesop import (
+        SkillsUpdateAttributesRequest,
+        SkillsUpdateAttributesRequestTypedDict,
+        SkillsUpdateAttributesResponse,
+        SkillsUpdateAttributesResponseTypedDict,
+    )
+    from .skills_update_sharing_scopeop import (
+        SkillsUpdateSharingScopeRequest,
+        SkillsUpdateSharingScopeRequestTypedDict,
+        SkillsUpdateSharingScopeResponse,
+        SkillsUpdateSharingScopeResponseTypedDict,
+    )
+    from .skills_update_version_attributesop import (
+        SkillsUpdateVersionAttributesRequest,
+        SkillsUpdateVersionAttributesRequestTypedDict,
+        SkillsUpdateVersionAttributesResponse,
+        SkillsUpdateVersionAttributesResponseTypedDict,
+    )
+    from .skillsinternalservicecreateskillversionbody import (
+        SkillsInternalServiceCreateSkillVersionBody,
+        SkillsInternalServiceCreateSkillVersionBodyTypedDict,
+    )
+    from .skillsinternalserviceupdateskillattributesbody import (
+        SkillsInternalServiceUpdateSkillAttributesBody,
+        SkillsInternalServiceUpdateSkillAttributesBodyTypedDict,
+    )
+    from .skillsinternalserviceupdateskillsharingscopebody import (
+        SkillsInternalServiceUpdateSkillSharingScopeBody,
+        SkillsInternalServiceUpdateSkillSharingScopeBodyTypedDict,
+    )
+    from .skillsinternalserviceupdateskillversionattributesbody import (
+        SkillsInternalServiceUpdateSkillVersionAttributesBody,
+        SkillsInternalServiceUpdateSkillVersionAttributesBodyTypedDict,
     )
     from .source import Source
     from .speech_v1_audio_speech_postop import (
@@ -2179,6 +2318,106 @@ if TYPE_CHECKING:
         UserMessageContentTypedDict,
         UserMessageTypedDict,
     )
+    from .v1assetcontent import V1AssetContent, V1AssetContentTypedDict
+    from .v1attributes import V1Attributes, V1AttributesTypedDict
+    from .v1createpromptrequest import (
+        V1CreatePromptRequest,
+        V1CreatePromptRequestTypedDict,
+    )
+    from .v1createpromptresponse import (
+        V1CreatePromptResponse,
+        V1CreatePromptResponseTypedDict,
+    )
+    from .v1createpromptversionresponse import (
+        V1CreatePromptVersionResponse,
+        V1CreatePromptVersionResponseTypedDict,
+    )
+    from .v1createskillrequest import (
+        V1CreateSkillRequest,
+        V1CreateSkillRequestTypedDict,
+    )
+    from .v1createskillresponse import (
+        V1CreateSkillResponse,
+        V1CreateSkillResponseTypedDict,
+    )
+    from .v1createskillversionresponse import (
+        V1CreateSkillVersionResponse,
+        V1CreateSkillVersionResponseTypedDict,
+    )
+    from .v1deletepromptresponse import (
+        V1DeletePromptResponse,
+        V1DeletePromptResponseTypedDict,
+    )
+    from .v1deleteskillresponse import (
+        V1DeleteSkillResponse,
+        V1DeleteSkillResponseTypedDict,
+    )
+    from .v1extraattribute import V1ExtraAttribute, V1ExtraAttributeTypedDict
+    from .v1getpromptresponse import V1GetPromptResponse, V1GetPromptResponseTypedDict
+    from .v1getskillresponse import V1GetSkillResponse, V1GetSkillResponseTypedDict
+    from .v1listpromptsresponse import (
+        V1ListPromptsResponse,
+        V1ListPromptsResponseTypedDict,
+    )
+    from .v1listpromptsresponseitem import (
+        V1ListPromptsResponseItem,
+        V1ListPromptsResponseItemTypedDict,
+    )
+    from .v1listpromptversionsresponse import (
+        V1ListPromptVersionsResponse,
+        V1ListPromptVersionsResponseTypedDict,
+    )
+    from .v1listpromptversionsresponseitem import (
+        V1ListPromptVersionsResponseItem,
+        V1ListPromptVersionsResponseItemTypedDict,
+    )
+    from .v1listskillsresponse import (
+        V1ListSkillsResponse,
+        V1ListSkillsResponseTypedDict,
+    )
+    from .v1listskillsresponseitem import (
+        V1ListSkillsResponseItem,
+        V1ListSkillsResponseItemTypedDict,
+    )
+    from .v1listskillversionsresponse import (
+        V1ListSkillVersionsResponse,
+        V1ListSkillVersionsResponseTypedDict,
+    )
+    from .v1listskillversionsresponseitem import (
+        V1ListSkillVersionsResponseItem,
+        V1ListSkillVersionsResponseItemTypedDict,
+    )
+    from .v1metadata import V1Metadata, V1MetadataTypedDict
+    from .v1prompt import V1Prompt, V1PromptTypedDict
+    from .v1sharingscope import V1SharingScope
+    from .v1skill import V1Skill, V1SkillTypedDict
+    from .v1stringlist import V1StringList, V1StringListTypedDict
+    from .v1updatepromptattributesresponse import (
+        V1UpdatePromptAttributesResponse,
+        V1UpdatePromptAttributesResponseTypedDict,
+    )
+    from .v1updatepromptsharingscoperesponse import (
+        V1UpdatePromptSharingScopeResponse,
+        V1UpdatePromptSharingScopeResponseTypedDict,
+    )
+    from .v1updatepromptversionattributesresponse import (
+        V1UpdatePromptVersionAttributesResponse,
+        V1UpdatePromptVersionAttributesResponseTypedDict,
+    )
+    from .v1updateskillattributesresponse import (
+        V1UpdateSkillAttributesResponse,
+        V1UpdateSkillAttributesResponseTypedDict,
+    )
+    from .v1updateskillsharingscoperesponse import (
+        V1UpdateSkillSharingScopeResponse,
+        V1UpdateSkillSharingScopeResponseTypedDict,
+    )
+    from .v1updateskillversionattributesresponse import (
+        V1UpdateSkillVersionAttributesResponse,
+        V1UpdateSkillVersionAttributesResponseTypedDict,
+    )
+    from .v1versionattributes import V1VersionAttributes, V1VersionAttributesTypedDict
+    from .v1versionmetadata import V1VersionMetadata, V1VersionMetadataTypedDict
     from .validationerror import (
         Context,
         ContextTypedDict,
@@ -2564,7 +2803,6 @@ __all__ = [
     "BatchJobTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
-    "BindConnectionTo",
     "BlobResourceContents",
     "BlobResourceContentsTypedDict",
     "BuiltInConnectors",
@@ -2929,6 +3167,7 @@ __all__ = [
     "DeploymentLocationTypedDict",
     "DeploymentResponse",
     "DeploymentResponseTypedDict",
+    "DeploymentStatus",
     "DeploymentWorkerResponse",
     "DeploymentWorkerResponseTypedDict",
     "Document",
@@ -3139,6 +3378,7 @@ __all__ = [
     "GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequest",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict",
+    "GetWorkflowsV1WorkflowsGetOrder",
     "GetWorkflowsV1WorkflowsGetRequest",
     "GetWorkflowsV1WorkflowsGetRequestTypedDict",
     "GetWorkflowsV1WorkflowsGetResponse",
@@ -3333,6 +3573,7 @@ __all__ = [
     "ListLibrariesResponseTypedDict",
     "ListModelsV1ModelsGetRequest",
     "ListModelsV1ModelsGetRequestTypedDict",
+    "ListRunsV1WorkflowsRunsGetOrder",
     "ListRunsV1WorkflowsRunsGetRequest",
     "ListRunsV1WorkflowsRunsGetRequestTypedDict",
     "ListRunsV1WorkflowsRunsGetResponse",
@@ -3437,8 +3678,6 @@ __all__ = [
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
     "OAuth2TokenTypedDict",
-    "OAuthMetadata",
-    "OAuthMetadataTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
@@ -3516,10 +3755,58 @@ __all__ = [
     "PromptArgumentTypedDict",
     "PromptTokensDetails",
     "PromptTokensDetailsTypedDict",
+    "PromptVariable",
+    "PromptVariableTypedDict",
     "Prompts",
     "PromptsCapability",
     "PromptsCapabilityTypedDict",
+    "PromptsCreateResponse",
+    "PromptsCreateResponseTypedDict",
+    "PromptsCreateVersionRequest",
+    "PromptsCreateVersionRequestTypedDict",
+    "PromptsCreateVersionResponse",
+    "PromptsCreateVersionResponseTypedDict",
+    "PromptsDeleteRequest",
+    "PromptsDeleteRequestTypedDict",
+    "PromptsDeleteResponse",
+    "PromptsDeleteResponseTypedDict",
+    "PromptsGetRequest",
+    "PromptsGetRequestTypedDict",
+    "PromptsGetResponse",
+    "PromptsGetResponseTypedDict",
+    "PromptsInternalServiceCreatePromptVersionBody",
+    "PromptsInternalServiceCreatePromptVersionBodyTypedDict",
+    "PromptsInternalServiceUpdatePromptAttributesBody",
+    "PromptsInternalServiceUpdatePromptAttributesBodyTypedDict",
+    "PromptsInternalServiceUpdatePromptSharingScopeBody",
+    "PromptsInternalServiceUpdatePromptSharingScopeBodyTypedDict",
+    "PromptsInternalServiceUpdatePromptVersionAttributesBody",
+    "PromptsInternalServiceUpdatePromptVersionAttributesBodyTypedDict",
+    "PromptsListRequest",
+    "PromptsListRequestTypedDict",
+    "PromptsListResponse",
+    "PromptsListResponseResult",
+    "PromptsListResponseResultTypedDict",
+    "PromptsListResponseTypedDict",
+    "PromptsListVersionsRequest",
+    "PromptsListVersionsRequestTypedDict",
+    "PromptsListVersionsResponse",
+    "PromptsListVersionsResponseTypedDict",
     "PromptsTypedDict",
+    "PromptsUpdateAttributesRequest",
+    "PromptsUpdateAttributesRequestTypedDict",
+    "PromptsUpdateAttributesResponse",
+    "PromptsUpdateAttributesResponseTypedDict",
+    "PromptsUpdateSharingScopeRequest",
+    "PromptsUpdateSharingScopeRequestTypedDict",
+    "PromptsUpdateSharingScopeResponse",
+    "PromptsUpdateSharingScopeResponseTypedDict",
+    "PromptsUpdateVersionAttributesRequest",
+    "PromptsUpdateVersionAttributesRequestTypedDict",
+    "PromptsUpdateVersionAttributesResponse",
+    "PromptsUpdateVersionAttributesResponseTypedDict",
+    "ProtobufAny",
+    "ProtobufAnyTypedDict",
     "PublicAuthenticationMethod",
     "PublicAuthenticationMethodTypedDict",
     "PublicConnectionConfig",
@@ -3534,6 +3821,8 @@ __all__ = [
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict",
     "QueryWorkflowResponse",
     "QueryWorkflowResponseTypedDict",
+    "RPCStatus",
+    "RPCStatusTypedDict",
     "RealtimeTranscriptionError",
     "RealtimeTranscriptionErrorDetail",
     "RealtimeTranscriptionErrorDetailMessage",
@@ -3675,8 +3964,53 @@ __all__ = [
     "SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequestTypedDict",
     "SignalWorkflowResponse",
     "SignalWorkflowResponseTypedDict",
+    "SkillsCreateResponse",
+    "SkillsCreateResponseTypedDict",
+    "SkillsCreateVersionRequest",
+    "SkillsCreateVersionRequestTypedDict",
+    "SkillsCreateVersionResponse",
+    "SkillsCreateVersionResponseTypedDict",
+    "SkillsDeleteRequest",
+    "SkillsDeleteRequestTypedDict",
+    "SkillsDeleteResponse",
+    "SkillsDeleteResponseTypedDict",
+    "SkillsGetRequest",
+    "SkillsGetRequestTypedDict",
+    "SkillsGetResponse",
+    "SkillsGetResponseTypedDict",
+    "SkillsInternalServiceCreateSkillVersionBody",
+    "SkillsInternalServiceCreateSkillVersionBodyTypedDict",
+    "SkillsInternalServiceUpdateSkillAttributesBody",
+    "SkillsInternalServiceUpdateSkillAttributesBodyTypedDict",
+    "SkillsInternalServiceUpdateSkillSharingScopeBody",
+    "SkillsInternalServiceUpdateSkillSharingScopeBodyTypedDict",
+    "SkillsInternalServiceUpdateSkillVersionAttributesBody",
+    "SkillsInternalServiceUpdateSkillVersionAttributesBodyTypedDict",
+    "SkillsListRequest",
+    "SkillsListRequestTypedDict",
+    "SkillsListResponse",
+    "SkillsListResponseResult",
+    "SkillsListResponseResultTypedDict",
+    "SkillsListResponseTypedDict",
+    "SkillsListVersionsRequest",
+    "SkillsListVersionsRequestTypedDict",
+    "SkillsListVersionsResponse",
+    "SkillsListVersionsResponseTypedDict",
+    "SkillsUpdateAttributesRequest",
+    "SkillsUpdateAttributesRequestTypedDict",
+    "SkillsUpdateAttributesResponse",
+    "SkillsUpdateAttributesResponseTypedDict",
+    "SkillsUpdateSharingScopeRequest",
+    "SkillsUpdateSharingScopeRequestTypedDict",
+    "SkillsUpdateSharingScopeResponse",
+    "SkillsUpdateSharingScopeResponseTypedDict",
+    "SkillsUpdateVersionAttributesRequest",
+    "SkillsUpdateVersionAttributesRequestTypedDict",
+    "SkillsUpdateVersionAttributesResponse",
+    "SkillsUpdateVersionAttributesResponseTypedDict",
     "SkipConfirmation",
     "SkipConfirmationTypedDict",
+    "SortBy",
     "Source",
     "SpeechOutputFormat",
     "SpeechRequest",
@@ -3936,6 +4270,73 @@ __all__ = [
     "UserMessageContent",
     "UserMessageContentTypedDict",
     "UserMessageTypedDict",
+    "V1AssetContent",
+    "V1AssetContentTypedDict",
+    "V1Attributes",
+    "V1AttributesTypedDict",
+    "V1CreatePromptRequest",
+    "V1CreatePromptRequestTypedDict",
+    "V1CreatePromptResponse",
+    "V1CreatePromptResponseTypedDict",
+    "V1CreatePromptVersionResponse",
+    "V1CreatePromptVersionResponseTypedDict",
+    "V1CreateSkillRequest",
+    "V1CreateSkillRequestTypedDict",
+    "V1CreateSkillResponse",
+    "V1CreateSkillResponseTypedDict",
+    "V1CreateSkillVersionResponse",
+    "V1CreateSkillVersionResponseTypedDict",
+    "V1DeletePromptResponse",
+    "V1DeletePromptResponseTypedDict",
+    "V1DeleteSkillResponse",
+    "V1DeleteSkillResponseTypedDict",
+    "V1ExtraAttribute",
+    "V1ExtraAttributeTypedDict",
+    "V1GetPromptResponse",
+    "V1GetPromptResponseTypedDict",
+    "V1GetSkillResponse",
+    "V1GetSkillResponseTypedDict",
+    "V1ListPromptVersionsResponse",
+    "V1ListPromptVersionsResponseItem",
+    "V1ListPromptVersionsResponseItemTypedDict",
+    "V1ListPromptVersionsResponseTypedDict",
+    "V1ListPromptsResponse",
+    "V1ListPromptsResponseItem",
+    "V1ListPromptsResponseItemTypedDict",
+    "V1ListPromptsResponseTypedDict",
+    "V1ListSkillVersionsResponse",
+    "V1ListSkillVersionsResponseItem",
+    "V1ListSkillVersionsResponseItemTypedDict",
+    "V1ListSkillVersionsResponseTypedDict",
+    "V1ListSkillsResponse",
+    "V1ListSkillsResponseItem",
+    "V1ListSkillsResponseItemTypedDict",
+    "V1ListSkillsResponseTypedDict",
+    "V1Metadata",
+    "V1MetadataTypedDict",
+    "V1Prompt",
+    "V1PromptTypedDict",
+    "V1SharingScope",
+    "V1Skill",
+    "V1SkillTypedDict",
+    "V1StringList",
+    "V1StringListTypedDict",
+    "V1UpdatePromptAttributesResponse",
+    "V1UpdatePromptAttributesResponseTypedDict",
+    "V1UpdatePromptSharingScopeResponse",
+    "V1UpdatePromptSharingScopeResponseTypedDict",
+    "V1UpdatePromptVersionAttributesResponse",
+    "V1UpdatePromptVersionAttributesResponseTypedDict",
+    "V1UpdateSkillAttributesResponse",
+    "V1UpdateSkillAttributesResponseTypedDict",
+    "V1UpdateSkillSharingScopeResponse",
+    "V1UpdateSkillSharingScopeResponseTypedDict",
+    "V1UpdateSkillVersionAttributesResponse",
+    "V1UpdateSkillVersionAttributesResponseTypedDict",
+    "V1VersionAttributes",
+    "V1VersionAttributesTypedDict",
+    "V1VersionMetadata",
+    "V1VersionMetadataTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
     "VespaSchemaResponse",
@@ -4380,7 +4781,6 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1Request": ".connector_delete_workspace_credentials_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict": ".connector_delete_workspace_credentials_v1op",
-    "BindConnectionTo": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthenticationMethodsV1Request": ".connector_get_authentication_methods_v1op",
@@ -4813,6 +5213,8 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict": ".get_workflow_registrations_v1_workflows_registrations_getop",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequest": ".get_workflow_v1_workflows_workflow_identifier_getop",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict": ".get_workflow_v1_workflows_workflow_identifier_getop",
+    "DeploymentStatus": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetOrder": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetRequest": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetRequestTypedDict": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetResponse": ".get_workflows_v1_workflows_getop",
@@ -4997,12 +5399,14 @@ _dynamic_imports: dict[str, str] = {
     "ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict": ".list_deployments_v1_workflows_deployments_getop",
     "ListModelsV1ModelsGetRequest": ".list_models_v1_models_getop",
     "ListModelsV1ModelsGetRequestTypedDict": ".list_models_v1_models_getop",
+    "ListRunsV1WorkflowsRunsGetOrder": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequest": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequestTypedDict": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetResponse": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetResponseTypedDict": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetStatus": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetStatusTypedDict": ".list_runs_v1_workflows_runs_getop",
+    "SortBy": ".list_runs_v1_workflows_runs_getop",
     "ListVoicesV1AudioVoicesGetRequest": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetRequestTypedDict": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetType": ".list_voices_v1_audio_voices_getop",
@@ -5131,8 +5535,6 @@ _dynamic_imports: dict[str, str] = {
     "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
-    "OAuthMetadata": ".oauthmetadata",
-    "OAuthMetadataTypedDict": ".oauthmetadata",
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
@@ -5203,10 +5605,58 @@ _dynamic_imports: dict[str, str] = {
     "ProcessStatus": ".processstatus",
     "PromptArgument": ".promptargument",
     "PromptArgumentTypedDict": ".promptargument",
+    "PromptsCreateVersionRequest": ".prompts_create_versionop",
+    "PromptsCreateVersionRequestTypedDict": ".prompts_create_versionop",
+    "PromptsCreateVersionResponse": ".prompts_create_versionop",
+    "PromptsCreateVersionResponseTypedDict": ".prompts_create_versionop",
+    "PromptsCreateResponse": ".prompts_createop",
+    "PromptsCreateResponseTypedDict": ".prompts_createop",
+    "PromptsDeleteRequest": ".prompts_deleteop",
+    "PromptsDeleteRequestTypedDict": ".prompts_deleteop",
+    "PromptsDeleteResponse": ".prompts_deleteop",
+    "PromptsDeleteResponseTypedDict": ".prompts_deleteop",
+    "PromptsGetRequest": ".prompts_getop",
+    "PromptsGetRequestTypedDict": ".prompts_getop",
+    "PromptsGetResponse": ".prompts_getop",
+    "PromptsGetResponseTypedDict": ".prompts_getop",
+    "PromptsListVersionsRequest": ".prompts_list_versionsop",
+    "PromptsListVersionsRequestTypedDict": ".prompts_list_versionsop",
+    "PromptsListVersionsResponse": ".prompts_list_versionsop",
+    "PromptsListVersionsResponseTypedDict": ".prompts_list_versionsop",
+    "PromptsListRequest": ".prompts_listop",
+    "PromptsListRequestTypedDict": ".prompts_listop",
+    "PromptsListResponse": ".prompts_listop",
+    "PromptsListResponseResult": ".prompts_listop",
+    "PromptsListResponseResultTypedDict": ".prompts_listop",
+    "PromptsListResponseTypedDict": ".prompts_listop",
+    "PromptsUpdateAttributesRequest": ".prompts_update_attributesop",
+    "PromptsUpdateAttributesRequestTypedDict": ".prompts_update_attributesop",
+    "PromptsUpdateAttributesResponse": ".prompts_update_attributesop",
+    "PromptsUpdateAttributesResponseTypedDict": ".prompts_update_attributesop",
+    "PromptsUpdateSharingScopeRequest": ".prompts_update_sharing_scopeop",
+    "PromptsUpdateSharingScopeRequestTypedDict": ".prompts_update_sharing_scopeop",
+    "PromptsUpdateSharingScopeResponse": ".prompts_update_sharing_scopeop",
+    "PromptsUpdateSharingScopeResponseTypedDict": ".prompts_update_sharing_scopeop",
+    "PromptsUpdateVersionAttributesRequest": ".prompts_update_version_attributesop",
+    "PromptsUpdateVersionAttributesRequestTypedDict": ".prompts_update_version_attributesop",
+    "PromptsUpdateVersionAttributesResponse": ".prompts_update_version_attributesop",
+    "PromptsUpdateVersionAttributesResponseTypedDict": ".prompts_update_version_attributesop",
     "PromptsCapability": ".promptscapability",
     "PromptsCapabilityTypedDict": ".promptscapability",
+    "PromptsInternalServiceCreatePromptVersionBody": ".promptsinternalservicecreatepromptversionbody",
+    "PromptsInternalServiceCreatePromptVersionBodyTypedDict": ".promptsinternalservicecreatepromptversionbody",
+    "PromptsInternalServiceUpdatePromptAttributesBody": ".promptsinternalserviceupdatepromptattributesbody",
+    "PromptsInternalServiceUpdatePromptAttributesBodyTypedDict": ".promptsinternalserviceupdatepromptattributesbody",
+    "PromptsInternalServiceUpdatePromptSharingScopeBody": ".promptsinternalserviceupdatepromptsharingscopebody",
+    "PromptsInternalServiceUpdatePromptSharingScopeBodyTypedDict": ".promptsinternalserviceupdatepromptsharingscopebody",
+    "PromptsInternalServiceUpdatePromptVersionAttributesBody": ".promptsinternalserviceupdatepromptversionattributesbody",
+    "PromptsInternalServiceUpdatePromptVersionAttributesBodyTypedDict": ".promptsinternalserviceupdatepromptversionattributesbody",
     "PromptTokensDetails": ".prompttokensdetails",
     "PromptTokensDetailsTypedDict": ".prompttokensdetails",
+    "PromptVariable": ".promptvariable",
+    "PromptVariableTypedDict": ".promptvariable",
+    "ProtobufAny": ".protobufany",
+    "ProtobufAnyTypedDict": ".protobufany",
     "PublicAuthenticationMethod": ".publicauthenticationmethod",
     "PublicAuthenticationMethodTypedDict": ".publicauthenticationmethod",
     "PublicConnectionConfig": ".publicconnectionconfig",
@@ -5278,6 +5728,8 @@ _dynamic_imports: dict[str, str] = {
     "Roles": ".roles",
     "RootsCapability": ".rootscapability",
     "RootsCapabilityTypedDict": ".rootscapability",
+    "RPCStatus": ".rpcstatus",
+    "RPCStatusTypedDict": ".rpcstatus",
     "SampleType": ".sampletype",
     "SamplingCapability": ".samplingcapability",
     "SamplingCapabilityTypedDict": ".samplingcapability",
@@ -5345,6 +5797,50 @@ _dynamic_imports: dict[str, str] = {
     "SignalInvocationBodyTypedDict": ".signalinvocationbody",
     "SignalWorkflowResponse": ".signalworkflowresponse",
     "SignalWorkflowResponseTypedDict": ".signalworkflowresponse",
+    "SkillsCreateVersionRequest": ".skills_create_versionop",
+    "SkillsCreateVersionRequestTypedDict": ".skills_create_versionop",
+    "SkillsCreateVersionResponse": ".skills_create_versionop",
+    "SkillsCreateVersionResponseTypedDict": ".skills_create_versionop",
+    "SkillsCreateResponse": ".skills_createop",
+    "SkillsCreateResponseTypedDict": ".skills_createop",
+    "SkillsDeleteRequest": ".skills_deleteop",
+    "SkillsDeleteRequestTypedDict": ".skills_deleteop",
+    "SkillsDeleteResponse": ".skills_deleteop",
+    "SkillsDeleteResponseTypedDict": ".skills_deleteop",
+    "SkillsGetRequest": ".skills_getop",
+    "SkillsGetRequestTypedDict": ".skills_getop",
+    "SkillsGetResponse": ".skills_getop",
+    "SkillsGetResponseTypedDict": ".skills_getop",
+    "SkillsListVersionsRequest": ".skills_list_versionsop",
+    "SkillsListVersionsRequestTypedDict": ".skills_list_versionsop",
+    "SkillsListVersionsResponse": ".skills_list_versionsop",
+    "SkillsListVersionsResponseTypedDict": ".skills_list_versionsop",
+    "SkillsListRequest": ".skills_listop",
+    "SkillsListRequestTypedDict": ".skills_listop",
+    "SkillsListResponse": ".skills_listop",
+    "SkillsListResponseResult": ".skills_listop",
+    "SkillsListResponseResultTypedDict": ".skills_listop",
+    "SkillsListResponseTypedDict": ".skills_listop",
+    "SkillsUpdateAttributesRequest": ".skills_update_attributesop",
+    "SkillsUpdateAttributesRequestTypedDict": ".skills_update_attributesop",
+    "SkillsUpdateAttributesResponse": ".skills_update_attributesop",
+    "SkillsUpdateAttributesResponseTypedDict": ".skills_update_attributesop",
+    "SkillsUpdateSharingScopeRequest": ".skills_update_sharing_scopeop",
+    "SkillsUpdateSharingScopeRequestTypedDict": ".skills_update_sharing_scopeop",
+    "SkillsUpdateSharingScopeResponse": ".skills_update_sharing_scopeop",
+    "SkillsUpdateSharingScopeResponseTypedDict": ".skills_update_sharing_scopeop",
+    "SkillsUpdateVersionAttributesRequest": ".skills_update_version_attributesop",
+    "SkillsUpdateVersionAttributesRequestTypedDict": ".skills_update_version_attributesop",
+    "SkillsUpdateVersionAttributesResponse": ".skills_update_version_attributesop",
+    "SkillsUpdateVersionAttributesResponseTypedDict": ".skills_update_version_attributesop",
+    "SkillsInternalServiceCreateSkillVersionBody": ".skillsinternalservicecreateskillversionbody",
+    "SkillsInternalServiceCreateSkillVersionBodyTypedDict": ".skillsinternalservicecreateskillversionbody",
+    "SkillsInternalServiceUpdateSkillAttributesBody": ".skillsinternalserviceupdateskillattributesbody",
+    "SkillsInternalServiceUpdateSkillAttributesBodyTypedDict": ".skillsinternalserviceupdateskillattributesbody",
+    "SkillsInternalServiceUpdateSkillSharingScopeBody": ".skillsinternalserviceupdateskillsharingscopebody",
+    "SkillsInternalServiceUpdateSkillSharingScopeBodyTypedDict": ".skillsinternalserviceupdateskillsharingscopebody",
+    "SkillsInternalServiceUpdateSkillVersionAttributesBody": ".skillsinternalserviceupdateskillversionattributesbody",
+    "SkillsInternalServiceUpdateSkillVersionAttributesBodyTypedDict": ".skillsinternalserviceupdateskillversionattributesbody",
     "Source": ".source",
     "SpeechResponse": ".speech_v1_audio_speech_postop",
     "SpeechResponseTypedDict": ".speech_v1_audio_speech_postop",
@@ -5584,6 +6080,73 @@ _dynamic_imports: dict[str, str] = {
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
     "UserMessageTypedDict": ".usermessage",
+    "V1AssetContent": ".v1assetcontent",
+    "V1AssetContentTypedDict": ".v1assetcontent",
+    "V1Attributes": ".v1attributes",
+    "V1AttributesTypedDict": ".v1attributes",
+    "V1CreatePromptRequest": ".v1createpromptrequest",
+    "V1CreatePromptRequestTypedDict": ".v1createpromptrequest",
+    "V1CreatePromptResponse": ".v1createpromptresponse",
+    "V1CreatePromptResponseTypedDict": ".v1createpromptresponse",
+    "V1CreatePromptVersionResponse": ".v1createpromptversionresponse",
+    "V1CreatePromptVersionResponseTypedDict": ".v1createpromptversionresponse",
+    "V1CreateSkillRequest": ".v1createskillrequest",
+    "V1CreateSkillRequestTypedDict": ".v1createskillrequest",
+    "V1CreateSkillResponse": ".v1createskillresponse",
+    "V1CreateSkillResponseTypedDict": ".v1createskillresponse",
+    "V1CreateSkillVersionResponse": ".v1createskillversionresponse",
+    "V1CreateSkillVersionResponseTypedDict": ".v1createskillversionresponse",
+    "V1DeletePromptResponse": ".v1deletepromptresponse",
+    "V1DeletePromptResponseTypedDict": ".v1deletepromptresponse",
+    "V1DeleteSkillResponse": ".v1deleteskillresponse",
+    "V1DeleteSkillResponseTypedDict": ".v1deleteskillresponse",
+    "V1ExtraAttribute": ".v1extraattribute",
+    "V1ExtraAttributeTypedDict": ".v1extraattribute",
+    "V1GetPromptResponse": ".v1getpromptresponse",
+    "V1GetPromptResponseTypedDict": ".v1getpromptresponse",
+    "V1GetSkillResponse": ".v1getskillresponse",
+    "V1GetSkillResponseTypedDict": ".v1getskillresponse",
+    "V1ListPromptsResponse": ".v1listpromptsresponse",
+    "V1ListPromptsResponseTypedDict": ".v1listpromptsresponse",
+    "V1ListPromptsResponseItem": ".v1listpromptsresponseitem",
+    "V1ListPromptsResponseItemTypedDict": ".v1listpromptsresponseitem",
+    "V1ListPromptVersionsResponse": ".v1listpromptversionsresponse",
+    "V1ListPromptVersionsResponseTypedDict": ".v1listpromptversionsresponse",
+    "V1ListPromptVersionsResponseItem": ".v1listpromptversionsresponseitem",
+    "V1ListPromptVersionsResponseItemTypedDict": ".v1listpromptversionsresponseitem",
+    "V1ListSkillsResponse": ".v1listskillsresponse",
+    "V1ListSkillsResponseTypedDict": ".v1listskillsresponse",
+    "V1ListSkillsResponseItem": ".v1listskillsresponseitem",
+    "V1ListSkillsResponseItemTypedDict": ".v1listskillsresponseitem",
+    "V1ListSkillVersionsResponse": ".v1listskillversionsresponse",
+    "V1ListSkillVersionsResponseTypedDict": ".v1listskillversionsresponse",
+    "V1ListSkillVersionsResponseItem": ".v1listskillversionsresponseitem",
+    "V1ListSkillVersionsResponseItemTypedDict": ".v1listskillversionsresponseitem",
+    "V1Metadata": ".v1metadata",
+    "V1MetadataTypedDict": ".v1metadata",
+    "V1Prompt": ".v1prompt",
+    "V1PromptTypedDict": ".v1prompt",
+    "V1SharingScope": ".v1sharingscope",
+    "V1Skill": ".v1skill",
+    "V1SkillTypedDict": ".v1skill",
+    "V1StringList": ".v1stringlist",
+    "V1StringListTypedDict": ".v1stringlist",
+    "V1UpdatePromptAttributesResponse": ".v1updatepromptattributesresponse",
+    "V1UpdatePromptAttributesResponseTypedDict": ".v1updatepromptattributesresponse",
+    "V1UpdatePromptSharingScopeResponse": ".v1updatepromptsharingscoperesponse",
+    "V1UpdatePromptSharingScopeResponseTypedDict": ".v1updatepromptsharingscoperesponse",
+    "V1UpdatePromptVersionAttributesResponse": ".v1updatepromptversionattributesresponse",
+    "V1UpdatePromptVersionAttributesResponseTypedDict": ".v1updatepromptversionattributesresponse",
+    "V1UpdateSkillAttributesResponse": ".v1updateskillattributesresponse",
+    "V1UpdateSkillAttributesResponseTypedDict": ".v1updateskillattributesresponse",
+    "V1UpdateSkillSharingScopeResponse": ".v1updateskillsharingscoperesponse",
+    "V1UpdateSkillSharingScopeResponseTypedDict": ".v1updateskillsharingscoperesponse",
+    "V1UpdateSkillVersionAttributesResponse": ".v1updateskillversionattributesresponse",
+    "V1UpdateSkillVersionAttributesResponseTypedDict": ".v1updateskillversionattributesresponse",
+    "V1VersionAttributes": ".v1versionattributes",
+    "V1VersionAttributesTypedDict": ".v1versionattributes",
+    "V1VersionMetadata": ".v1versionmetadata",
+    "V1VersionMetadataTypedDict": ".v1versionmetadata",
     "Context": ".validationerror",
     "ContextTypedDict": ".validationerror",
     "Loc": ".validationerror",

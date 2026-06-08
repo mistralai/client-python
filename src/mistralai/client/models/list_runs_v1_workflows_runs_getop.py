@@ -7,6 +7,7 @@ from .workflowexecutionlistresponse import (
     WorkflowExecutionListResponseTypedDict,
 )
 from .workflowexecutionstatus import WorkflowExecutionStatus
+from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,7 +17,7 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Awaitable, Callable, List, Optional, Union
+from typing import Awaitable, Callable, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -34,13 +35,41 @@ ListRunsV1WorkflowsRunsGetStatus = TypeAliasType(
 r"""Filter by workflow status"""
 
 
+SortBy = Literal[
+    "start_time",
+    "end_time",
+]
+r"""Field to sort by"""
+
+
+ListRunsV1WorkflowsRunsGetOrder = Literal[
+    "asc",
+    "desc",
+]
+r"""Sort direction"""
+
+
 class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     workflow_identifier: NotRequired[Nullable[str]]
     r"""Filter by workflow name or id"""
     search: NotRequired[Nullable[str]]
-    r"""Search by workflow name, display name or id"""
+    r"""Search by workflow name, display name, or ID"""
     status: NotRequired[Nullable[ListRunsV1WorkflowsRunsGetStatusTypedDict]]
     r"""Filter by workflow status"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""Filter by deployment name"""
+    sort_by: NotRequired[Nullable[SortBy]]
+    r"""Field to sort by"""
+    order: NotRequired[ListRunsV1WorkflowsRunsGetOrder]
+    r"""Sort direction"""
+    start_time_after: NotRequired[Nullable[datetime]]
+    r"""Include runs with start_time >= value"""
+    start_time_before: NotRequired[Nullable[datetime]]
+    r"""Include runs with start_time <= value"""
+    end_time_after: NotRequired[Nullable[datetime]]
+    r"""Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them."""
+    end_time_before: NotRequired[Nullable[datetime]]
+    r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
     page_size: NotRequired[int]
@@ -60,13 +89,55 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Search by workflow name, display name or id"""
+    r"""Search by workflow name, display name, or ID"""
 
     status: Annotated[
         OptionalNullable[ListRunsV1WorkflowsRunsGetStatus],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Filter by workflow status"""
+
+    deployment_name: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by deployment name"""
+
+    sort_by: Annotated[
+        OptionalNullable[SortBy],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Field to sort by"""
+
+    order: Annotated[
+        Optional[ListRunsV1WorkflowsRunsGetOrder],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "desc"
+    r"""Sort direction"""
+
+    start_time_after: Annotated[
+        OptionalNullable[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Include runs with start_time >= value"""
+
+    start_time_before: Annotated[
+        OptionalNullable[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Include runs with start_time <= value"""
+
+    end_time_after: Annotated[
+        OptionalNullable[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them."""
+
+    end_time_before: Annotated[
+        OptionalNullable[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
 
     user_id: Annotated[
         OptionalNullable[str],
@@ -93,13 +164,32 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "workflow_identifier",
                 "search",
                 "status",
+                "deployment_name",
+                "sort_by",
+                "order",
+                "start_time_after",
+                "start_time_before",
+                "end_time_after",
+                "end_time_before",
                 "user_id",
                 "page_size",
                 "next_page_token",
             ]
         )
         nullable_fields = set(
-            ["workflow_identifier", "search", "status", "user_id", "next_page_token"]
+            [
+                "workflow_identifier",
+                "search",
+                "status",
+                "deployment_name",
+                "sort_by",
+                "start_time_after",
+                "start_time_before",
+                "end_time_after",
+                "end_time_before",
+                "user_id",
+                "next_page_token",
+            ]
         )
         serialized = handler(self)
         m = {}

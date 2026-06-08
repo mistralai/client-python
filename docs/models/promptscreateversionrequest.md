@@ -1,0 +1,9 @@
+# PromptsCreateVersionRequest
+
+
+## Fields
+
+| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `prompt_id`                                                                                                        | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `prompts_internal_service_create_prompt_version_body`                                                              | [models.PromptsInternalServiceCreatePromptVersionBody](../models/promptsinternalservicecreatepromptversionbody.md) | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |

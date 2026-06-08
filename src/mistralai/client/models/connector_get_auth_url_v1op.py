@@ -12,14 +12,8 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
-
-
-BindConnectionTo = Literal[
-    "user",
-    "org",
-]
 
 
 class ConnectorGetAuthURLV1RequestTypedDict(TypedDict):
@@ -28,7 +22,6 @@ class ConnectorGetAuthURLV1RequestTypedDict(TypedDict):
     method_type: NotRequired[OutboundAuthenticationType]
     r"""Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app')."""
     credentials_name: NotRequired[Nullable[str]]
-    bind_connection_to: NotRequired[BindConnectionTo]
 
 
 class ConnectorGetAuthURLV1Request(BaseModel):
@@ -52,16 +45,9 @@ class ConnectorGetAuthURLV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
-    bind_connection_to: Annotated[
-        Optional[BindConnectionTo],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = "user"
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            ["app_return_url", "method_type", "credentials_name", "bind_connection_to"]
-        )
+        optional_fields = set(["app_return_url", "method_type", "credentials_name"])
         nullable_fields = set(["app_return_url", "credentials_name"])
         serialized = handler(self)
         m = {}

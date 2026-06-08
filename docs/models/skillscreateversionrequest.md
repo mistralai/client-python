@@ -1,0 +1,9 @@
+# SkillsCreateVersionRequest
+
+
+## Fields
+
+| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `skill_id`                                                                                                     | *str*                                                                                                          | :heavy_check_mark:                                                                                             | N/A                                                                                                            |
+| `skills_internal_service_create_skill_version_body`                                                            | [models.SkillsInternalServiceCreateSkillVersionBody](../models/skillsinternalservicecreateskillversionbody.md) | :heavy_check_mark:                                                                                             | N/A                                                                                                            |
