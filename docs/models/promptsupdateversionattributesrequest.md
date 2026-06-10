@@ -1,0 +1,10 @@
+# PromptsUpdateVersionAttributesRequest
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `prompt_id`                                                                                      | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `version`                                                                                        | *int*                                                                                            | :heavy_check_mark:                                                                               | Target version.                                                                                  |
+| `request_body`                                                                                   | [models.UpdatePromptVersionAttributesRequest](../models/updatepromptversionattributesrequest.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |

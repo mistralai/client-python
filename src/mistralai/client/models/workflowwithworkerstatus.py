@@ -37,8 +37,6 @@ class WorkflowWithWorkerStatusTypedDict(TypedDict):
     r"""Whether the workflow is available in chat assistant"""
     is_technical: NotRequired[bool]
     r"""Whether the workflow is technical (e.g. SDK-managed)"""
-    on_behalf_of: NotRequired[bool]
-    r"""Whether the workflow must run associated to a user's identity"""
     archived: NotRequired[bool]
     r"""Whether the workflow is archived"""
     tags: NotRequired[List[str]]
@@ -78,9 +76,6 @@ class WorkflowWithWorkerStatus(BaseModel):
     is_technical: Optional[bool] = False
     r"""Whether the workflow is technical (e.g. SDK-managed)"""
 
-    on_behalf_of: Optional[bool] = False
-    r"""Whether the workflow must run associated to a user's identity"""
-
     archived: Optional[bool] = False
     r"""Whether the workflow is archived"""
 
@@ -95,7 +90,6 @@ class WorkflowWithWorkerStatus(BaseModel):
                 "shared_namespace",
                 "available_in_chat_assistant",
                 "is_technical",
-                "on_behalf_of",
                 "archived",
                 "tags",
             ]

@@ -654,7 +654,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models.AttributesUnion],
+                Dict[str, models.AttributesUnionTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -770,7 +773,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models.AttributesUnion],
+                Dict[str, models.AttributesUnionTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -889,7 +895,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models.AttributesUnion],
+                Dict[str, models.AttributesUnionTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1008,7 +1017,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Dict[str, models.AttributesUnion],
+                Dict[str, models.AttributesUnionTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
