@@ -4,13 +4,11 @@
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client.beta_agents import BetaAgents
-from mistralai.client.beta_prompts import BetaPrompts
 from mistralai.client.connectors import Connectors
 from mistralai.client.conversations import Conversations
 from mistralai.client.libraries import Libraries
 from mistralai.client.observability import Observability
 from mistralai.client.rag import Rag
-from mistralai.client.skills import Skills
 from typing import Optional
 
 
@@ -25,10 +23,6 @@ class Beta(BaseSDK):
     connectors: Connectors
     r"""(beta) Connectors API - manage your connectors"""
     rag: Rag
-    prompts: BetaPrompts
-    r"""(beta) Prompts API - create and manage reusable prompt templates with versioning"""
-    skills: Skills
-    r"""(beta) Skills API - create and manage agent skills with versioning"""
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -48,5 +42,3 @@ class Beta(BaseSDK):
         )
         self.connectors = Connectors(self.sdk_configuration, parent_ref=self.parent_ref)
         self.rag = Rag(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.prompts = BetaPrompts(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.skills = Skills(self.sdk_configuration, parent_ref=self.parent_ref)

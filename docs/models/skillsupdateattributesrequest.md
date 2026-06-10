@@ -1,9 +1,0 @@
-# SkillsUpdateAttributesRequest
-
-
-## Fields
-
-| Field                                                                                                                | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          |
-| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `skill_id`                                                                                                           | *str*                                                                                                                | :heavy_check_mark:                                                                                                   | N/A                                                                                                                  |
-| `skills_internal_service_update_skill_attributes_body`                                                               | [models.SkillsInternalServiceUpdateSkillAttributesBody](../models/skillsinternalserviceupdateskillattributesbody.md) | :heavy_check_mark:                                                                                                   | N/A                                                                                                                  |

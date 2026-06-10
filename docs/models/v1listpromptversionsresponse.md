@@ -1,8 +1,0 @@
-# V1ListPromptVersionsResponse
-
-
-## Fields
-
-| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `items`                                                                                                        | List[[models.V1ListPromptVersionsResponseItem](../models/v1listpromptversionsresponseitem.md)]                 | :heavy_minus_sign:                                                                                             | Items are returned in reverse version order. Only the last 1000 items are<br/>returned (currently the whole list). |
