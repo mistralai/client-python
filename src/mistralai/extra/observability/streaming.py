@@ -15,7 +15,7 @@ this double-parse, but EventStream is Speakeasy-generated code.
 
 from typing import Any
 
-from mistralai.client.models import CompletionChunk, UsageInfo
+from mistralai.client.models import CompletionChunk, TextChunk, UsageInfo
 
 
 def parse_sse_chunks(raw_sse_bytes: bytes) -> list[CompletionChunk]:
@@ -66,8 +66,7 @@ def accumulate_chunks_to_response_dict(
             delta = choice.delta
             if isinstance(delta.role, str):
                 msg["role"] = delta.role
-            if isinstance(delta.content, str) and delta.content:
-                msg["content"] += delta.content
+            msg["content"] += _extract_output_text(delta.content)
             if isinstance(choice.finish_reason, str):
                 accumulated["finish_reason"] = choice.finish_reason
             if isinstance(delta.tool_calls, list):
@@ -96,3 +95,18 @@ def accumulate_chunks_to_response_dict(
     if usage is not None:
         result["usage"] = usage.model_dump(mode="json", by_alias=True)
     return result
+
+
+def _extract_output_text(content: Any) -> str:
+    if isinstance(content, str):
+        return content
+
+    if not isinstance(content, list):
+        return ""
+
+    text_parts: list[str] = []
+    for block in content:
+        if isinstance(block, TextChunk):
+            text_parts.append(block.text)
+
+    return "".join(text_parts)
