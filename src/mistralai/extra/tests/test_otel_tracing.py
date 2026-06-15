@@ -15,11 +15,12 @@ import asyncio
 from collections import Counter
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
 import threading
 import unittest
 from datetime import datetime, timezone
 from typing import cast
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import httpx
 from opentelemetry import context as context_api
@@ -118,9 +119,16 @@ def _make_httpx_response(body: dict, status_code: int = 200) -> httpx.Response:
     return resp
 
 
-def _make_hook_context(operation_id: str) -> HookContext:
+def _make_hook_context(
+    operation_id: str,
+    telemetry: bool | str | None = "global",
+) -> HookContext:
+    config = MagicMock()
+    config.telemetry = telemetry
+    config.client = None
+    config.async_client = None
     return HookContext(
-        config=MagicMock(),
+        config=config,
         base_url="https://api.mistral.ai",
         operation_id=operation_id,
         oauth2_scopes=None,
@@ -254,6 +262,7 @@ class TestOtelTracing(unittest.TestCase):
         request_body,
         response_body,
         streaming: bool = False,
+        telemetry: bool | str | None = "global",
     ):
         """Drive the real TracingHook: before_request → after_success.
 
@@ -266,7 +275,7 @@ class TestOtelTracing(unittest.TestCase):
         so the span is finalised before returning.
         """
         hook = TracingHook()
-        hook_ctx = _make_hook_context(operation_id)
+        hook_ctx = _make_hook_context(operation_id, telemetry=telemetry)
 
         req_dict = (
             _dump(request_body) if hasattr(request_body, "model_dump") else request_body
@@ -309,10 +318,11 @@ class TestOtelTracing(unittest.TestCase):
         response_body: dict,
         status_code: int = 400,
         error: Exception | None = None,
+        telemetry: bool | str | None = "global",
     ):
         """Drive the real TracingHook: before_request → after_error."""
         hook = TracingHook()
-        hook_ctx = _make_hook_context(operation_id)
+        hook_ctx = _make_hook_context(operation_id, telemetry=telemetry)
 
         req_dict = (
             _dump(request_body) if hasattr(request_body, "model_dump") else request_body
@@ -342,6 +352,36 @@ class TestOtelTracing(unittest.TestCase):
         """Assert that *expected* is a subset of *span.attributes*."""
         actual = {k: span.attributes[k] for k in expected}
         self.assertEqual(expected, actual)
+
+    def test_global_provider_alone_does_not_enable_sdk_span(self):
+        request = ChatCompletionRequest(
+            model="mistral-small-latest",
+            messages=[UserMessage(content="Hello")],
+        )
+        response = ChatCompletionResponse(
+            id="cmpl-no-telemetry-env",
+            object="chat.completion",
+            model="mistral-small-latest",
+            created=1700000015,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Hi!", tool_calls=None),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=UsageInfo(prompt_tokens=5, completion_tokens=2, total_tokens=7),
+        )
+
+        with patch.dict(os.environ, {}, clear=True):
+            self._run_hook_lifecycle(
+                "chat_completion_v1_chat_completions_post",
+                request,
+                response,
+                telemetry=None,
+            )
+
+        self.assertEqual(len(self._get_finished_spans()), 0)
 
     # -- Simple chat completion ------------------------------------------------
 
@@ -1754,6 +1794,7 @@ class TestOtelTracing(unittest.TestCase):
             api_key="test-key",
             async_client=async_client,
         )
+        client.sdk_configuration.__dict__["telemetry"] = "global"
 
         async def _run():
             return await asyncio.gather(
@@ -1804,6 +1845,48 @@ class TestOtelTracing(unittest.TestCase):
 
     # -- HTTPX auto-instrumentation parenting ---------------------------------
 
+    def test_app_otel_does_not_enable_mistral_span_without_mistral_telemetry(self):
+        instrumentor = HTTPXClientInstrumentor()
+        instrumentor.instrument()
+        tracer = trace.get_tracer("test-workflow-parenting")
+
+        try:
+            with patch.dict(os.environ, {}, clear=True):
+                with (
+                    _ChatCompletionTestServer() as server,
+                    httpx.Client() as http_client,
+                ):
+                    client = Mistral(
+                        api_key="test-key",
+                        client=http_client,
+                        server_url=server.url,
+                    )
+                    with tracer.start_as_current_span(
+                        "ExecuteActivity:generate_site_diagnostic"
+                    ) as activity_span:
+                        client.chat.complete(
+                            model="mistral-small-latest",
+                            messages=_make_user_messages("hello"),
+                        )
+
+                        self.assertEqual(
+                            trace.get_current_span().get_span_context().span_id,
+                            activity_span.get_span_context().span_id,
+                        )
+        finally:
+            instrumentor.uninstrument()
+
+        spans = self._get_finished_spans()
+        activity = next(
+            s for s in spans if s.name == "ExecuteActivity:generate_site_diagnostic"
+        )
+        genai_spans = [s for s in spans if s.name == "chat mistral-small-latest"]
+        post_spans = [s for s in spans if s.name == "POST"]
+
+        self.assertEqual(genai_spans, [])
+        self.assertEqual(len(post_spans), 1)
+        self.assertEqual(post_spans[0].parent.span_id, activity.context.span_id)
+
     def test_httpx_auto_instrumented_span_is_child_of_genai_span(self):
         instrumentor = HTTPXClientInstrumentor()
         instrumentor.instrument()
@@ -1816,6 +1899,7 @@ class TestOtelTracing(unittest.TestCase):
                     client=http_client,
                     server_url=server.url,
                 )
+                client.sdk_configuration.__dict__["telemetry"] = "global"
                 with tracer.start_as_current_span(
                     "ExecuteActivity:generate_site_diagnostic"
                 ) as activity_span:
@@ -1858,6 +1942,7 @@ class TestOtelTracing(unittest.TestCase):
                     client=http_client,
                     server_url="https://api.mistral.ai",
                 )
+                client.sdk_configuration.__dict__["telemetry"] = "global"
                 with tracer.start_as_current_span(
                     "ExecuteActivity:generate_site_diagnostic"
                 ) as activity_span:
@@ -1901,6 +1986,7 @@ class TestOtelTracing(unittest.TestCase):
                     async_client=async_client,
                     server_url=server_url,
                 )
+                client.sdk_configuration.__dict__["telemetry"] = "global"
 
                 with tracer.start_as_current_span(
                     "ExecuteActivity:generate_site_diagnostic"
@@ -1957,7 +2043,7 @@ class TestPerInstanceTracerProvider(unittest.TestCase):
         hook = TracingHook()
         hook.tracer_provider = custom_provider
 
-        hook_ctx = _make_hook_context("chat_completion")
+        hook_ctx = _make_hook_context("chat_completion", telemetry=None)
 
         request_body = _dump(
             ChatCompletionRequest(
@@ -2002,12 +2088,13 @@ class TestPerInstanceTracerProvider(unittest.TestCase):
         ]
         self.assertEqual(len(global_spans), 0)
 
-    def test_fallback_to_global_provider(self):
-        """When tracer_provider is None (default), spans go to the global provider."""
+    def test_global_telemetry_uses_global_provider(self):
+        """When telemetry is set to global, spans go to the global provider."""
         _EXPORTER.clear()
 
         hook = TracingHook()
-        # tracer_provider defaults to None — should use global provider
+        # tracer_provider defaults to None; telemetry="global" opts into the
+        # configured global provider.
         self.assertIsNone(hook.tracer_provider)
 
         hook_ctx = _make_hook_context("chat_completion")
