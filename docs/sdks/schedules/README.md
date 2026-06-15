@@ -11,6 +11,7 @@
 * [update_schedule](#update_schedule) - Update Schedule
 * [pause_schedule](#pause_schedule) - Pause Schedule
 * [resume_schedule](#resume_schedule) - Resume Schedule
+* [trigger_schedule](#trigger_schedule) - Trigger Schedule
 
 ## get_schedules
 
@@ -293,6 +294,43 @@ with Mistral(
 | `schedule_id`                                                          | *str*                                                                  | :heavy_check_mark:                                                     | N/A                                                                    |
 | `note`                                                                 | *OptionalNullable[str]*                                                | :heavy_minus_sign:                                                     | Optional note recorded in Temporal when pausing or resuming a schedule |
 | `retries`                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)       | :heavy_minus_sign:                                                     | Configuration to override the default retry behavior of the client.    |
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## trigger_schedule
+
+Trigger Schedule
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="trigger_schedule_v1_workflows_schedules__schedule_id__trigger_post" method="post" path="/v1/workflows/schedules/{schedule_id}/trigger" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    mistral.workflows.schedules.trigger_schedule(schedule_id="<id>")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `schedule_id`                                                                           | *str*                                                                                   | :heavy_check_mark:                                                                      | N/A                                                                                     |
+| `overlap`                                                                               | [OptionalNullable[models.ScheduleOverlapPolicy]](../../models/scheduleoverlappolicy.md) | :heavy_minus_sign:                                                                      | Optional overlap policy override to use for the immediate trigger.                      |
+| `retries`                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                        | :heavy_minus_sign:                                                                      | Configuration to override the default retry behavior of the client.                     |
 
 ### Errors
 

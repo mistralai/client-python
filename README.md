@@ -637,6 +637,31 @@ print(res.choices[0].message.content)
 * [update](docs/sdks/judges/README.md#update) - Update a judge
 * [judge_conversation](docs/sdks/judges/README.md#judge_conversation) - Run a saved judge on a conversation
 
+### [Beta.Observability.Logs](docs/sdks/logs/README.md)
+
+* [search](docs/sdks/logs/README.md#search) - Search logs
+* [list](docs/sdks/logs/README.md#list) - Get log field definitions
+* [fetch_options](docs/sdks/logs/README.md#fetch_options) - Get options for a log field
+
+### [Beta.Observability.Spans](docs/sdks/spans/README.md)
+
+* [search_spans](docs/sdks/spans/README.md#search_spans) - Search spans
+* [search_span_evaluations](docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
+* [search_latest_span_evaluations](docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
+* [list_span_fields](docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
+* [list_span_eval_fields](docs/sdks/spans/README.md#list_span_eval_fields) - Get span evaluation field definitions
+* [fetch_span_field_options](docs/sdks/spans/README.md#fetch_span_field_options) - Get options for a span field
+* [fetch_span_eval_field_options](docs/sdks/spans/README.md#fetch_span_eval_field_options) - Get options for a span evaluation field
+
+### [Beta.Observability.Traces](docs/sdks/traces/README.md)
+
+* [search](docs/sdks/traces/README.md#search) - Search traces
+* [get_trace_fields](docs/sdks/traces/README.md#get_trace_fields) - Get trace field definitions
+* [get_trace_by_id](docs/sdks/traces/README.md#get_trace_by_id) - Get trace by id
+* [get_trace_spans](docs/sdks/traces/README.md#get_trace_spans) - Get trace spans
+* [fetch_options](docs/sdks/traces/README.md#fetch_options) - Get options for a trace field
+* [get_span_by_id](docs/sdks/traces/README.md#get_span_by_id) - Get span by id
+
 ### [Beta.Rag.IngestionPipelineConfigurations](docs/sdks/ingestionpipelineconfigurations/README.md)
 
 * [list](docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
@@ -744,6 +769,8 @@ print(res.choices[0].message.content)
 * [get_workflow_execution_trace_summary](docs/sdks/executions/README.md#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
 * [get_workflow_execution_trace_events](docs/sdks/executions/README.md#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
 * [stream](docs/sdks/executions/README.md#stream) - Stream
+* [get_workflow_execution_logs](docs/sdks/executions/README.md#get_workflow_execution_logs) - Get Workflow Execution Logs
+* [stream_workflow_execution_logs](docs/sdks/executions/README.md#stream_workflow_execution_logs) - Stream Workflow Execution Logs
 
 #### [Workflows.Metrics](docs/sdks/metrics/README.md)
 
@@ -764,6 +791,7 @@ print(res.choices[0].message.content)
 * [update_schedule](docs/sdks/schedules/README.md#update_schedule) - Update Schedule
 * [pause_schedule](docs/sdks/schedules/README.md#pause_schedule) - Pause Schedule
 * [resume_schedule](docs/sdks/schedules/README.md#resume_schedule) - Resume Schedule
+* [trigger_schedule](docs/sdks/schedules/README.md#trigger_schedule) - Trigger Schedule
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -822,7 +850,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.get_workflows(active_only=False, include_shared=True, limit=50)
+    res = mistral.workflows.get_workflows(include_shared=True, order="asc", limit=50, active_only=False)
 
     while res is not None:
         # Handle items
@@ -975,8 +1003,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 130 of 197 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 41 of 197 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 133 of 216 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 216 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

@@ -2,6 +2,7 @@
 # @generated-id: a128585aee76
 
 from __future__ import annotations
+from .workflowexecutionstatus import WorkflowExecutionStatus
 from .workflowlistresponse import WorkflowListResponse, WorkflowListResponseTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -10,35 +11,75 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import FieldMetadata, QueryParamMetadata
+from mistralai.client.utils import FieldMetadata, QueryParamMetadata, validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Awaitable, Callable, List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Awaitable, Callable, List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+GetWorkflowsV1WorkflowsGetStatusTypedDict = TypeAliasType(
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict",
+    Union[WorkflowExecutionStatus, List[WorkflowExecutionStatus]],
+)
+r"""Filter by workflow status"""
+
+
+GetWorkflowsV1WorkflowsGetStatus = TypeAliasType(
+    "GetWorkflowsV1WorkflowsGetStatus",
+    Union[WorkflowExecutionStatus, List[WorkflowExecutionStatus]],
+)
+r"""Filter by workflow status"""
+
+
+DeploymentStatus = Literal[
+    "active",
+    "inactive",
+]
+r"""Filter by deployment activity. active=only active, inactive=only inactive, None=no filter"""
+
+
+GetWorkflowsV1WorkflowsGetOrder = Literal[
+    "asc",
+    "desc",
+]
+r"""Sort direction"""
 
 
 class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
-    active_only: NotRequired[bool]
-    r"""Whether to only return active workflows"""
+    status: NotRequired[Nullable[GetWorkflowsV1WorkflowsGetStatusTypedDict]]
+    r"""Filter by workflow status"""
     include_shared: NotRequired[bool]
     r"""Whether to include shared workflows"""
     available_in_chat_assistant: NotRequired[Nullable[bool]]
     r"""Whether to only return workflows available in chat assistant"""
+    deployment_name: NotRequired[Nullable[List[str]]]
+    r"""Filter by deployment name(s)"""
+    deployment_status: NotRequired[Nullable[DeploymentStatus]]
+    r"""Filter by deployment activity. active=only active, inactive=only inactive, None=no filter"""
     archived: NotRequired[Nullable[bool]]
     r"""Filter by archived state. False=exclude archived, True=only archived, None=include all"""
     tags: NotRequired[Nullable[List[str]]]
     r"""Filter to workflows tagged with all listed tags (AND)."""
+    sort_by: Nullable[Literal["display_name"]]
+    r"""Field to sort by"""
+    order: NotRequired[GetWorkflowsV1WorkflowsGetOrder]
+    r"""Sort direction"""
     cursor: NotRequired[Nullable[str]]
     r"""The cursor for pagination"""
     limit: NotRequired[int]
     r"""The maximum number of workflows to return"""
+    active_only: NotRequired[bool]
+    r"""Deprecated: use deployment_status instead"""
 
 
 class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
-    active_only: Annotated[
-        Optional[bool],
+    status: Annotated[
+        OptionalNullable[GetWorkflowsV1WorkflowsGetStatus],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = False
-    r"""Whether to only return active workflows"""
+    ] = UNSET
+    r"""Filter by workflow status"""
 
     include_shared: Annotated[
         Optional[bool],
@@ -52,6 +93,18 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     ] = UNSET
     r"""Whether to only return workflows available in chat assistant"""
 
+    deployment_name: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by deployment name(s)"""
+
+    deployment_status: Annotated[
+        OptionalNullable[DeploymentStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by deployment activity. active=only active, inactive=only inactive, None=no filter"""
+
     archived: Annotated[
         OptionalNullable[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -63,6 +116,22 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Filter to workflows tagged with all listed tags (AND)."""
+
+    sort_by: Annotated[
+        Annotated[
+            OptionalNullable[Literal["display_name"]],
+            AfterValidator(validate_const("display_name")),
+        ],
+        pydantic.Field(alias="sort_by"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "display_name"
+    r"""Field to sort by"""
+
+    order: Annotated[
+        Optional[GetWorkflowsV1WorkflowsGetOrder],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "asc"
+    r"""Sort direction"""
 
     cursor: Annotated[
         OptionalNullable[str],
@@ -76,21 +145,44 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     ] = 50
     r"""The maximum number of workflows to return"""
 
+    active_only: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Deprecated: use deployment_status instead"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "active_only",
+                "status",
                 "include_shared",
                 "available_in_chat_assistant",
+                "deployment_name",
+                "deployment_status",
                 "archived",
                 "tags",
+                "sort_by",
+                "order",
                 "cursor",
                 "limit",
+                "active_only",
             ]
         )
         nullable_fields = set(
-            ["available_in_chat_assistant", "archived", "tags", "cursor"]
+            [
+                "status",
+                "available_in_chat_assistant",
+                "deployment_name",
+                "deployment_status",
+                "archived",
+                "tags",
+                "sort_by",
+                "cursor",
+            ]
         )
         serialized = handler(self)
         m = {}
@@ -125,3 +217,9 @@ class GetWorkflowsV1WorkflowsGetResponse(BaseModel):
     ]
 
     result: WorkflowListResponse
+
+
+try:
+    GetWorkflowsV1WorkflowsGetRequest.model_rebuild()
+except NameError:
+    pass

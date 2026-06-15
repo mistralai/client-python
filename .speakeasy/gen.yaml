@@ -32,7 +32,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.4.9
+  version: 2.4.10
   additionalDependencies:
     dev:
       pytest: ^8.2.2

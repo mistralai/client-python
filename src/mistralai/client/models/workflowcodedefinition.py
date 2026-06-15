@@ -30,6 +30,8 @@ class WorkflowCodeDefinitionTypedDict(TypedDict):
     r"""Update handlers defined by the workflow"""
     enforce_determinism: NotRequired[bool]
     r"""Whether the workflow enforces deterministic execution"""
+    on_behalf_of: NotRequired[bool]
+    r"""Whether the workflow must run associated to a user's identity"""
     execution_timeout: NotRequired[float]
     r"""Maximum total execution time including retries and continue-as-new"""
     plugin_metadata: NotRequired[Nullable[Dict[str, Any]]]
@@ -55,6 +57,9 @@ class WorkflowCodeDefinition(BaseModel):
     enforce_determinism: Optional[bool] = False
     r"""Whether the workflow enforces deterministic execution"""
 
+    on_behalf_of: Optional[bool] = False
+    r"""Whether the workflow must run associated to a user's identity"""
+
     execution_timeout: Optional[float] = None
     r"""Maximum total execution time including retries and continue-as-new"""
 
@@ -70,6 +75,7 @@ class WorkflowCodeDefinition(BaseModel):
                 "queries",
                 "updates",
                 "enforce_determinism",
+                "on_behalf_of",
                 "execution_timeout",
                 "plugin_metadata",
             ]

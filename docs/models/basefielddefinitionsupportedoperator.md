@@ -1,12 +1,12 @@
-# SupportedOperator
+# BaseFieldDefinitionSupportedOperator
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import SupportedOperator
+from mistralai.client.models import BaseFieldDefinitionSupportedOperator
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SupportedOperator = "lt"
+value: BaseFieldDefinitionSupportedOperator = "lt"
 ```
 
 
