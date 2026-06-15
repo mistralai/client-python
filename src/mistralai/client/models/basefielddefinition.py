@@ -30,7 +30,7 @@ BaseFieldDefinitionType = Union[
 ]
 
 
-SupportedOperator = Union[
+BaseFieldDefinitionSupportedOperator = Union[
     Literal[
         "lt",
         "lte",
@@ -60,7 +60,7 @@ class BaseFieldDefinitionTypedDict(TypedDict):
     name: str
     label: str
     type: BaseFieldDefinitionType
-    supported_operators: List[SupportedOperator]
+    supported_operators: List[BaseFieldDefinitionSupportedOperator]
     group: NotRequired[Nullable[str]]
 
 
@@ -71,7 +71,7 @@ class BaseFieldDefinition(BaseModel):
 
     type: BaseFieldDefinitionType
 
-    supported_operators: List[SupportedOperator]
+    supported_operators: List[BaseFieldDefinitionSupportedOperator]
 
     group: OptionalNullable[str] = UNSET
 

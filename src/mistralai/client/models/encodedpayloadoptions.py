@@ -11,6 +11,7 @@ EncodedPayloadOptions = Union[
         "offloaded",
         "encrypted",
         "encrypted-partial",
+        "compressed",
     ],
     UnrecognizedStr,
 ]

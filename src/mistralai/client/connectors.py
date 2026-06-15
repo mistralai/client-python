@@ -502,7 +502,7 @@ class Connectors(BaseSDK):
         app_return_url: OptionalNullable[str] = UNSET,
         method_type: Optional[models.OutboundAuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
-        bind_connection_to: Optional[models.BindConnectionTo] = "user",
+        github_installation_link: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -516,7 +516,7 @@ class Connectors(BaseSDK):
         :param app_return_url:
         :param method_type: Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app').
         :param credentials_name:
-        :param bind_connection_to:
+        :param github_installation_link: Only valid with method_type=oauth2. When true, returns a GitHub App installation URL (https://github.com/apps/<slug>/installations/new) if the connector has the proper configuration The Github application needs to have 'Request user authorization (OAuth) during installation' enabled to perform the proper auth loop.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -539,7 +539,7 @@ class Connectors(BaseSDK):
             app_return_url=app_return_url,
             method_type=method_type,
             credentials_name=credentials_name,
-            bind_connection_to=bind_connection_to,
+            github_installation_link=github_installation_link,
             connector_id_or_name=connector_id_or_name,
         )
 
@@ -607,7 +607,7 @@ class Connectors(BaseSDK):
         app_return_url: OptionalNullable[str] = UNSET,
         method_type: Optional[models.OutboundAuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
-        bind_connection_to: Optional[models.BindConnectionTo] = "user",
+        github_installation_link: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -621,7 +621,7 @@ class Connectors(BaseSDK):
         :param app_return_url:
         :param method_type: Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app').
         :param credentials_name:
-        :param bind_connection_to:
+        :param github_installation_link: Only valid with method_type=oauth2. When true, returns a GitHub App installation URL (https://github.com/apps/<slug>/installations/new) if the connector has the proper configuration The Github application needs to have 'Request user authorization (OAuth) during installation' enabled to perform the proper auth loop.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -644,7 +644,7 @@ class Connectors(BaseSDK):
             app_return_url=app_return_url,
             method_type=method_type,
             credentials_name=credentials_name,
-            bind_connection_to=bind_connection_to,
+            github_installation_link=github_installation_link,
             connector_id_or_name=connector_id_or_name,
         )
 

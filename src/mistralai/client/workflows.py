@@ -295,13 +295,22 @@ class Workflows(BaseSDK):
     def get_workflows(
         self,
         *,
-        active_only: Optional[bool] = False,
+        status: OptionalNullable[
+            Union[
+                models.GetWorkflowsV1WorkflowsGetStatus,
+                models.GetWorkflowsV1WorkflowsGetStatusTypedDict,
+            ]
+        ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        deployment_name: OptionalNullable[List[str]] = UNSET,
+        deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
+        order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
+        active_only: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -309,13 +318,17 @@ class Workflows(BaseSDK):
     ) -> Optional[models.GetWorkflowsV1WorkflowsGetResponse]:
         r"""Get Workflows
 
-        :param active_only: Whether to only return active workflows
+        :param status: Filter by workflow status
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
+        :param deployment_name: Filter by deployment name(s)
+        :param deployment_status: Filter by deployment activity. active=only active, inactive=only inactive, None=no filter
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param tags: Filter to workflows tagged with all listed tags (AND).
+        :param order: Sort direction
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
+        :param active_only: Deprecated: use deployment_status instead
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -335,13 +348,17 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
-            active_only=active_only,
+            status=status,
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
+            deployment_name=deployment_name,
+            deployment_status=deployment_status,
             archived=archived,
             tags=tags,
+            order=order,
             cursor=cursor,
             limit=limit,
+            active_only=active_only,
         )
 
         req = self._build_request(
@@ -403,13 +420,17 @@ class Workflows(BaseSDK):
                 return None
 
             return self.get_workflows(
-                active_only=active_only,
+                status=status,
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
+                deployment_name=deployment_name,
+                deployment_status=deployment_status,
                 archived=archived,
                 tags=tags,
+                order=order,
                 cursor=next_cursor,
                 limit=limit,
+                active_only=active_only,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -439,13 +460,22 @@ class Workflows(BaseSDK):
     async def get_workflows_async(
         self,
         *,
-        active_only: Optional[bool] = False,
+        status: OptionalNullable[
+            Union[
+                models.GetWorkflowsV1WorkflowsGetStatus,
+                models.GetWorkflowsV1WorkflowsGetStatusTypedDict,
+            ]
+        ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        deployment_name: OptionalNullable[List[str]] = UNSET,
+        deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         tags: OptionalNullable[List[str]] = UNSET,
+        order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
+        active_only: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -453,13 +483,17 @@ class Workflows(BaseSDK):
     ) -> Optional[models.GetWorkflowsV1WorkflowsGetResponse]:
         r"""Get Workflows
 
-        :param active_only: Whether to only return active workflows
+        :param status: Filter by workflow status
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
+        :param deployment_name: Filter by deployment name(s)
+        :param deployment_status: Filter by deployment activity. active=only active, inactive=only inactive, None=no filter
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param tags: Filter to workflows tagged with all listed tags (AND).
+        :param order: Sort direction
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
+        :param active_only: Deprecated: use deployment_status instead
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -479,13 +513,17 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
-            active_only=active_only,
+            status=status,
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
+            deployment_name=deployment_name,
+            deployment_status=deployment_status,
             archived=archived,
             tags=tags,
+            order=order,
             cursor=cursor,
             limit=limit,
+            active_only=active_only,
         )
 
         req = self._build_request_async(
@@ -552,13 +590,17 @@ class Workflows(BaseSDK):
                 return empty_result()
 
             return self.get_workflows_async(
-                active_only=active_only,
+                status=status,
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
+                deployment_name=deployment_name,
+                deployment_status=deployment_status,
                 archived=archived,
                 tags=tags,
+                order=order,
                 cursor=next_cursor,
                 limit=limit,
+                active_only=active_only,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
