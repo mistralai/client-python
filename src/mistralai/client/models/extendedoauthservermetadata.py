@@ -2,7 +2,6 @@
 # @generated-id: 967e2e08f18c
 
 from __future__ import annotations
-from .oauthmetadata import OAuthMetadata, OAuthMetadataTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -48,7 +47,6 @@ class ExtendedOAuthServerMetadataTypedDict(TypedDict):
     ]
     code_challenge_methods_supported: NotRequired[Nullable[List[str]]]
     client_id_metadata_document_supported: NotRequired[Nullable[bool]]
-    x_org_server_metadata: NotRequired[Nullable[OAuthMetadataTypedDict]]
     x_resource_url: NotRequired[Nullable[str]]
 
 
@@ -109,8 +107,6 @@ class ExtendedOAuthServerMetadata(BaseModel):
 
     client_id_metadata_document_supported: OptionalNullable[bool] = UNSET
 
-    x_org_server_metadata: OptionalNullable[OAuthMetadata] = UNSET
-
     x_resource_url: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
@@ -136,7 +132,6 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "introspection_endpoint_auth_signing_alg_values_supported",
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
-                "x_org_server_metadata",
                 "x_resource_url",
             ]
         )
@@ -160,7 +155,6 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "introspection_endpoint_auth_signing_alg_values_supported",
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
-                "x_org_server_metadata",
                 "x_resource_url",
             ]
         )

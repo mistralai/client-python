@@ -7,6 +7,9 @@ from mistralai.client.campaigns import Campaigns
 from mistralai.client.chat_completion_events import ChatCompletionEvents
 from mistralai.client.datasets import Datasets
 from mistralai.client.judges import Judges
+from mistralai.client.logs import Logs
+from mistralai.client.spans import Spans
+from mistralai.client.traces import Traces
 from typing import Optional
 
 
@@ -15,6 +18,9 @@ class Observability(BaseSDK):
     judges: Judges
     campaigns: Campaigns
     datasets: Datasets
+    logs: Logs
+    traces: Traces
+    spans: Spans
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -30,3 +36,6 @@ class Observability(BaseSDK):
         self.judges = Judges(self.sdk_configuration, parent_ref=self.parent_ref)
         self.campaigns = Campaigns(self.sdk_configuration, parent_ref=self.parent_ref)
         self.datasets = Datasets(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.logs = Logs(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.traces = Traces(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.spans = Spans(self.sdk_configuration, parent_ref=self.parent_ref)

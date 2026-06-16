@@ -220,9 +220,9 @@ if TYPE_CHECKING:
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
+        BaseFieldDefinitionSupportedOperator,
         BaseFieldDefinitionType,
         BaseFieldDefinitionTypedDict,
-        SupportedOperator,
     )
     from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .basetaskstatus import BaseTaskStatus
@@ -476,7 +476,6 @@ if TYPE_CHECKING:
         ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict,
     )
     from .connector_get_auth_url_v1op import (
-        BindConnectionTo,
         ConnectorGetAuthURLV1Request,
         ConnectorGetAuthURLV1RequestTypedDict,
     )
@@ -863,6 +862,11 @@ if TYPE_CHECKING:
         ResponseExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostTypedDict,
     )
     from .executionconfig import ExecutionConfig, ExecutionConfigTypedDict
+    from .executionlogrecord import ExecutionLogRecord, ExecutionLogRecordTypedDict
+    from .executionlogsearchresponse import (
+        ExecutionLogSearchResponse,
+        ExecutionLogSearchResponseTypedDict,
+    )
     from .export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop import (
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest,
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict,
@@ -880,6 +884,13 @@ if TYPE_CHECKING:
         FeedResultChatCompletionEventPreview,
         FeedResultChatCompletionEventPreviewTypedDict,
     )
+    from .feedresultgetlog import FeedResultGetLog, FeedResultGetLogTypedDict
+    from .feedresultgetspan import FeedResultGetSpan, FeedResultGetSpanTypedDict
+    from .feedresultgetspanevaluation import (
+        FeedResultGetSpanEvaluation,
+        FeedResultGetSpanEvaluationTypedDict,
+    )
+    from .feedresultgettrace import FeedResultGetTrace, FeedResultGetTraceTypedDict
     from .fetchcampaignstatusresponse import (
         FetchCampaignStatusResponse,
         FetchCampaignStatusResponseTypedDict,
@@ -1056,6 +1067,10 @@ if TYPE_CHECKING:
         GetJudgesV1ObservabilityJudgesGetRequest,
         GetJudgesV1ObservabilityJudgesGetRequestTypedDict,
     )
+    from .get_log_field_options_v1_observability_logs_fields_field_name_options_getop import (
+        GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest,
+        GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict,
+    )
     from .get_run_history_v1_workflows_runs_run_id_history_getop import (
         GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest,
         GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict,
@@ -1079,12 +1094,36 @@ if TYPE_CHECKING:
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest,
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict,
     )
+    from .get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop import (
+        GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest,
+        GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict,
+    )
+    from .get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop import (
+        GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest,
+        GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict,
+    )
+    from .get_span_field_options_v1_observability_spans_fields_field_name_options_getop import (
+        GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest,
+        GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict,
+    )
     from .get_stream_events_v1_workflows_events_stream_getop import (
         GetStreamEventsV1WorkflowsEventsStreamGetRequest,
         GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict,
         GetStreamEventsV1WorkflowsEventsStreamGetResponseBody,
         GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict,
         Scope,
+    )
+    from .get_trace_by_id_v1_observability_traces_trace_id_getop import (
+        GetTraceByIDV1ObservabilityTracesTraceIDGetRequest,
+        GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict,
+    )
+    from .get_trace_field_options_v1_observability_traces_fields_field_name_options_getop import (
+        GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest,
+        GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict,
+    )
+    from .get_trace_spans_v1_observability_traces_trace_id_spans_getop import (
+        GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest,
+        GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict,
     )
     from .get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop import (
         GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest,
@@ -1101,6 +1140,11 @@ if TYPE_CHECKING:
     from .get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop import (
         GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest,
         GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict,
+    )
+    from .get_workflow_execution_logsop import (
+        GetWorkflowExecutionLogsOrder,
+        GetWorkflowExecutionLogsRequest,
+        GetWorkflowExecutionLogsRequestTypedDict,
     )
     from .get_workflow_execution_trace_eventsop import (
         GetWorkflowExecutionTraceEventsRequest,
@@ -1135,16 +1179,45 @@ if TYPE_CHECKING:
         GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict,
     )
     from .get_workflows_v1_workflows_getop import (
+        DeploymentStatus,
+        GetWorkflowsV1WorkflowsGetOrder,
         GetWorkflowsV1WorkflowsGetRequest,
         GetWorkflowsV1WorkflowsGetRequestTypedDict,
         GetWorkflowsV1WorkflowsGetResponse,
         GetWorkflowsV1WorkflowsGetResponseTypedDict,
+        GetWorkflowsV1WorkflowsGetStatus,
+        GetWorkflowsV1WorkflowsGetStatusTypedDict,
     )
     from .getfileresponse import GetFileResponse, GetFileResponseTypedDict
+    from .getlog import GetLog, GetLogTypedDict
+    from .getlogfieldoptions import GetLogFieldOptions, GetLogFieldOptionsTypedDict
+    from .getlogfields import GetLogFields, GetLogFieldsTypedDict
+    from .getlogs import GetLogs, GetLogsTypedDict
     from .getsignedurlresponse import (
         GetSignedURLResponse,
         GetSignedURLResponseTypedDict,
     )
+    from .getspan import GetSpan, GetSpanStatusCode, GetSpanTypedDict
+    from .getspanevaluation import GetSpanEvaluation, GetSpanEvaluationTypedDict
+    from .getspanevaluationfieldoptions import (
+        GetSpanEvaluationFieldOptions,
+        GetSpanEvaluationFieldOptionsTypedDict,
+    )
+    from .getspanevaluationfields import (
+        GetSpanEvaluationFields,
+        GetSpanEvaluationFieldsTypedDict,
+    )
+    from .getspanevaluations import GetSpanEvaluations, GetSpanEvaluationsTypedDict
+    from .getspanfieldoptions import GetSpanFieldOptions, GetSpanFieldOptionsTypedDict
+    from .getspanfields import GetSpanFields, GetSpanFieldsTypedDict
+    from .getspans import GetSpans, GetSpansTypedDict
+    from .gettrace import GetTrace, GetTraceStatusCode, GetTraceTypedDict
+    from .gettracefieldoptions import (
+        GetTraceFieldOptions,
+        GetTraceFieldOptionsTypedDict,
+    )
+    from .gettracefields import GetTraceFields, GetTraceFieldsTypedDict
+    from .gettraces import GetTraces, GetTracesTypedDict
     from .githubrepository import GithubRepository, GithubRepositoryTypedDict
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .httpstatus import HTTPStatus
@@ -1410,12 +1483,14 @@ if TYPE_CHECKING:
         ListModelsV1ModelsGetRequestTypedDict,
     )
     from .list_runs_v1_workflows_runs_getop import (
+        ListRunsV1WorkflowsRunsGetOrder,
         ListRunsV1WorkflowsRunsGetRequest,
         ListRunsV1WorkflowsRunsGetRequestTypedDict,
         ListRunsV1WorkflowsRunsGetResponse,
         ListRunsV1WorkflowsRunsGetResponseTypedDict,
         ListRunsV1WorkflowsRunsGetStatus,
         ListRunsV1WorkflowsRunsGetStatusTypedDict,
+        SortBy,
     )
     from .list_voices_v1_audio_voices_getop import (
         ListVoicesV1AudioVoicesGetRequest,
@@ -1475,6 +1550,7 @@ if TYPE_CHECKING:
         ListWorkflowEventResponseTypedDict,
     )
     from .locationtype import LocationType
+    from .logsrequest import LogsRequest, LogsRequestTypedDict, Order
     from .mcpprompt import MCPPrompt, MCPPromptTypedDict
     from .mcpresource import MCPResource, MCPResourceTypedDict
     from .mcpserverauthenticationrequirement import (
@@ -1576,7 +1652,6 @@ if TYPE_CHECKING:
     from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
     from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
-    from .oauthmetadata import OAuthMetadata, OAuthMetadataTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
         ObservabilityErrorDetail,
@@ -1603,6 +1678,12 @@ if TYPE_CHECKING:
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
+    from .otelfielddefinition import (
+        OtelFieldDefinition,
+        OtelFieldDefinitionSupportedOperator,
+        OtelFieldDefinitionType,
+        OtelFieldDefinitionTypedDict,
+    )
     from .outboundauthenticationtype import OutboundAuthenticationType
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
     from .paginatedconnectors import PaginatedConnectors, PaginatedConnectorsTypedDict
@@ -1795,6 +1876,26 @@ if TYPE_CHECKING:
         ScheduleRecentExecution,
         ScheduleRecentExecutionTypedDict,
     )
+    from .search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop import (
+        SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest,
+        SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict,
+    )
+    from .search_logs_v1_observability_logs_search_postop import (
+        SearchLogsV1ObservabilityLogsSearchPostRequest,
+        SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict,
+    )
+    from .search_span_evaluations_v1_observability_spans_evaluations_search_postop import (
+        SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest,
+        SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict,
+    )
+    from .search_spans_v1_observability_spans_search_postop import (
+        SearchSpansV1ObservabilitySpansSearchPostRequest,
+        SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict,
+    )
+    from .search_traces_v1_observability_traces_search_postop import (
+        SearchTracesV1ObservabilityTracesSearchPostRequest,
+        SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict,
+    )
     from .searchchatcompletioneventidsrequest import (
         SearchChatCompletionEventIdsRequest,
         SearchChatCompletionEventIdsRequestTypedDict,
@@ -1852,6 +1953,11 @@ if TYPE_CHECKING:
         SignalWorkflowResponseTypedDict,
     )
     from .source import Source
+    from .spanevaluationsrequest import (
+        SpanEvaluationsRequest,
+        SpanEvaluationsRequestTypedDict,
+    )
+    from .spansrequest import SpansRequest, SpansRequestTypedDict
     from .speech_v1_audio_speech_postop import (
         SpeechResponse,
         SpeechResponseTypedDict,
@@ -1878,6 +1984,16 @@ if TYPE_CHECKING:
         StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict,
     )
+    from .stream_workflow_execution_logsop import (
+        StreamWorkflowExecutionLogsData,
+        StreamWorkflowExecutionLogsDataTypedDict,
+        StreamWorkflowExecutionLogsEvent,
+        StreamWorkflowExecutionLogsRequest,
+        StreamWorkflowExecutionLogsRequestTypedDict,
+        StreamWorkflowExecutionLogsResponseBody,
+        StreamWorkflowExecutionLogsResponseBodyTypedDict,
+    )
+    from .streamerror import StreamError, StreamErrorTypedDict
     from .streameventssepayload import (
         StreamEventSsePayload,
         StreamEventSsePayloadData,
@@ -2036,6 +2152,7 @@ if TYPE_CHECKING:
     )
     from .toolscapability import ToolsCapability, ToolsCapabilityTypedDict
     from .tooltype import ToolType
+    from .tracesrequest import TracesRequest, TracesRequestTypedDict
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
         TranscriptionResponse,
@@ -2068,6 +2185,10 @@ if TYPE_CHECKING:
     from .transcriptionstreamtextdelta import (
         TranscriptionStreamTextDelta,
         TranscriptionStreamTextDeltaTypedDict,
+    )
+    from .trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop import (
+        TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest,
+        TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict,
     )
     from .turbinemeta import TurbineMeta, TurbineMetaTypedDict
     from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
@@ -2367,6 +2488,10 @@ if TYPE_CHECKING:
         WorkflowScheduleResponse,
         WorkflowScheduleResponseTypedDict,
     )
+    from .workflowscheduletriggerrequest import (
+        WorkflowScheduleTriggerRequest,
+        WorkflowScheduleTriggerRequestTypedDict,
+    )
     from .workflowscheduleupdaterequest import (
         WorkflowScheduleUpdateRequest,
         WorkflowScheduleUpdateRequestTypedDict,
@@ -2546,6 +2671,7 @@ __all__ = [
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
+    "BaseFieldDefinitionSupportedOperator",
     "BaseFieldDefinitionType",
     "BaseFieldDefinitionTypedDict",
     "BaseModelCard",
@@ -2564,7 +2690,6 @@ __all__ = [
     "BatchJobTypedDict",
     "BatchRequest",
     "BatchRequestTypedDict",
-    "BindConnectionTo",
     "BlobResourceContents",
     "BlobResourceContentsTypedDict",
     "BuiltInConnectors",
@@ -2929,6 +3054,7 @@ __all__ = [
     "DeploymentLocationTypedDict",
     "DeploymentResponse",
     "DeploymentResponseTypedDict",
+    "DeploymentStatus",
     "DeploymentWorkerResponse",
     "DeploymentWorkerResponseTypedDict",
     "Document",
@@ -2974,6 +3100,10 @@ __all__ = [
     "ExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostRequestTypedDict",
     "ExecutionConfig",
     "ExecutionConfigTypedDict",
+    "ExecutionLogRecord",
+    "ExecutionLogRecordTypedDict",
+    "ExecutionLogSearchResponse",
+    "ExecutionLogSearchResponseTypedDict",
     "ExportDatasetResponse",
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
@@ -2999,6 +3129,14 @@ __all__ = [
     "FailureTypedDict",
     "FeedResultChatCompletionEventPreview",
     "FeedResultChatCompletionEventPreviewTypedDict",
+    "FeedResultGetLog",
+    "FeedResultGetLogTypedDict",
+    "FeedResultGetSpan",
+    "FeedResultGetSpanEvaluation",
+    "FeedResultGetSpanEvaluationTypedDict",
+    "FeedResultGetSpanTypedDict",
+    "FeedResultGetTrace",
+    "FeedResultGetTraceTypedDict",
     "FetchCampaignStatusResponse",
     "FetchCampaignStatusResponseTypedDict",
     "FetchChatCompletionFieldOptionsResponse",
@@ -3096,6 +3234,16 @@ __all__ = [
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict",
     "GetJudgesV1ObservabilityJudgesGetRequest",
     "GetJudgesV1ObservabilityJudgesGetRequestTypedDict",
+    "GetLog",
+    "GetLogFieldOptions",
+    "GetLogFieldOptionsTypedDict",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetLogFields",
+    "GetLogFieldsTypedDict",
+    "GetLogTypedDict",
+    "GetLogs",
+    "GetLogsTypedDict",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict",
     "GetRunV1WorkflowsRunsRunIDGetRequest",
@@ -3111,10 +3259,48 @@ __all__ = [
     "GetSignedURLResponseTypedDict",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict",
+    "GetSpan",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict",
+    "GetSpanEvaluation",
+    "GetSpanEvaluationFieldOptions",
+    "GetSpanEvaluationFieldOptionsTypedDict",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetSpanEvaluationFields",
+    "GetSpanEvaluationFieldsTypedDict",
+    "GetSpanEvaluationTypedDict",
+    "GetSpanEvaluations",
+    "GetSpanEvaluationsTypedDict",
+    "GetSpanFieldOptions",
+    "GetSpanFieldOptionsTypedDict",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetSpanFields",
+    "GetSpanFieldsTypedDict",
+    "GetSpanStatusCode",
+    "GetSpanTypedDict",
+    "GetSpans",
+    "GetSpansTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict",
+    "GetTrace",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequest",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict",
+    "GetTraceFieldOptions",
+    "GetTraceFieldOptionsTypedDict",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetTraceFields",
+    "GetTraceFieldsTypedDict",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict",
+    "GetTraceStatusCode",
+    "GetTraceTypedDict",
+    "GetTraces",
+    "GetTracesTypedDict",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest",
@@ -3123,6 +3309,9 @@ __all__ = [
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict",
+    "GetWorkflowExecutionLogsOrder",
+    "GetWorkflowExecutionLogsRequest",
+    "GetWorkflowExecutionLogsRequestTypedDict",
     "GetWorkflowExecutionTraceEventsRequest",
     "GetWorkflowExecutionTraceEventsRequestTypedDict",
     "GetWorkflowExecutionTraceOtelRequest",
@@ -3139,10 +3328,13 @@ __all__ = [
     "GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequest",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict",
+    "GetWorkflowsV1WorkflowsGetOrder",
     "GetWorkflowsV1WorkflowsGetRequest",
     "GetWorkflowsV1WorkflowsGetRequestTypedDict",
     "GetWorkflowsV1WorkflowsGetResponse",
     "GetWorkflowsV1WorkflowsGetResponseTypedDict",
+    "GetWorkflowsV1WorkflowsGetStatus",
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict",
     "GithubRepository",
     "GithubRepositoryTypedDict",
     "GuardrailConfig",
@@ -3333,6 +3525,7 @@ __all__ = [
     "ListLibrariesResponseTypedDict",
     "ListModelsV1ModelsGetRequest",
     "ListModelsV1ModelsGetRequestTypedDict",
+    "ListRunsV1WorkflowsRunsGetOrder",
     "ListRunsV1WorkflowsRunsGetRequest",
     "ListRunsV1WorkflowsRunsGetRequestTypedDict",
     "ListRunsV1WorkflowsRunsGetResponse",
@@ -3354,6 +3547,8 @@ __all__ = [
     "LogicalExpression",
     "LogicalExpressionType",
     "LogicalExpressionTypedDict",
+    "LogsRequest",
+    "LogsRequestTypedDict",
     "MCPPrompt",
     "MCPPromptTypedDict",
     "MCPResource",
@@ -3437,8 +3632,6 @@ __all__ = [
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
     "OAuth2TokenTypedDict",
-    "OAuthMetadata",
-    "OAuthMetadataTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
     "OCRImageObject",
@@ -3466,7 +3659,12 @@ __all__ = [
     "OptionTypedDict",
     "Or",
     "OrTypedDict",
+    "Order",
     "OrderBy",
+    "OtelFieldDefinition",
+    "OtelFieldDefinitionSupportedOperator",
+    "OtelFieldDefinitionType",
+    "OtelFieldDefinitionTypedDict",
     "OutboundAuthenticationType",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
@@ -3646,6 +3844,16 @@ __all__ = [
     "SearchIndexResponseIndexTypedDict",
     "SearchIndexResponseStatus",
     "SearchIndexResponseTypedDict",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict",
+    "SearchLogsV1ObservabilityLogsSearchPostRequest",
+    "SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict",
+    "SearchSpansV1ObservabilitySpansSearchPostRequest",
+    "SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict",
+    "SearchTracesV1ObservabilityTracesSearchPostRequest",
+    "SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict",
     "Security",
     "SecurityTypedDict",
     "ServerCapabilities",
@@ -3677,7 +3885,12 @@ __all__ = [
     "SignalWorkflowResponseTypedDict",
     "SkipConfirmation",
     "SkipConfirmationTypedDict",
+    "SortBy",
     "Source",
+    "SpanEvaluationsRequest",
+    "SpanEvaluationsRequestTypedDict",
+    "SpansRequest",
+    "SpansRequestTypedDict",
     "SpeechOutputFormat",
     "SpeechRequest",
     "SpeechRequestTypedDict",
@@ -3694,6 +3907,8 @@ __all__ = [
     "SpeechV1AudioSpeechPostDataTypedDict",
     "SpeechV1AudioSpeechPostResponse",
     "SpeechV1AudioSpeechPostResponseTypedDict",
+    "StreamError",
+    "StreamErrorTypedDict",
     "StreamEventSsePayload",
     "StreamEventSsePayloadData",
     "StreamEventSsePayloadDataTypedDict",
@@ -3704,7 +3919,13 @@ __all__ = [
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict",
-    "SupportedOperator",
+    "StreamWorkflowExecutionLogsData",
+    "StreamWorkflowExecutionLogsDataTypedDict",
+    "StreamWorkflowExecutionLogsEvent",
+    "StreamWorkflowExecutionLogsRequest",
+    "StreamWorkflowExecutionLogsRequestTypedDict",
+    "StreamWorkflowExecutionLogsResponseBody",
+    "StreamWorkflowExecutionLogsResponseBodyTypedDict",
     "SystemMessage",
     "SystemMessageContent",
     "SystemMessageContentChunks",
@@ -3821,6 +4042,8 @@ __all__ = [
     "ToolsCapability",
     "ToolsCapabilityTypedDict",
     "ToolsTypedDict",
+    "TracesRequest",
+    "TracesRequestTypedDict",
     "TrainingFile",
     "TrainingFileTypedDict",
     "TranscriptionResponse",
@@ -3840,6 +4063,8 @@ __all__ = [
     "TranscriptionStreamSegmentDeltaTypedDict",
     "TranscriptionStreamTextDelta",
     "TranscriptionStreamTextDeltaTypedDict",
+    "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest",
+    "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict",
     "TurbineMeta",
     "TurbineMetaTypedDict",
     "TurbineToolLocale",
@@ -4048,6 +4273,8 @@ __all__ = [
     "WorkflowScheduleRequestTypedDict",
     "WorkflowScheduleResponse",
     "WorkflowScheduleResponseTypedDict",
+    "WorkflowScheduleTriggerRequest",
+    "WorkflowScheduleTriggerRequestTypedDict",
     "WorkflowScheduleUpdateRequest",
     "WorkflowScheduleUpdateRequestTypedDict",
     "WorkflowTaskFailedAttributes",
@@ -4201,9 +4428,9 @@ _dynamic_imports: dict[str, str] = {
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
+    "BaseFieldDefinitionSupportedOperator": ".basefielddefinition",
     "BaseFieldDefinitionType": ".basefielddefinition",
     "BaseFieldDefinitionTypedDict": ".basefielddefinition",
-    "SupportedOperator": ".basefielddefinition",
     "BaseModelCard": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
     "BaseTaskStatus": ".basetaskstatus",
@@ -4380,7 +4607,6 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1Request": ".connector_delete_workspace_credentials_v1op",
     "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict": ".connector_delete_workspace_credentials_v1op",
-    "BindConnectionTo": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthenticationMethodsV1Request": ".connector_get_authentication_methods_v1op",
@@ -4648,6 +4874,10 @@ _dynamic_imports: dict[str, str] = {
     "ResponseExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostTypedDict": ".execute_workflow_v1_workflows_workflow_identifier_execute_postop",
     "ExecutionConfig": ".executionconfig",
     "ExecutionConfigTypedDict": ".executionconfig",
+    "ExecutionLogRecord": ".executionlogrecord",
+    "ExecutionLogRecordTypedDict": ".executionlogrecord",
+    "ExecutionLogSearchResponse": ".executionlogsearchresponse",
+    "ExecutionLogSearchResponseTypedDict": ".executionlogsearchresponse",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
@@ -4658,6 +4888,14 @@ _dynamic_imports: dict[str, str] = {
     "FailureTypedDict": ".failure",
     "FeedResultChatCompletionEventPreview": ".feedresultchatcompletioneventpreview",
     "FeedResultChatCompletionEventPreviewTypedDict": ".feedresultchatcompletioneventpreview",
+    "FeedResultGetLog": ".feedresultgetlog",
+    "FeedResultGetLogTypedDict": ".feedresultgetlog",
+    "FeedResultGetSpan": ".feedresultgetspan",
+    "FeedResultGetSpanTypedDict": ".feedresultgetspan",
+    "FeedResultGetSpanEvaluation": ".feedresultgetspanevaluation",
+    "FeedResultGetSpanEvaluationTypedDict": ".feedresultgetspanevaluation",
+    "FeedResultGetTrace": ".feedresultgettrace",
+    "FeedResultGetTraceTypedDict": ".feedresultgettrace",
     "FetchCampaignStatusResponse": ".fetchcampaignstatusresponse",
     "FetchCampaignStatusResponseTypedDict": ".fetchcampaignstatusresponse",
     "FetchChatCompletionFieldOptionsResponse": ".fetchchatcompletionfieldoptionsresponse",
@@ -4771,6 +5009,8 @@ _dynamic_imports: dict[str, str] = {
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgesV1ObservabilityJudgesGetRequest": ".get_judges_v1_observability_judges_getop",
     "GetJudgesV1ObservabilityJudgesGetRequestTypedDict": ".get_judges_v1_observability_judges_getop",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunV1WorkflowsRunsRunIDGetRequest": ".get_run_v1_workflows_runs_run_id_getop",
@@ -4784,11 +5024,23 @@ _dynamic_imports: dict[str, str] = {
     "GetSchedulesV1WorkflowsSchedulesGetStatus": ".get_schedules_v1_workflows_schedules_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest": ".get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict": ".get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest": ".get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "Scope": ".get_stream_events_v1_workflows_events_stream_getop",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequest": ".get_trace_by_id_v1_observability_traces_trace_id_getop",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict": ".get_trace_by_id_v1_observability_traces_trace_id_getop",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest": ".get_trace_field_options_v1_observability_traces_fields_field_name_options_getop",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict": ".get_trace_field_options_v1_observability_traces_fields_field_name_options_getop",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest": ".get_voice_v1_audio_voices_voice_id_getop",
@@ -4797,6 +5049,9 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict": ".get_workflow_events_v1_workflows_events_list_getop",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest": ".get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict": ".get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop",
+    "GetWorkflowExecutionLogsOrder": ".get_workflow_execution_logsop",
+    "GetWorkflowExecutionLogsRequest": ".get_workflow_execution_logsop",
+    "GetWorkflowExecutionLogsRequestTypedDict": ".get_workflow_execution_logsop",
     "GetWorkflowExecutionTraceEventsRequest": ".get_workflow_execution_trace_eventsop",
     "GetWorkflowExecutionTraceEventsRequestTypedDict": ".get_workflow_execution_trace_eventsop",
     "GetWorkflowExecutionTraceOtelRequest": ".get_workflow_execution_trace_otelop",
@@ -4813,14 +5068,52 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict": ".get_workflow_registrations_v1_workflows_registrations_getop",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequest": ".get_workflow_v1_workflows_workflow_identifier_getop",
     "GetWorkflowV1WorkflowsWorkflowIdentifierGetRequestTypedDict": ".get_workflow_v1_workflows_workflow_identifier_getop",
+    "DeploymentStatus": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetOrder": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetRequest": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetRequestTypedDict": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetResponse": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetResponseTypedDict": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetStatus": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict": ".get_workflows_v1_workflows_getop",
     "GetFileResponse": ".getfileresponse",
     "GetFileResponseTypedDict": ".getfileresponse",
+    "GetLog": ".getlog",
+    "GetLogTypedDict": ".getlog",
+    "GetLogFieldOptions": ".getlogfieldoptions",
+    "GetLogFieldOptionsTypedDict": ".getlogfieldoptions",
+    "GetLogFields": ".getlogfields",
+    "GetLogFieldsTypedDict": ".getlogfields",
+    "GetLogs": ".getlogs",
+    "GetLogsTypedDict": ".getlogs",
     "GetSignedURLResponse": ".getsignedurlresponse",
     "GetSignedURLResponseTypedDict": ".getsignedurlresponse",
+    "GetSpan": ".getspan",
+    "GetSpanStatusCode": ".getspan",
+    "GetSpanTypedDict": ".getspan",
+    "GetSpanEvaluation": ".getspanevaluation",
+    "GetSpanEvaluationTypedDict": ".getspanevaluation",
+    "GetSpanEvaluationFieldOptions": ".getspanevaluationfieldoptions",
+    "GetSpanEvaluationFieldOptionsTypedDict": ".getspanevaluationfieldoptions",
+    "GetSpanEvaluationFields": ".getspanevaluationfields",
+    "GetSpanEvaluationFieldsTypedDict": ".getspanevaluationfields",
+    "GetSpanEvaluations": ".getspanevaluations",
+    "GetSpanEvaluationsTypedDict": ".getspanevaluations",
+    "GetSpanFieldOptions": ".getspanfieldoptions",
+    "GetSpanFieldOptionsTypedDict": ".getspanfieldoptions",
+    "GetSpanFields": ".getspanfields",
+    "GetSpanFieldsTypedDict": ".getspanfields",
+    "GetSpans": ".getspans",
+    "GetSpansTypedDict": ".getspans",
+    "GetTrace": ".gettrace",
+    "GetTraceStatusCode": ".gettrace",
+    "GetTraceTypedDict": ".gettrace",
+    "GetTraceFieldOptions": ".gettracefieldoptions",
+    "GetTraceFieldOptionsTypedDict": ".gettracefieldoptions",
+    "GetTraceFields": ".gettracefields",
+    "GetTraceFieldsTypedDict": ".gettracefields",
+    "GetTraces": ".gettraces",
+    "GetTracesTypedDict": ".gettraces",
     "GithubRepository": ".githubrepository",
     "GithubRepositoryTypedDict": ".githubrepository",
     "GuardrailConfig": ".guardrailconfig",
@@ -4997,12 +5290,14 @@ _dynamic_imports: dict[str, str] = {
     "ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict": ".list_deployments_v1_workflows_deployments_getop",
     "ListModelsV1ModelsGetRequest": ".list_models_v1_models_getop",
     "ListModelsV1ModelsGetRequestTypedDict": ".list_models_v1_models_getop",
+    "ListRunsV1WorkflowsRunsGetOrder": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequest": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequestTypedDict": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetResponse": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetResponseTypedDict": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetStatus": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetStatusTypedDict": ".list_runs_v1_workflows_runs_getop",
+    "SortBy": ".list_runs_v1_workflows_runs_getop",
     "ListVoicesV1AudioVoicesGetRequest": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetRequestTypedDict": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetType": ".list_voices_v1_audio_voices_getop",
@@ -5040,6 +5335,9 @@ _dynamic_imports: dict[str, str] = {
     "ListWorkflowEventResponseEventTypedDict": ".listworkfloweventresponse",
     "ListWorkflowEventResponseTypedDict": ".listworkfloweventresponse",
     "LocationType": ".locationtype",
+    "LogsRequest": ".logsrequest",
+    "LogsRequestTypedDict": ".logsrequest",
+    "Order": ".logsrequest",
     "MCPPrompt": ".mcpprompt",
     "MCPPromptTypedDict": ".mcpprompt",
     "MCPResource": ".mcpresource",
@@ -5131,8 +5429,6 @@ _dynamic_imports: dict[str, str] = {
     "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
-    "OAuthMetadata": ".oauthmetadata",
-    "OAuthMetadataTypedDict": ".oauthmetadata",
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
@@ -5161,6 +5457,10 @@ _dynamic_imports: dict[str, str] = {
     "OCRTableObjectTypedDict": ".ocrtableobject",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
+    "OtelFieldDefinition": ".otelfielddefinition",
+    "OtelFieldDefinitionSupportedOperator": ".otelfielddefinition",
+    "OtelFieldDefinitionType": ".otelfielddefinition",
+    "OtelFieldDefinitionTypedDict": ".otelfielddefinition",
     "OutboundAuthenticationType": ".outboundauthenticationtype",
     "OutputContentChunks": ".outputcontentchunks",
     "OutputContentChunksTypedDict": ".outputcontentchunks",
@@ -5302,6 +5602,16 @@ _dynamic_imports: dict[str, str] = {
     "ScheduleRangeTypedDict": ".schedulerange",
     "ScheduleRecentExecution": ".schedulerecentexecution",
     "ScheduleRecentExecutionTypedDict": ".schedulerecentexecution",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
+    "SearchLogsV1ObservabilityLogsSearchPostRequest": ".search_logs_v1_observability_logs_search_postop",
+    "SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict": ".search_logs_v1_observability_logs_search_postop",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest": ".search_span_evaluations_v1_observability_spans_evaluations_search_postop",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict": ".search_span_evaluations_v1_observability_spans_evaluations_search_postop",
+    "SearchSpansV1ObservabilitySpansSearchPostRequest": ".search_spans_v1_observability_spans_search_postop",
+    "SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict": ".search_spans_v1_observability_spans_search_postop",
+    "SearchTracesV1ObservabilityTracesSearchPostRequest": ".search_traces_v1_observability_traces_search_postop",
+    "SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict": ".search_traces_v1_observability_traces_search_postop",
     "SearchChatCompletionEventIdsRequest": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsRequestTypedDict": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsResponse": ".searchchatcompletioneventidsresponse",
@@ -5346,6 +5656,10 @@ _dynamic_imports: dict[str, str] = {
     "SignalWorkflowResponse": ".signalworkflowresponse",
     "SignalWorkflowResponseTypedDict": ".signalworkflowresponse",
     "Source": ".source",
+    "SpanEvaluationsRequest": ".spanevaluationsrequest",
+    "SpanEvaluationsRequestTypedDict": ".spanevaluationsrequest",
+    "SpansRequest": ".spansrequest",
+    "SpansRequestTypedDict": ".spansrequest",
     "SpeechResponse": ".speech_v1_audio_speech_postop",
     "SpeechResponseTypedDict": ".speech_v1_audio_speech_postop",
     "SpeechStreamEvents": ".speech_v1_audio_speech_postop",
@@ -5368,6 +5682,15 @@ _dynamic_imports: dict[str, str] = {
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
+    "StreamWorkflowExecutionLogsData": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsDataTypedDict": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsEvent": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsRequest": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsRequestTypedDict": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsResponseBody": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsResponseBodyTypedDict": ".stream_workflow_execution_logsop",
+    "StreamError": ".streamerror",
+    "StreamErrorTypedDict": ".streamerror",
     "StreamEventSsePayload": ".streameventssepayload",
     "StreamEventSsePayloadData": ".streameventssepayload",
     "StreamEventSsePayloadDataTypedDict": ".streameventssepayload",
@@ -5492,6 +5815,8 @@ _dynamic_imports: dict[str, str] = {
     "ToolsCapability": ".toolscapability",
     "ToolsCapabilityTypedDict": ".toolscapability",
     "ToolType": ".tooltype",
+    "TracesRequest": ".tracesrequest",
+    "TracesRequestTypedDict": ".tracesrequest",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
     "TranscriptionResponse": ".transcriptionresponse",
@@ -5512,6 +5837,8 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamSegmentDeltaTypedDict": ".transcriptionstreamsegmentdelta",
     "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
+    "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest": ".trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop",
+    "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict": ".trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop",
     "TurbineMeta": ".turbinemeta",
     "TurbineMetaTypedDict": ".turbinemeta",
     "TurbineToolLocale": ".turbinetoollocale",
@@ -5700,6 +6027,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleRequestTypedDict": ".workflowschedulerequest",
     "WorkflowScheduleResponse": ".workflowscheduleresponse",
     "WorkflowScheduleResponseTypedDict": ".workflowscheduleresponse",
+    "WorkflowScheduleTriggerRequest": ".workflowscheduletriggerrequest",
+    "WorkflowScheduleTriggerRequestTypedDict": ".workflowscheduletriggerrequest",
     "WorkflowScheduleUpdateRequest": ".workflowscheduleupdaterequest",
     "WorkflowScheduleUpdateRequestTypedDict": ".workflowscheduleupdaterequest",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",

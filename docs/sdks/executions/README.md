@@ -18,6 +18,8 @@
 * [get_workflow_execution_trace_summary](#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
 * [get_workflow_execution_trace_events](#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
 * [stream](#stream) - Stream
+* [get_workflow_execution_logs](#get_workflow_execution_logs) - Get Workflow Execution Logs
+* [stream_workflow_execution_logs](#stream_workflow_execution_logs) - Stream Workflow Execution Logs
 
 ## get_workflow_execution
 
@@ -590,6 +592,109 @@ with Mistral(
 ### Response
 
 **[Union[eventstreaming.EventStream[models.StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody], eventstreaming.EventStreamAsync[models.StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody]]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_workflow_execution_logs
+
+Retrieve logs for a workflow execution from Dora.
+
+First page sets the window via `after`/`before` (default: execution start through now, both
+widened by a margin so the bounds still prune partitions); later pages pass `cursor`, which
+carries both the window and the sort order (so `after`/`before`/`order` are then ignored —
+the order is fixed at the first page so a client can't flip direction mid-pagination).
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_workflow_execution_logs" method="get" path="/v1/workflows/executions/{execution_id}/logs" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.executions.get_workflow_execution_logs(execution_id="<id>", order="asc", limit=50)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `execution_id`                                                                                  | *str*                                                                                           | :heavy_check_mark:                                                                              | N/A                                                                                             |
+| `run_id`                                                                                        | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Filter logs by workflow run ID                                                                  |
+| `activity_id`                                                                                   | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Filter logs by activity ID                                                                      |
+| `after`                                                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects)                            | :heavy_minus_sign:                                                                              | Only return logs at or after this timestamp                                                     |
+| `before`                                                                                        | [date](https://docs.python.org/3/library/datetime.html#date-objects)                            | :heavy_minus_sign:                                                                              | Only return logs before this timestamp                                                          |
+| `order`                                                                                         | [Optional[models.GetWorkflowExecutionLogsOrder]](../../models/getworkflowexecutionlogsorder.md) | :heavy_minus_sign:                                                                              | First-page sort order: 'asc' (oldest first) or 'desc'. Ignored when `cursor` is set.            |
+| `cursor`                                                                                        | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Pagination cursor from a previous response's `next_cursor`; carries the window and order        |
+| `limit`                                                                                         | *Optional[int]*                                                                                 | :heavy_minus_sign:                                                                              | Maximum number of logs to return                                                                |
+| `retries`                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                | :heavy_minus_sign:                                                                              | Configuration to override the default retry behavior of the client.                             |
+
+### Response
+
+**[models.ExecutionLogSearchResponse](../../models/executionlogsearchresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## stream_workflow_execution_logs
+
+Stream logs for a workflow execution via SSE.
+
+If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
+otherwise `after` sets a fresh stream's start point (omit both to tail from the execution start).
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="stream_workflow_execution_logs" method="get" path="/v1/workflows/executions/{execution_id}/logs/stream" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.executions.stream_workflow_execution_logs(execution_id="<id>")
+
+    with res as event_stream:
+        for event in event_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+### Parameters
+
+| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `execution_id`                                                                   | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `run_id`                                                                         | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by workflow run ID                                                   |
+| `activity_id`                                                                    | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by activity ID                                                       |
+| `after`                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)             | :heavy_minus_sign:                                                               | Start a fresh stream at this timestamp (ignored when resuming via last_event_id) |
+| `last_event_id`                                                                  | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Resume from this cursor (a prior response's SSE id)                              |
+| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
+
+### Response
+
+**[Union[eventstreaming.EventStream[models.StreamWorkflowExecutionLogsResponseBody], eventstreaming.EventStreamAsync[models.StreamWorkflowExecutionLogsResponseBody]]](../../models/.md)**
 
 ### Errors
 
