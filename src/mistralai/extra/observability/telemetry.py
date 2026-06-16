@@ -135,7 +135,9 @@ def configure_telemetry_for_hook(
 ) -> bool:
     """Configure telemetry for a tracing hook when the user has opted in."""
     # Fast path: already resolved and no explicit override requested.
-    if hook._auto_telemetry_provider is not None and telemetry is None:
+    if telemetry is None and (
+        hook._auto_telemetry_provider is not None or hook._telemetry_use_global_provider
+    ):
         return True
     if telemetry is None and hook._telemetry_auto_disabled:
         return False
@@ -155,6 +157,7 @@ def configure_telemetry_for_hook(
     )
     if provider_mode is None:
         _shutdown_telemetry_provider(hook)
+        hook._telemetry_use_global_provider = False
         hook._telemetry_auto_disabled = True
         return False
 
@@ -176,6 +179,7 @@ def configure_telemetry_for_hook(
             "configure_telemetry(client, provider='dedicated') to attach an "
             "SDK-owned provider for this client."
         )
+        hook._telemetry_use_global_provider = False
         hook._telemetry_auto_disabled = True
         return False
 
@@ -294,6 +298,7 @@ def _attach_telemetry_provider(
     _shutdown_telemetry_provider(hook)
     hook.tracer_provider = provider
     hook._auto_telemetry_provider = provider
+    hook._telemetry_use_global_provider = False
     hook._telemetry_auto_disabled = False
     hook._telemetry_finalizer = weakref.finalize(
         finalizer_owner, provider.shutdown
@@ -306,6 +311,7 @@ def _attach_custom_tracer_provider(
 ) -> None:
     _shutdown_telemetry_provider(hook)
     hook.tracer_provider = provider
+    hook._telemetry_use_global_provider = False
     hook._telemetry_auto_disabled = False
 
 
@@ -323,6 +329,7 @@ def _use_global_tracer_provider(
 
     _shutdown_telemetry_provider(hook)
     hook.tracer_provider = None
+    hook._telemetry_use_global_provider = True
     hook._telemetry_auto_disabled = True
     return True
 
