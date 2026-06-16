@@ -309,7 +309,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         provider = FakeProvider()
         client = _make_client(api_key="test-key")
 
-        configure_telemetry(client, provider=provider)
+        configure_telemetry(client, provider=cast(TracerProvider, provider))
         tracer = get_telemetry_tracer(client, "my-agent")
 
         self.assertIs(tracer, provider.tracers["my-agent"])
