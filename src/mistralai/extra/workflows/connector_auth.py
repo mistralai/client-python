@@ -57,6 +57,7 @@ from mistralai.client.models import (
     WorkflowExecutionCompletedResponse,
     WorkflowExecutionFailedResponse,
     WorkflowExecutionResponse,
+    WorkflowStreamError,
 )
 
 from .connector_slot import ConnectorSlot, WorkflowExtensions
@@ -192,6 +193,13 @@ async def _stream_and_handle_auth(
                         continue
 
                     payload = sse_event.data
+                    if isinstance(payload, WorkflowStreamError):
+                        # Typed SSE error after HTTP 200: the stream failed
+                        # mid-tail. Treat it like a dropped connection so the
+                        # reconnect/back-off loop below handles it.
+                        raise ConnectionError(
+                            f"workflow event stream error: {payload.error} ({payload.reason})"
+                        )
                     last_seq = payload.broker_sequence + 1
                     event = payload.data
 
