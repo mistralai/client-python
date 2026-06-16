@@ -1107,6 +1107,8 @@ if TYPE_CHECKING:
         GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict,
     )
     from .get_stream_events_v1_workflows_events_stream_getop import (
+        GetStreamEventsV1WorkflowsEventsStreamGetData,
+        GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict,
         GetStreamEventsV1WorkflowsEventsStreamGetRequest,
         GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict,
         GetStreamEventsV1WorkflowsEventsStreamGetResponseBody,
@@ -1979,6 +1981,8 @@ if TYPE_CHECKING:
     from .speechstreameventtypes import SpeechStreamEventTypes
     from .ssetypes import SSETypes
     from .stream_v1_workflows_executions_execution_id_stream_getop import (
+        StreamV1WorkflowsExecutionsExecutionIDStreamGetData,
+        StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody,
@@ -2496,6 +2500,7 @@ if TYPE_CHECKING:
         WorkflowScheduleUpdateRequest,
         WorkflowScheduleUpdateRequestTypedDict,
     )
+    from .workflowstreamerror import WorkflowStreamError, WorkflowStreamErrorTypedDict
     from .workflowtaskfailedattributes import (
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
@@ -3282,6 +3287,8 @@ __all__ = [
     "GetSpanTypedDict",
     "GetSpans",
     "GetSpansTypedDict",
+    "GetStreamEventsV1WorkflowsEventsStreamGetData",
+    "GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody",
@@ -3915,6 +3922,8 @@ __all__ = [
     "StreamEventSsePayloadTypedDict",
     "StreamEventWorkflowContext",
     "StreamEventWorkflowContextTypedDict",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetData",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody",
@@ -4277,6 +4286,8 @@ __all__ = [
     "WorkflowScheduleTriggerRequestTypedDict",
     "WorkflowScheduleUpdateRequest",
     "WorkflowScheduleUpdateRequestTypedDict",
+    "WorkflowStreamError",
+    "WorkflowStreamErrorTypedDict",
     "WorkflowTaskFailedAttributes",
     "WorkflowTaskFailedAttributesTypedDict",
     "WorkflowTaskFailedResponse",
@@ -5030,6 +5041,8 @@ _dynamic_imports: dict[str, str] = {
     "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop",
     "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
     "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
+    "GetStreamEventsV1WorkflowsEventsStreamGetData": ".get_stream_events_v1_workflows_events_stream_getop",
+    "GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody": ".get_stream_events_v1_workflows_events_stream_getop",
@@ -5678,6 +5691,8 @@ _dynamic_imports: dict[str, str] = {
     "SpeechStreamDoneTypedDict": ".speechstreamdone",
     "SpeechStreamEventTypes": ".speechstreameventtypes",
     "SSETypes": ".ssetypes",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetData": ".stream_v1_workflows_executions_execution_id_stream_getop",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody": ".stream_v1_workflows_executions_execution_id_stream_getop",
@@ -6031,6 +6046,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleTriggerRequestTypedDict": ".workflowscheduletriggerrequest",
     "WorkflowScheduleUpdateRequest": ".workflowscheduleupdaterequest",
     "WorkflowScheduleUpdateRequestTypedDict": ".workflowscheduleupdaterequest",
+    "WorkflowStreamError": ".workflowstreamerror",
+    "WorkflowStreamErrorTypedDict": ".workflowstreamerror",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",
