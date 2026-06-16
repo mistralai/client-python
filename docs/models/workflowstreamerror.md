@@ -1,4 +1,4 @@
-# StreamError
+# WorkflowStreamError
 
 
 ## Fields

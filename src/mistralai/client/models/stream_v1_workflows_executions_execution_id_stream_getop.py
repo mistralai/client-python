@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .eventsource import EventSource
 from .streameventssepayload import StreamEventSsePayload, StreamEventSsePayloadTypedDict
+from .workflowstreamerror import WorkflowStreamError, WorkflowStreamErrorTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -13,8 +14,8 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict(TypedDict):
@@ -64,11 +65,24 @@ class StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest(BaseModel):
         return m
 
 
+StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict = TypeAliasType(
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict",
+    Union[WorkflowStreamErrorTypedDict, StreamEventSsePayloadTypedDict],
+)
+
+
+StreamV1WorkflowsExecutionsExecutionIDStreamGetData = TypeAliasType(
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetData",
+    Union[WorkflowStreamError, StreamEventSsePayload],
+)
+
+
 class StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict(TypedDict):
     r"""Stream of Server-Sent Events (SSE)"""
 
     event: NotRequired[str]
-    data: NotRequired[StreamEventSsePayloadTypedDict]
+    r"""SSE event name. `error` indicates the stream failed after HTTP 200."""
+    data: NotRequired[StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict]
     id: NotRequired[str]
     retry: NotRequired[int]
 
@@ -77,8 +91,9 @@ class StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody(BaseModel):
     r"""Stream of Server-Sent Events (SSE)"""
 
     event: Optional[str] = None
+    r"""SSE event name. `error` indicates the stream failed after HTTP 200."""
 
-    data: Optional[StreamEventSsePayload] = None
+    data: Optional[StreamV1WorkflowsExecutionsExecutionIDStreamGetData] = None
 
     id: Optional[str] = None
 
