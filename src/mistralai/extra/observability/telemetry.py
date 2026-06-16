@@ -11,7 +11,7 @@ from opentelemetry import trace as otel_trace
 
 from mistralai.client.utils import get_security_from_env
 
-from .otel import OTEL_SERVICE_NAME
+from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
 
 if TYPE_CHECKING:
     from opentelemetry.sdk.trace import TracerProvider as SDKTracerProvider
@@ -123,6 +123,44 @@ def configure_telemetry(
 
     _attach_custom_tracer_provider(hook, provider)
     return True
+
+
+def get_telemetry_tracer(
+    client: "Mistral",
+    name: str | None = None,
+) -> otel_trace.Tracer:
+    """Return a tracer from the telemetry provider configured for a client.
+
+    Custom and SDK-owned dedicated providers are used directly. Clients
+    explicitly configured for global telemetry use the OpenTelemetry global
+    provider. If telemetry is disabled or has not been configured for this
+    client, a TelemetryConfigurationError is raised.
+    """
+    hooks = getattr(client.sdk_configuration, "_hooks", None)
+    if hooks is None:
+        raise ValueError("Cannot get telemetry tracer: SDK hooks not initialised.")
+
+    hook = _get_tracing_hook(hooks)
+    tracer_name = name or MISTRAL_SDK_OTEL_TRACER_NAME
+
+    if hook.tracer_provider is None and not hook._telemetry_use_global_provider:
+        configure_telemetry_for_hook(
+            hook,
+            client.sdk_configuration,
+            finalizer_owner=client,
+            respect_global_provider=True,
+        )
+
+    if hook.tracer_provider is not None:
+        return hook.tracer_provider.get_tracer(tracer_name)
+    if hook._telemetry_use_global_provider:
+        return otel_trace.get_tracer(tracer_name)
+
+    raise TelemetryConfigurationError(
+        "Telemetry is not configured for this client. Call configure_telemetry(client) "
+        "or configure_telemetry(client, provider='global') before requesting a "
+        "telemetry tracer."
+    )
 
 
 def configure_telemetry_for_hook(

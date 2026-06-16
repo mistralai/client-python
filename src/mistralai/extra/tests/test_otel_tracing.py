@@ -2029,6 +2029,54 @@ class TestOtelTracing(unittest.TestCase):
 class TestPerInstanceTracerProvider(unittest.TestCase):
     """Tests for per-instance tracer_provider support via set_tracer_provider."""
 
+    def test_get_telemetry_tracer_dedicated_provider_captures_app_spans(self):
+        from mistralai.extra.observability import (
+            configure_telemetry,
+            get_telemetry_tracer,
+        )
+
+        exporter = InMemorySpanExporter()
+        dedicated_provider = TracerProvider()
+        dedicated_provider.add_span_processor(SimpleSpanProcessor(exporter))
+
+        with patch.dict(os.environ, {}, clear=True):
+            with patch(
+                "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
+                return_value=dedicated_provider,
+            ):
+                with (
+                    _ChatCompletionTestServer() as server,
+                    httpx.Client() as http_client,
+                ):
+                    client = Mistral(
+                        api_key="test-key",
+                        client=http_client,
+                        server_url=server.url,
+                    )
+                    configure_telemetry(client)
+                    tracer = get_telemetry_tracer(client, "my-agent")
+
+                    with tracer.start_as_current_span("invoke_agent"):
+                        client.chat.complete(
+                            model="mistral-small-latest",
+                            messages=_make_user_messages("hello"),
+                        )
+
+                        with tracer.start_as_current_span(
+                            "execute_tool web_search"
+                        ):
+                            pass
+
+        spans = exporter.get_finished_spans()
+        invoke_span = next(s for s in spans if s.name == "invoke_agent")
+        chat_span = next(s for s in spans if s.name == "chat mistral-small-latest")
+        tool_span = next(s for s in spans if s.name == "execute_tool web_search")
+
+        self.assertEqual(chat_span.parent.span_id, invoke_span.context.span_id)
+        self.assertEqual(tool_span.parent.span_id, invoke_span.context.span_id)
+        self.assertEqual(chat_span.context.trace_id, invoke_span.context.trace_id)
+        self.assertEqual(tool_span.context.trace_id, invoke_span.context.trace_id)
+
     def test_custom_provider_captures_spans(self):
         """Spans go to the instance-specific exporter, not the global provider."""
         # Create a standalone provider with its own exporter
