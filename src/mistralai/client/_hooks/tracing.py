@@ -44,29 +44,30 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
         self._auto_telemetry_provider: Optional[Any] = None
         self._telemetry_finalizer: Optional[weakref.finalize] = None
         self._telemetry_auto_disabled: bool = False
+        self._telemetry_use_global_provider: bool = False
         self.tracing_enabled, self.tracer = get_or_create_otel_tracer()
 
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
-        # The GenAI span is created in this hook, but HTTPX creates its own
-        # auto-instrumented span later inside send(). Wrap the configured
-        # clients so each request's stored GenAI span is current only while
-        # that request is being sent.
-        self._ensure_client_send_wrapped(getattr(hook_ctx.config, "client", None))
-        self._ensure_async_client_send_wrapped(
-            getattr(hook_ctx.config, "async_client", None)
-        )
-        configure_telemetry_for_hook(
+        telemetry_configured = configure_telemetry_for_hook(
             self,
             hook_ctx.config,
             respect_global_provider=True,
         )
-        # Refresh tracer/provider per request so tracing can be enabled if the
-        # application configures OpenTelemetry after the client is instantiated.
-        self.tracing_enabled, self.tracer = get_or_create_otel_tracer(
-            provider=self.tracer_provider,
+        should_trace = (
+            telemetry_configured
+            or self.tracer_provider is not None
+            or self._telemetry_use_global_provider
         )
+        if should_trace:
+            # Refresh tracer/provider per request so tracing can be enabled if the
+            # application configures OpenTelemetry after the client is instantiated.
+            self.tracing_enabled, self.tracer = get_or_create_otel_tracer(
+                provider=self.tracer_provider,
+            )
+        else:
+            self.tracing_enabled = False
         request, span = get_traced_request_and_span(
             tracing_enabled=self.tracing_enabled,
             tracer=self.tracer,
@@ -75,6 +76,15 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
             request=request,
         )
         self._store_span_on_request(request, span)
+        # The GenAI span is created in this hook, but HTTPX creates its own
+        # auto-instrumented span later inside send(). Wrap the configured
+        # clients so each request's stored GenAI span is current only while
+        # that request is being sent.
+        if span is not None:
+            self._ensure_client_send_wrapped(getattr(hook_ctx.config, "client", None))
+            self._ensure_async_client_send_wrapped(
+                getattr(hook_ctx.config, "async_client", None)
+            )
         return request
 
     @staticmethod
