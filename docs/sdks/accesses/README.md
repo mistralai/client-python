@@ -114,6 +114,8 @@ with Mistral(
 
     res = mistral.beta.libraries.accesses.delete(library_id="709e3cad-9fb2-4f4e-bf88-143cf1808107", share_with_uuid="b843cc47-ce8f-4354-8cfc-5fcd7fb2865b", share_with_type="User")
 
+    assert res is not None
+
     # Handle response
     print(res)
 

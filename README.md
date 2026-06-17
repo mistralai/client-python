@@ -670,8 +670,15 @@ print(res.choices[0].message.content)
 
 ### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
 
-* [list](docs/sdks/searchindexes/README.md#list) - Get Search Indexes
-* [register](docs/sdks/searchindexes/README.md#register) - Register Search Index
+* [register](docs/sdks/searchindexes/README.md#register) - Register (or re-register) a search index
+* [get_index_summaries](docs/sdks/searchindexes/README.md#get_index_summaries) - Get Index Summaries
+* [unregister](docs/sdks/searchindexes/README.md#unregister) - Unregister Search Index
+* [update_index_metrics](docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
+* [get_index_detail](docs/sdks/searchindexes/README.md#get_index_detail) - Get Index Details
+* [set_index_summary](docs/sdks/searchindexes/README.md#set_index_summary) - Set Index Summary
+* [get_index_schema_detail](docs/sdks/searchindexes/README.md#get_index_schema_detail) - Get Index Schema Detail
+* [set_schema_summary](docs/sdks/searchindexes/README.md#set_schema_summary) - Set Schema Summary
+* [get_index_schema_file](docs/sdks/searchindexes/README.md#get_index_schema_file) - Get Index Schema File
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -1003,8 +1010,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 134 of 216 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 216 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 140 of 223 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 223 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
