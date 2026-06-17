@@ -678,21 +678,6 @@ if TYPE_CHECKING:
         CreateLibraryRequestTypedDict,
         OwnerType,
     )
-    from .createsearchindexinforequest import (
-        CreateSearchIndexInfoRequest,
-        CreateSearchIndexInfoRequestIndex,
-        CreateSearchIndexInfoRequestIndexTypedDict,
-        CreateSearchIndexInfoRequestStatus,
-        CreateSearchIndexInfoRequestTypedDict,
-    )
-    from .createvespaschemarequest import (
-        CreateVespaSchemaRequest,
-        CreateVespaSchemaRequestTypedDict,
-    )
-    from .createvespasearchindexinforequest import (
-        CreateVespaSearchIndexInfoRequest,
-        CreateVespaSearchIndexInfoRequestTypedDict,
-    )
     from .credentialscreateorupdate import (
         CredentialsCreateOrUpdate,
         CredentialsCreateOrUpdateTypedDict,
@@ -909,6 +894,7 @@ if TYPE_CHECKING:
         FetchFieldOptionCountsResponse,
         FetchFieldOptionCountsResponseTypedDict,
     )
+    from .field import FieldT, FieldTTypedDict
     from .fieldgroup import FieldGroup, FieldGroupTypedDict
     from .fieldoptioncountitem import (
         FieldOptionCountItem,
@@ -1058,6 +1044,18 @@ if TYPE_CHECKING:
     from .get_deployment_v1_workflows_deployments_name_getop import (
         GetDeploymentV1WorkflowsDeploymentsNameGetRequest,
         GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict,
+    )
+    from .get_index_details_v1_rag_indexes_index_index_id_detail_getop import (
+        GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest,
+        GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict,
+    )
+    from .get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop import (
+        GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest,
+        GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict,
+    )
+    from .get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop import (
+        GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest,
+        GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict,
     )
     from .get_judge_by_id_v1_observability_judges_judge_id_getop import (
         GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest,
@@ -1253,6 +1251,15 @@ if TYPE_CHECKING:
         ImportDatasetFromPlaygroundRequest,
         ImportDatasetFromPlaygroundRequestTypedDict,
     )
+    from .index_input import (
+        IndexInput,
+        IndexInputIndex,
+        IndexInputIndexTypedDict,
+        IndexInputStatus,
+        IndexInputTypedDict,
+    )
+    from .indexmetricsoffline import IndexMetricsOffline, IndexMetricsOfflineTypedDict
+    from .indexmetricsonline import IndexMetricsOnline, IndexMetricsOnlineTypedDict
     from .ingestionpipelineconfiguration import (
         IngestionPipelineConfiguration,
         IngestionPipelineConfigurationTypedDict,
@@ -1616,6 +1623,30 @@ if TYPE_CHECKING:
     from .messageresponse import MessageResponse, MessageResponseTypedDict
     from .messagetokens import MessageTokens, MessageTokensTypedDict
     from .metric import Metric, MetricTypedDict
+    from .mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_index import (
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndexTypedDict,
+    )
+    from .mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_schema import (
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchema,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchemaTypedDict,
+    )
+    from .mistralai_search_studio_app_routes_v1_indexes_getsearchindexschemadetail_schema import (
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchemaTypedDict,
+    )
+    from .mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index import (
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndexTypedDict,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexStatus,
+        MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexTypedDict,
+        UnknownMistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex,
+    )
+    from .mistralai_search_studio_app_routes_v1_indexes_registersearchindexresponse_index import (
+        MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex,
+        MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndexTypedDict,
+    )
     from .mistralpromptmode import MistralPromptMode
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
     from .modelconversation import (
@@ -1878,6 +1909,11 @@ if TYPE_CHECKING:
         ScheduleRecentExecution,
         ScheduleRecentExecutionTypedDict,
     )
+    from .schemafieldindex import SchemaFieldIndex
+    from .schemafieldstorage import SchemaFieldStorage
+    from .schemafieldtype import SchemaFieldType
+    from .schemametrics import SchemaMetrics, SchemaMetricsTypedDict
+    from .sdfile import SDFile, SDFileTypedDict
     from .search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop import (
         SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest,
         SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict,
@@ -1914,14 +1950,6 @@ if TYPE_CHECKING:
         SearchChatCompletionEventsResponse,
         SearchChatCompletionEventsResponseTypedDict,
     )
-    from .searchindexresponse import (
-        SearchIndexResponse,
-        SearchIndexResponseIndex,
-        SearchIndexResponseIndexTypedDict,
-        SearchIndexResponseStatus,
-        SearchIndexResponseTypedDict,
-        UnknownSearchIndexResponseIndex,
-    )
     from .security import Security, SecurityTypedDict
     from .servercapabilities import ServerCapabilities, ServerCapabilitiesTypedDict
     from .serverlocale import ServerLocale, ServerLocaleTypedDict
@@ -1932,6 +1960,14 @@ if TYPE_CHECKING:
     from .servertasksrequestscapability import (
         ServerTasksRequestsCapability,
         ServerTasksRequestsCapabilityTypedDict,
+    )
+    from .set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop import (
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest,
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict,
+    )
+    from .set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop import (
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest,
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict,
     )
     from .shareenum import ShareEnum
     from .sharing import Sharing, SharingTypedDict
@@ -2008,6 +2044,7 @@ if TYPE_CHECKING:
         StreamEventWorkflowContext,
         StreamEventWorkflowContextTypedDict,
     )
+    from .summary import Summary, SummaryTypedDict
     from .systemmessage import (
         SystemMessage,
         SystemMessageContent,
@@ -2205,6 +2242,10 @@ if TYPE_CHECKING:
         UnarchiveModelResponse,
         UnarchiveModelResponseTypedDict,
     )
+    from .unregister_search_index_v1_rag_indexes_index_index_id_deleteop import (
+        UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest,
+        UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict,
+    )
     from .unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop import (
         UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest,
         UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict,
@@ -2220,6 +2261,12 @@ if TYPE_CHECKING:
     from .update_dataset_v1_observability_datasets_dataset_id_patchop import (
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest,
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict,
+    )
+    from .update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop import (
+        MetricsData,
+        MetricsDataTypedDict,
+        UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest,
+        UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict,
     )
     from .update_judge_v1_observability_judges_judge_id_putop import (
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
@@ -2312,11 +2359,11 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
-    from .vespaschemaresponse import VespaSchemaResponse, VespaSchemaResponseTypedDict
-    from .vespasearchindexinforesponse import (
-        VespaSearchIndexInfoResponse,
-        VespaSearchIndexInfoResponseTypedDict,
-    )
+    from .vespaindex_input import VespaIndexInput, VespaIndexInputTypedDict
+    from .vespaindex_output import VespaIndexOutput, VespaIndexOutputTypedDict
+    from .vespaschema_input import VespaSchemaInput, VespaSchemaInputTypedDict
+    from .vespaschema_output import VespaSchemaOutput, VespaSchemaOutputTypedDict
+    from .vespaschemafield import VespaSchemaField, VespaSchemaFieldTypedDict
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
     from .voiceresponse import VoiceResponse, VoiceResponseTypedDict
@@ -2978,15 +3025,6 @@ __all__ = [
     "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
-    "CreateSearchIndexInfoRequest",
-    "CreateSearchIndexInfoRequestIndex",
-    "CreateSearchIndexInfoRequestIndexTypedDict",
-    "CreateSearchIndexInfoRequestStatus",
-    "CreateSearchIndexInfoRequestTypedDict",
-    "CreateVespaSchemaRequest",
-    "CreateVespaSchemaRequestTypedDict",
-    "CreateVespaSearchIndexInfoRequest",
-    "CreateVespaSearchIndexInfoRequestTypedDict",
     "CredentialsCreateOrUpdate",
     "CredentialsCreateOrUpdateTypedDict",
     "CredentialsResponse",
@@ -3154,6 +3192,8 @@ __all__ = [
     "FieldGroupTypedDict",
     "FieldOptionCountItem",
     "FieldOptionCountItemTypedDict",
+    "FieldT",
+    "FieldTTypedDict",
     "File",
     "FileChunk",
     "FileChunkTypedDict",
@@ -3235,6 +3275,12 @@ __all__ = [
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict",
     "GetFileResponse",
     "GetFileResponseTypedDict",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict",
     "GetJudgesV1ObservabilityJudgesGetRequest",
@@ -3370,6 +3416,15 @@ __all__ = [
     "ImportDatasetFromFileRequestTypedDict",
     "ImportDatasetFromPlaygroundRequest",
     "ImportDatasetFromPlaygroundRequestTypedDict",
+    "IndexInput",
+    "IndexInputIndex",
+    "IndexInputIndexTypedDict",
+    "IndexInputStatus",
+    "IndexInputTypedDict",
+    "IndexMetricsOffline",
+    "IndexMetricsOfflineTypedDict",
+    "IndexMetricsOnline",
+    "IndexMetricsOnlineTypedDict",
     "IngestionPipelineConfiguration",
     "IngestionPipelineConfigurationTypedDict",
     "InputEntries",
@@ -3607,7 +3662,22 @@ __all__ = [
     "MessageTokensTypedDict",
     "Metric",
     "MetricTypedDict",
+    "MetricsData",
+    "MetricsDataTypedDict",
     "MistralPromptMode",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndexTypedDict",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchemaTypedDict",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchemaTypedDict",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndexTypedDict",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexStatus",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexTypedDict",
+    "MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex",
+    "MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndexTypedDict",
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
     "ModelConversation",
@@ -3812,6 +3882,8 @@ __all__ = [
     "Roles",
     "RootsCapability",
     "RootsCapabilityTypedDict",
+    "SDFile",
+    "SDFileTypedDict",
     "SSETypes",
     "SampleType",
     "SamplingCapability",
@@ -3837,6 +3909,11 @@ __all__ = [
     "ScheduleRangeTypedDict",
     "ScheduleRecentExecution",
     "ScheduleRecentExecutionTypedDict",
+    "SchemaFieldIndex",
+    "SchemaFieldStorage",
+    "SchemaFieldType",
+    "SchemaMetrics",
+    "SchemaMetricsTypedDict",
     "Scope",
     "SearchChatCompletionEventIdsRequest",
     "SearchChatCompletionEventIdsRequestTypedDict",
@@ -3846,11 +3923,6 @@ __all__ = [
     "SearchChatCompletionEventsRequestTypedDict",
     "SearchChatCompletionEventsResponse",
     "SearchChatCompletionEventsResponseTypedDict",
-    "SearchIndexResponse",
-    "SearchIndexResponseIndex",
-    "SearchIndexResponseIndexTypedDict",
-    "SearchIndexResponseStatus",
-    "SearchIndexResponseTypedDict",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict",
     "SearchLogsV1ObservabilityLogsSearchPostRequest",
@@ -3871,6 +3943,10 @@ __all__ = [
     "ServerTasksCapabilityTypedDict",
     "ServerTasksRequestsCapability",
     "ServerTasksRequestsCapabilityTypedDict",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict",
     "ShareEnum",
     "Sharing",
     "SharingDelete",
@@ -3935,6 +4011,8 @@ __all__ = [
     "StreamWorkflowExecutionLogsRequestTypedDict",
     "StreamWorkflowExecutionLogsResponseBody",
     "StreamWorkflowExecutionLogsResponseBodyTypedDict",
+    "Summary",
+    "SummaryTypedDict",
     "SystemMessage",
     "SystemMessageContent",
     "SystemMessageContentChunks",
@@ -4102,14 +4180,16 @@ __all__ = [
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
     "UnknownJudgeOutputUnion",
     "UnknownListFineTuningJobsResponseData",
+    "UnknownMistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex",
     "UnknownModelConversationTool",
     "UnknownModelListData",
     "UnknownPayload",
     "UnknownResponse",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
-    "UnknownSearchIndexResponseIndex",
     "UnknownSpeechV1AudioSpeechPostData",
     "UnknownTranscriptionStreamEventsData",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict",
     "UpdateAgentRequest",
@@ -4134,6 +4214,8 @@ __all__ = [
     "UpdateDefinitionTypedDict",
     "UpdateDocumentRequest",
     "UpdateDocumentRequestTypedDict",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict",
     "UpdateInvocationBody",
     "UpdateInvocationBodyInput",
     "UpdateInvocationBodyInputTypedDict",
@@ -4172,10 +4254,16 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
-    "VespaSchemaResponse",
-    "VespaSchemaResponseTypedDict",
-    "VespaSearchIndexInfoResponse",
-    "VespaSearchIndexInfoResponseTypedDict",
+    "VespaIndexInput",
+    "VespaIndexInputTypedDict",
+    "VespaIndexOutput",
+    "VespaIndexOutputTypedDict",
+    "VespaSchemaField",
+    "VespaSchemaFieldTypedDict",
+    "VespaSchemaInput",
+    "VespaSchemaInputTypedDict",
+    "VespaSchemaOutput",
+    "VespaSchemaOutputTypedDict",
     "Visibility",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
@@ -4753,15 +4841,6 @@ _dynamic_imports: dict[str, str] = {
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
     "OwnerType": ".createlibraryrequest",
-    "CreateSearchIndexInfoRequest": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestIndex": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestIndexTypedDict": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestStatus": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestTypedDict": ".createsearchindexinforequest",
-    "CreateVespaSchemaRequest": ".createvespaschemarequest",
-    "CreateVespaSchemaRequestTypedDict": ".createvespaschemarequest",
-    "CreateVespaSearchIndexInfoRequest": ".createvespasearchindexinforequest",
-    "CreateVespaSearchIndexInfoRequestTypedDict": ".createvespasearchindexinforequest",
     "CredentialsCreateOrUpdate": ".credentialscreateorupdate",
     "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
     "CredentialsResponse": ".credentialsresponse",
@@ -4917,6 +4996,8 @@ _dynamic_imports: dict[str, str] = {
     "FetchFieldOptionCountsRequestTypedDict": ".fetchfieldoptioncountsrequest",
     "FetchFieldOptionCountsResponse": ".fetchfieldoptioncountsresponse",
     "FetchFieldOptionCountsResponseTypedDict": ".fetchfieldoptioncountsresponse",
+    "FieldT": ".field",
+    "FieldTTypedDict": ".field",
     "FieldGroup": ".fieldgroup",
     "FieldGroupTypedDict": ".fieldgroup",
     "FieldOptionCountItem": ".fieldoptioncountitem",
@@ -5016,6 +5097,12 @@ _dynamic_imports: dict[str, str] = {
     "GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict": ".get_datasets_v1_observability_datasets_getop",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequest": ".get_deployment_v1_workflows_deployments_name_getop",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict": ".get_deployment_v1_workflows_deployments_name_getop",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest": ".get_index_details_v1_rag_indexes_index_index_id_detail_getop",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict": ".get_index_details_v1_rag_indexes_index_index_id_detail_getop",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest": ".get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict": ".get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgesV1ObservabilityJudgesGetRequest": ".get_judges_v1_observability_judges_getop",
@@ -5153,6 +5240,15 @@ _dynamic_imports: dict[str, str] = {
     "ImportDatasetFromFileRequestTypedDict": ".importdatasetfromfilerequest",
     "ImportDatasetFromPlaygroundRequest": ".importdatasetfromplaygroundrequest",
     "ImportDatasetFromPlaygroundRequestTypedDict": ".importdatasetfromplaygroundrequest",
+    "IndexInput": ".index_input",
+    "IndexInputIndex": ".index_input",
+    "IndexInputIndexTypedDict": ".index_input",
+    "IndexInputStatus": ".index_input",
+    "IndexInputTypedDict": ".index_input",
+    "IndexMetricsOffline": ".indexmetricsoffline",
+    "IndexMetricsOfflineTypedDict": ".indexmetricsoffline",
+    "IndexMetricsOnline": ".indexmetricsonline",
+    "IndexMetricsOnlineTypedDict": ".indexmetricsonline",
     "IngestionPipelineConfiguration": ".ingestionpipelineconfiguration",
     "IngestionPipelineConfigurationTypedDict": ".ingestionpipelineconfiguration",
     "InputEntries": ".inputentries",
@@ -5410,6 +5506,20 @@ _dynamic_imports: dict[str, str] = {
     "MessageTokensTypedDict": ".messagetokens",
     "Metric": ".metric",
     "MetricTypedDict": ".metric",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndexTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchema": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_schema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseSchemaTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexdetailresponse_schema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexschemadetail_schema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchemaTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexschemadetail_schema",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndexTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexStatus": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "UnknownMistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndexIndex": ".mistralai_search_studio_app_routes_v1_indexes_getsearchindexsummaryresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex": ".mistralai_search_studio_app_routes_v1_indexes_registersearchindexresponse_index",
+    "MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndexTypedDict": ".mistralai_search_studio_app_routes_v1_indexes_registersearchindexresponse_index",
     "MistralPromptMode": ".mistralpromptmode",
     "ModelCapabilities": ".modelcapabilities",
     "ModelCapabilitiesTypedDict": ".modelcapabilities",
@@ -5615,6 +5725,13 @@ _dynamic_imports: dict[str, str] = {
     "ScheduleRangeTypedDict": ".schedulerange",
     "ScheduleRecentExecution": ".schedulerecentexecution",
     "ScheduleRecentExecutionTypedDict": ".schedulerecentexecution",
+    "SchemaFieldIndex": ".schemafieldindex",
+    "SchemaFieldStorage": ".schemafieldstorage",
+    "SchemaFieldType": ".schemafieldtype",
+    "SchemaMetrics": ".schemametrics",
+    "SchemaMetricsTypedDict": ".schemametrics",
+    "SDFile": ".sdfile",
+    "SDFileTypedDict": ".sdfile",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
     "SearchLogsV1ObservabilityLogsSearchPostRequest": ".search_logs_v1_observability_logs_search_postop",
@@ -5633,12 +5750,6 @@ _dynamic_imports: dict[str, str] = {
     "SearchChatCompletionEventsRequestTypedDict": ".searchchatcompletioneventsrequest",
     "SearchChatCompletionEventsResponse": ".searchchatcompletioneventsresponse",
     "SearchChatCompletionEventsResponseTypedDict": ".searchchatcompletioneventsresponse",
-    "SearchIndexResponse": ".searchindexresponse",
-    "SearchIndexResponseIndex": ".searchindexresponse",
-    "SearchIndexResponseIndexTypedDict": ".searchindexresponse",
-    "SearchIndexResponseStatus": ".searchindexresponse",
-    "SearchIndexResponseTypedDict": ".searchindexresponse",
-    "UnknownSearchIndexResponseIndex": ".searchindexresponse",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "ServerCapabilities": ".servercapabilities",
@@ -5649,6 +5760,10 @@ _dynamic_imports: dict[str, str] = {
     "ServerTasksCapabilityTypedDict": ".servertaskscapability",
     "ServerTasksRequestsCapability": ".servertasksrequestscapability",
     "ServerTasksRequestsCapabilityTypedDict": ".servertasksrequestscapability",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
     "ShareEnum": ".shareenum",
     "Sharing": ".sharing",
     "SharingTypedDict": ".sharing",
@@ -5712,6 +5827,8 @@ _dynamic_imports: dict[str, str] = {
     "StreamEventSsePayloadTypedDict": ".streameventssepayload",
     "StreamEventWorkflowContext": ".streameventworkflowcontext",
     "StreamEventWorkflowContextTypedDict": ".streameventworkflowcontext",
+    "Summary": ".summary",
+    "SummaryTypedDict": ".summary",
     "SystemMessage": ".systemmessage",
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
@@ -5864,6 +5981,8 @@ _dynamic_imports: dict[str, str] = {
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
     "UnarchiveModelResponseTypedDict": ".unarchivemodelresponse",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest": ".unregister_search_index_v1_rag_indexes_index_index_id_deleteop",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict": ".unregister_search_index_v1_rag_indexes_index_index_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest": ".update_dataset_record_payload_v1_observability_dataset_records_dataset_record_id_payload_putop",
@@ -5872,6 +5991,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequestTypedDict": ".update_dataset_record_properties_v1_observability_dataset_records_dataset_record_id_properties_putop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
+    "MetricsData": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "MetricsDataTypedDict": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
@@ -5932,10 +6055,16 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
-    "VespaSchemaResponse": ".vespaschemaresponse",
-    "VespaSchemaResponseTypedDict": ".vespaschemaresponse",
-    "VespaSearchIndexInfoResponse": ".vespasearchindexinforesponse",
-    "VespaSearchIndexInfoResponseTypedDict": ".vespasearchindexinforesponse",
+    "VespaIndexInput": ".vespaindex_input",
+    "VespaIndexInputTypedDict": ".vespaindex_input",
+    "VespaIndexOutput": ".vespaindex_output",
+    "VespaIndexOutputTypedDict": ".vespaindex_output",
+    "VespaSchemaInput": ".vespaschema_input",
+    "VespaSchemaInputTypedDict": ".vespaschema_input",
+    "VespaSchemaOutput": ".vespaschema_output",
+    "VespaSchemaOutputTypedDict": ".vespaschema_output",
+    "VespaSchemaField": ".vespaschemafield",
+    "VespaSchemaFieldTypedDict": ".vespaschemafield",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
     "VoiceListResponse": ".voicelistresponse",
