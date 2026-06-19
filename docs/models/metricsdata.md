@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### `models.IndexMetricsOnline`
+### `models.UpdateIndexMetricsRequestIndexMetricsOnline`
 
 ```python
-value: models.IndexMetricsOnline = /* values here */
+value: models.UpdateIndexMetricsRequestIndexMetricsOnline = /* values here */
 ```
 
-### `models.IndexMetricsOffline`
+### `models.UpdateIndexMetricsRequestIndexMetricsOffline`
 
 ```python
-value: models.IndexMetricsOffline = /* values here */
+value: models.UpdateIndexMetricsRequestIndexMetricsOffline = /* values here */
 ```
 

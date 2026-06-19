@@ -2,8 +2,14 @@
 # @generated-id: a57bee1ef839
 
 from __future__ import annotations
-from .indexmetricsoffline import IndexMetricsOffline, IndexMetricsOfflineTypedDict
-from .indexmetricsonline import IndexMetricsOnline, IndexMetricsOnlineTypedDict
+from .updateindexmetricsrequestindexmetricsoffline import (
+    UpdateIndexMetricsRequestIndexMetricsOffline,
+    UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict,
+)
+from .updateindexmetricsrequestindexmetricsonline import (
+    UpdateIndexMetricsRequestIndexMetricsOnline,
+    UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict,
+)
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import Field
@@ -13,12 +19,19 @@ from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 MetricsDataTypedDict = TypeAliasType(
     "MetricsDataTypedDict",
-    Union[IndexMetricsOfflineTypedDict, IndexMetricsOnlineTypedDict],
+    Union[
+        UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict,
+        UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict,
+    ],
 )
 
 
 MetricsData = Annotated[
-    Union[IndexMetricsOnline, IndexMetricsOffline], Field(discriminator="status")
+    Union[
+        UpdateIndexMetricsRequestIndexMetricsOnline,
+        UpdateIndexMetricsRequestIndexMetricsOffline,
+    ],
+    Field(discriminator="status"),
 ]
 
 

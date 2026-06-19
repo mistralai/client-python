@@ -15,13 +15,16 @@ class SearchIndexes(BaseSDK):
         self,
         *,
         name: str,
-        index: Union[models.IndexInputIndex, models.IndexInputIndexTypedDict],
-        status: Optional[models.IndexInputStatus] = "offline",
+        index: Union[
+            models.RegisterSearchIndexRequestIndexIndex,
+            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        ],
+        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex:
+    ) -> models.RegisterSearchIndexResponseIndex:
         r"""Register (or re-register) a search index
 
         :param name:
@@ -38,17 +41,19 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.IndexInput(
+        request = models.RegisterSearchIndexRequestIndex(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(index, models.IndexInputIndex),
+            index=utils.get_pydantic_model(
+                index, models.RegisterSearchIndexRequestIndexIndex
+            ),
         )
 
         req = self._build_request(
@@ -65,7 +70,7 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.IndexInput
+                request, False, False, "json", models.RegisterSearchIndexRequestIndex
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -97,8 +102,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex,
-                http_res,
+                models.RegisterSearchIndexResponseIndex, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -118,13 +122,16 @@ class SearchIndexes(BaseSDK):
         self,
         *,
         name: str,
-        index: Union[models.IndexInputIndex, models.IndexInputIndexTypedDict],
-        status: Optional[models.IndexInputStatus] = "offline",
+        index: Union[
+            models.RegisterSearchIndexRequestIndexIndex,
+            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        ],
+        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex:
+    ) -> models.RegisterSearchIndexResponseIndex:
         r"""Register (or re-register) a search index
 
         :param name:
@@ -141,17 +148,19 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.IndexInput(
+        request = models.RegisterSearchIndexRequestIndex(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(index, models.IndexInputIndex),
+            index=utils.get_pydantic_model(
+                index, models.RegisterSearchIndexRequestIndexIndex
+            ),
         )
 
         req = self._build_request_async(
@@ -168,7 +177,7 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.IndexInput
+                request, False, False, "json", models.RegisterSearchIndexRequestIndex
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -200,8 +209,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex,
-                http_res,
+                models.RegisterSearchIndexResponseIndex, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -224,9 +232,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[
-        models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex
-    ]:
+    ) -> List[models.GetSearchIndexSummaryResponseIndex]:
         r"""Get Index Summaries
 
         Fetch summary view of all indexes available to a user
@@ -242,7 +248,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -290,10 +296,7 @@ class SearchIndexes(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[
-                    models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex
-                ],
-                http_res,
+                List[models.GetSearchIndexSummaryResponseIndex], http_res
             )
         if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
@@ -311,9 +314,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[
-        models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex
-    ]:
+    ) -> List[models.GetSearchIndexSummaryResponseIndex]:
         r"""Get Index Summaries
 
         Fetch summary view of all indexes available to a user
@@ -329,7 +330,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -377,10 +378,7 @@ class SearchIndexes(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                List[
-                    models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex
-                ],
-                http_res,
+                List[models.GetSearchIndexSummaryResponseIndex], http_res
             )
         if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
@@ -416,7 +414,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -509,7 +507,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -604,7 +602,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -697,7 +695,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -771,9 +769,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> (
-        models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex
-    ):
+    ) -> models.GetSearchIndexDetailResponseIndex:
         r"""Get Index Details
 
         Get a detailed view of the stored data for a single index
@@ -790,7 +786,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -844,8 +840,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex,
-                http_res,
+                models.GetSearchIndexDetailResponseIndex, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -869,9 +864,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> (
-        models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex
-    ):
+    ) -> models.GetSearchIndexDetailResponseIndex:
         r"""Get Index Details
 
         Get a detailed view of the stored data for a single index
@@ -888,7 +881,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -942,8 +935,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex,
-                http_res,
+                models.GetSearchIndexDetailResponseIndex, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -986,7 +978,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -995,7 +987,7 @@ class SearchIndexes(BaseSDK):
 
         request = models.SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(
             index_id=index_id,
-            summary=models.Summary(
+            update_index_summary_request_summary=models.UpdateIndexSummaryRequestSummary(
                 summary=summary,
             ),
         )
@@ -1014,7 +1006,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.summary, False, False, "json", models.Summary
+                request.update_index_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateIndexSummaryRequestSummary,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1087,7 +1083,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1096,7 +1092,7 @@ class SearchIndexes(BaseSDK):
 
         request = models.SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(
             index_id=index_id,
-            summary=models.Summary(
+            update_index_summary_request_summary=models.UpdateIndexSummaryRequestSummary(
                 summary=summary,
             ),
         )
@@ -1115,7 +1111,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.summary, False, False, "json", models.Summary
+                request.update_index_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateIndexSummaryRequestSummary,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1170,7 +1170,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema:
+    ) -> models.GetSearchIndexSchemaDetailResponseSchemaModel:
         r"""Get Index Schema Detail
 
         Get a detailed view of the stored information for a schema
@@ -1188,7 +1188,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1243,8 +1243,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema,
-                http_res,
+                models.GetSearchIndexSchemaDetailResponseSchemaModel, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -1269,7 +1268,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema:
+    ) -> models.GetSearchIndexSchemaDetailResponseSchemaModel:
         r"""Get Index Schema Detail
 
         Get a detailed view of the stored information for a schema
@@ -1287,7 +1286,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1342,8 +1341,7 @@ class SearchIndexes(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema,
-                http_res,
+                models.GetSearchIndexSchemaDetailResponseSchemaModel, http_res
             )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
@@ -1388,7 +1386,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1398,7 +1396,7 @@ class SearchIndexes(BaseSDK):
         request = models.SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest(
             index_id=index_id,
             schema_id=schema_id,
-            summary=models.Summary(
+            update_schema_summary_request_summary=models.UpdateSchemaSummaryRequestSummary(
                 summary=summary,
             ),
         )
@@ -1417,7 +1415,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.summary, False, False, "json", models.Summary
+                request.update_schema_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateSchemaSummaryRequestSummary,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1492,7 +1494,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1502,7 +1504,7 @@ class SearchIndexes(BaseSDK):
         request = models.SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest(
             index_id=index_id,
             schema_id=schema_id,
-            summary=models.Summary(
+            update_schema_summary_request_summary=models.UpdateSchemaSummaryRequestSummary(
                 summary=summary,
             ),
         )
@@ -1521,7 +1523,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.summary, False, False, "json", models.Summary
+                request.update_schema_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateSchemaSummaryRequestSummary,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1576,7 +1582,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SDFile:
+    ) -> models.GetSearchIndexSchemaSDFileResponseSDFile:
         r"""Get Index Schema File
 
         :param index_id:
@@ -1592,7 +1598,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1646,7 +1652,9 @@ class SearchIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SDFile, http_res)
+            return unmarshal_json_response(
+                models.GetSearchIndexSchemaSDFileResponseSDFile, http_res
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -1670,7 +1678,7 @@ class SearchIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SDFile:
+    ) -> models.GetSearchIndexSchemaSDFileResponseSDFile:
         r"""Get Index Schema File
 
         :param index_id:
@@ -1686,7 +1694,7 @@ class SearchIndexes(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1740,7 +1748,9 @@ class SearchIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SDFile, http_res)
+            return unmarshal_json_response(
+                models.GetSearchIndexSchemaSDFileResponseSDFile, http_res
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

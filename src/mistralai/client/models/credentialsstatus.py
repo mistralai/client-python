@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .authstatus import AuthStatus
+from .credentialsstatuserrorreason import CredentialsStatusErrorReason
 from .httpstatus import HTTPStatus
 from datetime import datetime
 from mistralai.client.types import (
@@ -20,7 +21,7 @@ class CredentialsStatusTypedDict(TypedDict):
     status_type: AuthStatus
     last_checked_at: NotRequired[Nullable[datetime]]
     error_http_code: NotRequired[Nullable[HTTPStatus]]
-    error_message: NotRequired[Nullable[str]]
+    error_message: NotRequired[Nullable[CredentialsStatusErrorReason]]
 
 
 class CredentialsStatus(BaseModel):
@@ -30,7 +31,7 @@ class CredentialsStatus(BaseModel):
 
     error_http_code: OptionalNullable[HTTPStatus] = UNSET
 
-    error_message: OptionalNullable[str] = UNSET
+    error_message: OptionalNullable[CredentialsStatusErrorReason] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

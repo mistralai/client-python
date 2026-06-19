@@ -2,7 +2,10 @@
 # @generated-id: 91979d9b4dc4
 
 from __future__ import annotations
-from .summary import Summary, SummaryTypedDict
+from .updateschemasummaryrequestsummary import (
+    UpdateSchemaSummaryRequestSummary,
+    UpdateSchemaSummaryRequestSummaryTypedDict,
+)
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -13,7 +16,7 @@ class SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldP
 ):
     index_id: str
     schema_id: str
-    summary: SummaryTypedDict
+    update_schema_summary_request_summary: UpdateSchemaSummaryRequestSummaryTypedDict
 
 
 class SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest(
@@ -27,6 +30,7 @@ class SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldP
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    summary: Annotated[
-        Summary, FieldMetadata(request=RequestMetadata(media_type="application/json"))
+    update_schema_summary_request_summary: Annotated[
+        UpdateSchemaSummaryRequestSummary,
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

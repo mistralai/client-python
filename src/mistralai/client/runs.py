@@ -17,6 +17,7 @@ class Runs(BaseSDK):
         self,
         *,
         workflow_identifier: OptionalNullable[str] = UNSET,
+        root_execution_id: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         status: OptionalNullable[
             Union[
@@ -32,6 +33,7 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
+        include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -42,6 +44,7 @@ class Runs(BaseSDK):
         r"""List Runs
 
         :param workflow_identifier: Filter by workflow name or id
+        :param root_execution_id: Filter by root execution id; returns the whole execution tree (the root and all its descendant sub-workflows).
         :param search: Search by workflow name, display name, or ID
         :param status: Filter by workflow status
         :param deployment_name: Filter by deployment name
@@ -52,6 +55,7 @@ class Runs(BaseSDK):
         :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
+        :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -65,7 +69,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -74,6 +78,7 @@ class Runs(BaseSDK):
 
         request = models.ListRunsV1WorkflowsRunsGetRequest(
             workflow_identifier=workflow_identifier,
+            root_execution_id=root_execution_id,
             search=search,
             status=status,
             deployment_name=deployment_name,
@@ -84,6 +89,7 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
+            include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -148,6 +154,7 @@ class Runs(BaseSDK):
 
             return self.list_runs(
                 workflow_identifier=workflow_identifier,
+                root_execution_id=root_execution_id,
                 search=search,
                 status=status,
                 deployment_name=deployment_name,
@@ -158,6 +165,7 @@ class Runs(BaseSDK):
                 end_time_after=end_time_after,
                 end_time_before=end_time_before,
                 user_id=user_id,
+                include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
@@ -192,6 +200,7 @@ class Runs(BaseSDK):
         self,
         *,
         workflow_identifier: OptionalNullable[str] = UNSET,
+        root_execution_id: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         status: OptionalNullable[
             Union[
@@ -207,6 +216,7 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
+        include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -217,6 +227,7 @@ class Runs(BaseSDK):
         r"""List Runs
 
         :param workflow_identifier: Filter by workflow name or id
+        :param root_execution_id: Filter by root execution id; returns the whole execution tree (the root and all its descendant sub-workflows).
         :param search: Search by workflow name, display name, or ID
         :param status: Filter by workflow status
         :param deployment_name: Filter by deployment name
@@ -227,6 +238,7 @@ class Runs(BaseSDK):
         :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
+        :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -240,7 +252,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -249,6 +261,7 @@ class Runs(BaseSDK):
 
         request = models.ListRunsV1WorkflowsRunsGetRequest(
             workflow_identifier=workflow_identifier,
+            root_execution_id=root_execution_id,
             search=search,
             status=status,
             deployment_name=deployment_name,
@@ -259,6 +272,7 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
+            include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -328,6 +342,7 @@ class Runs(BaseSDK):
 
             return self.list_runs_async(
                 workflow_identifier=workflow_identifier,
+                root_execution_id=root_execution_id,
                 search=search,
                 status=status,
                 deployment_name=deployment_name,
@@ -338,6 +353,7 @@ class Runs(BaseSDK):
                 end_time_after=end_time_after,
                 end_time_before=end_time_before,
                 user_id=user_id,
+                include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
@@ -391,7 +407,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -482,7 +498,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -575,7 +591,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -669,7 +685,7 @@ class Runs(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url

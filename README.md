@@ -754,6 +754,8 @@ print(res.choices[0].message.content)
 
 * [list_deployments](docs/sdks/deployments/README.md#list_deployments) - List Deployments
 * [get_deployment](docs/sdks/deployments/README.md#get_deployment) - Get Deployment
+* [get_deployment_logs](docs/sdks/deployments/README.md#get_deployment_logs) - Get Deployment Logs
+* [stream_deployment_logs](docs/sdks/deployments/README.md#stream_deployment_logs) - Stream Deployment Logs
 
 #### [Workflows.Events](docs/sdks/workflowsevents/README.md)
 
@@ -1010,8 +1012,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 140 of 223 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 223 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 142 of 225 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 225 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

@@ -3,8 +3,8 @@
 
 ## Fields
 
-| Field                                  | Type                                   | Required                               | Description                            |
-| -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| `index_id`                             | *str*                                  | :heavy_check_mark:                     | N/A                                    |
-| `schema_id`                            | *str*                                  | :heavy_check_mark:                     | N/A                                    |
-| `summary`                              | [models.Summary](../models/summary.md) | :heavy_check_mark:                     | N/A                                    |
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `index_id`                                                                                 | *str*                                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `schema_id`                                                                                | *str*                                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `update_schema_summary_request_summary`                                                    | [models.UpdateSchemaSummaryRequestSummary](../models/updateschemasummaryrequestsummary.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
