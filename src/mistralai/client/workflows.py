@@ -340,7 +340,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -505,7 +505,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -668,7 +668,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -788,7 +788,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -906,7 +906,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1033,7 +1033,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1163,7 +1163,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1293,7 +1293,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1404,7 +1404,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1495,7 +1495,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1594,7 +1594,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1706,7 +1706,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1814,7 +1814,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1913,7 +1913,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2008,7 +2008,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2102,7 +2102,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2196,7 +2196,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2292,7 +2292,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2388,7 +2388,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2479,7 +2479,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2570,7 +2570,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2663,7 +2663,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
