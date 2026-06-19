@@ -2,7 +2,10 @@
 # @generated-id: 27a48c657681
 
 from __future__ import annotations
-from .summary import Summary, SummaryTypedDict
+from .updateindexsummaryrequestsummary import (
+    UpdateIndexSummaryRequestSummary,
+    UpdateIndexSummaryRequestSummaryTypedDict,
+)
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from typing_extensions import Annotated, TypedDict
@@ -10,7 +13,7 @@ from typing_extensions import Annotated, TypedDict
 
 class SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict(TypedDict):
     index_id: str
-    summary: SummaryTypedDict
+    update_index_summary_request_summary: UpdateIndexSummaryRequestSummaryTypedDict
 
 
 class SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(BaseModel):
@@ -18,6 +21,7 @@ class SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    summary: Annotated[
-        Summary, FieldMetadata(request=RequestMetadata(media_type="application/json"))
+    update_index_summary_request_summary: Annotated[
+        UpdateIndexSummaryRequestSummary,
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

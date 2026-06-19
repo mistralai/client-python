@@ -52,6 +52,8 @@ r"""Sort direction"""
 class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     workflow_identifier: NotRequired[Nullable[str]]
     r"""Filter by workflow name or id"""
+    root_execution_id: NotRequired[Nullable[str]]
+    r"""Filter by root execution id; returns the whole execution tree (the root and all its descendant sub-workflows)."""
     search: NotRequired[Nullable[str]]
     r"""Search by workflow name, display name, or ID"""
     status: NotRequired[Nullable[ListRunsV1WorkflowsRunsGetStatusTypedDict]]
@@ -72,6 +74,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
+    include_internal: NotRequired[bool]
+    r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
     page_size: NotRequired[int]
     r"""Number of items per page"""
     next_page_token: NotRequired[Nullable[str]]
@@ -84,6 +88,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Filter by workflow name or id"""
+
+    root_execution_id: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by root execution id; returns the whole execution tree (the root and all its descendant sub-workflows)."""
 
     search: Annotated[
         OptionalNullable[str],
@@ -145,6 +155,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
 
+    include_internal: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = True
+    r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
+
     page_size: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -162,6 +178,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
         optional_fields = set(
             [
                 "workflow_identifier",
+                "root_execution_id",
                 "search",
                 "status",
                 "deployment_name",
@@ -172,6 +189,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_after",
                 "end_time_before",
                 "user_id",
+                "include_internal",
                 "page_size",
                 "next_page_token",
             ]
@@ -179,6 +197,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
         nullable_fields = set(
             [
                 "workflow_identifier",
+                "root_execution_id",
                 "search",
                 "status",
                 "deployment_name",

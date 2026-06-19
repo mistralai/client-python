@@ -53,16 +53,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `name`                                                                | *str*                                                                 | :heavy_check_mark:                                                    | N/A                                                                   |
-| `index`                                                               | [models.IndexInputIndex](../../models/indexinputindex.md)             | :heavy_check_mark:                                                    | N/A                                                                   |
-| `status`                                                              | [Optional[models.IndexInputStatus]](../../models/indexinputstatus.md) | :heavy_minus_sign:                                                    | N/A                                                                   |
-| `retries`                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)      | :heavy_minus_sign:                                                    | Configuration to override the default retry behavior of the client.   |
+| Parameter                                                                                                       | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                          | *str*                                                                                                           | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
+| `index`                                                                                                         | [models.RegisterSearchIndexRequestIndexIndex](../../models/registersearchindexrequestindexindex.md)             | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
+| `status`                                                                                                        | [Optional[models.RegisterSearchIndexRequestIndexStatus]](../../models/registersearchindexrequestindexstatus.md) | :heavy_minus_sign:                                                                                              | N/A                                                                                                             |
+| `retries`                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                | :heavy_minus_sign:                                                                                              | Configuration to override the default retry behavior of the client.                                             |
 
 ### Response
 
-**[models.MistralaiSearchStudioAppRoutesV1IndexesRegisterSearchIndexResponseIndex](../../models/mistralaisearchstudioapproutesv1indexesregistersearchindexresponseindex.md)**
+**[models.RegisterSearchIndexResponseIndex](../../models/registersearchindexresponseindex.md)**
 
 ### Errors
 
@@ -102,7 +102,7 @@ with Mistral(
 
 ### Response
 
-**[List[models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSummaryResponseIndex]](../../models/.md)**
+**[List[models.GetSearchIndexSummaryResponseIndex]](../../models/.md)**
 
 ### Errors
 
@@ -233,7 +233,7 @@ with Mistral(
 
 ### Response
 
-**[models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexDetailResponseIndex](../../models/mistralaisearchstudioapproutesv1indexesgetsearchindexdetailresponseindex.md)**
+**[models.GetSearchIndexDetailResponseIndex](../../models/getsearchindexdetailresponseindex.md)**
 
 ### Errors
 
@@ -317,7 +317,7 @@ with Mistral(
 
 ### Response
 
-**[models.MistralaiSearchStudioAppRoutesV1IndexesGetSearchIndexSchemaDetailSchema](../../models/mistralaisearchstudioapproutesv1indexesgetsearchindexschemadetailschema.md)**
+**[models.GetSearchIndexSchemaDetailResponseSchemaModel](../../models/getsearchindexschemadetailresponseschemamodel.md)**
 
 ### Errors
 
@@ -402,7 +402,7 @@ with Mistral(
 
 ### Response
 
-**[models.SDFile](../../models/sdfile.md)**
+**[models.GetSearchIndexSchemaSDFileResponseSDFile](../../models/getsearchindexschemasdfileresponsesdfile.md)**
 
 ### Errors
 
