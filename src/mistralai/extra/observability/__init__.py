@@ -7,6 +7,7 @@ from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
 from .telemetry import (
     TelemetryConfigurationError,
     configure_telemetry,
+    get_telemetry_tracer,
 )
 
 if TYPE_CHECKING:
@@ -47,6 +48,7 @@ def set_tracer_provider(
 __all__ = [
     "TelemetryConfigurationError",
     "configure_telemetry",
+    "get_telemetry_tracer",
     "set_tracer_provider",
     "trace",
 ]

@@ -10,7 +10,12 @@ from mistralai.client._hooks.tracing import TracingHook
 from mistralai.client.models import Security
 from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.client.utils.logger import get_default_logger
-from mistralai.extra.observability import configure_telemetry, set_tracer_provider
+from mistralai.extra.observability import (
+    configure_telemetry,
+    get_telemetry_tracer,
+    set_tracer_provider,
+)
+from mistralai.extra.observability.otel import MISTRAL_SDK_OTEL_TRACER_NAME
 from mistralai.extra.observability.telemetry import (
     MISTRAL_TELEMETRY_ENDPOINT,
     MISTRAL_SDK_TELEMETRY_ENV,
@@ -64,6 +69,14 @@ def _configure_for_hook(
 class FakeProvider:
     def __init__(self):
         self.shutdown_called = False
+        self.get_tracer_calls: list[str] = []
+        self.tracers: dict[str, MagicMock] = {}
+
+    def get_tracer(self, name: str):
+        self.get_tracer_calls.append(name)
+        if name not in self.tracers:
+            self.tracers[name] = MagicMock(name=f"tracer:{name}")
+        return self.tracers[name]
 
     def shutdown(self):
         self.shutdown_called = True
@@ -276,6 +289,63 @@ class TestTelemetryConfiguration(unittest.TestCase):
         custom_shutdown.assert_not_called()
         self.assertIs(hook.tracer_provider, dedicated_provider)
         self.assertIs(hook._auto_telemetry_provider, dedicated_provider)
+
+    def test_get_telemetry_tracer_dedicated_uses_auto_provider(self):
+        provider = FakeProvider()
+
+        with patch.dict(os.environ, {}, clear=True):
+            with patch(
+                "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
+                return_value=provider,
+            ):
+                client = _make_client(api_key="test-key")
+                configure_telemetry(client)
+                tracer = get_telemetry_tracer(client)
+
+        self.assertIs(tracer, provider.tracers[MISTRAL_SDK_OTEL_TRACER_NAME])
+        self.assertEqual(provider.get_tracer_calls, [MISTRAL_SDK_OTEL_TRACER_NAME])
+
+    def test_get_telemetry_tracer_custom_provider_uses_custom_name(self):
+        provider = FakeProvider()
+        client = _make_client(api_key="test-key")
+
+        configure_telemetry(client, provider=cast(TracerProvider, provider))
+        tracer = get_telemetry_tracer(client, "my-agent")
+
+        self.assertIs(tracer, provider.tracers["my-agent"])
+        self.assertEqual(provider.get_tracer_calls, ["my-agent"])
+
+    def test_get_telemetry_tracer_global_uses_global_provider(self):
+        client = _make_client(api_key="test-key")
+        configure_telemetry(client, provider="global")
+        tracer = MagicMock()
+
+        with patch(
+            "mistralai.extra.observability.telemetry.otel_trace.get_tracer",
+            return_value=tracer,
+        ) as get_tracer:
+            result = get_telemetry_tracer(client, "my-agent")
+
+        self.assertIs(result, tracer)
+        get_tracer.assert_called_once_with("my-agent")
+
+    def test_get_telemetry_tracer_disabled_raises_configuration_error(self):
+        env_cases = ({}, {MISTRAL_SDK_TELEMETRY_ENV: "false"})
+
+        for env in env_cases:
+            with self.subTest(env=env):
+                with patch.dict(os.environ, env, clear=True):
+                    with patch(
+                        "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
+                    ) as create_provider:
+                        client = _make_client(api_key="test-key")
+                        with self.assertRaisesRegex(
+                            TelemetryConfigurationError,
+                            "Telemetry is not configured",
+                        ):
+                            get_telemetry_tracer(client)
+
+                create_provider.assert_not_called()
 
     def test_internal_explicit_false_overrides_env_dedicated(self):
         with patch.dict(
