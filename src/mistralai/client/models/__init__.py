@@ -807,6 +807,14 @@ if TYPE_CHECKING:
         DeploymentWorkerResponseTypedDict,
     )
     from .document import Document, DocumentTypedDict
+    from .document_fetch_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_getop import (
+        DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest,
+        DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequestTypedDict,
+    )
+    from .document_lookup_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_retrievable_document_id_getop import (
+        DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequest,
+        DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequestTypedDict,
+    )
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
     from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
@@ -858,6 +866,7 @@ if TYPE_CHECKING:
         ExecutionLogSearchResponse,
         ExecutionLogSearchResponseTypedDict,
     )
+    from .executiontool import ExecutionTool, ExecutionToolTypedDict
     from .export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop import (
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest,
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict,
@@ -1703,14 +1712,29 @@ if TYPE_CHECKING:
         ObservabilityErrorDetail,
         ObservabilityErrorDetailTypedDict,
     )
+    from .ocrasidetextblock import OCRAsideTextBlock, OCRAsideTextBlockTypedDict
+    from .ocrcaptionblock import OCRCaptionBlock, OCRCaptionBlockTypedDict
+    from .ocrcodeblock import OCRCodeBlock, OCRCodeBlockTypedDict
     from .ocrconfidencescore import OCRConfidenceScore, OCRConfidenceScoreTypedDict
+    from .ocrequationblock import OCREquationBlock, OCREquationBlockTypedDict
+    from .ocrfooterblock import OCRFooterBlock, OCRFooterBlockTypedDict
+    from .ocrheaderblock import OCRHeaderBlock, OCRHeaderBlockTypedDict
+    from .ocrimageblock import OCRImageBlock, OCRImageBlockTypedDict
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+    from .ocrlistblock import OCRListBlock, OCRListBlockTypedDict
     from .ocrpageconfidencescores import (
         OCRPageConfidenceScores,
         OCRPageConfidenceScoresTypedDict,
     )
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
-    from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
+    from .ocrpageobject import (
+        Block,
+        BlockTypedDict,
+        OCRPageObject,
+        OCRPageObjectTypedDict,
+        UnknownBlock,
+    )
+    from .ocrreferencesblock import OCRReferencesBlock, OCRReferencesBlockTypedDict
     from .ocrrequest import (
         ConfidenceScoresGranularity,
         DocumentUnion,
@@ -1722,7 +1746,11 @@ if TYPE_CHECKING:
         TableFormat,
     )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
+    from .ocrsignatureblock import OCRSignatureBlock, OCRSignatureBlockTypedDict
+    from .ocrtableblock import OCRTableBlock, OCRTableBlockTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
+    from .ocrtextblock import OCRTextBlock, OCRTextBlockTypedDict
+    from .ocrtitleblock import OCRTitleBlock, OCRTitleBlockTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .otelfielddefinition import (
         OtelFieldDefinition,
@@ -1801,6 +1829,19 @@ if TYPE_CHECKING:
         PublicConnectionConfig,
         PublicConnectionConfigTypedDict,
     )
+    from .publicconnectorexecutiondata import (
+        PublicConnectorExecutionData,
+        PublicConnectorExecutionDataTypedDict,
+    )
+    from .publicexecutionconnectionconfig import (
+        PublicExecutionConnectionConfig,
+        PublicExecutionConnectionConfigTypedDict,
+    )
+    from .publicexecutionconnector import (
+        PublicExecutionConnector,
+        PublicExecutionConnectorTypedDict,
+    )
+    from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict,
@@ -2235,6 +2276,7 @@ if TYPE_CHECKING:
     )
     from .toolscapability import ToolsCapability, ToolsCapabilityTypedDict
     from .tooltype import ToolType
+    from .tooltypes import ToolTypes
     from .tracesrequest import TracesRequest, TracesRequestTypedDict
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
@@ -2420,6 +2462,10 @@ if TYPE_CHECKING:
         LocTypedDict,
         ValidationError,
         ValidationErrorTypedDict,
+    )
+    from .vespagetretrievableresponseretrievable import (
+        VespaGetRetrievableResponseRetrievable,
+        VespaGetRetrievableResponseRetrievableTypedDict,
     )
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
@@ -2801,6 +2847,8 @@ __all__ = [
     "BatchRequestTypedDict",
     "BlobResourceContents",
     "BlobResourceContentsTypedDict",
+    "Block",
+    "BlockTypedDict",
     "BuiltInConnectors",
     "Campaign",
     "CampaignTypedDict",
@@ -3163,8 +3211,12 @@ __all__ = [
     "DeploymentWorkerResponse",
     "DeploymentWorkerResponseTypedDict",
     "Document",
+    "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest",
+    "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequestTypedDict",
     "DocumentLibraryTool",
     "DocumentLibraryToolTypedDict",
+    "DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequest",
+    "DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequestTypedDict",
     "DocumentTextContent",
     "DocumentTextContentTypedDict",
     "DocumentTypedDict",
@@ -3209,6 +3261,8 @@ __all__ = [
     "ExecutionLogRecordTypedDict",
     "ExecutionLogSearchResponse",
     "ExecutionLogSearchResponseTypedDict",
+    "ExecutionTool",
+    "ExecutionToolTypedDict",
     "ExportDatasetResponse",
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
@@ -3769,22 +3823,48 @@ __all__ = [
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
     "OAuth2TokenTypedDict",
+    "OCRAsideTextBlock",
+    "OCRAsideTextBlockTypedDict",
+    "OCRCaptionBlock",
+    "OCRCaptionBlockTypedDict",
+    "OCRCodeBlock",
+    "OCRCodeBlockTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
+    "OCREquationBlock",
+    "OCREquationBlockTypedDict",
+    "OCRFooterBlock",
+    "OCRFooterBlockTypedDict",
+    "OCRHeaderBlock",
+    "OCRHeaderBlockTypedDict",
+    "OCRImageBlock",
+    "OCRImageBlockTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
+    "OCRListBlock",
+    "OCRListBlockTypedDict",
     "OCRPageConfidenceScores",
     "OCRPageConfidenceScoresTypedDict",
     "OCRPageDimensions",
     "OCRPageDimensionsTypedDict",
     "OCRPageObject",
     "OCRPageObjectTypedDict",
+    "OCRReferencesBlock",
+    "OCRReferencesBlockTypedDict",
     "OCRRequest",
     "OCRRequestTypedDict",
     "OCRResponse",
     "OCRResponseTypedDict",
+    "OCRSignatureBlock",
+    "OCRSignatureBlockTypedDict",
+    "OCRTableBlock",
+    "OCRTableBlockTypedDict",
     "OCRTableObject",
     "OCRTableObjectTypedDict",
+    "OCRTextBlock",
+    "OCRTextBlockTypedDict",
+    "OCRTitleBlock",
+    "OCRTitleBlockTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
     "ObservabilityErrorCode",
@@ -3859,6 +3939,14 @@ __all__ = [
     "PublicAuthenticationMethodTypedDict",
     "PublicConnectionConfig",
     "PublicConnectionConfigTypedDict",
+    "PublicConnectorExecutionData",
+    "PublicConnectorExecutionDataTypedDict",
+    "PublicExecutionConnectionConfig",
+    "PublicExecutionConnectionConfigTypedDict",
+    "PublicExecutionConnector",
+    "PublicExecutionConnectorTypedDict",
+    "PublicExecutionEnv",
+    "PublicExecutionEnvTypedDict",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -4199,6 +4287,7 @@ __all__ = [
     "ToolReferenceChunkTypedDict",
     "ToolType",
     "ToolTypedDict",
+    "ToolTypes",
     "Tools",
     "ToolsCapability",
     "ToolsCapabilityTypedDict",
@@ -4238,6 +4327,7 @@ __all__ = [
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict",
     "UnknownAgentTool",
     "UnknownAuthorization",
+    "UnknownBlock",
     "UnknownClassifierFineTuningJobDetailsIntegration",
     "UnknownClassifierFineTuningJobIntegration",
     "UnknownCompletionFineTuningJobDetailsIntegration",
@@ -4338,6 +4428,8 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
+    "VespaGetRetrievableResponseRetrievable",
+    "VespaGetRetrievableResponseRetrievableTypedDict",
     "Visibility",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
@@ -5002,6 +5094,10 @@ _dynamic_imports: dict[str, str] = {
     "DeploymentWorkerResponseTypedDict": ".deploymentworkerresponse",
     "Document": ".document",
     "DocumentTypedDict": ".document",
+    "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest": ".document_fetch_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_getop",
+    "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequestTypedDict": ".document_fetch_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_getop",
+    "DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequest": ".document_lookup_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_retrievable_document_id_getop",
+    "DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequestTypedDict": ".document_lookup_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_retrievable_document_id_getop",
     "DocumentLibraryTool": ".documentlibrarytool",
     "DocumentLibraryToolTypedDict": ".documentlibrarytool",
     "DocumentTextContent": ".documenttextcontent",
@@ -5047,6 +5143,8 @@ _dynamic_imports: dict[str, str] = {
     "ExecutionLogRecordTypedDict": ".executionlogrecord",
     "ExecutionLogSearchResponse": ".executionlogsearchresponse",
     "ExecutionLogSearchResponseTypedDict": ".executionlogsearchresponse",
+    "ExecutionTool": ".executiontool",
+    "ExecutionToolTypedDict": ".executiontool",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
@@ -5632,16 +5730,37 @@ _dynamic_imports: dict[str, str] = {
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
+    "OCRAsideTextBlock": ".ocrasidetextblock",
+    "OCRAsideTextBlockTypedDict": ".ocrasidetextblock",
+    "OCRCaptionBlock": ".ocrcaptionblock",
+    "OCRCaptionBlockTypedDict": ".ocrcaptionblock",
+    "OCRCodeBlock": ".ocrcodeblock",
+    "OCRCodeBlockTypedDict": ".ocrcodeblock",
     "OCRConfidenceScore": ".ocrconfidencescore",
     "OCRConfidenceScoreTypedDict": ".ocrconfidencescore",
+    "OCREquationBlock": ".ocrequationblock",
+    "OCREquationBlockTypedDict": ".ocrequationblock",
+    "OCRFooterBlock": ".ocrfooterblock",
+    "OCRFooterBlockTypedDict": ".ocrfooterblock",
+    "OCRHeaderBlock": ".ocrheaderblock",
+    "OCRHeaderBlockTypedDict": ".ocrheaderblock",
+    "OCRImageBlock": ".ocrimageblock",
+    "OCRImageBlockTypedDict": ".ocrimageblock",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
+    "OCRListBlock": ".ocrlistblock",
+    "OCRListBlockTypedDict": ".ocrlistblock",
     "OCRPageConfidenceScores": ".ocrpageconfidencescores",
     "OCRPageConfidenceScoresTypedDict": ".ocrpageconfidencescores",
     "OCRPageDimensions": ".ocrpagedimensions",
     "OCRPageDimensionsTypedDict": ".ocrpagedimensions",
+    "Block": ".ocrpageobject",
+    "BlockTypedDict": ".ocrpageobject",
     "OCRPageObject": ".ocrpageobject",
     "OCRPageObjectTypedDict": ".ocrpageobject",
+    "UnknownBlock": ".ocrpageobject",
+    "OCRReferencesBlock": ".ocrreferencesblock",
+    "OCRReferencesBlockTypedDict": ".ocrreferencesblock",
     "ConfidenceScoresGranularity": ".ocrrequest",
     "DocumentUnion": ".ocrrequest",
     "DocumentUnionTypedDict": ".ocrrequest",
@@ -5652,9 +5771,17 @@ _dynamic_imports: dict[str, str] = {
     "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
+    "OCRSignatureBlock": ".ocrsignatureblock",
+    "OCRSignatureBlockTypedDict": ".ocrsignatureblock",
+    "OCRTableBlock": ".ocrtableblock",
+    "OCRTableBlockTypedDict": ".ocrtableblock",
     "Format": ".ocrtableobject",
     "OCRTableObject": ".ocrtableobject",
     "OCRTableObjectTypedDict": ".ocrtableobject",
+    "OCRTextBlock": ".ocrtextblock",
+    "OCRTextBlockTypedDict": ".ocrtextblock",
+    "OCRTitleBlock": ".ocrtitleblock",
+    "OCRTitleBlockTypedDict": ".ocrtitleblock",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "OtelFieldDefinition": ".otelfielddefinition",
@@ -5711,6 +5838,14 @@ _dynamic_imports: dict[str, str] = {
     "PublicAuthenticationMethodTypedDict": ".publicauthenticationmethod",
     "PublicConnectionConfig": ".publicconnectionconfig",
     "PublicConnectionConfigTypedDict": ".publicconnectionconfig",
+    "PublicConnectorExecutionData": ".publicconnectorexecutiondata",
+    "PublicConnectorExecutionDataTypedDict": ".publicconnectorexecutiondata",
+    "PublicExecutionConnectionConfig": ".publicexecutionconnectionconfig",
+    "PublicExecutionConnectionConfigTypedDict": ".publicexecutionconnectionconfig",
+    "PublicExecutionConnector": ".publicexecutionconnector",
+    "PublicExecutionConnectorTypedDict": ".publicexecutionconnector",
+    "PublicExecutionEnv": ".publicexecutionenv",
+    "PublicExecutionEnvTypedDict": ".publicexecutionenv",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -6038,6 +6173,7 @@ _dynamic_imports: dict[str, str] = {
     "ToolsCapability": ".toolscapability",
     "ToolsCapabilityTypedDict": ".toolscapability",
     "ToolType": ".tooltype",
+    "ToolTypes": ".tooltypes",
     "TracesRequest": ".tracesrequest",
     "TracesRequestTypedDict": ".tracesrequest",
     "TrainingFile": ".trainingfile",
@@ -6156,6 +6292,8 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
+    "VespaGetRetrievableResponseRetrievable": ".vespagetretrievableresponseretrievable",
+    "VespaGetRetrievableResponseRetrievableTypedDict": ".vespagetretrievableresponseretrievable",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
     "VoiceListResponse": ".voicelistresponse",
