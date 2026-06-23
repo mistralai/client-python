@@ -5,8 +5,8 @@
 ```python
 from mistralai.client.models import SchemaFieldIndex
 
-# Open enum: unrecognized values are captured as UnrecognizedInt
-value: SchemaFieldIndex = 1
+# Open enum: unrecognized values are captured as UnrecognizedStr
+value: SchemaFieldIndex = "ann"
 ```
 
 
@@ -14,6 +14,6 @@ value: SchemaFieldIndex = 1
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `1`
-- `2`
-- `3`
+- `"ann"`
+- `"bm25"`
+- `"attribute"`
