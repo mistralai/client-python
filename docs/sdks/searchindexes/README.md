@@ -13,6 +13,8 @@
 * [get_index_schema_detail](#get_index_schema_detail) - Get Index Schema Detail
 * [set_schema_summary](#set_schema_summary) - Set Schema Summary
 * [get_index_schema_file](#get_index_schema_file) - Get Index Schema File
+* [document_lookup](#document_lookup) - Document Lookup
+* [documents_fetch](#documents_fetch) - Document Fetch
 
 ## register
 
@@ -403,6 +405,92 @@ with Mistral(
 ### Response
 
 **[models.GetSearchIndexSchemaSDFileResponseSDFile](../../models/getsearchindexschemasdfileresponsesdfile.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## document_lookup
+
+Fetch stored information about a retrievable element stored in an index
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="document_lookup_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_retrievable__document_id__get" method="get" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables/retrievable/{document_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.document_lookup(index_id="77308a24-2d8e-4392-9ab4-38770b2bb993", schema_id="1fe735e7-4ec0-4264-b715-12a944fe2b87", document_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `schema_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `document_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | the native ID in the underlying index                               |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.VespaGetRetrievableResponseRetrievable](../../models/vespagetretrievableresponseretrievable.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## documents_fetch
+
+Fetch a few stored retrievable elements from the index/schema
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="document_fetch_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_get" method="get" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.documents_fetch(index_id="7c9f7007-1a54-48fd-b6da-93e91f31f6aa", schema_id="7eb7703c-1b80-4ecc-8a8b-288b43e1f30e")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `schema_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `group_id`                                                          | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Only retrieve from this group                                       |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[List[models.VespaGetRetrievableResponseRetrievable]](../../models/.md)**
 
 ### Errors
 

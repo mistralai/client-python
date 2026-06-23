@@ -72,6 +72,8 @@ class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
     r"""The maximum number of workflows to return"""
     active_only: NotRequired[bool]
     r"""Deprecated: use deployment_status instead"""
+    search: NotRequired[Nullable[str]]
+    r"""Fuzzy search query for workflow name, display name, description, or ID"""
 
 
 class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
@@ -154,6 +156,12 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     ] = False
     r"""Deprecated: use deployment_status instead"""
 
+    search: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Fuzzy search query for workflow name, display name, description, or ID"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -170,6 +178,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
                 "cursor",
                 "limit",
                 "active_only",
+                "search",
             ]
         )
         nullable_fields = set(
@@ -182,6 +191,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
                 "tags",
                 "sort_by",
                 "cursor",
+                "search",
             ]
         )
         serialized = handler(self)

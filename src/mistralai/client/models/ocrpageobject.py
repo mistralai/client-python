@@ -2,13 +2,27 @@
 # @generated-id: 07a099f89487
 
 from __future__ import annotations
+from .ocrasidetextblock import OCRAsideTextBlock, OCRAsideTextBlockTypedDict
+from .ocrcaptionblock import OCRCaptionBlock, OCRCaptionBlockTypedDict
+from .ocrcodeblock import OCRCodeBlock, OCRCodeBlockTypedDict
+from .ocrequationblock import OCREquationBlock, OCREquationBlockTypedDict
+from .ocrfooterblock import OCRFooterBlock, OCRFooterBlockTypedDict
+from .ocrheaderblock import OCRHeaderBlock, OCRHeaderBlockTypedDict
+from .ocrimageblock import OCRImageBlock, OCRImageBlockTypedDict
 from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+from .ocrlistblock import OCRListBlock, OCRListBlockTypedDict
 from .ocrpageconfidencescores import (
     OCRPageConfidenceScores,
     OCRPageConfidenceScoresTypedDict,
 )
 from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
+from .ocrreferencesblock import OCRReferencesBlock, OCRReferencesBlockTypedDict
+from .ocrsignatureblock import OCRSignatureBlock, OCRSignatureBlockTypedDict
+from .ocrtableblock import OCRTableBlock, OCRTableBlockTypedDict
 from .ocrtableobject import OCRTableObject, OCRTableObjectTypedDict
+from .ocrtextblock import OCRTextBlock, OCRTextBlockTypedDict
+from .ocrtitleblock import OCRTitleBlock, OCRTitleBlockTypedDict
+from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,9 +30,87 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
-from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+BlockTypedDict = TypeAliasType(
+    "BlockTypedDict",
+    Union[
+        OCRAsideTextBlockTypedDict,
+        OCRListBlockTypedDict,
+        OCRTitleBlockTypedDict,
+        OCREquationBlockTypedDict,
+        OCRCaptionBlockTypedDict,
+        OCRCodeBlockTypedDict,
+        OCRReferencesBlockTypedDict,
+        OCRTextBlockTypedDict,
+        OCRHeaderBlockTypedDict,
+        OCRFooterBlockTypedDict,
+        OCRSignatureBlockTypedDict,
+        OCRImageBlockTypedDict,
+        OCRTableBlockTypedDict,
+    ],
+)
+
+
+class UnknownBlock(BaseModel):
+    r"""A Block variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_BLOCK_VARIANTS: dict[str, Any] = {
+    "aside_text": OCRAsideTextBlock,
+    "caption": OCRCaptionBlock,
+    "code": OCRCodeBlock,
+    "equation": OCREquationBlock,
+    "footer": OCRFooterBlock,
+    "header": OCRHeaderBlock,
+    "image": OCRImageBlock,
+    "list": OCRListBlock,
+    "references": OCRReferencesBlock,
+    "signature": OCRSignatureBlock,
+    "table": OCRTableBlock,
+    "text": OCRTextBlock,
+    "title": OCRTitleBlock,
+}
+
+
+Block = Annotated[
+    Union[
+        OCRAsideTextBlock,
+        OCRCaptionBlock,
+        OCRCodeBlock,
+        OCREquationBlock,
+        OCRFooterBlock,
+        OCRHeaderBlock,
+        OCRImageBlock,
+        OCRListBlock,
+        OCRReferencesBlock,
+        OCRSignatureBlock,
+        OCRTableBlock,
+        OCRTextBlock,
+        OCRTitleBlock,
+        UnknownBlock,
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_BLOCK_VARIANTS,
+            unknown_cls=UnknownBlock,
+            union_name="Block",
+        )
+    ),
+]
 
 
 class OCRPageObjectTypedDict(TypedDict):
@@ -40,6 +132,8 @@ class OCRPageObjectTypedDict(TypedDict):
     r"""Footer of the page"""
     confidence_scores: NotRequired[Nullable[OCRPageConfidenceScoresTypedDict]]
     r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
+    blocks: NotRequired[Nullable[List[BlockTypedDict]]]
+    r"""Paragraph-level bounding boxes for all content blocks in reading order (populated when include_blocks is True)"""
 
 
 class OCRPageObject(BaseModel):
@@ -70,12 +164,17 @@ class OCRPageObject(BaseModel):
     confidence_scores: OptionalNullable[OCRPageConfidenceScores] = UNSET
     r"""Confidence scores for the OCR page (populated when confidence_scores_granularity is set)"""
 
+    blocks: OptionalNullable[List[Block]] = UNSET
+    r"""Paragraph-level bounding boxes for all content blocks in reading order (populated when include_blocks is True)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["tables", "hyperlinks", "header", "footer", "confidence_scores"]
+            ["tables", "hyperlinks", "header", "footer", "confidence_scores", "blocks"]
         )
-        nullable_fields = set(["header", "footer", "dimensions", "confidence_scores"])
+        nullable_fields = set(
+            ["header", "footer", "dimensions", "confidence_scores", "blocks"]
+        )
         serialized = handler(self)
         m = {}
 

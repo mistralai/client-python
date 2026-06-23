@@ -311,6 +311,7 @@ class Workflows(BaseSDK):
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
         active_only: Optional[bool] = False,
+        search: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -329,6 +330,7 @@ class Workflows(BaseSDK):
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
         :param active_only: Deprecated: use deployment_status instead
+        :param search: Fuzzy search query for workflow name, display name, description, or ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -359,6 +361,7 @@ class Workflows(BaseSDK):
             cursor=cursor,
             limit=limit,
             active_only=active_only,
+            search=search,
         )
 
         req = self._build_request(
@@ -431,6 +434,7 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 active_only=active_only,
+                search=search,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -476,6 +480,7 @@ class Workflows(BaseSDK):
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
         active_only: Optional[bool] = False,
+        search: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -494,6 +499,7 @@ class Workflows(BaseSDK):
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
         :param active_only: Deprecated: use deployment_status instead
+        :param search: Fuzzy search query for workflow name, display name, description, or ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -524,6 +530,7 @@ class Workflows(BaseSDK):
             cursor=cursor,
             limit=limit,
             active_only=active_only,
+            search=search,
         )
 
         req = self._build_request_async(
@@ -601,6 +608,7 @@ class Workflows(BaseSDK):
                 cursor=next_cursor,
                 limit=limit,
                 active_only=active_only,
+                search=search,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
