@@ -72,6 +72,8 @@ class OCRRequestTypedDict(TypedDict):
     table_format: NotRequired[Nullable[TableFormat]]
     extract_header: NotRequired[bool]
     extract_footer: NotRequired[bool]
+    include_blocks: NotRequired[bool]
+    r"""Return paragraph-level bounding boxes for all content blocks in the response"""
     confidence_scores_granularity: NotRequired[Nullable[ConfidenceScoresGranularity]]
     r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
 
@@ -109,6 +111,9 @@ class OCRRequest(BaseModel):
 
     extract_footer: Optional[bool] = None
 
+    include_blocks: Optional[bool] = False
+    r"""Return paragraph-level bounding boxes for all content blocks in the response"""
+
     confidence_scores_granularity: OptionalNullable[ConfidenceScoresGranularity] = UNSET
     r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
 
@@ -126,6 +131,7 @@ class OCRRequest(BaseModel):
                 "table_format",
                 "extract_header",
                 "extract_footer",
+                "include_blocks",
                 "confidence_scores_granularity",
             ]
         )

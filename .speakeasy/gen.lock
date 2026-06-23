@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: d3180e118f5cbf85eb5e628c1bd48702
+  docChecksum: e90049ec26c71fac1151c63b6210c6dc
   docVersion: 1.0.0
   speakeasyVersion: 1.763.6
   generationVersion: 2.884.13
-  releaseVersion: 2.4.13
-  configChecksum: 528103488ea6793f7e237ff43113a64c
+  releaseVersion: 2.4.14
+  configChecksum: f8c582be71752df76ae9777613f29511
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: 48647e3a-4c3f-4135-9d22-f702f07d0168
-  pristine_commit_hash: 9b3c146286acab1a4b736dc35919d915ec79b63f
-  pristine_tree_hash: af749e839f003efc3ae81a640a560ec5493a0c42
+  generation_id: 9fd89e7a-0990-4d73-8ddd-c31a4bd78cb7
+  pristine_commit_hash: 6273020009ab17b27c759c10bff340aca8bfa852
+  pristine_tree_hash: 3e8e7718756920b5f3aa608482a63152ec2aae29
 features:
   python:
     acceptHeaders: 3.0.0
@@ -406,6 +406,10 @@ trackedFiles:
     id: 19b9f897373e
     last_write_checksum: sha1:0a40334024da0f41ccab87e10add590ea87a8b01
     pristine_git_object: c862e53730393d65a061ed63a96640859fe74adc
+  docs/models/block.md:
+    id: 37aeed3d7dc4
+    last_write_checksum: sha1:3a3d663edfa4a812a9c06daad87a4143dff9d7e5
+    pristine_git_object: 087bec2ac5a1821720cfde579c9ec8214a3d35d3
   docs/models/builtinconnectors.md:
     id: 9d14e972f08a
     last_write_checksum: sha1:ad790344ffc177d10a7eff06482c39d722cd7b95
@@ -676,8 +680,8 @@ trackedFiles:
     pristine_git_object: e069233ff9f42a6b13e356985e3bc3819128b970
   docs/models/connector.md:
     id: cbf7c2c53983
-    last_write_checksum: sha1:7694fec24017b429b23d5b42f29a2d66d6f8aa50
-    pristine_git_object: 45aafa1e2d539276d23688d6b36c503650ecb454
+    last_write_checksum: sha1:e62c24b5d77083e1060af0d61c9fa806bc4dc905
+    pristine_git_object: 73f8a8249f8a64897eadc013616776b19b97594d
   docs/models/connectoractivatefororganizationv1request.md:
     id: 3a15b69f7e51
     last_write_checksum: sha1:ae29bb24fdf11ccf8c08e2a1a2909d55d4cbaf6c
@@ -1278,6 +1282,10 @@ trackedFiles:
     id: afbc2f9d2896
     last_write_checksum: sha1:e2b91fdca15edd495d9616eaa00dca08205e16c9
     pristine_git_object: 69fb7f2583a2b11fea45a94e0774981fa2abe0e7
+  docs/models/executiontool.md:
+    id: 93ea56c33110
+    last_write_checksum: sha1:1420c961938f933b4bbff4b2a2086983a0a3eca7
+    pristine_git_object: b8cbe716fd77c9f7ece39e69efd99fe3bc75ba69
   docs/models/exportdatasetresponse.md:
     id: f4594898de85
     last_write_checksum: sha1:2e68bd840ee44b5b61aac0945d608060bd6506f4
@@ -2458,14 +2466,46 @@ trackedFiles:
     id: 38061447dfbb
     last_write_checksum: sha1:1da7bf6e72c2f972b0e22f0201a1cb9b76f53ccd
     pristine_git_object: a95e25c91c54edc4948ef82c1626773975190110
+  docs/models/ocrasidetextblock.md:
+    id: f70a1dee9058
+    last_write_checksum: sha1:87fc47392b5587ad4b10ee128b7a4e01906c04a8
+    pristine_git_object: 6bf9f26f54e256c88106cd5ac042ca711d81f459
+  docs/models/ocrcaptionblock.md:
+    id: 8dee3ae7cc64
+    last_write_checksum: sha1:53fceb8b426087f746fdf28990d877a758d64845
+    pristine_git_object: 31ee417932dc05b290057ee4f75437e2c16169a2
+  docs/models/ocrcodeblock.md:
+    id: cf573ee145ef
+    last_write_checksum: sha1:19f8eb8db694b341c712a36fa0639c9acb55c8a7
+    pristine_git_object: 564528893d7cb980993a9a31613fd9f5067f6fda
   docs/models/ocrconfidencescore.md:
     id: 44a3cb211acc
     last_write_checksum: sha1:d88c21a3aa36f24e00c2b24c31bc54944d1fc73f
     pristine_git_object: 73fdcb28b1044bb7122ba6609708979c17a46e5e
+  docs/models/ocrequationblock.md:
+    id: a9450fe13197
+    last_write_checksum: sha1:6870063bce791334cb5d62445409ec09b13856de
+    pristine_git_object: 4c71e4910427d776ce9ffed0c2d68a0a9bed978c
+  docs/models/ocrfooterblock.md:
+    id: 8f726428e66d
+    last_write_checksum: sha1:fce976d77fdb8e5982de7ab6907e25a5d93ead24
+    pristine_git_object: cc7ff354f77a3841d46e2c503de38cc4c1d5d0c9
+  docs/models/ocrheaderblock.md:
+    id: 2fd90b301b1a
+    last_write_checksum: sha1:fc5bac58718bed5e19eb02adf9b71889b7507c5d
+    pristine_git_object: 0b000251ea4992b86eecadaa153d996f98f2c2c7
+  docs/models/ocrimageblock.md:
+    id: 7ec5340dab29
+    last_write_checksum: sha1:e4d0996294a9ccb64838a23326aa36eb3c4c01f4
+    pristine_git_object: 5744a5a6f07b33970cbab60107ec0272a838881f
   docs/models/ocrimageobject.md:
     id: b72f3c5853b2
     last_write_checksum: sha1:90c5158dec6a7b31c858677b6a8efa1e3cabd504
     pristine_git_object: 3c0d5544a80499b011467f29ef83d49f53801af6
+  docs/models/ocrlistblock.md:
+    id: 6a1b9aa88a44
+    last_write_checksum: sha1:035e5cbbd71babdab775b56020a2fa09416e2713
+    pristine_git_object: 0fce7a1a660673bcb1168d3c119b12e3a7feacb1
   docs/models/ocrpageconfidencescores.md:
     id: 4bc78fe53e38
     last_write_checksum: sha1:26733f345c69b188d372290784688a972fe39dbf
@@ -2476,20 +2516,40 @@ trackedFiles:
     pristine_git_object: c93ca64d5e20319ec6ec1bcb82b28c6ce0940f29
   docs/models/ocrpageobject.md:
     id: 88a9e101b11e
-    last_write_checksum: sha1:84b903d90dadcac943000b90e8a8e8a81c8b92fa
-    pristine_git_object: 0fc55052cdf2360131c0adcec93a732e2b0f78c5
+    last_write_checksum: sha1:a7fa0bb8d0d7a8d1a701748395ce9dc82093ca15
+    pristine_git_object: 5f5c3cd5b274bb92228106b3204cba7d2a63c73b
+  docs/models/ocrreferencesblock.md:
+    id: c1614ca10b63
+    last_write_checksum: sha1:68a20e60403c4ea7ce6ee0d5cd7e33709d830cf0
+    pristine_git_object: 5893eacfe1fd5ddc0bc52b83612af918345cc0f3
   docs/models/ocrrequest.md:
     id: 6862a3fc2d0f
-    last_write_checksum: sha1:2ea2303ff17a962fe38a64f20f43ea0986e29cc4
-    pristine_git_object: 54cea7c1359b338c552fdfd321abd2fd137602df
+    last_write_checksum: sha1:427dc4b07be7db540bbd79b4883b3446274fec93
+    pristine_git_object: 6851e03e1b6b0d055f121c5fd854b5694229e866
   docs/models/ocrresponse.md:
     id: 30042328fb78
     last_write_checksum: sha1:8e4a4ae404ea752f3e9f1108c2a5f89ed6cfb143
     pristine_git_object: 0a309317644eedc643009b6cec3a7dbb142b1a15
+  docs/models/ocrsignatureblock.md:
+    id: 9d55fdaa416a
+    last_write_checksum: sha1:1c1fc41b61092bef33eea167bf4a2fdfe9d548ad
+    pristine_git_object: de2b4f60199ce3935adf167d8f25fbd4ba9e86fc
+  docs/models/ocrtableblock.md:
+    id: 0077842c24d0
+    last_write_checksum: sha1:ebe772782a1f47335cabeeb15ce5a77243217d36
+    pristine_git_object: c0e1f8abaf0cbe81aa6f4b42c3c8d215ef341e3f
   docs/models/ocrtableobject.md:
     id: c967796380e6
     last_write_checksum: sha1:deb1715d618330b4f791b7237955e697d26c6bc2
     pristine_git_object: 2da8f6105dd83d7f4d067c74298316ab512c9c3f
+  docs/models/ocrtextblock.md:
+    id: ec731e2067f3
+    last_write_checksum: sha1:8560306c52628f855b4806b69e1b41402e1571b9
+    pristine_git_object: 1eab8e1273cebfb605508ed9b1466f49eaa46c8b
+  docs/models/ocrtitleblock.md:
+    id: 2602d3e1db41
+    last_write_checksum: sha1:8bccfc2aacd5713767f7344e5b8532ecadf1194d
+    pristine_git_object: 59c68c9f8fb8698f0185c93f652ab85b4f73708c
   docs/models/ocrusageinfo.md:
     id: 419abbb8353a
     last_write_checksum: sha1:6e717a3f3de3c464e8b3237f06867cdfecec339e
@@ -2650,6 +2710,22 @@ trackedFiles:
     id: e05a024f162c
     last_write_checksum: sha1:ab9dd73817a606e22c4d526910771158070e0e4e
     pristine_git_object: 56c9ee8ea7ec86a54854cb4f3513646f182b58d0
+  docs/models/publicconnectorexecutiondata.md:
+    id: 8aa7148f717b
+    last_write_checksum: sha1:f353170986cdcd16da55527fd6fd4964774710fc
+    pristine_git_object: 07ad8c575e5bed4891395f0cc6076485328b0bec
+  docs/models/publicexecutionconnectionconfig.md:
+    id: b2fab3177da3
+    last_write_checksum: sha1:3a4e0dde1ae8da86315d2c68a77c5f51538cc26c
+    pristine_git_object: 2c069435cd720616eda74d3191b95bde74156564
+  docs/models/publicexecutionconnector.md:
+    id: 12af5b6c685d
+    last_write_checksum: sha1:ddbba26dc7317024280f36924afc4d5586bd638c
+    pristine_git_object: b6ae566b4f1e1f1859a90c458ffaa10f7d3907f5
+  docs/models/publicexecutionenv.md:
+    id: 2b2437bca7dc
+    last_write_checksum: sha1:97855538932162eb7cfca831f96be4b57df92956
+    pristine_git_object: b67ea255c930b7cae2258d083ad108a6210f096d
   docs/models/querydefinition.md:
     id: 4831b7e558f9
     last_write_checksum: sha1:f4983c0963906b3eda13c69e2852b08d662dd744
@@ -3100,8 +3176,8 @@ trackedFiles:
     pristine_git_object: 5cf16331555769cce233e274ea7eeae4ddc0f2ee
   docs/models/streamdeploymentlogsrequest.md:
     id: 9565d271f177
-    last_write_checksum: sha1:f738464f94a5a7f8ed4cfd6b79ebb0daa6d41dc9
-    pristine_git_object: aa28aa596982cb4f59b99e073c735ac147aced8b
+    last_write_checksum: sha1:775382143c3714fc331ac58ade0d94c80c4c0013
+    pristine_git_object: 791326562419e0035853cb0344e56b9b010f933e
   docs/models/streamdeploymentlogsresponsebody.md:
     id: 6e35aabc3f22
     last_write_checksum: sha1:34dad5539a586bea97b3f9c18786fb5e3bac7cf1
@@ -3144,8 +3220,8 @@ trackedFiles:
     pristine_git_object: 20533c6ac7ac494899fcce13b4c21b2c390b8bad
   docs/models/streamworkflowexecutionlogsrequest.md:
     id: 9f05db84fa04
-    last_write_checksum: sha1:063fc8013ac22009dbecb68b3efdbe7da99cf3cb
-    pristine_git_object: f1313cce8ffe597006e73cab6cbaf0b4314d66e9
+    last_write_checksum: sha1:39408f0173b1e3a7e4dc8b0a014da6bea960c0a5
+    pristine_git_object: f58907cd0710b4e51cb22045e763e6790bac7274
   docs/models/streamworkflowexecutionlogsresponsebody.md:
     id: 5d8ed5fe8479
     last_write_checksum: sha1:27c4bce66bdb6bfd651c5b38196d0dfb18fe74a9
@@ -3288,24 +3364,24 @@ trackedFiles:
     pristine_git_object: 4c84779c4d2e8bf2a2fe258c2b350b05d047f2e3
   docs/models/tool.md:
     id: 8966139dbeed
-    last_write_checksum: sha1:2ab2016846da06ab38751176ba80fb6527c2818b
-    pristine_git_object: 85888d01cf439be601c8d1df4048c90161cf47df
+    last_write_checksum: sha1:1725bf53fc9f1ca3f332322d91de24c9d58adc6a
+    pristine_git_object: fb661f72887271d5bb470e4edf025a32b00ade17
   docs/models/toolannotations.md:
     id: ac541d142ff4
     last_write_checksum: sha1:54d9bfd3cd764d11cd993f7ff87784bd6d11f14d
     pristine_git_object: f3c8fc3cf7d9b4587b47afaf67eb14608eb58b48
   docs/models/toolcall.md:
     id: 80892ea1a051
-    last_write_checksum: sha1:621dc83981e13cbcbc21f2e16a34178c322c4566
-    pristine_git_object: 9d236e8b289977d2aa7bded0d633b224c5ec9e57
+    last_write_checksum: sha1:cb27b9d36cfe6227978c7a7a01b1349b6bac99d9
+    pristine_git_object: 3819236b9f3eee2f6878818cfbbe2817e97f7de2
   docs/models/toolcallconfirmation.md:
     id: 944eebb142ff
     last_write_checksum: sha1:864ccb39a00094d965b764235e74709945abca3d
     pristine_git_object: 1812f7d687d83f5692d9e79709e56813ab2c79b1
   docs/models/toolchoice.md:
     id: "097076343426"
-    last_write_checksum: sha1:65a2794a1102fdcba6fa5a3f497630fbaf98f94b
-    pristine_git_object: a457f96f6e295d590a5ef75f83a5a6c4fdd41c47
+    last_write_checksum: sha1:25b33b34da02c3b46349dc8b6223f9ae18370d16
+    pristine_git_object: 373046bbbc834169293b4f4ae8b2e238f952ddde
   docs/models/toolchoiceenum.md:
     id: 15410de51ffc
     last_write_checksum: sha1:cdff87c62661fcb902824fda8e305c5b1b98b3d8
@@ -3394,6 +3470,10 @@ trackedFiles:
     id: 5e2ddf7b3863
     last_write_checksum: sha1:3aa9c92e9872fe75032e53e311bf050dbab51e98
     pristine_git_object: 2a64e130e526f8d99e623e7cbc0c7add82d8fab0
+  docs/models/tooltypes.md:
+    id: adb50fe63ea2
+    last_write_checksum: sha1:d0d67b717773cbc99add6716e0287e64f04d24df
+    pristine_git_object: 345ee7dc07187e1ee06726ec63ffb75e1a34e736
   docs/models/tracesrequest.md:
     id: 3adc703b2d5d
     last_write_checksum: sha1:6bbeaac0bf661c426a8d442f70e53d76b45c2a44
@@ -3740,8 +3820,8 @@ trackedFiles:
     pristine_git_object: 4b61c7b7fad5d597639122a8b32b7ac3c375d669
   docs/models/workflowexecutionresponse.md:
     id: 73595cfc443f
-    last_write_checksum: sha1:b2aacb271ca655f622ba0c724971620814e0272b
-    pristine_git_object: 03f1010030defa48eb7d3f98189baab9ff7b1bfe
+    last_write_checksum: sha1:7621c93ced46e57411855bbe97746a4590a2d6af
+    pristine_git_object: ffdb5ee8b1232c905176f7665ebb7c87d538057d
   docs/models/workflowexecutionstartedattributesresponse.md:
     id: 384d48b3e104
     last_write_checksum: sha1:54ce029d9db1b0f5dee6a42019995a58ef196268
@@ -3764,32 +3844,32 @@ trackedFiles:
     pristine_git_object: b6bb388ca18523ca9b682e5bc4d4cf1c95100fa5
   docs/models/workflowexecutiontraceeventsresponse.md:
     id: 4242880e71fc
-    last_write_checksum: sha1:e240be5e6d57636189c0648f749ea7c2bb1b18bd
-    pristine_git_object: d24dfcaf0cb9f0c1519b5057263dcb839b61f275
+    last_write_checksum: sha1:d686fc95497d86c27b209188f292fd209ffb6de9
+    pristine_git_object: c9b667df4e18c89493e238a712b4abb9a24b59d1
   docs/models/workflowexecutiontraceeventsresponseevent.md:
     id: 40012f3fc374
     last_write_checksum: sha1:b7b2a4544e04bda359d226efc6ae4247678bda9a
     pristine_git_object: 81c4f573a5af75f2ea8356f8bf23da676700ab8d
   docs/models/workflowexecutiontraceotelresponse.md:
     id: 358cf8c2556f
-    last_write_checksum: sha1:8a518835d45e407d39893fe1493e24bb5931dd86
-    pristine_git_object: cc4ff9cab9673bdce6ab31e930224490ad78f6c1
+    last_write_checksum: sha1:f82314b4524066d3d0913e9c2f905c9200aabe59
+    pristine_git_object: 747b0ff65be90e2bddf084d3329752eee4a3b2e1
   docs/models/workflowexecutiontracesummaryattributesvalues.md:
     id: 50e4fbfd4cf6
     last_write_checksum: sha1:ee33a4345041c2d8529049f0d04efb410ead4f64
     pristine_git_object: 04bd34abb60485a9fe252a3c3cb125570f6fcc27
   docs/models/workflowexecutiontracesummaryresponse.md:
     id: 5ac68ea4a1a4
-    last_write_checksum: sha1:57899967680f72b2093c5a1add7fd4e598bc38f5
-    pristine_git_object: c0380e7893e43ce2f5e4bef048efb1061ad93fa5
+    last_write_checksum: sha1:e12d31f4129cd46e2ab90be3b1cb209966651edf
+    pristine_git_object: 44458210c24890f3dd37826810132f413f79face
   docs/models/workflowexecutiontracesummaryspan.md:
     id: 3851de52d638
     last_write_checksum: sha1:528371799a9c90c9ddaf5315c2d33b89320688b8
     pristine_git_object: 8ee487a2091161e674db28a7919d0d3d4cb57e32
   docs/models/workflowexecutionwithoutresultresponse.md:
     id: 612e2645e3a3
-    last_write_checksum: sha1:a62d8b840c5c769f61ec6e6af3b06dec3aecb044
-    pristine_git_object: 47d795898cda1c2ce875b5f46f740d2f6c708c59
+    last_write_checksum: sha1:1f3370c99584dba8d4051ae0de4db0c5410251fd
+    pristine_git_object: 2711c1cd23ad52a9081c8b19ae8a9d84066f9f47
   docs/models/workflowgetresponse.md:
     id: aa8fca163259
     last_write_checksum: sha1:eba9585e94ebc141c43d39689c31997083dcb615
@@ -3808,8 +3888,8 @@ trackedFiles:
     pristine_git_object: 4936382b48d568309c80ba1c4c25703ef3b69659
   docs/models/workflowregistration.md:
     id: 1d0720b1355b
-    last_write_checksum: sha1:4704d8dc8f5b961ac128ccbc4ff0e95874b8a020
-    pristine_git_object: 52658c64464a744ff8f64205036a7abb6e92586d
+    last_write_checksum: sha1:57eef63b2d911de13dc2478e6bc71cf2bb387ffe
+    pristine_git_object: d4020d2397c580b04276b2f0b07e2955f48db804
   docs/models/workflowregistrationgetresponse.md:
     id: f2658cb29bf4
     last_write_checksum: sha1:ef021920be1f1cf2016887fb1e3fb7f583c3596f
@@ -3820,8 +3900,8 @@ trackedFiles:
     pristine_git_object: e37b36713c38a44b35d0aea4fb96cc8a44658156
   docs/models/workflowregistrationwithworkerstatus.md:
     id: a558e858a7a9
-    last_write_checksum: sha1:26d77bcd8fcfb7f2940513cc0aa2af2ca1734aca
-    pristine_git_object: f85563cedae6cb209614fc97ecf6dd94ef810172
+    last_write_checksum: sha1:aef63357118b3b8219e64bba067f1c2bcb20f453
+    pristine_git_object: bf9264d7fef65b8f212c4221518ef346470b2441
   docs/models/workflowschedulelistresponse.md:
     id: 4c425808aa60
     last_write_checksum: sha1:76a8376715ccad83ebe039f64b757617229d65c0
@@ -3932,8 +4012,8 @@ trackedFiles:
     pristine_git_object: c04ced0cf5e5f7774ba9b1d25722085b92b8f0c2
   docs/sdks/deployments/README.md:
     id: e7c5559ab768
-    last_write_checksum: sha1:366970a0a4f70f76efade23ce3beb8aab6add2ec
-    pristine_git_object: f70fa1a6c19542e7dc5d10c682db419a33d1c929
+    last_write_checksum: sha1:0d4ad30c6d3b6517aa6dc9899e3f134decc1a560
+    pristine_git_object: 349f37cd871fa78ad62fa6e32b9b31cdddeecfa0
   docs/sdks/documents/README.md:
     id: 9758e88a0a9d
     last_write_checksum: sha1:7f1540110547b0ddb1350dc24422bb94bdf3bdd8
@@ -3948,8 +4028,8 @@ trackedFiles:
     pristine_git_object: de6b43fcbbcbadef17a4e35978815289146925ec
   docs/sdks/executions/README.md:
     id: 401745b17323
-    last_write_checksum: sha1:828dedc778f58589232097d56ad35aa52c1dac32
-    pristine_git_object: f877f53f748bcf5319a1d26907d88b80ef81cbb7
+    last_write_checksum: sha1:471a49e8af942b3f4413b565b757ff572edc981a
+    pristine_git_object: cc2ebf13d813783a5d4bd236079000cfec798d9c
   docs/sdks/fields/README.md:
     id: fdb6c4f3bd69
     last_write_checksum: sha1:ea6dea75f85d25fd0ccdd2c659ecec43d0e5242d
@@ -3992,8 +4072,8 @@ trackedFiles:
     pristine_git_object: f585dcbeadeb87d5634a505450f3599af21df155
   docs/sdks/ocr/README.md:
     id: 545e35d2613e
-    last_write_checksum: sha1:be72cd3b23779c9538f01ed718be7c44ae43c775
-    pristine_git_object: 533b1bb20d121df7feb586680f20a5349b46acfa
+    last_write_checksum: sha1:cd32bb3687d72b393f7b4df9f75fc1a84fd172f4
+    pristine_git_object: 68a2879f569f7eadebb22bf0f43c2da8411c1130
   docs/sdks/records/README.md:
     id: db86bab024d3
     last_write_checksum: sha1:2ef5b164016e9b40c27d8a4915aeb8d3d2ed42c7
@@ -4064,8 +4144,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:982ae98c1635cdd615a4ce5682bd508a78c23731
-    pristine_git_object: 9c098e0a3a8ab146fd496953c423b2da76ea6f4b
+    last_write_checksum: sha1:f83dc16c4f0b9153b90d0351edb91e1f59072746
+    pristine_git_object: e3b019304184e0676bab6e3dd77b7276332b44dd
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:33d8a0663a647b7a7e1946064d05c3b40e538816
@@ -4128,8 +4208,8 @@ trackedFiles:
     pristine_git_object: 2e4e12201981a2bba2447ad06ba5445786cfc164
   src/mistralai/client/deployments.py:
     id: a874b267fcb9
-    last_write_checksum: sha1:b3d0bd14fad762c96ded90076b160a5f05ee663a
-    pristine_git_object: 0e068d4fa710a80f5d5c6274eaafad868b95a6ed
+    last_write_checksum: sha1:9c7c5d565ec5120666ab40970c1e430c57324ce0
+    pristine_git_object: 96b16af8c61ce69b77176e1e1938a162acd93604
   src/mistralai/client/documents.py:
     id: bcc17286c31c
     last_write_checksum: sha1:4261eeb474387959cbf359911e8ff3cfe706f75f
@@ -4172,8 +4252,8 @@ trackedFiles:
     pristine_git_object: 6ce1897365d66d1ae32e435388b41add3eb3464f
   src/mistralai/client/executions.py:
     id: 974004d347a2
-    last_write_checksum: sha1:091cf1ac7d445ed03f9f1c5b58a881c111bf323a
-    pristine_git_object: e4ed8348a0ef6d3cf539b8e32f2409c70473bfe8
+    last_write_checksum: sha1:054fd67b46686af2142afb63ba8e6262015502be
+    pristine_git_object: d34d6dffd756ea93bd6e4881b1f532293fb966e0
   src/mistralai/client/fields.py:
     id: 862335210b20
     last_write_checksum: sha1:52a113e4ba06571c5a5072e196d59b84ee936f3d
@@ -4220,8 +4300,8 @@ trackedFiles:
     pristine_git_object: d0b6b4fc091393e6e8a75f158363baa8e2ea21d4
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:f315b5dd13dbe68c63038bb99aa115e0bc18bb5c
-    pristine_git_object: 50ad9d5264c4efb0ef9256c5c2641008535c0c27
+    last_write_checksum: sha1:a2c067fcfbea47a8e4af41d1c39713215a6a9652
+    pristine_git_object: 38a48115704be471ec7f821d7e4c5e53c53ad81e
   src/mistralai/client/models/activitytaskcompletedattributesresponse.py:
     id: 8174941767cc
     last_write_checksum: sha1:b5246e203765ba0532a6a65d391bdd237ab2c891
@@ -4356,12 +4436,12 @@ trackedFiles:
     pristine_git_object: 3186d5df9000d4a62c0fbc64a601e6b709803deb
   src/mistralai/client/models/agentscompletionrequest.py:
     id: 3960bc4c545f
-    last_write_checksum: sha1:2f05e7029b2a283e82dd5744f333ced15b7519b9
-    pristine_git_object: 55794ea2f7f27c8b2c1946fcee3fbc8887ce5f26
+    last_write_checksum: sha1:39836b814e3fe00ad6fe79d54cc3db0fb9ca8820
+    pristine_git_object: d6b430999648398aa4555bd851bbd91c29c5c06e
   src/mistralai/client/models/agentscompletionstreamrequest.py:
     id: 1b73f90befc2
-    last_write_checksum: sha1:0d00a288f9ca11bcbe75e8f826fb73d8a13d75a2
-    pristine_git_object: 5d3bdecd4ff8c2330de59873edfc9a69973a1d58
+    last_write_checksum: sha1:c9657a7501bc6ca9f9990c78814ecb43aebb5ef3
+    pristine_git_object: bb53879d7b590e19de74e183cb9658d7de6ba271
   src/mistralai/client/models/annotations.py:
     id: 3ae9e07de11d
     last_write_checksum: sha1:c015e86fa53f60f6fccce2be63b2faf8a6d81f38
@@ -4500,16 +4580,16 @@ trackedFiles:
     pristine_git_object: 40985f844c72814bc23d3ed1f6869fcf33fb19c2
   src/mistralai/client/models/chatcompletionrequest.py:
     id: 9979805d8c38
-    last_write_checksum: sha1:3211124d52b666c680a614d9c99bf8f4a80af273
-    pristine_git_object: ee168c18d6427a745fce5a639c60ce2ae82024b9
+    last_write_checksum: sha1:11747a6d0b92fb94e89b8d9bba4207f885222982
+    pristine_git_object: dafd0073273505b12ced421d80f81d8bab6195c5
   src/mistralai/client/models/chatcompletionresponse.py:
     id: 669d996b8e82
     last_write_checksum: sha1:97f164fea881127ac82303e637b6a270e200ac5b
     pristine_git_object: 7092bbc18425091d111ec998b33edc009ff0931b
   src/mistralai/client/models/chatcompletionstreamrequest.py:
     id: 18cb2b2415d4
-    last_write_checksum: sha1:59663f3b3bd4a17253208e73025a3857e7c9de32
-    pristine_git_object: f6ad6a3610ddd57857b3f1019dfde13d8e8e42bc
+    last_write_checksum: sha1:36a3c5b9a91d0ff5401c6242fa2c1350e9a74d34
+    pristine_git_object: 9597cafbc63a6858e8eb0467393160253fa37b90
   src/mistralai/client/models/chatmoderationrequest.py:
     id: 057aecb07275
     last_write_checksum: sha1:7677494c0e36ccbc201384cb587abeb852a1a924
@@ -4628,8 +4708,8 @@ trackedFiles:
     pristine_git_object: 953ef17cbecfa6983a722b151b966c72f74cf476
   src/mistralai/client/models/connector.py:
     id: 1a4facac922d
-    last_write_checksum: sha1:5b8d7f5c6f97a2f8478ddfdd093a74b60d53da34
-    pristine_git_object: ce9e083744d2682451378528aafd90c439748bfd
+    last_write_checksum: sha1:0b6936f5932683bb6ec3c283b55d28dfc21b0f00
+    pristine_git_object: 70cd30c7699bc38add3629f45ccdc4964b3b51c7
   src/mistralai/client/models/connector_activate_for_organization_v1op.py:
     id: 9b35397dd5cc
     last_write_checksum: sha1:310d5c74ef6b89e604e94bec61efa51f853e7c88
@@ -5126,6 +5206,10 @@ trackedFiles:
     id: 967bf5f43b22
     last_write_checksum: sha1:0c4798d0793091f48d614f73208fa5bb62b5b18d
     pristine_git_object: 8095c3149fbca09c6b089e4e5638d54a39a66277
+  src/mistralai/client/models/executiontool.py:
+    id: 313d88a97140
+    last_write_checksum: sha1:ac13ed1fb5866a8660bfbd8d9dde7e24b9518ba5
+    pristine_git_object: 2bbc5332a1d49f571aba8e0173b09fc5ff93f3b5
   src/mistralai/client/models/export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop.py:
     id: 74f5f3183b64
     last_write_checksum: sha1:8d7dde90d9c55b520aa9300a25c843a0b866638b
@@ -6122,14 +6206,46 @@ trackedFiles:
     id: cb6e8a484a38
     last_write_checksum: sha1:3a7991f57573edee24780bc4b3907c8426aa3fa6
     pristine_git_object: f1535352af02c0d32c573f431b0440da4dab2fd6
+  src/mistralai/client/models/ocrasidetextblock.py:
+    id: 1960ecdcc21a
+    last_write_checksum: sha1:abb98c5335b7cdc1f98dd8960d25a3ad3392fa70
+    pristine_git_object: 3d81d9d3fcd7aa94cdc1720e045ae69c6cb4bdaa
+  src/mistralai/client/models/ocrcaptionblock.py:
+    id: 84933d3975dd
+    last_write_checksum: sha1:539fbaa44cabf0e9f31d24aaebf039dd22eb4a83
+    pristine_git_object: d1e0da834914534b5a6e6e430037788f3635b8d1
+  src/mistralai/client/models/ocrcodeblock.py:
+    id: bacdc04c0c8d
+    last_write_checksum: sha1:2a00f62939c32ddadc98cb62f7d0657840788ac5
+    pristine_git_object: 52ffee5980bd40f43a9e30b9e219935bc1afbb22
   src/mistralai/client/models/ocrconfidencescore.py:
     id: 15b75862a7bd
     last_write_checksum: sha1:daafce451f4ee4a0440db6f6444f10187a64fe67
     pristine_git_object: 7fab8c9b542b1419bc4844d9d91d62c4f76f19ad
+  src/mistralai/client/models/ocrequationblock.py:
+    id: e8856fb2a77f
+    last_write_checksum: sha1:0b3a71740141c1b429fd6fd87aaacf72a8ea1f38
+    pristine_git_object: 57a8eb3e2a23cc9ab6c367627a70364ad0ccb083
+  src/mistralai/client/models/ocrfooterblock.py:
+    id: 9435c879d4c4
+    last_write_checksum: sha1:967f7db619bfb5dc29a49dcc32ed41f05b279ed0
+    pristine_git_object: b3f4c18db886ae80526ee32515030b23418f8e97
+  src/mistralai/client/models/ocrheaderblock.py:
+    id: 86d4b90e4056
+    last_write_checksum: sha1:d2c1def9d9c8ed8ce38f0b804acf9639a0023ef3
+    pristine_git_object: a2e30a98babaf7372fad7816e005ac8ee1803257
+  src/mistralai/client/models/ocrimageblock.py:
+    id: 9700f3ab6b59
+    last_write_checksum: sha1:2c5acd9a1126607622c53b1d7ae75a2b6b764fd7
+    pristine_git_object: 3381c47a53a91ebe5ae05802339c5af081a82a0f
   src/mistralai/client/models/ocrimageobject.py:
     id: 685faeb41a80
     last_write_checksum: sha1:a848d782d09e7b899e4a801d8ea43505783c853f
     pristine_git_object: 583cc38bf6046ff783ac2b5b2306fa42fa3c6fb5
+  src/mistralai/client/models/ocrlistblock.py:
+    id: 20bdae8ad688
+    last_write_checksum: sha1:4da4b1177c9a080b386d23d46c7784acd43b46e4
+    pristine_git_object: 8d32c11af97a7bc0fd83796cd40a049d373e4c81
   src/mistralai/client/models/ocrpageconfidencescores.py:
     id: 7e4a07e4bdfd
     last_write_checksum: sha1:5b1a3f6f27f8c45141bc9c445bbbd17636aae7f7
@@ -6140,20 +6256,40 @@ trackedFiles:
     pristine_git_object: 847205c6c74a621dd2ee6d9eb18d1acba8395c50
   src/mistralai/client/models/ocrpageobject.py:
     id: 07a099f89487
-    last_write_checksum: sha1:d97dc5b6ff4f91302cfcf1ea120c8e99545716c5
-    pristine_git_object: d77661aad5832248ab66bfb3c7bf48bfd2910303
+    last_write_checksum: sha1:1e6999b5bf68f0913cddbf1dfcacee3c28042490
+    pristine_git_object: 662326b0debf02aea468879c6097ce97ce4c7b85
+  src/mistralai/client/models/ocrreferencesblock.py:
+    id: 24b57f5f1f99
+    last_write_checksum: sha1:711341fe3e0fdff6fd4eecb448d4fc0cda3ede96
+    pristine_git_object: 6294488cacbd6910a8edb6458ce37d1f0696ba43
   src/mistralai/client/models/ocrrequest.py:
     id: 36f204c64074
-    last_write_checksum: sha1:032a1fcd9eb0a6c0a4249772c2e5790705ee2b28
-    pristine_git_object: 2a16e7128eeb7f262bb1f80633a9a50d02a093b5
+    last_write_checksum: sha1:4cd9c6ff777d2d4636b7d8bcc87fc05e83884dd4
+    pristine_git_object: 3628c2143bc8e6733f61fe1dfcf6b6acf8a53f4b
   src/mistralai/client/models/ocrresponse.py:
     id: 2fdfc881ca56
     last_write_checksum: sha1:8e496f6122ea0798df0d23f50ea3046a29f0f8db
     pristine_git_object: ff4b96c30573a18c2e5665a6f3f10724f7a23f9a
+  src/mistralai/client/models/ocrsignatureblock.py:
+    id: 2e2939942241
+    last_write_checksum: sha1:2368b8c7334df43bf5fb6b0ecbd1aa5983451333
+    pristine_git_object: 0275466fa06d5a70d95642d994d47b767d3e3ea4
+  src/mistralai/client/models/ocrtableblock.py:
+    id: dada7ebd13b0
+    last_write_checksum: sha1:23c9f6d6db7ac51e7ece61ad1443ab90384f5955
+    pristine_git_object: 97c8adb79af95093fbd8dd3162804ac60cb503b3
   src/mistralai/client/models/ocrtableobject.py:
     id: d74dd0d2ddac
     last_write_checksum: sha1:fd0c1d3034011209de01a573952d1fd7f663504d
     pristine_git_object: 1cb59527b9c1892c789b099f04b99cb1e7169c6c
+  src/mistralai/client/models/ocrtextblock.py:
+    id: d329f1be53f7
+    last_write_checksum: sha1:c35ec9568a14b1dc2cfe554a838bbbbd91fa3592
+    pristine_git_object: bb6981f941675be259325d67ddc4230dcfaa92c3
+  src/mistralai/client/models/ocrtitleblock.py:
+    id: 1a397a673c85
+    last_write_checksum: sha1:c8d7cf2b035c12637594e87f1a002cc7be344aca
+    pristine_git_object: 951f80f4c0d7a459dbce36b8b9a7d46ba134d824
   src/mistralai/client/models/ocrusageinfo.py:
     id: 272b7e1785d5
     last_write_checksum: sha1:eb223a88b7e5175056197f64bb4bce2c88ccea19
@@ -6266,6 +6402,22 @@ trackedFiles:
     id: 03c2460e04ac
     last_write_checksum: sha1:faea37686e78fd3cc8a74371a3004d59ca57f4e9
     pristine_git_object: 94fd670836c95c432fd71f1f7dfc16323b50ee24
+  src/mistralai/client/models/publicconnectorexecutiondata.py:
+    id: 60d7f9e91ee6
+    last_write_checksum: sha1:8113e3f1e90aeb27359ec47883e9355cd029d1bd
+    pristine_git_object: 9e6bbd582707bddce4c987bb8c6d57b73f461b56
+  src/mistralai/client/models/publicexecutionconnectionconfig.py:
+    id: c905833ce251
+    last_write_checksum: sha1:9c66d819f7af3bc35173efdbe80414cacd328b00
+    pristine_git_object: c6a4cd145b8f7cd0cda121ccc44ed0adb0feb228
+  src/mistralai/client/models/publicexecutionconnector.py:
+    id: c2a70c48a9c6
+    last_write_checksum: sha1:0354f7dc75e49efdcc18abc8d1491eae86441a15
+    pristine_git_object: 0223968ff278e67cff58f3c694739c67b7fd160d
+  src/mistralai/client/models/publicexecutionenv.py:
+    id: e0bc735fbadc
+    last_write_checksum: sha1:6cb66e7935e4a35148f9491324473cea33323814
+    pristine_git_object: 69f08df6f751207b46b581ed70138e13ea48a6df
   src/mistralai/client/models/query_workflow_execution_v1_workflows_executions_execution_id_queries_postop.py:
     id: 73826dbd3f5b
     last_write_checksum: sha1:5105618697e031bae45cf9f6d7c5227d9c08f155
@@ -6612,16 +6764,16 @@ trackedFiles:
     pristine_git_object: 0add960bc93f53df5ddda94892543a0857f32dd6
   src/mistralai/client/models/stream_deployment_logsop.py:
     id: 0d66b14b5200
-    last_write_checksum: sha1:f651071fd9b03c32c475a58ce9ec9cf56f06bc81
-    pristine_git_object: 4bf76da59bc93669243a57b9422f9244b16b0912
+    last_write_checksum: sha1:127b4065550f0cc0e04e3bff01a923d561b69e3b
+    pristine_git_object: 8b89bd80d500981f028c951fc5dac6c9b1f751fb
   src/mistralai/client/models/stream_v1_workflows_executions_execution_id_stream_getop.py:
     id: 793a9301522f
     last_write_checksum: sha1:7a3c1f618afb8510a032e3f8255ed5f92ece6c86
     pristine_git_object: b87f630a583fe4564781914c85f63682912dbc14
   src/mistralai/client/models/stream_workflow_execution_logsop.py:
     id: 33528845f8f2
-    last_write_checksum: sha1:6338be8a5d5d4b87c3bb948f0441e29f66f2f4da
-    pristine_git_object: 653d2a5bdc55737d113ef4384bcb73af087605dc
+    last_write_checksum: sha1:28fba3991c117b301cc6b79605645d9e104d8aa6
+    pristine_git_object: 9db7db54c0b75143b35d73040057094dcedd876a
   src/mistralai/client/models/streamerror.py:
     id: 2632e221b587
     last_write_checksum: sha1:71eb9338eb4b1e747621027b67c45f37ca4042ad
@@ -6744,24 +6896,24 @@ trackedFiles:
     pristine_git_object: 8d3773752444db865c0e2629ad9eed66eb7f2bc6
   src/mistralai/client/models/tool.py:
     id: 48b4f6f50fe9
-    last_write_checksum: sha1:507bcbe7af5e919614c27c0704f1c26def7da2bd
-    pristine_git_object: a83a6d1c4f66ae2876179e4cf3967f84b013f020
+    last_write_checksum: sha1:ed3725d5da10e6a201f73724a2bbf618bdbb2a33
+    pristine_git_object: 1d1c5ce557321c33b036949fa4c625fb25e38f95
   src/mistralai/client/models/toolannotations.py:
     id: 2ae257a35b01
     last_write_checksum: sha1:6f7c174966fc9a9fee5de7c8dfa4dbf2064c10e4
     pristine_git_object: b2e9b94808b96b859d29c42aa0d5ca994761a395
   src/mistralai/client/models/toolcall.py:
     id: fb34a1a3f3c2
-    last_write_checksum: sha1:f07d54b25fddde055361c448764a428238c57a4a
-    pristine_git_object: 1424d87929b8c7f19205eb1a348c8278b436e817
+    last_write_checksum: sha1:a0e14e69a107d88239e1ee43d2e8fd498eb034a4
+    pristine_git_object: 29f1149cd07dfc2744a1088d271af65e4ad70012
   src/mistralai/client/models/toolcallconfirmation.py:
     id: f2e953cfb4fe
     last_write_checksum: sha1:554a2e073917ffb479efe5887c0b59a2f4967c6e
     pristine_git_object: fd6eca50a7ec2f4cca2ae20958717881660e0ac5
   src/mistralai/client/models/toolchoice.py:
     id: 14f7e4cc35b6
-    last_write_checksum: sha1:bf3eaf4ce3feeff3dd44e6ac69783f2833333c3e
-    pristine_git_object: e7a17d5cdebe8206f6df70e3be29afff68fbfe79
+    last_write_checksum: sha1:531f7ac1d7cd7d99b79756b9c673463dd33f2011
+    pristine_git_object: ce84573ae34624b1e07f7001d3a00bf36d620e5f
   src/mistralai/client/models/toolchoiceenum.py:
     id: c7798801f860
     last_write_checksum: sha1:5388b2a6fad842f8e4ae79e6257b4d14c122a6ff
@@ -6818,6 +6970,10 @@ trackedFiles:
     id: cbe8c44aee50
     last_write_checksum: sha1:53949106f192944a13a8fcbeb37b3d08478b7bbc
     pristine_git_object: 1a7781fc2c1001002785d512ed7909ce91a9129f
+  src/mistralai/client/models/tooltypes.py:
+    id: 86c3b54272fd
+    last_write_checksum: sha1:e90c15c1e645a5f207af0c7ac728cb0a521c6706
+    pristine_git_object: e601c1967c42ef8d0c2eea98bc5c0ca722cde066
   src/mistralai/client/models/tracesrequest.py:
     id: df80914625df
     last_write_checksum: sha1:26f12ccd773c5ce0776fa6787ade821b6f70910a
@@ -7136,8 +7292,8 @@ trackedFiles:
     pristine_git_object: ea5e752df355fd5a771813a7e5c569539e66c90a
   src/mistralai/client/models/workflowexecutionresponse.py:
     id: 758786637be5
-    last_write_checksum: sha1:1a06785d691c7bdc9e5d1fe4e2a4e3d5e2d3b96b
-    pristine_git_object: 83179054bf4ca0e3da6be1644fcb32680a4c43c7
+    last_write_checksum: sha1:30c1fd49d20113d7c1fe5ba54078686bc3f3da79
+    pristine_git_object: e387a57a095c0e8539e0cdcb43729ba427e58725
   src/mistralai/client/models/workflowexecutionstartedattributesresponse.py:
     id: d2276919a895
     last_write_checksum: sha1:53312110c8c2902f32c72a88ee68cea048833fca
@@ -7160,28 +7316,28 @@ trackedFiles:
     pristine_git_object: f74cd5ab6aeadf662e90a46b394621a631602372
   src/mistralai/client/models/workflowexecutiontraceeventsresponse.py:
     id: 94d92762ccb7
-    last_write_checksum: sha1:2d46b00c374d7590802c60abee6ea69d1d999ed1
-    pristine_git_object: 22853e9b01dea9917dfb6291feb36b32f1e65850
+    last_write_checksum: sha1:903aaa97d450493daf1a5921d37553cf8aa669d8
+    pristine_git_object: 0494ad7512ee434c3125c0e8eb61b06947c803b0
   src/mistralai/client/models/workflowexecutiontraceotelresponse.py:
     id: 7531bf461dc2
-    last_write_checksum: sha1:284b6d7b90576638656b3493e5ba7429a56fe9c5
-    pristine_git_object: 46f5404e4da7d0e40199054cfb5b0dfc15ab1eed
+    last_write_checksum: sha1:0093cbf55e37fd6fad45f84aab5625ee6a6e7b8e
+    pristine_git_object: f6f11bce18789923ff304834f7b881313194edb9
   src/mistralai/client/models/workflowexecutiontracesummaryattributesvalues.py:
     id: 5e3448a39a40
     last_write_checksum: sha1:a59ae1b987558f478518c86f93713e174e5e8d19
     pristine_git_object: 1957662cace4c7ca9b7b892b749922a436ca92f0
   src/mistralai/client/models/workflowexecutiontracesummaryresponse.py:
     id: 2ea199810f5f
-    last_write_checksum: sha1:8642e0396abaedb1f758df0bc06d8386c024c8c5
-    pristine_git_object: 92e9a2a7b0df8a7a6ff1fff5f1aee4cdc04c51c5
+    last_write_checksum: sha1:4eeaf18d8c024d5cd8852fdcc7ab7726308a8fa3
+    pristine_git_object: 25f202167f2f49547036fe58e0125b6f9a607802
   src/mistralai/client/models/workflowexecutiontracesummaryspan.py:
     id: 750353cbd052
     last_write_checksum: sha1:ba4f7ecc22fdd36aa3c11af5c1e434bb974d5786
     pristine_git_object: e80db90fe890726c75f711ea2b52b3008ef949ca
   src/mistralai/client/models/workflowexecutionwithoutresultresponse.py:
     id: dd70ba8def79
-    last_write_checksum: sha1:c6952b7163b972a0beb868b4407b3780f7ecbbd8
-    pristine_git_object: 5e7fe8528de081b2366584af49ab954b93aeea0c
+    last_write_checksum: sha1:ff1ece0a70cfc120d0611f745148adc5d6fb9ac6
+    pristine_git_object: 110c3174b21c2cc0d37bf0c6485488307dbaf1b9
   src/mistralai/client/models/workflowgetresponse.py:
     id: 230f55a36ebf
     last_write_checksum: sha1:935cfce50db82d85ac0e246736c8939bfb015da0
@@ -7200,8 +7356,8 @@ trackedFiles:
     pristine_git_object: d80bb3db6cbc69404e22007a78bbef209c03c658
   src/mistralai/client/models/workflowregistration.py:
     id: 2b937728c88b
-    last_write_checksum: sha1:aa049285311701b56fa1b3f331b395174cc9ece3
-    pristine_git_object: 7c65801d28753f738dc9f0b8f06aabd4b8a50ffc
+    last_write_checksum: sha1:f3c4b6a72b456a864d87f2a878d750f6962803a5
+    pristine_git_object: 61df9d852e3625507b4cf2bc5833f15e2b61eae3
   src/mistralai/client/models/workflowregistrationgetresponse.py:
     id: f063656f22ae
     last_write_checksum: sha1:cc7b4d3b71ea8bb8ae452c6fd3e4acc710a18321
@@ -7212,8 +7368,8 @@ trackedFiles:
     pristine_git_object: e66f219b28849d7a49af7c764389e0d1d1ee7f37
   src/mistralai/client/models/workflowregistrationwithworkerstatus.py:
     id: 23b661b9496f
-    last_write_checksum: sha1:b09da5640b53502f1d2935729b17655c176de27e
-    pristine_git_object: 62c379d91f6f8e0b2842b11208513635160a0c02
+    last_write_checksum: sha1:7d9880e7111e739234a918ae2ffdc9f8eeda5d41
+    pristine_git_object: 0b43a2e9bcb1664b77010f1398222a35186461f7
   src/mistralai/client/models/workflowschedulelistresponse.py:
     id: e5247c5183bb
     last_write_checksum: sha1:10d416a4157ccfd9f60479ea0cd8e4daaaa49cc3
@@ -7288,8 +7444,8 @@ trackedFiles:
     pristine_git_object: 4d07debc5757055464dd0fb3cd1b5b0aebd3cfe8
   src/mistralai/client/ocr.py:
     id: 2f804a12fc62
-    last_write_checksum: sha1:e6a545a2f2d7bfcb963da1084ef34e60d5176523
-    pristine_git_object: 0907ce6de5f518d0a0f1a7c84a1c73e7465ddd5b
+    last_write_checksum: sha1:42d187a4d918535d004873ff1b3ee7b0c0aa6826
+    pristine_git_object: e63d1aeb649883d4e44d17915e739c2ec96e7da7
   src/mistralai/client/py.typed:
     id: d95cd1565e33
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
@@ -7958,7 +8114,7 @@ examples:
           application/json: {}
     userExample:
       requestBody:
-        application/json: {"model": "CX-9", "document": {"type": "document_url", "document_url": "https://upset-labourer.net/"}, "bbox_annotation_format": {"type": "text"}, "document_annotation_format": {"type": "text"}}
+        application/json: {"model": "CX-9", "document": {"type": "document_url", "document_url": "https://upset-labourer.net/"}, "bbox_annotation_format": {"type": "text"}, "document_annotation_format": {"type": "text"}, "include_blocks": false}
       responses:
         "200":
           application/json: {"pages": [{"index": 1, "markdown": "# LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE\nSaurabh Garg*<br> Carnegie Mellon University<br> sgarg2@andrew.cmu.edu<br> Sivaraman Balakrishnan<br> Carnegie Mellon University<br> sbalakri@andrew.cmu.edu<br> Zachary C. Lipton<br> Carnegie Mellon University<br> zlipton@andrew.cmu.edu\n## Behnam Neyshabur\nGoogle Research, Blueshift team<br> neyshabur@google.com\nHanie Sedghi<br> Google Research, Brain team<br> hsedghi@google.com\n#### Abstract\nReal-world machine learning deployments are characterized by mismatches between the source (training) and target (test) distributions that may cause performance drops. In this work, we investigate methods for predicting the target domain accuracy using only labeled source data and unlabeled target data. We propose Average Thresholded Confidence (ATC), a practical method that learns a threshold on the model's confidence, predicting accuracy as the fraction of unlabeled examples for which model confidence exceeds that threshold. ATC outperforms previous methods across several model architectures, types of distribution shifts (e.g., due to synthetic corruptions, dataset reproduction, or novel subpopulations), and datasets (WILDS, ImageNet, BREEDS, CIFAR, and MNIST). In our experiments, ATC estimates target performance $2-4 \\times$ more accurately than prior methods. We also explore the theoretical foundations of the problem, proving that, in general, identifying the accuracy is just as hard as identifying the optimal predictor and thus, the efficacy of any method rests upon (perhaps unstated) assumptions on the nature of the shift. Finally, analyzing our method on some toy distributions, we provide insights concerning when it works ${ }^{1}$.\n## 1 INTRODUCTION\nMachine learning models deployed in the real world typically encounter examples from previously unseen distributions. While the IID assumption enables us to evaluate models using held-out data from the source distribution (from which training data is sampled), this estimate is no longer valid in presence of a distribution shift. Moreover, under such shifts, model accuracy tends to degrade (Szegedy et al., 2014; Recht et al., 2019; Koh et al., 2021). Commonly, the only data available to the practitioner are a labeled training set (source) and unlabeled deployment-time data which makes the problem more difficult. In this setting, detecting shifts in the distribution of covariates is known to be possible (but difficult) in theory (Ramdas et al., 2015), and in practice (Rabanser et al., 2018). However, producing an optimal predictor using only labeled source and unlabeled target data is well-known to be impossible absent further assumptions (Ben-David et al., 2010; Lipton et al., 2018).\nTwo vital questions that remain are: (i) the precise conditions under which we can estimate a classifier's target-domain accuracy; and (ii) which methods are most practically useful. To begin, the straightforward way to assess the performance of a model under distribution shift would be to collect labeled (target domain) examples and then to evaluate the model on that data. However, collecting fresh labeled data from the target distribution is prohibitively expensive and time-consuming, especially if the target distribution is non-stationary. Hence, instead of using labeled data, we aim to use unlabeled data from the target distribution, that is comparatively abundant, to predict model performance. Note that in this work, our focus is not to improve performance on the target but, rather, to estimate the accuracy on the target for a given classifier.\n[^0]: Work done in part while Saurabh Garg was interning at Google ${ }^{1}$ Code is available at [https://github.com/saurabhgarg1996/ATC_code](https://github.com/saurabhgarg1996/ATC_code).\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 2, "markdown": "![img-0.jpeg](img-0.jpeg)\nFigure 1: Illustration of our proposed method ATC. Left: using source domain validation data, we identify a threshold on a score (e.g. negative entropy) computed on model confidence such that fraction of examples above the threshold matches the validation set accuracy. ATC estimates accuracy on unlabeled target data as the fraction of examples with the score above the threshold. Interestingly, this threshold yields accurate estimates on a wide set of target distributions resulting from natural and synthetic shifts. Right: Efficacy of ATC over previously proposed approaches on our testbed with a post-hoc calibrated model. To obtain errors on the same scale, we rescale all errors with Average Confidence (AC) error. Lower estimation error is better. See Table 1 for exact numbers and comparison on various types of distribution shift. See Sec. 5 for details on our testbed.\nRecently, numerous methods have been proposed for this purpose (Deng & Zheng, 2021; Chen et al., 2021b; Jiang et al., 2021; Deng et al., 2021; Guillory et al., 2021). These methods either require calibration on the target domain to yield consistent estimates (Jiang et al., 2021; Guillory et al., 2021) or additional labeled data from several target domains to learn a linear regression function on a distributional distance that then predicts model performance (Deng et al., 2021; Deng & Zheng, 2021; Guillory et al., 2021). However, methods that require calibration on the target domain typically yield poor estimates since deep models trained and calibrated on source data are not, in general, calibrated on a (previously unseen) target domain (Ovadia et al., 2019). Besides, methods that leverage labeled data from target domains rely on the fact that unseen target domains exhibit strong linear correlation with seen target domains on the underlying distance measure and, hence, can be rendered ineffective when such target domains with labeled data are unavailable (in Sec. 5.1 we demonstrate such a failure on a real-world distribution shift problem). Therefore, throughout the paper, we assume access to labeled source data and only unlabeled data from target domain(s).\nIn this work, we first show that absent assumptions on the source classifier or the nature of the shift, no method of estimating accuracy will work generally (even in non-contrived settings). To estimate accuracy on target domain perfectly, we highlight that even given perfect knowledge of the labeled source distribution (i.e., $p_{s}(x, y)$ ) and unlabeled target distribution (i.e., $p_{t}(x)$ ), we need restrictions on the nature of the shift such that we can uniquely identify the target conditional $p_{t}(y \\mid x)$. Thus, in general, identifying the accuracy of the classifier is as hard as identifying the optimal predictor.\nSecond, motivated by the superiority of methods that use maximum softmax probability (or logit) of a model for Out-Of-Distribution (OOD) detection (Hendrycks & Gimpel, 2016; Hendrycks et al., 2019), we propose a simple method that leverages softmax probability to predict model performance. Our method, Average Thresholded Confidence (ATC), learns a threshold on a score (e.g., maximum confidence or negative entropy) of model confidence on validation source data and predicts target domain accuracy as the fraction of unlabeled target points that receive a score above that threshold. ATC selects a threshold on validation source data such that the fraction of source examples that receive the score above the threshold match the accuracy of those examples. Our primary contribution in ATC is the proposal of obtaining the threshold and observing its efficacy on (practical) accuracy estimation. Importantly, our work takes a step forward in positively answering the question raised in Deng & Zheng (2021); Deng et al. (2021) about a practical strategy to select a threshold that enables accuracy prediction with thresholded model confidence.\n", "images": [{"id": "img-0.jpeg", "top_left_x": 292, "top_left_y": 217, "bottom_right_x": 1405, "bottom_right_y": 649, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 3, "markdown": "<value>", "images": [], "dimensions": {"dpi": 539192, "height": 944919, "width": 247256}}, {"index": 27, "markdown": "![img-8.jpeg](img-8.jpeg)\nFigure 9: Scatter plot of predicted accuracy versus (true) OOD accuracy for vision datasets except MNIST with a ResNet50 model. Results reported by aggregating MAE numbers over 4 different seeds.\n", "images": [{"id": "img-8.jpeg", "top_left_x": 290, "top_left_y": 226, "bottom_right_x": 1405, "bottom_right_y": 1834, "image_base64": "<value>"}], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 28, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 6.60 | 5.74 | 9.88 | 6.89 | 7.25 | 6.07 | 4.77 | 3.21 | 3.02 | 2.99 | 2.85 | |  |  | (0.35) | (0.30) | (0.16) | (0.13) | (0.15) | (0.16) | (0.13) | (0.49) | (0.40) | (0.37) | (0.29) | |  | Synthetic | 12.33 | 10.20 | 16.50 | 11.91 | 13.87 | 11.08 | 6.55 | 4.65 | 4.25 | 4.21 | 3.87 | |  |  | (0.51) | (0.48) | (0.26) | (0.17) | (0.18) | (0.17) | (0.35) | (0.55) | (0.55) | (0.55) | (0.75) | | CIFAR100 | Synthetic | 13.69 | 11.51 | 23.61 | 13.10 | 14.60 | 10.14 | 9.85 | 5.50 | 4.75 | 4.72 | 4.94 | |  |  | (0.55) | (0.41) | (1.16) | (0.80) | (0.77) | (0.64) | (0.57) | (0.70) | (0.73) | (0.74) | (0.74) | | ImageNet200 | Natural | 12.37 | 8.19 | 22.07 | 8.61 | 15.17 | 7.81 | 5.13 | 4.37 | 2.04 | 3.79 | 1.45 | |  |  | (0.25) | (0.33) | (0.08) | (0.25) | (0.11) | (0.29) | (0.08) | (0.39) | (0.24) | (0.30) | (0.27) | |  | Synthetic | 19.86 | 12.94 | 32.44 | 13.35 | 25.02 | 12.38 | 5.41 | 5.93 | 3.09 | 5.00 | 2.68 | |  |  | (1.38) | (1.81) | (1.00) | (1.30) | (1.10) | (1.38) | (0.89) | (1.38) | (0.87) | (1.28) | (0.45) | | ImageNet | Natural | 7.77 | 6.50 | 18.13 | 6.02 | 8.13 | 5.76 | 6.23 | 3.88 | 2.17 | 2.06 | 0.80 | |  |  | (0.27) | (0.33) | (0.23) | (0.34) | (0.27) | (0.37) | (0.41) | (0.53) | (0.62) | (0.54) | (0.44) | |  | Synthetic | 13.39 | 10.12 | 24.62 | 8.51 | 13.55 | 7.90 | 6.32 | 3.34 | 2.53 | 2.61 | 4.89 | |  |  | (0.53) | (0.63) | (0.64) | (0.71) | (0.61) | (0.72) | (0.33) | (0.53) | (0.36) | (0.33) | (0.83) | | FMoW-WILDS | Natural | 5.53 | 4.31 | 33.53 | 12.84 | 5.94 | 4.45 | 5.74 | 3.06 | 2.70 | 3.02 | 2.72 | |  |  | (0.33) | (0.63) | (0.13) | (12.06) | (0.36) | (0.77) | (0.55) | (0.36) | (0.54) | (0.35) | (0.44) | | RxRx1-WILDS | Natural | 5.80 | 5.72 | 7.90 | 4.84 | 5.98 | 5.98 | 6.03 | 4.66 | 4.56 | 4.41 | 4.47 | |  |  | (0.17) | (0.15) | (0.24) | (0.09) | (0.15) | (0.13) | (0.08) | (0.38) | (0.38) | (0.31) | (0.26) | | Amazon-WILDS | Natural | 2.40 | 2.29 | 8.01 | 2.38 | 2.40 | 2.28 | 17.87 | 1.65 | 1.62 | 1.60 | 1.59 | |  |  | (0.08) | (0.09) | (0.53) | (0.17) | (0.09) | (0.09) | (0.18) | (0.06) | (0.05) | (0.14) | (0.15) | | CivilCom.-WILDS | Natural | 12.64 | 10.80 | 16.76 | 11.03 | 13.31 | 10.99 | 16.65 |  | 7.14 |  |  | |  |  | (0.52) | (0.48) | (0.53) | (0.49) | (0.52) | (0.49) | (0.25) |  | (0.41) |  |  | | MNIST | Natural | 18.48 | 15.99 | 21.17 | 14.81 | 20.19 | 14.56 | 24.42 | 5.02 | 2.40 | 3.14 | 3.50 | |  |  | (0.45) | (1.53) | (0.24) | (3.89) | (0.23) | (3.47) | (0.41) | (0.44) | (1.83) | (0.49) | (0.17) | | ENTITY-13 | Same | 16.23 | 11.14 | 24.97 | 10.88 | 19.08 | 10.47 | 10.71 | 5.39 | 3.88 | 4.58 | 4.19 | |  |  | (0.77) | (0.65) | (0.70) | (0.77) | (0.65) | (0.72) | (0.74) | (0.92) | (0.61) | (0.85) | (0.16) | |  | Novel | 28.53 | 22.02 | 38.33 | 21.64 | 32.43 | 21.22 | 20.61 | 13.58 | 10.28 | 12.25 | 6.63 | |  |  | (0.82) | (0.68) | (0.75) | (0.86) | (0.69) | (0.80) | (0.60) | (1.15) | (1.34) | (1.21) | (0.93) | | ENTITY-30 | Same | 18.59 | 14.46 | 28.82 | 14.30 | 21.63 | 13.46 | 12.92 | 9.12 | 7.75 | 8.15 | 7.64 | |  |  | (0.51) | (0.52) | (0.43) | (0.71) | (0.37) | (0.59) | (0.14) | (0.62) | (0.72) | (0.68) | (0.88) | |  | Novel | 32.34 | 26.85 | 44.02 | 26.27 | 36.82 | 25.42 | 23.16 | 17.75 | 14.30 | 15.60 | 10.57 | |  |  | (0.60) | (0.58) | (0.56) | (0.79) | (0.47) | (0.68) | (0.12) | (0.76) | (0.85) | (0.86) | (0.86) | | NONLIVING-26 | Same | 18.66 | 17.17 | 26.39 | 16.14 | 19.86 | 15.58 | 16.63 | 10.87 | 10.24 | 10.07 | 10.26 | |  |  | (0.76) | (0.74) | (0.82) | (0.81) | (0.67) | (0.76) | (0.45) | (0.98) | (0.83) | (0.92) | (1.18) | |  | Novel | 33.43 | 31.53 | 41.66 | 29.87 | 35.13 | 29.31 | 29.56 | 21.70 | 20.12 | 19.08 | 18.26 | |  |  | (0.67) | (0.65) | (0.67) | (0.71) | (0.54) | (0.64) | (0.21) | (0.86) | (0.75) | (0.82) | (1.12) | | LIVING-17 | Same | 12.63 | 11.05 | 18.32 | 10.46 | 14.43 | 10.14 | 9.87 | 4.57 | 3.95 | 3.81 | 4.21 | |  |  | (1.25) | (1.20) | (1.01) | (1.12) | (1.11) | (1.16) | (0.61) | (0.71) | (0.48) | (0.22) | (0.53) | |  | Novel | 29.03 | 26.96 | 35.67 | 26.11 | 31.73 | 25.73 | 23.53 | 16.15 | 14.49 | 12.97 | 11.39 | |  |  | (1.44) | (1.38) | (1.09) | (1.27) | (1.19) | (1.35) | (0.52) | (1.36) | (1.46) | (1.52) | (1.72) |\nTable 3: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. For language datasets, we use DistilBERT-base-uncased, for vision dataset we report results with DenseNet model with the exception of MNIST where we use FCN. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}, {"index": 29, "markdown": "| Dataset | Shift | IM |  | AC |  | DOC |  | GDE | ATC-MC (Ours) |  | ATC-NE (Ours) |  | | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | |  |  | Pre T | Post T | Pre T | Post T | Pre T | Post T | Post T | Pre T | Post T | Pre T | Post T | | CIFAR10 | Natural | 7.14 | 6.20 | 10.25 | 7.06 | 7.68 | 6.35 | 5.74 | 4.02 | 3.85 | 3.76 | 3.38 | |  |  | (0.14) | (0.11) | (0.31) | (0.33) | (0.28) | (0.27) | (0.25) | (0.38) | (0.30) | (0.33) | (0.32) | |  | Synthetic | 12.62 | 10.75 | 16.50 | 11.91 | 13.93 | 11.20 | 7.97 | 5.66 | 5.03 | 4.87 | 3.63 | |  |  | (0.76) | (0.71) | (0.28) | (0.24) | (0.29) | (0.28) | (0.13) | (0.64) | (0.71) | (0.71) | (0.62) | | CIFAR100 | Synthetic | 12.77 | 12.34 | 16.89 | 12.73 | 11.18 | 9.63 | 12.00 | 5.61 | 5.55 | 5.65 | 5.76 | |  |  | (0.43) | (0.68) | (0.20) | (2.59) | (0.35) | (1.25) | (0.48) | (0.51) | (0.55) | (0.35) | (0.27) | | ImageNet200 | Natural | 12.63 | 7.99 | 23.08 | 7.22 | 15.40 | 6.33 | 5.00 | 4.60 | 1.80 | 4.06 | 1.38 | |  |  | (0.59) | (0.47) | (0.31) | (0.22) | (0.42) | (0.24) | (0.36) | (0.63) | (0.17) | (0.69) | (0.29) | |  | Synthetic | 20.17 | 11.74 | 33.69 | 9.51 | 25.49 | 8.61 | 4.19 | 5.37 | 2.78 | 4.53 | 3.58 | |  |  | (0.74) | (0.80) | (0.73) | (0.51) | (0.66) | (0.50) | (0.14) | (0.88) | (0.23) | (0.79) | (0.33) | | ImageNet | Natural | 8.09 | 6.42 | 21.66 | 5.91 | 8.53 | 5.21 | 5.90 | 3.93 | 1.89 | 2.45 | 0.73 | |  |  | (0.25) | (0.28) | (0.38) | (0.22) | (0.26) | (0.25) | (0.44) | (0.26) | (0.21) | (0.16) | (0.10) | |  | Synthetic | 13.93 | 9.90 | 28.05 | 7.56 | 13.82 | 6.19 | 6.70 | 3.33 | 2.55 | 2.12 | 5.06 | |  |  | (0.14) | (0.23) | (0.39) | (0.13) | (0.31) | (0.07) | (0.52) | (0.25) | (0.25) | (0.31) | (0.27) | | FMoW-WILDS | Natural | 5.15 | 3.55 | 34.64 | 5.03 | 5.58 | 3.46 | 5.08 | 2.59 | 2.33 | 2.52 | 2.22 | |  |  | (0.19) | (0.41) | (0.22) | (0.29) | (0.17) | (0.37) | (0.46) | (0.32) | (0.28) | (0.25) | (0.30) | | RxRx1-WILDS | Natural | 6.17 | 6.11 | 21.05 | 5.21 | 6.54 | 6.27 | 6.82 | 5.30 | 5.20 | 5.19 | 5.63 | |  |  | (0.20) | (0.24) | (0.31) | (0.18) | (0.21) | (0.20) | (0.31) | (0.30) | (0.44) | (0.43) | (0.55) | | Entity-13 | Same | 18.32 | 14.38 | 27.79 | 13.56 | 20.50 | 13.22 | 16.09 | 9.35 | 7.50 | 7.80 | 6.94 | |  |  | (0.29) | (0.53) | (1.18) | (0.58) | (0.47) | (0.58) | (0.84) | (0.79) | (0.65) | (0.62) | (0.71) | |  | Novel | 28.82 | 24.03 | 38.97 | 22.96 | 31.66 | 22.61 | 25.26 | 17.11 | 13.96 | 14.75 | 9.94 | |  |  | (0.30) | (0.55) | (1.32) | (0.59) | (0.54) | (0.58) | (1.08) | (0.93) | (0.64) | (0.78) |  | | Entity-30 | Same | 16.91 | 14.61 | 26.84 | 14.37 | 18.60 | 13.11 | 13.74 | 8.54 | 7.94 | 7.77 | 8.04 | |  |  | (1.33) | (1.11) | (2.15) | (1.34) | (1.69) | (1.30) | (1.07) | (1.47) | (1.38) | (1.44) | (1.51) | |  | Novel | 28.66 | 25.83 | 39.21 | 25.03 | 30.95 | 23.73 | 23.15 | 15.57 | 13.24 | 12.44 | 11.05 | |  |  | (1.16) | (0.88) | (2.03) | (1.11) | (1.64) | (1.11) | (0.51) | (1.44) | (1.15) | (1.26) | (1.13) | | NonLIVING-26 | Same | 17.43 | 15.95 | 27.70 | 15.40 | 18.06 | 14.58 | 16.99 | 10.79 | 10.13 | 10.05 | 10.29 | |  |  | (0.90) | (0.86) | (0.90) | (0.69) | (1.00) | (0.78) | (1.25) | (0.62) | (0.32) | (0.46) | (0.79) | |  | Novel | 29.51 | 27.75 | 40.02 | 26.77 | 30.36 | 25.93 | 27.70 | 19.64 | 17.75 | 16.90 | 15.69 | |  |  | (0.86) | (0.82) | (0.76) | (0.82) | (0.95) | (0.80) | (1.42) | (0.68) | (0.53) | (0.60) | (0.83) | | LIVING-17 | Same | 14.28 | 12.21 | 23.46 | 11.16 | 15.22 | 10.78 | 10.49 | 4.92 | 4.23 | 4.19 | 4.73 | |  |  | (0.96) | (0.93) | (1.16) | (0.90) | (0.96) | (0.99) | (0.97) | (0.57) | (0.42) | (0.35) | (0.24) | |  | Novel | 28.91 | 26.35 | 38.62 | 24.91 | 30.32 | 24.52 | 22.49 | 15.42 | 13.02 | 12.29 | 10.34 | |  |  | (0.66) | (0.73) | (1.01) | (0.61) | (0.59) | (0.74) | (0.85) | (0.59) | (0.53) | (0.73) | (0.62) |\nTable 4: Mean Absolute estimation Error (MAE) results for different datasets in our setup grouped by the nature of shift for ResNet model. 'Same' refers to same subpopulation shifts and 'Novel' refers novel subpopulation shifts. We include details about the target sets considered in each shift in Table 2. Post T denotes use of TS calibration on source. Across all datasets, we observe that ATC achieves superior performance (lower MAE is better). For GDE post T and pre T estimates match since TS doesn't alter the argmax prediction. Results reported by aggregating MAE numbers over 4 different seeds. Values in parenthesis (i.e., $(\\cdot)$ ) denote standard deviation values.\n", "images": [], "dimensions": {"dpi": 200, "height": 2200, "width": 1700}}], "model": "mistral-ocr-2503-completion", "usage_info": {"pages_processed": 29, "doc_size_bytes": null}}

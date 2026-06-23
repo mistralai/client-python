@@ -13,7 +13,13 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
     UnrecognizedStr,
 )
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
+from mistralai.client.utils import (
+    FieldMetadata,
+    HeaderMetadata,
+    PathParamMetadata,
+    QueryParamMetadata,
+)
+import pydantic
 from pydantic import model_serializer
 from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -27,8 +33,10 @@ class StreamWorkflowExecutionLogsRequestTypedDict(TypedDict):
     r"""Filter logs by activity ID"""
     after: NotRequired[Nullable[datetime]]
     r"""Start a fresh stream at this timestamp (ignored when resuming via last_event_id)"""
-    last_event_id: NotRequired[Nullable[str]]
+    last_event_id_query_parameter: NotRequired[Nullable[str]]
     r"""Resume from this cursor (a prior response's SSE id)"""
+    last_event_id: NotRequired[Nullable[str]]
+    r"""Resume from this cursor (a prior response's SSE id). Takes precedence over the query parameter."""
 
 
 class StreamWorkflowExecutionLogsRequest(BaseModel):
@@ -54,16 +62,40 @@ class StreamWorkflowExecutionLogsRequest(BaseModel):
     ] = UNSET
     r"""Start a fresh stream at this timestamp (ignored when resuming via last_event_id)"""
 
-    last_event_id: Annotated[
+    last_event_id_query_parameter: Annotated[
         OptionalNullable[str],
+        pydantic.Field(alias="last_event_id"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Resume from this cursor (a prior response's SSE id)"""
 
+    last_event_id: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(alias="Last-Event-ID"),
+        FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
+    ] = UNSET
+    r"""Resume from this cursor (a prior response's SSE id). Takes precedence over the query parameter."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["run_id", "activity_id", "after", "last_event_id"])
-        nullable_fields = set(["run_id", "activity_id", "after", "last_event_id"])
+        optional_fields = set(
+            [
+                "run_id",
+                "activity_id",
+                "after",
+                "last_event_idQueryParameter",
+                "Last-Event-ID",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "run_id",
+                "activity_id",
+                "after",
+                "last_event_idQueryParameter",
+                "Last-Event-ID",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
