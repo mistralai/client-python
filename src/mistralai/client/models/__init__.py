@@ -867,6 +867,10 @@ if TYPE_CHECKING:
         ExecutionLogSearchResponseTypedDict,
     )
     from .executiontool import ExecutionTool, ExecutionToolTypedDict
+    from .executiontraceinforesponse import (
+        ExecutionTraceInfoResponse,
+        ExecutionTraceInfoResponseTypedDict,
+    )
     from .export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop import (
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest,
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict,
@@ -1169,6 +1173,10 @@ if TYPE_CHECKING:
         GetWorkflowExecutionTraceEventsRequest,
         GetWorkflowExecutionTraceEventsRequestTypedDict,
     )
+    from .get_workflow_execution_trace_infoop import (
+        GetWorkflowExecutionTraceInfoRequest,
+        GetWorkflowExecutionTraceInfoRequestTypedDict,
+    )
     from .get_workflow_execution_trace_otelop import (
         GetWorkflowExecutionTraceOtelRequest,
         GetWorkflowExecutionTraceOtelRequestTypedDict,
@@ -1214,6 +1222,7 @@ if TYPE_CHECKING:
     from .getlogs import GetLogs, GetLogsTypedDict
     from .getsearchindexdetailresponseindex import (
         GetSearchIndexDetailResponseIndex,
+        GetSearchIndexDetailResponseIndexStatus,
         GetSearchIndexDetailResponseIndexTypedDict,
     )
     from .getsearchindexdetailresponseschemamodel import (
@@ -1986,9 +1995,10 @@ if TYPE_CHECKING:
         ScheduleRecentExecution,
         ScheduleRecentExecutionTypedDict,
     )
+    from .schemafielddatatype import SchemaFieldDataType
     from .schemafieldindex import SchemaFieldIndex
+    from .schemafieldrankingtype import SchemaFieldRankingType
     from .schemafieldstorage import SchemaFieldStorage
-    from .schemafieldtype import SchemaFieldType
     from .search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop import (
         SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest,
         SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict,
@@ -3263,6 +3273,8 @@ __all__ = [
     "ExecutionLogSearchResponseTypedDict",
     "ExecutionTool",
     "ExecutionToolTypedDict",
+    "ExecutionTraceInfoResponse",
+    "ExecutionTraceInfoResponseTypedDict",
     "ExportDatasetResponse",
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
@@ -3424,6 +3436,7 @@ __all__ = [
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict",
     "GetSchedulesV1WorkflowsSchedulesGetStatus",
     "GetSearchIndexDetailResponseIndex",
+    "GetSearchIndexDetailResponseIndexStatus",
     "GetSearchIndexDetailResponseIndexTypedDict",
     "GetSearchIndexDetailResponseSchemaModel",
     "GetSearchIndexDetailResponseSchemaModelTypedDict",
@@ -3503,6 +3516,8 @@ __all__ = [
     "GetWorkflowExecutionLogsRequestTypedDict",
     "GetWorkflowExecutionTraceEventsRequest",
     "GetWorkflowExecutionTraceEventsRequestTypedDict",
+    "GetWorkflowExecutionTraceInfoRequest",
+    "GetWorkflowExecutionTraceInfoRequestTypedDict",
     "GetWorkflowExecutionTraceOtelRequest",
     "GetWorkflowExecutionTraceOtelRequestTypedDict",
     "GetWorkflowExecutionTraceSummaryRequest",
@@ -4068,9 +4083,10 @@ __all__ = [
     "ScheduleRangeTypedDict",
     "ScheduleRecentExecution",
     "ScheduleRecentExecutionTypedDict",
+    "SchemaFieldDataType",
     "SchemaFieldIndex",
+    "SchemaFieldRankingType",
     "SchemaFieldStorage",
-    "SchemaFieldType",
     "Scope",
     "SearchChatCompletionEventIdsRequest",
     "SearchChatCompletionEventIdsRequestTypedDict",
@@ -5145,6 +5161,8 @@ _dynamic_imports: dict[str, str] = {
     "ExecutionLogSearchResponseTypedDict": ".executionlogsearchresponse",
     "ExecutionTool": ".executiontool",
     "ExecutionToolTypedDict": ".executiontool",
+    "ExecutionTraceInfoResponse": ".executiontraceinforesponse",
+    "ExecutionTraceInfoResponseTypedDict": ".executiontraceinforesponse",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
@@ -5332,6 +5350,8 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowExecutionLogsRequestTypedDict": ".get_workflow_execution_logsop",
     "GetWorkflowExecutionTraceEventsRequest": ".get_workflow_execution_trace_eventsop",
     "GetWorkflowExecutionTraceEventsRequestTypedDict": ".get_workflow_execution_trace_eventsop",
+    "GetWorkflowExecutionTraceInfoRequest": ".get_workflow_execution_trace_infoop",
+    "GetWorkflowExecutionTraceInfoRequestTypedDict": ".get_workflow_execution_trace_infoop",
     "GetWorkflowExecutionTraceOtelRequest": ".get_workflow_execution_trace_otelop",
     "GetWorkflowExecutionTraceOtelRequestTypedDict": ".get_workflow_execution_trace_otelop",
     "GetWorkflowExecutionTraceSummaryRequest": ".get_workflow_execution_trace_summaryop",
@@ -5365,6 +5385,7 @@ _dynamic_imports: dict[str, str] = {
     "GetLogs": ".getlogs",
     "GetLogsTypedDict": ".getlogs",
     "GetSearchIndexDetailResponseIndex": ".getsearchindexdetailresponseindex",
+    "GetSearchIndexDetailResponseIndexStatus": ".getsearchindexdetailresponseindex",
     "GetSearchIndexDetailResponseIndexTypedDict": ".getsearchindexdetailresponseindex",
     "GetSearchIndexDetailResponseSchemaModel": ".getsearchindexdetailresponseschemamodel",
     "GetSearchIndexDetailResponseSchemaModelTypedDict": ".getsearchindexdetailresponseschemamodel",
@@ -5950,9 +5971,10 @@ _dynamic_imports: dict[str, str] = {
     "ScheduleRangeTypedDict": ".schedulerange",
     "ScheduleRecentExecution": ".schedulerecentexecution",
     "ScheduleRecentExecutionTypedDict": ".schedulerecentexecution",
+    "SchemaFieldDataType": ".schemafielddatatype",
     "SchemaFieldIndex": ".schemafieldindex",
+    "SchemaFieldRankingType": ".schemafieldrankingtype",
     "SchemaFieldStorage": ".schemafieldstorage",
-    "SchemaFieldType": ".schemafieldtype",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
     "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
     "SearchLogsV1ObservabilityLogsSearchPostRequest": ".search_logs_v1_observability_logs_search_postop",

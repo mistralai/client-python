@@ -22,7 +22,7 @@ class ToolCall(BaseModel):
 
     id: Optional[str] = "null"
 
-    type: Optional[ToolTypes] = None
+    type: Optional[ToolTypes] = "function"
 
     index: Optional[int] = 0
 

@@ -20,3 +20,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"unparsable credentials"`
 - `"you need to reconnect"`
 - `"oauth refresh error"`
+- `"MCP server unreachable"`
+- `"MCP server timed out"`
+- `"MCP server error"`
+- `"unknown error"`

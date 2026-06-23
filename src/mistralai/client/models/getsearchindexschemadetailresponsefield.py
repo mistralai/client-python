@@ -2,9 +2,9 @@
 # @generated-id: 9a63e248e0d3
 
 from __future__ import annotations
+from .schemafielddatatype import SchemaFieldDataType
 from .schemafieldindex import SchemaFieldIndex
 from .schemafieldstorage import SchemaFieldStorage
-from .schemafieldtype import SchemaFieldType
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing_extensions import TypedDict
@@ -12,7 +12,7 @@ from typing_extensions import TypedDict
 
 class GetSearchIndexSchemaDetailResponseFieldTypedDict(TypedDict):
     name: str
-    type: SchemaFieldType
+    type: SchemaFieldDataType
     storage: SchemaFieldStorage
     index_type: Nullable[SchemaFieldIndex]
 
@@ -20,7 +20,7 @@ class GetSearchIndexSchemaDetailResponseFieldTypedDict(TypedDict):
 class GetSearchIndexSchemaDetailResponseField(BaseModel):
     name: str
 
-    type: SchemaFieldType
+    type: SchemaFieldDataType
 
     storage: SchemaFieldStorage
 

@@ -14,6 +14,10 @@ CredentialsStatusErrorReason = Union[
         "unparsable credentials",
         "you need to reconnect",
         "oauth refresh error",
+        "MCP server unreachable",
+        "MCP server timed out",
+        "MCP server error",
+        "unknown error",
     ],
     UnrecognizedStr,
 ]
