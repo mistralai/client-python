@@ -2,9 +2,10 @@
 # @generated-id: 89c0feb14bcb
 
 from __future__ import annotations
+from .schemafielddatatype import SchemaFieldDataType
 from .schemafieldindex import SchemaFieldIndex
+from .schemafieldrankingtype import SchemaFieldRankingType
 from .schemafieldstorage import SchemaFieldStorage
-from .schemafieldtype import SchemaFieldType
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing_extensions import TypedDict
@@ -12,19 +13,25 @@ from typing_extensions import TypedDict
 
 class RegisterSearchIndexRequestVespaSchemaFieldTypedDict(TypedDict):
     name: str
-    type: SchemaFieldType
+    type: SchemaFieldDataType
     storage: SchemaFieldStorage
+    ranking: SchemaFieldRankingType
     index_type: Nullable[SchemaFieldIndex]
+    multidimensional: bool
 
 
 class RegisterSearchIndexRequestVespaSchemaField(BaseModel):
     name: str
 
-    type: SchemaFieldType
+    type: SchemaFieldDataType
 
     storage: SchemaFieldStorage
 
+    ranking: SchemaFieldRankingType
+
     index_type: Nullable[SchemaFieldIndex]
+
+    multidimensional: bool
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

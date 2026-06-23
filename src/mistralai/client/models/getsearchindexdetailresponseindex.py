@@ -6,14 +6,29 @@ from .getsearchindexdetailresponseschemamodel import (
     GetSearchIndexDetailResponseSchemaModel,
     GetSearchIndexDetailResponseSchemaModelTypedDict,
 )
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from datetime import datetime
+from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
-from typing import List
+from typing import List, Literal, Union
 from typing_extensions import TypedDict
+
+
+GetSearchIndexDetailResponseIndexStatus = Union[
+    Literal[
+        "online",
+        "offline",
+    ],
+    UnrecognizedStr,
+]
 
 
 class GetSearchIndexDetailResponseIndexTypedDict(TypedDict):
     name: str
+    creator_id: str
+    document_count: int
+    status: GetSearchIndexDetailResponseIndexStatus
+    created_at: datetime
+    modified_at: datetime
     vespa_version: Nullable[str]
     summary: Nullable[str]
     schemas: List[GetSearchIndexDetailResponseSchemaModelTypedDict]
@@ -21,6 +36,16 @@ class GetSearchIndexDetailResponseIndexTypedDict(TypedDict):
 
 class GetSearchIndexDetailResponseIndex(BaseModel):
     name: str
+
+    creator_id: str
+
+    document_count: int
+
+    status: GetSearchIndexDetailResponseIndexStatus
+
+    created_at: datetime
+
+    modified_at: datetime
 
     vespa_version: Nullable[str]
 

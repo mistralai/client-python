@@ -18,7 +18,7 @@ class ToolTypedDict(TypedDict):
 class Tool(BaseModel):
     function: Function
 
-    type: Optional[ToolTypes] = None
+    type: Optional[ToolTypes] = "function"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -776,6 +776,7 @@ print(res.choices[0].message.content)
 * [batch_cancel_workflow_executions](docs/sdks/executions/README.md#batch_cancel_workflow_executions) - Batch Cancel Workflow Executions
 * [reset_workflow](docs/sdks/executions/README.md#reset_workflow) - Reset Workflow
 * [update_workflow_execution](docs/sdks/executions/README.md#update_workflow_execution) - Update Workflow Execution
+* [get_workflow_execution_trace_info](docs/sdks/executions/README.md#get_workflow_execution_trace_info) - Get Workflow Execution Trace Info
 * [get_workflow_execution_trace_otel](docs/sdks/executions/README.md#get_workflow_execution_trace_otel) - Get Workflow Execution Trace Otel
 * [get_workflow_execution_trace_summary](docs/sdks/executions/README.md#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
 * [get_workflow_execution_trace_events](docs/sdks/executions/README.md#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
@@ -1014,8 +1015,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 144 of 227 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 227 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 145 of 228 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 228 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

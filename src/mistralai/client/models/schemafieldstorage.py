@@ -2,14 +2,14 @@
 # @generated-id: 6ec367e3cfe5
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedInt
+from mistralai.client.types import UnrecognizedStr
 from typing import Literal, Union
 
 
 SchemaFieldStorage = Union[
     Literal[
-        1,
-        2,
+        "in_memory",
+        "on_disk",
     ],
-    UnrecognizedInt,
+    UnrecognizedStr,
 ]

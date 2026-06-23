@@ -24,7 +24,7 @@ class ToolChoice(BaseModel):
     function: FunctionName
     r"""this restriction of `Function` is used to select a specific function to call"""
 
-    type: Optional[ToolTypes] = None
+    type: Optional[ToolTypes] = "function"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
