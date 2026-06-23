@@ -32,6 +32,7 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        include_blocks: Optional[bool] = False,
         confidence_scores_granularity: OptionalNullable[
             models.ConfidenceScoresGranularity
         ] = UNSET,
@@ -54,6 +55,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
         :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -90,6 +92,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            include_blocks=include_blocks,
             confidence_scores_granularity=confidence_scores_granularity,
         )
 
@@ -172,6 +175,7 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        include_blocks: Optional[bool] = False,
         confidence_scores_granularity: OptionalNullable[
             models.ConfidenceScoresGranularity
         ] = UNSET,
@@ -194,6 +198,7 @@ class Ocr(BaseSDK):
         :param table_format:
         :param extract_header:
         :param extract_footer:
+        :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
         :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -230,6 +235,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            include_blocks=include_blocks,
             confidence_scores_granularity=confidence_scores_granularity,
         )
 
