@@ -31,10 +31,16 @@ class WorkflowExecutionResponseTypedDict(TypedDict):
     r"""The end time of the workflow execution, if available"""
     result: Nullable[Any]
     r"""The result of the workflow execution, if available"""
+    workflow_id: NotRequired[Nullable[str]]
+    r"""The ID of the workflow"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""The name of the deployment that ran this execution"""
     parent_execution_id: NotRequired[Nullable[str]]
     r"""The parent execution ID of the workflow execution"""
     run_id: NotRequired[Nullable[str]]
     r"""The unique run identifier (database UUID)"""
+    user_id: NotRequired[Nullable[str]]
+    r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
 
@@ -61,22 +67,43 @@ class WorkflowExecutionResponse(BaseModel):
     result: Nullable[Any]
     r"""The result of the workflow execution, if available"""
 
+    workflow_id: OptionalNullable[str] = UNSET
+    r"""The ID of the workflow"""
+
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""The name of the deployment that ran this execution"""
+
     parent_execution_id: OptionalNullable[str] = UNSET
     r"""The parent execution ID of the workflow execution"""
 
     run_id: OptionalNullable[str] = UNSET
     r"""The unique run identifier (database UUID)"""
 
+    user_id: OptionalNullable[str] = UNSET
+    r"""The ID of the user who triggered the execution"""
+
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["parent_execution_id", "run_id", "total_duration_ms"])
-        nullable_fields = set(
+        optional_fields = set(
             [
+                "workflow_id",
+                "deployment_name",
                 "parent_execution_id",
                 "run_id",
+                "user_id",
+                "total_duration_ms",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "workflow_id",
+                "deployment_name",
+                "parent_execution_id",
+                "run_id",
+                "user_id",
                 "status",
                 "end_time",
                 "total_duration_ms",

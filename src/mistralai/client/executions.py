@@ -3055,6 +3055,7 @@ class Executions(BaseSDK):
         run_id: OptionalNullable[str] = UNSET,
         activity_id: OptionalNullable[str] = UNSET,
         after: OptionalNullable[datetime] = UNSET,
+        last_event_id_query_parameter: OptionalNullable[str] = UNSET,
         last_event_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -3065,14 +3066,15 @@ class Executions(BaseSDK):
 
         Stream logs for a workflow execution via SSE.
 
-        If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
-        otherwise `after` sets a fresh stream's start point (omit both to tail from the execution start).
+        Resume cursor comes from the `Last-Event-ID` header or `last_event_id` query param (header wins)
+        and takes precedence over `after`; omit all to tail from the execution start.
 
         :param execution_id:
         :param run_id: Filter logs by workflow run ID
         :param activity_id: Filter logs by activity ID
         :param after: Start a fresh stream at this timestamp (ignored when resuming via last_event_id)
-        :param last_event_id: Resume from this cursor (a prior response's SSE id)
+        :param last_event_id_query_parameter: Resume from this cursor (a prior response's SSE id)
+        :param last_event_id: Resume from this cursor (a prior response's SSE id). Takes precedence over the query parameter.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3096,6 +3098,7 @@ class Executions(BaseSDK):
             run_id=run_id,
             activity_id=activity_id,
             after=after,
+            last_event_id_query_parameter=last_event_id_query_parameter,
             last_event_id=last_event_id,
         )
 
@@ -3173,6 +3176,7 @@ class Executions(BaseSDK):
         run_id: OptionalNullable[str] = UNSET,
         activity_id: OptionalNullable[str] = UNSET,
         after: OptionalNullable[datetime] = UNSET,
+        last_event_id_query_parameter: OptionalNullable[str] = UNSET,
         last_event_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -3185,14 +3189,15 @@ class Executions(BaseSDK):
 
         Stream logs for a workflow execution via SSE.
 
-        If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
-        otherwise `after` sets a fresh stream's start point (omit both to tail from the execution start).
+        Resume cursor comes from the `Last-Event-ID` header or `last_event_id` query param (header wins)
+        and takes precedence over `after`; omit all to tail from the execution start.
 
         :param execution_id:
         :param run_id: Filter logs by workflow run ID
         :param activity_id: Filter logs by activity ID
         :param after: Start a fresh stream at this timestamp (ignored when resuming via last_event_id)
-        :param last_event_id: Resume from this cursor (a prior response's SSE id)
+        :param last_event_id_query_parameter: Resume from this cursor (a prior response's SSE id)
+        :param last_event_id: Resume from this cursor (a prior response's SSE id). Takes precedence over the query parameter.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3216,6 +3221,7 @@ class Executions(BaseSDK):
             run_id=run_id,
             activity_id=activity_id,
             after=after,
+            last_event_id_query_parameter=last_event_id_query_parameter,
             last_event_id=last_event_id,
         )
 
