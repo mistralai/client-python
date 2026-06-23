@@ -27,11 +27,13 @@ class WorkflowRegistrationTypedDict(TypedDict):
     workflow_id: str
     r"""Workflow ID of the workflow"""
     deployment_id: NotRequired[Nullable[str]]
-    r"""Deployment ID this registration belongs to"""
+    r"""Deprecated. Use deployment_name instead. Will be removed in a future release."""
     task_queue: NotRequired[Nullable[str]]
-    r"""Deprecated. Use deployment_id instead. Will be removed in a future release."""
+    r"""Deprecated. Use deployment_name instead. Will be removed in a future release."""
     workflow: NotRequired[Nullable[WorkflowTypedDict]]
     r"""Workflow of the workflow registration"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""Name of the deployment this registration belongs to"""
     compatible_with_chat_assistant: NotRequired[bool]
     r"""Whether the workflow is compatible with chat assistant"""
 
@@ -45,8 +47,13 @@ class WorkflowRegistration(BaseModel):
     workflow_id: str
     r"""Workflow ID of the workflow"""
 
-    deployment_id: OptionalNullable[str] = UNSET
-    r"""Deployment ID this registration belongs to"""
+    deployment_id: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated. Use deployment_name instead. Will be removed in a future release."""
 
     task_queue: Annotated[
         OptionalNullable[str],
@@ -54,10 +61,13 @@ class WorkflowRegistration(BaseModel):
             deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
         ),
     ] = UNSET
-    r"""Deprecated. Use deployment_id instead. Will be removed in a future release."""
+    r"""Deprecated. Use deployment_name instead. Will be removed in a future release."""
 
     workflow: OptionalNullable[Workflow] = UNSET
     r"""Workflow of the workflow registration"""
+
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""Name of the deployment this registration belongs to"""
 
     compatible_with_chat_assistant: Optional[bool] = False
     r"""Whether the workflow is compatible with chat assistant"""
@@ -69,10 +79,13 @@ class WorkflowRegistration(BaseModel):
                 "deployment_id",
                 "task_queue",
                 "workflow",
+                "deployment_name",
                 "compatible_with_chat_assistant",
             ]
         )
-        nullable_fields = set(["deployment_id", "task_queue", "workflow"])
+        nullable_fields = set(
+            ["deployment_id", "task_queue", "workflow", "deployment_name"]
+        )
         serialized = handler(self)
         m = {}
 
