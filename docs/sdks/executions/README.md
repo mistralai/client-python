@@ -655,8 +655,8 @@ with Mistral(
 
 Stream logs for a workflow execution via SSE.
 
-If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
-otherwise `after` sets a fresh stream's start point (omit both to tail from the execution start).
+Resume cursor comes from the `Last-Event-ID` header or `last_event_id` query param (header wins)
+and takes precedence over `after`; omit all to tail from the execution start.
 
 ### Example Usage
 

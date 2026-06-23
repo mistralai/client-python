@@ -679,6 +679,8 @@ print(res.choices[0].message.content)
 * [get_index_schema_detail](docs/sdks/searchindexes/README.md#get_index_schema_detail) - Get Index Schema Detail
 * [set_schema_summary](docs/sdks/searchindexes/README.md#set_schema_summary) - Set Schema Summary
 * [get_index_schema_file](docs/sdks/searchindexes/README.md#get_index_schema_file) - Get Index Schema File
+* [document_lookup](docs/sdks/searchindexes/README.md#document_lookup) - Document Lookup
+* [documents_fetch](docs/sdks/searchindexes/README.md#documents_fetch) - Document Fetch
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -1012,8 +1014,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 142 of 225 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 225 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 144 of 227 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 227 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
