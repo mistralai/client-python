@@ -152,8 +152,8 @@ with Mistral(
 
 Stream logs for a deployment (all of its workers) via SSE.
 
-If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
-otherwise `after` sets a fresh stream's start point (omit both to tail from the deployment start).
+Resume cursor comes from the `Last-Event-ID` header or `last_event_id` query param (header wins)
+and takes precedence over `after`; omit all to tail from the deployment start.
 
 ### Example Usage
 
@@ -178,14 +178,15 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `name`                                                                           | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
-| `worker_name`                                                                    | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by worker name                                                       |
-| `workflow_name`                                                                  | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by workflow name                                                     |
-| `after`                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)             | :heavy_minus_sign:                                                               | Start a fresh stream at this timestamp (ignored when resuming via last_event_id) |
-| `last_event_id`                                                                  | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Resume from this cursor (a prior response's SSE id)                              |
-| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `name`                                                                                          | *str*                                                                                           | :heavy_check_mark:                                                                              | N/A                                                                                             |
+| `worker_name`                                                                                   | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Filter logs by worker name                                                                      |
+| `workflow_name`                                                                                 | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Filter logs by workflow name                                                                    |
+| `after`                                                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects)                            | :heavy_minus_sign:                                                                              | Start a fresh stream at this timestamp (ignored when resuming via last_event_id)                |
+| `last_event_id_query_parameter`                                                                 | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Resume from this cursor (a prior response's SSE id)                                             |
+| `last_event_id`                                                                                 | *OptionalNullable[str]*                                                                         | :heavy_minus_sign:                                                                              | Resume from this cursor (a prior response's SSE id). Takes precedence over the query parameter. |
+| `retries`                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                | :heavy_minus_sign:                                                                              | Configuration to override the default retry behavior of the client.                             |
 
 ### Response
 

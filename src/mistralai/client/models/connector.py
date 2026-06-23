@@ -19,6 +19,7 @@ from .publicconnectionconfig import (
     PublicConnectionConfig,
     PublicConnectionConfigTypedDict,
 )
+from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
 from .resourcetype import ResourceType
 from .resourcevisibility import ResourceVisibility
 from datetime import datetime
@@ -64,6 +65,7 @@ class ConnectorTypedDict(TypedDict):
     tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
     system_prompt_route: NotRequired[Nullable[str]]
     connection_config: NotRequired[Nullable[PublicConnectionConfigTypedDict]]
+    execution_env: NotRequired[Nullable[PublicExecutionEnvTypedDict]]
 
 
 class Connector(BaseModel):
@@ -117,6 +119,8 @@ class Connector(BaseModel):
 
     connection_config: OptionalNullable[PublicConnectionConfig] = UNSET
 
+    execution_env: OptionalNullable[PublicExecutionEnv] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -138,6 +142,7 @@ class Connector(BaseModel):
                 "tools",
                 "system_prompt_route",
                 "connection_config",
+                "execution_env",
             ]
         )
         nullable_fields = set(
@@ -157,6 +162,7 @@ class Connector(BaseModel):
                 "tools",
                 "system_prompt_route",
                 "connection_config",
+                "execution_env",
             ]
         )
         serialized = handler(self)
