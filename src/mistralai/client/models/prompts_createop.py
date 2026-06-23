@@ -3,17 +3,16 @@
 
 from __future__ import annotations
 from .connecterror import ConnectError, ConnectErrorTypedDict
-from .createpromptresponse import CreatePromptResponse, CreatePromptResponseTypedDict
+from .prompt import Prompt, PromptTypedDict
 from typing import Union
 from typing_extensions import TypeAliasType
 
 
 PromptsCreateResponseTypedDict = TypeAliasType(
-    "PromptsCreateResponseTypedDict",
-    Union[CreatePromptResponseTypedDict, ConnectErrorTypedDict],
+    "PromptsCreateResponseTypedDict", Union[ConnectErrorTypedDict, PromptTypedDict]
 )
 
 
 PromptsCreateResponse = TypeAliasType(
-    "PromptsCreateResponse", Union[CreatePromptResponse, ConnectError]
+    "PromptsCreateResponse", Union[ConnectError, Prompt]
 )

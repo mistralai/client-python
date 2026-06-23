@@ -10,10 +10,12 @@ from typing_extensions import NotRequired, TypedDict
 
 class PromptVariableTypedDict(TypedDict):
     name: NotRequired[str]
+    r"""Stable object name."""
 
 
 class PromptVariable(BaseModel):
     name: Optional[str] = None
+    r"""Stable object name."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

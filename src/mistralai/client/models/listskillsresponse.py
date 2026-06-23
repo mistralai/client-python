@@ -2,7 +2,7 @@
 # @generated-id: 8bb718493f49
 
 from __future__ import annotations
-from .skilllistitem import SkillListItem, SkillListItemTypedDict
+from .skill import Skill, SkillTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
@@ -11,12 +11,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListSkillsResponseTypedDict(TypedDict):
-    data: NotRequired[List[SkillListItemTypedDict]]
+    data: NotRequired[List[SkillTypedDict]]
     next_page_token: NotRequired[str]
 
 
 class ListSkillsResponse(BaseModel):
-    data: Optional[List[SkillListItem]] = None
+    data: Optional[List[Skill]] = None
 
     next_page_token: Annotated[Optional[str], pydantic.Field(alias="nextPageToken")] = (
         None

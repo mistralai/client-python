@@ -34,6 +34,10 @@ class WorkflowExecutionTraceOTelResponseTypedDict(TypedDict):
     r"""The result of the workflow execution, if available"""
     data_source: str
     r"""The data source of the trace"""
+    workflow_id: NotRequired[Nullable[str]]
+    r"""The ID of the workflow"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""The name of the deployment that ran this execution"""
     parent_execution_id: NotRequired[Nullable[str]]
     r"""The parent execution ID of the workflow execution"""
     run_id: NotRequired[Nullable[str]]
@@ -71,6 +75,12 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
     data_source: str
     r"""The data source of the trace"""
 
+    workflow_id: OptionalNullable[str] = UNSET
+    r"""The ID of the workflow"""
+
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""The name of the deployment that ran this execution"""
+
     parent_execution_id: OptionalNullable[str] = UNSET
     r"""The parent execution ID of the workflow execution"""
 
@@ -90,6 +100,8 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "workflow_id",
+                "deployment_name",
                 "parent_execution_id",
                 "run_id",
                 "total_duration_ms",
@@ -99,6 +111,8 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
         )
         nullable_fields = set(
             [
+                "workflow_id",
+                "deployment_name",
                 "parent_execution_id",
                 "run_id",
                 "status",

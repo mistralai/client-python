@@ -10,23 +10,13 @@ from typing_extensions import NotRequired, TypedDict
 
 class CreatePromptVersionResponseTypedDict(TypedDict):
     version: NotRequired[int]
-    r"""The newly created version number (or existing if deduplicated)."""
     deduplicated: NotRequired[bool]
-    r"""True if content + attributes matched the latest version (best effort), in
-    that case the returned version is the current latest version that is not
-    changed by this RPC.
-    """
 
 
 class CreatePromptVersionResponse(BaseModel):
     version: Optional[int] = None
-    r"""The newly created version number (or existing if deduplicated)."""
 
     deduplicated: Optional[bool] = None
-    r"""True if content + attributes matched the latest version (best effort), in
-    that case the returned version is the current latest version that is not
-    changed by this RPC.
-    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

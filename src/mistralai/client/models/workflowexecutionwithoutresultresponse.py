@@ -28,6 +28,10 @@ class WorkflowExecutionWithoutResultResponseTypedDict(TypedDict):
     r"""The start time of the workflow execution"""
     end_time: Nullable[datetime]
     r"""The end time of the workflow execution, if available"""
+    workflow_id: NotRequired[Nullable[str]]
+    r"""The ID of the workflow"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""The name of the deployment that ran this execution"""
     parent_execution_id: NotRequired[Nullable[str]]
     r"""The parent execution ID of the workflow execution"""
     run_id: NotRequired[Nullable[str]]
@@ -55,6 +59,12 @@ class WorkflowExecutionWithoutResultResponse(BaseModel):
     end_time: Nullable[datetime]
     r"""The end time of the workflow execution, if available"""
 
+    workflow_id: OptionalNullable[str] = UNSET
+    r"""The ID of the workflow"""
+
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""The name of the deployment that ran this execution"""
+
     parent_execution_id: OptionalNullable[str] = UNSET
     r"""The parent execution ID of the workflow execution"""
 
@@ -66,9 +76,25 @@ class WorkflowExecutionWithoutResultResponse(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["parent_execution_id", "run_id", "total_duration_ms"])
+        optional_fields = set(
+            [
+                "workflow_id",
+                "deployment_name",
+                "parent_execution_id",
+                "run_id",
+                "total_duration_ms",
+            ]
+        )
         nullable_fields = set(
-            ["parent_execution_id", "run_id", "status", "end_time", "total_duration_ms"]
+            [
+                "workflow_id",
+                "deployment_name",
+                "parent_execution_id",
+                "run_id",
+                "status",
+                "end_time",
+                "total_duration_ms",
+            ]
         )
         serialized = handler(self)
         m = {}

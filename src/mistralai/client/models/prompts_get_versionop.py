@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 from .connecterror import ConnectError, ConnectErrorTypedDict
-from .promptversionresponse import PromptVersionResponse, PromptVersionResponseTypedDict
+from .prompt import Prompt, PromptTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
@@ -15,7 +15,6 @@ class PromptsGetVersionRequestTypedDict(TypedDict):
     prompt_id: str
     version: int
     fields: NotRequired[List[str]]
-    r"""The set of field mask paths."""
 
 
 class PromptsGetVersionRequest(BaseModel):
@@ -31,7 +30,6 @@ class PromptsGetVersionRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""The set of field mask paths."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -51,11 +49,10 @@ class PromptsGetVersionRequest(BaseModel):
 
 
 PromptsGetVersionResponseTypedDict = TypeAliasType(
-    "PromptsGetVersionResponseTypedDict",
-    Union[ConnectErrorTypedDict, PromptVersionResponseTypedDict],
+    "PromptsGetVersionResponseTypedDict", Union[ConnectErrorTypedDict, PromptTypedDict]
 )
 
 
 PromptsGetVersionResponse = TypeAliasType(
-    "PromptsGetVersionResponse", Union[ConnectError, PromptVersionResponse]
+    "PromptsGetVersionResponse", Union[ConnectError, Prompt]
 )

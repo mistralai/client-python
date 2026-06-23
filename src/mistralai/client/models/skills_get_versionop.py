@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 from .connecterror import ConnectError, ConnectErrorTypedDict
-from .skillversionresponse import SkillVersionResponse, SkillVersionResponseTypedDict
+from .skill import Skill, SkillTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
@@ -15,7 +15,6 @@ class SkillsGetVersionRequestTypedDict(TypedDict):
     skill_id: str
     version: int
     fields: NotRequired[List[str]]
-    r"""The set of field mask paths."""
 
 
 class SkillsGetVersionRequest(BaseModel):
@@ -31,7 +30,6 @@ class SkillsGetVersionRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""The set of field mask paths."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -51,11 +49,10 @@ class SkillsGetVersionRequest(BaseModel):
 
 
 SkillsGetVersionResponseTypedDict = TypeAliasType(
-    "SkillsGetVersionResponseTypedDict",
-    Union[ConnectErrorTypedDict, SkillVersionResponseTypedDict],
+    "SkillsGetVersionResponseTypedDict", Union[ConnectErrorTypedDict, SkillTypedDict]
 )
 
 
 SkillsGetVersionResponse = TypeAliasType(
-    "SkillsGetVersionResponse", Union[ConnectError, SkillVersionResponse]
+    "SkillsGetVersionResponse", Union[ConnectError, Skill]
 )

@@ -2,7 +2,7 @@
 # @generated-id: 45e30bdd1633
 
 from __future__ import annotations
-from .promptlistitem import PromptListItem, PromptListItemTypedDict
+from .prompt import Prompt, PromptTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
@@ -11,12 +11,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListPromptsResponseTypedDict(TypedDict):
-    data: NotRequired[List[PromptListItemTypedDict]]
+    data: NotRequired[List[PromptTypedDict]]
     next_page_token: NotRequired[str]
 
 
 class ListPromptsResponse(BaseModel):
-    data: Optional[List[PromptListItem]] = None
+    data: Optional[List[Prompt]] = None
 
     next_page_token: Annotated[Optional[str], pydantic.Field(alias="nextPageToken")] = (
         None

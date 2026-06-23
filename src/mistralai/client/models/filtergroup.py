@@ -16,14 +16,6 @@ from typing import List, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-OrTypedDict = TypeAliasType(
-    "OrTypedDict", Union["FilterGroupTypedDict", FilterConditionTypedDict]
-)
-
-
-Or = TypeAliasType("Or", Union["FilterGroup", FilterCondition])
-
-
 class FilterGroupTypedDict(TypedDict):
     and_: NotRequired[Nullable[List[AndTypedDict]]]
     or_: NotRequired[Nullable[List[OrTypedDict]]]
@@ -58,6 +50,14 @@ class FilterGroup(BaseModel):
                     m[k] = val
 
         return m
+
+
+OrTypedDict = TypeAliasType(
+    "OrTypedDict", Union["FilterGroupTypedDict", FilterConditionTypedDict]
+)
+
+
+Or = TypeAliasType("Or", Union["FilterGroup", FilterCondition])
 
 
 AndTypedDict = TypeAliasType(

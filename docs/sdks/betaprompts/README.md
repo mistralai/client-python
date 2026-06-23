@@ -2,20 +2,17 @@
 
 ## Overview
 
-(beta) Prompts API - create and manage reusable prompt templates with versioning
-
 ### Available Operations
 
 * [list](#list) - ListPrompts
 * [create](#create) - CreatePrompt
 * [get](#get) - GetPrompt
 * [delete](#delete) - DeletePrompt
-* [update](#update) - UpdatePromptAttributes
+* [update_metadata](#update_metadata) - UpdatePrompt
 * [list_versions](#list_versions) - ListPromptVersions
 * [create_version](#create_version) - CreatePromptVersion
 * [get_version](#get_version) - GetPromptVersion
-* [update_version](#update_version) - UpdatePromptVersionAttributes
-* [update_sharing_scope](#update_sharing_scope) - UpdatePromptSharingScope
+* [update_version_metadata](#update_version_metadata) - UpdatePromptVersionMetadata
 
 ## list
 
@@ -23,7 +20,7 @@ ListPrompts
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_list" method="get" path="/v1/prompts" -->
+<!-- UsageSnippet language="python" operationID="prompts_list" method="get" path="/v2/prompts" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -44,16 +41,13 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `page_size`                                                                                    | *Optional[int]*                                                                                | :heavy_minus_sign:                                                                             | N/A                                                                                            |
-| `page_token`                                                                                   | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | N/A                                                                                            |
-| `fields`                                                                                       | List[*str*]                                                                                    | :heavy_minus_sign:                                                                             | The set of field mask paths.                                                                   |
-| `version_alias`                                                                                | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | Selects the version returned for each object and excludes objects<br/> without this current alias. |
-| `filter_key`                                                                                   | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | N/A                                                                                            |
-| `filter_value`                                                                                 | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | N/A                                                                                            |
-| `search`                                                                                       | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | Case-insensitive substring match against per-version content.                                  |
-| `retries`                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                               | :heavy_minus_sign:                                                                             | Configuration to override the default retry behavior of the client.                            |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `page_token`                                                        | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -67,11 +61,11 @@ with Mistral(
 
 ## create
 
---- Existing (modified request/response) ---
+CreatePrompt
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_create" method="post" path="/v1/prompts" -->
+<!-- UsageSnippet language="python" operationID="prompts_create" method="post" path="/v2/prompts" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -81,7 +75,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.create()
+    res = mistral.beta.prompts.create(name="<value>", definition={
+        "content": "<value>",
+    })
 
     # Handle response
     print(res)
@@ -90,13 +86,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `prompt`                                                                | [Optional[models.PromptContent]](../../models/promptcontent.md)         | :heavy_minus_sign:                                                      | User-editable template fields (create / update body).                   |
-| `attributes`                                                            | [Optional[models.Attributes]](../../models/attributes.md)               | :heavy_minus_sign:                                                      | N/A                                                                     |
-| `version_attributes`                                                    | [Optional[models.VersionAttributes]](../../models/versionattributes.md) | :heavy_minus_sign:                                                      | User-provided, per-version fields                                       |
-| `name`                                                                  | *Optional[str]*                                                         | :heavy_minus_sign:                                                      | Optional human-readable name, immutable after creation.                 |
-| `retries`                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)        | :heavy_minus_sign:                                                      | Configuration to override the default retry behavior of the client.     |
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `name`                                                                        | *str*                                                                         | :heavy_check_mark:                                                            | Stable object name.                                                           |
+| `definition`                                                                  | [models.PromptDefinition](../../models/promptdefinition.md)                   | :heavy_check_mark:                                                            | Versioned prompt content.                                                     |
+| `title`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | Display title.                                                                |
+| `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | Display description.                                                          |
+| `notes`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | Notes for this version.                                                       |
+| `sharing_scope`                                                               | [Optional[models.RegistrySharingScope]](../../models/registrysharingscope.md) | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `aliases`                                                                     | List[*str*]                                                                   | :heavy_minus_sign:                                                            | Aliases pointing to this version.                                             |
+| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
 
 ### Response
 
@@ -114,7 +113,7 @@ GetPrompt
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_get" method="get" path="/v1/prompts/{prompt_id}" -->
+<!-- UsageSnippet language="python" operationID="prompts_get" method="get" path="/v2/prompts/{prompt_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -136,9 +135,9 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Fetch specific version number.                                      |
-| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Fetch version pointed to by alias name.                             |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | The set of field mask paths.                                        |
+| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -157,7 +156,7 @@ DeletePrompt
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_delete" method="delete" path="/v1/prompts/{prompt_id}" -->
+<!-- UsageSnippet language="python" operationID="prompts_delete" method="delete" path="/v2/prompts/{prompt_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -191,13 +190,13 @@ with Mistral(
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4XX, 5XX        | \*/\*           |
 
-## update
+## update_metadata
 
---- New: per-object mutations ---
+UpdatePrompt
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_update_attributes" method="patch" path="/v1/prompts/{prompt_id}" -->
+<!-- UsageSnippet language="python" operationID="prompts_update" method="patch" path="/v2/prompts/{prompt_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -207,7 +206,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.update(prompt_id="<id>")
+    res = mistral.beta.prompts.update_metadata(prompt_id="<id>")
 
     # Handle response
     print(res)
@@ -216,16 +215,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt_id`                                                                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `attributes`                                                                                                                                                                                                                                                                                                        | [Optional[models.Attributes]](../../models/attributes.md)                                                                                                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `file`                                                                                                                                                                                                                                                                                                              | *Optional[bytes]*                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
-| `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `prompt_id`                                                                   | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
+| `title`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | Display title.                                                                |
+| `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | Display description.                                                          |
+| `sharing_scope`                                                               | [Optional[models.RegistrySharingScope]](../../models/registrysharingscope.md) | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
 
 ### Response
 
-**[models.PromptsUpdateAttributesResponse](../../models/promptsupdateattributesresponse.md)**
+**[models.PromptsUpdateResponse](../../models/promptsupdateresponse.md)**
 
 ### Errors
 
@@ -239,7 +239,7 @@ ListPromptVersions
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_list_versions" method="get" path="/v1/prompts/{prompt_id}/versions" -->
+<!-- UsageSnippet language="python" operationID="prompts_list_versions" method="get" path="/v2/prompts/{prompt_id}/versions" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -275,11 +275,11 @@ with Mistral(
 
 ## create_version
 
---- New: versioning ---
+CreatePromptVersion
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_create_version" method="post" path="/v1/prompts/{prompt_id}/versions" -->
+<!-- UsageSnippet language="python" operationID="prompts_create_version" method="post" path="/v2/prompts/{prompt_id}/versions" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -289,7 +289,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.create_version(prompt_id="<id>")
+    res = mistral.beta.prompts.create_version(prompt_id="<id>", definition={
+        "content": "<value>",
+    })
 
     # Handle response
     print(res)
@@ -298,13 +300,13 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt_id`                                                                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `prompt`                                                                                                                                                                                                                                                                                                            | [Optional[models.PromptContent]](../../models/promptcontent.md)                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | User-editable template fields (create / update body).                                                                                                                                                                                                                                                               |
-| `version_attributes`                                                                                                                                                                                                                                                                                                | [Optional[models.VersionAttributes]](../../models/versionattributes.md)                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | User-provided, per-version fields                                                                                                                                                                                                                                                                                   |
-| `file`                                                                                                                                                                                                                                                                                                              | *Optional[bytes]*                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
-| `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `definition`                                                        | [models.PromptDefinition](../../models/promptdefinition.md)         | :heavy_check_mark:                                                  | Versioned prompt content.                                           |
+| `notes`                                                             | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Notes for this version.                                             |
+| `aliases`                                                           | List[*str*]                                                         | :heavy_minus_sign:                                                  | Aliases pointing to this version.                                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -322,7 +324,7 @@ GetPromptVersion
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_get_version" method="get" path="/v1/prompts/{prompt_id}/versions/{version}" -->
+<!-- UsageSnippet language="python" operationID="prompts_get_version" method="get" path="/v2/prompts/{prompt_id}/versions/{version}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -345,7 +347,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | The set of field mask paths.                                        |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -358,13 +360,13 @@ with Mistral(
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4XX, 5XX        | \*/\*           |
 
-## update_version
+## update_version_metadata
 
---- New: per-version mutations ---
+UpdatePromptVersionMetadata
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="prompts_update_version_attributes" method="patch" path="/v1/prompts/{prompt_id}/versions/{version}" -->
+<!-- UsageSnippet language="python" operationID="prompts_update_version_metadata" method="patch" path="/v2/prompts/{prompt_id}/versions/{version}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -374,7 +376,9 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.update_version(prompt_id="<id>", version=242918)
+    res = mistral.beta.prompts.update_version_metadata(prompt_id="<id>", version=389563, aliases=[
+        "<value 1>",
+    ])
 
     # Handle response
     print(res)
@@ -383,59 +387,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt_id`                                                                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `version`                                                                                                                                                                                                                                                                                                           | *int*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | Target version.                                                                                                                                                                                                                                                                                                     |
-| `version_attributes`                                                                                                                                                                                                                                                                                                | [Optional[models.VersionAttributes]](../../models/versionattributes.md)                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | User-provided, per-version fields                                                                                                                                                                                                                                                                                   |
-| `file`                                                                                                                                                                                                                                                                                                              | *Optional[bytes]*                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
-| `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `aliases`                                                           | List[*str*]                                                         | :heavy_check_mark:                                                  | Aliases pointing to this version.                                   |
+| `notes`                                                             | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Notes for this version.                                             |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
-**[models.PromptsUpdateVersionAttributesResponse](../../models/promptsupdateversionattributesresponse.md)**
-
-### Errors
-
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| errors.SDKError | 4XX, 5XX        | \*/\*           |
-
-## update_sharing_scope
-
-UpdatePromptSharingScope
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="prompts_update_sharing_scope" method="patch" path="/v1/prompts/{prompt_id}/sharing-scope" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.prompts.update_sharing_scope(prompt_id="<id>")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt_id`                                                                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `sharing_scope`                                                                                                                                                                                                                                                                                                     | [Optional[models.SharingScope]](../../models/sharingscope.md)                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
-| `file`                                                                                                                                                                                                                                                                                                              | *Optional[bytes]*                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
-| `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
-
-### Response
-
-**[models.PromptsUpdateSharingScopeResponse](../../models/promptsupdatesharingscoperesponse.md)**
+**[models.PromptsUpdateVersionMetadataResponse](../../models/promptsupdateversionmetadataresponse.md)**
 
 ### Errors
 

@@ -2,52 +2,83 @@
 # @generated-id: 5e7efdfa82b5
 
 from __future__ import annotations
-from .attributes import Attributes, AttributesTypedDict
-from .promptcontent import PromptContent, PromptContentTypedDict
-from .versionattributes import VersionAttributes, VersionAttributesTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from .promptdefinition import PromptDefinition, PromptDefinitionTypedDict
+from .registrysharingscope import RegistrySharingScope
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 import pydantic
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreatePromptRequestTypedDict(TypedDict):
-    prompt: NotRequired[PromptContentTypedDict]
-    r"""User-editable template fields (create / update body)."""
-    attributes: NotRequired[AttributesTypedDict]
-    version_attributes: NotRequired[VersionAttributesTypedDict]
-    r"""User-provided, per-version fields"""
-    name: NotRequired[str]
-    r"""Optional human-readable name, immutable after creation."""
+    name: str
+    r"""Stable object name."""
+    definition: PromptDefinitionTypedDict
+    r"""Versioned prompt content."""
+    title: NotRequired[Nullable[str]]
+    r"""Display title."""
+    description: NotRequired[Nullable[str]]
+    r"""Display description."""
+    notes: NotRequired[Nullable[str]]
+    r"""Notes for this version."""
+    sharing_scope: NotRequired[RegistrySharingScope]
+    aliases: NotRequired[List[str]]
+    r"""Aliases pointing to this version."""
 
 
 class CreatePromptRequest(BaseModel):
-    prompt: Optional[PromptContent] = None
-    r"""User-editable template fields (create / update body)."""
+    name: str
+    r"""Stable object name."""
 
-    attributes: Optional[Attributes] = None
+    definition: PromptDefinition
+    r"""Versioned prompt content."""
 
-    version_attributes: Annotated[
-        Optional[VersionAttributes], pydantic.Field(alias="versionAttributes")
+    title: OptionalNullable[str] = UNSET
+    r"""Display title."""
+
+    description: OptionalNullable[str] = UNSET
+    r"""Display description."""
+
+    notes: OptionalNullable[str] = UNSET
+    r"""Notes for this version."""
+
+    sharing_scope: Annotated[
+        Optional[RegistrySharingScope], pydantic.Field(alias="sharingScope")
     ] = None
-    r"""User-provided, per-version fields"""
 
-    name: Optional[str] = None
-    r"""Optional human-readable name, immutable after creation."""
+    aliases: Optional[List[str]] = None
+    r"""Aliases pointing to this version."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["prompt", "attributes", "versionAttributes", "name"])
+        optional_fields = set(
+            ["title", "description", "notes", "sharingScope", "aliases"]
+        )
+        nullable_fields = set(["title", "description", "notes"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

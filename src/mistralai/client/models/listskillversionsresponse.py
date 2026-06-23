@@ -2,7 +2,7 @@
 # @generated-id: 7d5c6bc92aab
 
 from __future__ import annotations
-from .skillversionitem import SkillVersionItem, SkillVersionItemTypedDict
+from .skillversion import SkillVersion, SkillVersionTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -10,15 +10,15 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ListSkillVersionsResponseTypedDict(TypedDict):
-    items: NotRequired[List[SkillVersionItemTypedDict]]
+    data: NotRequired[List[SkillVersionTypedDict]]
 
 
 class ListSkillVersionsResponse(BaseModel):
-    items: Optional[List[SkillVersionItem]] = None
+    data: Optional[List[SkillVersion]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["items"])
+        optional_fields = set(["data"])
         serialized = handler(self)
         m = {}
 

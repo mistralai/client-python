@@ -2,6 +2,7 @@
 # @generated-id: a128585aee76
 
 from __future__ import annotations
+from .workflowexecutionstatus import WorkflowExecutionStatus
 from .workflowlistresponse import WorkflowListResponse, WorkflowListResponseTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -15,7 +16,21 @@ import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Awaitable, Callable, List, Literal, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+GetWorkflowsV1WorkflowsGetStatusTypedDict = TypeAliasType(
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict",
+    Union[WorkflowExecutionStatus, List[WorkflowExecutionStatus]],
+)
+r"""Filter by workflow status"""
+
+
+GetWorkflowsV1WorkflowsGetStatus = TypeAliasType(
+    "GetWorkflowsV1WorkflowsGetStatus",
+    Union[WorkflowExecutionStatus, List[WorkflowExecutionStatus]],
+)
+r"""Filter by workflow status"""
 
 
 DeploymentStatus = Literal[
@@ -33,6 +48,8 @@ r"""Sort direction"""
 
 
 class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
+    status: NotRequired[Nullable[GetWorkflowsV1WorkflowsGetStatusTypedDict]]
+    r"""Filter by workflow status"""
     include_shared: NotRequired[bool]
     r"""Whether to include shared workflows"""
     available_in_chat_assistant: NotRequired[Nullable[bool]]
@@ -58,6 +75,12 @@ class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
 
 
 class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
+    status: Annotated[
+        OptionalNullable[GetWorkflowsV1WorkflowsGetStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter by workflow status"""
+
     include_shared: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -135,6 +158,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "status",
                 "include_shared",
                 "available_in_chat_assistant",
                 "deployment_name",
@@ -150,6 +174,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
         )
         nullable_fields = set(
             [
+                "status",
                 "available_in_chat_assistant",
                 "deployment_name",
                 "deployment_status",

@@ -3,17 +3,14 @@
 
 from __future__ import annotations
 from .connecterror import ConnectError, ConnectErrorTypedDict
-from .createskillresponse import CreateSkillResponse, CreateSkillResponseTypedDict
+from .skill import Skill, SkillTypedDict
 from typing import Union
 from typing_extensions import TypeAliasType
 
 
 SkillsCreateResponseTypedDict = TypeAliasType(
-    "SkillsCreateResponseTypedDict",
-    Union[CreateSkillResponseTypedDict, ConnectErrorTypedDict],
+    "SkillsCreateResponseTypedDict", Union[ConnectErrorTypedDict, SkillTypedDict]
 )
 
 
-SkillsCreateResponse = TypeAliasType(
-    "SkillsCreateResponse", Union[CreateSkillResponse, ConnectError]
-)
+SkillsCreateResponse = TypeAliasType("SkillsCreateResponse", Union[ConnectError, Skill])

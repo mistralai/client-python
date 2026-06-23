@@ -12,18 +12,13 @@ from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
 
 
 class BetaPrompts(BaseSDK):
-    r"""(beta) Prompts API - create and manage reusable prompt templates with versioning"""
-
     def list(
         self,
         *,
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
+        alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
-        version_alias: Optional[str] = None,
-        filter_key: Optional[str] = None,
-        filter_value: Optional[str] = None,
-        search: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,12 +28,8 @@ class BetaPrompts(BaseSDK):
 
         :param page_size:
         :param page_token:
-        :param fields: The set of field mask paths.
-        :param version_alias: Selects the version returned for each object and excludes objects
-            without this current alias.
-        :param filter_key:
-        :param filter_value:
-        :param search: Case-insensitive substring match against per-version content.
+        :param alias:
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -50,7 +41,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -60,16 +51,13 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsListRequest(
             page_size=page_size,
             page_token=page_token,
+            alias=alias,
             fields=fields,
-            version_alias=version_alias,
-            filter_key=filter_key,
-            filter_value=filter_value,
-            search=search,
         )
 
         req = self._build_request(
             method="GET",
-            path="/v1/prompts",
+            path="/v2/prompts",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -103,14 +91,14 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         def next_func() -> Optional[models.PromptsListResponse]:
             body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
 
-            next_cursor = JSONPath("$.next_page_token").parse(body)
+            next_cursor = JSONPath("$.nextPageToken").parse(body)
 
             if len(next_cursor) == 0:
                 return None
@@ -121,22 +109,16 @@ class BetaPrompts(BaseSDK):
             results = JSONPath("$.data").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit_ = request.page_size if isinstance(request.page_size, int) else 0
-            if len(results[0]) < limit_:
+            limit = request.page_size if isinstance(request.page_size, int) else 0
+            if len(results[0]) < limit:
                 return None
 
             return self.list(
                 page_size=page_size,
                 page_token=next_cursor,
+                alias=alias,
                 fields=fields,
-                version_alias=version_alias,
-                filter_key=filter_key,
-                filter_value=filter_value,
-                search=search,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         if utils.match_response(http_res, "200", "application/json"):
@@ -163,11 +145,8 @@ class BetaPrompts(BaseSDK):
         *,
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
+        alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
-        version_alias: Optional[str] = None,
-        filter_key: Optional[str] = None,
-        filter_value: Optional[str] = None,
-        search: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -177,12 +156,8 @@ class BetaPrompts(BaseSDK):
 
         :param page_size:
         :param page_token:
-        :param fields: The set of field mask paths.
-        :param version_alias: Selects the version returned for each object and excludes objects
-            without this current alias.
-        :param filter_key:
-        :param filter_value:
-        :param search: Case-insensitive substring match against per-version content.
+        :param alias:
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -194,7 +169,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -204,16 +179,13 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsListRequest(
             page_size=page_size,
             page_token=page_token,
+            alias=alias,
             fields=fields,
-            version_alias=version_alias,
-            filter_key=filter_key,
-            filter_value=filter_value,
-            search=search,
         )
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/prompts",
+            path="/v2/prompts",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -247,7 +219,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -257,7 +229,7 @@ class BetaPrompts(BaseSDK):
             async def empty_result():
                 return None
 
-            next_cursor = JSONPath("$.next_page_token").parse(body)
+            next_cursor = JSONPath("$.nextPageToken").parse(body)
 
             if len(next_cursor) == 0:
                 return empty_result()
@@ -268,22 +240,16 @@ class BetaPrompts(BaseSDK):
             results = JSONPath("$.data").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit_ = request.page_size if isinstance(request.page_size, int) else 0
-            if len(results[0]) < limit_:
+            limit = request.page_size if isinstance(request.page_size, int) else 0
+            if len(results[0]) < limit:
                 return empty_result()
 
             return self.list_async(
                 page_size=page_size,
                 page_token=next_cursor,
+                alias=alias,
                 fields=fields,
-                version_alias=version_alias,
-                filter_key=filter_key,
-                filter_value=filter_value,
-                search=search,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         if utils.match_response(http_res, "200", "application/json"):
@@ -308,16 +274,13 @@ class BetaPrompts(BaseSDK):
     def create(
         self,
         *,
-        prompt: Optional[
-            Union[models.PromptContent, models.PromptContentTypedDict]
-        ] = None,
-        attributes: Optional[
-            Union[models.Attributes, models.AttributesTypedDict]
-        ] = None,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        name: Optional[str] = None,
+        name: str,
+        definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
+        title: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        notes: OptionalNullable[str] = UNSET,
+        sharing_scope: Optional[models.RegistrySharingScope] = None,
+        aliases: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -325,12 +288,13 @@ class BetaPrompts(BaseSDK):
     ) -> models.PromptsCreateResponse:
         r"""CreatePrompt
 
-        --- Existing (modified request/response) ---
-
-        :param prompt: User-editable template fields (create / update body).
-        :param attributes:
-        :param version_attributes: User-provided, per-version fields
-        :param name: Optional human-readable name, immutable after creation.
+        :param name: Stable object name.
+        :param definition: Versioned prompt content.
+        :param title: Display title.
+        :param description: Display description.
+        :param notes: Notes for this version.
+        :param sharing_scope:
+        :param aliases: Aliases pointing to this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -342,7 +306,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -350,19 +314,18 @@ class BetaPrompts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePromptRequest(
-            prompt=utils.get_pydantic_model(prompt, Optional[models.PromptContent]),
-            attributes=utils.get_pydantic_model(
-                attributes, Optional[models.Attributes]
-            ),
-            version_attributes=utils.get_pydantic_model(
-                version_attributes, Optional[models.VersionAttributes]
-            ),
             name=name,
+            definition=utils.get_pydantic_model(definition, models.PromptDefinition),
+            title=title,
+            description=description,
+            notes=notes,
+            sharing_scope=sharing_scope,
+            aliases=aliases,
         )
 
         req = self._build_request(
             method="POST",
-            path="/v1/prompts",
+            path="/v2/prompts",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -399,12 +362,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CreatePromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -419,16 +382,13 @@ class BetaPrompts(BaseSDK):
     async def create_async(
         self,
         *,
-        prompt: Optional[
-            Union[models.PromptContent, models.PromptContentTypedDict]
-        ] = None,
-        attributes: Optional[
-            Union[models.Attributes, models.AttributesTypedDict]
-        ] = None,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        name: Optional[str] = None,
+        name: str,
+        definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
+        title: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        notes: OptionalNullable[str] = UNSET,
+        sharing_scope: Optional[models.RegistrySharingScope] = None,
+        aliases: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -436,12 +396,13 @@ class BetaPrompts(BaseSDK):
     ) -> models.PromptsCreateResponse:
         r"""CreatePrompt
 
-        --- Existing (modified request/response) ---
-
-        :param prompt: User-editable template fields (create / update body).
-        :param attributes:
-        :param version_attributes: User-provided, per-version fields
-        :param name: Optional human-readable name, immutable after creation.
+        :param name: Stable object name.
+        :param definition: Versioned prompt content.
+        :param title: Display title.
+        :param description: Display description.
+        :param notes: Notes for this version.
+        :param sharing_scope:
+        :param aliases: Aliases pointing to this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -453,7 +414,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -461,19 +422,18 @@ class BetaPrompts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePromptRequest(
-            prompt=utils.get_pydantic_model(prompt, Optional[models.PromptContent]),
-            attributes=utils.get_pydantic_model(
-                attributes, Optional[models.Attributes]
-            ),
-            version_attributes=utils.get_pydantic_model(
-                version_attributes, Optional[models.VersionAttributes]
-            ),
             name=name,
+            definition=utils.get_pydantic_model(definition, models.PromptDefinition),
+            title=title,
+            description=description,
+            notes=notes,
+            sharing_scope=sharing_scope,
+            aliases=aliases,
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/prompts",
+            path="/v2/prompts",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -510,12 +470,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.CreatePromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -542,9 +502,9 @@ class BetaPrompts(BaseSDK):
         r"""GetPrompt
 
         :param prompt_id:
-        :param version: Fetch specific version number.
-        :param alias: Fetch version pointed to by alias name.
-        :param fields: The set of field mask paths.
+        :param version:
+        :param alias:
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -556,7 +516,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -572,7 +532,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request(
             method="GET",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -606,12 +566,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.PromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -638,9 +598,9 @@ class BetaPrompts(BaseSDK):
         r"""GetPrompt
 
         :param prompt_id:
-        :param version: Fetch specific version number.
-        :param alias: Fetch version pointed to by alias name.
-        :param fields: The set of field mask paths.
+        :param version:
+        :param alias:
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -652,7 +612,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -668,7 +628,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -702,12 +662,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.PromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -742,7 +702,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -755,7 +715,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request(
             method="DELETE",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -789,7 +749,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -829,7 +789,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -842,7 +802,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -876,7 +836,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -893,34 +853,24 @@ class BetaPrompts(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def update(
+    def update_metadata(
         self,
         *,
         prompt_id: str,
-        attributes: Optional[
-            Union[models.Attributes, models.AttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        title: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        sharing_scope: Optional[models.RegistrySharingScope] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateAttributesResponse:
-        r"""UpdatePromptAttributes
-
-        --- New: per-object mutations ---
+    ) -> models.PromptsUpdateResponse:
+        r"""UpdatePrompt
 
         :param prompt_id:
-        :param attributes:
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param title: Display title.
+        :param description: Display description.
+        :param sharing_scope:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -932,26 +882,25 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.PromptsUpdateAttributesRequest(
+        request = models.PromptsUpdateRequest(
             prompt_id=prompt_id,
-            request_body=models.UpdatePromptAttributesRequest(
-                attributes=utils.get_pydantic_model(
-                    attributes, Optional[models.Attributes]
-                ),
-                file=file,
+            request_body=models.UpdatePromptRequest(
+                title=title,
+                description=description,
+                sharing_scope=sharing_scope,
             ),
         )
 
         req = self._build_request(
             method="PATCH",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -963,11 +912,7 @@ class BetaPrompts(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "json",
-                models.UpdatePromptAttributesRequest,
+                request.request_body, False, False, "json", models.UpdatePromptRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -985,19 +930,19 @@ class BetaPrompts(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="prompts_update_attributes",
+                operation_id="prompts_update",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UpdatePromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1009,34 +954,24 @@ class BetaPrompts(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def update_async(
+    async def update_metadata_async(
         self,
         *,
         prompt_id: str,
-        attributes: Optional[
-            Union[models.Attributes, models.AttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        title: OptionalNullable[str] = UNSET,
+        description: OptionalNullable[str] = UNSET,
+        sharing_scope: Optional[models.RegistrySharingScope] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateAttributesResponse:
-        r"""UpdatePromptAttributes
-
-        --- New: per-object mutations ---
+    ) -> models.PromptsUpdateResponse:
+        r"""UpdatePrompt
 
         :param prompt_id:
-        :param attributes:
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param title: Display title.
+        :param description: Display description.
+        :param sharing_scope:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1048,26 +983,25 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.PromptsUpdateAttributesRequest(
+        request = models.PromptsUpdateRequest(
             prompt_id=prompt_id,
-            request_body=models.UpdatePromptAttributesRequest(
-                attributes=utils.get_pydantic_model(
-                    attributes, Optional[models.Attributes]
-                ),
-                file=file,
+            request_body=models.UpdatePromptRequest(
+                title=title,
+                description=description,
+                sharing_scope=sharing_scope,
             ),
         )
 
         req = self._build_request_async(
             method="PATCH",
-            path="/v1/prompts/{prompt_id}",
+            path="/v2/prompts/{prompt_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1079,11 +1013,7 @@ class BetaPrompts(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "json",
-                models.UpdatePromptAttributesRequest,
+                request.request_body, False, False, "json", models.UpdatePromptRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1101,19 +1031,19 @@ class BetaPrompts(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="prompts_update_attributes",
+                operation_id="prompts_update",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UpdatePromptResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1148,7 +1078,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1161,7 +1091,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request(
             method="GET",
-            path="/v1/prompts/{prompt_id}/versions",
+            path="/v2/prompts/{prompt_id}/versions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1195,7 +1125,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1235,7 +1165,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1248,7 +1178,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/prompts/{prompt_id}/versions",
+            path="/v2/prompts/{prompt_id}/versions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1282,7 +1212,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1303,13 +1233,9 @@ class BetaPrompts(BaseSDK):
         self,
         *,
         prompt_id: str,
-        prompt: Optional[
-            Union[models.PromptContent, models.PromptContentTypedDict]
-        ] = None,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
+        notes: OptionalNullable[str] = UNSET,
+        aliases: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1317,20 +1243,10 @@ class BetaPrompts(BaseSDK):
     ) -> models.PromptsCreateVersionResponse:
         r"""CreatePromptVersion
 
-        --- New: versioning ---
-
         :param prompt_id:
-        :param prompt: User-editable template fields (create / update body).
-        :param version_attributes: User-provided, per-version fields
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param definition: Versioned prompt content.
+        :param notes: Notes for this version.
+        :param aliases: Aliases pointing to this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1342,7 +1258,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1352,17 +1268,17 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsCreateVersionRequest(
             prompt_id=prompt_id,
             request_body=models.CreatePromptVersionRequest(
-                prompt=utils.get_pydantic_model(prompt, Optional[models.PromptContent]),
-                version_attributes=utils.get_pydantic_model(
-                    version_attributes, Optional[models.VersionAttributes]
+                definition=utils.get_pydantic_model(
+                    definition, models.PromptDefinition
                 ),
-                file=file,
+                notes=notes,
+                aliases=aliases,
             ),
         )
 
         req = self._build_request(
             method="POST",
-            path="/v1/prompts/{prompt_id}/versions",
+            path="/v2/prompts/{prompt_id}/versions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1403,7 +1319,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1424,13 +1340,9 @@ class BetaPrompts(BaseSDK):
         self,
         *,
         prompt_id: str,
-        prompt: Optional[
-            Union[models.PromptContent, models.PromptContentTypedDict]
-        ] = None,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
+        notes: OptionalNullable[str] = UNSET,
+        aliases: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1438,20 +1350,10 @@ class BetaPrompts(BaseSDK):
     ) -> models.PromptsCreateVersionResponse:
         r"""CreatePromptVersion
 
-        --- New: versioning ---
-
         :param prompt_id:
-        :param prompt: User-editable template fields (create / update body).
-        :param version_attributes: User-provided, per-version fields
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param definition: Versioned prompt content.
+        :param notes: Notes for this version.
+        :param aliases: Aliases pointing to this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1463,7 +1365,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1473,17 +1375,17 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsCreateVersionRequest(
             prompt_id=prompt_id,
             request_body=models.CreatePromptVersionRequest(
-                prompt=utils.get_pydantic_model(prompt, Optional[models.PromptContent]),
-                version_attributes=utils.get_pydantic_model(
-                    version_attributes, Optional[models.VersionAttributes]
+                definition=utils.get_pydantic_model(
+                    definition, models.PromptDefinition
                 ),
-                file=file,
+                notes=notes,
+                aliases=aliases,
             ),
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/prompts/{prompt_id}/versions",
+            path="/v2/prompts/{prompt_id}/versions",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1524,7 +1426,7 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1556,7 +1458,7 @@ class BetaPrompts(BaseSDK):
 
         :param prompt_id:
         :param version:
-        :param fields: The set of field mask paths.
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1568,7 +1470,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1583,7 +1485,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request(
             method="GET",
-            path="/v1/prompts/{prompt_id}/versions/{version}",
+            path="/v2/prompts/{prompt_id}/versions/{version}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1617,12 +1519,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.PromptVersionResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1649,7 +1551,7 @@ class BetaPrompts(BaseSDK):
 
         :param prompt_id:
         :param version:
-        :param fields: The set of field mask paths.
+        :param fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1661,7 +1563,7 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1676,7 +1578,7 @@ class BetaPrompts(BaseSDK):
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/prompts/{prompt_id}/versions/{version}",
+            path="/v2/prompts/{prompt_id}/versions/{version}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1710,12 +1612,12 @@ class BetaPrompts(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.PromptVersionResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1727,36 +1629,24 @@ class BetaPrompts(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def update_version(
+    def update_version_metadata(
         self,
         *,
         prompt_id: str,
         version: int,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        aliases: List[str],
+        notes: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateVersionAttributesResponse:
-        r"""UpdatePromptVersionAttributes
-
-        --- New: per-version mutations ---
+    ) -> models.PromptsUpdateVersionMetadataResponse:
+        r"""UpdatePromptVersionMetadata
 
         :param prompt_id:
-        :param version: Target version.
-        :param version_attributes: User-provided, per-version fields
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param version:
+        :param aliases: Aliases pointing to this version.
+        :param notes: Notes for this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1768,27 +1658,25 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.PromptsUpdateVersionAttributesRequest(
+        request = models.PromptsUpdateVersionMetadataRequest(
             prompt_id=prompt_id,
             version=version,
-            request_body=models.UpdatePromptVersionAttributesRequest(
-                version_attributes=utils.get_pydantic_model(
-                    version_attributes, Optional[models.VersionAttributes]
-                ),
-                file=file,
+            request_body=models.UpdatePromptVersionRequest(
+                notes=notes,
+                aliases=aliases,
             ),
         )
 
         req = self._build_request(
             method="PATCH",
-            path="/v1/prompts/{prompt_id}/versions/{version}",
+            path="/v2/prompts/{prompt_id}/versions/{version}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1804,7 +1692,7 @@ class BetaPrompts(BaseSDK):
                 False,
                 False,
                 "json",
-                models.UpdatePromptVersionAttributesRequest,
+                models.UpdatePromptVersionRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1822,19 +1710,19 @@ class BetaPrompts(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="prompts_update_version_attributes",
+                operation_id="prompts_update_version_metadata",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UpdatePromptVersionResponse, http_res)
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
@@ -1846,36 +1734,24 @@ class BetaPrompts(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def update_version_async(
+    async def update_version_metadata_async(
         self,
         *,
         prompt_id: str,
         version: int,
-        version_attributes: Optional[
-            Union[models.VersionAttributes, models.VersionAttributesTypedDict]
-        ] = None,
-        file: Optional[bytes] = None,
+        aliases: List[str],
+        notes: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateVersionAttributesResponse:
-        r"""UpdatePromptVersionAttributes
-
-        --- New: per-version mutations ---
+    ) -> models.PromptsUpdateVersionMetadataResponse:
+        r"""UpdatePromptVersionMetadata
 
         :param prompt_id:
-        :param version: Target version.
-        :param version_attributes: User-provided, per-version fields
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
+        :param version:
+        :param aliases: Aliases pointing to this version.
+        :param notes: Notes for this version.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1887,27 +1763,25 @@ class BetaPrompts(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.PromptsUpdateVersionAttributesRequest(
+        request = models.PromptsUpdateVersionMetadataRequest(
             prompt_id=prompt_id,
             version=version,
-            request_body=models.UpdatePromptVersionAttributesRequest(
-                version_attributes=utils.get_pydantic_model(
-                    version_attributes, Optional[models.VersionAttributes]
-                ),
-                file=file,
+            request_body=models.UpdatePromptVersionRequest(
+                notes=notes,
+                aliases=aliases,
             ),
         )
 
         req = self._build_request_async(
             method="PATCH",
-            path="/v1/prompts/{prompt_id}/versions/{version}",
+            path="/v2/prompts/{prompt_id}/versions/{version}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1923,7 +1797,7 @@ class BetaPrompts(BaseSDK):
                 False,
                 False,
                 "json",
-                models.UpdatePromptVersionAttributesRequest,
+                models.UpdatePromptVersionRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1941,243 +1815,19 @@ class BetaPrompts(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="prompts_update_version_attributes",
+                operation_id="prompts_update_version_metadata",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["4XX", "5XX"],
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.UpdatePromptVersionResponse, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def update_sharing_scope(
-        self,
-        *,
-        prompt_id: str,
-        sharing_scope: Optional[models.SharingScope] = None,
-        file: Optional[bytes] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateSharingScopeResponse:
-        r"""UpdatePromptSharingScope
-
-        :param prompt_id:
-        :param sharing_scope:
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 60000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.PromptsUpdateSharingScopeRequest(
-            prompt_id=prompt_id,
-            request_body=models.UpdatePromptSharingScopeRequest(
-                sharing_scope=sharing_scope,
-                file=file,
-            ),
-        )
-
-        req = self._build_request(
-            method="PATCH",
-            path="/v1/prompts/{prompt_id}/sharing-scope",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "json",
-                models.UpdatePromptSharingScopeRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="prompts_update_sharing_scope",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.UpdatePromptSharingScopeResponse, http_res
-            )
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def update_sharing_scope_async(
-        self,
-        *,
-        prompt_id: str,
-        sharing_scope: Optional[models.SharingScope] = None,
-        file: Optional[bytes] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateSharingScopeResponse:
-        r"""UpdatePromptSharingScope
-
-        :param prompt_id:
-        :param sharing_scope:
-        :param file: The File object (not file name) to be uploaded.
-            To upload a file and specify a custom file name you should format your request as such:
-            ```bash
-            file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-            ```
-            Otherwise, you can just keep the original file name:
-            ```bash
-            file=@path/to/your/file.jsonl
-            ```
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 60000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.PromptsUpdateSharingScopeRequest(
-            prompt_id=prompt_id,
-            request_body=models.UpdatePromptSharingScopeRequest(
-                sharing_scope=sharing_scope,
-                file=file,
-            ),
-        )
-
-        req = self._build_request_async(
-            method="PATCH",
-            path="/v1/prompts/{prompt_id}/sharing-scope",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body,
-                False,
-                False,
-                "json",
-                models.UpdatePromptSharingScopeRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="prompts_update_sharing_scope",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.UpdatePromptSharingScopeResponse, http_res
-            )
+            return unmarshal_json_response(models.Prompt, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)

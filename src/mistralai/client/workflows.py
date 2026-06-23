@@ -295,6 +295,12 @@ class Workflows(BaseSDK):
     def get_workflows(
         self,
         *,
+        status: OptionalNullable[
+            Union[
+                models.GetWorkflowsV1WorkflowsGetStatus,
+                models.GetWorkflowsV1WorkflowsGetStatusTypedDict,
+            ]
+        ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
         deployment_name: OptionalNullable[List[str]] = UNSET,
@@ -312,6 +318,7 @@ class Workflows(BaseSDK):
     ) -> Optional[models.GetWorkflowsV1WorkflowsGetResponse]:
         r"""Get Workflows
 
+        :param status: Filter by workflow status
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param deployment_name: Filter by deployment name(s)
@@ -333,7 +340,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -341,6 +348,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
+            status=status,
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
             deployment_name=deployment_name,
@@ -389,7 +397,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -407,11 +415,12 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit_ = request.limit if isinstance(request.limit, int) else 50
-            if len(results[0]) < limit_:
+            limit = request.limit if isinstance(request.limit, int) else 50
+            if len(results[0]) < limit:
                 return None
 
             return self.get_workflows(
+                status=status,
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
                 deployment_name=deployment_name,
@@ -423,9 +432,6 @@ class Workflows(BaseSDK):
                 limit=limit,
                 active_only=active_only,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -451,6 +457,12 @@ class Workflows(BaseSDK):
     async def get_workflows_async(
         self,
         *,
+        status: OptionalNullable[
+            Union[
+                models.GetWorkflowsV1WorkflowsGetStatus,
+                models.GetWorkflowsV1WorkflowsGetStatusTypedDict,
+            ]
+        ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
         deployment_name: OptionalNullable[List[str]] = UNSET,
@@ -468,6 +480,7 @@ class Workflows(BaseSDK):
     ) -> Optional[models.GetWorkflowsV1WorkflowsGetResponse]:
         r"""Get Workflows
 
+        :param status: Filter by workflow status
         :param include_shared: Whether to include shared workflows
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
         :param deployment_name: Filter by deployment name(s)
@@ -489,7 +502,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -497,6 +510,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
+            status=status,
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
             deployment_name=deployment_name,
@@ -545,7 +559,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -568,11 +582,12 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit_ = request.limit if isinstance(request.limit, int) else 50
-            if len(results[0]) < limit_:
+            limit = request.limit if isinstance(request.limit, int) else 50
+            if len(results[0]) < limit:
                 return empty_result()
 
             return self.get_workflows_async(
+                status=status,
                 include_shared=include_shared,
                 available_in_chat_assistant=available_in_chat_assistant,
                 deployment_name=deployment_name,
@@ -584,9 +599,6 @@ class Workflows(BaseSDK):
                 limit=limit,
                 active_only=active_only,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -650,7 +662,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -706,7 +718,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -770,7 +782,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -826,7 +838,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -888,7 +900,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -952,7 +964,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1015,7 +1027,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1079,7 +1091,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1145,7 +1157,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1209,7 +1221,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1275,7 +1287,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1339,7 +1351,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1386,7 +1398,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1433,7 +1445,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1477,7 +1489,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1524,7 +1536,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1576,7 +1588,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1636,7 +1648,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1688,7 +1700,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1748,7 +1760,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1796,7 +1808,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1845,7 +1857,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1895,7 +1907,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -1944,7 +1956,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1990,7 +2002,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2040,7 +2052,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2084,7 +2096,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2134,7 +2146,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2178,7 +2190,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2228,7 +2240,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2274,7 +2286,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2324,7 +2336,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2370,7 +2382,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2417,7 +2429,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2461,7 +2473,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2508,7 +2520,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2552,7 +2564,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2601,7 +2613,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2645,7 +2657,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -2694,7 +2706,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

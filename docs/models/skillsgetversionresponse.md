@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.SkillVersionResponse`
+### `models.Skill`
 
 ```python
-value: models.SkillVersionResponse = /* values here */
+value: models.Skill = /* values here */
 ```
 
 ### `models.ConnectError`

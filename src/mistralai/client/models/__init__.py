@@ -199,7 +199,6 @@ if TYPE_CHECKING:
         AssistantMessageContentTypedDict,
         AssistantMessageTypedDict,
     )
-    from .attributes import Attributes, AttributesTypedDict
     from .audiochunk import AudioChunk, AudioChunkTypedDict
     from .audiocontent import AudioContent, AudioContentTypedDict
     from .audioencoding import AudioEncoding
@@ -221,9 +220,9 @@ if TYPE_CHECKING:
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
     from .basefielddefinition import (
         BaseFieldDefinition,
+        BaseFieldDefinitionSupportedOperator,
         BaseFieldDefinitionType,
         BaseFieldDefinitionTypedDict,
-        SupportedOperator,
     )
     from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
     from .basetaskstatus import BaseTaskStatus
@@ -681,34 +680,14 @@ if TYPE_CHECKING:
         OwnerType,
     )
     from .createpromptrequest import CreatePromptRequest, CreatePromptRequestTypedDict
-    from .createpromptresponse import (
-        CreatePromptResponse,
-        CreatePromptResponseTypedDict,
-    )
     from .createpromptversionresponse import (
         CreatePromptVersionResponse,
         CreatePromptVersionResponseTypedDict,
     )
-    from .createsearchindexinforequest import (
-        CreateSearchIndexInfoRequest,
-        CreateSearchIndexInfoRequestIndex,
-        CreateSearchIndexInfoRequestIndexTypedDict,
-        CreateSearchIndexInfoRequestStatus,
-        CreateSearchIndexInfoRequestTypedDict,
-    )
     from .createskillrequest import CreateSkillRequest, CreateSkillRequestTypedDict
-    from .createskillresponse import CreateSkillResponse, CreateSkillResponseTypedDict
     from .createskillversionresponse import (
         CreateSkillVersionResponse,
         CreateSkillVersionResponseTypedDict,
-    )
-    from .createvespaschemarequest import (
-        CreateVespaSchemaRequest,
-        CreateVespaSchemaRequestTypedDict,
-    )
-    from .createvespasearchindexinforequest import (
-        CreateVespaSearchIndexInfoRequest,
-        CreateVespaSearchIndexInfoRequestTypedDict,
     )
     from .credentialscreateorupdate import (
         CredentialsCreateOrUpdate,
@@ -716,6 +695,7 @@ if TYPE_CHECKING:
     )
     from .credentialsresponse import CredentialsResponse, CredentialsResponseTypedDict
     from .credentialsstatus import CredentialsStatus, CredentialsStatusTypedDict
+    from .credentialsstatuserrorreason import CredentialsStatusErrorReason
     from .customconnector import (
         Authorization,
         AuthorizationTypedDict,
@@ -832,6 +812,11 @@ if TYPE_CHECKING:
         DeploymentListResponseTypedDict,
     )
     from .deploymentlocation import DeploymentLocation, DeploymentLocationTypedDict
+    from .deploymentlogrecord import DeploymentLogRecord, DeploymentLogRecordTypedDict
+    from .deploymentlogsearchresponse import (
+        DeploymentLogSearchResponse,
+        DeploymentLogSearchResponseTypedDict,
+    )
     from .deploymentresponse import DeploymentResponse, DeploymentResponseTypedDict
     from .deploymentworkerresponse import (
         DeploymentWorkerResponse,
@@ -884,6 +869,12 @@ if TYPE_CHECKING:
         ResponseExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostTypedDict,
     )
     from .executionconfig import ExecutionConfig, ExecutionConfigTypedDict
+    from .executionlogrecord import ExecutionLogRecord, ExecutionLogRecordTypedDict
+    from .executionlogsearchresponse import (
+        ExecutionLogSearchResponse,
+        ExecutionLogSearchResponseTypedDict,
+    )
+    from .executiontool import ExecutionTool, ExecutionToolTypedDict
     from .export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop import (
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest,
         ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict,
@@ -896,21 +887,18 @@ if TYPE_CHECKING:
         ExtendedOAuthServerMetadata,
         ExtendedOAuthServerMetadataTypedDict,
     )
-    from .extraattribute import (
-        ExtraAttribute,
-        ExtraAttributeTypedDict,
-        NullValue,
-        NullValueTypedDict,
-        StringValue,
-        StringValueTypedDict,
-        StringValues,
-        StringValuesTypedDict,
-    )
     from .failure import Failure, FailureTypedDict
     from .feedresultchatcompletioneventpreview import (
         FeedResultChatCompletionEventPreview,
         FeedResultChatCompletionEventPreviewTypedDict,
     )
+    from .feedresultgetlog import FeedResultGetLog, FeedResultGetLogTypedDict
+    from .feedresultgetspan import FeedResultGetSpan, FeedResultGetSpanTypedDict
+    from .feedresultgetspanevaluation import (
+        FeedResultGetSpanEvaluation,
+        FeedResultGetSpanEvaluationTypedDict,
+    )
+    from .feedresultgettrace import FeedResultGetTrace, FeedResultGetTraceTypedDict
     from .fetchcampaignstatusresponse import (
         FetchCampaignStatusResponse,
         FetchCampaignStatusResponseTypedDict,
@@ -1075,9 +1063,26 @@ if TYPE_CHECKING:
         GetDatasetsV1ObservabilityDatasetsGetRequest,
         GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict,
     )
+    from .get_deployment_logsop import (
+        GetDeploymentLogsOrder,
+        GetDeploymentLogsRequest,
+        GetDeploymentLogsRequestTypedDict,
+    )
     from .get_deployment_v1_workflows_deployments_name_getop import (
         GetDeploymentV1WorkflowsDeploymentsNameGetRequest,
         GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict,
+    )
+    from .get_index_details_v1_rag_indexes_index_index_id_detail_getop import (
+        GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest,
+        GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict,
+    )
+    from .get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop import (
+        GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest,
+        GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict,
+    )
+    from .get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop import (
+        GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest,
+        GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict,
     )
     from .get_judge_by_id_v1_observability_judges_judge_id_getop import (
         GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest,
@@ -1086,6 +1091,10 @@ if TYPE_CHECKING:
     from .get_judges_v1_observability_judges_getop import (
         GetJudgesV1ObservabilityJudgesGetRequest,
         GetJudgesV1ObservabilityJudgesGetRequestTypedDict,
+    )
+    from .get_log_field_options_v1_observability_logs_fields_field_name_options_getop import (
+        GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest,
+        GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict,
     )
     from .get_run_history_v1_workflows_runs_run_id_history_getop import (
         GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest,
@@ -1110,12 +1119,38 @@ if TYPE_CHECKING:
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest,
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict,
     )
+    from .get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop import (
+        GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest,
+        GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict,
+    )
+    from .get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop import (
+        GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest,
+        GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict,
+    )
+    from .get_span_field_options_v1_observability_spans_fields_field_name_options_getop import (
+        GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest,
+        GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict,
+    )
     from .get_stream_events_v1_workflows_events_stream_getop import (
+        GetStreamEventsV1WorkflowsEventsStreamGetData,
+        GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict,
         GetStreamEventsV1WorkflowsEventsStreamGetRequest,
         GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict,
         GetStreamEventsV1WorkflowsEventsStreamGetResponseBody,
         GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict,
         Scope,
+    )
+    from .get_trace_by_id_v1_observability_traces_trace_id_getop import (
+        GetTraceByIDV1ObservabilityTracesTraceIDGetRequest,
+        GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict,
+    )
+    from .get_trace_field_options_v1_observability_traces_fields_field_name_options_getop import (
+        GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest,
+        GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict,
+    )
+    from .get_trace_spans_v1_observability_traces_trace_id_spans_getop import (
+        GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest,
+        GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict,
     )
     from .get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop import (
         GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest,
@@ -1132,6 +1167,11 @@ if TYPE_CHECKING:
     from .get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop import (
         GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest,
         GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict,
+    )
+    from .get_workflow_execution_logsop import (
+        GetWorkflowExecutionLogsOrder,
+        GetWorkflowExecutionLogsRequest,
+        GetWorkflowExecutionLogsRequestTypedDict,
     )
     from .get_workflow_execution_trace_eventsop import (
         GetWorkflowExecutionTraceEventsRequest,
@@ -1172,15 +1212,76 @@ if TYPE_CHECKING:
         GetWorkflowsV1WorkflowsGetRequestTypedDict,
         GetWorkflowsV1WorkflowsGetResponse,
         GetWorkflowsV1WorkflowsGetResponseTypedDict,
+        GetWorkflowsV1WorkflowsGetStatus,
+        GetWorkflowsV1WorkflowsGetStatusTypedDict,
     )
     from .getfileresponse import GetFileResponse, GetFileResponseTypedDict
+    from .getlog import GetLog, GetLogTypedDict
+    from .getlogfieldoptions import GetLogFieldOptions, GetLogFieldOptionsTypedDict
+    from .getlogfields import GetLogFields, GetLogFieldsTypedDict
+    from .getlogs import GetLogs, GetLogsTypedDict
+    from .getsearchindexdetailresponseindex import (
+        GetSearchIndexDetailResponseIndex,
+        GetSearchIndexDetailResponseIndexTypedDict,
+    )
+    from .getsearchindexdetailresponseschemamodel import (
+        GetSearchIndexDetailResponseSchemaModel,
+        GetSearchIndexDetailResponseSchemaModelTypedDict,
+    )
+    from .getsearchindexschemadetailresponsefield import (
+        GetSearchIndexSchemaDetailResponseField,
+        GetSearchIndexSchemaDetailResponseFieldTypedDict,
+    )
+    from .getsearchindexschemadetailresponseschemamodel import (
+        GetSearchIndexSchemaDetailResponseSchemaModel,
+        GetSearchIndexSchemaDetailResponseSchemaModelTypedDict,
+    )
+    from .getsearchindexschemasdfileresponsesdfile import (
+        GetSearchIndexSchemaSDFileResponseSDFile,
+        GetSearchIndexSchemaSDFileResponseSDFileTypedDict,
+    )
+    from .getsearchindexsummaryresponseindex import (
+        GetSearchIndexSummaryResponseIndex,
+        GetSearchIndexSummaryResponseIndexIndex,
+        GetSearchIndexSummaryResponseIndexIndexTypedDict,
+        GetSearchIndexSummaryResponseIndexStatus,
+        GetSearchIndexSummaryResponseIndexTypedDict,
+        UnknownGetSearchIndexSummaryResponseIndexIndex,
+    )
+    from .getsearchindexsummaryresponsevespaindex import (
+        GetSearchIndexSummaryResponseVespaIndex,
+        GetSearchIndexSummaryResponseVespaIndexTypedDict,
+    )
+    from .getsearchindexsummaryresponsevespaschemamodel import (
+        GetSearchIndexSummaryResponseVespaSchemaModel,
+        GetSearchIndexSummaryResponseVespaSchemaModelTypedDict,
+    )
     from .getsignedurlresponse import (
         GetSignedURLResponse,
         GetSignedURLResponseTypedDict,
     )
+    from .getspan import GetSpan, GetSpanStatusCode, GetSpanTypedDict
+    from .getspanevaluation import GetSpanEvaluation, GetSpanEvaluationTypedDict
+    from .getspanevaluationfieldoptions import (
+        GetSpanEvaluationFieldOptions,
+        GetSpanEvaluationFieldOptionsTypedDict,
+    )
+    from .getspanevaluationfields import (
+        GetSpanEvaluationFields,
+        GetSpanEvaluationFieldsTypedDict,
+    )
+    from .getspanevaluations import GetSpanEvaluations, GetSpanEvaluationsTypedDict
+    from .getspanfieldoptions import GetSpanFieldOptions, GetSpanFieldOptionsTypedDict
+    from .getspanfields import GetSpanFields, GetSpanFieldsTypedDict
+    from .getspans import GetSpans, GetSpansTypedDict
+    from .gettrace import GetTrace, GetTraceStatusCode, GetTraceTypedDict
+    from .gettracefieldoptions import (
+        GetTraceFieldOptions,
+        GetTraceFieldOptionsTypedDict,
+    )
+    from .gettracefields import GetTraceFields, GetTraceFieldsTypedDict
+    from .gettraces import GetTraces, GetTracesTypedDict
     from .githubrepository import GithubRepository, GithubRepositoryTypedDict
-    from .google_protobuf_any import GoogleProtobufAny, GoogleProtobufAnyTypedDict
-    from .google_protobuf_nullvalue import GoogleProtobufNullValue
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .httpstatus import HTTPStatus
     from .imagecontent import ImageContent, ImageContentTypedDict
@@ -1522,6 +1623,7 @@ if TYPE_CHECKING:
         ListWorkflowEventResponseTypedDict,
     )
     from .locationtype import LocationType
+    from .logsrequest import LogsRequest, LogsRequestTypedDict, Order
     from .mcpprompt import MCPPrompt, MCPPromptTypedDict
     from .mcpresource import MCPResource, MCPResourceTypedDict
     from .mcpserverauthenticationrequirement import (
@@ -1584,7 +1686,6 @@ if TYPE_CHECKING:
     )
     from .messageresponse import MessageResponse, MessageResponseTypedDict
     from .messagetokens import MessageTokens, MessageTokensTypedDict
-    from .metadata import Metadata, MetadataTypedDict
     from .metric import Metric, MetricTypedDict
     from .mistralpromptmode import MistralPromptMode
     from .modelcapabilities import ModelCapabilities, ModelCapabilitiesTypedDict
@@ -1650,6 +1751,12 @@ if TYPE_CHECKING:
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
+    from .otelfielddefinition import (
+        OtelFieldDefinition,
+        OtelFieldDefinitionSupportedOperator,
+        OtelFieldDefinitionType,
+        OtelFieldDefinitionTypedDict,
+    )
     from .outboundauthenticationtype import OutboundAuthenticationType
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
     from .paginatedconnectors import PaginatedConnectors, PaginatedConnectorsTypedDict
@@ -1710,10 +1817,9 @@ if TYPE_CHECKING:
     from .prediction import Prediction, PredictionTypedDict
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
+    from .prompt import Prompt, PromptTypedDict
     from .promptargument import PromptArgument, PromptArgumentTypedDict
-    from .promptcontent import PromptContent, PromptContentTypedDict
-    from .promptlistitem import PromptListItem, PromptListItemTypedDict
-    from .promptresponse import PromptResponse, PromptResponseTypedDict
+    from .promptdefinition import PromptDefinition, PromptDefinitionTypedDict
     from .prompts_create_versionop import (
         CreatePromptVersionRequest,
         CreatePromptVersionRequestTypedDict,
@@ -1755,38 +1861,27 @@ if TYPE_CHECKING:
         PromptsListResponseResultTypedDict,
         PromptsListResponseTypedDict,
     )
-    from .prompts_update_attributesop import (
-        PromptsUpdateAttributesRequest,
-        PromptsUpdateAttributesRequestTypedDict,
-        PromptsUpdateAttributesResponse,
-        PromptsUpdateAttributesResponseTypedDict,
-        UpdatePromptAttributesRequest,
-        UpdatePromptAttributesRequestTypedDict,
+    from .prompts_update_version_metadataop import (
+        PromptsUpdateVersionMetadataRequest,
+        PromptsUpdateVersionMetadataRequestTypedDict,
+        PromptsUpdateVersionMetadataResponse,
+        PromptsUpdateVersionMetadataResponseTypedDict,
+        UpdatePromptVersionRequest,
+        UpdatePromptVersionRequestTypedDict,
     )
-    from .prompts_update_sharing_scopeop import (
-        PromptsUpdateSharingScopeRequest,
-        PromptsUpdateSharingScopeRequestTypedDict,
-        PromptsUpdateSharingScopeResponse,
-        PromptsUpdateSharingScopeResponseTypedDict,
-        UpdatePromptSharingScopeRequest,
-        UpdatePromptSharingScopeRequestTypedDict,
-    )
-    from .prompts_update_version_attributesop import (
-        PromptsUpdateVersionAttributesRequest,
-        PromptsUpdateVersionAttributesRequestTypedDict,
-        PromptsUpdateVersionAttributesResponse,
-        PromptsUpdateVersionAttributesResponseTypedDict,
-        UpdatePromptVersionAttributesRequest,
-        UpdatePromptVersionAttributesRequestTypedDict,
+    from .prompts_updateop import (
+        PromptsUpdateRequest,
+        PromptsUpdateRequestTypedDict,
+        PromptsUpdateResponse,
+        PromptsUpdateResponseTypedDict,
+        UpdatePromptRequest,
+        UpdatePromptRequestTypedDict,
     )
     from .promptscapability import PromptsCapability, PromptsCapabilityTypedDict
     from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
     from .promptvariable import PromptVariable, PromptVariableTypedDict
-    from .promptversionitem import PromptVersionItem, PromptVersionItemTypedDict
-    from .promptversionresponse import (
-        PromptVersionResponse,
-        PromptVersionResponseTypedDict,
-    )
+    from .promptversion import PromptVersion, PromptVersionTypedDict
+    from .protobufany import ProtobufAny, ProtobufAnyTypedDict
     from .publicauthenticationmethod import (
         PublicAuthenticationMethod,
         PublicAuthenticationMethodTypedDict,
@@ -1795,6 +1890,19 @@ if TYPE_CHECKING:
         PublicConnectionConfig,
         PublicConnectionConfigTypedDict,
     )
+    from .publicconnectorexecutiondata import (
+        PublicConnectorExecutionData,
+        PublicConnectorExecutionDataTypedDict,
+    )
+    from .publicexecutionconnectionconfig import (
+        PublicExecutionConnectionConfig,
+        PublicExecutionConnectionConfigTypedDict,
+    )
+    from .publicexecutionconnector import (
+        PublicExecutionConnector,
+        PublicExecutionConnectorTypedDict,
+    )
+    from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict,
@@ -1859,6 +1967,30 @@ if TYPE_CHECKING:
         ReferenceID,
         ReferenceIDTypedDict,
     )
+    from .registersearchindexrequestindex import (
+        RegisterSearchIndexRequestIndex,
+        RegisterSearchIndexRequestIndexIndex,
+        RegisterSearchIndexRequestIndexIndexTypedDict,
+        RegisterSearchIndexRequestIndexStatus,
+        RegisterSearchIndexRequestIndexTypedDict,
+    )
+    from .registersearchindexrequestvespaindex import (
+        RegisterSearchIndexRequestVespaIndex,
+        RegisterSearchIndexRequestVespaIndexTypedDict,
+    )
+    from .registersearchindexrequestvespaschemafield import (
+        RegisterSearchIndexRequestVespaSchemaField,
+        RegisterSearchIndexRequestVespaSchemaFieldTypedDict,
+    )
+    from .registersearchindexrequestvespaschemamodel import (
+        RegisterSearchIndexRequestVespaSchemaModel,
+        RegisterSearchIndexRequestVespaSchemaModelTypedDict,
+    )
+    from .registersearchindexresponseindex import (
+        RegisterSearchIndexResponseIndex,
+        RegisterSearchIndexResponseIndexTypedDict,
+    )
+    from .registrysharingscope import RegistrySharingScope
     from .requestsource import RequestSource
     from .reset_workflow_v1_workflows_executions_execution_id_reset_postop import (
         ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequest,
@@ -1916,6 +2048,29 @@ if TYPE_CHECKING:
         ScheduleRecentExecution,
         ScheduleRecentExecutionTypedDict,
     )
+    from .schemafieldindex import SchemaFieldIndex
+    from .schemafieldstorage import SchemaFieldStorage
+    from .schemafieldtype import SchemaFieldType
+    from .search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop import (
+        SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest,
+        SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict,
+    )
+    from .search_logs_v1_observability_logs_search_postop import (
+        SearchLogsV1ObservabilityLogsSearchPostRequest,
+        SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict,
+    )
+    from .search_span_evaluations_v1_observability_spans_evaluations_search_postop import (
+        SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest,
+        SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict,
+    )
+    from .search_spans_v1_observability_spans_search_postop import (
+        SearchSpansV1ObservabilitySpansSearchPostRequest,
+        SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict,
+    )
+    from .search_traces_v1_observability_traces_search_postop import (
+        SearchTracesV1ObservabilityTracesSearchPostRequest,
+        SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict,
+    )
     from .searchchatcompletioneventidsrequest import (
         SearchChatCompletionEventIdsRequest,
         SearchChatCompletionEventIdsRequestTypedDict,
@@ -1932,14 +2087,6 @@ if TYPE_CHECKING:
         SearchChatCompletionEventsResponse,
         SearchChatCompletionEventsResponseTypedDict,
     )
-    from .searchindexresponse import (
-        SearchIndexResponse,
-        SearchIndexResponseIndex,
-        SearchIndexResponseIndexTypedDict,
-        SearchIndexResponseStatus,
-        SearchIndexResponseTypedDict,
-        UnknownSearchIndexResponseIndex,
-    )
     from .security import Security, SecurityTypedDict
     from .servercapabilities import ServerCapabilities, ServerCapabilitiesTypedDict
     from .serverlocale import ServerLocale, ServerLocaleTypedDict
@@ -1951,11 +2098,18 @@ if TYPE_CHECKING:
         ServerTasksRequestsCapability,
         ServerTasksRequestsCapabilityTypedDict,
     )
+    from .set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop import (
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest,
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict,
+    )
+    from .set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop import (
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest,
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict,
+    )
     from .shareenum import ShareEnum
     from .sharing import Sharing, SharingTypedDict
     from .sharingdelete import SharingDelete, SharingDeleteTypedDict
     from .sharingrequest import SharingRequest, SharingRequestTypedDict
-    from .sharingscope import SharingScope
     from .signal_workflow_execution_v1_workflows_executions_execution_id_signals_postop import (
         SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequest,
         SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequestTypedDict,
@@ -1973,17 +2127,16 @@ if TYPE_CHECKING:
         SignalWorkflowResponse,
         SignalWorkflowResponseTypedDict,
     )
-    from .skillasset import (
+    from .skill import Skill, SkillTypedDict
+    from .skillassetcontent import (
         RawContent,
         RawContentTypedDict,
-        SkillAsset,
-        SkillAssetTextContent,
-        SkillAssetTextContentTypedDict,
-        SkillAssetTypedDict,
+        SkillAssetContent,
+        SkillAssetContentTextContent,
+        SkillAssetContentTextContentTypedDict,
+        SkillAssetContentTypedDict,
     )
-    from .skillcontent import SkillContent, SkillContentTypedDict
-    from .skilllistitem import SkillListItem, SkillListItemTypedDict
-    from .skillresponse import SkillResponse, SkillResponseTypedDict
+    from .skilldefinition import SkillDefinition, SkillDefinitionTypedDict
     from .skills_create_versionop import (
         CreateSkillVersionRequest,
         CreateSkillVersionRequestTypedDict,
@@ -2025,36 +2178,29 @@ if TYPE_CHECKING:
         SkillsListResponseResultTypedDict,
         SkillsListResponseTypedDict,
     )
-    from .skills_update_attributesop import (
-        SkillsUpdateAttributesRequest,
-        SkillsUpdateAttributesRequestTypedDict,
-        SkillsUpdateAttributesResponse,
-        SkillsUpdateAttributesResponseTypedDict,
-        UpdateSkillAttributesRequest,
-        UpdateSkillAttributesRequestTypedDict,
+    from .skills_update_version_metadataop import (
+        SkillsUpdateVersionMetadataRequest,
+        SkillsUpdateVersionMetadataRequestTypedDict,
+        SkillsUpdateVersionMetadataResponse,
+        SkillsUpdateVersionMetadataResponseTypedDict,
+        UpdateSkillVersionRequest,
+        UpdateSkillVersionRequestTypedDict,
     )
-    from .skills_update_sharing_scopeop import (
-        SkillsUpdateSharingScopeRequest,
-        SkillsUpdateSharingScopeRequestTypedDict,
-        SkillsUpdateSharingScopeResponse,
-        SkillsUpdateSharingScopeResponseTypedDict,
-        UpdateSkillSharingScopeRequest,
-        UpdateSkillSharingScopeRequestTypedDict,
+    from .skills_updateop import (
+        SkillsUpdateRequest,
+        SkillsUpdateRequestTypedDict,
+        SkillsUpdateResponse,
+        SkillsUpdateResponseTypedDict,
+        UpdateSkillRequest,
+        UpdateSkillRequestTypedDict,
     )
-    from .skills_update_version_attributesop import (
-        SkillsUpdateVersionAttributesRequest,
-        SkillsUpdateVersionAttributesRequestTypedDict,
-        SkillsUpdateVersionAttributesResponse,
-        SkillsUpdateVersionAttributesResponseTypedDict,
-        UpdateSkillVersionAttributesRequest,
-        UpdateSkillVersionAttributesRequestTypedDict,
-    )
-    from .skillversionitem import SkillVersionItem, SkillVersionItemTypedDict
-    from .skillversionresponse import (
-        SkillVersionResponse,
-        SkillVersionResponseTypedDict,
-    )
+    from .skillversion import SkillVersion, SkillVersionTypedDict
     from .source import Source
+    from .spanevaluationsrequest import (
+        SpanEvaluationsRequest,
+        SpanEvaluationsRequestTypedDict,
+    )
+    from .spansrequest import SpansRequest, SpansRequestTypedDict
     from .speech_v1_audio_speech_postop import (
         SpeechResponse,
         SpeechResponseTypedDict,
@@ -2075,12 +2221,33 @@ if TYPE_CHECKING:
     from .speechstreamdone import SpeechStreamDone, SpeechStreamDoneTypedDict
     from .speechstreameventtypes import SpeechStreamEventTypes
     from .ssetypes import SSETypes
+    from .stream_deployment_logsop import (
+        StreamDeploymentLogsData,
+        StreamDeploymentLogsDataTypedDict,
+        StreamDeploymentLogsEvent,
+        StreamDeploymentLogsRequest,
+        StreamDeploymentLogsRequestTypedDict,
+        StreamDeploymentLogsResponseBody,
+        StreamDeploymentLogsResponseBodyTypedDict,
+    )
     from .stream_v1_workflows_executions_execution_id_stream_getop import (
+        StreamV1WorkflowsExecutionsExecutionIDStreamGetData,
+        StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody,
         StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict,
     )
+    from .stream_workflow_execution_logsop import (
+        StreamWorkflowExecutionLogsData,
+        StreamWorkflowExecutionLogsDataTypedDict,
+        StreamWorkflowExecutionLogsEvent,
+        StreamWorkflowExecutionLogsRequest,
+        StreamWorkflowExecutionLogsRequestTypedDict,
+        StreamWorkflowExecutionLogsResponseBody,
+        StreamWorkflowExecutionLogsResponseBodyTypedDict,
+    )
+    from .streamerror import StreamError, StreamErrorTypedDict
     from .streameventssepayload import (
         StreamEventSsePayload,
         StreamEventSsePayloadData,
@@ -2091,7 +2258,6 @@ if TYPE_CHECKING:
         StreamEventWorkflowContext,
         StreamEventWorkflowContextTypedDict,
     )
-    from .stringlist import StringList, StringListTypedDict
     from .systemmessage import (
         SystemMessage,
         SystemMessageContent,
@@ -2240,6 +2406,8 @@ if TYPE_CHECKING:
     )
     from .toolscapability import ToolsCapability, ToolsCapabilityTypedDict
     from .tooltype import ToolType
+    from .tooltypes import ToolTypes
+    from .tracesrequest import TracesRequest, TracesRequestTypedDict
     from .trainingfile import TrainingFile, TrainingFileTypedDict
     from .transcriptionresponse import (
         TranscriptionResponse,
@@ -2288,6 +2456,10 @@ if TYPE_CHECKING:
         UnarchiveModelResponse,
         UnarchiveModelResponseTypedDict,
     )
+    from .unregister_search_index_v1_rag_indexes_index_index_id_deleteop import (
+        UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest,
+        UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict,
+    )
     from .unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop import (
         UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest,
         UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict,
@@ -2303,6 +2475,12 @@ if TYPE_CHECKING:
     from .update_dataset_v1_observability_datasets_dataset_id_patchop import (
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest,
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict,
+    )
+    from .update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop import (
+        MetricsData,
+        MetricsDataTypedDict,
+        UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest,
+        UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict,
     )
     from .update_judge_v1_observability_judges_judge_id_putop import (
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
@@ -2352,10 +2530,26 @@ if TYPE_CHECKING:
     )
     from .updatedefinition import UpdateDefinition, UpdateDefinitionTypedDict
     from .updatedocumentrequest import (
-        AttributesUnion,
-        AttributesUnionTypedDict,
+        Attributes,
+        AttributesTypedDict,
         UpdateDocumentRequest,
         UpdateDocumentRequestTypedDict,
+    )
+    from .updateindexmetricsrequestindexmetricsoffline import (
+        UpdateIndexMetricsRequestIndexMetricsOffline,
+        UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict,
+    )
+    from .updateindexmetricsrequestindexmetricsonline import (
+        UpdateIndexMetricsRequestIndexMetricsOnline,
+        UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict,
+    )
+    from .updateindexmetricsrequestschemametrics import (
+        UpdateIndexMetricsRequestSchemaMetrics,
+        UpdateIndexMetricsRequestSchemaMetricsTypedDict,
+    )
+    from .updateindexsummaryrequestsummary import (
+        UpdateIndexSummaryRequestSummary,
+        UpdateIndexSummaryRequestSummaryTypedDict,
     )
     from .updateinvocationbody import (
         UpdateInvocationBody,
@@ -2374,27 +2568,10 @@ if TYPE_CHECKING:
         UpdateLibraryRequestTypedDict,
     )
     from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
-    from .updatepromptresponse import (
-        UpdatePromptResponse,
-        UpdatePromptResponseTypedDict,
-    )
-    from .updatepromptsharingscoperesponse import (
-        UpdatePromptSharingScopeResponse,
-        UpdatePromptSharingScopeResponseTypedDict,
-    )
-    from .updatepromptversionresponse import (
-        UpdatePromptVersionResponse,
-        UpdatePromptVersionResponseTypedDict,
-    )
     from .updateruninfo import UpdateRunInfo, UpdateRunInfoTypedDict
-    from .updateskillresponse import UpdateSkillResponse, UpdateSkillResponseTypedDict
-    from .updateskillsharingscoperesponse import (
-        UpdateSkillSharingScopeResponse,
-        UpdateSkillSharingScopeResponseTypedDict,
-    )
-    from .updateskillversionresponse import (
-        UpdateSkillVersionResponse,
-        UpdateSkillVersionResponseTypedDict,
+    from .updateschemasummaryrequestsummary import (
+        UpdateSchemaSummaryRequestSummary,
+        UpdateSchemaSummaryRequestSummaryTypedDict,
     )
     from .updateworkflowresponse import (
         UpdateWorkflowResponse,
@@ -2415,13 +2592,6 @@ if TYPE_CHECKING:
         LocTypedDict,
         ValidationError,
         ValidationErrorTypedDict,
-    )
-    from .versionattributes import VersionAttributes, VersionAttributesTypedDict
-    from .versionmetadata import VersionMetadata, VersionMetadataTypedDict
-    from .vespaschemaresponse import VespaSchemaResponse, VespaSchemaResponseTypedDict
-    from .vespasearchindexinforesponse import (
-        VespaSearchIndexInfoResponse,
-        VespaSearchIndexInfoResponseTypedDict,
     )
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
@@ -2606,6 +2776,7 @@ if TYPE_CHECKING:
         WorkflowScheduleUpdateRequest,
         WorkflowScheduleUpdateRequestTypedDict,
     )
+    from .workflowstreamerror import WorkflowStreamError, WorkflowStreamErrorTypedDict
     from .workflowtaskfailedattributes import (
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
@@ -2759,8 +2930,6 @@ __all__ = [
     "AssistantMessageTypedDict",
     "Attributes",
     "AttributesTypedDict",
-    "AttributesUnion",
-    "AttributesUnionTypedDict",
     "Audience",
     "AudioChunk",
     "AudioChunkTypedDict",
@@ -2783,6 +2952,7 @@ __all__ = [
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
+    "BaseFieldDefinitionSupportedOperator",
     "BaseFieldDefinitionType",
     "BaseFieldDefinitionTypedDict",
     "BaseModelCard",
@@ -3089,34 +3259,22 @@ __all__ = [
     "CreateLibraryRequestTypedDict",
     "CreatePromptRequest",
     "CreatePromptRequestTypedDict",
-    "CreatePromptResponse",
-    "CreatePromptResponseTypedDict",
     "CreatePromptVersionRequest",
     "CreatePromptVersionRequestTypedDict",
     "CreatePromptVersionResponse",
     "CreatePromptVersionResponseTypedDict",
-    "CreateSearchIndexInfoRequest",
-    "CreateSearchIndexInfoRequestIndex",
-    "CreateSearchIndexInfoRequestIndexTypedDict",
-    "CreateSearchIndexInfoRequestStatus",
-    "CreateSearchIndexInfoRequestTypedDict",
     "CreateSkillRequest",
     "CreateSkillRequestTypedDict",
-    "CreateSkillResponse",
-    "CreateSkillResponseTypedDict",
     "CreateSkillVersionRequest",
     "CreateSkillVersionRequestTypedDict",
     "CreateSkillVersionResponse",
     "CreateSkillVersionResponseTypedDict",
-    "CreateVespaSchemaRequest",
-    "CreateVespaSchemaRequestTypedDict",
-    "CreateVespaSearchIndexInfoRequest",
-    "CreateVespaSearchIndexInfoRequestTypedDict",
     "CredentialsCreateOrUpdate",
     "CredentialsCreateOrUpdateTypedDict",
     "CredentialsResponse",
     "CredentialsResponseTypedDict",
     "CredentialsStatus",
+    "CredentialsStatusErrorReason",
     "CredentialsStatusTypedDict",
     "CustomConnector",
     "CustomConnectorTypedDict",
@@ -3186,6 +3344,10 @@ __all__ = [
     "DeploymentListResponseTypedDict",
     "DeploymentLocation",
     "DeploymentLocationTypedDict",
+    "DeploymentLogRecord",
+    "DeploymentLogRecordTypedDict",
+    "DeploymentLogSearchResponse",
+    "DeploymentLogSearchResponseTypedDict",
     "DeploymentResponse",
     "DeploymentResponseTypedDict",
     "DeploymentStatus",
@@ -3234,6 +3396,12 @@ __all__ = [
     "ExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostRequestTypedDict",
     "ExecutionConfig",
     "ExecutionConfigTypedDict",
+    "ExecutionLogRecord",
+    "ExecutionLogRecordTypedDict",
+    "ExecutionLogSearchResponse",
+    "ExecutionLogSearchResponseTypedDict",
+    "ExecutionTool",
+    "ExecutionToolTypedDict",
     "ExportDatasetResponse",
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
@@ -3242,8 +3410,6 @@ __all__ = [
     "ExpressionTypedDict",
     "ExtendedOAuthServerMetadata",
     "ExtendedOAuthServerMetadataTypedDict",
-    "ExtraAttribute",
-    "ExtraAttributeTypedDict",
     "FIMCompletionRequest",
     "FIMCompletionRequestStop",
     "FIMCompletionRequestStopTypedDict",
@@ -3261,6 +3427,14 @@ __all__ = [
     "FailureTypedDict",
     "FeedResultChatCompletionEventPreview",
     "FeedResultChatCompletionEventPreviewTypedDict",
+    "FeedResultGetLog",
+    "FeedResultGetLogTypedDict",
+    "FeedResultGetSpan",
+    "FeedResultGetSpanEvaluation",
+    "FeedResultGetSpanEvaluationTypedDict",
+    "FeedResultGetSpanTypedDict",
+    "FeedResultGetTrace",
+    "FeedResultGetTraceTypedDict",
     "FetchCampaignStatusResponse",
     "FetchCampaignStatusResponseTypedDict",
     "FetchChatCompletionFieldOptionsResponse",
@@ -3350,14 +3524,33 @@ __all__ = [
     "GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequestTypedDict",
     "GetDatasetsV1ObservabilityDatasetsGetRequest",
     "GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict",
+    "GetDeploymentLogsOrder",
+    "GetDeploymentLogsRequest",
+    "GetDeploymentLogsRequestTypedDict",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequest",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict",
     "GetFileResponse",
     "GetFileResponseTypedDict",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict",
     "GetJudgesV1ObservabilityJudgesGetRequest",
     "GetJudgesV1ObservabilityJudgesGetRequestTypedDict",
+    "GetLog",
+    "GetLogFieldOptions",
+    "GetLogFieldOptionsTypedDict",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetLogFields",
+    "GetLogFieldsTypedDict",
+    "GetLogTypedDict",
+    "GetLogs",
+    "GetLogsTypedDict",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict",
     "GetRunV1WorkflowsRunsRunIDGetRequest",
@@ -3369,14 +3562,73 @@ __all__ = [
     "GetSchedulesV1WorkflowsSchedulesGetResponse",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict",
     "GetSchedulesV1WorkflowsSchedulesGetStatus",
+    "GetSearchIndexDetailResponseIndex",
+    "GetSearchIndexDetailResponseIndexTypedDict",
+    "GetSearchIndexDetailResponseSchemaModel",
+    "GetSearchIndexDetailResponseSchemaModelTypedDict",
+    "GetSearchIndexSchemaDetailResponseField",
+    "GetSearchIndexSchemaDetailResponseFieldTypedDict",
+    "GetSearchIndexSchemaDetailResponseSchemaModel",
+    "GetSearchIndexSchemaDetailResponseSchemaModelTypedDict",
+    "GetSearchIndexSchemaSDFileResponseSDFile",
+    "GetSearchIndexSchemaSDFileResponseSDFileTypedDict",
+    "GetSearchIndexSummaryResponseIndex",
+    "GetSearchIndexSummaryResponseIndexIndex",
+    "GetSearchIndexSummaryResponseIndexIndexTypedDict",
+    "GetSearchIndexSummaryResponseIndexStatus",
+    "GetSearchIndexSummaryResponseIndexTypedDict",
+    "GetSearchIndexSummaryResponseVespaIndex",
+    "GetSearchIndexSummaryResponseVespaIndexTypedDict",
+    "GetSearchIndexSummaryResponseVespaSchemaModel",
+    "GetSearchIndexSummaryResponseVespaSchemaModelTypedDict",
     "GetSignedURLResponse",
     "GetSignedURLResponseTypedDict",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict",
+    "GetSpan",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict",
+    "GetSpanEvaluation",
+    "GetSpanEvaluationFieldOptions",
+    "GetSpanEvaluationFieldOptionsTypedDict",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetSpanEvaluationFields",
+    "GetSpanEvaluationFieldsTypedDict",
+    "GetSpanEvaluationTypedDict",
+    "GetSpanEvaluations",
+    "GetSpanEvaluationsTypedDict",
+    "GetSpanFieldOptions",
+    "GetSpanFieldOptionsTypedDict",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetSpanFields",
+    "GetSpanFieldsTypedDict",
+    "GetSpanStatusCode",
+    "GetSpanTypedDict",
+    "GetSpans",
+    "GetSpansTypedDict",
+    "GetStreamEventsV1WorkflowsEventsStreamGetData",
+    "GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict",
+    "GetTrace",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequest",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict",
+    "GetTraceFieldOptions",
+    "GetTraceFieldOptionsTypedDict",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict",
+    "GetTraceFields",
+    "GetTraceFieldsTypedDict",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict",
+    "GetTraceStatusCode",
+    "GetTraceTypedDict",
+    "GetTraces",
+    "GetTracesTypedDict",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest",
@@ -3385,6 +3637,9 @@ __all__ = [
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict",
+    "GetWorkflowExecutionLogsOrder",
+    "GetWorkflowExecutionLogsRequest",
+    "GetWorkflowExecutionLogsRequestTypedDict",
     "GetWorkflowExecutionTraceEventsRequest",
     "GetWorkflowExecutionTraceEventsRequestTypedDict",
     "GetWorkflowExecutionTraceOtelRequest",
@@ -3406,11 +3661,10 @@ __all__ = [
     "GetWorkflowsV1WorkflowsGetRequestTypedDict",
     "GetWorkflowsV1WorkflowsGetResponse",
     "GetWorkflowsV1WorkflowsGetResponseTypedDict",
+    "GetWorkflowsV1WorkflowsGetStatus",
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict",
     "GithubRepository",
     "GithubRepositoryTypedDict",
-    "GoogleProtobufAny",
-    "GoogleProtobufAnyTypedDict",
-    "GoogleProtobufNullValue",
     "GuardrailConfig",
     "GuardrailConfigTypedDict",
     "HTTPStatus",
@@ -3629,6 +3883,8 @@ __all__ = [
     "LogicalExpression",
     "LogicalExpressionType",
     "LogicalExpressionTypedDict",
+    "LogsRequest",
+    "LogsRequestTypedDict",
     "MCPPrompt",
     "MCPPromptTypedDict",
     "MCPResource",
@@ -3678,10 +3934,10 @@ __all__ = [
     "MessageResponseTypedDict",
     "MessageTokens",
     "MessageTokensTypedDict",
-    "Metadata",
-    "MetadataTypedDict",
     "Metric",
     "MetricTypedDict",
+    "MetricsData",
+    "MetricsDataTypedDict",
     "MistralPromptMode",
     "ModelCapabilities",
     "ModelCapabilitiesTypedDict",
@@ -3710,8 +3966,6 @@ __all__ = [
     "MultiPartBodyParamsTypedDict",
     "NetworkEncodedInput",
     "NetworkEncodedInputTypedDict",
-    "NullValue",
-    "NullValueTypedDict",
     "OAuth2Token",
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
@@ -3743,7 +3997,12 @@ __all__ = [
     "OptionTypedDict",
     "Or",
     "OrTypedDict",
+    "Order",
     "OrderBy",
+    "OtelFieldDefinition",
+    "OtelFieldDefinitionSupportedOperator",
+    "OtelFieldDefinitionType",
+    "OtelFieldDefinitionTypedDict",
     "OutboundAuthenticationType",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
@@ -3789,22 +4048,18 @@ __all__ = [
     "ProcessStatus",
     "ProcessingStatus",
     "ProcessingStatusTypedDict",
+    "Prompt",
     "PromptArgument",
     "PromptArgumentTypedDict",
-    "PromptContent",
-    "PromptContentTypedDict",
-    "PromptListItem",
-    "PromptListItemTypedDict",
-    "PromptResponse",
-    "PromptResponseTypedDict",
+    "PromptDefinition",
+    "PromptDefinitionTypedDict",
     "PromptTokensDetails",
     "PromptTokensDetailsTypedDict",
+    "PromptTypedDict",
     "PromptVariable",
     "PromptVariableTypedDict",
-    "PromptVersionItem",
-    "PromptVersionItemTypedDict",
-    "PromptVersionResponse",
-    "PromptVersionResponseTypedDict",
+    "PromptVersion",
+    "PromptVersionTypedDict",
     "Prompts",
     "PromptsCapability",
     "PromptsCapabilityTypedDict",
@@ -3837,22 +4092,28 @@ __all__ = [
     "PromptsListVersionsResponse",
     "PromptsListVersionsResponseTypedDict",
     "PromptsTypedDict",
-    "PromptsUpdateAttributesRequest",
-    "PromptsUpdateAttributesRequestTypedDict",
-    "PromptsUpdateAttributesResponse",
-    "PromptsUpdateAttributesResponseTypedDict",
-    "PromptsUpdateSharingScopeRequest",
-    "PromptsUpdateSharingScopeRequestTypedDict",
-    "PromptsUpdateSharingScopeResponse",
-    "PromptsUpdateSharingScopeResponseTypedDict",
-    "PromptsUpdateVersionAttributesRequest",
-    "PromptsUpdateVersionAttributesRequestTypedDict",
-    "PromptsUpdateVersionAttributesResponse",
-    "PromptsUpdateVersionAttributesResponseTypedDict",
+    "PromptsUpdateRequest",
+    "PromptsUpdateRequestTypedDict",
+    "PromptsUpdateResponse",
+    "PromptsUpdateResponseTypedDict",
+    "PromptsUpdateVersionMetadataRequest",
+    "PromptsUpdateVersionMetadataRequestTypedDict",
+    "PromptsUpdateVersionMetadataResponse",
+    "PromptsUpdateVersionMetadataResponseTypedDict",
+    "ProtobufAny",
+    "ProtobufAnyTypedDict",
     "PublicAuthenticationMethod",
     "PublicAuthenticationMethodTypedDict",
     "PublicConnectionConfig",
     "PublicConnectionConfigTypedDict",
+    "PublicConnectorExecutionData",
+    "PublicConnectorExecutionDataTypedDict",
+    "PublicExecutionConnectionConfig",
+    "PublicExecutionConnectionConfigTypedDict",
+    "PublicExecutionConnector",
+    "PublicExecutionConnectorTypedDict",
+    "PublicExecutionEnv",
+    "PublicExecutionEnvTypedDict",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -3892,6 +4153,20 @@ __all__ = [
     "ReferenceChunkTypedDict",
     "ReferenceID",
     "ReferenceIDTypedDict",
+    "RegisterSearchIndexRequestIndex",
+    "RegisterSearchIndexRequestIndexIndex",
+    "RegisterSearchIndexRequestIndexIndexTypedDict",
+    "RegisterSearchIndexRequestIndexStatus",
+    "RegisterSearchIndexRequestIndexTypedDict",
+    "RegisterSearchIndexRequestVespaIndex",
+    "RegisterSearchIndexRequestVespaIndexTypedDict",
+    "RegisterSearchIndexRequestVespaSchemaField",
+    "RegisterSearchIndexRequestVespaSchemaFieldTypedDict",
+    "RegisterSearchIndexRequestVespaSchemaModel",
+    "RegisterSearchIndexRequestVespaSchemaModelTypedDict",
+    "RegisterSearchIndexResponseIndex",
+    "RegisterSearchIndexResponseIndexTypedDict",
+    "RegistrySharingScope",
     "RequestSource",
     "RequiresConfirmation",
     "RequiresConfirmationTypedDict",
@@ -3963,6 +4238,9 @@ __all__ = [
     "ScheduleRangeTypedDict",
     "ScheduleRecentExecution",
     "ScheduleRecentExecutionTypedDict",
+    "SchemaFieldIndex",
+    "SchemaFieldStorage",
+    "SchemaFieldType",
     "Scope",
     "SearchChatCompletionEventIdsRequest",
     "SearchChatCompletionEventIdsRequestTypedDict",
@@ -3972,11 +4250,16 @@ __all__ = [
     "SearchChatCompletionEventsRequestTypedDict",
     "SearchChatCompletionEventsResponse",
     "SearchChatCompletionEventsResponseTypedDict",
-    "SearchIndexResponse",
-    "SearchIndexResponseIndex",
-    "SearchIndexResponseIndexTypedDict",
-    "SearchIndexResponseStatus",
-    "SearchIndexResponseTypedDict",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict",
+    "SearchLogsV1ObservabilityLogsSearchPostRequest",
+    "SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict",
+    "SearchSpansV1ObservabilitySpansSearchPostRequest",
+    "SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict",
+    "SearchTracesV1ObservabilityTracesSearchPostRequest",
+    "SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict",
     "Security",
     "SecurityTypedDict",
     "ServerCapabilities",
@@ -3987,13 +4270,16 @@ __all__ = [
     "ServerTasksCapabilityTypedDict",
     "ServerTasksRequestsCapability",
     "ServerTasksRequestsCapabilityTypedDict",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict",
     "ShareEnum",
     "Sharing",
     "SharingDelete",
     "SharingDeleteTypedDict",
     "SharingRequest",
     "SharingRequestTypedDict",
-    "SharingScope",
     "SharingTypedDict",
     "SignalDefinition",
     "SignalDefinitionTypedDict",
@@ -4007,20 +4293,16 @@ __all__ = [
     "SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequestTypedDict",
     "SignalWorkflowResponse",
     "SignalWorkflowResponseTypedDict",
-    "SkillAsset",
-    "SkillAssetTextContent",
-    "SkillAssetTextContentTypedDict",
-    "SkillAssetTypedDict",
-    "SkillContent",
-    "SkillContentTypedDict",
-    "SkillListItem",
-    "SkillListItemTypedDict",
-    "SkillResponse",
-    "SkillResponseTypedDict",
-    "SkillVersionItem",
-    "SkillVersionItemTypedDict",
-    "SkillVersionResponse",
-    "SkillVersionResponseTypedDict",
+    "Skill",
+    "SkillAssetContent",
+    "SkillAssetContentTextContent",
+    "SkillAssetContentTextContentTypedDict",
+    "SkillAssetContentTypedDict",
+    "SkillDefinition",
+    "SkillDefinitionTypedDict",
+    "SkillTypedDict",
+    "SkillVersion",
+    "SkillVersionTypedDict",
     "SkillsCreateResponse",
     "SkillsCreateResponseTypedDict",
     "SkillsCreateVersionRequest",
@@ -4049,22 +4331,22 @@ __all__ = [
     "SkillsListVersionsRequestTypedDict",
     "SkillsListVersionsResponse",
     "SkillsListVersionsResponseTypedDict",
-    "SkillsUpdateAttributesRequest",
-    "SkillsUpdateAttributesRequestTypedDict",
-    "SkillsUpdateAttributesResponse",
-    "SkillsUpdateAttributesResponseTypedDict",
-    "SkillsUpdateSharingScopeRequest",
-    "SkillsUpdateSharingScopeRequestTypedDict",
-    "SkillsUpdateSharingScopeResponse",
-    "SkillsUpdateSharingScopeResponseTypedDict",
-    "SkillsUpdateVersionAttributesRequest",
-    "SkillsUpdateVersionAttributesRequestTypedDict",
-    "SkillsUpdateVersionAttributesResponse",
-    "SkillsUpdateVersionAttributesResponseTypedDict",
+    "SkillsUpdateRequest",
+    "SkillsUpdateRequestTypedDict",
+    "SkillsUpdateResponse",
+    "SkillsUpdateResponseTypedDict",
+    "SkillsUpdateVersionMetadataRequest",
+    "SkillsUpdateVersionMetadataRequestTypedDict",
+    "SkillsUpdateVersionMetadataResponse",
+    "SkillsUpdateVersionMetadataResponseTypedDict",
     "SkipConfirmation",
     "SkipConfirmationTypedDict",
     "SortBy",
     "Source",
+    "SpanEvaluationsRequest",
+    "SpanEvaluationsRequestTypedDict",
+    "SpansRequest",
+    "SpansRequestTypedDict",
     "SpeechOutputFormat",
     "SpeechRequest",
     "SpeechRequestTypedDict",
@@ -4081,23 +4363,34 @@ __all__ = [
     "SpeechV1AudioSpeechPostDataTypedDict",
     "SpeechV1AudioSpeechPostResponse",
     "SpeechV1AudioSpeechPostResponseTypedDict",
+    "StreamDeploymentLogsData",
+    "StreamDeploymentLogsDataTypedDict",
+    "StreamDeploymentLogsEvent",
+    "StreamDeploymentLogsRequest",
+    "StreamDeploymentLogsRequestTypedDict",
+    "StreamDeploymentLogsResponseBody",
+    "StreamDeploymentLogsResponseBodyTypedDict",
+    "StreamError",
+    "StreamErrorTypedDict",
     "StreamEventSsePayload",
     "StreamEventSsePayloadData",
     "StreamEventSsePayloadDataTypedDict",
     "StreamEventSsePayloadTypedDict",
     "StreamEventWorkflowContext",
     "StreamEventWorkflowContextTypedDict",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetData",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict",
-    "StringList",
-    "StringListTypedDict",
-    "StringValue",
-    "StringValueTypedDict",
-    "StringValues",
-    "StringValuesTypedDict",
-    "SupportedOperator",
+    "StreamWorkflowExecutionLogsData",
+    "StreamWorkflowExecutionLogsDataTypedDict",
+    "StreamWorkflowExecutionLogsEvent",
+    "StreamWorkflowExecutionLogsRequest",
+    "StreamWorkflowExecutionLogsRequestTypedDict",
+    "StreamWorkflowExecutionLogsResponseBody",
+    "StreamWorkflowExecutionLogsResponseBodyTypedDict",
     "SystemMessage",
     "SystemMessageContent",
     "SystemMessageContentChunks",
@@ -4210,10 +4503,13 @@ __all__ = [
     "ToolReferenceChunkTypedDict",
     "ToolType",
     "ToolTypedDict",
+    "ToolTypes",
     "Tools",
     "ToolsCapability",
     "ToolsCapabilityTypedDict",
     "ToolsTypedDict",
+    "TracesRequest",
+    "TracesRequestTypedDict",
     "TrainingFile",
     "TrainingFileTypedDict",
     "TranscriptionResponse",
@@ -4256,6 +4552,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
+    "UnknownGetSearchIndexSummaryResponseIndexIndex",
     "UnknownJSONPatch",
     "UnknownJobsAPIRoutesFineTuningCancelFineTuningJobResponse",
     "UnknownJobsAPIRoutesFineTuningGetFineTuningJobResponse",
@@ -4268,9 +4565,10 @@ __all__ = [
     "UnknownPayload",
     "UnknownResponse",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
-    "UnknownSearchIndexResponseIndex",
     "UnknownSpeechV1AudioSpeechPostData",
     "UnknownTranscriptionStreamEventsData",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict",
     "UpdateAgentRequest",
@@ -4295,6 +4593,16 @@ __all__ = [
     "UpdateDefinitionTypedDict",
     "UpdateDocumentRequest",
     "UpdateDocumentRequestTypedDict",
+    "UpdateIndexMetricsRequestIndexMetricsOffline",
+    "UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict",
+    "UpdateIndexMetricsRequestIndexMetricsOnline",
+    "UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict",
+    "UpdateIndexMetricsRequestSchemaMetrics",
+    "UpdateIndexMetricsRequestSchemaMetricsTypedDict",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict",
+    "UpdateIndexSummaryRequestSummary",
+    "UpdateIndexSummaryRequestSummaryTypedDict",
     "UpdateInvocationBody",
     "UpdateInvocationBodyInput",
     "UpdateInvocationBodyInputTypedDict",
@@ -4309,36 +4617,22 @@ __all__ = [
     "UpdateLibraryRequestTypedDict",
     "UpdateModelRequest",
     "UpdateModelRequestTypedDict",
-    "UpdatePromptAttributesRequest",
-    "UpdatePromptAttributesRequestTypedDict",
-    "UpdatePromptResponse",
-    "UpdatePromptResponseTypedDict",
-    "UpdatePromptSharingScopeRequest",
-    "UpdatePromptSharingScopeRequestTypedDict",
-    "UpdatePromptSharingScopeResponse",
-    "UpdatePromptSharingScopeResponseTypedDict",
-    "UpdatePromptVersionAttributesRequest",
-    "UpdatePromptVersionAttributesRequestTypedDict",
-    "UpdatePromptVersionResponse",
-    "UpdatePromptVersionResponseTypedDict",
+    "UpdatePromptRequest",
+    "UpdatePromptRequestTypedDict",
+    "UpdatePromptVersionRequest",
+    "UpdatePromptVersionRequestTypedDict",
     "UpdateRunInfo",
     "UpdateRunInfoTypedDict",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict",
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest",
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict",
-    "UpdateSkillAttributesRequest",
-    "UpdateSkillAttributesRequestTypedDict",
-    "UpdateSkillResponse",
-    "UpdateSkillResponseTypedDict",
-    "UpdateSkillSharingScopeRequest",
-    "UpdateSkillSharingScopeRequestTypedDict",
-    "UpdateSkillSharingScopeResponse",
-    "UpdateSkillSharingScopeResponseTypedDict",
-    "UpdateSkillVersionAttributesRequest",
-    "UpdateSkillVersionAttributesRequestTypedDict",
-    "UpdateSkillVersionResponse",
-    "UpdateSkillVersionResponseTypedDict",
+    "UpdateSchemaSummaryRequestSummary",
+    "UpdateSchemaSummaryRequestSummaryTypedDict",
+    "UpdateSkillRequest",
+    "UpdateSkillRequestTypedDict",
+    "UpdateSkillVersionRequest",
+    "UpdateSkillVersionRequestTypedDict",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest",
@@ -4357,14 +4651,6 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
-    "VersionAttributes",
-    "VersionAttributesTypedDict",
-    "VersionMetadata",
-    "VersionMetadataTypedDict",
-    "VespaSchemaResponse",
-    "VespaSchemaResponseTypedDict",
-    "VespaSearchIndexInfoResponse",
-    "VespaSearchIndexInfoResponseTypedDict",
     "Visibility",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
@@ -4475,6 +4761,8 @@ __all__ = [
     "WorkflowScheduleTriggerRequestTypedDict",
     "WorkflowScheduleUpdateRequest",
     "WorkflowScheduleUpdateRequestTypedDict",
+    "WorkflowStreamError",
+    "WorkflowStreamErrorTypedDict",
     "WorkflowTaskFailedAttributes",
     "WorkflowTaskFailedAttributesTypedDict",
     "WorkflowTaskFailedResponse",
@@ -4607,8 +4895,6 @@ _dynamic_imports: dict[str, str] = {
     "AssistantMessageContent": ".assistantmessage",
     "AssistantMessageContentTypedDict": ".assistantmessage",
     "AssistantMessageTypedDict": ".assistantmessage",
-    "Attributes": ".attributes",
-    "AttributesTypedDict": ".attributes",
     "AudioChunk": ".audiochunk",
     "AudioChunkTypedDict": ".audiochunk",
     "AudioContent": ".audiocontent",
@@ -4628,9 +4914,9 @@ _dynamic_imports: dict[str, str] = {
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
     "BaseFieldDefinition": ".basefielddefinition",
+    "BaseFieldDefinitionSupportedOperator": ".basefielddefinition",
     "BaseFieldDefinitionType": ".basefielddefinition",
     "BaseFieldDefinitionTypedDict": ".basefielddefinition",
-    "SupportedOperator": ".basefielddefinition",
     "BaseModelCard": ".basemodelcard",
     "BaseModelCardTypedDict": ".basemodelcard",
     "BaseTaskStatus": ".basetaskstatus",
@@ -4947,31 +5233,19 @@ _dynamic_imports: dict[str, str] = {
     "OwnerType": ".createlibraryrequest",
     "CreatePromptRequest": ".createpromptrequest",
     "CreatePromptRequestTypedDict": ".createpromptrequest",
-    "CreatePromptResponse": ".createpromptresponse",
-    "CreatePromptResponseTypedDict": ".createpromptresponse",
     "CreatePromptVersionResponse": ".createpromptversionresponse",
     "CreatePromptVersionResponseTypedDict": ".createpromptversionresponse",
-    "CreateSearchIndexInfoRequest": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestIndex": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestIndexTypedDict": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestStatus": ".createsearchindexinforequest",
-    "CreateSearchIndexInfoRequestTypedDict": ".createsearchindexinforequest",
     "CreateSkillRequest": ".createskillrequest",
     "CreateSkillRequestTypedDict": ".createskillrequest",
-    "CreateSkillResponse": ".createskillresponse",
-    "CreateSkillResponseTypedDict": ".createskillresponse",
     "CreateSkillVersionResponse": ".createskillversionresponse",
     "CreateSkillVersionResponseTypedDict": ".createskillversionresponse",
-    "CreateVespaSchemaRequest": ".createvespaschemarequest",
-    "CreateVespaSchemaRequestTypedDict": ".createvespaschemarequest",
-    "CreateVespaSearchIndexInfoRequest": ".createvespasearchindexinforequest",
-    "CreateVespaSearchIndexInfoRequestTypedDict": ".createvespasearchindexinforequest",
     "CredentialsCreateOrUpdate": ".credentialscreateorupdate",
     "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
     "CredentialsResponse": ".credentialsresponse",
     "CredentialsResponseTypedDict": ".credentialsresponse",
     "CredentialsStatus": ".credentialsstatus",
     "CredentialsStatusTypedDict": ".credentialsstatus",
+    "CredentialsStatusErrorReason": ".credentialsstatuserrorreason",
     "Authorization": ".customconnector",
     "AuthorizationTypedDict": ".customconnector",
     "CustomConnector": ".customconnector",
@@ -5046,6 +5320,10 @@ _dynamic_imports: dict[str, str] = {
     "DeploymentListResponseTypedDict": ".deploymentlistresponse",
     "DeploymentLocation": ".deploymentlocation",
     "DeploymentLocationTypedDict": ".deploymentlocation",
+    "DeploymentLogRecord": ".deploymentlogrecord",
+    "DeploymentLogRecordTypedDict": ".deploymentlogrecord",
+    "DeploymentLogSearchResponse": ".deploymentlogsearchresponse",
+    "DeploymentLogSearchResponseTypedDict": ".deploymentlogsearchresponse",
     "DeploymentResponse": ".deploymentresponse",
     "DeploymentResponseTypedDict": ".deploymentresponse",
     "DeploymentWorkerResponse": ".deploymentworkerresponse",
@@ -5093,24 +5371,30 @@ _dynamic_imports: dict[str, str] = {
     "ResponseExecuteWorkflowV1WorkflowsWorkflowIdentifierExecutePostTypedDict": ".execute_workflow_v1_workflows_workflow_identifier_execute_postop",
     "ExecutionConfig": ".executionconfig",
     "ExecutionConfigTypedDict": ".executionconfig",
+    "ExecutionLogRecord": ".executionlogrecord",
+    "ExecutionLogRecordTypedDict": ".executionlogrecord",
+    "ExecutionLogSearchResponse": ".executionlogsearchresponse",
+    "ExecutionLogSearchResponseTypedDict": ".executionlogsearchresponse",
+    "ExecutionTool": ".executiontool",
+    "ExecutionToolTypedDict": ".executiontool",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
     "ExportDatasetResponseTypedDict": ".exportdatasetresponse",
     "ExtendedOAuthServerMetadata": ".extendedoauthservermetadata",
     "ExtendedOAuthServerMetadataTypedDict": ".extendedoauthservermetadata",
-    "ExtraAttribute": ".extraattribute",
-    "ExtraAttributeTypedDict": ".extraattribute",
-    "NullValue": ".extraattribute",
-    "NullValueTypedDict": ".extraattribute",
-    "StringValue": ".extraattribute",
-    "StringValueTypedDict": ".extraattribute",
-    "StringValues": ".extraattribute",
-    "StringValuesTypedDict": ".extraattribute",
     "Failure": ".failure",
     "FailureTypedDict": ".failure",
     "FeedResultChatCompletionEventPreview": ".feedresultchatcompletioneventpreview",
     "FeedResultChatCompletionEventPreviewTypedDict": ".feedresultchatcompletioneventpreview",
+    "FeedResultGetLog": ".feedresultgetlog",
+    "FeedResultGetLogTypedDict": ".feedresultgetlog",
+    "FeedResultGetSpan": ".feedresultgetspan",
+    "FeedResultGetSpanTypedDict": ".feedresultgetspan",
+    "FeedResultGetSpanEvaluation": ".feedresultgetspanevaluation",
+    "FeedResultGetSpanEvaluationTypedDict": ".feedresultgetspanevaluation",
+    "FeedResultGetTrace": ".feedresultgettrace",
+    "FeedResultGetTraceTypedDict": ".feedresultgettrace",
     "FetchCampaignStatusResponse": ".fetchcampaignstatusresponse",
     "FetchCampaignStatusResponseTypedDict": ".fetchcampaignstatusresponse",
     "FetchChatCompletionFieldOptionsResponse": ".fetchchatcompletionfieldoptionsresponse",
@@ -5218,12 +5502,23 @@ _dynamic_imports: dict[str, str] = {
     "GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequestTypedDict": ".get_dataset_records_v1_observability_datasets_dataset_id_records_getop",
     "GetDatasetsV1ObservabilityDatasetsGetRequest": ".get_datasets_v1_observability_datasets_getop",
     "GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict": ".get_datasets_v1_observability_datasets_getop",
+    "GetDeploymentLogsOrder": ".get_deployment_logsop",
+    "GetDeploymentLogsRequest": ".get_deployment_logsop",
+    "GetDeploymentLogsRequestTypedDict": ".get_deployment_logsop",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequest": ".get_deployment_v1_workflows_deployments_name_getop",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict": ".get_deployment_v1_workflows_deployments_name_getop",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest": ".get_index_details_v1_rag_indexes_index_index_id_detail_getop",
+    "GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequestTypedDict": ".get_index_details_v1_rag_indexes_index_index_id_detail_getop",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest": ".get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop",
+    "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict": ".get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
+    "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgesV1ObservabilityJudgesGetRequest": ".get_judges_v1_observability_judges_getop",
     "GetJudgesV1ObservabilityJudgesGetRequestTypedDict": ".get_judges_v1_observability_judges_getop",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
+    "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunV1WorkflowsRunsRunIDGetRequest": ".get_run_v1_workflows_runs_run_id_getop",
@@ -5237,11 +5532,25 @@ _dynamic_imports: dict[str, str] = {
     "GetSchedulesV1WorkflowsSchedulesGetStatus": ".get_schedules_v1_workflows_schedules_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest": ".get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop",
+    "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequestTypedDict": ".get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequest": ".get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop",
+    "GetSpanEvaluationFieldOptionsV1ObservabilitySpansEvaluationsFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_evaluation_field_options_v1_observability_spans_evaluations_fields_field_name_options_getop",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequest": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
+    "GetSpanFieldOptionsV1ObservabilitySpansFieldsFieldNameOptionsGetRequestTypedDict": ".get_span_field_options_v1_observability_spans_fields_field_name_options_getop",
+    "GetStreamEventsV1WorkflowsEventsStreamGetData": ".get_stream_events_v1_workflows_events_stream_getop",
+    "GetStreamEventsV1WorkflowsEventsStreamGetDataTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequest": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody": ".get_stream_events_v1_workflows_events_stream_getop",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict": ".get_stream_events_v1_workflows_events_stream_getop",
     "Scope": ".get_stream_events_v1_workflows_events_stream_getop",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequest": ".get_trace_by_id_v1_observability_traces_trace_id_getop",
+    "GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict": ".get_trace_by_id_v1_observability_traces_trace_id_getop",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequest": ".get_trace_field_options_v1_observability_traces_fields_field_name_options_getop",
+    "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict": ".get_trace_field_options_v1_observability_traces_fields_field_name_options_getop",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
+    "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest": ".get_voice_v1_audio_voices_voice_id_getop",
@@ -5250,6 +5559,9 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict": ".get_workflow_events_v1_workflows_events_list_getop",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest": ".get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequestTypedDict": ".get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop",
+    "GetWorkflowExecutionLogsOrder": ".get_workflow_execution_logsop",
+    "GetWorkflowExecutionLogsRequest": ".get_workflow_execution_logsop",
+    "GetWorkflowExecutionLogsRequestTypedDict": ".get_workflow_execution_logsop",
     "GetWorkflowExecutionTraceEventsRequest": ".get_workflow_execution_trace_eventsop",
     "GetWorkflowExecutionTraceEventsRequestTypedDict": ".get_workflow_execution_trace_eventsop",
     "GetWorkflowExecutionTraceOtelRequest": ".get_workflow_execution_trace_otelop",
@@ -5272,15 +5584,68 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowsV1WorkflowsGetRequestTypedDict": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetResponse": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetResponseTypedDict": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetStatus": ".get_workflows_v1_workflows_getop",
+    "GetWorkflowsV1WorkflowsGetStatusTypedDict": ".get_workflows_v1_workflows_getop",
     "GetFileResponse": ".getfileresponse",
     "GetFileResponseTypedDict": ".getfileresponse",
+    "GetLog": ".getlog",
+    "GetLogTypedDict": ".getlog",
+    "GetLogFieldOptions": ".getlogfieldoptions",
+    "GetLogFieldOptionsTypedDict": ".getlogfieldoptions",
+    "GetLogFields": ".getlogfields",
+    "GetLogFieldsTypedDict": ".getlogfields",
+    "GetLogs": ".getlogs",
+    "GetLogsTypedDict": ".getlogs",
+    "GetSearchIndexDetailResponseIndex": ".getsearchindexdetailresponseindex",
+    "GetSearchIndexDetailResponseIndexTypedDict": ".getsearchindexdetailresponseindex",
+    "GetSearchIndexDetailResponseSchemaModel": ".getsearchindexdetailresponseschemamodel",
+    "GetSearchIndexDetailResponseSchemaModelTypedDict": ".getsearchindexdetailresponseschemamodel",
+    "GetSearchIndexSchemaDetailResponseField": ".getsearchindexschemadetailresponsefield",
+    "GetSearchIndexSchemaDetailResponseFieldTypedDict": ".getsearchindexschemadetailresponsefield",
+    "GetSearchIndexSchemaDetailResponseSchemaModel": ".getsearchindexschemadetailresponseschemamodel",
+    "GetSearchIndexSchemaDetailResponseSchemaModelTypedDict": ".getsearchindexschemadetailresponseschemamodel",
+    "GetSearchIndexSchemaSDFileResponseSDFile": ".getsearchindexschemasdfileresponsesdfile",
+    "GetSearchIndexSchemaSDFileResponseSDFileTypedDict": ".getsearchindexschemasdfileresponsesdfile",
+    "GetSearchIndexSummaryResponseIndex": ".getsearchindexsummaryresponseindex",
+    "GetSearchIndexSummaryResponseIndexIndex": ".getsearchindexsummaryresponseindex",
+    "GetSearchIndexSummaryResponseIndexIndexTypedDict": ".getsearchindexsummaryresponseindex",
+    "GetSearchIndexSummaryResponseIndexStatus": ".getsearchindexsummaryresponseindex",
+    "GetSearchIndexSummaryResponseIndexTypedDict": ".getsearchindexsummaryresponseindex",
+    "UnknownGetSearchIndexSummaryResponseIndexIndex": ".getsearchindexsummaryresponseindex",
+    "GetSearchIndexSummaryResponseVespaIndex": ".getsearchindexsummaryresponsevespaindex",
+    "GetSearchIndexSummaryResponseVespaIndexTypedDict": ".getsearchindexsummaryresponsevespaindex",
+    "GetSearchIndexSummaryResponseVespaSchemaModel": ".getsearchindexsummaryresponsevespaschemamodel",
+    "GetSearchIndexSummaryResponseVespaSchemaModelTypedDict": ".getsearchindexsummaryresponsevespaschemamodel",
     "GetSignedURLResponse": ".getsignedurlresponse",
     "GetSignedURLResponseTypedDict": ".getsignedurlresponse",
+    "GetSpan": ".getspan",
+    "GetSpanStatusCode": ".getspan",
+    "GetSpanTypedDict": ".getspan",
+    "GetSpanEvaluation": ".getspanevaluation",
+    "GetSpanEvaluationTypedDict": ".getspanevaluation",
+    "GetSpanEvaluationFieldOptions": ".getspanevaluationfieldoptions",
+    "GetSpanEvaluationFieldOptionsTypedDict": ".getspanevaluationfieldoptions",
+    "GetSpanEvaluationFields": ".getspanevaluationfields",
+    "GetSpanEvaluationFieldsTypedDict": ".getspanevaluationfields",
+    "GetSpanEvaluations": ".getspanevaluations",
+    "GetSpanEvaluationsTypedDict": ".getspanevaluations",
+    "GetSpanFieldOptions": ".getspanfieldoptions",
+    "GetSpanFieldOptionsTypedDict": ".getspanfieldoptions",
+    "GetSpanFields": ".getspanfields",
+    "GetSpanFieldsTypedDict": ".getspanfields",
+    "GetSpans": ".getspans",
+    "GetSpansTypedDict": ".getspans",
+    "GetTrace": ".gettrace",
+    "GetTraceStatusCode": ".gettrace",
+    "GetTraceTypedDict": ".gettrace",
+    "GetTraceFieldOptions": ".gettracefieldoptions",
+    "GetTraceFieldOptionsTypedDict": ".gettracefieldoptions",
+    "GetTraceFields": ".gettracefields",
+    "GetTraceFieldsTypedDict": ".gettracefields",
+    "GetTraces": ".gettraces",
+    "GetTracesTypedDict": ".gettraces",
     "GithubRepository": ".githubrepository",
     "GithubRepositoryTypedDict": ".githubrepository",
-    "GoogleProtobufAny": ".google_protobuf_any",
-    "GoogleProtobufAnyTypedDict": ".google_protobuf_any",
-    "GoogleProtobufNullValue": ".google_protobuf_nullvalue",
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
     "HTTPStatus": ".httpstatus",
@@ -5508,6 +5873,9 @@ _dynamic_imports: dict[str, str] = {
     "ListWorkflowEventResponseEventTypedDict": ".listworkfloweventresponse",
     "ListWorkflowEventResponseTypedDict": ".listworkfloweventresponse",
     "LocationType": ".locationtype",
+    "LogsRequest": ".logsrequest",
+    "LogsRequestTypedDict": ".logsrequest",
+    "Order": ".logsrequest",
     "MCPPrompt": ".mcpprompt",
     "MCPPromptTypedDict": ".mcpprompt",
     "MCPResource": ".mcpresource",
@@ -5565,8 +5933,6 @@ _dynamic_imports: dict[str, str] = {
     "MessageResponseTypedDict": ".messageresponse",
     "MessageTokens": ".messagetokens",
     "MessageTokensTypedDict": ".messagetokens",
-    "Metadata": ".metadata",
-    "MetadataTypedDict": ".metadata",
     "Metric": ".metric",
     "MetricTypedDict": ".metric",
     "MistralPromptMode": ".mistralpromptmode",
@@ -5629,6 +5995,10 @@ _dynamic_imports: dict[str, str] = {
     "OCRTableObjectTypedDict": ".ocrtableobject",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
+    "OtelFieldDefinition": ".otelfielddefinition",
+    "OtelFieldDefinitionSupportedOperator": ".otelfielddefinition",
+    "OtelFieldDefinitionType": ".otelfielddefinition",
+    "OtelFieldDefinitionTypedDict": ".otelfielddefinition",
     "OutboundAuthenticationType": ".outboundauthenticationtype",
     "OutputContentChunks": ".outputcontentchunks",
     "OutputContentChunksTypedDict": ".outputcontentchunks",
@@ -5669,14 +6039,12 @@ _dynamic_imports: dict[str, str] = {
     "ProcessingStatus": ".processingstatus",
     "ProcessingStatusTypedDict": ".processingstatus",
     "ProcessStatus": ".processstatus",
+    "Prompt": ".prompt",
+    "PromptTypedDict": ".prompt",
     "PromptArgument": ".promptargument",
     "PromptArgumentTypedDict": ".promptargument",
-    "PromptContent": ".promptcontent",
-    "PromptContentTypedDict": ".promptcontent",
-    "PromptListItem": ".promptlistitem",
-    "PromptListItemTypedDict": ".promptlistitem",
-    "PromptResponse": ".promptresponse",
-    "PromptResponseTypedDict": ".promptresponse",
+    "PromptDefinition": ".promptdefinition",
+    "PromptDefinitionTypedDict": ".promptdefinition",
     "CreatePromptVersionRequest": ".prompts_create_versionop",
     "CreatePromptVersionRequestTypedDict": ".prompts_create_versionop",
     "PromptsCreateVersionRequest": ".prompts_create_versionop",
@@ -5707,38 +6075,40 @@ _dynamic_imports: dict[str, str] = {
     "PromptsListResponseResult": ".prompts_listop",
     "PromptsListResponseResultTypedDict": ".prompts_listop",
     "PromptsListResponseTypedDict": ".prompts_listop",
-    "PromptsUpdateAttributesRequest": ".prompts_update_attributesop",
-    "PromptsUpdateAttributesRequestTypedDict": ".prompts_update_attributesop",
-    "PromptsUpdateAttributesResponse": ".prompts_update_attributesop",
-    "PromptsUpdateAttributesResponseTypedDict": ".prompts_update_attributesop",
-    "UpdatePromptAttributesRequest": ".prompts_update_attributesop",
-    "UpdatePromptAttributesRequestTypedDict": ".prompts_update_attributesop",
-    "PromptsUpdateSharingScopeRequest": ".prompts_update_sharing_scopeop",
-    "PromptsUpdateSharingScopeRequestTypedDict": ".prompts_update_sharing_scopeop",
-    "PromptsUpdateSharingScopeResponse": ".prompts_update_sharing_scopeop",
-    "PromptsUpdateSharingScopeResponseTypedDict": ".prompts_update_sharing_scopeop",
-    "UpdatePromptSharingScopeRequest": ".prompts_update_sharing_scopeop",
-    "UpdatePromptSharingScopeRequestTypedDict": ".prompts_update_sharing_scopeop",
-    "PromptsUpdateVersionAttributesRequest": ".prompts_update_version_attributesop",
-    "PromptsUpdateVersionAttributesRequestTypedDict": ".prompts_update_version_attributesop",
-    "PromptsUpdateVersionAttributesResponse": ".prompts_update_version_attributesop",
-    "PromptsUpdateVersionAttributesResponseTypedDict": ".prompts_update_version_attributesop",
-    "UpdatePromptVersionAttributesRequest": ".prompts_update_version_attributesop",
-    "UpdatePromptVersionAttributesRequestTypedDict": ".prompts_update_version_attributesop",
+    "PromptsUpdateVersionMetadataRequest": ".prompts_update_version_metadataop",
+    "PromptsUpdateVersionMetadataRequestTypedDict": ".prompts_update_version_metadataop",
+    "PromptsUpdateVersionMetadataResponse": ".prompts_update_version_metadataop",
+    "PromptsUpdateVersionMetadataResponseTypedDict": ".prompts_update_version_metadataop",
+    "UpdatePromptVersionRequest": ".prompts_update_version_metadataop",
+    "UpdatePromptVersionRequestTypedDict": ".prompts_update_version_metadataop",
+    "PromptsUpdateRequest": ".prompts_updateop",
+    "PromptsUpdateRequestTypedDict": ".prompts_updateop",
+    "PromptsUpdateResponse": ".prompts_updateop",
+    "PromptsUpdateResponseTypedDict": ".prompts_updateop",
+    "UpdatePromptRequest": ".prompts_updateop",
+    "UpdatePromptRequestTypedDict": ".prompts_updateop",
     "PromptsCapability": ".promptscapability",
     "PromptsCapabilityTypedDict": ".promptscapability",
     "PromptTokensDetails": ".prompttokensdetails",
     "PromptTokensDetailsTypedDict": ".prompttokensdetails",
     "PromptVariable": ".promptvariable",
     "PromptVariableTypedDict": ".promptvariable",
-    "PromptVersionItem": ".promptversionitem",
-    "PromptVersionItemTypedDict": ".promptversionitem",
-    "PromptVersionResponse": ".promptversionresponse",
-    "PromptVersionResponseTypedDict": ".promptversionresponse",
+    "PromptVersion": ".promptversion",
+    "PromptVersionTypedDict": ".promptversion",
+    "ProtobufAny": ".protobufany",
+    "ProtobufAnyTypedDict": ".protobufany",
     "PublicAuthenticationMethod": ".publicauthenticationmethod",
     "PublicAuthenticationMethodTypedDict": ".publicauthenticationmethod",
     "PublicConnectionConfig": ".publicconnectionconfig",
     "PublicConnectionConfigTypedDict": ".publicconnectionconfig",
+    "PublicConnectorExecutionData": ".publicconnectorexecutiondata",
+    "PublicConnectorExecutionDataTypedDict": ".publicconnectorexecutiondata",
+    "PublicExecutionConnectionConfig": ".publicexecutionconnectionconfig",
+    "PublicExecutionConnectionConfigTypedDict": ".publicexecutionconnectionconfig",
+    "PublicExecutionConnector": ".publicexecutionconnector",
+    "PublicExecutionConnectorTypedDict": ".publicexecutionconnector",
+    "PublicExecutionEnv": ".publicexecutionenv",
+    "PublicExecutionEnvTypedDict": ".publicexecutionenv",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -5776,6 +6146,20 @@ _dynamic_imports: dict[str, str] = {
     "ReferenceChunkTypedDict": ".referencechunk",
     "ReferenceID": ".referencechunk",
     "ReferenceIDTypedDict": ".referencechunk",
+    "RegisterSearchIndexRequestIndex": ".registersearchindexrequestindex",
+    "RegisterSearchIndexRequestIndexIndex": ".registersearchindexrequestindex",
+    "RegisterSearchIndexRequestIndexIndexTypedDict": ".registersearchindexrequestindex",
+    "RegisterSearchIndexRequestIndexStatus": ".registersearchindexrequestindex",
+    "RegisterSearchIndexRequestIndexTypedDict": ".registersearchindexrequestindex",
+    "RegisterSearchIndexRequestVespaIndex": ".registersearchindexrequestvespaindex",
+    "RegisterSearchIndexRequestVespaIndexTypedDict": ".registersearchindexrequestvespaindex",
+    "RegisterSearchIndexRequestVespaSchemaField": ".registersearchindexrequestvespaschemafield",
+    "RegisterSearchIndexRequestVespaSchemaFieldTypedDict": ".registersearchindexrequestvespaschemafield",
+    "RegisterSearchIndexRequestVespaSchemaModel": ".registersearchindexrequestvespaschemamodel",
+    "RegisterSearchIndexRequestVespaSchemaModelTypedDict": ".registersearchindexrequestvespaschemamodel",
+    "RegisterSearchIndexResponseIndex": ".registersearchindexresponseindex",
+    "RegisterSearchIndexResponseIndexTypedDict": ".registersearchindexresponseindex",
+    "RegistrySharingScope": ".registrysharingscope",
     "RequestSource": ".requestsource",
     "ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequest": ".reset_workflow_v1_workflows_executions_execution_id_reset_postop",
     "ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequestTypedDict": ".reset_workflow_v1_workflows_executions_execution_id_reset_postop",
@@ -5830,6 +6214,19 @@ _dynamic_imports: dict[str, str] = {
     "ScheduleRangeTypedDict": ".schedulerange",
     "ScheduleRecentExecution": ".schedulerecentexecution",
     "ScheduleRecentExecutionTypedDict": ".schedulerecentexecution",
+    "SchemaFieldIndex": ".schemafieldindex",
+    "SchemaFieldStorage": ".schemafieldstorage",
+    "SchemaFieldType": ".schemafieldtype",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequest": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
+    "SearchLatestSpanEvaluationsV1ObservabilitySpansEvaluationsSearchLatestPostRequestTypedDict": ".search_latest_span_evaluations_v1_observability_spans_evaluations_search_latest_postop",
+    "SearchLogsV1ObservabilityLogsSearchPostRequest": ".search_logs_v1_observability_logs_search_postop",
+    "SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict": ".search_logs_v1_observability_logs_search_postop",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequest": ".search_span_evaluations_v1_observability_spans_evaluations_search_postop",
+    "SearchSpanEvaluationsV1ObservabilitySpansEvaluationsSearchPostRequestTypedDict": ".search_span_evaluations_v1_observability_spans_evaluations_search_postop",
+    "SearchSpansV1ObservabilitySpansSearchPostRequest": ".search_spans_v1_observability_spans_search_postop",
+    "SearchSpansV1ObservabilitySpansSearchPostRequestTypedDict": ".search_spans_v1_observability_spans_search_postop",
+    "SearchTracesV1ObservabilityTracesSearchPostRequest": ".search_traces_v1_observability_traces_search_postop",
+    "SearchTracesV1ObservabilityTracesSearchPostRequestTypedDict": ".search_traces_v1_observability_traces_search_postop",
     "SearchChatCompletionEventIdsRequest": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsRequestTypedDict": ".searchchatcompletioneventidsrequest",
     "SearchChatCompletionEventIdsResponse": ".searchchatcompletioneventidsresponse",
@@ -5838,12 +6235,6 @@ _dynamic_imports: dict[str, str] = {
     "SearchChatCompletionEventsRequestTypedDict": ".searchchatcompletioneventsrequest",
     "SearchChatCompletionEventsResponse": ".searchchatcompletioneventsresponse",
     "SearchChatCompletionEventsResponseTypedDict": ".searchchatcompletioneventsresponse",
-    "SearchIndexResponse": ".searchindexresponse",
-    "SearchIndexResponseIndex": ".searchindexresponse",
-    "SearchIndexResponseIndexTypedDict": ".searchindexresponse",
-    "SearchIndexResponseStatus": ".searchindexresponse",
-    "SearchIndexResponseTypedDict": ".searchindexresponse",
-    "UnknownSearchIndexResponseIndex": ".searchindexresponse",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "ServerCapabilities": ".servercapabilities",
@@ -5854,6 +6245,10 @@ _dynamic_imports: dict[str, str] = {
     "ServerTasksCapabilityTypedDict": ".servertaskscapability",
     "ServerTasksRequestsCapability": ".servertasksrequestscapability",
     "ServerTasksRequestsCapabilityTypedDict": ".servertasksrequestscapability",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
     "ShareEnum": ".shareenum",
     "Sharing": ".sharing",
     "SharingTypedDict": ".sharing",
@@ -5861,7 +6256,6 @@ _dynamic_imports: dict[str, str] = {
     "SharingDeleteTypedDict": ".sharingdelete",
     "SharingRequest": ".sharingrequest",
     "SharingRequestTypedDict": ".sharingrequest",
-    "SharingScope": ".sharingscope",
     "SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequest": ".signal_workflow_execution_v1_workflows_executions_execution_id_signals_postop",
     "SignalWorkflowExecutionV1WorkflowsExecutionsExecutionIDSignalsPostRequestTypedDict": ".signal_workflow_execution_v1_workflows_executions_execution_id_signals_postop",
     "SignalDefinition": ".signaldefinition",
@@ -5874,18 +6268,16 @@ _dynamic_imports: dict[str, str] = {
     "SignalInvocationBodyTypedDict": ".signalinvocationbody",
     "SignalWorkflowResponse": ".signalworkflowresponse",
     "SignalWorkflowResponseTypedDict": ".signalworkflowresponse",
-    "RawContent": ".skillasset",
-    "RawContentTypedDict": ".skillasset",
-    "SkillAsset": ".skillasset",
-    "SkillAssetTextContent": ".skillasset",
-    "SkillAssetTextContentTypedDict": ".skillasset",
-    "SkillAssetTypedDict": ".skillasset",
-    "SkillContent": ".skillcontent",
-    "SkillContentTypedDict": ".skillcontent",
-    "SkillListItem": ".skilllistitem",
-    "SkillListItemTypedDict": ".skilllistitem",
-    "SkillResponse": ".skillresponse",
-    "SkillResponseTypedDict": ".skillresponse",
+    "Skill": ".skill",
+    "SkillTypedDict": ".skill",
+    "RawContent": ".skillassetcontent",
+    "RawContentTypedDict": ".skillassetcontent",
+    "SkillAssetContent": ".skillassetcontent",
+    "SkillAssetContentTextContent": ".skillassetcontent",
+    "SkillAssetContentTextContentTypedDict": ".skillassetcontent",
+    "SkillAssetContentTypedDict": ".skillassetcontent",
+    "SkillDefinition": ".skilldefinition",
+    "SkillDefinitionTypedDict": ".skilldefinition",
     "CreateSkillVersionRequest": ".skills_create_versionop",
     "CreateSkillVersionRequestTypedDict": ".skills_create_versionop",
     "SkillsCreateVersionRequest": ".skills_create_versionop",
@@ -5916,29 +6308,25 @@ _dynamic_imports: dict[str, str] = {
     "SkillsListResponseResult": ".skills_listop",
     "SkillsListResponseResultTypedDict": ".skills_listop",
     "SkillsListResponseTypedDict": ".skills_listop",
-    "SkillsUpdateAttributesRequest": ".skills_update_attributesop",
-    "SkillsUpdateAttributesRequestTypedDict": ".skills_update_attributesop",
-    "SkillsUpdateAttributesResponse": ".skills_update_attributesop",
-    "SkillsUpdateAttributesResponseTypedDict": ".skills_update_attributesop",
-    "UpdateSkillAttributesRequest": ".skills_update_attributesop",
-    "UpdateSkillAttributesRequestTypedDict": ".skills_update_attributesop",
-    "SkillsUpdateSharingScopeRequest": ".skills_update_sharing_scopeop",
-    "SkillsUpdateSharingScopeRequestTypedDict": ".skills_update_sharing_scopeop",
-    "SkillsUpdateSharingScopeResponse": ".skills_update_sharing_scopeop",
-    "SkillsUpdateSharingScopeResponseTypedDict": ".skills_update_sharing_scopeop",
-    "UpdateSkillSharingScopeRequest": ".skills_update_sharing_scopeop",
-    "UpdateSkillSharingScopeRequestTypedDict": ".skills_update_sharing_scopeop",
-    "SkillsUpdateVersionAttributesRequest": ".skills_update_version_attributesop",
-    "SkillsUpdateVersionAttributesRequestTypedDict": ".skills_update_version_attributesop",
-    "SkillsUpdateVersionAttributesResponse": ".skills_update_version_attributesop",
-    "SkillsUpdateVersionAttributesResponseTypedDict": ".skills_update_version_attributesop",
-    "UpdateSkillVersionAttributesRequest": ".skills_update_version_attributesop",
-    "UpdateSkillVersionAttributesRequestTypedDict": ".skills_update_version_attributesop",
-    "SkillVersionItem": ".skillversionitem",
-    "SkillVersionItemTypedDict": ".skillversionitem",
-    "SkillVersionResponse": ".skillversionresponse",
-    "SkillVersionResponseTypedDict": ".skillversionresponse",
+    "SkillsUpdateVersionMetadataRequest": ".skills_update_version_metadataop",
+    "SkillsUpdateVersionMetadataRequestTypedDict": ".skills_update_version_metadataop",
+    "SkillsUpdateVersionMetadataResponse": ".skills_update_version_metadataop",
+    "SkillsUpdateVersionMetadataResponseTypedDict": ".skills_update_version_metadataop",
+    "UpdateSkillVersionRequest": ".skills_update_version_metadataop",
+    "UpdateSkillVersionRequestTypedDict": ".skills_update_version_metadataop",
+    "SkillsUpdateRequest": ".skills_updateop",
+    "SkillsUpdateRequestTypedDict": ".skills_updateop",
+    "SkillsUpdateResponse": ".skills_updateop",
+    "SkillsUpdateResponseTypedDict": ".skills_updateop",
+    "UpdateSkillRequest": ".skills_updateop",
+    "UpdateSkillRequestTypedDict": ".skills_updateop",
+    "SkillVersion": ".skillversion",
+    "SkillVersionTypedDict": ".skillversion",
     "Source": ".source",
+    "SpanEvaluationsRequest": ".spanevaluationsrequest",
+    "SpanEvaluationsRequestTypedDict": ".spanevaluationsrequest",
+    "SpansRequest": ".spansrequest",
+    "SpansRequestTypedDict": ".spansrequest",
     "SpeechResponse": ".speech_v1_audio_speech_postop",
     "SpeechResponseTypedDict": ".speech_v1_audio_speech_postop",
     "SpeechStreamEvents": ".speech_v1_audio_speech_postop",
@@ -5957,18 +6345,34 @@ _dynamic_imports: dict[str, str] = {
     "SpeechStreamDoneTypedDict": ".speechstreamdone",
     "SpeechStreamEventTypes": ".speechstreameventtypes",
     "SSETypes": ".ssetypes",
+    "StreamDeploymentLogsData": ".stream_deployment_logsop",
+    "StreamDeploymentLogsDataTypedDict": ".stream_deployment_logsop",
+    "StreamDeploymentLogsEvent": ".stream_deployment_logsop",
+    "StreamDeploymentLogsRequest": ".stream_deployment_logsop",
+    "StreamDeploymentLogsRequestTypedDict": ".stream_deployment_logsop",
+    "StreamDeploymentLogsResponseBody": ".stream_deployment_logsop",
+    "StreamDeploymentLogsResponseBodyTypedDict": ".stream_deployment_logsop",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetData": ".stream_v1_workflows_executions_execution_id_stream_getop",
+    "StreamV1WorkflowsExecutionsExecutionIDStreamGetDataTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequest": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetRequestTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody": ".stream_v1_workflows_executions_execution_id_stream_getop",
     "StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBodyTypedDict": ".stream_v1_workflows_executions_execution_id_stream_getop",
+    "StreamWorkflowExecutionLogsData": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsDataTypedDict": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsEvent": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsRequest": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsRequestTypedDict": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsResponseBody": ".stream_workflow_execution_logsop",
+    "StreamWorkflowExecutionLogsResponseBodyTypedDict": ".stream_workflow_execution_logsop",
+    "StreamError": ".streamerror",
+    "StreamErrorTypedDict": ".streamerror",
     "StreamEventSsePayload": ".streameventssepayload",
     "StreamEventSsePayloadData": ".streameventssepayload",
     "StreamEventSsePayloadDataTypedDict": ".streameventssepayload",
     "StreamEventSsePayloadTypedDict": ".streameventssepayload",
     "StreamEventWorkflowContext": ".streameventworkflowcontext",
     "StreamEventWorkflowContextTypedDict": ".streameventworkflowcontext",
-    "StringList": ".stringlist",
-    "StringListTypedDict": ".stringlist",
     "SystemMessage": ".systemmessage",
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
@@ -6087,6 +6491,9 @@ _dynamic_imports: dict[str, str] = {
     "ToolsCapability": ".toolscapability",
     "ToolsCapabilityTypedDict": ".toolscapability",
     "ToolType": ".tooltype",
+    "ToolTypes": ".tooltypes",
+    "TracesRequest": ".tracesrequest",
+    "TracesRequestTypedDict": ".tracesrequest",
     "TrainingFile": ".trainingfile",
     "TrainingFileTypedDict": ".trainingfile",
     "TranscriptionResponse": ".transcriptionresponse",
@@ -6119,6 +6526,8 @@ _dynamic_imports: dict[str, str] = {
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
     "UnarchiveModelResponseTypedDict": ".unarchivemodelresponse",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest": ".unregister_search_index_v1_rag_indexes_index_index_id_deleteop",
+    "UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequestTypedDict": ".unregister_search_index_v1_rag_indexes_index_index_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest": ".update_dataset_record_payload_v1_observability_dataset_records_dataset_record_id_payload_putop",
@@ -6127,6 +6536,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequestTypedDict": ".update_dataset_record_properties_v1_observability_dataset_records_dataset_record_id_properties_putop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
+    "MetricsData": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "MetricsDataTypedDict": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
+    "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
@@ -6153,10 +6566,18 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetRequestTypedDict": ".updatedatasetrequest",
     "UpdateDefinition": ".updatedefinition",
     "UpdateDefinitionTypedDict": ".updatedefinition",
-    "AttributesUnion": ".updatedocumentrequest",
-    "AttributesUnionTypedDict": ".updatedocumentrequest",
+    "Attributes": ".updatedocumentrequest",
+    "AttributesTypedDict": ".updatedocumentrequest",
     "UpdateDocumentRequest": ".updatedocumentrequest",
     "UpdateDocumentRequestTypedDict": ".updatedocumentrequest",
+    "UpdateIndexMetricsRequestIndexMetricsOffline": ".updateindexmetricsrequestindexmetricsoffline",
+    "UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict": ".updateindexmetricsrequestindexmetricsoffline",
+    "UpdateIndexMetricsRequestIndexMetricsOnline": ".updateindexmetricsrequestindexmetricsonline",
+    "UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict": ".updateindexmetricsrequestindexmetricsonline",
+    "UpdateIndexMetricsRequestSchemaMetrics": ".updateindexmetricsrequestschemametrics",
+    "UpdateIndexMetricsRequestSchemaMetricsTypedDict": ".updateindexmetricsrequestschemametrics",
+    "UpdateIndexSummaryRequestSummary": ".updateindexsummaryrequestsummary",
+    "UpdateIndexSummaryRequestSummaryTypedDict": ".updateindexsummaryrequestsummary",
     "UpdateInvocationBody": ".updateinvocationbody",
     "UpdateInvocationBodyInput": ".updateinvocationbody",
     "UpdateInvocationBodyInputTypedDict": ".updateinvocationbody",
@@ -6169,20 +6590,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateLibraryRequestTypedDict": ".updatelibraryrequest",
     "UpdateModelRequest": ".updatemodelrequest",
     "UpdateModelRequestTypedDict": ".updatemodelrequest",
-    "UpdatePromptResponse": ".updatepromptresponse",
-    "UpdatePromptResponseTypedDict": ".updatepromptresponse",
-    "UpdatePromptSharingScopeResponse": ".updatepromptsharingscoperesponse",
-    "UpdatePromptSharingScopeResponseTypedDict": ".updatepromptsharingscoperesponse",
-    "UpdatePromptVersionResponse": ".updatepromptversionresponse",
-    "UpdatePromptVersionResponseTypedDict": ".updatepromptversionresponse",
     "UpdateRunInfo": ".updateruninfo",
     "UpdateRunInfoTypedDict": ".updateruninfo",
-    "UpdateSkillResponse": ".updateskillresponse",
-    "UpdateSkillResponseTypedDict": ".updateskillresponse",
-    "UpdateSkillSharingScopeResponse": ".updateskillsharingscoperesponse",
-    "UpdateSkillSharingScopeResponseTypedDict": ".updateskillsharingscoperesponse",
-    "UpdateSkillVersionResponse": ".updateskillversionresponse",
-    "UpdateSkillVersionResponseTypedDict": ".updateskillversionresponse",
+    "UpdateSchemaSummaryRequestSummary": ".updateschemasummaryrequestsummary",
+    "UpdateSchemaSummaryRequestSummaryTypedDict": ".updateschemasummaryrequestsummary",
     "UpdateWorkflowResponse": ".updateworkflowresponse",
     "UpdateWorkflowResponseTypedDict": ".updateworkflowresponse",
     "UsageInfo": ".usageinfo",
@@ -6199,14 +6610,6 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
-    "VersionAttributes": ".versionattributes",
-    "VersionAttributesTypedDict": ".versionattributes",
-    "VersionMetadata": ".versionmetadata",
-    "VersionMetadataTypedDict": ".versionmetadata",
-    "VespaSchemaResponse": ".vespaschemaresponse",
-    "VespaSchemaResponseTypedDict": ".vespaschemaresponse",
-    "VespaSearchIndexInfoResponse": ".vespasearchindexinforesponse",
-    "VespaSearchIndexInfoResponseTypedDict": ".vespasearchindexinforesponse",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
     "VoiceListResponse": ".voicelistresponse",
@@ -6317,6 +6720,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleTriggerRequestTypedDict": ".workflowscheduletriggerrequest",
     "WorkflowScheduleUpdateRequest": ".workflowscheduleupdaterequest",
     "WorkflowScheduleUpdateRequestTypedDict": ".workflowscheduleupdaterequest",
+    "WorkflowStreamError": ".workflowstreamerror",
+    "WorkflowStreamErrorTypedDict": ".workflowstreamerror",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",

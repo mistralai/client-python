@@ -15,6 +15,8 @@ from typing import Optional
 
 
 class Beta(BaseSDK):
+    prompts: BetaPrompts
+    skills: Skills
     conversations: Conversations
     r"""(beta) Conversations API"""
     agents: BetaAgents
@@ -25,10 +27,6 @@ class Beta(BaseSDK):
     connectors: Connectors
     r"""(beta) Connectors API - manage your connectors"""
     rag: Rag
-    prompts: BetaPrompts
-    r"""(beta) Prompts API - create and manage reusable prompt templates with versioning"""
-    skills: Skills
-    r"""(beta) Skills API - create and manage agent skills with versioning"""
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -38,6 +36,8 @@ class Beta(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
+        self.prompts = BetaPrompts(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.skills = Skills(self.sdk_configuration, parent_ref=self.parent_ref)
         self.conversations = Conversations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
@@ -48,5 +48,3 @@ class Beta(BaseSDK):
         )
         self.connectors = Connectors(self.sdk_configuration, parent_ref=self.parent_ref)
         self.rag = Rag(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.prompts = BetaPrompts(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.skills = Skills(self.sdk_configuration, parent_ref=self.parent_ref)

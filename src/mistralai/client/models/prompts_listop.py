@@ -6,6 +6,7 @@ from .connecterror import ConnectError, ConnectErrorTypedDict
 from .listpromptsresponse import ListPromptsResponse, ListPromptsResponseTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
+import pydantic
 from pydantic import model_serializer
 from typing import Awaitable, Callable, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -14,25 +15,24 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 class PromptsListRequestTypedDict(TypedDict):
     page_size: NotRequired[int]
     page_token: NotRequired[str]
+    alias: NotRequired[str]
     fields: NotRequired[List[str]]
-    r"""The set of field mask paths."""
-    version_alias: NotRequired[str]
-    r"""Selects the version returned for each object and excludes objects
-    without this current alias.
-    """
-    filter_key: NotRequired[str]
-    filter_value: NotRequired[str]
-    search: NotRequired[str]
-    r"""Case-insensitive substring match against per-version content."""
 
 
 class PromptsListRequest(BaseModel):
     page_size: Annotated[
         Optional[int],
+        pydantic.Field(alias="pageSize"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
 
     page_token: Annotated[
+        Optional[str],
+        pydantic.Field(alias="pageToken"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+
+    alias: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
@@ -41,45 +41,10 @@ class PromptsListRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""The set of field mask paths."""
-
-    version_alias: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Selects the version returned for each object and excludes objects
-    without this current alias.
-    """
-
-    filter_key: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-
-    filter_value: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-
-    search: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Case-insensitive substring match against per-version content."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "page_size",
-                "page_token",
-                "fields",
-                "version_alias",
-                "filter_key",
-                "filter_value",
-                "search",
-            ]
-        )
+        optional_fields = set(["pageSize", "pageToken", "alias", "fields"])
         serialized = handler(self)
         m = {}
 

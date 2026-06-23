@@ -64,6 +64,8 @@ class ScheduleDefinitionOutputTypedDict(TypedDict):
     policy: NotRequired[SchedulePolicyTypedDict]
     remaining_executions: NotRequired[Nullable[int]]
     r"""Remaining workflow executions before this schedule stops triggering automatically. null means unlimited; 0 means the limit has been reached and the schedule is exhausted."""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""Name of the deployment this schedule targets."""
     note: NotRequired[Nullable[str]]
     r"""Human-readable note associated with the current pause or resume state."""
     future_executions: NotRequired[List[ScheduleFutureExecutionTypedDict]]
@@ -124,6 +126,9 @@ class ScheduleDefinitionOutput(BaseModel):
     remaining_executions: OptionalNullable[int] = UNSET
     r"""Remaining workflow executions before this schedule stops triggering automatically. null means unlimited; 0 means the limit has been reached and the schedule is exhausted."""
 
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""Name of the deployment this schedule targets."""
+
     note: OptionalNullable[str] = UNSET
     r"""Human-readable note associated with the current pause or resume state."""
 
@@ -147,6 +152,7 @@ class ScheduleDefinitionOutput(BaseModel):
                 "time_zone_name",
                 "policy",
                 "remaining_executions",
+                "deployment_name",
                 "note",
                 "future_executions",
                 "recent_executions",
@@ -159,6 +165,7 @@ class ScheduleDefinitionOutput(BaseModel):
                 "jitter",
                 "time_zone_name",
                 "remaining_executions",
+                "deployment_name",
                 "note",
             ]
         )

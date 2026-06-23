@@ -2,7 +2,7 @@
 # @generated-id: ba4ea2df4818
 
 from __future__ import annotations
-from .google_protobuf_any import GoogleProtobufAny, GoogleProtobufAnyTypedDict
+from .protobufany import ProtobufAny, ProtobufAnyTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 import pydantic
 from pydantic import ConfigDict, model_serializer
@@ -31,22 +31,22 @@ Code = Union[
     ],
     UnrecognizedStr,
 ]
-r"""The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."""
+r"""Machine-readable error code."""
 
 
 class ConnectErrorTypedDict(TypedDict):
-    r"""Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation"""
+    r"""Error response."""
 
     code: NotRequired[Code]
-    r"""The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."""
+    r"""Machine-readable error code."""
     message: NotRequired[str]
-    r"""A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."""
-    detail: NotRequired[GoogleProtobufAnyTypedDict]
-    r"""Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."""
+    r"""Human-readable error message."""
+    detail: NotRequired[ProtobufAnyTypedDict]
+    r"""Additional structured error detail."""
 
 
 class ConnectError(BaseModel):
-    r"""Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation"""
+    r"""Error response."""
 
     model_config = ConfigDict(
         populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
@@ -54,13 +54,13 @@ class ConnectError(BaseModel):
     __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
 
     code: Optional[Code] = None
-    r"""The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."""
+    r"""Machine-readable error code."""
 
     message: Optional[str] = None
-    r"""A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."""
+    r"""Human-readable error message."""
 
-    detail: Optional[GoogleProtobufAny] = None
-    r"""Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."""
+    detail: Optional[ProtobufAny] = None
+    r"""Additional structured error detail."""
 
     @property
     def additional_properties(self):

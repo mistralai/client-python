@@ -81,14 +81,17 @@ ChatCompletionRequestToolTypedDict = TypeAliasType(
 )
 
 
-ChatCompletionRequestTool = Union[
-    Tool,
-    WebSearchTool,
-    WebSearchPremiumTool,
-    CodeInterpreterTool,
-    ImageGenerationTool,
-    DocumentLibraryTool,
-    CustomConnector,
+ChatCompletionRequestTool = Annotated[
+    Union[
+        Annotated[Tool, Tag("function")],
+        Annotated[WebSearchTool, Tag("web_search")],
+        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
+        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
+        Annotated[ImageGenerationTool, Tag("image_generation")],
+        Annotated[DocumentLibraryTool, Tag("document_library")],
+        Annotated[CustomConnector, Tag("connector")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]
 
 

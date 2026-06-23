@@ -7,67 +7,60 @@ from .createpromptversionresponse import (
     CreatePromptVersionResponse,
     CreatePromptVersionResponseTypedDict,
 )
-from .promptcontent import PromptContent, PromptContentTypedDict
-from .versionattributes import VersionAttributes, VersionAttributesTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from .promptdefinition import PromptDefinition, PromptDefinitionTypedDict
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-import pydantic
 from pydantic import model_serializer
-from typing import Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class CreatePromptVersionRequestTypedDict(TypedDict):
-    prompt: NotRequired[PromptContentTypedDict]
-    r"""User-editable template fields (create / update body)."""
-    version_attributes: NotRequired[VersionAttributesTypedDict]
-    r"""User-provided, per-version fields"""
-    file: NotRequired[bytes]
-    r"""The File object (not file name) to be uploaded.
-    To upload a file and specify a custom file name you should format your request as such:
-    ```bash
-    file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-    ```
-    Otherwise, you can just keep the original file name:
-    ```bash
-    file=@path/to/your/file.jsonl
-    ```
-    """
+    definition: PromptDefinitionTypedDict
+    r"""Versioned prompt content."""
+    notes: NotRequired[Nullable[str]]
+    r"""Notes for this version."""
+    aliases: NotRequired[List[str]]
+    r"""Aliases pointing to this version."""
 
 
 class CreatePromptVersionRequest(BaseModel):
-    prompt: Optional[PromptContent] = None
-    r"""User-editable template fields (create / update body)."""
+    definition: PromptDefinition
+    r"""Versioned prompt content."""
 
-    version_attributes: Annotated[
-        Optional[VersionAttributes], pydantic.Field(alias="versionAttributes")
-    ] = None
-    r"""User-provided, per-version fields"""
+    notes: OptionalNullable[str] = UNSET
+    r"""Notes for this version."""
 
-    file: Optional[bytes] = None
-    r"""The File object (not file name) to be uploaded.
-    To upload a file and specify a custom file name you should format your request as such:
-    ```bash
-    file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-    ```
-    Otherwise, you can just keep the original file name:
-    ```bash
-    file=@path/to/your/file.jsonl
-    ```
-    """
+    aliases: Optional[List[str]] = None
+    r"""Aliases pointing to this version."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["prompt", "versionAttributes", "file"])
+        optional_fields = set(["notes", "aliases"])
+        nullable_fields = set(["notes"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
@@ -98,9 +91,3 @@ PromptsCreateVersionResponseTypedDict = TypeAliasType(
 PromptsCreateVersionResponse = TypeAliasType(
     "PromptsCreateVersionResponse", Union[CreatePromptVersionResponse, ConnectError]
 )
-
-
-try:
-    CreatePromptVersionRequest.model_rebuild()
-except NameError:
-    pass

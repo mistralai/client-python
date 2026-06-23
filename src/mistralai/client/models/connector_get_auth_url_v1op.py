@@ -22,6 +22,8 @@ class ConnectorGetAuthURLV1RequestTypedDict(TypedDict):
     method_type: NotRequired[OutboundAuthenticationType]
     r"""Auth method type to use for the authorization URL. Required when the connector supports multiple interactive auth methods; otherwise the sole method is selected automatically. Use this to pick a specific method (e.g. 'oauth2' vs 'github_app')."""
     credentials_name: NotRequired[Nullable[str]]
+    github_installation_link: NotRequired[bool]
+    r"""Only valid with method_type=oauth2. When true, returns a GitHub App installation URL (https://github.com/apps/<slug>/installations/new) if the connector has the proper configuration The Github application needs to have 'Request user authorization (OAuth) during installation' enabled to perform the proper auth loop."""
 
 
 class ConnectorGetAuthURLV1Request(BaseModel):
@@ -45,9 +47,22 @@ class ConnectorGetAuthURLV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
+    github_installation_link: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Only valid with method_type=oauth2. When true, returns a GitHub App installation URL (https://github.com/apps/<slug>/installations/new) if the connector has the proper configuration The Github application needs to have 'Request user authorization (OAuth) during installation' enabled to perform the proper auth loop."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["app_return_url", "method_type", "credentials_name"])
+        optional_fields = set(
+            [
+                "app_return_url",
+                "method_type",
+                "credentials_name",
+                "github_installation_link",
+            ]
+        )
         nullable_fields = set(["app_return_url", "credentials_name"])
         serialized = handler(self)
         m = {}

@@ -1,6 +1,6 @@
 # Code
 
-The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+Machine-readable error code.
 
 ## Example Usage
 

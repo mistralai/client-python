@@ -15,16 +15,16 @@ from typing import Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-AttributesUnionTypedDict = TypeAliasType(
-    "AttributesUnionTypedDict",
+AttributesTypedDict = TypeAliasType(
+    "AttributesTypedDict",
     Union[
         bool, str, int, float, datetime, List[str], List[int], List[float], List[bool]
     ],
 )
 
 
-AttributesUnion = TypeAliasType(
-    "AttributesUnion",
+Attributes = TypeAliasType(
+    "Attributes",
     Union[
         bool, str, int, float, datetime, List[str], List[int], List[float], List[bool]
     ],
@@ -33,7 +33,7 @@ AttributesUnion = TypeAliasType(
 
 class UpdateDocumentRequestTypedDict(TypedDict):
     name: NotRequired[str]
-    attributes: NotRequired[Nullable[Dict[str, AttributesUnionTypedDict]]]
+    attributes: NotRequired[Nullable[Dict[str, AttributesTypedDict]]]
     expires_at: NotRequired[Nullable[datetime]]
     r"""If set, the document will be automatically deleted after this date."""
 
@@ -41,7 +41,7 @@ class UpdateDocumentRequestTypedDict(TypedDict):
 class UpdateDocumentRequest(BaseModel):
     name: Optional[str] = None
 
-    attributes: OptionalNullable[Dict[str, AttributesUnion]] = UNSET
+    attributes: OptionalNullable[Dict[str, Attributes]] = UNSET
 
     expires_at: OptionalNullable[datetime] = UNSET
     r"""If set, the document will be automatically deleted after this date."""

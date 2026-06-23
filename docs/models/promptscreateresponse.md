@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.CreatePromptResponse`
+### `models.Prompt`
 
 ```python
-value: models.CreatePromptResponse = /* values here */
+value: models.Prompt = /* values here */
 ```
 
 ### `models.ConnectError`

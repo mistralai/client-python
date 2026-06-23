@@ -160,6 +160,8 @@ with Mistral(
 
     res = mistral.beta.libraries.delete(library_id="6cad0b6e-fd2e-4d11-a48b-21d30fb7c17a")
 
+    assert res is not None
+
     # Handle response
     print(res)
 

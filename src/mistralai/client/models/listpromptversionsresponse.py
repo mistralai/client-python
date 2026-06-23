@@ -2,7 +2,7 @@
 # @generated-id: d5efd40c8c73
 
 from __future__ import annotations
-from .promptversionitem import PromptVersionItem, PromptVersionItemTypedDict
+from .promptversion import PromptVersion, PromptVersionTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -10,21 +10,15 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ListPromptVersionsResponseTypedDict(TypedDict):
-    items: NotRequired[List[PromptVersionItemTypedDict]]
-    r"""Items are returned in reverse version order. Only the last 1000 items are
-    returned (currently the whole list).
-    """
+    data: NotRequired[List[PromptVersionTypedDict]]
 
 
 class ListPromptVersionsResponse(BaseModel):
-    items: Optional[List[PromptVersionItem]] = None
-    r"""Items are returned in reverse version order. Only the last 1000 items are
-    returned (currently the whole list).
-    """
+    data: Optional[List[PromptVersion]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["items"])
+        optional_fields = set(["data"])
         serialized = handler(self)
         m = {}
 

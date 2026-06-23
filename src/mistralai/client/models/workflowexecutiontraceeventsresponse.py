@@ -54,6 +54,10 @@ class WorkflowExecutionTraceEventsResponseTypedDict(TypedDict):
     r"""The end time of the workflow execution, if available"""
     result: Nullable[Any]
     r"""The result of the workflow execution, if available"""
+    workflow_id: NotRequired[Nullable[str]]
+    r"""The ID of the workflow"""
+    deployment_name: NotRequired[Nullable[str]]
+    r"""The name of the deployment that ran this execution"""
     parent_execution_id: NotRequired[Nullable[str]]
     r"""The parent execution ID of the workflow execution"""
     run_id: NotRequired[Nullable[str]]
@@ -86,6 +90,12 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
     result: Nullable[Any]
     r"""The result of the workflow execution, if available"""
 
+    workflow_id: OptionalNullable[str] = UNSET
+    r"""The ID of the workflow"""
+
+    deployment_name: OptionalNullable[str] = UNSET
+    r"""The name of the deployment that ran this execution"""
+
     parent_execution_id: OptionalNullable[str] = UNSET
     r"""The parent execution ID of the workflow execution"""
 
@@ -101,10 +111,19 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["parent_execution_id", "run_id", "total_duration_ms", "events"]
+            [
+                "workflow_id",
+                "deployment_name",
+                "parent_execution_id",
+                "run_id",
+                "total_duration_ms",
+                "events",
+            ]
         )
         nullable_fields = set(
             [
+                "workflow_id",
+                "deployment_name",
                 "parent_execution_id",
                 "run_id",
                 "status",
