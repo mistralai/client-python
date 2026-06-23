@@ -726,6 +726,6 @@ Based on:
 - OpenAPI Doc  
 - Speakeasy CLI 1.763.6 (2.884.13) https://github.com/speakeasy-api/speakeasy
 ### Generated
-- [python v2.5.1] .
+- [python v2.5.0] .
 ### Releases
-- [PyPI v2.5.1] https://pypi.org/project/mistralai/2.5.1 - .
+- [PyPI v2.5.0] https://pypi.org/project/mistralai/2.5.0 - .
