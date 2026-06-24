@@ -35,10 +35,10 @@ if TYPE_CHECKING:
 class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
-    beta: "Beta"
     audio: "Audio"
     models: "Models"
     r"""Model Management API"""
+    beta: "Beta"
     files: "Files"
     r"""Files API"""
     fine_tuning: "FineTuning"
@@ -58,9 +58,9 @@ class Mistral(BaseSDK):
     workflows: "Workflows"
     events: "Events"
     _sub_sdk_map = {
-        "beta": ("mistralai.client.beta", "Beta"),
         "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
+        "beta": ("mistralai.client.beta", "Beta"),
         "files": ("mistralai.client.files", "Files"),
         "fine_tuning": ("mistralai.client.fine_tuning", "FineTuning"),
         "batch": ("mistralai.client.batch", "Batch"),
