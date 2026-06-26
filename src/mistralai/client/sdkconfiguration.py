@@ -16,16 +16,10 @@ from pydantic import Field
 from typing import Callable, Dict, Optional, Tuple, Union
 
 
-SERVER_GLOBAL = "global"
-r"""Global Production server"""
 SERVER_EU = "eu"
 r"""EU Production server"""
-SERVER_US = "us"
-r"""US Production server"""
 SERVERS = {
-    SERVER_GLOBAL: "https://api.mistral.ai",
-    SERVER_EU: "https://api.eu.mistral.ai",
-    SERVER_US: "https://api.us.mistral.ai",
+    SERVER_EU: "https://api.mistral.ai",
 }
 """Contains the list of servers available to the SDK"""
 
@@ -52,7 +46,7 @@ class SDKConfiguration:
         if self.server_url is not None and self.server_url:
             return remove_suffix(self.server_url, "/"), {}
         if not self.server:
-            self.server = SERVER_GLOBAL
+            self.server = SERVER_EU
 
         if self.server not in SERVERS:
             raise ValueError(f'Invalid server "{self.server}"')

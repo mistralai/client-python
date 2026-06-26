@@ -62,6 +62,8 @@ class WorkflowExecutionTraceEventsResponseTypedDict(TypedDict):
     r"""The parent execution ID of the workflow execution"""
     run_id: NotRequired[Nullable[str]]
     r"""The unique run identifier (database UUID)"""
+    user_id: NotRequired[Nullable[str]]
+    r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
     events: NotRequired[List[WorkflowExecutionTraceEventsResponseEventTypedDict]]
@@ -102,6 +104,9 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
     run_id: OptionalNullable[str] = UNSET
     r"""The unique run identifier (database UUID)"""
 
+    user_id: OptionalNullable[str] = UNSET
+    r"""The ID of the user who triggered the execution"""
+
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
@@ -116,6 +121,7 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
                 "deployment_name",
                 "parent_execution_id",
                 "run_id",
+                "user_id",
                 "total_duration_ms",
                 "events",
             ]
@@ -126,6 +132,7 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
                 "deployment_name",
                 "parent_execution_id",
                 "run_id",
+                "user_id",
                 "status",
                 "end_time",
                 "total_duration_ms",

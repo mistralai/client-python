@@ -14,6 +14,7 @@
 * [batch_cancel_workflow_executions](#batch_cancel_workflow_executions) - Batch Cancel Workflow Executions
 * [reset_workflow](#reset_workflow) - Reset Workflow
 * [update_workflow_execution](#update_workflow_execution) - Update Workflow Execution
+* [get_workflow_execution_trace_info](#get_workflow_execution_trace_info) - Get Workflow Execution Trace Info
 * [get_workflow_execution_trace_otel](#get_workflow_execution_trace_otel) - Get Workflow Execution Trace Otel
 * [get_workflow_execution_trace_summary](#get_workflow_execution_trace_summary) - Get Workflow Execution Trace Summary
 * [get_workflow_execution_trace_events](#get_workflow_execution_trace_events) - Get Workflow Execution Trace Events
@@ -430,6 +431,47 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## get_workflow_execution_trace_info
+
+Get Workflow Execution Trace Info
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_workflow_execution_trace_info" method="get" path="/v1/workflows/executions/{execution_id}/trace/info" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.executions.get_workflow_execution_trace_info(execution_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `execution_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ExecutionTraceInfoResponse](../../models/executiontraceinforesponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## get_workflow_execution_trace_otel
 
 Get Workflow Execution Trace Otel
@@ -655,8 +697,8 @@ with Mistral(
 
 Stream logs for a workflow execution via SSE.
 
-If `last_event_id` is set it resumes from that cursor and takes precedence over `after`;
-otherwise `after` sets a fresh stream's start point (omit both to tail from the execution start).
+Resume cursor comes from the `Last-Event-ID` header or `last_event_id` query param (header wins)
+and takes precedence over `after`; omit all to tail from the execution start.
 
 ### Example Usage
 
