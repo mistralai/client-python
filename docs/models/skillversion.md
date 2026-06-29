@@ -1,0 +1,12 @@
+# SkillVersion
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          | Example                                                              |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `version`                                                            | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |                                                                      |
+| `definition`                                                         | [Optional[models.SkillDefinition]](../models/skilldefinition.md)     | :heavy_minus_sign:                                                   | Versioned skill content.                                             |                                                                      |
+| `notes`                                                              | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Notes for this version.                                              |                                                                      |
+| `aliases`                                                            | List[*str*]                                                          | :heavy_minus_sign:                                                   | Aliases pointing to this version.                                    |                                                                      |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | RFC 3339 timestamp.                                                  | **Example 1:** 1s<br/>**Example 2:** 1.000340012s                    |

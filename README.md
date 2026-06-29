@@ -568,6 +568,8 @@ print(res.choices[0].message.content)
 
 * [list](docs/sdks/documents/README.md#list) - List documents in a given library.
 * [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
+* [get_signed_upload_url](docs/sdks/documents/README.md#get_signed_upload_url) - Get a signed URL for direct upload to blob storage.
+* [ingest_from_blob_storage](docs/sdks/documents/README.md#ingest_from_blob_storage) - Ingest a document from blob storage of the document library.
 * [get](docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
 * [update](docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
 * [~~libraries_documents_update_v1~~](docs/sdks/documents/README.md#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
@@ -662,6 +664,18 @@ print(res.choices[0].message.content)
 * [fetch_options](docs/sdks/traces/README.md#fetch_options) - Get options for a trace field
 * [get_span_by_id](docs/sdks/traces/README.md#get_span_by_id) - Get span by id
 
+### [Beta.Prompts](docs/sdks/betaprompts/README.md)
+
+* [list](docs/sdks/betaprompts/README.md#list) - ListPrompts
+* [create](docs/sdks/betaprompts/README.md#create) - CreatePrompt
+* [get](docs/sdks/betaprompts/README.md#get) - GetPrompt
+* [delete](docs/sdks/betaprompts/README.md#delete) - DeletePrompt
+* [update_metadata](docs/sdks/betaprompts/README.md#update_metadata) - UpdatePrompt
+* [list_versions](docs/sdks/betaprompts/README.md#list_versions) - ListPromptVersions
+* [create_version](docs/sdks/betaprompts/README.md#create_version) - CreatePromptVersion
+* [get_version](docs/sdks/betaprompts/README.md#get_version) - GetPromptVersion
+* [update_version_metadata](docs/sdks/betaprompts/README.md#update_version_metadata) - UpdatePromptVersionMetadata
+
 ### [Beta.Rag.IngestionPipelineConfigurations](docs/sdks/ingestionpipelineconfigurations/README.md)
 
 * [list](docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
@@ -681,6 +695,18 @@ print(res.choices[0].message.content)
 * [get_index_schema_file](docs/sdks/searchindexes/README.md#get_index_schema_file) - Get Index Schema File
 * [document_lookup](docs/sdks/searchindexes/README.md#document_lookup) - Document Lookup
 * [documents_fetch](docs/sdks/searchindexes/README.md#documents_fetch) - Document Fetch
+
+### [Beta.Skills](docs/sdks/skills/README.md)
+
+* [list](docs/sdks/skills/README.md#list) - ListSkills
+* [create](docs/sdks/skills/README.md#create) - CreateSkill
+* [get](docs/sdks/skills/README.md#get) - GetSkill
+* [delete](docs/sdks/skills/README.md#delete) - DeleteSkill
+* [update_metadata](docs/sdks/skills/README.md#update_metadata) - UpdateSkill
+* [list_versions](docs/sdks/skills/README.md#list_versions) - ListSkillVersions
+* [create_version](docs/sdks/skills/README.md#create_version) - CreateSkillVersion
+* [get_version](docs/sdks/skills/README.md#get_version) - GetSkillVersion
+* [update_version_metadata](docs/sdks/skills/README.md#update_version_metadata) - UpdateSkillVersionMetadata
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -829,8 +855,17 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
-
+    res = mistral.beta.conversations.start_stream(inputs=[
+        {
+            "object": "entry",
+            "type": "function.result",
+            "tool_call_id": "<id>",
+            "result": "<value>",
+        },
+    ], completion_args={
+        "response_format": {
+            "type": "text",
+        },
     })
 
     with res as event_stream:
@@ -862,7 +897,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.get_workflows(include_shared=True, order="asc", limit=50, active_only=False)
+    res = mistral.beta.prompts.list()
 
     while res is not None:
         # Handle items
@@ -891,7 +926,10 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.transcriptions.complete(model="Model X", diarize=False)
+    res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+    })
 
     # Handle response
     print(res)
@@ -915,15 +953,13 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
-
-    },
+    res = mistral.beta.prompts.list(,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    with res as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
+    while res is not None:
+        # Handle items
+
+        res = res.next()
 
 ```
 
@@ -939,14 +975,12 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+    res = mistral.beta.prompts.list()
 
-    })
+    while res is not None:
+        # Handle items
 
-    with res as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
+        res = res.next()
 
 ```
 <!-- End Retries [retries] -->
@@ -977,14 +1011,14 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
-
+        res = mistral.beta.conversations.start(inputs="<value>", completion_args={
+            "response_format": {
+                "type": "text",
+            },
         })
 
-        with res as event_stream:
-            for event in event_stream:
-                # handle event
-                print(event, flush=True)
+        # Handle response
+        print(res)
 
 
     except errors.MistralError as e:
@@ -1015,8 +1049,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 145 of 228 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 228 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 147 of 248 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 248 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1047,14 +1081,12 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+    res = mistral.beta.prompts.list()
 
-    })
+    while res is not None:
+        # Handle items
 
-    with res as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
+        res = res.next()
 
 ```
 
@@ -1071,14 +1103,12 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+    res = mistral.beta.prompts.list()
 
-    })
+    while res is not None:
+        # Handle items
 
-    with res as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
+        res = res.next()
 
 ```
 <!-- End Server Selection [server] -->
@@ -1185,14 +1215,12 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.speech.complete(input="<value>", stream=False, additional_properties={
+    res = mistral.beta.prompts.list()
 
-    })
+    while res is not None:
+        # Handle items
 
-    with res as event_stream:
-        for event in event_stream:
-            # handle event
-            print(event, flush=True)
+        res = res.next()
 
 ```
 <!-- End Authentication [security] -->
