@@ -18,7 +18,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class LibrariesListV1RequestTypedDict(TypedDict):
     page_size: NotRequired[int]
+    page_token: NotRequired[Nullable[str]]
+    r"""Continuation token from a previous response's next_page_token. Preferred over `page`."""
     page: NotRequired[int]
+    r"""Deprecated: use page_token. Offset paging re-scans earlier pages and is being phased out."""
     search: NotRequired[Nullable[str]]
     r"""Case-insensitive search on the library name."""
     filter_owned_by_me: NotRequired[Nullable[bool]]
@@ -31,10 +34,20 @@ class LibrariesListV1Request(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 100
 
+    page_token: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Continuation token from a previous response's next_page_token. Preferred over `page`."""
+
     page: Annotated[
         Optional[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 0
+    r"""Deprecated: use page_token. Offset paging re-scans earlier pages and is being phased out."""
 
     search: Annotated[
         OptionalNullable[str],
@@ -53,8 +66,10 @@ class LibrariesListV1Request(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["page_size", "page", "search", "filter_owned_by_me"])
-        nullable_fields = set(["search", "filter_owned_by_me"])
+        optional_fields = set(
+            ["page_size", "page_token", "page", "search", "filter_owned_by_me"]
+        )
+        nullable_fields = set(["page_token", "search", "filter_owned_by_me"])
         serialized = handler(self)
         m = {}
 
