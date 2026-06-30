@@ -1,0 +1,12 @@
+# CreateSkillRequest
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | Stable object name.                                                        |
+| `definition`                                                               | [models.SkillDefinition](../models/skilldefinition.md)                     | :heavy_check_mark:                                                         | Versioned skill content.                                                   |
+| `notes`                                                                    | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | Notes for this version.                                                    |
+| `sharing_scope`                                                            | [Optional[models.RegistrySharingScope]](../models/registrysharingscope.md) | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `aliases`                                                                  | List[*str*]                                                                | :heavy_minus_sign:                                                         | Aliases pointing to this version.                                          |
