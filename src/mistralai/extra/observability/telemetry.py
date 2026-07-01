@@ -65,10 +65,43 @@ def _resolve_telemetry_mode(value: bool | str) -> TelemetryProviderMode | None:
     )
 
 
+def _resolve_provider_mode(value: str) -> TelemetryProviderMode:
+    normalized = value.strip().lower()
+    if normalized == TELEMETRY_PROVIDER_DEDICATED:
+        return TELEMETRY_PROVIDER_DEDICATED
+    if normalized == TELEMETRY_PROVIDER_GLOBAL:
+        return TELEMETRY_PROVIDER_GLOBAL
+
+    accepted_values = ", ".join(sorted(_PROVIDER_VALUES))
+    raise TelemetryConfigurationError(
+        f"Invalid telemetry provider {value!r}. Expected one of: {accepted_values}."
+    )
+
+
+def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
+    env_value = os.getenv(MISTRAL_SDK_TELEMETRY_ENV)
+    if env_value is None or env_value == "":
+        return None
+
+    try:
+        return _resolve_telemetry_mode(env_value)
+    except TelemetryConfigurationError as exc:
+        accepted_values = ", ".join(sorted(_PROVIDER_VALUES | {_DISABLED_VALUE}))
+        raise TelemetryConfigurationError(
+            f"Invalid {MISTRAL_SDK_TELEMETRY_ENV}={env_value!r}. "
+            f"Expected one of: {accepted_values}."
+        ) from exc
+
+
+# TODO: Feels like this is redundant with redaction.resolve_policy and we could merge it there.
+# Also does the None bring any value here ?
+# Currently None -> default, True -> default, False -> no redaction
+# Could have RedactionPolicyLike | bool with True -> default and False -> no redaction ?
+# RedactingSpanExporter may need some changes accordingly since it consumes resolve_policy
 def _resolve_redaction_policy(
     redaction: RedactionPolicyLike | bool | None,
 ) -> "RedactionPolicy | None":
-    """Resolve the ``redaction`` argument into a policy (``None`` disables it).
+    """Resolve the redaction argument into a policy (``None`` disables it).
 
     Redaction is safe-by-default: ``True``/``None`` yield the default policy,
     ``False`` disables redaction entirely, and a policy or ``(key, value)``
@@ -102,34 +135,6 @@ def _warn_redaction_ignored(
     )
 
 
-def _resolve_provider_mode(value: str) -> TelemetryProviderMode:
-    normalized = value.strip().lower()
-    if normalized == TELEMETRY_PROVIDER_DEDICATED:
-        return TELEMETRY_PROVIDER_DEDICATED
-    if normalized == TELEMETRY_PROVIDER_GLOBAL:
-        return TELEMETRY_PROVIDER_GLOBAL
-
-    accepted_values = ", ".join(sorted(_PROVIDER_VALUES))
-    raise TelemetryConfigurationError(
-        f"Invalid telemetry provider {value!r}. Expected one of: {accepted_values}."
-    )
-
-
-def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
-    env_value = os.getenv(MISTRAL_SDK_TELEMETRY_ENV)
-    if env_value is None or env_value == "":
-        return None
-
-    try:
-        return _resolve_telemetry_mode(env_value)
-    except TelemetryConfigurationError as exc:
-        accepted_values = ", ".join(sorted(_PROVIDER_VALUES | {_DISABLED_VALUE}))
-        raise TelemetryConfigurationError(
-            f"Invalid {MISTRAL_SDK_TELEMETRY_ENV}={env_value!r}. "
-            f"Expected one of: {accepted_values}."
-        ) from exc
-
-
 def configure_telemetry(
     client: "Mistral",
     provider: str | otel_trace.TracerProvider = TELEMETRY_PROVIDER_DEDICATED,
@@ -142,12 +147,18 @@ def configure_telemetry(
     global OpenTelemetry provider. Passing a TracerProvider attaches it to this
     client without taking ownership of its lifecycle.
 
-    In ``dedicated`` mode, spans are redacted before export (safe by default).
-    Control this with ``redaction``: ``True`` (default) uses the default
-    policy, ``False`` disables redaction, and a ``RedactionPolicy`` or
-    ``(key, value)`` callback customizes it. ``redaction`` has no effect in
-    ``global``/``custom`` modes, where the application owns the export pipeline
-    and must wrap its own exporter with ``RedactingSpanExporter``.
+    In dedicated mode, spans are redacted before export (safe by default).
+    You can control this with the redaction argument:
+    - True: (default) uses the default policy. It redacts all possibly sensitive attributes
+    - False: disables redaction
+    - Some RedactionPolicy classes (e.g. based on regexes) can be found in the redaction
+      module and provided here
+    - You can also provide a (key, value) -> value | None callback to customize how attributes
+      get redacted. Your function should return the modified attribute value or None to drop
+      the attribute.
+    Note that redaction has no effect when using the global provider mode or providing your own
+    telemetry provider, since your application controls the provider then. In that case, wrap
+    your exporter with redaction.RedactingSpanExporter to redact span before export.
     """
     hooks = getattr(client.sdk_configuration, "_hooks", None)
     if hooks is None:
@@ -230,8 +241,8 @@ def configure_telemetry_for_hook(
     """Configure telemetry for a tracing hook when the user has opted in.
 
     In dedicated mode the SDK-owned OTLP exporter is wrapped with a
-    ``RedactingSpanExporter`` unless ``redaction`` is ``False`` (safe by
-    default). See :func:`configure_telemetry` for the accepted values.
+    RedactingSpanExporter unless redaction is False (safe by
+    default). See configure_telemetry for the accepted values.
     """
     # Fast path: already resolved and no explicit override requested.
     if telemetry is None and (
