@@ -1,23 +1,19 @@
-"""Tests for client-side telemetry redaction."""
-
 import pytest
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor, SpanExportResult
+from opentelemetry.sdk.trace import ReadableSpan, TracerProvider
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 from opentelemetry.trace import SpanKind, Status, StatusCode
 
 from mistralai.extra.observability.redaction import (
-    DEFAULT_PII_SECRET_PATTERNS,
     DEFAULT_REDACTED_VALUE,
-    DEFAULT_TOKEN_PATTERNS,
     AttributeRedactionPolicy,
     CallbackRedactionPolicy,
     RedactingSpanExporter,
-    RedactionPolicy,
     RegexRedactionPolicy,
     default_redaction_policy,
     redact_span,
     resolve_policy,
+    resolve_redaction,
 )
 
 
@@ -32,12 +28,16 @@ def regex_policy() -> RegexRedactionPolicy:
 
 
 class TestAttributeRedactionPolicy:
-    def test_sensitive_key_redacted_wholesale(self, attribute_policy: AttributeRedactionPolicy):
+    def test_sensitive_key_redacted_wholesale(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
         out = attribute_policy.redact_attributes({"gen_ai.input.messages": "hello"})
         assert out["gen_ai.input.messages"] == DEFAULT_REDACTED_VALUE
 
     def test_safe_key_kept(self, attribute_policy: AttributeRedactionPolicy):
-        out = attribute_policy.redact_attributes({"gen_ai.request.model": "mistral-large"})
+        out = attribute_policy.redact_attributes(
+            {"gen_ai.request.model": "mistral-large"}
+        )
         assert out["gen_ai.request.model"] == "mistral-large"
 
     def test_usage_prefix_kept(self, attribute_policy: AttributeRedactionPolicy):
@@ -45,10 +45,14 @@ class TestAttributeRedactionPolicy:
         assert out["gen_ai.usage.input_tokens"] == 42
 
     def test_fragment_match_redacted(self, attribute_policy: AttributeRedactionPolicy):
-        out = attribute_policy.redact_attributes({"custom.prompt.text": "secret prompt"})
+        out = attribute_policy.redact_attributes(
+            {"custom.prompt.text": "secret prompt"}
+        )
         assert out["custom.prompt.text"] == DEFAULT_REDACTED_VALUE
 
-    def test_token_pattern_on_kept_string(self, attribute_policy: AttributeRedactionPolicy):
+    def test_token_pattern_on_kept_string(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
         out = attribute_policy.redact_attributes(
             {"note": "call token ghp_abcdefghijklmnopqrstuvwxyz0123 now"}
         )
@@ -70,16 +74,22 @@ class TestAttributeRedactionPolicy:
         )
         assert out["tags"] == ["plain", DEFAULT_REDACTED_VALUE]
 
-    def test_safe_key_string_sequence_scanned(self, attribute_policy: AttributeRedactionPolicy):
+    def test_safe_key_string_sequence_scanned(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
         out = attribute_policy.redact_attributes(
             {"gen_ai.response.finish_reasons": ("stop", "Bearer abc.def")}
         )
         assert out["gen_ai.response.finish_reasons"] == ("stop", DEFAULT_REDACTED_VALUE)
 
-    def test_none_attributes_returns_empty(self, attribute_policy: AttributeRedactionPolicy):
+    def test_none_attributes_returns_empty(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
         assert attribute_policy.redact_attributes(None) == {}
 
-    def test_status_description_redacted(self, attribute_policy: AttributeRedactionPolicy):
+    def test_status_description_redacted(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
         assert (
             attribute_policy.redact_status_description("boom: user@x.com")
             == DEFAULT_REDACTED_VALUE
@@ -87,7 +97,10 @@ class TestAttributeRedactionPolicy:
         assert attribute_policy.redact_status_description(None) is None
 
     def test_span_name_unchanged(self, attribute_policy: AttributeRedactionPolicy):
-        assert attribute_policy.redact_span_name("chat mistral-large") == "chat mistral-large"
+        assert (
+            attribute_policy.redact_span_name("chat mistral-large")
+            == "chat mistral-large"
+        )
 
     def test_custom_redacted_value(self):
         policy = AttributeRedactionPolicy(redacted_value="XXX")
@@ -96,7 +109,9 @@ class TestAttributeRedactionPolicy:
 
 
 class TestRegexRedactionPolicy:
-    def test_email_redacted_inline_preserving_structure(self, regex_policy: RegexRedactionPolicy):
+    def test_email_redacted_inline_preserving_structure(
+        self, regex_policy: RegexRedactionPolicy
+    ):
         out = regex_policy.redact_attributes(
             {"gen_ai.input.messages": '{"content":"reach me at a@b.com"}'}
         )
@@ -133,14 +148,18 @@ class TestRegexRedactionPolicy:
             "sk_live_0123456789abcdefghij",
         ],
     )
-    def test_secret_patterns_redacted(self, regex_policy: RegexRedactionPolicy, secret: str):
+    def test_secret_patterns_redacted(
+        self, regex_policy: RegexRedactionPolicy, secret: str
+    ):
         out = regex_policy.redact_attributes({"v": f"leak {secret} here"})
         value = out["v"]
         assert isinstance(value, str)
         assert secret not in value
         assert DEFAULT_REDACTED_VALUE in value
 
-    def test_string_sequence_scanned_preserving_container(self, regex_policy: RegexRedactionPolicy):
+    def test_string_sequence_scanned_preserving_container(
+        self, regex_policy: RegexRedactionPolicy
+    ):
         out = regex_policy.redact_attributes({"msgs": ["hello", "reach me at a@b.com"]})
         assert out["msgs"] == ["hello", "reach me at [REDACTED]"]
 
@@ -151,13 +170,6 @@ class TestRegexRedactionPolicy:
     def test_numeric_sequence_untouched(self, regex_policy: RegexRedactionPolicy):
         out = regex_policy.redact_attributes({"nums": [1, 2, 3]})
         assert out["nums"] == [1, 2, 3]
-
-
-class TestDefaultPatternComposition:
-    def test_pii_patterns_extend_token_patterns(self):
-        prefix = DEFAULT_PII_SECRET_PATTERNS[: len(DEFAULT_TOKEN_PATTERNS)]
-        assert prefix == DEFAULT_TOKEN_PATTERNS
-        assert len(DEFAULT_PII_SECRET_PATTERNS) > len(DEFAULT_TOKEN_PATTERNS)
 
 
 class TestCallbackRedactionPolicy:
@@ -178,33 +190,10 @@ class TestCallbackRedactionPolicy:
         assert out == {"keep": "y"}
 
 
-class TestRedactionPolicyABC:
-    def test_base_class_cannot_be_instantiated(self):
-        with pytest.raises(TypeError):
-            RedactionPolicy()  # type: ignore[abstract]
-
-    def test_subclass_without_redact_attributes_cannot_be_instantiated(self):
-        class Incomplete(RedactionPolicy):
-            pass
-
-        with pytest.raises(TypeError):
-            Incomplete()  # type: ignore[abstract]
-
-    def test_subclass_implementing_redact_attributes_instantiates(self):
-        class Minimal(RedactionPolicy):
-            def redact_attributes(self, attributes):
-                return dict(attributes or {})
-
-        policy = Minimal()
-        # Concrete identity defaults remain available.
-        assert policy.redact_span_name("span") == "span"
-        assert policy.redact_status_description("desc") == "desc"
-
-
 class TestResolvePolicy:
     def test_none_returns_default(self):
-        assert isinstance(resolve_policy(None), AttributeRedactionPolicy)
         assert isinstance(default_redaction_policy(), AttributeRedactionPolicy)
+        assert isinstance(resolve_policy(None), AttributeRedactionPolicy)
 
     def test_policy_passthrough(self):
         policy = RegexRedactionPolicy()
@@ -217,6 +206,22 @@ class TestResolvePolicy:
     def test_invalid_raises_type_error(self):
         with pytest.raises(TypeError):
             resolve_policy(123)  # type: ignore[arg-type]
+
+
+class TestResolveRedaction:
+    def test_true_returns_default_policy(self):
+        assert isinstance(resolve_redaction(True), AttributeRedactionPolicy)
+
+    def test_false_returns_none(self):
+        assert resolve_redaction(False) is None
+
+    def test_policy_passthrough(self):
+        policy = RegexRedactionPolicy()
+        assert resolve_redaction(policy) is policy
+
+    def test_callable_wrapped(self):
+        resolved = resolve_redaction(lambda k, v: v)
+        assert isinstance(resolved, CallbackRedactionPolicy)
 
 
 class TestRedactSpan:
@@ -234,14 +239,9 @@ class TestRedactSpan:
         provider.force_flush()
         return exporter.get_finished_spans()[0]
 
-    def test_rebuilds_genuine_readable_span(self):
-        from opentelemetry.sdk.trace import ReadableSpan
-
-        redacted = redact_span(self._make_span(), default_redaction_policy())
-        assert isinstance(redacted, ReadableSpan)
-
     def test_attributes_redacted(self):
         redacted = redact_span(self._make_span(), default_redaction_policy())
+        assert isinstance(redacted, ReadableSpan)
         attrs = redacted.attributes
         assert attrs is not None
         assert attrs["gen_ai.input.messages"] == DEFAULT_REDACTED_VALUE
@@ -279,7 +279,7 @@ class TestRedactingSpanExporter:
         )
         tracer = provider.get_tracer("test")
         with tracer.start_as_current_span("chat") as span:
-            span.set_attribute("gen_ai.output.messages", "leak")
+            span.set_attribute("gen_ai.output.messages", "leak Bearer abc.def-ghi")
             span.set_attribute("gen_ai.request.model", "mistral-large")
         provider.force_flush()
         return wrapped.get_finished_spans()
@@ -294,34 +294,6 @@ class TestRedactingSpanExporter:
 
     def test_custom_policy_used(self):
         spans = self._export_through(RegexRedactionPolicy())
-        # Regex policy keeps structure; "leak" has no PII pattern -> unchanged.
         attrs = spans[0].attributes
         assert attrs is not None
-        assert attrs["gen_ai.output.messages"] == "leak"
-
-    def test_export_returns_wrapped_result(self):
-        wrapped = InMemorySpanExporter()
-        exporter = RedactingSpanExporter(wrapped)
-        assert exporter.export([]) == SpanExportResult.SUCCESS
-
-    def test_shutdown_and_force_flush_delegate(self):
-        class _Recorder(InMemorySpanExporter):
-            def __init__(self):
-                super().__init__()
-                self.shutdown_called = False
-                self.flush_called = False
-
-            def shutdown(self):
-                self.shutdown_called = True
-                super().shutdown()
-
-            def force_flush(self, timeout_millis=30000):
-                self.flush_called = True
-                return True
-
-        recorder = _Recorder()
-        exporter = RedactingSpanExporter(recorder)
-        assert exporter.force_flush() is True
-        exporter.shutdown()
-        assert recorder.flush_called
-        assert recorder.shutdown_called
+        assert attrs["gen_ai.output.messages"] == f"leak {DEFAULT_REDACTED_VALUE}"

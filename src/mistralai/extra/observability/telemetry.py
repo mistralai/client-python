@@ -21,9 +21,9 @@ from .redaction import (
 if TYPE_CHECKING:
     from opentelemetry.sdk.trace import TracerProvider as SDKTracerProvider
 
+    from mistralai.client._hooks.tracing import TracingHook
     from mistralai.client.sdk import Mistral
     from mistralai.client.sdkconfiguration import SDKConfiguration
-    from mistralai.client._hooks.tracing import TracingHook
 
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
@@ -95,13 +95,8 @@ def _warn_redaction_ignored(
     redaction: RedactionPolicyLike | bool,
     mode: str,
 ) -> None:
-    """Warn when a redaction override cannot take effect for this provider mode.
-
-    Redaction is only applied in ``dedicated`` mode where the SDK owns the
-    exporter. In ``global``/``custom`` modes the application owns the export
-    pipeline and must wrap its own exporter with ``RedactingSpanExporter``.
-    """
-    if redaction is True:
+    """Warn when redaction may not happen when user might expect it."""
+    if redaction is False:  # Explicitly turned off
         return
     logger.warning(
         "Telemetry redaction is only applied in 'dedicated' provider mode, where "

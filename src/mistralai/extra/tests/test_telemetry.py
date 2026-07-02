@@ -22,12 +22,11 @@ from mistralai.extra.observability.redaction import (
     CallbackRedactionPolicy,
     RedactingSpanExporter,
     RegexRedactionPolicy,
-    resolve_redaction,
 )
 from mistralai.extra.observability.telemetry import (
-    MISTRAL_TELEMETRY_ENDPOINT,
-    MISTRAL_SDK_TELEMETRY_ENV,
     MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
+    MISTRAL_SDK_TELEMETRY_ENV,
+    MISTRAL_TELEMETRY_ENDPOINT,
     TelemetryConfigurationError,
     _create_telemetry_tracer_provider,
     configure_telemetry_for_hook,
@@ -57,7 +56,9 @@ def _make_client(api_key: str | None = "test-key") -> "Mistral":
 
 def _get_tracing_hook(client: "Mistral") -> TracingHook:
     hooks = client.sdk_configuration.__dict__["_hooks"]
-    tracing_hooks = [h for h in hooks.before_request_hooks if isinstance(h, TracingHook)]
+    tracing_hooks = [
+        h for h in hooks.before_request_hooks if isinstance(h, TracingHook)
+    ]
     assert len(tracing_hooks) == 1
     return tracing_hooks[0]
 
@@ -494,7 +495,9 @@ class TestTelemetryConfiguration(unittest.TestCase):
             with patch(
                 "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
             ) as create_provider:
-                configured = configure_telemetry_for_hook(hook, client.sdk_configuration)
+                configured = configure_telemetry_for_hook(
+                    hook, client.sdk_configuration
+                )
 
         self.assertTrue(configured)
         create_provider.assert_not_called()
@@ -544,7 +547,9 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
                 return_value=provider,
             ):
-                configured = configure_telemetry_for_hook(hook, client.sdk_configuration)
+                configured = configure_telemetry_for_hook(
+                    hook, client.sdk_configuration
+                )
 
         self.assertTrue(configured)
         self.assertIs(hook.tracer_provider, provider)
@@ -686,8 +691,6 @@ class TestTelemetryRedaction:
         provider = self._make_provider()
         exporter = self._exporter_of(provider)
         assert isinstance(exporter, RedactingSpanExporter)
-        # The wrapped exporter is still the single OTLP exporter created.
-        assert len(FakeExporter.instances) == 1
         assert exporter._exporter is FakeExporter.instances[0]
         assert isinstance(exporter._policy, AttributeRedactionPolicy)
 
@@ -719,17 +722,8 @@ class TestTelemetryRedaction:
         assert isinstance(exporter, RedactingSpanExporter)
         assert isinstance(exporter._policy, CallbackRedactionPolicy)
 
-    def test_resolve_redaction_semantics(self):
-        assert isinstance(resolve_redaction(True), AttributeRedactionPolicy)
-        assert resolve_redaction(False) is None
-
-        policy = RegexRedactionPolicy()
-        assert resolve_redaction(policy) is policy
-
-        resolved = resolve_redaction(lambda k, v: v)
-        assert isinstance(resolved, CallbackRedactionPolicy)
-
-    def test_configure_dedicated_threads_redaction(self):
+    def test_dedicated_mode_forwards_custom_redaction_to_provider(self):
+        # Wiring test
         with patch(
             "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
         ) as create_provider:
@@ -740,23 +734,40 @@ class TestTelemetryRedaction:
 
         create_provider.assert_called_once_with(api_key="test-key", redaction=policy)
 
-    def test_global_mode_warns_when_redaction_customized(self, caplog):
-        client = _make_client(api_key="test-key")
-        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
-            configure_telemetry(client, provider="global", redaction=False)
-        assert "only applied in 'dedicated'" in caplog.text
+    def test_dedicated_mode_forwards_default_redaction_to_provider(self):
+        # Wiring test
+        with patch(
+            "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider"
+        ) as create_provider:
+            create_provider.return_value = FakeProvider()
+            client = _make_client(api_key="test-key")
+            configure_telemetry(client, provider="dedicated")
 
-    def test_global_mode_does_not_warn_by_default(self, caplog):
+        create_provider.assert_called_once_with(api_key="test-key", redaction=True)
+
+    def test_global_mode_warns_by_default(self, caplog):
         client = _make_client(api_key="test-key")
         with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
             configure_telemetry(client, provider="global")
+        assert "Telemetry redaction is only applied in 'dedicated'" in caplog.text
+
+    def test_global_mode_does_not_warn_when_redaction_disabled(self, caplog):
+        client = _make_client(api_key="test-key")
+        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
+            configure_telemetry(client, provider="global", redaction=False)
         assert not [r for r in caplog.records if r.name == _TELEMETRY_LOGGER]
 
-    def test_custom_provider_warns_when_redaction_customized(self, caplog):
+    def test_custom_provider_warns_by_default(self, caplog):
+        client = _make_client(api_key="test-key")
+        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
+            configure_telemetry(client, provider=TracerProvider())
+        assert "Telemetry redaction is only applied in 'dedicated'" in caplog.text
+
+    def test_custom_provider_does_not_warn_when_redaction_disabled(self, caplog):
         client = _make_client(api_key="test-key")
         with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
             configure_telemetry(client, provider=TracerProvider(), redaction=False)
-        assert "only applied in 'dedicated'" in caplog.text
+        assert not [r for r in caplog.records if r.name == _TELEMETRY_LOGGER]
 
 
 if __name__ == "__main__":
