@@ -57,6 +57,21 @@ class TestAttributeRedactionPolicy(unittest.TestCase):
         out = policy.redact_attributes({"safeish.list": ("a", "b")})
         self.assertEqual(out["safeish.list"], ("a", "b"))
 
+    def test_string_sequence_scanned_element_wise_when_kept(self):
+        policy = AttributeRedactionPolicy(redact_non_primitive=False)
+        out = policy.redact_attributes(
+            {"tags": ["plain", "ghp_abcdefghijklmnopqrstuvwxyz0123"]}
+        )
+        self.assertEqual(out["tags"], ["plain", DEFAULT_REDACTED_VALUE])
+
+    def test_safe_key_string_sequence_scanned(self):
+        out = self.policy.redact_attributes(
+            {"gen_ai.response.finish_reasons": ("stop", "Bearer abc.def")}
+        )
+        self.assertEqual(
+            out["gen_ai.response.finish_reasons"], ("stop", DEFAULT_REDACTED_VALUE)
+        )
+
     def test_none_attributes_returns_empty(self):
         self.assertEqual(self.policy.redact_attributes(None), {})
 
@@ -99,6 +114,20 @@ class TestRegexRedactionPolicy(unittest.TestCase):
     def test_non_string_untouched(self):
         out = self.policy.redact_attributes({"n": 5, "b": True})
         self.assertEqual(out, {"n": 5, "b": True})
+
+    def test_string_sequence_scanned_preserving_container(self):
+        out = self.policy.redact_attributes(
+            {"msgs": ["hello", "reach me at a@b.com"]}
+        )
+        self.assertEqual(out["msgs"], ["hello", "reach me at [REDACTED]"])
+
+    def test_tuple_sequence_stays_tuple(self):
+        out = self.policy.redact_attributes({"msgs": ("hi", "a@b.com")})
+        self.assertEqual(out["msgs"], ("hi", "[REDACTED]"))
+
+    def test_numeric_sequence_untouched(self):
+        out = self.policy.redact_attributes({"nums": [1, 2, 3]})
+        self.assertEqual(out["nums"], [1, 2, 3])
 
     def test_span_name_scanned(self):
         self.assertEqual(self.policy.redact_span_name("op a@b.com"), "op [REDACTED]")

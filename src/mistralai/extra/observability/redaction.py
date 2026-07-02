@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 from abc import ABC, abstractmethod
 from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING, Any, Callable, Final, Union
+from typing import TYPE_CHECKING, Any, Callable, Final, Union, cast
 
 from opentelemetry.util.types import AttributeValue
 
@@ -142,9 +142,6 @@ _SAFE_KEY_PREFIXES: Final[tuple[str, ...]] = ("gen_ai.usage.",)
 _PRIMITIVE_TYPES: Final[tuple[type, ...]] = (str, bool, int, float)
 
 
-# TODO: also redact Sequence[str] ?
-
-
 class AttributeRedactionPolicy(RedactionPolicy):
     """Key-oriented hybrid policy.
 
@@ -202,12 +199,9 @@ class AttributeRedactionPolicy(RedactionPolicy):
             if self._should_redact(key, value):
                 redacted[key] = self._redacted_value
                 continue
-            if isinstance(value, str):
-                redacted[key] = _redact_text(
-                    value, self._token_patterns, self._redacted_value
-                )
-                continue
-            redacted[key] = value
+            redacted[key] = _redact_value(
+                value, self._token_patterns, self._redacted_value
+            )
 
         return redacted
 
@@ -256,12 +250,7 @@ class RegexRedactionPolicy(RedactionPolicy):
             return redacted
 
         for key, value in attributes.items():
-            if isinstance(value, str):
-                redacted[key] = _redact_text(
-                    value, self._patterns, self._redacted_value
-                )
-                continue
-            redacted[key] = value
+            redacted[key] = _redact_value(value, self._patterns, self._redacted_value)
 
         return redacted
 
@@ -470,6 +459,24 @@ def _redact_status(status: Any, policy: RedactionPolicy, types: Any) -> Any:
     status_code = getattr(status, "status_code", None) or types.StatusCode.UNSET
     description = policy.redact_status_description(getattr(status, "description", None))
     return types.Status(status_code, description)
+
+
+def _redact_value(
+    value: AttributeValue,
+    patterns: Sequence[re.Pattern[str]],
+    redacted_value: str = DEFAULT_REDACTED_VALUE,
+) -> AttributeValue:
+    if isinstance(value, str):
+        return _redact_text(value, patterns, redacted_value)
+    if isinstance(value, (list, tuple)):
+        items = [
+            _redact_text(item, patterns, redacted_value)
+            if isinstance(item, str)
+            else item
+            for item in value
+        ]
+        return cast(AttributeValue, tuple(items) if isinstance(value, tuple) else items)
+    return value
 
 
 def _redact_text(
