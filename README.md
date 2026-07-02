@@ -46,6 +46,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Resource Management](#resource-management)
   * [Debugging](#debugging)
   * [IDE Support](#ide-support)
+  * [Telemetry \& Observability](#telemetry--observability)
 * [Development](#development)
   * [Contributions](#contributions)
 
@@ -841,7 +842,7 @@ print(res.choices[0].message.content)
 operations. These operations will expose the stream as [Generator][generator] that
 can be consumed using a simple `for` loop. The loop will
 terminate when the server no longer has any events to send and closes the
-underlying connection.  
+underlying connection.
 
 The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
 underlying connection when the context is exited.
@@ -1282,9 +1283,117 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
+
+## Telemetry & Observability
+
+The SDK can emit [OpenTelemetry](https://opentelemetry.io/) traces for the API calls it makes (chat, agents, embeddings, OCR, …), following the
+[GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
+Spans capture the operation, model, token usage, and — unless redacted — the input/output messages and tool calls. Telemetry is **opt-in** and lives in the `mistralai.extra.observability` module.
+
+### Installation
+
+Install the `telemetry` extra:
+
+```bash
+pip install "mistralai[telemetry]"
+# or: uv add "mistralai[telemetry]"
+```
+
+### Enabling telemetry
+
+Either set an environment variable before creating the client:
+
+```bash
+export MISTRAL_SDK_TELEMETRY=dedicated   # dedicated | global | false
+```
+
+or configure it in code:
+
+```python
+import os
+from mistralai.client import Mistral
+from mistralai.extra.observability import configure_telemetry
+
+with Mistral(api_key=os.environ["MISTRAL_API_KEY"]) as client:
+    # Dedicated mode (default): the SDK creates and owns an OTLP exporter that
+    # ships spans to the Mistral telemetry endpoint. Spans are redacted before
+    # export.
+    configure_telemetry(client)
+
+    client.chat.complete(
+        model="mistral-small-latest",
+        messages=[{"role": "user", "content": "Hello!"}],
+    )
+```
+
+### Provider modes
+
+`configure_telemetry(client, provider=...)` selects where spans go and who owns the export pipeline:
+
+| `provider` | Who owns the exporter | Where spans go | Redaction |
+| ---------- | --------------------- | -------------- | --------- |
+| `"dedicated"` (default) | The SDK | Mistral telemetry endpoint | Applied automatically |
+| `"global"` | Your application | Your global OpenTelemetry provider | **Not** applied — you need to wrap your own exporter |
+| a `TracerProvider` | Your application | The provider you pass | **Not** applied — you need to wrap your own exporter |
+
+In `global`/custom modes your application owns the pipeline, so the `redaction` argument is ignored (a warning is logged). Wrap your own exporter with `RedactingSpanExporter` to redact spans there:
+
+```python
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from mistralai.extra.observability import RedactingSpanExporter, configure_telemetry
+
+provider = TracerProvider()
+provider.add_span_processor(
+    BatchSpanProcessor(RedactingSpanExporter(OTLPSpanExporter()))
+)
+trace.set_tracer_provider(provider)
+
+# SDK spans now flow through your global provider (already redacted above).
+configure_telemetry(client, provider="global")
+```
+
+### Redaction
+
+In dedicated mode, redaction is on by default. Control it with the `redaction` argument, which also accepts any of the reusable policies from `mistralai.extra.observability`:
+
+```python
+from mistralai.extra.observability import AttributeRedactionPolicy
+
+configure_telemetry(client)                                        # default policy (regex)
+configure_telemetry(client, redaction=AttributeRedactionPolicy())  # very conservative key-oriented policy
+configure_telemetry(client, redaction=False)                       # disabled - no redaction
+configure_telemetry(                                               # custom callback to control how attributes are redacted
+    client,
+    redaction=lambda key, value: None if "email" in key else value,
+)
+```
+
+| Policy | Strategy | Trade-off |
+| ------ | -------- | --------- |
+| `RegexRedactionPolicy` (default, `redaction=True`) | Content-oriented: keeps keys and structure, redacts matched substrings (secret tokens plus PII — emails, card-like sequences, IPv4). | Redacts most sensitive data while preserving observability value; may miss free-form PII or secrets not in the pattern set. |
+| `AttributeRedactionPolicy` | Key-oriented: redacts whole values for sensitive keys (explicit set, fragment match, or non-primitive value), then scans kept values for secret token patterns. | Very conservative, but erases most prompt/response content. |
+| `CallbackRedactionPolicy` (`redaction=<callable>`) | Your `(key, value) -> value \| None` masker per attribute; return `None` to drop the attribute. | Full control; you own the logic. |
+
+*Note: the `RedactingSpanExporter` primitive is reusable by any OpenTelemetry application, independent of the Mistral client.*
+
+### Environment variables
+
+| Variable | Description | Default |
+| -------- | ----------- | ------- |
+| `MISTRAL_SDK_TELEMETRY` | Auto-enable telemetry: `dedicated`, `global`, or `false`. | unset (disabled) |
+| `MISTRAL_OTLP_TRACES_ENDPOINT` | Override the OTLP traces endpoint used in dedicated mode. | `https://api.mistral.ai/telemetry/v1/traces` |
+| `MISTRAL_SDK_DEBUG_TRACING` | Set to `true` for verbose tracing logs. | `false` |
+| `MISTRAL_API_KEY` | Used as the bearer token for the dedicated-mode exporter. | — |
+
+Runnable examples live in [`examples/mistral/observability`](/examples/mistral/observability).
+
+
 # Development
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.

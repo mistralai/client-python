@@ -4,6 +4,16 @@ from typing import TYPE_CHECKING
 from opentelemetry import trace as otel_trace
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
+from .redaction import (
+    AttributeRedactionPolicy,
+    CallbackRedactionPolicy,
+    RedactingSpanExporter,
+    RedactionPolicy,
+    RegexRedactionPolicy,
+    default_redaction_policy,
+    redact_span,
+    resolve_policy,
+)
 from .telemetry import (
     TelemetryConfigurationError,
     configure_telemetry,
@@ -46,9 +56,17 @@ def set_tracer_provider(
 
 
 __all__ = [
+    "AttributeRedactionPolicy",
+    "CallbackRedactionPolicy",
+    "RedactingSpanExporter",
+    "RedactionPolicy",
+    "RegexRedactionPolicy",
     "TelemetryConfigurationError",
     "configure_telemetry",
+    "default_redaction_policy",
     "get_telemetry_tracer",
+    "redact_span",
+    "resolve_policy",
     "set_tracer_provider",
     "trace",
 ]

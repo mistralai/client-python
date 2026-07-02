@@ -12,13 +12,18 @@ from opentelemetry import trace as otel_trace
 from mistralai.client.utils import get_security_from_env
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
+from .redaction import (
+    RedactingSpanExporter,
+    RedactionPolicyLike,
+    resolve_redaction,
+)
 
 if TYPE_CHECKING:
     from opentelemetry.sdk.trace import TracerProvider as SDKTracerProvider
 
+    from mistralai.client._hooks.tracing import TracingHook
     from mistralai.client.sdk import Mistral
     from mistralai.client.sdkconfiguration import SDKConfiguration
-    from mistralai.client._hooks.tracing import TracingHook
 
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
@@ -86,9 +91,26 @@ def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
         ) from exc
 
 
+def _warn_redaction_ignored(
+    redaction: RedactionPolicyLike | bool,
+    mode: str,
+) -> None:
+    """Warn when redaction may not happen when user might expect it."""
+    if redaction is False:  # Explicitly turned off
+        return
+    logger.warning(
+        "Telemetry redaction is only applied in 'dedicated' provider mode, where "
+        "the Mistral SDK owns the exporter. In %r mode the application owns the "
+        "export pipeline; wrap your exporter with RedactingSpanExporter to redact "
+        "spans. Ignoring the redaction argument.",
+        mode,
+    )
+
+
 def configure_telemetry(
     client: "Mistral",
     provider: str | otel_trace.TracerProvider = TELEMETRY_PROVIDER_DEDICATED,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> bool:
     """Configure telemetry provider mode for a Mistral client.
 
@@ -96,6 +118,20 @@ def configure_telemetry(
     provider="global" clears the per-client provider so SDK spans use the
     global OpenTelemetry provider. Passing a TracerProvider attaches it to this
     client without taking ownership of its lifecycle.
+
+    In dedicated mode, spans are redacted before export (safe by default).
+    You can control this with the redaction argument:
+    - True: (default) uses the default policy. It scans string values and redacts matched
+      secrets/PII substrings while preserving keys and surrounding content
+    - False: disables redaction
+    - Other RedactionPolicy classes (e.g. the conservative but destructive
+      AttributeRedactionPolicy) can be found in the redaction module and provided here
+    - You can also provide a (key, value) -> value | None callback to customize how attributes
+      get redacted. Your function should return the modified attribute value or None to drop
+      the attribute.
+    Note that redaction has no effect when using the global provider mode or providing your own
+    telemetry provider, since your application controls the provider then. In that case, wrap
+    your exporter with redaction.RedactingSpanExporter to redact span before export.
     """
     hooks = getattr(client.sdk_configuration, "_hooks", None)
     if hooks is None:
@@ -105,6 +141,7 @@ def configure_telemetry(
     if isinstance(provider, str):
         provider_mode = _resolve_provider_mode(provider)
         if provider_mode == TELEMETRY_PROVIDER_GLOBAL:
+            _warn_redaction_ignored(redaction, provider_mode)
             return _use_global_tracer_provider(hook, replace_existing=True)
 
         return configure_telemetry_for_hook(
@@ -113,6 +150,7 @@ def configure_telemetry(
             telemetry=provider_mode,
             finalizer_owner=client,
             replace_existing=True,
+            redaction=redaction,
         )
 
     if isinstance(provider, bool):
@@ -121,6 +159,7 @@ def configure_telemetry(
             "or an OpenTelemetry TracerProvider."
         )
 
+    _warn_redaction_ignored(redaction, "custom")
     _attach_custom_tracer_provider(hook, provider)
     return True
 
@@ -170,8 +209,14 @@ def configure_telemetry_for_hook(
     finalizer_owner: Any | None = None,
     respect_global_provider: bool = False,
     replace_existing: bool = False,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> bool:
-    """Configure telemetry for a tracing hook when the user has opted in."""
+    """Configure telemetry for a tracing hook when the user has opted in.
+
+    In dedicated mode the SDK-owned OTLP exporter is wrapped with a
+    RedactingSpanExporter unless redaction is False (safe by
+    default). See configure_telemetry for the accepted values.
+    """
     # Fast path: already resolved and no explicit override requested.
     if telemetry is None and (
         hook._auto_telemetry_provider is not None or hook._telemetry_use_global_provider
@@ -232,6 +277,7 @@ def configure_telemetry_for_hook(
     api_key = _resolve_api_key_from_security(getattr(sdk_config, "security", None))
     provider = _create_telemetry_tracer_provider(
         api_key=api_key,
+        redaction=redaction,
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
     return True
@@ -272,6 +318,7 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> "SDKTracerProvider":
     (
         batch_span_processor_cls,
@@ -289,6 +336,9 @@ def _create_telemetry_tracer_provider(
         endpoint=_resolve_mistral_telemetry_endpoint(),
         headers={"Authorization": _as_bearer_token(api_key)},
     )
+    policy = resolve_redaction(redaction)
+    if policy is not None:
+        exporter = RedactingSpanExporter(exporter, policy)
     provider = tracer_provider_cls(
         resource=resource_cls.create({"service.name": OTEL_SERVICE_NAME})
     )
