@@ -3,6 +3,7 @@ import unittest
 from typing import TYPE_CHECKING, cast
 from unittest.mock import MagicMock, patch
 
+import pytest
 from opentelemetry.sdk.trace import TracerProvider
 
 from mistralai.client._hooks import SDKHooks
@@ -654,11 +655,17 @@ class TestTelemetryConfiguration(unittest.TestCase):
         )
 
 
-class TestTelemetryRedaction(unittest.TestCase):
-    def setUp(self):
-        FakeExporter.instances.clear()
+_TELEMETRY_LOGGER = "mistralai.extra.observability.telemetry"
 
-    def _make_provider(self, **kwargs):
+
+@pytest.fixture
+def clear_exporters():
+    FakeExporter.instances.clear()
+
+
+class TestTelemetryRedaction:
+    @staticmethod
+    def _make_provider(**kwargs):
         with patch(
             "mistralai.extra.observability.telemetry._load_otel_sdk",
             return_value=(
@@ -670,56 +677,57 @@ class TestTelemetryRedaction(unittest.TestCase):
         ):
             return _create_telemetry_tracer_provider(api_key="test-key", **kwargs)
 
-    def _exporter_of(self, provider):
-        self.assertEqual(len(provider.span_processors), 1)
+    @staticmethod
+    def _exporter_of(provider):
+        assert len(provider.span_processors) == 1
         return provider.span_processors[0].exporter
 
-    def test_dedicated_wraps_exporter_by_default(self):
+    def test_dedicated_wraps_exporter_by_default(self, clear_exporters):
         provider = self._make_provider()
         exporter = self._exporter_of(provider)
-        self.assertIsInstance(exporter, RedactingSpanExporter)
+        assert isinstance(exporter, RedactingSpanExporter)
         # The wrapped exporter is still the single OTLP exporter created.
-        self.assertEqual(len(FakeExporter.instances), 1)
-        self.assertIs(exporter._exporter, FakeExporter.instances[0])
-        self.assertIsInstance(exporter._policy, AttributeRedactionPolicy)
+        assert len(FakeExporter.instances) == 1
+        assert exporter._exporter is FakeExporter.instances[0]
+        assert isinstance(exporter._policy, AttributeRedactionPolicy)
 
-    def test_redaction_true_wraps_with_default_policy(self):
+    def test_redaction_true_wraps_with_default_policy(self, clear_exporters):
         provider = self._make_provider(redaction=True)
         exporter = self._exporter_of(provider)
-        self.assertIsInstance(exporter, RedactingSpanExporter)
-        self.assertIsInstance(exporter._policy, AttributeRedactionPolicy)
+        assert isinstance(exporter, RedactingSpanExporter)
+        assert isinstance(exporter._policy, AttributeRedactionPolicy)
 
-    def test_redaction_false_leaves_exporter_unwrapped(self):
+    def test_redaction_false_leaves_exporter_unwrapped(self, clear_exporters):
         provider = self._make_provider(redaction=False)
         exporter = self._exporter_of(provider)
-        self.assertNotIsInstance(exporter, RedactingSpanExporter)
-        self.assertIs(exporter, FakeExporter.instances[0])
+        assert not isinstance(exporter, RedactingSpanExporter)
+        assert exporter is FakeExporter.instances[0]
 
-    def test_custom_policy_instance_is_used(self):
+    def test_custom_policy_instance_is_used(self, clear_exporters):
         policy = RegexRedactionPolicy()
         provider = self._make_provider(redaction=policy)
         exporter = self._exporter_of(provider)
-        self.assertIsInstance(exporter, RedactingSpanExporter)
-        self.assertIs(exporter._policy, policy)
+        assert isinstance(exporter, RedactingSpanExporter)
+        assert exporter._policy is policy
 
-    def test_callback_is_wrapped_in_callback_policy(self):
+    def test_callback_is_wrapped_in_callback_policy(self, clear_exporters):
         def mask(key, value):
             return value
 
         provider = self._make_provider(redaction=mask)
         exporter = self._exporter_of(provider)
-        self.assertIsInstance(exporter, RedactingSpanExporter)
-        self.assertIsInstance(exporter._policy, CallbackRedactionPolicy)
+        assert isinstance(exporter, RedactingSpanExporter)
+        assert isinstance(exporter._policy, CallbackRedactionPolicy)
 
     def test_resolve_redaction_semantics(self):
-        self.assertIsInstance(resolve_redaction(True), AttributeRedactionPolicy)
-        self.assertIsNone(resolve_redaction(False))
+        assert isinstance(resolve_redaction(True), AttributeRedactionPolicy)
+        assert resolve_redaction(False) is None
 
         policy = RegexRedactionPolicy()
-        self.assertIs(resolve_redaction(policy), policy)
+        assert resolve_redaction(policy) is policy
 
         resolved = resolve_redaction(lambda k, v: v)
-        self.assertIsInstance(resolved, CallbackRedactionPolicy)
+        assert isinstance(resolved, CallbackRedactionPolicy)
 
     def test_configure_dedicated_threads_redaction(self):
         with patch(
@@ -732,32 +740,23 @@ class TestTelemetryRedaction(unittest.TestCase):
 
         create_provider.assert_called_once_with(api_key="test-key", redaction=policy)
 
-    def test_global_mode_warns_when_redaction_customized(self):
+    def test_global_mode_warns_when_redaction_customized(self, caplog):
         client = _make_client(api_key="test-key")
-        with self.assertLogs(
-            "mistralai.extra.observability.telemetry", level="WARNING"
-        ) as logs:
+        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
             configure_telemetry(client, provider="global", redaction=False)
-        self.assertIn("only applied in 'dedicated'", logs.output[0])
+        assert "only applied in 'dedicated'" in caplog.text
 
-    def test_global_mode_does_not_warn_by_default(self):
+    def test_global_mode_does_not_warn_by_default(self, caplog):
         client = _make_client(api_key="test-key")
-        logger = __import__(
-            "logging"
-        ).getLogger("mistralai.extra.observability.telemetry")
-        with patch.object(logger, "warning") as warn:
+        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
             configure_telemetry(client, provider="global")
-        warn.assert_not_called()
+        assert not [r for r in caplog.records if r.name == _TELEMETRY_LOGGER]
 
-    def test_custom_provider_warns_when_redaction_customized(self):
+    def test_custom_provider_warns_when_redaction_customized(self, caplog):
         client = _make_client(api_key="test-key")
-        with self.assertLogs(
-            "mistralai.extra.observability.telemetry", level="WARNING"
-        ) as logs:
-            configure_telemetry(
-                client, provider=TracerProvider(), redaction=False
-            )
-        self.assertIn("only applied in 'dedicated'", logs.output[0])
+        with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
+            configure_telemetry(client, provider=TracerProvider(), redaction=False)
+        assert "only applied in 'dedicated'" in caplog.text
 
 
 if __name__ == "__main__":
