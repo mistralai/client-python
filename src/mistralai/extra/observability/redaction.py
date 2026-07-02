@@ -67,6 +67,8 @@ DEFAULT_SENSITIVE_ATTRIBUTE_KEYS: Final[frozenset[str]] = frozenset(
         "gen_ai.input.messages",
         "gen_ai.output.messages",
         "gen_ai.tool.definitions",
+        "gen_ai.tool.call.arguments",
+        "gen_ai.tool.call.result",
         "http.request.body",
         "http.request.header.authorization",
         "http.request.header.cookie",
