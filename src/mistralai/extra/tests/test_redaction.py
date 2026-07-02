@@ -8,7 +8,9 @@ from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanE
 from opentelemetry.trace import SpanKind, Status, StatusCode
 
 from mistralai.extra.observability.redaction import (
+    DEFAULT_PII_SECRET_PATTERNS,
     DEFAULT_REDACTED_VALUE,
+    DEFAULT_TOKEN_PATTERNS,
     AttributeRedactionPolicy,
     CallbackRedactionPolicy,
     RedactingSpanExporter,
@@ -105,6 +107,29 @@ class TestRegexRedactionPolicy(unittest.TestCase):
         self.assertEqual(
             self.policy.redact_status_description("failed for a@b.com"),
             "failed for [REDACTED]",
+        )
+
+    def test_secret_patterns_redacted(self):
+        secrets = {
+            "aws": "AKIAIOSFODNN7EXAMPLE",
+            "google": "AIzaabcdefghijklmnopqrstuvwxyz012345678",
+            "jwt": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.abc123",
+            "pem": "-----BEGIN RSA PRIVATE KEY-----",
+            "stripe": "sk_live_0123456789abcdefghij",
+        }
+        for name, secret in secrets.items():
+            with self.subTest(secret=name):
+                out = self.policy.redact_attributes({"v": f"leak {secret} here"})
+                self.assertNotIn(secret, out["v"])
+                self.assertIn(DEFAULT_REDACTED_VALUE, out["v"])
+
+
+class TestDefaultPatternComposition(unittest.TestCase):
+    def test_pii_patterns_extend_token_patterns(self):
+        prefix = DEFAULT_PII_SECRET_PATTERNS[: len(DEFAULT_TOKEN_PATTERNS)]
+        self.assertEqual(prefix, DEFAULT_TOKEN_PATTERNS)
+        self.assertGreater(
+            len(DEFAULT_PII_SECRET_PATTERNS), len(DEFAULT_TOKEN_PATTERNS)
         )
 
 

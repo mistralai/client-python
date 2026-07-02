@@ -125,6 +125,11 @@ DEFAULT_TOKEN_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
     re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"),
     re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"),
     re.compile(r"\bsk-[A-Za-z0-9]{20,}\b"),
+    re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
+    re.compile(r"\bAIza[0-9A-Za-z_\-]{35}\b"),
+    re.compile(r"\beyJ[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\b"),
+    re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
+    re.compile(r"\b[sr]k_(?:live|test)_[0-9A-Za-z]{10,}\b"),
 )
 _SAFE_KEY_PREFIXES: Final[tuple[str, ...]] = ("gen_ai.usage.",)
 _PRIMITIVE_TYPES: Final[tuple[type, ...]] = (str, bool, int, float)
@@ -206,13 +211,8 @@ class AttributeRedactionPolicy(RedactionPolicy):
         return self._redacted_value
 
 
-# TODO: add regexes (all from PII/secrets detector ?) These are placeholders for now
 DEFAULT_PII_SECRET_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
-    # Secrets / tokens
-    re.compile(r"(?i)bearer\s+[a-z0-9._\-]+"),
-    re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"),
-    re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"),
-    re.compile(r"\bsk-[A-Za-z0-9]{20,}\b"),
+    *DEFAULT_TOKEN_PATTERNS,
     # Email addresses
     re.compile(r"\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b"),
     # Credit-card-like sequences (13-16 digits, optional spaces/dashes)
