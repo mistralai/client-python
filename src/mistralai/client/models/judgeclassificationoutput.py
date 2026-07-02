@@ -28,9 +28,3 @@ class JudgeClassificationOutput(BaseModel):
         ],
         pydantic.Field(alias="type"),
     ] = "CLASSIFICATION"
-
-
-try:
-    JudgeClassificationOutput.model_rebuild()
-except NameError:
-    pass

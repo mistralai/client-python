@@ -85,7 +85,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -178,7 +178,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -288,7 +288,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -398,7 +398,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -505,7 +505,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -614,7 +614,7 @@ class Accesses(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

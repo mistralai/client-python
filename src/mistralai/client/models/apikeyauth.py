@@ -22,9 +22,3 @@ class APIKeyAuth(BaseModel):
         Annotated[Literal["api-key"], AfterValidator(validate_const("api-key"))],
         pydantic.Field(alias="type"),
     ] = "api-key"
-
-
-try:
-    APIKeyAuth.model_rebuild()
-except NameError:
-    pass

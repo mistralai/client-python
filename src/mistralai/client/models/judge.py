@@ -8,7 +8,6 @@ from .judgeclassificationoutput import (
 )
 from .judgeregressionoutput import JudgeRegressionOutput, JudgeRegressionOutputTypedDict
 from datetime import datetime
-from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -16,10 +15,8 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict, model_serializer
-from pydantic.functional_validators import BeforeValidator
-from typing import Any, List, Literal, Union
+from pydantic import Field, model_serializer
+from typing import List, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -29,33 +26,8 @@ JudgeOutputUnionTypedDict = TypeAliasType(
 )
 
 
-class UnknownJudgeOutputUnion(BaseModel):
-    r"""A JudgeOutputUnion variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    type: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_JUDGE_OUTPUT_UNION_VARIANTS: dict[str, Any] = {
-    "CLASSIFICATION": JudgeClassificationOutput,
-    "REGRESSION": JudgeRegressionOutput,
-}
-
-
 JudgeOutputUnion = Annotated[
-    Union[JudgeClassificationOutput, JudgeRegressionOutput, UnknownJudgeOutputUnion],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="type",
-            variants=_JUDGE_OUTPUT_UNION_VARIANTS,
-            unknown_cls=UnknownJudgeOutputUnion,
-            union_name="JudgeOutputUnion",
-        )
-    ),
+    Union[JudgeClassificationOutput, JudgeRegressionOutput], Field(discriminator="type")
 ]
 
 
@@ -110,27 +82,35 @@ class Judge(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["up_revision", "down_revision", "base_revision"])
-        nullable_fields = set(
-            ["deleted_at", "up_revision", "down_revision", "base_revision"]
-        )
+        optional_fields = ["up_revision", "down_revision", "base_revision"]
+        nullable_fields = [
+            "deleted_at",
+            "up_revision",
+            "down_revision",
+            "base_revision",
+        ]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m

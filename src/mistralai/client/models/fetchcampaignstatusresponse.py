@@ -4,7 +4,9 @@
 from __future__ import annotations
 from .basetaskstatus import BaseTaskStatus
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
+from typing_extensions import Annotated, TypedDict
 
 
 class FetchCampaignStatusResponseTypedDict(TypedDict):
@@ -12,4 +14,4 @@ class FetchCampaignStatusResponseTypedDict(TypedDict):
 
 
 class FetchCampaignStatusResponse(BaseModel):
-    status: BaseTaskStatus
+    status: Annotated[BaseTaskStatus, PlainValidator(validate_open_enum(False))]

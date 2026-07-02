@@ -53,7 +53,8 @@ class ScheduleDefinitionOutputTypedDict(TypedDict):
     end_at: NotRequired[Nullable[datetime]]
     r"""Time after which no more actions will be run."""
     jitter: NotRequired[Nullable[str]]
-    r"""Jitter to apply each action.
+    r"""
+    Jitter to apply each action.
 
     An action's scheduled time will be incremented by a random value between 0
     and this value if present (but not past the next schedule).
@@ -111,7 +112,8 @@ class ScheduleDefinitionOutput(BaseModel):
     r"""Time after which no more actions will be run."""
 
     jitter: OptionalNullable[str] = UNSET
-    r"""Jitter to apply each action.
+    r"""
+    Jitter to apply each action.
 
     An action's scheduled time will be incremented by a random value between 0
     and this value if present (but not past the next schedule).
@@ -140,52 +142,53 @@ class ScheduleDefinitionOutput(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "calendars",
-                "intervals",
-                "cron_expressions",
-                "skip",
-                "start_at",
-                "end_at",
-                "jitter",
-                "time_zone_name",
-                "policy",
-                "remaining_executions",
-                "deployment_name",
-                "note",
-                "future_executions",
-                "recent_executions",
-            ]
-        )
-        nullable_fields = set(
-            [
-                "start_at",
-                "end_at",
-                "jitter",
-                "time_zone_name",
-                "remaining_executions",
-                "deployment_name",
-                "note",
-            ]
-        )
+        optional_fields = [
+            "calendars",
+            "intervals",
+            "cron_expressions",
+            "skip",
+            "start_at",
+            "end_at",
+            "jitter",
+            "time_zone_name",
+            "policy",
+            "remaining_executions",
+            "deployment_name",
+            "note",
+            "future_executions",
+            "recent_executions",
+        ]
+        nullable_fields = [
+            "start_at",
+            "end_at",
+            "jitter",
+            "time_zone_name",
+            "remaining_executions",
+            "deployment_name",
+            "note",
+        ]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m

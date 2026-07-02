@@ -100,7 +100,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -209,7 +209,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -300,7 +300,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -391,7 +391,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -508,7 +508,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -625,7 +625,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -733,7 +733,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["404", "422", "4XX", "503", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -746,7 +746,6 @@ class Deployments(BaseSDK):
                     raw, models.StreamDeploymentLogsResponseBody
                 ),
                 client_ref=self,
-                data_required=False,
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = utils.stream_to_text(http_res)
@@ -851,7 +850,7 @@ class Deployments(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["404", "422", "4XX", "503", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -864,7 +863,6 @@ class Deployments(BaseSDK):
                     raw, models.StreamDeploymentLogsResponseBody
                 ),
                 client_ref=self,
-                data_required=False,
             )
         if utils.match_response(http_res, "422", "application/json"):
             http_res_text = await utils.stream_to_text_async(http_res)

@@ -7,12 +7,18 @@ from .paginatedresultchatcompletioneventpreview import (
     PaginatedResultChatCompletionEventPreviewTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ListCampaignSelectedEventsResponseTypedDict(TypedDict):
-    completion_events: PaginatedResultChatCompletionEventPreviewTypedDict
+    paginated_result_chat_completion_event_preview: (
+        PaginatedResultChatCompletionEventPreviewTypedDict
+    )
 
 
 class ListCampaignSelectedEventsResponse(BaseModel):
-    completion_events: PaginatedResultChatCompletionEventPreview
+    paginated_result_chat_completion_event_preview: Annotated[
+        PaginatedResultChatCompletionEventPreview,
+        pydantic.Field(alias="completion_events"),
+    ]

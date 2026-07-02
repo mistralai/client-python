@@ -2,10 +2,9 @@
 # @generated-id: c61d451066dc
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -32,25 +31,3 @@ class JudgeRegressionOutput(BaseModel):
     min: Optional[float] = 0
 
     max: Optional[float] = 1
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["min", "max"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-try:
-    JudgeRegressionOutput.model_rebuild()
-except NameError:
-    pass

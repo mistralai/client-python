@@ -35,9 +35,3 @@ class GetSearchIndexSummaryResponseVespaIndex(BaseModel):
         Annotated[Literal["vespa"], AfterValidator(validate_const("vespa"))],
         pydantic.Field(alias="type"),
     ] = "vespa"
-
-
-try:
-    GetSearchIndexSummaryResponseVespaIndex.model_rebuild()
-except NameError:
-    pass

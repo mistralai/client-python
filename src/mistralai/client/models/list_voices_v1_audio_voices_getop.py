@@ -2,9 +2,8 @@
 # @generated-id: 6b3ce5be1294
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
-from pydantic import model_serializer
 from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -44,19 +43,3 @@ class ListVoicesV1AudioVoicesGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = "all"
     r"""Filter the voices between customs and presets"""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["limit", "offset", "type"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m

@@ -5,4 +5,4 @@
 
 | Field                                                      | Type                                                       | Required                                                   | Description                                                |
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
-| `spans`                                                    | [models.FeedResultGetSpan](../models/feedresultgetspan.md) | :heavy_check_mark:                                         | N/A                                                        |
+| `feed_result_get_span`                                     | [models.FeedResultGetSpan](../models/feedresultgetspan.md) | :heavy_check_mark:                                         | N/A                                                        |

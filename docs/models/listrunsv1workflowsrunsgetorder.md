@@ -2,15 +2,10 @@
 
 Sort direction
 
-## Example Usage
-
-```python
-from mistralai.client.models import ListRunsV1WorkflowsRunsGetOrder
-value: ListRunsV1WorkflowsRunsGetOrder = "asc"
-```
-
 
 ## Values
 
-- `"asc"`
-- `"desc"`
+| Name   | Value  |
+| ------ | ------ |
+| `ASC`  | asc    |
+| `DESC` | desc   |

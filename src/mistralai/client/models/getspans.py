@@ -4,12 +4,13 @@
 from __future__ import annotations
 from .feedresultgetspan import FeedResultGetSpan, FeedResultGetSpanTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class GetSpansTypedDict(TypedDict):
-    spans: FeedResultGetSpanTypedDict
+    feed_result_get_span: FeedResultGetSpanTypedDict
 
 
 class GetSpans(BaseModel):
-    spans: FeedResultGetSpan
+    feed_result_get_span: Annotated[FeedResultGetSpan, pydantic.Field(alias="spans")]

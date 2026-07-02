@@ -2,9 +2,9 @@
 # @generated-id: c284a1711148
 
 from __future__ import annotations
-from .conversationrestartstreamrequest import (
-    ConversationRestartStreamRequest,
-    ConversationRestartStreamRequestTypedDict,
+from .restartconversationrequest import (
+    RestartConversationRequest,
+    RestartConversationRequestTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
@@ -14,7 +14,7 @@ from typing_extensions import Annotated, TypedDict
 class AgentsAPIV1ConversationsRestartStreamRequestTypedDict(TypedDict):
     conversation_id: str
     r"""ID of the original conversation which is being restarted."""
-    conversation_restart_stream_request: ConversationRestartStreamRequestTypedDict
+    restart_conversation_request: RestartConversationRequestTypedDict
 
 
 class AgentsAPIV1ConversationsRestartStreamRequest(BaseModel):
@@ -23,7 +23,7 @@ class AgentsAPIV1ConversationsRestartStreamRequest(BaseModel):
     ]
     r"""ID of the original conversation which is being restarted."""
 
-    conversation_restart_stream_request: Annotated[
-        ConversationRestartStreamRequest,
+    restart_conversation_request: Annotated[
+        RestartConversationRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]

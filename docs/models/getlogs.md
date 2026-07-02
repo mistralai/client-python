@@ -5,4 +5,4 @@
 
 | Field                                                    | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `logs`                                                   | [models.FeedResultGetLog](../models/feedresultgetlog.md) | :heavy_check_mark:                                       | N/A                                                      |
+| `feed_result_get_log`                                    | [models.FeedResultGetLog](../models/feedresultgetlog.md) | :heavy_check_mark:                                       | N/A                                                      |

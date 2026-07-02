@@ -3,10 +3,11 @@
 
 from __future__ import annotations
 from .scheduleoverlappolicy import ScheduleOverlapPolicy
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import model_serializer
+from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SchedulePolicyTypedDict(TypedDict):
@@ -24,26 +25,12 @@ class SchedulePolicy(BaseModel):
     catchup_window_seconds: Optional[int] = 31536000
     r"""After a Temporal server is unavailable, amount of time in seconds in the past to execute missed actions."""
 
-    overlap: Optional[ScheduleOverlapPolicy] = None
+    overlap: Annotated[
+        Optional[ScheduleOverlapPolicy], PlainValidator(validate_open_enum(True))
+    ] = None
     r"""Controls what happens when a workflow would be started by a schedule but
     one is already running.
     """
 
     pause_on_failure: Optional[bool] = False
     r"""Whether to pause the schedule after a workflow failure."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["catchup_window_seconds", "overlap", "pause_on_failure"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m

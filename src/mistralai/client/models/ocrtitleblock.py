@@ -36,9 +36,3 @@ class OCRTitleBlock(BaseModel):
         Annotated[Literal["title"], AfterValidator(validate_const("title"))],
         pydantic.Field(alias="type"),
     ] = "title"
-
-
-try:
-    OCRTitleBlock.model_rebuild()
-except NameError:
-    pass

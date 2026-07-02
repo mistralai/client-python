@@ -36,9 +36,3 @@ class OCRAsideTextBlock(BaseModel):
         Annotated[Literal["aside_text"], AfterValidator(validate_const("aside_text"))],
         pydantic.Field(alias="type"),
     ] = "aside_text"
-
-
-try:
-    OCRAsideTextBlock.model_rebuild()
-except NameError:
-    pass

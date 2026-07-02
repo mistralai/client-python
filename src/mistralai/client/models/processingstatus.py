@@ -4,7 +4,9 @@
 from __future__ import annotations
 from .processstatus import ProcessStatus
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_open_enum
 import pydantic
+from pydantic.functional_validators import PlainValidator
 from typing_extensions import Annotated, TypedDict
 
 
@@ -17,7 +19,7 @@ class ProcessingStatusTypedDict(TypedDict):
 class ProcessingStatus(BaseModel):
     document_id: str
 
-    process_status: ProcessStatus
+    process_status: Annotated[ProcessStatus, PlainValidator(validate_open_enum(False))]
 
     processing_status: Annotated[
         str,

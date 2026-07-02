@@ -11,7 +11,6 @@ from .embeddedresource import EmbeddedResource, EmbeddedResourceTypedDict
 from .imagecontent import ImageContent, ImageContentTypedDict
 from .resourcelink import ResourceLink, ResourceLinkTypedDict
 from .textcontent import TextContent, TextContentTypedDict
-from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -19,11 +18,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils.unions import parse_open_union
 import pydantic
-from pydantic import ConfigDict, model_serializer
-from pydantic.functional_validators import BeforeValidator
-from typing import Any, Dict, List, Literal, Union
+from pydantic import ConfigDict, Field, model_serializer
+from typing import Any, Dict, List, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -39,43 +36,9 @@ ConnectorToolCallResponseContentTypedDict = TypeAliasType(
 )
 
 
-class UnknownConnectorToolCallResponseContent(BaseModel):
-    r"""A ConnectorToolCallResponseContent variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    type: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_CONNECTOR_TOOL_CALL_RESPONSE_CONTENT_VARIANTS: dict[str, Any] = {
-    "text": TextContent,
-    "image": ImageContent,
-    "audio": AudioContent,
-    "resource_link": ResourceLink,
-    "resource": EmbeddedResource,
-}
-
-
 ConnectorToolCallResponseContent = Annotated[
-    Union[
-        TextContent,
-        ImageContent,
-        AudioContent,
-        ResourceLink,
-        EmbeddedResource,
-        UnknownConnectorToolCallResponseContent,
-    ],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="type",
-            variants=_CONNECTOR_TOOL_CALL_RESPONSE_CONTENT_VARIANTS,
-            unknown_cls=UnknownConnectorToolCallResponseContent,
-            union_name="ConnectorToolCallResponseContent",
-        )
-    ),
+    Union[TextContent, ImageContent, AudioContent, ResourceLink, EmbeddedResource],
+    Field(discriminator="type"),
 ]
 
 
@@ -122,27 +85,32 @@ class ConnectorToolCallResponse(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["metadata"])
-        nullable_fields = set(["metadata"])
+        optional_fields = ["metadata"]
+        nullable_fields = ["metadata"]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
         for k, v in serialized.items():
             m[k] = v
 

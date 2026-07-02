@@ -4,8 +4,10 @@
 from __future__ import annotations
 from .toolproperties import ToolProperties, ToolPropertiesTypedDict
 from mistralai.client.types import BaseModel, UnrecognizedStr
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import List, Literal, Union
-from typing_extensions import TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
 LogicalExpressionType = Union[
@@ -23,7 +25,7 @@ class LogicalExpressionTypedDict(TypedDict):
 
 
 class LogicalExpression(BaseModel):
-    type: LogicalExpressionType
+    type: Annotated[LogicalExpressionType, PlainValidator(validate_open_enum(False))]
 
     expressions: List[Expression]
 

@@ -11,9 +11,11 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_open_enum
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ResponseFormatTypedDict(TypedDict):
@@ -26,31 +28,38 @@ class ResponseFormatTypedDict(TypedDict):
 class ResponseFormat(BaseModel):
     r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
 
-    type: Optional[ResponseFormats] = None
+    type: Annotated[
+        Optional[ResponseFormats], PlainValidator(validate_open_enum(False))
+    ] = None
 
     json_schema: OptionalNullable[JSONSchema] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["type", "json_schema"])
-        nullable_fields = set(["json_schema"])
+        optional_fields = ["type", "json_schema"]
+        nullable_fields = ["json_schema"]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m

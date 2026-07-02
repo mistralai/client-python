@@ -6,9 +6,12 @@ from .conversationpayload import ConversationPayload, ConversationPayloadTypedDi
 from .conversationsource import ConversationSource
 from datetime import datetime
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from mistralai.client.utils import validate_open_enum
+import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import Any, Dict
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class DatasetRecordTypedDict(TypedDict):
@@ -17,7 +20,7 @@ class DatasetRecordTypedDict(TypedDict):
     updated_at: datetime
     deleted_at: Nullable[datetime]
     dataset_id: str
-    payload: ConversationPayloadTypedDict
+    conversation_payload: ConversationPayloadTypedDict
     properties: Dict[str, Any]
     source: ConversationSource
 
@@ -33,22 +36,40 @@ class DatasetRecord(BaseModel):
 
     dataset_id: str
 
-    payload: ConversationPayload
+    conversation_payload: Annotated[
+        ConversationPayload, pydantic.Field(alias="payload")
+    ]
 
     properties: Dict[str, Any]
 
-    source: ConversationSource
+    source: Annotated[ConversationSource, PlainValidator(validate_open_enum(False))]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
+        optional_fields = []
+        nullable_fields = ["deleted_at"]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
                 m[k] = val
 
         return m

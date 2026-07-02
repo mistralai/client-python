@@ -2,15 +2,18 @@
 # @generated-id: 0a4f50bb358b
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
 from .registrysharingscope import RegistrySharingScope
-from .skill import Skill, SkillTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from mistralai.client.types import BaseModel
+from mistralai.client.utils import (
+    FieldMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+    validate_open_enum,
+)
 import pydantic
-from pydantic import model_serializer
-from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from pydantic.functional_validators import PlainValidator
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateSkillRequestTypedDict(TypedDict):
@@ -19,24 +22,11 @@ class UpdateSkillRequestTypedDict(TypedDict):
 
 class UpdateSkillRequest(BaseModel):
     sharing_scope: Annotated[
-        Optional[RegistrySharingScope], pydantic.Field(alias="sharingScope")
+        Annotated[
+            Optional[RegistrySharingScope], PlainValidator(validate_open_enum(False))
+        ],
+        pydantic.Field(alias="sharingScope"),
     ] = None
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["sharingScope"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
 
 
 class SkillsUpdateRequestTypedDict(TypedDict):
@@ -53,17 +43,3 @@ class SkillsUpdateRequest(BaseModel):
         UpdateSkillRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-SkillsUpdateResponseTypedDict = TypeAliasType(
-    "SkillsUpdateResponseTypedDict", Union[ConnectErrorTypedDict, SkillTypedDict]
-)
-
-
-SkillsUpdateResponse = TypeAliasType("SkillsUpdateResponse", Union[ConnectError, Skill])
-
-
-try:
-    UpdateSkillRequest.model_rebuild()
-except NameError:
-    pass

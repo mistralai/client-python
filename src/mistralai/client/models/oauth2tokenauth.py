@@ -24,9 +24,3 @@ class OAuth2TokenAuth(BaseModel):
         ],
         pydantic.Field(alias="type"),
     ] = "oauth2-token"
-
-
-try:
-    OAuth2TokenAuth.model_rebuild()
-except NameError:
-    pass

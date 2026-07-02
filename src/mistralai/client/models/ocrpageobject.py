@@ -22,7 +22,6 @@ from .ocrtableblock import OCRTableBlock, OCRTableBlockTypedDict
 from .ocrtableobject import OCRTableObject, OCRTableObjectTypedDict
 from .ocrtextblock import OCRTextBlock, OCRTextBlockTypedDict
 from .ocrtitleblock import OCRTitleBlock, OCRTitleBlockTypedDict
-from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -30,10 +29,8 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict, model_serializer
-from pydantic.functional_validators import BeforeValidator
-from typing import Any, List, Literal, Optional, Union
+from pydantic import Field, model_serializer
+from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -57,33 +54,6 @@ BlockTypedDict = TypeAliasType(
 )
 
 
-class UnknownBlock(BaseModel):
-    r"""A Block variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    type: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_BLOCK_VARIANTS: dict[str, Any] = {
-    "aside_text": OCRAsideTextBlock,
-    "caption": OCRCaptionBlock,
-    "code": OCRCodeBlock,
-    "equation": OCREquationBlock,
-    "footer": OCRFooterBlock,
-    "header": OCRHeaderBlock,
-    "image": OCRImageBlock,
-    "list": OCRListBlock,
-    "references": OCRReferencesBlock,
-    "signature": OCRSignatureBlock,
-    "table": OCRTableBlock,
-    "text": OCRTextBlock,
-    "title": OCRTitleBlock,
-}
-
-
 Block = Annotated[
     Union[
         OCRAsideTextBlock,
@@ -99,17 +69,8 @@ Block = Annotated[
         OCRTableBlock,
         OCRTextBlock,
         OCRTitleBlock,
-        UnknownBlock,
     ],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="type",
-            variants=_BLOCK_VARIANTS,
-            unknown_cls=UnknownBlock,
-            union_name="Block",
-        )
-    ),
+    Field(discriminator="type"),
 ]
 
 
@@ -169,29 +130,43 @@ class OCRPageObject(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            ["tables", "hyperlinks", "header", "footer", "confidence_scores", "blocks"]
-        )
-        nullable_fields = set(
-            ["header", "footer", "dimensions", "confidence_scores", "blocks"]
-        )
+        optional_fields = [
+            "tables",
+            "hyperlinks",
+            "header",
+            "footer",
+            "confidence_scores",
+            "blocks",
+        ]
+        nullable_fields = [
+            "header",
+            "footer",
+            "dimensions",
+            "confidence_scores",
+            "blocks",
+        ]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m

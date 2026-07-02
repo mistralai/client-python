@@ -86,9 +86,3 @@ class ChatModerationRequest(BaseModel):
     r"""Chat to classify"""
 
     model: str
-
-
-try:
-    ChatModerationRequest.model_rebuild()
-except NameError:
-    pass

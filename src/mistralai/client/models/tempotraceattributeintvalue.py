@@ -15,9 +15,3 @@ class TempoTraceAttributeIntValueTypedDict(TypedDict):
 class TempoTraceAttributeIntValue(BaseModel):
     int_value: Annotated[str, pydantic.Field(alias="intValue")]
     r"""The integer value of the attribute"""
-
-
-try:
-    TempoTraceAttributeIntValue.model_rebuild()
-except NameError:
-    pass

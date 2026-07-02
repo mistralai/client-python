@@ -36,9 +36,3 @@ class OCRFooterBlock(BaseModel):
         Annotated[Literal["footer"], AfterValidator(validate_const("footer"))],
         pydantic.Field(alias="type"),
     ] = "footer"
-
-
-try:
-    OCRFooterBlock.model_rebuild()
-except NameError:
-    pass

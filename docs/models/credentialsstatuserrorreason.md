@@ -1,26 +1,17 @@
 # CredentialsStatusErrorReason
 
-## Example Usage
-
-```python
-from mistralai.client.models import CredentialsStatusErrorReason
-
-# Open enum: unrecognized values are captured as UnrecognizedStr
-value: CredentialsStatusErrorReason = "oauth expired"
-```
-
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"oauth expired"`
-- `"oauth near expiry"`
-- `"empty credentials"`
-- `"unparsable credentials"`
-- `"you need to reconnect"`
-- `"oauth refresh error"`
-- `"MCP server unreachable"`
-- `"MCP server timed out"`
-- `"MCP server error"`
-- `"unknown error"`
+| Name                     | Value                    |
+| ------------------------ | ------------------------ |
+| `OAUTH_EXPIRED`          | oauth expired            |
+| `OAUTH_NEAR_EXPIRY`      | oauth near expiry        |
+| `EMPTY_CREDENTIALS`      | empty credentials        |
+| `UNPARSABLE_CREDENTIALS` | unparsable credentials   |
+| `YOU_NEED_TO_RECONNECT`  | you need to reconnect    |
+| `OAUTH_REFRESH_ERROR`    | oauth refresh error      |
+| `MCP_SERVER_UNREACHABLE` | MCP server unreachable   |
+| `MCP_SERVER_TIMED_OUT`   | MCP server timed out     |
+| `MCP_SERVER_ERROR`       | MCP server error         |
+| `UNKNOWN_ERROR`          | unknown error            |

@@ -40,9 +40,3 @@ class OCRSignatureBlock(BaseModel):
         Annotated[Literal["signature"], AfterValidator(validate_const("signature"))],
         pydantic.Field(alias="type"),
     ] = "signature"
-
-
-try:
-    OCRSignatureBlock.model_rebuild()
-except NameError:
-    pass

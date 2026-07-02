@@ -2,63 +2,137 @@
 # @generated-id: b7521bc9a558
 
 from __future__ import annotations
-from .jsonpatchadd import JSONPatchAdd, JSONPatchAddTypedDict
-from .jsonpatchappend import JSONPatchAppend, JSONPatchAppendTypedDict
-from .jsonpatchremove import JSONPatchRemove, JSONPatchRemoveTypedDict
-from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
-from functools import partial
+from .encryptedpatchvalue import EncryptedPatchValue, EncryptedPatchValueTypedDict
 from mistralai.client.types import BaseModel
-from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict
-from pydantic.functional_validators import BeforeValidator
+from mistralai.client.utils import validate_const
+import pydantic
+from pydantic import Field
+from pydantic.functional_validators import AfterValidator
 from typing import Any, Literal, Union
-from typing_extensions import Annotated, TypeAliasType
+from typing_extensions import Annotated, TypeAliasType, TypedDict
+
+
+class JSONPatchRemoveJSONPatchTypedDict(TypedDict):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+    value: Any
+    r"""The value to use for the operation"""
+    op: Literal["remove"]
+    r"""Remove operation"""
+
+
+class JSONPatchRemoveJSONPatch(BaseModel):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+
+    value: Any
+    r"""The value to use for the operation"""
+
+    op: Annotated[
+        Annotated[Literal["remove"], AfterValidator(validate_const("remove"))],
+        pydantic.Field(alias="op"),
+    ] = "remove"
+    r"""Remove operation"""
+
+
+class JSONPatchReplaceJSONPatchTypedDict(TypedDict):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+    value: Any
+    r"""The value to use for the operation"""
+    op: Literal["replace"]
+    r"""Replace operation"""
+
+
+class JSONPatchReplaceJSONPatch(BaseModel):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+
+    value: Any
+    r"""The value to use for the operation"""
+
+    op: Annotated[
+        Annotated[Literal["replace"], AfterValidator(validate_const("replace"))],
+        pydantic.Field(alias="op"),
+    ] = "replace"
+    r"""Replace operation"""
+
+
+class JSONPatchAddJSONPatchTypedDict(TypedDict):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+    value: Any
+    r"""The value to use for the operation"""
+    op: Literal["add"]
+    r"""Add operation"""
+
+
+class JSONPatchAddJSONPatch(BaseModel):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+
+    value: Any
+    r"""The value to use for the operation"""
+
+    op: Annotated[
+        Annotated[Literal["add"], AfterValidator(validate_const("add"))],
+        pydantic.Field(alias="op"),
+    ] = "add"
+    r"""Add operation"""
+
+
+JSONPatchAppendValueTypedDict = TypeAliasType(
+    "JSONPatchAppendValueTypedDict", Union[EncryptedPatchValueTypedDict, str]
+)
+r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
+
+
+JSONPatchAppendValue = TypeAliasType(
+    "JSONPatchAppendValue", Union[EncryptedPatchValue, str]
+)
+r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
+
+
+class JSONPatchAppendJSONPatchTypedDict(TypedDict):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+    value: JSONPatchAppendValueTypedDict
+    r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
+    op: Literal["append"]
+    r"""'append' is an extension for efficient string concatenation in streaming scenarios."""
+
+
+class JSONPatchAppendJSONPatch(BaseModel):
+    path: str
+    r"""A JSON Pointer (RFC 6901) identifying the target location within the document. Can be a string path (e.g., '/foo/bar'), '/', '', or an empty list [] for root-level operations."""
+
+    value: JSONPatchAppendValue
+    r"""The value to use for the operation. A string to append to the existing value, or an EncryptedPatchValue wrapper when encryption is applied."""
+
+    op: Annotated[
+        Annotated[Literal["append"], AfterValidator(validate_const("append"))],
+        pydantic.Field(alias="op"),
+    ] = "append"
+    r"""'append' is an extension for efficient string concatenation in streaming scenarios."""
 
 
 JSONPatchTypedDict = TypeAliasType(
     "JSONPatchTypedDict",
     Union[
-        JSONPatchAppendTypedDict,
-        JSONPatchAddTypedDict,
-        JSONPatchReplaceTypedDict,
-        JSONPatchRemoveTypedDict,
+        JSONPatchAppendJSONPatchTypedDict,
+        JSONPatchAddJSONPatchTypedDict,
+        JSONPatchReplaceJSONPatchTypedDict,
+        JSONPatchRemoveJSONPatchTypedDict,
     ],
 )
 
 
-class UnknownJSONPatch(BaseModel):
-    r"""A JSONPatch variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    op: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_JSON_PATCH_VARIANTS: dict[str, Any] = {
-    "add": JSONPatchAdd,
-    "append": JSONPatchAppend,
-    "remove": JSONPatchRemove,
-    "replace": JSONPatchReplace,
-}
-
-
 JSONPatch = Annotated[
     Union[
-        JSONPatchAdd,
-        JSONPatchAppend,
-        JSONPatchRemove,
-        JSONPatchReplace,
-        UnknownJSONPatch,
+        JSONPatchAddJSONPatch,
+        JSONPatchAppendJSONPatch,
+        JSONPatchRemoveJSONPatch,
+        JSONPatchReplaceJSONPatch,
     ],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="op",
-            variants=_JSON_PATCH_VARIANTS,
-            unknown_cls=UnknownJSONPatch,
-            union_name="JSONPatch",
-        )
-    ),
+    Field(discriminator="op"),
 ]

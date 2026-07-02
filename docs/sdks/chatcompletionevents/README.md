@@ -26,7 +26,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.chat_completion_events.search(search_params={
+    res = mistral.beta.observability.chat_completion_events.search(filter_payload={
         "filters": None,
     }, page_size=50)
 
@@ -39,7 +39,7 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `search_params`                                                     | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `filter_payload`                                                    | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `cursor`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `extra_fields`                                                      | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
@@ -72,7 +72,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.chat_completion_events.search_ids(search_params={
+    res = mistral.beta.observability.chat_completion_events.search_ids(filter_payload={
         "filters": {
             "field": "<value>",
             "op": "lt",
@@ -89,7 +89,7 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `search_params`                                                     | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `filter_payload`                                                    | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `extra_fields`                                                      | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
@@ -202,7 +202,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.chat_completion_events.judge(event_id="dfcd5582-1373-4de5-af51-987464da561c", judge_definition={
+    res = mistral.beta.observability.chat_completion_events.judge(event_id="dfcd5582-1373-4de5-af51-987464da561c", create_judge_request={
         "name": "<value>",
         "description": "total plain self-confidence candid hungrily partial astride cruelly brr",
         "model_name": "<value>",
@@ -229,7 +229,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `event_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `judge_definition`                                                  | [models.CreateJudgeRequest](../../models/createjudgerequest.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
+| `create_judge_request`                                              | [models.CreateJudgeRequest](../../models/createjudgerequest.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

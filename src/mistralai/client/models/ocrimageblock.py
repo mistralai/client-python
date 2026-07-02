@@ -41,9 +41,3 @@ class OCRImageBlock(BaseModel):
         Annotated[Literal["image"], AfterValidator(validate_const("image"))],
         pydantic.Field(alias="type"),
     ] = "image"
-
-
-try:
-    OCRImageBlock.model_rebuild()
-except NameError:
-    pass

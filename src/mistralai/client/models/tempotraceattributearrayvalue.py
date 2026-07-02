@@ -19,9 +19,3 @@ class TempoTraceAttributeArrayValue(BaseModel):
     array_value: Annotated[
         TempoTraceAttributeArrayContainer, pydantic.Field(alias="arrayValue")
     ]
-
-
-try:
-    TempoTraceAttributeArrayValue.model_rebuild()
-except NameError:
-    pass

@@ -15,9 +15,3 @@ class TempoTraceAttributeStringValueTypedDict(TypedDict):
 class TempoTraceAttributeStringValue(BaseModel):
     string_value: Annotated[str, pydantic.Field(alias="stringValue")]
     r"""The string value of the attribute"""
-
-
-try:
-    TempoTraceAttributeStringValue.model_rebuild()
-except NameError:
-    pass

@@ -41,9 +41,3 @@ class RegisterSearchIndexRequestVespaIndex(BaseModel):
         Annotated[Literal["vespa"], AfterValidator(validate_const("vespa"))],
         pydantic.Field(alias="type"),
     ] = "vespa"
-
-
-try:
-    RegisterSearchIndexRequestVespaIndex.model_rebuild()
-except NameError:
-    pass

@@ -4,12 +4,13 @@
 from __future__ import annotations
 from .feedresultgettrace import FeedResultGetTrace, FeedResultGetTraceTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class GetTracesTypedDict(TypedDict):
-    traces: FeedResultGetTraceTypedDict
+    feed_result_get_trace: FeedResultGetTraceTypedDict
 
 
 class GetTraces(BaseModel):
-    traces: FeedResultGetTrace
+    feed_result_get_trace: Annotated[FeedResultGetTrace, pydantic.Field(alias="traces")]

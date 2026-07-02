@@ -284,7 +284,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload=models.ConversationPayload(
+    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", conversation_payload=models.ConversationPayload(
         messages=[
             {
                 "key": "<value>",
@@ -310,7 +310,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
+| `conversation_payload`                                              | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
 | `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 

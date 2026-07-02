@@ -36,9 +36,3 @@ class OCRReferencesBlock(BaseModel):
         Annotated[Literal["references"], AfterValidator(validate_const("references"))],
         pydantic.Field(alias="type"),
     ] = "references"
-
-
-try:
-    OCRReferencesBlock.model_rebuild()
-except NameError:
-    pass

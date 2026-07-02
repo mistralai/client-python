@@ -95,7 +95,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -202,7 +202,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -290,7 +290,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -372,7 +372,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -461,7 +461,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -554,7 +554,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -653,7 +653,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -746,7 +746,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -833,7 +833,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -928,7 +928,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1035,7 +1035,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1140,7 +1140,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1236,7 +1236,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1334,7 +1334,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1444,7 +1444,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1552,7 +1552,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1646,7 +1646,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1742,7 +1742,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1843,7 +1843,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1944,7 +1944,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2045,7 +2045,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2146,7 +2146,7 @@ class SearchIndexes(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

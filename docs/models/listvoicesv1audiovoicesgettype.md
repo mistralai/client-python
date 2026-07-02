@@ -2,16 +2,11 @@
 
 Filter the voices between customs and presets
 
-## Example Usage
-
-```python
-from mistralai.client.models import ListVoicesV1AudioVoicesGetType
-value: ListVoicesV1AudioVoicesGetType = "all"
-```
-
 
 ## Values
 
-- `"all"`
-- `"custom"`
-- `"preset"`
+| Name     | Value    |
+| -------- | -------- |
+| `ALL`    | all      |
+| `CUSTOM` | custom   |
+| `PRESET` | preset   |

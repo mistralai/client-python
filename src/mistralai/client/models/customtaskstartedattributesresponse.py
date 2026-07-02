@@ -3,8 +3,7 @@
 
 from __future__ import annotations
 from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import model_serializer
+from mistralai.client.types import BaseModel
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -41,19 +40,3 @@ class CustomTaskStartedAttributesResponse(BaseModel):
     When encrypted, the value field contains base64-encoded encrypted data
     and encoding_options indicates the type of encryption applied.
     """
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["payload"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m

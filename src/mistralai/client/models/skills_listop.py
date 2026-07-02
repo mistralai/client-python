@@ -2,14 +2,12 @@
 # @generated-id: b3600a24a06d
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
 from .listskillsresponse import ListSkillsResponse, ListSkillsResponseTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 import pydantic
-from pydantic import model_serializer
 from typing import Awaitable, Callable, List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SkillsListRequestTypedDict(TypedDict):
@@ -42,36 +40,9 @@ class SkillsListRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
 
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["pageSize", "pageToken", "alias", "fields"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-SkillsListResponseResultTypedDict = TypeAliasType(
-    "SkillsListResponseResultTypedDict",
-    Union[ListSkillsResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-SkillsListResponseResult = TypeAliasType(
-    "SkillsListResponseResult", Union[ListSkillsResponse, ConnectError]
-)
-
 
 class SkillsListResponseTypedDict(TypedDict):
-    result: SkillsListResponseResultTypedDict
+    result: ListSkillsResponseTypedDict
 
 
 class SkillsListResponse(BaseModel):
@@ -80,4 +51,4 @@ class SkillsListResponse(BaseModel):
         Callable[[], Awaitable[Optional[SkillsListResponse]]],
     ]
 
-    result: SkillsListResponseResult
+    result: ListSkillsResponse

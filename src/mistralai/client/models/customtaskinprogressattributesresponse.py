@@ -7,12 +7,10 @@ from .jsonpatchpayloadresponse import (
     JSONPatchPayloadResponseTypedDict,
 )
 from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
-from functools import partial
 from mistralai.client.types import BaseModel
-from mistralai.client.utils.unions import parse_open_union
-from pydantic import ConfigDict
-from pydantic.functional_validators import BeforeValidator
-from typing import Any, Literal, Union
+from mistralai.client.utils import get_discriminator
+from pydantic import Discriminator, Tag
+from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
@@ -23,33 +21,12 @@ PayloadTypedDict = TypeAliasType(
 r"""The current state or incremental update for the task."""
 
 
-class UnknownPayload(BaseModel):
-    r"""A Payload variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    type: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_PAYLOAD_VARIANTS: dict[str, Any] = {
-    "json": JSONPayloadResponse,
-    "json_patch": JSONPatchPayloadResponse,
-}
-
-
 Payload = Annotated[
-    Union[JSONPayloadResponse, JSONPatchPayloadResponse, UnknownPayload],
-    BeforeValidator(
-        partial(
-            parse_open_union,
-            disc_key="type",
-            variants=_PAYLOAD_VARIANTS,
-            unknown_cls=UnknownPayload,
-            union_name="Payload",
-        )
-    ),
+    Union[
+        Annotated[JSONPayloadResponse, Tag("json")],
+        Annotated[JSONPatchPayloadResponse, Tag("json_patch")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "type", "type")),
 ]
 r"""The current state or incremental update for the task."""
 

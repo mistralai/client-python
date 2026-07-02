@@ -4,12 +4,15 @@
 from __future__ import annotations
 from .createjudgerequest import CreateJudgeRequest, CreateJudgeRequestTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class JudgeDatasetRecordRequestTypedDict(TypedDict):
-    judge_definition: CreateJudgeRequestTypedDict
+    create_judge_request: CreateJudgeRequestTypedDict
 
 
 class JudgeDatasetRecordRequest(BaseModel):
-    judge_definition: CreateJudgeRequest
+    create_judge_request: Annotated[
+        CreateJudgeRequest, pydantic.Field(alias="judge_definition")
+    ]

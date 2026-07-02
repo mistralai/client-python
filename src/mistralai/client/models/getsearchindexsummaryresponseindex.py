@@ -8,9 +8,10 @@ from .getsearchindexsummaryresponsevespaindex import (
 )
 from datetime import datetime
 from mistralai.client.types import BaseModel, UnrecognizedStr
-from pydantic import ConfigDict
-from typing import Any, Literal, Union
-from typing_extensions import TypedDict
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
+from typing import Literal, Union
+from typing_extensions import Annotated, TypedDict
 
 
 GetSearchIndexSummaryResponseIndexStatus = Union[
@@ -25,21 +26,6 @@ GetSearchIndexSummaryResponseIndexStatus = Union[
 GetSearchIndexSummaryResponseIndexIndexTypedDict = (
     GetSearchIndexSummaryResponseVespaIndexTypedDict
 )
-
-
-class UnknownGetSearchIndexSummaryResponseIndexIndex(BaseModel):
-    r"""A GetSearchIndexSummaryResponseIndexIndex variant the SDK doesn't recognize. Preserves the raw payload."""
-
-    type: Literal["UNKNOWN"] = "UNKNOWN"
-    raw: Any
-    is_unknown: Literal[True] = True
-
-    model_config = ConfigDict(frozen=True)
-
-
-_GET_SEARCH_INDEX_SUMMARY_RESPONSE_INDEX_INDEX_VARIANTS: dict[str, Any] = {
-    "vespa": GetSearchIndexSummaryResponseVespaIndex,
-}
 
 
 GetSearchIndexSummaryResponseIndexIndex = GetSearchIndexSummaryResponseVespaIndex
@@ -65,7 +51,10 @@ class GetSearchIndexSummaryResponseIndex(BaseModel):
 
     document_count: int
 
-    status: GetSearchIndexSummaryResponseIndexStatus
+    status: Annotated[
+        GetSearchIndexSummaryResponseIndexStatus,
+        PlainValidator(validate_open_enum(False)),
+    ]
 
     created_at: datetime
 

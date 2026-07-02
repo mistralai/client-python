@@ -7,12 +7,15 @@ from .paginatedresultdatasetpreview import (
     PaginatedResultDatasetPreviewTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ListDatasetsResponseTypedDict(TypedDict):
-    datasets: PaginatedResultDatasetPreviewTypedDict
+    paginated_result_dataset_preview: PaginatedResultDatasetPreviewTypedDict
 
 
 class ListDatasetsResponse(BaseModel):
-    datasets: PaginatedResultDatasetPreview
+    paginated_result_dataset_preview: Annotated[
+        PaginatedResultDatasetPreview, pydantic.Field(alias="datasets")
+    ]

@@ -101,7 +101,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -200,7 +200,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -299,7 +299,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -398,7 +398,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -491,7 +491,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -584,7 +584,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -677,7 +677,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -770,7 +770,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -878,7 +878,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -986,7 +986,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1087,7 +1087,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1188,7 +1188,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1215,7 +1215,9 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        conversation_payload: Union[
+            models.ConversationPayload, models.ConversationPayloadTypedDict
+        ],
         properties: Dict[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1225,7 +1227,7 @@ class Datasets(BaseSDK):
         r"""Add a conversation to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param conversation_payload:
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1248,7 +1250,9 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                conversation_payload=utils.get_pydantic_model(
+                    conversation_payload, models.ConversationPayload
+                ),
                 properties=properties,
             ),
         )
@@ -1296,7 +1300,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1323,7 +1327,9 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        conversation_payload: Union[
+            models.ConversationPayload, models.ConversationPayloadTypedDict
+        ],
         properties: Dict[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1333,7 +1339,7 @@ class Datasets(BaseSDK):
         r"""Add a conversation to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param conversation_payload:
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1356,7 +1362,9 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                conversation_payload=utils.get_pydantic_model(
+                    conversation_payload, models.ConversationPayload
+                ),
                 properties=properties,
             ),
         )
@@ -1404,7 +1412,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1509,7 +1517,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1614,7 +1622,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1719,7 +1727,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1824,7 +1832,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1929,7 +1937,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2034,7 +2042,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2139,7 +2147,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2244,7 +2252,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2349,7 +2357,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2454,7 +2462,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2547,7 +2555,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2640,7 +2648,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2736,7 +2744,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2832,7 +2840,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2933,7 +2941,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -3036,7 +3044,7 @@ class Datasets(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

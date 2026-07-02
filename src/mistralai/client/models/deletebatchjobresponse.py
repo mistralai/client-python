@@ -2,10 +2,9 @@
 # @generated-id: 79a43aab6cf9
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -26,25 +25,3 @@ class DeleteBatchJobResponse(BaseModel):
     ] = "batch"
 
     deleted: Optional[bool] = True
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["object", "deleted"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-try:
-    DeleteBatchJobResponse.model_rebuild()
-except NameError:
-    pass

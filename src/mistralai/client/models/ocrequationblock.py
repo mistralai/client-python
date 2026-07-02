@@ -36,9 +36,3 @@ class OCREquationBlock(BaseModel):
         Annotated[Literal["equation"], AfterValidator(validate_const("equation"))],
         pydantic.Field(alias="type"),
     ] = "equation"
-
-
-try:
-    OCREquationBlock.model_rebuild()
-except NameError:
-    pass

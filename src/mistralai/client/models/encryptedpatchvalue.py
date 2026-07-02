@@ -40,9 +40,3 @@ class EncryptedPatchValue(BaseModel):
         ],
         pydantic.Field(alias="type"),
     ] = "__encrypted__"
-
-
-try:
-    EncryptedPatchValue.model_rebuild()
-except NameError:
-    pass

@@ -95,7 +95,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -198,7 +198,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -300,7 +300,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -402,7 +402,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -505,7 +505,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -608,7 +608,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -633,7 +633,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        input: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -642,7 +642,7 @@ class Classifiers(BaseSDK):
         r"""Chat Classifications
 
         :param model:
-        :param input: Chat to classify
+        :param inputs: Chat to classify
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -663,7 +663,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            input=utils.get_pydantic_model(input, models.Inputs),
+            inputs=utils.get_pydantic_model(inputs, models.Inputs),
         )
 
         req = self._build_request(
@@ -705,7 +705,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -730,7 +730,7 @@ class Classifiers(BaseSDK):
         self,
         *,
         model: str,
-        input: Union[models.Inputs, models.InputsTypedDict],
+        inputs: Union[models.Inputs, models.InputsTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -739,7 +739,7 @@ class Classifiers(BaseSDK):
         r"""Chat Classifications
 
         :param model:
-        :param input: Chat to classify
+        :param inputs: Chat to classify
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -760,7 +760,7 @@ class Classifiers(BaseSDK):
 
         request = models.ChatClassificationRequest(
             model=model,
-            input=utils.get_pydantic_model(input, models.Inputs),
+            inputs=utils.get_pydantic_model(inputs, models.Inputs),
         )
 
         req = self._build_request_async(
@@ -802,7 +802,7 @@ class Classifiers(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

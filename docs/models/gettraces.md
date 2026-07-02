@@ -5,4 +5,4 @@
 
 | Field                                                        | Type                                                         | Required                                                     | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `traces`                                                     | [models.FeedResultGetTrace](../models/feedresultgettrace.md) | :heavy_check_mark:                                           | N/A                                                          |
+| `feed_result_get_trace`                                      | [models.FeedResultGetTrace](../models/feedresultgettrace.md) | :heavy_check_mark:                                           | N/A                                                          |

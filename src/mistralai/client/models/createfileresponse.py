@@ -13,8 +13,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_open_enum
 import pydantic
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -55,11 +57,11 @@ class CreateFileResponse(BaseModel):
     filename: str
     r"""The name of the uploaded file."""
 
-    purpose: FilePurpose
+    purpose: Annotated[FilePurpose, PlainValidator(validate_open_enum(False))]
 
-    sample_type: SampleType
+    sample_type: Annotated[SampleType, PlainValidator(validate_open_enum(False))]
 
-    source: Source
+    source: Annotated[Source, PlainValidator(validate_open_enum(False))]
 
     num_lines: OptionalNullable[int] = UNSET
 
@@ -69,39 +71,48 @@ class CreateFileResponse(BaseModel):
 
     expires_at: OptionalNullable[int] = UNSET
 
-    visibility: OptionalNullable[FileVisibility] = UNSET
+    visibility: Annotated[
+        OptionalNullable[FileVisibility], PlainValidator(validate_open_enum(False))
+    ] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            ["num_lines", "mimetype", "signature", "expires_at", "visibility"]
-        )
-        nullable_fields = set(
-            ["num_lines", "mimetype", "signature", "expires_at", "visibility"]
-        )
+        optional_fields = [
+            "num_lines",
+            "mimetype",
+            "signature",
+            "expires_at",
+            "visibility",
+        ]
+        nullable_fields = [
+            "num_lines",
+            "mimetype",
+            "signature",
+            "expires_at",
+            "visibility",
+        ]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m
-
-
-try:
-    CreateFileResponse.model_rebuild()
-except NameError:
-    pass

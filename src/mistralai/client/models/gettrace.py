@@ -4,8 +4,10 @@
 from __future__ import annotations
 from datetime import datetime
 from mistralai.client.types import BaseModel, UnrecognizedStr
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import List, Literal, Union
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 GetTraceStatusCode = Union[
@@ -87,7 +89,9 @@ class GetTrace(BaseModel):
 
     agent_name: str
 
-    status_code: GetTraceStatusCode
+    status_code: Annotated[
+        GetTraceStatusCode, PlainValidator(validate_open_enum(False))
+    ]
 
     error_count: int
 

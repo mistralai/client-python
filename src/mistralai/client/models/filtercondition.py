@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 from mistralai.client.types import BaseModel, UnrecognizedStr
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import Any, Literal, Union
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 Op = Union[
@@ -42,6 +44,6 @@ class FilterConditionTypedDict(TypedDict):
 class FilterCondition(BaseModel):
     field: str
 
-    op: Op
+    op: Annotated[Op, PlainValidator(validate_open_enum(False))]
 
     value: Any

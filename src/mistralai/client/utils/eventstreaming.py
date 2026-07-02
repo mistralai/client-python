@@ -3,9 +3,7 @@
 
 import re
 import json
-from dataclasses import dataclass, asdict
 from typing import (
-    Any,
     Callable,
     Generic,
     TypeVar,
@@ -25,7 +23,6 @@ class EventStream(Generic[T]):
     client_ref: Optional[object]
     response: httpx.Response
     generator: Generator[T, None, None]
-    _closed: bool
 
     def __init__(
         self,
@@ -33,28 +30,21 @@ class EventStream(Generic[T]):
         decoder: Callable[[str], T],
         sentinel: Optional[str] = None,
         client_ref: Optional[object] = None,
-        data_required: bool = True,
     ):
         self.response = response
-        self.generator = stream_events(
-            response, decoder, sentinel, data_required=data_required
-        )
+        self.generator = stream_events(response, decoder, sentinel)
         self.client_ref = client_ref
-        self._closed = False
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self._closed:
-            raise StopIteration
         return next(self.generator)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._closed = True
         self.response.close()
 
 
@@ -64,7 +54,6 @@ class EventStreamAsync(Generic[T]):
     client_ref: Optional[object]
     response: httpx.Response
     generator: AsyncGenerator[T, None]
-    _closed: bool
 
     def __init__(
         self,
@@ -72,65 +61,53 @@ class EventStreamAsync(Generic[T]):
         decoder: Callable[[str], T],
         sentinel: Optional[str] = None,
         client_ref: Optional[object] = None,
-        data_required: bool = True,
     ):
         self.response = response
-        self.generator = stream_events_async(
-            response, decoder, sentinel, data_required=data_required
-        )
+        self.generator = stream_events_async(response, decoder, sentinel)
         self.client_ref = client_ref
-        self._closed = False
 
     def __aiter__(self):
         return self
 
     async def __anext__(self):
-        if self._closed:
-            raise StopAsyncIteration
         return await self.generator.__anext__()
 
     async def __aenter__(self):
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        self._closed = True
         await self.response.aclose()
 
 
-@dataclass
 class ServerEvent:
     id: Optional[str] = None
     event: Optional[str] = None
-    data: Any = None
+    data: Optional[str] = None
     retry: Optional[int] = None
 
 
 MESSAGE_BOUNDARIES = [
     b"\r\n\r\n",
-    b"\r\n\r",
-    b"\r\n\n",
-    b"\r\r\n",
-    b"\n\r\n",
-    b"\r\r",
-    b"\n\r",
     b"\n\n",
+    b"\r\r",
 ]
-
-UTF8_BOM = b"\xef\xbb\xbf"
 
 
 async def stream_events_async(
     response: httpx.Response,
     decoder: Callable[[str], T],
     sentinel: Optional[str] = None,
-    data_required: bool = True,
 ) -> AsyncGenerator[T, None]:
     buffer = bytearray()
     position = 0
-    event_id: Optional[str] = None
+    discard = False
     async for chunk in response.aiter_bytes():
-        if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
-            chunk = chunk[len(UTF8_BOM) :]
+        # We've encountered the sentinel value and should no longer process
+        # incoming data. Instead we throw new data away until the server closes
+        # the connection.
+        if discard:
+            continue
+
         buffer += chunk
         for i in range(position, len(buffer)):
             char = buffer[i : i + 1]
@@ -145,30 +122,15 @@ async def stream_events_async(
 
             block = buffer[position:i]
             position = i + len(seq)
-            event, discard, event_id = _parse_event(
-                raw=block,
-                decoder=decoder,
-                sentinel=sentinel,
-                event_id=event_id,
-                data_required=data_required,
-            )
+            event, discard = _parse_event(block, decoder, sentinel)
             if event is not None:
                 yield event
-            if discard:
-                await response.aclose()
-                return
 
         if position > 0:
             buffer = buffer[position:]
             position = 0
 
-    event, discard, _ = _parse_event(
-        raw=buffer,
-        decoder=decoder,
-        sentinel=sentinel,
-        event_id=event_id,
-        data_required=data_required,
-    )
+    event, discard = _parse_event(buffer, decoder, sentinel)
     if event is not None:
         yield event
 
@@ -177,14 +139,17 @@ def stream_events(
     response: httpx.Response,
     decoder: Callable[[str], T],
     sentinel: Optional[str] = None,
-    data_required: bool = True,
 ) -> Generator[T, None, None]:
     buffer = bytearray()
     position = 0
-    event_id: Optional[str] = None
+    discard = False
     for chunk in response.iter_bytes():
-        if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
-            chunk = chunk[len(UTF8_BOM) :]
+        # We've encountered the sentinel value and should no longer process
+        # incoming data. Instead we throw new data away until the server closes
+        # the connection.
+        if discard:
+            continue
+
         buffer += chunk
         for i in range(position, len(buffer)):
             char = buffer[i : i + 1]
@@ -199,42 +164,22 @@ def stream_events(
 
             block = buffer[position:i]
             position = i + len(seq)
-            event, discard, event_id = _parse_event(
-                raw=block,
-                decoder=decoder,
-                sentinel=sentinel,
-                event_id=event_id,
-                data_required=data_required,
-            )
+            event, discard = _parse_event(block, decoder, sentinel)
             if event is not None:
                 yield event
-            if discard:
-                response.close()
-                return
 
         if position > 0:
             buffer = buffer[position:]
             position = 0
 
-    event, discard, _ = _parse_event(
-        raw=buffer,
-        decoder=decoder,
-        sentinel=sentinel,
-        event_id=event_id,
-        data_required=data_required,
-    )
+    event, discard = _parse_event(buffer, decoder, sentinel)
     if event is not None:
         yield event
 
 
 def _parse_event(
-    *,
-    raw: bytearray,
-    decoder: Callable[[str], T],
-    sentinel: Optional[str] = None,
-    event_id: Optional[str] = None,
-    data_required: bool = True,
-) -> Tuple[Optional[T], bool, Optional[str]]:
+    raw: bytearray, decoder: Callable[[str], T], sentinel: Optional[str] = None
+) -> Tuple[Optional[T], bool]:
     block = raw.decode()
     lines = re.split(r"\r?\n|\r", block)
     publish = False
@@ -245,16 +190,13 @@ def _parse_event(
             continue
 
         delim = line.find(":")
-        if delim == 0:
+        if delim <= 0:
             continue
 
-        field = line
-        value = ""
-        if delim > 0:
-            field = line[0:delim]
-            value = line[delim + 1 :] if delim < len(line) - 1 else ""
-            if len(value) and value[0] == " ":
-                value = value[1:]
+        field = line[0:delim]
+        value = line[delim + 1 :] if delim < len(line) - 1 else ""
+        if len(value) and value[0] == " ":
+            value = value[1:]
 
         if field == "event":
             event.event = value
@@ -263,40 +205,37 @@ def _parse_event(
             data += value + "\n"
             publish = True
         elif field == "id":
+            event.id = value
             publish = True
-            if "\x00" not in value:
-                event_id = value
         elif field == "retry":
-            if value.isdigit():
-                event.retry = int(value)
+            event.retry = int(value) if value.isdigit() else None
             publish = True
-
-    event.id = event_id
 
     if sentinel and data == f"{sentinel}\n":
-        return None, True, event_id
-
-    # Skip data-less events when data is required
-    if not data and publish and data_required:
-        return None, False, event_id
+        return None, True
 
     if data:
         data = data[:-1]
-        try:
-            event.data = json.loads(data)
-        except json.JSONDecodeError:
-            event.data = data
+        event.data = data
+
+        data_is_primitive = (
+            data.isnumeric() or data == "true" or data == "false" or data == "null"
+        )
+        data_is_json = (
+            data.startswith("{") or data.startswith("[") or data.startswith('"')
+        )
+
+        if data_is_primitive or data_is_json:
+            try:
+                event.data = json.loads(data)
+            except Exception:
+                pass
 
     out = None
     if publish:
-        out_dict = {
-            k: v
-            for k, v in asdict(event).items()
-            if v is not None or (k == "data" and data)
-        }
-        out = decoder(json.dumps(out_dict))
+        out = decoder(json.dumps(event.__dict__))
 
-    return out, False, event_id
+    return out, False
 
 
 def _peek_sequence(position: int, buffer: bytearray, sequence: bytes):

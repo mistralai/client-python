@@ -36,9 +36,3 @@ class OCRCodeBlock(BaseModel):
         Annotated[Literal["code"], AfterValidator(validate_const("code"))],
         pydantic.Field(alias="type"),
     ] = "code"
-
-
-try:
-    OCRCodeBlock.model_rebuild()
-except NameError:
-    pass

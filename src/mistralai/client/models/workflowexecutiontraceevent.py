@@ -7,10 +7,11 @@ from .workflowexecutiontracesummaryattributesvalues import (
     WorkflowExecutionTraceSummaryAttributesValues,
     WorkflowExecutionTraceSummaryAttributesValuesTypedDict,
 )
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
-from pydantic import model_serializer
+from mistralai.client.types import BaseModel, Nullable
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import Dict, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WorkflowExecutionTraceEventTypedDict(TypedDict):
@@ -42,23 +43,9 @@ class WorkflowExecutionTraceEvent(BaseModel):
     attributes: Dict[str, Nullable[WorkflowExecutionTraceSummaryAttributesValues]]
     r"""The attributes of the event"""
 
-    type: Optional[EventType] = None
+    type: Annotated[Optional[EventType], PlainValidator(validate_open_enum(False))] = (
+        None
+    )
 
     internal: Optional[bool] = False
     r"""Whether the event is internal"""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["type", "internal"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m

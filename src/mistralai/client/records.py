@@ -81,7 +81,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -174,7 +174,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -267,7 +267,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -360,7 +360,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -456,7 +456,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -552,7 +552,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -579,7 +579,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        judge_definition: Union[
+        create_judge_request: Union[
             models.CreateJudgeRequest, models.CreateJudgeRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -590,7 +590,7 @@ class Records(BaseSDK):
         r"""Run Judge on a dataset record based on the given options
 
         :param dataset_record_id:
-        :param judge_definition:
+        :param create_judge_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -612,8 +612,8 @@ class Records(BaseSDK):
         request = models.JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest(
             dataset_record_id=dataset_record_id,
             judge_dataset_record_request=models.JudgeDatasetRecordRequest(
-                judge_definition=utils.get_pydantic_model(
-                    judge_definition, models.CreateJudgeRequest
+                create_judge_request=utils.get_pydantic_model(
+                    create_judge_request, models.CreateJudgeRequest
                 ),
             ),
         )
@@ -661,7 +661,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -688,7 +688,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        judge_definition: Union[
+        create_judge_request: Union[
             models.CreateJudgeRequest, models.CreateJudgeRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -699,7 +699,7 @@ class Records(BaseSDK):
         r"""Run Judge on a dataset record based on the given options
 
         :param dataset_record_id:
-        :param judge_definition:
+        :param create_judge_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -721,8 +721,8 @@ class Records(BaseSDK):
         request = models.JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest(
             dataset_record_id=dataset_record_id,
             judge_dataset_record_request=models.JudgeDatasetRecordRequest(
-                judge_definition=utils.get_pydantic_model(
-                    judge_definition, models.CreateJudgeRequest
+                create_judge_request=utils.get_pydantic_model(
+                    create_judge_request, models.CreateJudgeRequest
                 ),
             ),
         )
@@ -770,7 +770,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -797,7 +797,9 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        conversation_payload: Union[
+            models.ConversationPayload, models.ConversationPayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -806,7 +808,7 @@ class Records(BaseSDK):
         r"""Update a dataset record conversation payload
 
         :param dataset_record_id:
-        :param payload:
+        :param conversation_payload:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -828,7 +830,9 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                conversation_payload=utils.get_pydantic_model(
+                    conversation_payload, models.ConversationPayload
+                ),
             ),
         )
 
@@ -875,7 +879,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -902,7 +906,9 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        conversation_payload: Union[
+            models.ConversationPayload, models.ConversationPayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -911,7 +917,7 @@ class Records(BaseSDK):
         r"""Update a dataset record conversation payload
 
         :param dataset_record_id:
-        :param payload:
+        :param conversation_payload:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -933,7 +939,9 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                conversation_payload=utils.get_pydantic_model(
+                    conversation_payload, models.ConversationPayload
+                ),
             ),
         )
 
@@ -980,7 +988,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1085,7 +1093,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1190,7 +1198,7 @@ class Records(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

@@ -9,11 +9,16 @@ from mistralai.client.models import (
     observabilityerrordetail as models_observabilityerrordetail,
 )
 from mistralai.client.types import BaseModel
+import pydantic
 from typing import Optional
+from typing_extensions import Annotated
 
 
 class ObservabilityErrorData(BaseModel):
-    detail: models_observabilityerrordetail.ObservabilityErrorDetail
+    observability_error_detail: Annotated[
+        models_observabilityerrordetail.ObservabilityErrorDetail,
+        pydantic.Field(alias="detail"),
+    ]
 
 
 @dataclass(unsafe_hash=True)
@@ -27,6 +32,6 @@ class ObservabilityError(MistralError):
         body: Optional[str] = None,
     ):
         fallback = body or raw_response.text
-        message = str(data.detail.message) or fallback
+        message = str(data.observability_error_detail.message) or fallback
         super().__init__(message, raw_response, body)
         object.__setattr__(self, "data", data)

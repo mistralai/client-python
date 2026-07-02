@@ -400,7 +400,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -418,8 +418,8 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit_ = request.limit if isinstance(request.limit, int) else 50
-            if len(results[0]) < limit_:
+            limit = request.limit if not request.limit is None else 50
+            if len(results[0]) < limit:
                 return None
 
             return self.get_workflows(
@@ -436,9 +436,6 @@ class Workflows(BaseSDK):
                 active_only=active_only,
                 search=search,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -569,7 +566,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -592,8 +589,8 @@ class Workflows(BaseSDK):
             results = JSONPath("$.workflows").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit_ = request.limit if isinstance(request.limit, int) else 50
-            if len(results[0]) < limit_:
+            limit = request.limit if not request.limit is None else 50
+            if len(results[0]) < limit:
                 return empty_result()
 
             return self.get_workflows_async(
@@ -610,9 +607,6 @@ class Workflows(BaseSDK):
                 active_only=active_only,
                 search=search,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -732,7 +726,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -852,7 +846,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -978,7 +972,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1105,7 +1099,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1235,7 +1229,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1365,7 +1359,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1459,7 +1453,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1550,7 +1544,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1662,7 +1656,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1774,7 +1768,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1871,7 +1865,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1970,7 +1964,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2066,7 +2060,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2160,7 +2154,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2254,7 +2248,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2350,7 +2344,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2443,7 +2437,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2534,7 +2528,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2627,7 +2621,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2720,7 +2714,7 @@ class Workflows(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

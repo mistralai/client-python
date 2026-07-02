@@ -4,16 +4,19 @@
 from __future__ import annotations
 from .conversationpayload import ConversationPayload, ConversationPayloadTypedDict
 from mistralai.client.types import BaseModel
+import pydantic
 from typing import Any, Dict
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class CreateDatasetRecordRequestTypedDict(TypedDict):
-    payload: ConversationPayloadTypedDict
+    conversation_payload: ConversationPayloadTypedDict
     properties: Dict[str, Any]
 
 
 class CreateDatasetRecordRequest(BaseModel):
-    payload: ConversationPayload
+    conversation_payload: Annotated[
+        ConversationPayload, pydantic.Field(alias="payload")
+    ]
 
     properties: Dict[str, Any]

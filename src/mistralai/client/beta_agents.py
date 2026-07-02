@@ -4,6 +4,14 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
+from mistralai.client.models import (
+    agents_api_v1_agents_getop as models_agents_api_v1_agents_getop,
+    completionargs as models_completionargs,
+    createagentrequest as models_createagentrequest,
+    guardrailconfig as models_guardrailconfig,
+    requestsource as models_requestsource,
+    updateagentrequest as models_updateagentrequest,
+)
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -21,15 +29,21 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                List[models_createagentrequest.CreateAgentRequestTool],
+                List[models_createagentrequest.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                List[models_guardrailconfig.GuardrailConfig],
+                List[models_guardrailconfig.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -130,7 +144,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -159,15 +173,21 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                List[models_createagentrequest.CreateAgentRequestTool],
+                List[models_createagentrequest.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                List[models_guardrailconfig.GuardrailConfig],
+                List[models_guardrailconfig.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
         handoffs: OptionalNullable[List[str]] = UNSET,
@@ -268,7 +288,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -295,7 +315,7 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
@@ -382,7 +402,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -409,7 +429,7 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[List[models_requestsource.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
@@ -496,7 +516,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -523,8 +543,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models.AgentsAPIV1AgentsGetAgentVersion,
-                models.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -597,7 +617,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -624,8 +644,8 @@ class BetaAgents(BaseSDK):
         agent_id: str,
         agent_version: OptionalNullable[
             Union[
-                models.AgentsAPIV1AgentsGetAgentVersion,
-                models.AgentsAPIV1AgentsGetAgentVersionTypedDict,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersion,
+                models_agents_api_v1_agents_getop.AgentsAPIV1AgentsGetAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -698,7 +718,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -726,15 +746,21 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                List[models_updateagentrequest.UpdateAgentRequestTool],
+                List[models_updateagentrequest.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                List[models_guardrailconfig.GuardrailConfig],
+                List[models_guardrailconfig.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
@@ -848,7 +874,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -876,15 +902,21 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                List[models_updateagentrequest.UpdateAgentRequestTool],
+                List[models_updateagentrequest.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
-            Union[models.CompletionArgs, models.CompletionArgsTypedDict]
+            Union[
+                models_completionargs.CompletionArgs,
+                models_completionargs.CompletionArgsTypedDict,
+            ]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                List[models_guardrailconfig.GuardrailConfig],
+                List[models_guardrailconfig.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
@@ -998,7 +1030,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1089,7 +1121,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1180,7 +1212,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1276,7 +1308,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1372,7 +1404,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1471,7 +1503,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1570,7 +1602,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1666,7 +1698,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1762,7 +1794,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1861,7 +1893,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1960,7 +1992,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2053,7 +2085,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2146,7 +2178,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2242,7 +2274,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2338,7 +2370,7 @@ class BetaAgents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

@@ -7,12 +7,15 @@ from .paginatedresultdatasetimporttask import (
     PaginatedResultDatasetImportTaskTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ListDatasetImportTasksResponseTypedDict(TypedDict):
-    tasks: PaginatedResultDatasetImportTaskTypedDict
+    paginated_result_dataset_import_task: PaginatedResultDatasetImportTaskTypedDict
 
 
 class ListDatasetImportTasksResponse(BaseModel):
-    tasks: PaginatedResultDatasetImportTask
+    paginated_result_dataset_import_task: Annotated[
+        PaginatedResultDatasetImportTask, pydantic.Field(alias="tasks")
+    ]

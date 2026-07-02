@@ -143,7 +143,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.datasets.records.judge(dataset_record_id="9de5d7a1-787a-45dd-b668-9f3407e76d8b", judge_definition={
+    res = mistral.beta.observability.datasets.records.judge(dataset_record_id="9de5d7a1-787a-45dd-b668-9f3407e76d8b", create_judge_request={
         "name": "<value>",
         "description": "wisely railway deceivingly arcade minion back what yowza outrun service",
         "model_name": "<value>",
@@ -172,7 +172,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_record_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `judge_definition`                                                  | [models.CreateJudgeRequest](../../models/createjudgerequest.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
+| `create_judge_request`                                              | [models.CreateJudgeRequest](../../models/createjudgerequest.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -202,7 +202,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    mistral.beta.observability.datasets.records.update_payload(dataset_record_id="17506b15-748e-4e7c-9737-c97c44d04b0f", payload=models.ConversationPayload(
+    mistral.beta.observability.datasets.records.update_payload(dataset_record_id="17506b15-748e-4e7c-9737-c97c44d04b0f", conversation_payload=models.ConversationPayload(
         messages=[
             {
                 "key": "<value>",
@@ -225,7 +225,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_record_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
+| `conversation_payload`                                              | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors

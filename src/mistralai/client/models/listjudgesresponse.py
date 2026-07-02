@@ -7,12 +7,15 @@ from .paginatedresultjudgepreview import (
     PaginatedResultJudgePreviewTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ListJudgesResponseTypedDict(TypedDict):
-    judges: PaginatedResultJudgePreviewTypedDict
+    paginated_result_judge_preview: PaginatedResultJudgePreviewTypedDict
 
 
 class ListJudgesResponse(BaseModel):
-    judges: PaginatedResultJudgePreview
+    paginated_result_judge_preview: Annotated[
+        PaginatedResultJudgePreview, pydantic.Field(alias="judges")
+    ]

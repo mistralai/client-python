@@ -3,10 +3,11 @@
 
 from __future__ import annotations
 from .encodedpayloadoptions import EncodedPayloadOptions
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from pydantic import model_serializer
+from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class NetworkEncodedInputTypedDict(TypedDict):
@@ -22,24 +23,12 @@ class NetworkEncodedInput(BaseModel):
     b64payload: str
     r"""The encoded payload"""
 
-    encoding_options: Optional[List[EncodedPayloadOptions]] = None
+    encoding_options: Optional[
+        List[
+            Annotated[EncodedPayloadOptions, PlainValidator(validate_open_enum(False))]
+        ]
+    ] = None
     r"""The encoding of the payload"""
 
     empty: Optional[bool] = False
     r"""Whether the payload is empty"""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["encoding_options", "empty"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m

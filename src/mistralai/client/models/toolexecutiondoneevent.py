@@ -4,11 +4,10 @@
 from __future__ import annotations
 from .builtinconnectors import BuiltInConnectors
 from datetime import datetime
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
-from mistralai.client.utils import validate_const
+from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_const, validate_open_enum
 import pydantic
-from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
+from pydantic.functional_validators import AfterValidator, PlainValidator
 from typing import Any, Dict, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -19,7 +18,8 @@ ToolExecutionDoneEventNameTypedDict = TypeAliasType(
 
 
 ToolExecutionDoneEventName = TypeAliasType(
-    "ToolExecutionDoneEventName", Union[BuiltInConnectors, str]
+    "ToolExecutionDoneEventName",
+    Union[Annotated[BuiltInConnectors, PlainValidator(validate_open_enum(False))], str],
 )
 
 
@@ -50,25 +50,3 @@ class ToolExecutionDoneEvent(BaseModel):
     output_index: Optional[int] = 0
 
     info: Optional[Dict[str, Any]] = None
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["created_at", "output_index", "info"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-try:
-    ToolExecutionDoneEvent.model_rebuild()
-except NameError:
-    pass

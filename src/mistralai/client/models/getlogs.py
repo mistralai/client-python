@@ -4,12 +4,13 @@
 from __future__ import annotations
 from .feedresultgetlog import FeedResultGetLog, FeedResultGetLogTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class GetLogsTypedDict(TypedDict):
-    logs: FeedResultGetLogTypedDict
+    feed_result_get_log: FeedResultGetLogTypedDict
 
 
 class GetLogs(BaseModel):
-    logs: FeedResultGetLog
+    feed_result_get_log: Annotated[FeedResultGetLog, pydantic.Field(alias="logs")]

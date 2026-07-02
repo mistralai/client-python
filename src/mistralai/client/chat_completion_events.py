@@ -28,7 +28,7 @@ class ChatCompletionEvents(BaseSDK):
     def search(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         page_size: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
         extra_fields: OptionalNullable[List[str]] = UNSET,
@@ -39,7 +39,7 @@ class ChatCompletionEvents(BaseSDK):
     ) -> models.SearchChatCompletionEventsResponse:
         r"""Get Chat Completion Events
 
-        :param search_params:
+        :param filter_payload:
         :param page_size:
         :param cursor:
         :param extra_fields:
@@ -65,8 +65,8 @@ class ChatCompletionEvents(BaseSDK):
             page_size=page_size,
             cursor=cursor,
             search_chat_completion_events_request=models.SearchChatCompletionEventsRequest(
-                search_params=utils.get_pydantic_model(
-                    search_params, models.FilterPayload
+                filter_payload=utils.get_pydantic_model(
+                    filter_payload, models.FilterPayload
                 ),
                 extra_fields=extra_fields,
             ),
@@ -115,7 +115,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -143,7 +143,7 @@ class ChatCompletionEvents(BaseSDK):
     async def search_async(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         page_size: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
         extra_fields: OptionalNullable[List[str]] = UNSET,
@@ -154,7 +154,7 @@ class ChatCompletionEvents(BaseSDK):
     ) -> models.SearchChatCompletionEventsResponse:
         r"""Get Chat Completion Events
 
-        :param search_params:
+        :param filter_payload:
         :param page_size:
         :param cursor:
         :param extra_fields:
@@ -180,8 +180,8 @@ class ChatCompletionEvents(BaseSDK):
             page_size=page_size,
             cursor=cursor,
             search_chat_completion_events_request=models.SearchChatCompletionEventsRequest(
-                search_params=utils.get_pydantic_model(
-                    search_params, models.FilterPayload
+                filter_payload=utils.get_pydantic_model(
+                    filter_payload, models.FilterPayload
                 ),
                 extra_fields=extra_fields,
             ),
@@ -230,7 +230,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -258,7 +258,7 @@ class ChatCompletionEvents(BaseSDK):
     def search_ids(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         extra_fields: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -267,7 +267,7 @@ class ChatCompletionEvents(BaseSDK):
     ) -> models.SearchChatCompletionEventIdsResponse:
         r"""Alternative to /search that returns only the IDs and that can return many IDs at once
 
-        :param search_params:
+        :param filter_payload:
         :param extra_fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -288,7 +288,9 @@ class ChatCompletionEvents(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.SearchChatCompletionEventIdsRequest(
-            search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
+            filter_payload=utils.get_pydantic_model(
+                filter_payload, models.FilterPayload
+            ),
             extra_fields=extra_fields,
         )
 
@@ -335,7 +337,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -363,7 +365,7 @@ class ChatCompletionEvents(BaseSDK):
     async def search_ids_async(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         extra_fields: OptionalNullable[List[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -372,7 +374,7 @@ class ChatCompletionEvents(BaseSDK):
     ) -> models.SearchChatCompletionEventIdsResponse:
         r"""Alternative to /search that returns only the IDs and that can return many IDs at once
 
-        :param search_params:
+        :param filter_payload:
         :param extra_fields:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -393,7 +395,9 @@ class ChatCompletionEvents(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.SearchChatCompletionEventIdsRequest(
-            search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
+            filter_payload=utils.get_pydantic_model(
+                filter_payload, models.FilterPayload
+            ),
             extra_fields=extra_fields,
         )
 
@@ -440,7 +444,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -535,7 +539,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -628,7 +632,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -721,7 +725,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -816,7 +820,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -845,7 +849,7 @@ class ChatCompletionEvents(BaseSDK):
         self,
         *,
         event_id: str,
-        judge_definition: Union[
+        create_judge_request: Union[
             models.CreateJudgeRequest, models.CreateJudgeRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -856,7 +860,7 @@ class ChatCompletionEvents(BaseSDK):
         r"""Run Judge on an event based on the given options
 
         :param event_id:
-        :param judge_definition:
+        :param create_judge_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -878,8 +882,8 @@ class ChatCompletionEvents(BaseSDK):
         request = models.JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequest(
             event_id=event_id,
             judge_chat_completion_event_request=models.JudgeChatCompletionEventRequest(
-                judge_definition=utils.get_pydantic_model(
-                    judge_definition, models.CreateJudgeRequest
+                create_judge_request=utils.get_pydantic_model(
+                    create_judge_request, models.CreateJudgeRequest
                 ),
             ),
         )
@@ -927,7 +931,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -954,7 +958,7 @@ class ChatCompletionEvents(BaseSDK):
         self,
         *,
         event_id: str,
-        judge_definition: Union[
+        create_judge_request: Union[
             models.CreateJudgeRequest, models.CreateJudgeRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -965,7 +969,7 @@ class ChatCompletionEvents(BaseSDK):
         r"""Run Judge on an event based on the given options
 
         :param event_id:
-        :param judge_definition:
+        :param create_judge_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -987,8 +991,8 @@ class ChatCompletionEvents(BaseSDK):
         request = models.JudgeChatCompletionEventV1ObservabilityChatCompletionEventsEventIDLiveJudgingPostRequest(
             event_id=event_id,
             judge_chat_completion_event_request=models.JudgeChatCompletionEventRequest(
-                judge_definition=utils.get_pydantic_model(
-                    judge_definition, models.CreateJudgeRequest
+                create_judge_request=utils.get_pydantic_model(
+                    create_judge_request, models.CreateJudgeRequest
                 ),
             ),
         )
@@ -1036,7 +1040,7 @@ class ChatCompletionEvents(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

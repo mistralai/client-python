@@ -14,7 +14,7 @@ class Campaigns(BaseSDK):
     def create(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         judge_id: str,
         name: str,
         description: str,
@@ -26,7 +26,7 @@ class Campaigns(BaseSDK):
     ) -> models.Campaign:
         r"""Create and start a new campaign
 
-        :param search_params:
+        :param filter_payload:
         :param judge_id:
         :param name:
         :param description:
@@ -50,7 +50,9 @@ class Campaigns(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateCampaignRequest(
-            search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
+            filter_payload=utils.get_pydantic_model(
+                filter_payload, models.FilterPayload
+            ),
             judge_id=judge_id,
             name=name,
             description=description,
@@ -96,7 +98,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -122,7 +124,7 @@ class Campaigns(BaseSDK):
     async def create_async(
         self,
         *,
-        search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
+        filter_payload: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         judge_id: str,
         name: str,
         description: str,
@@ -134,7 +136,7 @@ class Campaigns(BaseSDK):
     ) -> models.Campaign:
         r"""Create and start a new campaign
 
-        :param search_params:
+        :param filter_payload:
         :param judge_id:
         :param name:
         :param description:
@@ -158,7 +160,9 @@ class Campaigns(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateCampaignRequest(
-            search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
+            filter_payload=utils.get_pydantic_model(
+                filter_payload, models.FilterPayload
+            ),
             judge_id=judge_id,
             name=name,
             description=description,
@@ -204,7 +208,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -303,7 +307,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -402,7 +406,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -495,7 +499,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -588,7 +592,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -681,7 +685,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -774,7 +778,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -867,7 +871,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -960,7 +964,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1059,7 +1063,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1160,7 +1164,7 @@ class Campaigns(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "404", "408", "409", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

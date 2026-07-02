@@ -7,12 +7,17 @@ from .feedresultchatcompletioneventpreview import (
     FeedResultChatCompletionEventPreviewTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class SearchChatCompletionEventsResponseTypedDict(TypedDict):
-    completion_events: FeedResultChatCompletionEventPreviewTypedDict
+    feed_result_chat_completion_event_preview: (
+        FeedResultChatCompletionEventPreviewTypedDict
+    )
 
 
 class SearchChatCompletionEventsResponse(BaseModel):
-    completion_events: FeedResultChatCompletionEventPreview
+    feed_result_chat_completion_event_preview: Annotated[
+        FeedResultChatCompletionEventPreview, pydantic.Field(alias="completion_events")
+    ]

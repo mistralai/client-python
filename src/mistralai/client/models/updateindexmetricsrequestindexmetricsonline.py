@@ -29,9 +29,3 @@ class UpdateIndexMetricsRequestIndexMetricsOnline(BaseModel):
         Annotated[Literal["online"], AfterValidator(validate_const("online"))],
         pydantic.Field(alias="status"),
     ] = "online"
-
-
-try:
-    UpdateIndexMetricsRequestIndexMetricsOnline.model_rebuild()
-except NameError:
-    pass

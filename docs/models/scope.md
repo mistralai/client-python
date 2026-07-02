@@ -1,15 +1,10 @@
 # Scope
 
-## Example Usage
-
-```python
-from mistralai.client.models import Scope
-value: Scope = "activity"
-```
-
 
 ## Values
 
-- `"activity"`
-- `"workflow"`
-- `"*"`
+| Name        | Value       |
+| ----------- | ----------- |
+| `ACTIVITY`  | activity    |
+| `WORKFLOW`  | workflow    |
+| `WILDCARD_` | *           |

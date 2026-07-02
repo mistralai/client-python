@@ -4,11 +4,12 @@
 from __future__ import annotations
 from .filterpayload import FilterPayload, FilterPayloadTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class CreateCampaignRequestTypedDict(TypedDict):
-    search_params: FilterPayloadTypedDict
+    filter_payload: FilterPayloadTypedDict
     judge_id: str
     name: str
     description: str
@@ -16,7 +17,7 @@ class CreateCampaignRequestTypedDict(TypedDict):
 
 
 class CreateCampaignRequest(BaseModel):
-    search_params: FilterPayload
+    filter_payload: Annotated[FilterPayload, pydantic.Field(alias="search_params")]
 
     judge_id: str
 

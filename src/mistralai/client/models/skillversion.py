@@ -4,9 +4,8 @@
 from __future__ import annotations
 from .skilldefinition import SkillDefinition, SkillDefinitionTypedDict
 from datetime import datetime
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 import pydantic
-from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -37,27 +36,3 @@ class SkillVersion(BaseModel):
 
     created_at: Annotated[Optional[datetime], pydantic.Field(alias="createdAt")] = None
     r"""RFC 3339 timestamp."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(
-            ["version", "definition", "notes", "aliases", "createdAt"]
-        )
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-try:
-    SkillVersion.model_rebuild()
-except NameError:
-    pass

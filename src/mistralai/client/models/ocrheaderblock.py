@@ -36,9 +36,3 @@ class OCRHeaderBlock(BaseModel):
         Annotated[Literal["header"], AfterValidator(validate_const("header"))],
         pydantic.Field(alias="type"),
     ] = "header"
-
-
-try:
-    OCRHeaderBlock.model_rebuild()
-except NameError:
-    pass

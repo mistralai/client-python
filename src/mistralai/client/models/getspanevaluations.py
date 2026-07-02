@@ -7,12 +7,15 @@ from .feedresultgetspanevaluation import (
     FeedResultGetSpanEvaluationTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class GetSpanEvaluationsTypedDict(TypedDict):
-    span_evaluations: FeedResultGetSpanEvaluationTypedDict
+    feed_result_get_span_evaluation: FeedResultGetSpanEvaluationTypedDict
 
 
 class GetSpanEvaluations(BaseModel):
-    span_evaluations: FeedResultGetSpanEvaluation
+    feed_result_get_span_evaluation: Annotated[
+        FeedResultGetSpanEvaluation, pydantic.Field(alias="span_evaluations")
+    ]

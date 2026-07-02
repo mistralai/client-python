@@ -8,7 +8,7 @@ from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
 import importlib
-from mistralai.client import models as models_, utils
+from mistralai.client import models, utils
 from mistralai.client._hooks import SDKHooks
 from mistralai.client.types import OptionalNullable, UNSET
 import sys
@@ -26,7 +26,6 @@ if TYPE_CHECKING:
     from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
-    from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
     from mistralai.client.workflows import Workflows
@@ -36,12 +35,10 @@ class Mistral(BaseSDK):
     r"""Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it."""
 
     beta: "Beta"
-    audio: "Audio"
-    models: "Models"
-    r"""Model Management API"""
     files: "Files"
     r"""Files API"""
-    fine_tuning: "FineTuning"
+    models: "Models"
+    r"""Model Management API"""
     batch: "Batch"
     chat: "Chat"
     r"""Chat Completion API."""
@@ -55,14 +52,13 @@ class Mistral(BaseSDK):
     r"""Classifiers API."""
     ocr: "Ocr"
     r"""OCR API"""
+    audio: "Audio"
     workflows: "Workflows"
     events: "Events"
     _sub_sdk_map = {
         "beta": ("mistralai.client.beta", "Beta"),
-        "audio": ("mistralai.client.audio", "Audio"),
-        "models": ("mistralai.client.models_", "Models"),
         "files": ("mistralai.client.files", "Files"),
-        "fine_tuning": ("mistralai.client.fine_tuning", "FineTuning"),
+        "models": ("mistralai.client.models_", "Models"),
         "batch": ("mistralai.client.batch", "Batch"),
         "chat": ("mistralai.client.chat", "Chat"),
         "fim": ("mistralai.client.fim", "Fim"),
@@ -70,6 +66,7 @@ class Mistral(BaseSDK):
         "embeddings": ("mistralai.client.embeddings", "Embeddings"),
         "classifiers": ("mistralai.client.classifiers", "Classifiers"),
         "ocr": ("mistralai.client.ocr", "Ocr"),
+        "audio": ("mistralai.client.audio", "Audio"),
         "workflows": ("mistralai.client.workflows", "Workflows"),
         "events": ("mistralai.client.events", "Events"),
     }
@@ -78,8 +75,8 @@ class Mistral(BaseSDK):
         self,
         api_key: Optional[Union[Optional[str], Callable[[], Optional[str]]]] = None,
         server: Optional[str] = None,
-        url_params: Optional[Dict[str, str]] = None,
         server_url: Optional[str] = None,
+        url_params: Optional[Dict[str, str]] = None,
         client: Optional[HttpClient] = None,
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
@@ -119,13 +116,11 @@ class Mistral(BaseSDK):
         ), "The provided async_client must implement the AsyncHttpClient protocol."
 
         security: Any = None
-        if api_key is None:
-            security = None
-        elif callable(api_key):
+        if callable(api_key):
             # pylint: disable=unnecessary-lambda-assignment
-            security = lambda: models_.Security(api_key=api_key())
+            security = lambda: models.Security(api_key=api_key())
         else:
-            security = models_.Security(api_key=api_key)
+            security = models.Security(api_key=api_key)
 
         if server_url is not None:
             if url_params is not None:

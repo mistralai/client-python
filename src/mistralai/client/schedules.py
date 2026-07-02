@@ -96,7 +96,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -114,8 +114,8 @@ class Schedules(BaseSDK):
             results = JSONPath("$.schedules").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return None
-            limit_ = request.page_size if isinstance(request.page_size, int) else 0
-            if len(results[0]) < limit_:
+            limit = request.page_size if not request.page_size is None else 0
+            if len(results[0]) < limit:
                 return None
 
             return self.get_schedules(
@@ -125,9 +125,6 @@ class Schedules(BaseSDK):
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -236,7 +233,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -259,8 +256,8 @@ class Schedules(BaseSDK):
             results = JSONPath("$.schedules").parse(body)
             if len(results) == 0 or len(results[0]) == 0:
                 return empty_result()
-            limit_ = request.page_size if isinstance(request.page_size, int) else 0
-            if len(results[0]) < limit_:
+            limit = request.page_size if not request.page_size is None else 0
+            if len(results[0]) < limit:
                 return empty_result()
 
             return self.get_schedules_async(
@@ -270,9 +267,6 @@ class Schedules(BaseSDK):
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
-                server_url=server_url,
-                timeout_ms=timeout_ms,
-                http_headers=http_headers,
             )
 
         response_data: Any = None
@@ -393,7 +387,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -510,7 +504,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -601,7 +595,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -692,7 +686,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -783,7 +777,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -874,7 +868,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -984,7 +978,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1094,7 +1088,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1168,9 +1162,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_pause_request
-                if request is not None
-                else None,
+                request.workflow_schedule_pause_request,
                 True,
                 True,
                 "json",
@@ -1199,7 +1191,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1273,9 +1265,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_pause_request
-                if request is not None
-                else None,
+                request.workflow_schedule_pause_request,
                 True,
                 True,
                 "json",
@@ -1304,7 +1294,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1378,9 +1368,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_pause_request
-                if request is not None
-                else None,
+                request.workflow_schedule_pause_request,
                 True,
                 True,
                 "json",
@@ -1409,7 +1397,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1483,9 +1471,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_pause_request
-                if request is not None
-                else None,
+                request.workflow_schedule_pause_request,
                 True,
                 True,
                 "json",
@@ -1514,7 +1500,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1590,9 +1576,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_trigger_request
-                if request is not None
-                else None,
+                request.workflow_schedule_trigger_request,
                 True,
                 True,
                 "json",
@@ -1621,7 +1605,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1697,9 +1681,7 @@ class Schedules(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.workflow_schedule_trigger_request
-                if request is not None
-                else None,
+                request.workflow_schedule_trigger_request,
                 True,
                 True,
                 "json",
@@ -1728,7 +1710,7 @@ class Schedules(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

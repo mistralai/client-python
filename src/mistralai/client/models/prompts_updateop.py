@@ -2,8 +2,6 @@
 # @generated-id: 45d598d57587
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .prompt import Prompt, PromptTypedDict
 from .registrysharingscope import RegistrySharingScope
 from mistralai.client.types import (
     BaseModel,
@@ -12,11 +10,17 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from mistralai.client.utils import (
+    FieldMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+    validate_open_enum,
+)
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from pydantic.functional_validators import PlainValidator
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdatePromptRequestTypedDict(TypedDict):
@@ -35,31 +39,39 @@ class UpdatePromptRequest(BaseModel):
     r"""Display description."""
 
     sharing_scope: Annotated[
-        Optional[RegistrySharingScope], pydantic.Field(alias="sharingScope")
+        Annotated[
+            Optional[RegistrySharingScope], PlainValidator(validate_open_enum(False))
+        ],
+        pydantic.Field(alias="sharingScope"),
     ] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["title", "description", "sharingScope"])
-        nullable_fields = set(["title", "description"])
+        optional_fields = ["title", "description", "sharingScope"]
+        nullable_fields = ["title", "description"]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m
 
@@ -78,19 +90,3 @@ class PromptsUpdateRequest(BaseModel):
         UpdatePromptRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-PromptsUpdateResponseTypedDict = TypeAliasType(
-    "PromptsUpdateResponseTypedDict", Union[ConnectErrorTypedDict, PromptTypedDict]
-)
-
-
-PromptsUpdateResponse = TypeAliasType(
-    "PromptsUpdateResponse", Union[ConnectError, Prompt]
-)
-
-
-try:
-    UpdatePromptRequest.model_rebuild()
-except NameError:
-    pass

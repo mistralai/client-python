@@ -24,9 +24,3 @@ class AudioChunk(BaseModel):
         ],
         pydantic.Field(alias="type"),
     ] = "input_audio"
-
-
-try:
-    AudioChunk.model_rebuild()
-except NameError:
-    pass

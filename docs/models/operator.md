@@ -2,32 +2,27 @@
 
 The operator to use for filtering options
 
-## Example Usage
-
-```python
-from mistralai.client.models import Operator
-value: Operator = "lt"
-```
-
 
 ## Values
 
-- `"lt"`
-- `"lte"`
-- `"gt"`
-- `"gte"`
-- `"startswith"`
-- `"istartswith"`
-- `"endswith"`
-- `"iendswith"`
-- `"contains"`
-- `"icontains"`
-- `"matches"`
-- `"notcontains"`
-- `"inotcontains"`
-- `"eq"`
-- `"neq"`
-- `"isnull"`
-- `"includes"`
-- `"excludes"`
-- `"len_eq"`
+| Name           | Value          |
+| -------------- | -------------- |
+| `LT`           | lt             |
+| `LTE`          | lte            |
+| `GT`           | gt             |
+| `GTE`          | gte            |
+| `STARTSWITH`   | startswith     |
+| `ISTARTSWITH`  | istartswith    |
+| `ENDSWITH`     | endswith       |
+| `IENDSWITH`    | iendswith      |
+| `CONTAINS`     | contains       |
+| `ICONTAINS`    | icontains      |
+| `MATCHES`      | matches        |
+| `NOTCONTAINS`  | notcontains    |
+| `INOTCONTAINS` | inotcontains   |
+| `EQ`           | eq             |
+| `NEQ`          | neq            |
+| `ISNULL`       | isnull         |
+| `INCLUDES`     | includes       |
+| `EXCLUDES`     | excludes       |
+| `LEN_EQ`       | len_eq         |

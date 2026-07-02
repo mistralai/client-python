@@ -5,10 +5,10 @@ Chat to classify
 
 ## Supported Types
 
-### `models.InstructRequest`
+### `models.InstructRequestInputs`
 
 ```python
-value: models.InstructRequest = /* values here */
+value: models.InstructRequestInputs = /* values here */
 ```
 
 ### `List[models.InstructRequest]`

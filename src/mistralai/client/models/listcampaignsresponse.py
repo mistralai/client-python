@@ -7,12 +7,15 @@ from .paginatedresultcampaignpreview import (
     PaginatedResultCampaignPreviewTypedDict,
 )
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ListCampaignsResponseTypedDict(TypedDict):
-    campaigns: PaginatedResultCampaignPreviewTypedDict
+    paginated_result_campaign_preview: PaginatedResultCampaignPreviewTypedDict
 
 
 class ListCampaignsResponse(BaseModel):
-    campaigns: PaginatedResultCampaignPreview
+    paginated_result_campaign_preview: Annotated[
+        PaginatedResultCampaignPreview, pydantic.Field(alias="campaigns")
+    ]

@@ -376,6 +376,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationRequestHandoffExecution
@@ -414,6 +415,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -446,6 +448,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -505,7 +508,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -530,6 +533,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = False,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationRequestHandoffExecution
@@ -568,6 +572,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -600,6 +605,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -659,7 +665,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -758,7 +764,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -859,7 +865,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -954,7 +960,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1047,7 +1053,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1140,7 +1146,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1233,7 +1239,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1261,9 +1267,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendRequestHandoffExecution
+            models.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -1285,6 +1292,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1309,10 +1317,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            conversation_append_request=models.ConversationAppendRequest(
+            append_conversation_request=models.AppendConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1339,11 +1348,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1368,7 +1377,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1396,9 +1405,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendRequestHandoffExecution
+            models.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -1420,6 +1430,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1444,10 +1455,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendRequest(
             conversation_id=conversation_id,
-            conversation_append_request=models.ConversationAppendRequest(
+            append_conversation_request=models.AppendConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1474,11 +1486,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -1503,7 +1515,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1596,7 +1608,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1689,7 +1701,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1782,7 +1794,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1875,7 +1887,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1904,9 +1916,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartRequestHandoffExecution
+            models.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -1917,8 +1930,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models.ConversationRestartRequestAgentVersion,
-                models.ConversationRestartRequestAgentVersionTypedDict,
+                models.RestartConversationRequestAgentVersion,
+                models.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1933,6 +1946,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -1959,10 +1973,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            conversation_restart_request=models.ConversationRestartRequest(
+            restart_conversation_request=models.RestartConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -1991,11 +2006,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2020,7 +2035,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2049,9 +2064,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartRequestHandoffExecution
+            models.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -2062,8 +2078,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models.ConversationRestartRequestAgentVersion,
-                models.ConversationRestartRequestAgentVersionTypedDict,
+                models.RestartConversationRequestAgentVersion,
+                models.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2078,6 +2094,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2104,10 +2121,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartRequest(
             conversation_id=conversation_id,
-            conversation_restart_request=models.ConversationRestartRequest(
+            restart_conversation_request=models.RestartConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2136,11 +2154,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2165,7 +2183,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2190,6 +2208,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationStreamRequestHandoffExecution
@@ -2228,6 +2247,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -2260,6 +2280,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationStreamRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -2319,7 +2340,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -2351,6 +2372,7 @@ class Conversations(BaseSDK):
         self,
         *,
         inputs: Union[models.ConversationInputs, models.ConversationInputsTypedDict],
+        stream: Optional[bool] = True,
         store: OptionalNullable[bool] = UNSET,
         handoff_execution: OptionalNullable[
             models.ConversationStreamRequestHandoffExecution
@@ -2389,6 +2411,7 @@ class Conversations(BaseSDK):
         Create a new conversation, using a base model or an agent and append entries. Completion and tool executions are run and the response is appended to the conversation.Use the returned conversation_id to continue the conversation.
 
         :param inputs:
+        :param stream:
         :param store:
         :param handoff_execution:
         :param instructions:
@@ -2421,6 +2444,7 @@ class Conversations(BaseSDK):
 
         request = models.ConversationStreamRequest(
             inputs=utils.get_pydantic_model(inputs, models.ConversationInputs),
+            stream=stream,
             store=store,
             handoff_execution=handoff_execution,
             instructions=instructions,
@@ -2480,7 +2504,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -2515,9 +2539,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
+            models.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -2539,6 +2564,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2563,10 +2589,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
+            append_conversation_request=models.AppendConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2593,11 +2620,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendStreamRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2622,7 +2649,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -2657,9 +2684,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationAppendStreamRequestHandoffExecution
+            models.AppendConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -2681,6 +2709,7 @@ class Conversations(BaseSDK):
 
         :param conversation_id: ID of the conversation to which we append entries.
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2705,10 +2734,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsAppendStreamRequest(
             conversation_id=conversation_id,
-            conversation_append_stream_request=models.ConversationAppendStreamRequest(
+            append_conversation_request=models.AppendConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2735,11 +2765,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_append_stream_request,
+                request.append_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationAppendStreamRequest,
+                models.AppendConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2764,7 +2794,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -2800,9 +2830,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
+            models.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -2813,8 +2844,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models.ConversationRestartStreamRequestAgentVersion,
-                models.ConversationRestartStreamRequestAgentVersionTypedDict,
+                models.RestartConversationRequestAgentVersion,
+                models.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2829,6 +2860,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -2855,10 +2887,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
+            restart_conversation_request=models.RestartConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -2887,11 +2920,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartStreamRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -2916,7 +2949,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )
@@ -2952,9 +2985,10 @@ class Conversations(BaseSDK):
         inputs: Optional[
             Union[models.ConversationInputs, models.ConversationInputsTypedDict]
         ] = None,
+        stream: Optional[bool] = False,
         store: Optional[bool] = True,
         handoff_execution: Optional[
-            models.ConversationRestartStreamRequestHandoffExecution
+            models.RestartConversationRequestHandoffExecution
         ] = "server",
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
@@ -2965,8 +2999,8 @@ class Conversations(BaseSDK):
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         agent_version: OptionalNullable[
             Union[
-                models.ConversationRestartStreamRequestAgentVersion,
-                models.ConversationRestartStreamRequestAgentVersionTypedDict,
+                models.RestartConversationRequestAgentVersion,
+                models.RestartConversationRequestAgentVersionTypedDict,
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -2981,6 +3015,7 @@ class Conversations(BaseSDK):
         :param conversation_id: ID of the original conversation which is being restarted.
         :param from_entry_id:
         :param inputs:
+        :param stream:
         :param store: Whether to store the results into our servers or not.
         :param handoff_execution:
         :param completion_args: White-listed arguments from the completion API
@@ -3007,10 +3042,11 @@ class Conversations(BaseSDK):
 
         request = models.AgentsAPIV1ConversationsRestartStreamRequest(
             conversation_id=conversation_id,
-            conversation_restart_stream_request=models.ConversationRestartStreamRequest(
+            restart_conversation_request=models.RestartConversationRequest(
                 inputs=utils.get_pydantic_model(
                     inputs, Optional[models.ConversationInputs]
                 ),
+                stream=stream,
                 store=store,
                 handoff_execution=handoff_execution,
                 completion_args=utils.get_pydantic_model(
@@ -3039,11 +3075,11 @@ class Conversations(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.conversation_restart_stream_request,
+                request.restart_conversation_request,
                 False,
                 False,
                 "json",
-                models.ConversationRestartStreamRequest,
+                models.RestartConversationRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -3068,7 +3104,7 @@ class Conversations(BaseSDK):
                 ),
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["422", "4XX", "5XX"],
             stream=True,
             retry_config=retry_config,
         )

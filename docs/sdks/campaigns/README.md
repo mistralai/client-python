@@ -27,7 +27,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.campaigns.create(search_params={
+    res = mistral.beta.observability.campaigns.create(filter_payload={
         "filters": {
             "field": "<value>",
             "op": "lt",
@@ -44,7 +44,7 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `search_params`                                                     | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `filter_payload`                                                    | [models.FilterPayload](../../models/filterpayload.md)               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `judge_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `description`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |

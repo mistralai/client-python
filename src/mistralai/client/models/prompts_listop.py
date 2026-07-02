@@ -2,14 +2,12 @@
 # @generated-id: 48f5a4a8009b
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
 from .listpromptsresponse import ListPromptsResponse, ListPromptsResponseTypedDict
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 import pydantic
-from pydantic import model_serializer
 from typing import Awaitable, Callable, List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PromptsListRequestTypedDict(TypedDict):
@@ -42,36 +40,9 @@ class PromptsListRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
 
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["pageSize", "pageToken", "alias", "fields"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-PromptsListResponseResultTypedDict = TypeAliasType(
-    "PromptsListResponseResultTypedDict",
-    Union[ListPromptsResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-PromptsListResponseResult = TypeAliasType(
-    "PromptsListResponseResult", Union[ListPromptsResponse, ConnectError]
-)
-
 
 class PromptsListResponseTypedDict(TypedDict):
-    result: PromptsListResponseResultTypedDict
+    result: ListPromptsResponseTypedDict
 
 
 class PromptsListResponse(BaseModel):
@@ -80,4 +51,4 @@ class PromptsListResponse(BaseModel):
         Callable[[], Awaitable[Optional[PromptsListResponse]]],
     ]
 
-    result: PromptsListResponseResult
+    result: ListPromptsResponse

@@ -1,21 +1,12 @@
 # ChatCompletionChoiceFinishReason
 
-## Example Usage
-
-```python
-from mistralai.client.models import ChatCompletionChoiceFinishReason
-
-# Open enum: unrecognized values are captured as UnrecognizedStr
-value: ChatCompletionChoiceFinishReason = "stop"
-```
-
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"stop"`
-- `"length"`
-- `"model_length"`
-- `"error"`
-- `"tool_calls"`
+| Name           | Value          |
+| -------------- | -------------- |
+| `STOP`         | stop           |
+| `LENGTH`       | length         |
+| `MODEL_LENGTH` | model_length   |
+| `ERROR`        | error          |
+| `TOOL_CALLS`   | tool_calls     |

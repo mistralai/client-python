@@ -4,17 +4,18 @@
 from __future__ import annotations
 from .inputs import Inputs, InputsTypedDict
 from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+import pydantic
+from typing_extensions import Annotated, TypedDict
 
 
 class ChatClassificationRequestTypedDict(TypedDict):
     model: str
-    input: InputsTypedDict
+    inputs: InputsTypedDict
     r"""Chat to classify"""
 
 
 class ChatClassificationRequest(BaseModel):
     model: str
 
-    input: Inputs
+    inputs: Annotated[Inputs, pydantic.Field(alias="input")]
     r"""Chat to classify"""

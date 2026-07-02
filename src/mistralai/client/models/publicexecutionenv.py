@@ -8,15 +8,16 @@ from .publicconnectorexecutiondata import (
 )
 from .tool import Tool, ToolTypedDict
 from mistralai.client.types import BaseModel
+import pydantic
 from typing import List
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class PublicExecutionEnvTypedDict(TypedDict):
     r"""Credentials-free projection of ExecutionEnv for the public /connectors/mistral response."""
 
     tools: List[ToolTypedDict]
-    tool_execution_data: PublicConnectorExecutionDataTypedDict
+    public_connector_execution_data: PublicConnectorExecutionDataTypedDict
     errors: List[str]
 
 
@@ -25,6 +26,8 @@ class PublicExecutionEnv(BaseModel):
 
     tools: List[Tool]
 
-    tool_execution_data: PublicConnectorExecutionData
+    public_connector_execution_data: Annotated[
+        PublicConnectorExecutionData, pydantic.Field(alias="tool_execution_data")
+    ]
 
     errors: List[str]

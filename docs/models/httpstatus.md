@@ -18,79 +18,70 @@ Status codes from the following RFCs are all observed:
     * RFC 8297: An HTTP Status Code for Indicating Hints
     * RFC 8470: Using Early Data in HTTP
 
-## Example Usage
-
-```python
-from mistralai.client.models import HTTPStatus
-
-# Open enum: unrecognized values are captured as UnrecognizedInt
-value: HTTPStatus = 100
-```
-
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `100`
-- `101`
-- `102`
-- `103`
-- `200`
-- `201`
-- `202`
-- `203`
-- `204`
-- `205`
-- `206`
-- `207`
-- `208`
-- `226`
-- `300`
-- `301`
-- `302`
-- `303`
-- `304`
-- `305`
-- `307`
-- `308`
-- `400`
-- `401`
-- `402`
-- `403`
-- `404`
-- `405`
-- `406`
-- `407`
-- `408`
-- `409`
-- `410`
-- `411`
-- `412`
-- `413`
-- `414`
-- `415`
-- `416`
-- `417`
-- `418`
-- `421`
-- `422`
-- `423`
-- `424`
-- `425`
-- `426`
-- `428`
-- `429`
-- `431`
-- `451`
-- `500`
-- `501`
-- `502`
-- `503`
-- `504`
-- `505`
-- `506`
-- `507`
-- `508`
-- `510`
-- `511`
+| Name                            | Value                           |
+| ------------------------------- | ------------------------------- |
+| `ONE_HUNDRED`                   | 100                             |
+| `ONE_HUNDRED_AND_ONE`           | 101                             |
+| `ONE_HUNDRED_AND_TWO`           | 102                             |
+| `ONE_HUNDRED_AND_THREE`         | 103                             |
+| `TWO_HUNDRED`                   | 200                             |
+| `TWO_HUNDRED_AND_ONE`           | 201                             |
+| `TWO_HUNDRED_AND_TWO`           | 202                             |
+| `TWO_HUNDRED_AND_THREE`         | 203                             |
+| `TWO_HUNDRED_AND_FOUR`          | 204                             |
+| `TWO_HUNDRED_AND_FIVE`          | 205                             |
+| `TWO_HUNDRED_AND_SIX`           | 206                             |
+| `TWO_HUNDRED_AND_SEVEN`         | 207                             |
+| `TWO_HUNDRED_AND_EIGHT`         | 208                             |
+| `TWO_HUNDRED_AND_TWENTY_SIX`    | 226                             |
+| `THREE_HUNDRED`                 | 300                             |
+| `THREE_HUNDRED_AND_ONE`         | 301                             |
+| `THREE_HUNDRED_AND_TWO`         | 302                             |
+| `THREE_HUNDRED_AND_THREE`       | 303                             |
+| `THREE_HUNDRED_AND_FOUR`        | 304                             |
+| `THREE_HUNDRED_AND_FIVE`        | 305                             |
+| `THREE_HUNDRED_AND_SEVEN`       | 307                             |
+| `THREE_HUNDRED_AND_EIGHT`       | 308                             |
+| `FOUR_HUNDRED`                  | 400                             |
+| `FOUR_HUNDRED_AND_ONE`          | 401                             |
+| `FOUR_HUNDRED_AND_TWO`          | 402                             |
+| `FOUR_HUNDRED_AND_THREE`        | 403                             |
+| `FOUR_HUNDRED_AND_FOUR`         | 404                             |
+| `FOUR_HUNDRED_AND_FIVE`         | 405                             |
+| `FOUR_HUNDRED_AND_SIX`          | 406                             |
+| `FOUR_HUNDRED_AND_SEVEN`        | 407                             |
+| `FOUR_HUNDRED_AND_EIGHT`        | 408                             |
+| `FOUR_HUNDRED_AND_NINE`         | 409                             |
+| `FOUR_HUNDRED_AND_TEN`          | 410                             |
+| `FOUR_HUNDRED_AND_ELEVEN`       | 411                             |
+| `FOUR_HUNDRED_AND_TWELVE`       | 412                             |
+| `FOUR_HUNDRED_AND_THIRTEEN`     | 413                             |
+| `FOUR_HUNDRED_AND_FOURTEEN`     | 414                             |
+| `FOUR_HUNDRED_AND_FIFTEEN`      | 415                             |
+| `FOUR_HUNDRED_AND_SIXTEEN`      | 416                             |
+| `FOUR_HUNDRED_AND_SEVENTEEN`    | 417                             |
+| `FOUR_HUNDRED_AND_EIGHTEEN`     | 418                             |
+| `FOUR_HUNDRED_AND_TWENTY_ONE`   | 421                             |
+| `FOUR_HUNDRED_AND_TWENTY_TWO`   | 422                             |
+| `FOUR_HUNDRED_AND_TWENTY_THREE` | 423                             |
+| `FOUR_HUNDRED_AND_TWENTY_FOUR`  | 424                             |
+| `FOUR_HUNDRED_AND_TWENTY_FIVE`  | 425                             |
+| `FOUR_HUNDRED_AND_TWENTY_SIX`   | 426                             |
+| `FOUR_HUNDRED_AND_TWENTY_EIGHT` | 428                             |
+| `FOUR_HUNDRED_AND_TWENTY_NINE`  | 429                             |
+| `FOUR_HUNDRED_AND_THIRTY_ONE`   | 431                             |
+| `FOUR_HUNDRED_AND_FIFTY_ONE`    | 451                             |
+| `FIVE_HUNDRED`                  | 500                             |
+| `FIVE_HUNDRED_AND_ONE`          | 501                             |
+| `FIVE_HUNDRED_AND_TWO`          | 502                             |
+| `FIVE_HUNDRED_AND_THREE`        | 503                             |
+| `FIVE_HUNDRED_AND_FOUR`         | 504                             |
+| `FIVE_HUNDRED_AND_FIVE`         | 505                             |
+| `FIVE_HUNDRED_AND_SIX`          | 506                             |
+| `FIVE_HUNDRED_AND_SEVEN`        | 507                             |
+| `FIVE_HUNDRED_AND_EIGHT`        | 508                             |
+| `FIVE_HUNDRED_AND_TEN`          | 510                             |
+| `FIVE_HUNDRED_AND_ELEVEN`       | 511                             |

@@ -15,8 +15,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import FieldMetadata, QueryParamMetadata
+from mistralai.client.utils import FieldMetadata, QueryParamMetadata, validate_open_enum
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import Awaitable, Callable, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -30,7 +31,14 @@ r"""Filter by workflow status"""
 
 ListRunsV1WorkflowsRunsGetStatus = TypeAliasType(
     "ListRunsV1WorkflowsRunsGetStatus",
-    Union[WorkflowExecutionStatus, List[WorkflowExecutionStatus]],
+    Union[
+        Annotated[WorkflowExecutionStatus, PlainValidator(validate_open_enum(False))],
+        List[
+            Annotated[
+                WorkflowExecutionStatus, PlainValidator(validate_open_enum(False))
+            ]
+        ],
+    ],
 )
 r"""Filter by workflow status"""
 
@@ -74,6 +82,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
+    workflow_tags: NotRequired[Nullable[List[str]]]
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
     include_internal: NotRequired[bool]
     r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
     page_size: NotRequired[int]
@@ -155,6 +165,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
 
+    workflow_tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
+
     include_internal: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -175,59 +191,62 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "workflow_identifier",
-                "root_execution_id",
-                "search",
-                "status",
-                "deployment_name",
-                "sort_by",
-                "order",
-                "start_time_after",
-                "start_time_before",
-                "end_time_after",
-                "end_time_before",
-                "user_id",
-                "include_internal",
-                "page_size",
-                "next_page_token",
-            ]
-        )
-        nullable_fields = set(
-            [
-                "workflow_identifier",
-                "root_execution_id",
-                "search",
-                "status",
-                "deployment_name",
-                "sort_by",
-                "start_time_after",
-                "start_time_before",
-                "end_time_after",
-                "end_time_before",
-                "user_id",
-                "next_page_token",
-            ]
-        )
+        optional_fields = [
+            "workflow_identifier",
+            "root_execution_id",
+            "search",
+            "status",
+            "deployment_name",
+            "sort_by",
+            "order",
+            "start_time_after",
+            "start_time_before",
+            "end_time_after",
+            "end_time_before",
+            "user_id",
+            "workflow_tags",
+            "include_internal",
+            "page_size",
+            "next_page_token",
+        ]
+        nullable_fields = [
+            "workflow_identifier",
+            "root_execution_id",
+            "search",
+            "status",
+            "deployment_name",
+            "sort_by",
+            "start_time_after",
+            "start_time_before",
+            "end_time_after",
+            "end_time_before",
+            "user_id",
+            "workflow_tags",
+            "next_page_token",
+        ]
+        null_default_fields = []
+
         serialized = handler(self)
+
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
+            val = serialized.get(k)
+            serialized.pop(k, None)
 
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
 
         return m
 

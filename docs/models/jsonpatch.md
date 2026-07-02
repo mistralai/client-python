@@ -3,27 +3,27 @@
 
 ## Supported Types
 
-### `models.JSONPatchAdd`
+### `models.JSONPatchAddJSONPatch`
 
 ```python
-value: models.JSONPatchAdd = /* values here */
+value: models.JSONPatchAddJSONPatch = /* values here */
 ```
 
-### `models.JSONPatchAppend`
+### `models.JSONPatchAppendJSONPatch`
 
 ```python
-value: models.JSONPatchAppend = /* values here */
+value: models.JSONPatchAppendJSONPatch = /* values here */
 ```
 
-### `models.JSONPatchRemove`
+### `models.JSONPatchRemoveJSONPatch`
 
 ```python
-value: models.JSONPatchRemove = /* values here */
+value: models.JSONPatchRemoveJSONPatch = /* values here */
 ```
 
-### `models.JSONPatchReplace`
+### `models.JSONPatchReplaceJSONPatch`
 
 ```python
-value: models.JSONPatchReplace = /* values here */
+value: models.JSONPatchReplaceJSONPatch = /* values here */
 ```
 

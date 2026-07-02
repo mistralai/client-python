@@ -4,8 +4,10 @@
 from __future__ import annotations
 from .ftclassifierlossfunction import FTClassifierLossFunction
 from mistralai.client.types import BaseModel
+from mistralai.client.utils import validate_open_enum
+from pydantic.functional_validators import PlainValidator
 from typing import List
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class ClassifierTargetResultTypedDict(TypedDict):
@@ -22,4 +24,6 @@ class ClassifierTargetResult(BaseModel):
 
     weight: float
 
-    loss_function: FTClassifierLossFunction
+    loss_function: Annotated[
+        FTClassifierLossFunction, PlainValidator(validate_open_enum(False))
+    ]

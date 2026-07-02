@@ -15,9 +15,3 @@ class TempoTraceAttributeBoolValueTypedDict(TypedDict):
 class TempoTraceAttributeBoolValue(BaseModel):
     bool_value: Annotated[bool, pydantic.Field(alias="boolValue")]
     r"""The boolean value of the attribute"""
-
-
-try:
-    TempoTraceAttributeBoolValue.model_rebuild()
-except NameError:
-    pass

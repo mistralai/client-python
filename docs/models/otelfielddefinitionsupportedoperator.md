@@ -1,40 +1,31 @@
 # OtelFieldDefinitionSupportedOperator
 
-## Example Usage
-
-```python
-from mistralai.client.models import OtelFieldDefinitionSupportedOperator
-
-# Open enum: unrecognized values are captured as UnrecognizedStr
-value: OtelFieldDefinitionSupportedOperator = "eq"
-```
-
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"eq"`
-- `"neq"`
-- `"lt"`
-- `"lte"`
-- `"gt"`
-- `"gte"`
-- `"like"`
-- `"ilike"`
-- `"not_like"`
-- `"not_ilike"`
-- `"between"`
-- `"not_between"`
-- `"in"`
-- `"not_in"`
-- `"exists"`
-- `"not_exists"`
-- `"regexp"`
-- `"not_regexp"`
-- `"contains"`
-- `"not_contains"`
-- `"has"`
-- `"hasAny"`
-- `"hasAll"`
-- `"hasToken"`
+| Name           | Value          |
+| -------------- | -------------- |
+| `EQ`           | eq             |
+| `NEQ`          | neq            |
+| `LT`           | lt             |
+| `LTE`          | lte            |
+| `GT`           | gt             |
+| `GTE`          | gte            |
+| `LIKE`         | like           |
+| `ILIKE`        | ilike          |
+| `NOT_LIKE`     | not_like       |
+| `NOT_ILIKE`    | not_ilike      |
+| `BETWEEN`      | between        |
+| `NOT_BETWEEN`  | not_between    |
+| `IN`           | in             |
+| `NOT_IN`       | not_in         |
+| `EXISTS`       | exists         |
+| `NOT_EXISTS`   | not_exists     |
+| `REGEXP`       | regexp         |
+| `NOT_REGEXP`   | not_regexp     |
+| `CONTAINS`     | contains       |
+| `NOT_CONTAINS` | not_contains   |
+| `HAS`          | has            |
+| `HAS_ANY`      | hasAny         |
+| `HAS_ALL`      | hasAll         |
+| `HAS_TOKEN`    | hasToken       |
