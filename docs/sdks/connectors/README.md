@@ -9,6 +9,7 @@
 * [create](#create) - Create a new connector.
 * [list](#list) - List all connectors.
 * [get_auth_url](#get_auth_url) - Get the auth URL for a connector.
+* [share](#share) - Share a private connector to the current workspace.
 * [activate_for_organization](#activate_for_organization) - Activate a connector for an organization.
 * [deactivate_for_organization](#deactivate_for_organization) - Deactivate a connector for an organization.
 * [activate_for_workspace](#activate_for_workspace) - Activate a connector for a workspace.
@@ -162,6 +163,47 @@ with Mistral(
 ### Response
 
 **[models.AuthURLResponse](../../models/authurlresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## share
+
+Transfers ownership of a private user-owned connector to the current workspace, making it available to all workspace members. This action is irreversible: once shared, the connector belongs to the workspace and can no longer be used privately across other workspaces. Any authentication flows that rely on the original owner's identity (e.g. OAuth on-behalf-of) will be affected and must be reconfigured after sharing. Only the connector's creator can call this endpoint. Requires the ShareConnectorToWorkspace workspace permission.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_share_v1" method="put" path="/v1/connectors/{connector_id}/share" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.share(connector_id="cf748b50-632b-46d6-98c3-b015086cb194")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
 
 ### Errors
 

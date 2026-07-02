@@ -8,8 +8,6 @@
 
 * [list](#list) - List documents in a given library.
 * [upload](#upload) - Upload a new document.
-* [get_signed_upload_url](#get_signed_upload_url) - Get a signed URL for direct upload to blob storage.
-* [ingest_from_blob_storage](#ingest_from_blob_storage) - Ingest a document from blob storage of the document library.
 * [get](#get) - Retrieve the metadata of a specific document.
 * [update](#update) - Update the metadata of a specific document.
 * [~~libraries_documents_update_v1~~](#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
@@ -100,91 +98,6 @@ with Mistral(
 | `library_id`                                                                                                                                                                                                                                                                                                        | *str*                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                                                                                                                 |
 | `file`                                                                                                                                                                                                                                                                                                              | [models.File](../../models/file.md)                                                                                                                                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                                                                                                                                                  | The File object (not file name) to be uploaded.<br/> To upload a file and specify a custom file name you should format your request as such:<br/> ```bash<br/> file=@path/to/your/file.jsonl;filename=custom_name.jsonl<br/> ```<br/> Otherwise, you can just keep the original file name:<br/> ```bash<br/> file=@path/to/your/file.jsonl<br/> ``` |
 | `retries`                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                 |
-
-### Response
-
-**[models.Document](../../models/document.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
-
-## get_signed_upload_url
-
-Returns a signed URL that can be used to upload a file directly to Azure Blob Storage. To process the upload call ingest-from-blob-storage.
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="libraries_documents_get_signed_upload_url_v1" method="get" path="/v1/libraries/{library_id}/documents/signed-upload-url" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.libraries.documents.get_signed_upload_url(library_id="c77684a7-f47b-4332-8eff-b2461dd4b12d", extension="mp2a")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `extension`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.RequestUploadURLResponse](../../models/requestuploadurlresponse.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
-
-## ingest_from_blob_storage
-
-Ingest a document that was uploaded via a signed URL of the document library from blob storage into the library.
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="libraries_documents_ingest_from_blob_storage_v1" method="post" path="/v1/libraries/{library_id}/documents/ingest-from-blob-storage" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.libraries.documents.ingest_from_blob_storage(library_id="7a5d7cf9-bfdb-4bd9-95b9-025e0e6338f1", filename="example.file", signed_url="https://flashy-sticker.info/")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                                                                                                    | Type                                                                                                                                         | Required                                                                                                                                     | Description                                                                                                                                  |
-| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `library_id`                                                                                                                                 | *str*                                                                                                                                        | :heavy_check_mark:                                                                                                                           | N/A                                                                                                                                          |
-| `filename`                                                                                                                                   | *str*                                                                                                                                        | :heavy_check_mark:                                                                                                                           | Name of the file to be ingested.                                                                                                             |
-| `signed_url`                                                                                                                                 | *str*                                                                                                                                        | :heavy_check_mark:                                                                                                                           | Signed URL for ingesting a document from blob storage. You can get one via the /libraries/{library_id}/documents/signed-upload-url endpoint. |
-| `retries`                                                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                             | :heavy_minus_sign:                                                                                                                           | Configuration to override the default retry behavior of the client.                                                                          |
 
 ### Response
 

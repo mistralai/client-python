@@ -2,12 +2,9 @@
 # @generated-id: 818345e7f5f0
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .deletepromptresponse import DeletePromptResponse, DeletePromptResponseTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from typing import Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class PromptsDeleteRequestTypedDict(TypedDict):
@@ -18,14 +15,3 @@ class PromptsDeleteRequest(BaseModel):
     prompt_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-
-
-PromptsDeleteResponseTypedDict = TypeAliasType(
-    "PromptsDeleteResponseTypedDict",
-    Union[DeletePromptResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-PromptsDeleteResponse = TypeAliasType(
-    "PromptsDeleteResponse", Union[DeletePromptResponse, ConnectError]
-)

@@ -2,13 +2,11 @@
 # @generated-id: 3a39540b6332
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .prompt import Prompt, PromptTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PromptsGetRequestTypedDict(TypedDict):
@@ -53,11 +51,3 @@ class PromptsGetRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-PromptsGetResponseTypedDict = TypeAliasType(
-    "PromptsGetResponseTypedDict", Union[ConnectErrorTypedDict, PromptTypedDict]
-)
-
-
-PromptsGetResponse = TypeAliasType("PromptsGetResponse", Union[ConnectError, Prompt])

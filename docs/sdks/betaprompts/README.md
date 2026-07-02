@@ -99,7 +99,7 @@ with Mistral(
 
 ### Response
 
-**[models.PromptsCreateResponse](../../models/promptscreateresponse.md)**
+**[models.Prompt](../../models/prompt.md)**
 
 ### Errors
 
@@ -123,7 +123,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.get(prompt_id="<id>")
+    res = mistral.beta.prompts.get(prompt_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -132,17 +132,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 | 1                                                                   |
+| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[models.PromptsGetResponse](../../models/promptsgetresponse.md)**
+**[models.Prompt](../../models/prompt.md)**
 
 ### Errors
 
@@ -182,7 +182,7 @@ with Mistral(
 
 ### Response
 
-**[models.PromptsDeleteResponse](../../models/promptsdeleteresponse.md)**
+**[models.DeletePromptResponse](../../models/deletepromptresponse.md)**
 
 ### Errors
 
@@ -225,7 +225,7 @@ with Mistral(
 
 ### Response
 
-**[models.PromptsUpdateResponse](../../models/promptsupdateresponse.md)**
+**[models.Prompt](../../models/prompt.md)**
 
 ### Errors
 
@@ -265,7 +265,7 @@ with Mistral(
 
 ### Response
 
-**[models.PromptsListVersionsResponse](../../models/promptslistversionsresponse.md)**
+**[models.ListPromptVersionsResponse](../../models/listpromptversionsresponse.md)**
 
 ### Errors
 
@@ -310,7 +310,7 @@ with Mistral(
 
 ### Response
 
-**[models.PromptsCreateVersionResponse](../../models/promptscreateversionresponse.md)**
+**[models.CreatePromptVersionResponse](../../models/createpromptversionresponse.md)**
 
 ### Errors
 
@@ -334,7 +334,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.get_version(prompt_id="<id>", version=600480)
+    res = mistral.beta.prompts.get_version(prompt_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -343,16 +343,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `prompt_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 | 1                                                                   |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[models.PromptsGetVersionResponse](../../models/promptsgetversionresponse.md)**
+**[models.Prompt](../../models/prompt.md)**
 
 ### Errors
 
@@ -376,7 +376,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.prompts.update_version_metadata(prompt_id="<id>", version=422846)
+    res = mistral.beta.prompts.update_version_metadata(prompt_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -385,17 +385,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                       | Type                                                                                                                                                                                                                            | Required                                                                                                                                                                                                                        | Description                                                                                                                                                                                                                     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt_id`                                                                                                                                                                                                                     | *str*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |
-| `version`                                                                                                                                                                                                                       | *int*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |
-| `notes`                                                                                                                                                                                                                         | *OptionalNullable[str]*                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Notes for this version.                                                                                                                                                                                                         |
-| `aliases`                                                                                                                                                                                                                       | [Optional[models.AliasList]](../../models/aliaslist.md)                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Presence wrapper for a set of alias labels on update RPCs. As a message field it carries presence, so callers can distinguish "leave aliases unchanged" (field omitted) from "clear all aliases" (field set, empty ``values``). |
-| `retries`                                                                                                                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                              | Configuration to override the default retry behavior of the client.                                                                                                                                                             |
+| Parameter                                                                                                                                                                                                                       | Type                                                                                                                                                                                                                            | Required                                                                                                                                                                                                                        | Description                                                                                                                                                                                                                     | Example                                                                                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `prompt_id`                                                                                                                                                                                                                     | *str*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |                                                                                                                                                                                                                                 |
+| `version`                                                                                                                                                                                                                       | *int*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             | 1                                                                                                                                                                                                                               |
+| `notes`                                                                                                                                                                                                                         | *OptionalNullable[str]*                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Notes for this version.                                                                                                                                                                                                         |                                                                                                                                                                                                                                 |
+| `aliases`                                                                                                                                                                                                                       | [Optional[models.AliasList]](../../models/aliaslist.md)                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Presence wrapper for a set of alias labels on update RPCs. As a message field it carries presence, so callers can distinguish "leave aliases unchanged" (field omitted) from "clear all aliases" (field set, empty ``values``). |                                                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                              | Configuration to override the default retry behavior of the client.                                                                                                                                                             |                                                                                                                                                                                                                                 |
 
 ### Response
 
-**[models.PromptsUpdateVersionMetadataResponse](../../models/promptsupdateversionmetadataresponse.md)**
+**[models.Prompt](../../models/prompt.md)**
 
 ### Errors
 

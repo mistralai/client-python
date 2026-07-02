@@ -2,13 +2,11 @@
 # @generated-id: f1939bb21376
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .skill import Skill, SkillTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class SkillsGetRequestTypedDict(TypedDict):
@@ -53,11 +51,3 @@ class SkillsGetRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-SkillsGetResponseTypedDict = TypeAliasType(
-    "SkillsGetResponseTypedDict", Union[ConnectErrorTypedDict, SkillTypedDict]
-)
-
-
-SkillsGetResponse = TypeAliasType("SkillsGetResponse", Union[ConnectError, Skill])

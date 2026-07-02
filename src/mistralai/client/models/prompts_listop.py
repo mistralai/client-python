@@ -2,14 +2,13 @@
 # @generated-id: 48f5a4a8009b
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
 from .listpromptsresponse import ListPromptsResponse, ListPromptsResponseTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 import pydantic
 from pydantic import model_serializer
 from typing import Awaitable, Callable, List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PromptsListRequestTypedDict(TypedDict):
@@ -59,19 +58,8 @@ class PromptsListRequest(BaseModel):
         return m
 
 
-PromptsListResponseResultTypedDict = TypeAliasType(
-    "PromptsListResponseResultTypedDict",
-    Union[ListPromptsResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-PromptsListResponseResult = TypeAliasType(
-    "PromptsListResponseResult", Union[ListPromptsResponse, ConnectError]
-)
-
-
 class PromptsListResponseTypedDict(TypedDict):
-    result: PromptsListResponseResultTypedDict
+    result: ListPromptsResponseTypedDict
 
 
 class PromptsListResponse(BaseModel):
@@ -80,4 +68,4 @@ class PromptsListResponse(BaseModel):
         Callable[[], Awaitable[Optional[PromptsListResponse]]],
     ]
 
-    result: PromptsListResponseResult
+    result: ListPromptsResponse

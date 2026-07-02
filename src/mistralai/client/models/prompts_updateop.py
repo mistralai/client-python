@@ -2,8 +2,6 @@
 # @generated-id: 45d598d57587
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .prompt import Prompt, PromptTypedDict
 from .registrysharingscope import RegistrySharingScope
 from mistralai.client.types import (
     BaseModel,
@@ -15,8 +13,8 @@ from mistralai.client.types import (
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdatePromptRequestTypedDict(TypedDict):
@@ -78,16 +76,6 @@ class PromptsUpdateRequest(BaseModel):
         UpdatePromptRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-PromptsUpdateResponseTypedDict = TypeAliasType(
-    "PromptsUpdateResponseTypedDict", Union[ConnectErrorTypedDict, PromptTypedDict]
-)
-
-
-PromptsUpdateResponse = TypeAliasType(
-    "PromptsUpdateResponse", Union[ConnectError, Prompt]
-)
 
 
 try:
