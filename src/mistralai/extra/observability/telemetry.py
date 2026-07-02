@@ -15,8 +15,7 @@ from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
 from .redaction import (
     RedactingSpanExporter,
     RedactionPolicyLike,
-    default_redaction_policy,
-    resolve_policy,
+    resolve_redaction,
 )
 
 if TYPE_CHECKING:
@@ -25,7 +24,6 @@ if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
     from mistralai.client.sdkconfiguration import SDKConfiguration
     from mistralai.client._hooks.tracing import TracingHook
-    from .redaction import RedactionPolicy
 
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
@@ -93,29 +91,8 @@ def _resolve_mistral_telemetry_env() -> TelemetryProviderMode | None:
         ) from exc
 
 
-# TODO: Feels like this is redundant with redaction.resolve_policy and we could merge it there.
-# Also does the None bring any value here ?
-# Currently None -> default, True -> default, False -> no redaction
-# Could have RedactionPolicyLike | bool with True -> default and False -> no redaction ?
-# RedactingSpanExporter may need some changes accordingly since it consumes resolve_policy
-def _resolve_redaction_policy(
-    redaction: RedactionPolicyLike | bool | None,
-) -> "RedactionPolicy | None":
-    """Resolve the redaction argument into a policy (``None`` disables it).
-
-    Redaction is safe-by-default: ``True``/``None`` yield the default policy,
-    ``False`` disables redaction entirely, and a policy or ``(key, value)``
-    callback is used as-is.
-    """
-    if redaction is False:
-        return None
-    if redaction is True or redaction is None:
-        return default_redaction_policy()
-    return resolve_policy(redaction)
-
-
 def _warn_redaction_ignored(
-    redaction: RedactionPolicyLike | bool | None,
+    redaction: RedactionPolicyLike | bool,
     mode: str,
 ) -> None:
     """Warn when a redaction override cannot take effect for this provider mode.
@@ -138,7 +115,7 @@ def _warn_redaction_ignored(
 def configure_telemetry(
     client: "Mistral",
     provider: str | otel_trace.TracerProvider = TELEMETRY_PROVIDER_DEDICATED,
-    redaction: RedactionPolicyLike | bool | None = True,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> bool:
     """Configure telemetry provider mode for a Mistral client.
 
@@ -236,7 +213,7 @@ def configure_telemetry_for_hook(
     finalizer_owner: Any | None = None,
     respect_global_provider: bool = False,
     replace_existing: bool = False,
-    redaction: RedactionPolicyLike | bool | None = True,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> bool:
     """Configure telemetry for a tracing hook when the user has opted in.
 
@@ -345,7 +322,7 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
-    redaction: RedactionPolicyLike | bool | None = True,
+    redaction: RedactionPolicyLike | bool = True,
 ) -> "SDKTracerProvider":
     (
         batch_span_processor_cls,
@@ -363,7 +340,7 @@ def _create_telemetry_tracer_provider(
         endpoint=_resolve_mistral_telemetry_endpoint(),
         headers={"Authorization": _as_bearer_token(api_key)},
     )
-    policy = _resolve_redaction_policy(redaction)
+    policy = resolve_redaction(redaction)
     if policy is not None:
         exporter = RedactingSpanExporter(exporter, policy)
     provider = tracer_provider_cls(

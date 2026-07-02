@@ -311,6 +311,19 @@ def resolve_policy(policy: RedactionPolicyLike | None) -> RedactionPolicy:
     )
 
 
+def resolve_redaction(redaction: RedactionPolicyLike | bool) -> RedactionPolicy | None:
+    """Resolve redaction setting into a policy or None to disable redaction.
+
+    True yields the default policy, False disables redaction entirely,
+    and a policy or (key, value)->value | None callback is used as-is.
+    """
+    if redaction is False:
+        return None
+    if redaction is True:
+        return default_redaction_policy()
+    return resolve_policy(redaction)
+
+
 # SpanExporter wrapper
 # NOTE: in essence this is a subclass of SpanExporter. It's not typed as such because
 # the opentelemetry SDK is an optional dependency, so to keep it importable we duck-type it

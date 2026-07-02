@@ -21,6 +21,7 @@ from mistralai.extra.observability.redaction import (
     CallbackRedactionPolicy,
     RedactingSpanExporter,
     RegexRedactionPolicy,
+    resolve_redaction,
 )
 from mistralai.extra.observability.telemetry import (
     MISTRAL_TELEMETRY_ENDPOINT,
@@ -28,7 +29,6 @@ from mistralai.extra.observability.telemetry import (
     MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
     TelemetryConfigurationError,
     _create_telemetry_tracer_provider,
-    _resolve_redaction_policy,
     configure_telemetry_for_hook,
 )
 
@@ -689,12 +689,6 @@ class TestTelemetryRedaction(unittest.TestCase):
         self.assertIsInstance(exporter, RedactingSpanExporter)
         self.assertIsInstance(exporter._policy, AttributeRedactionPolicy)
 
-    def test_redaction_none_wraps_with_default_policy(self):
-        provider = self._make_provider(redaction=None)
-        exporter = self._exporter_of(provider)
-        self.assertIsInstance(exporter, RedactingSpanExporter)
-        self.assertIsInstance(exporter._policy, AttributeRedactionPolicy)
-
     def test_redaction_false_leaves_exporter_unwrapped(self):
         provider = self._make_provider(redaction=False)
         exporter = self._exporter_of(provider)
@@ -717,19 +711,14 @@ class TestTelemetryRedaction(unittest.TestCase):
         self.assertIsInstance(exporter, RedactingSpanExporter)
         self.assertIsInstance(exporter._policy, CallbackRedactionPolicy)
 
-    def test_resolve_redaction_policy_semantics(self):
-        self.assertIsInstance(
-            _resolve_redaction_policy(True), AttributeRedactionPolicy
-        )
-        self.assertIsInstance(
-            _resolve_redaction_policy(None), AttributeRedactionPolicy
-        )
-        self.assertIsNone(_resolve_redaction_policy(False))
+    def test_resolve_redaction_semantics(self):
+        self.assertIsInstance(resolve_redaction(True), AttributeRedactionPolicy)
+        self.assertIsNone(resolve_redaction(False))
 
         policy = RegexRedactionPolicy()
-        self.assertIs(_resolve_redaction_policy(policy), policy)
+        self.assertIs(resolve_redaction(policy), policy)
 
-        resolved = _resolve_redaction_policy(lambda k, v: v)
+        resolved = resolve_redaction(lambda k, v: v)
         self.assertIsInstance(resolved, CallbackRedactionPolicy)
 
     def test_configure_dedicated_threads_redaction(self):
