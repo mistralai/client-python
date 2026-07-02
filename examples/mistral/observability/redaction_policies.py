@@ -2,9 +2,9 @@
 """Choosing a redaction policy in dedicated telemetry mode.
 
 The `redaction` argument accepts:
-  - True (default): the attribute (key-oriented) policy
+  - True (default): the regex (content-oriented) policy
   - False: redaction disabled
-  - a RedactionPolicy instance (e.g. RegexRedactionPolicy)
+  - a RedactionPolicy instance (e.g. AttributeRedactionPolicy)
   - a (key, value) -> value | None callback
 
 Requires the telemetry extra: pip install "mistralai[telemetry]"
@@ -13,16 +13,14 @@ Requires the telemetry extra: pip install "mistralai[telemetry]"
 import os
 
 from mistralai.client import Mistral
-from mistralai.extra.observability import RegexRedactionPolicy, configure_telemetry
+from mistralai.extra.observability import AttributeRedactionPolicy, configure_telemetry
 
 
 def main() -> None:
     api_key = os.environ["MISTRAL_API_KEY"]
 
     with Mistral(api_key=api_key) as client:
-        # Content-oriented policy: keeps keys/structure, redacts matched
-        # substrings (secret tokens plus PII such as emails, cards, IPv4).
-        configure_telemetry(client, redaction=RegexRedactionPolicy())
+        configure_telemetry(client, redaction=AttributeRedactionPolicy())
 
         # Alternatives:
         # configure_telemetry(client, redaction=False)  # disable entirely

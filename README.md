@@ -1360,12 +1360,12 @@ configure_telemetry(client, provider="global")
 In dedicated mode, redaction is on by default. Control it with the `redaction` argument, which also accepts any of the reusable policies from `mistralai.extra.observability`:
 
 ```python
-from mistralai.extra.observability import RegexRedactionPolicy
+from mistralai.extra.observability import AttributeRedactionPolicy
 
-configure_telemetry(client)                                    # default policy
-configure_telemetry(client, redaction=RegexRedactionPolicy())  # regex policy
-configure_telemetry(client, redaction=False)                   # disabled - no redaction
-configure_telemetry(                                           # custom callback to control how attributes are redacted
+configure_telemetry(client)                                        # default policy (regex)
+configure_telemetry(client, redaction=AttributeRedactionPolicy())  # very conservative key-oriented policy
+configure_telemetry(client, redaction=False)                       # disabled - no redaction
+configure_telemetry(                                               # custom callback to control how attributes are redacted
     client,
     redaction=lambda key, value: None if "email" in key else value,
 )
@@ -1373,8 +1373,8 @@ configure_telemetry(                                           # custom callback
 
 | Policy | Strategy | Trade-off |
 | ------ | -------- | --------- |
-| `AttributeRedactionPolicy` (default, `redaction=True`) | Key-oriented: redacts whole values for sensitive keys (explicit set, fragment match, or non-primitive value), then scans kept values for secret token patterns. | High recall, "safe by default"; erases most prompt/response content. |
-| `RegexRedactionPolicy` | Content-oriented: keeps keys and structure, redacts matched substrings (secret tokens plus PII — emails, card-like sequences, IPv4). | Fewer false positives, preserves observability value; may miss free-form PII not in the pattern set. |
+| `RegexRedactionPolicy` (default, `redaction=True`) | Content-oriented: keeps keys and structure, redacts matched substrings (secret tokens plus PII — emails, card-like sequences, IPv4). | Redacts most sensitive data while preserving observability value; may miss free-form PII or secrets not in the pattern set. |
+| `AttributeRedactionPolicy` | Key-oriented: redacts whole values for sensitive keys (explicit set, fragment match, or non-primitive value), then scans kept values for secret token patterns. | Very conservative, but erases most prompt/response content. |
 | `CallbackRedactionPolicy` (`redaction=<callable>`) | Your `(key, value) -> value \| None` masker per attribute; return `None` to drop the attribute. | Full control; you own the logic. |
 
 *Note: the `RedactingSpanExporter` primitive is reusable by any OpenTelemetry application, independent of the Mistral client.*

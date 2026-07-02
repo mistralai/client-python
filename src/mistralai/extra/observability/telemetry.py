@@ -121,10 +121,11 @@ def configure_telemetry(
 
     In dedicated mode, spans are redacted before export (safe by default).
     You can control this with the redaction argument:
-    - True: (default) uses the default policy. It redacts all possibly sensitive attributes
+    - True: (default) uses the default policy. It scans string values and redacts matched
+      secrets/PII substrings while preserving keys and surrounding content
     - False: disables redaction
-    - Some RedactionPolicy classes (e.g. based on regexes) can be found in the redaction
-      module and provided here
+    - Other RedactionPolicy classes (e.g. the conservative but destructive
+      AttributeRedactionPolicy) can be found in the redaction module and provided here
     - You can also provide a (key, value) -> value | None callback to customize how attributes
       get redacted. Your function should return the modified attribute value or None to drop
       the attribute.

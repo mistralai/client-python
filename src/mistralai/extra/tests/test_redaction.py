@@ -203,8 +203,8 @@ class TestCallbackRedactionPolicy:
 
 class TestResolvePolicy:
     def test_none_returns_default(self):
-        assert isinstance(default_redaction_policy(), AttributeRedactionPolicy)
-        assert isinstance(resolve_policy(None), AttributeRedactionPolicy)
+        assert isinstance(default_redaction_policy(), RegexRedactionPolicy)
+        assert isinstance(resolve_policy(None), RegexRedactionPolicy)
 
     def test_policy_passthrough(self):
         policy = RegexRedactionPolicy()
@@ -221,7 +221,7 @@ class TestResolvePolicy:
 
 class TestResolveRedaction:
     def test_true_returns_default_policy(self):
-        assert isinstance(resolve_redaction(True), AttributeRedactionPolicy)
+        assert isinstance(resolve_redaction(True), RegexRedactionPolicy)
 
     def test_false_returns_none(self):
         assert resolve_redaction(False) is None
@@ -251,7 +251,7 @@ class TestRedactSpan:
         return exporter.get_finished_spans()[0]
 
     def test_attributes_redacted(self):
-        redacted = redact_span(self._make_span(), default_redaction_policy())
+        redacted = redact_span(self._make_span(), AttributeRedactionPolicy())
         assert isinstance(redacted, ReadableSpan)
         attrs = redacted.attributes
         assert attrs is not None
@@ -259,7 +259,7 @@ class TestRedactSpan:
         assert attrs["gen_ai.request.model"] == "mistral-large"
 
     def test_event_attributes_redacted(self):
-        redacted = redact_span(self._make_span(), default_redaction_policy())
+        redacted = redact_span(self._make_span(), AttributeRedactionPolicy())
         event = redacted.events[0]
         assert event.name == "exception"
         attrs = event.attributes
@@ -267,13 +267,13 @@ class TestRedactSpan:
         assert attrs["exception.message"] == DEFAULT_REDACTED_VALUE
 
     def test_status_description_redacted(self):
-        redacted = redact_span(self._make_span(), default_redaction_policy())
+        redacted = redact_span(self._make_span(), AttributeRedactionPolicy())
         assert redacted.status.status_code == StatusCode.ERROR
         assert redacted.status.description == DEFAULT_REDACTED_VALUE
 
     def test_identity_preserved(self):
         original = self._make_span()
-        redacted = redact_span(original, default_redaction_policy())
+        redacted = redact_span(original, AttributeRedactionPolicy())
         assert redacted.context is not None
         assert original.context is not None
         assert redacted.context.span_id == original.context.span_id
@@ -300,11 +300,11 @@ class TestRedactingSpanExporter:
         assert len(spans) == 1
         attrs = spans[0].attributes
         assert attrs is not None
-        assert attrs["gen_ai.output.messages"] == DEFAULT_REDACTED_VALUE
+        assert attrs["gen_ai.output.messages"] == f"leak {DEFAULT_REDACTED_VALUE}"
         assert attrs["gen_ai.request.model"] == "mistral-large"
 
     def test_custom_policy_used(self):
-        spans = self._export_through(RegexRedactionPolicy())
+        spans = self._export_through(AttributeRedactionPolicy())
         attrs = spans[0].attributes
         assert attrs is not None
-        assert attrs["gen_ai.output.messages"] == f"leak {DEFAULT_REDACTED_VALUE}"
+        assert attrs["gen_ai.output.messages"] == DEFAULT_REDACTED_VALUE

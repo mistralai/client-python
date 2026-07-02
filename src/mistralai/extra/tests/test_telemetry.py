@@ -692,13 +692,13 @@ class TestTelemetryRedaction:
         exporter = self._exporter_of(provider)
         assert isinstance(exporter, RedactingSpanExporter)
         assert exporter._exporter is FakeExporter.instances[0]
-        assert isinstance(exporter._policy, AttributeRedactionPolicy)
+        assert isinstance(exporter._policy, RegexRedactionPolicy)
 
     def test_redaction_true_wraps_with_default_policy(self, clear_exporters):
         provider = self._make_provider(redaction=True)
         exporter = self._exporter_of(provider)
         assert isinstance(exporter, RedactingSpanExporter)
-        assert isinstance(exporter._policy, AttributeRedactionPolicy)
+        assert isinstance(exporter._policy, RegexRedactionPolicy)
 
     def test_redaction_false_leaves_exporter_unwrapped(self, clear_exporters):
         provider = self._make_provider(redaction=False)
@@ -707,7 +707,7 @@ class TestTelemetryRedaction:
         assert exporter is FakeExporter.instances[0]
 
     def test_custom_policy_instance_is_used(self, clear_exporters):
-        policy = RegexRedactionPolicy()
+        policy = AttributeRedactionPolicy()
         provider = self._make_provider(redaction=policy)
         exporter = self._exporter_of(provider)
         assert isinstance(exporter, RedactingSpanExporter)

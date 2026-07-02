@@ -171,10 +171,10 @@ _PRIMITIVE_TYPES: Final[tuple[type, ...]] = (str, bool, int, float)
 class AttributeRedactionPolicy(RedactionPolicy):
     """Key-oriented hybrid policy.
 
-    This is the default policy: high recall, "safe by default", at the cost of erasing most
-    prompt/response content. It redacts whole values for keys judged sensitive (explicit set,
-    fragment match, or non-primitive value), then runs token_patterns over the values it keeps
-    to redact values.
+    An opt-in, high-recall alternative to the default policy: "safe by default", at the cost
+    of erasing most prompt/response content. It redacts whole values for keys judged sensitive
+    (explicit set, fragment match, or non-primitive value), then runs token_patterns over the
+    values it keeps to redact values.
     """
 
     def __init__(
@@ -254,9 +254,10 @@ DEFAULT_PII_SECRET_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
 class RegexRedactionPolicy(RedactionPolicy):
     """Content-oriented policy based on regexes.
 
-    Leaves keys and structure intact, scans string values and redacts matched substrings.
-    Fewer false positives than default policy and aims to preserve observability value;
-    may miss free-form PII or secrets not in the default patterns.
+    This is the default policy. Leaves keys and structure intact, scans string values and
+    redacts matched substrings. Fewer false positives than AttributeRedactionPolicy and aims
+    to preserve observability value; may miss free-form PII or secrets not in the default
+    patterns.
     """
 
     def __init__(
@@ -317,7 +318,7 @@ class CallbackRedactionPolicy(RedactionPolicy):
 
 # Helpers
 def default_redaction_policy() -> RedactionPolicy:
-    return AttributeRedactionPolicy()
+    return RegexRedactionPolicy()
 
 
 def resolve_policy(policy: RedactionPolicyLike | None) -> RedactionPolicy:
