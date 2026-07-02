@@ -22,6 +22,13 @@ if TYPE_CHECKING:
     from opentelemetry.sdk.trace import ReadableSpan
     from opentelemetry.sdk.trace.export import SpanExporter, SpanExportResult
 
+    # Inherit from the real base only for static analysis: linters verify our
+    # export/shutdown/force_flush signatures. At runtime the base is object so
+    # the optional OpenTelemetry SDK is not required to import this module.
+    _SpanExporterBase = SpanExporter
+else:
+    _SpanExporterBase = object
+
 
 # User-supplied per-attribute masker: given (key, value), return the value
 # to keep. Return the value unchanged to keep it, a redacted value to mask it,
@@ -325,10 +332,7 @@ def resolve_redaction(redaction: RedactionPolicyLike | bool) -> RedactionPolicy 
 
 
 # SpanExporter wrapper
-# NOTE: in essence this is a subclass of SpanExporter. It's not typed as such because
-# the opentelemetry SDK is an optional dependency, so to keep it importable we duck-type it
-# TODO: can't we rely on typing to have static linters verify that ? (i.e. don't inherit, but type)
-class RedactingSpanExporter:
+class RedactingSpanExporter(_SpanExporterBase):
     """Wrap any SpanExporter to redact spans before delegating export.
 
     Example
