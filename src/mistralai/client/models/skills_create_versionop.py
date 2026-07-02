@@ -2,11 +2,6 @@
 # @generated-id: 1e87cf43e50f
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .createskillversionresponse import (
-    CreateSkillVersionResponse,
-    CreateSkillVersionResponseTypedDict,
-)
 from .skilldefinition import SkillDefinition, SkillDefinitionTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -17,8 +12,8 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateSkillVersionRequestTypedDict(TypedDict):
@@ -80,14 +75,3 @@ class SkillsCreateVersionRequest(BaseModel):
         CreateSkillVersionRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-SkillsCreateVersionResponseTypedDict = TypeAliasType(
-    "SkillsCreateVersionResponseTypedDict",
-    Union[CreateSkillVersionResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-SkillsCreateVersionResponse = TypeAliasType(
-    "SkillsCreateVersionResponse", Union[CreateSkillVersionResponse, ConnectError]
-)

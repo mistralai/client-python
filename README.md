@@ -486,13 +486,13 @@ print(res.choices[0].message.content)
 * [get](docs/sdks/voices/README.md#get) - Get voice details
 * [get_sample_audio](docs/sdks/voices/README.md#get_sample_audio) - Get voice sample audio
 
-### [Batch.Jobs](docs/sdks/batchjobs/README.md)
+### [Batch.Jobs](docs/sdks/jobs/README.md)
 
-* [list](docs/sdks/batchjobs/README.md#list) - Get Batch Jobs
-* [create](docs/sdks/batchjobs/README.md#create) - Create Batch Job
-* [get](docs/sdks/batchjobs/README.md#get) - Get Batch Job
-* [delete](docs/sdks/batchjobs/README.md#delete) - Delete Batch Job
-* [cancel](docs/sdks/batchjobs/README.md#cancel) - Cancel Batch Job
+* [list](docs/sdks/jobs/README.md#list) - Get Batch Jobs
+* [create](docs/sdks/jobs/README.md#create) - Create Batch Job
+* [get](docs/sdks/jobs/README.md#get) - Get Batch Job
+* [delete](docs/sdks/jobs/README.md#delete) - Delete Batch Job
+* [cancel](docs/sdks/jobs/README.md#cancel) - Cancel Batch Job
 
 ### [Beta.Agents](docs/sdks/betaagents/README.md)
 
@@ -513,6 +513,7 @@ print(res.choices[0].message.content)
 * [create](docs/sdks/connectors/README.md#create) - Create a new connector.
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
+* [share](docs/sdks/connectors/README.md#share) - Share a private connector to the current workspace.
 * [activate_for_organization](docs/sdks/connectors/README.md#activate_for_organization) - Activate a connector for an organization.
 * [deactivate_for_organization](docs/sdks/connectors/README.md#deactivate_for_organization) - Deactivate a connector for an organization.
 * [activate_for_workspace](docs/sdks/connectors/README.md#activate_for_workspace) - Activate a connector for a workspace.
@@ -568,8 +569,6 @@ print(res.choices[0].message.content)
 
 * [list](docs/sdks/documents/README.md#list) - List documents in a given library.
 * [upload](docs/sdks/documents/README.md#upload) - Upload a new document.
-* [get_signed_upload_url](docs/sdks/documents/README.md#get_signed_upload_url) - Get a signed URL for direct upload to blob storage.
-* [ingest_from_blob_storage](docs/sdks/documents/README.md#ingest_from_blob_storage) - Ingest a document from blob storage of the document library.
 * [get](docs/sdks/documents/README.md#get) - Retrieve the metadata of a specific document.
 * [update](docs/sdks/documents/README.md#update) - Update the metadata of a specific document.
 * [~~libraries_documents_update_v1~~](docs/sdks/documents/README.md#libraries_documents_update_v1) - Update the metadata of a specific document. :warning: **Deprecated**
@@ -708,6 +707,10 @@ print(res.choices[0].message.content)
 * [get_version](docs/sdks/skills/README.md#get_version) - GetSkillVersion
 * [update_version_metadata](docs/sdks/skills/README.md#update_version_metadata) - UpdateSkillVersionMetadata
 
+### [Beta.Users](docs/sdks/users/README.md)
+
+* [get_identity](docs/sdks/users/README.md#get_identity) - Get Identity
+
 ### [Chat](docs/sdks/chat/README.md)
 
 * [complete](docs/sdks/chat/README.md#complete) - Chat Completion
@@ -742,14 +745,6 @@ print(res.choices[0].message.content)
 
 * [complete](docs/sdks/fim/README.md#complete) - Fim Completion
 * [stream](docs/sdks/fim/README.md#stream) - Stream fim completion
-
-### [FineTuning.Jobs](docs/sdks/finetuningjobs/README.md)
-
-* [list](docs/sdks/finetuningjobs/README.md#list) - Get Fine Tuning Jobs
-* [create](docs/sdks/finetuningjobs/README.md#create) - Create Fine Tuning Job
-* [get](docs/sdks/finetuningjobs/README.md#get) - Get Fine Tuning Job
-* [cancel](docs/sdks/finetuningjobs/README.md#cancel) - Cancel Fine Tuning Job
-* [start](docs/sdks/finetuningjobs/README.md#start) - Start Fine Tuning Job
 
 ### [Models](docs/sdks/models/README.md)
 
@@ -1049,8 +1044,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 147 of 248 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 248 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 146 of 243 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 243 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
