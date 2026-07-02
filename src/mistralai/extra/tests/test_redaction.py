@@ -146,6 +146,17 @@ class TestRegexRedactionPolicy:
             "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.abc123",
             "-----BEGIN RSA PRIVATE KEY-----",
             "sk_live_0123456789abcdefghij",
+            "sk-ant-api03-abcdefghijklmnopqrstuvwxyz012345",
+            "hf_abcdefghijklmnopqrstuvwxyz0123456789",
+            "github_pat_abcdefghijklmnopqrstuvwxyz",
+            "glpat-abcdefghij0123456789ab",
+            "shpat_0123456789abcdef0123456789abcdef",
+            "sq0atp-0123456789abcdefghijkl",
+            "PMAK-0123456789abcdefghijklmn",
+            "phc_abcdefghijklmnopqrstuvwxyz0123456789abcdefg",
+            "SG.abcdefghijklmnopqrstuv.abcdefghijklmnopqrstuvwxyz0123456789abcdefg",
+            "pk_live_0123456789abcdefghijklmn",
+            "https://hooks.slack.com/services/T00000000/B00000000/abcdefghijklmnopqrstuvwx",
         ],
     )
     def test_secret_patterns_redacted(

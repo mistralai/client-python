@@ -139,6 +139,30 @@ DEFAULT_TOKEN_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
     re.compile(r"\beyJ[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\b"),
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
     re.compile(r"\b[sr]k_(?:live|test)_[0-9A-Za-z]{10,}\b"),
+    # AI providers
+    re.compile(r"\bsk-ant-[A-Za-z0-9\-_]{20,}\b"),
+    re.compile(r"\bsk-proj-[A-Za-z0-9\-_]{20,}\b"),
+    re.compile(r"\bhf_[A-Za-z0-9]{30,}\b"),
+    # Dev / infra tokens
+    re.compile(r"\bgithub_pat_[A-Za-z0-9_]{22,}\b"),
+    re.compile(r"\bglpat-[A-Za-z0-9\-=_]{20,22}\b"),
+    re.compile(r"\bshp(?:at|ca|pa|ss)_[a-fA-F0-9]{32}\b"),
+    re.compile(r"\bsq0(?:atp|csp|idp)-[0-9A-Za-z\-_]{22,43}\b"),
+    re.compile(r"\bPMAK-[a-zA-Z0-9]{24,59}\b"),
+    re.compile(r"\bphc_[a-zA-Z0-9_]{43}\b"),
+    re.compile(r"\brubygems_[a-f0-9]{48}\b"),
+    re.compile(r"\blin_api_[0-9A-Za-z]{40}\b"),
+    re.compile(r"pypi-AgEIcHlwaS5vcmc[A-Za-z0-9\-_]{50,}"),
+    re.compile(r"\bsecret_[A-Za-z0-9]{43}\b"),
+    re.compile(r"[A-Za-z0-9]{14}\.atlasv1\.[A-Za-z0-9]{60,}"),
+    re.compile(r"\bSG\.[A-Za-z0-9_\-]{22}\.[A-Za-z0-9_\-]{43}\b"),
+    re.compile(r"\bpk_(?:live|test)_[0-9a-zA-Z]{24}\b"),
+    # Webhook URLs (the whole URL is the secret)
+    re.compile(r"https://hooks\.slack\.com/services/[A-Za-z0-9/+]{40,}"),
+    re.compile(
+        r"https://discord(?:app)?\.com/api/webhooks/[0-9]{17,}/[A-Za-z0-9\-_]{60,}"
+    ),
+    re.compile(r"https://hooks\.zapier\.com/hooks/catch/[A-Za-z0-9/]{16,}"),
 )
 _SAFE_KEY_PREFIXES: Final[tuple[str, ...]] = ("gen_ai.usage.",)
 _PRIMITIVE_TYPES: Final[tuple[type, ...]] = (str, bool, int, float)
