@@ -26,7 +26,6 @@ if TYPE_CHECKING:
     from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
-    from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
     from mistralai.client.workflows import Workflows
@@ -41,7 +40,6 @@ class Mistral(BaseSDK):
     r"""Model Management API"""
     files: "Files"
     r"""Files API"""
-    fine_tuning: "FineTuning"
     batch: "Batch"
     chat: "Chat"
     r"""Chat Completion API."""
@@ -62,7 +60,6 @@ class Mistral(BaseSDK):
         "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
         "files": ("mistralai.client.files", "Files"),
-        "fine_tuning": ("mistralai.client.fine_tuning", "FineTuning"),
         "batch": ("mistralai.client.batch", "Batch"),
         "chat": ("mistralai.client.chat", "Chat"),
         "fim": ("mistralai.client.fim", "Fim"),

@@ -2,11 +2,6 @@
 # @generated-id: ed1ab96e4d47
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .createpromptversionresponse import (
-    CreatePromptVersionResponse,
-    CreatePromptVersionResponseTypedDict,
-)
 from .promptdefinition import PromptDefinition, PromptDefinitionTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -17,8 +12,8 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreatePromptVersionRequestTypedDict(TypedDict):
@@ -80,14 +75,3 @@ class PromptsCreateVersionRequest(BaseModel):
         CreatePromptVersionRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-PromptsCreateVersionResponseTypedDict = TypeAliasType(
-    "PromptsCreateVersionResponseTypedDict",
-    Union[CreatePromptVersionResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-PromptsCreateVersionResponse = TypeAliasType(
-    "PromptsCreateVersionResponse", Union[CreatePromptVersionResponse, ConnectError]
-)

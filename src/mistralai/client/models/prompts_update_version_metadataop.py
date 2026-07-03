@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 from .aliaslist import AliasList, AliasListTypedDict
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .prompt import Prompt, PromptTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,8 +12,8 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdatePromptVersionRequestTypedDict(TypedDict):
@@ -77,14 +75,3 @@ class PromptsUpdateVersionMetadataRequest(BaseModel):
         UpdatePromptVersionRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-PromptsUpdateVersionMetadataResponseTypedDict = TypeAliasType(
-    "PromptsUpdateVersionMetadataResponseTypedDict",
-    Union[ConnectErrorTypedDict, PromptTypedDict],
-)
-
-
-PromptsUpdateVersionMetadataResponse = TypeAliasType(
-    "PromptsUpdateVersionMetadataResponse", Union[ConnectError, Prompt]
-)
