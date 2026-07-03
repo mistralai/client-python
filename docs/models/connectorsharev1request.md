@@ -1,8 +1,8 @@
-# JobsAPIRoutesFineTuningStartFineTuningJobRequest
+# ConnectorShareV1Request
 
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `job_id`           | *str*              | :heavy_check_mark: | N/A                |
+| `connector_id`     | *str*              | :heavy_check_mark: | N/A                |
