@@ -74,6 +74,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
+    workflow_tags: NotRequired[Nullable[List[str]]]
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
     include_internal: NotRequired[bool]
     r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
     page_size: NotRequired[int]
@@ -155,6 +157,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
 
+    workflow_tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
+
     include_internal: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -189,6 +197,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_after",
                 "end_time_before",
                 "user_id",
+                "workflow_tags",
                 "include_internal",
                 "page_size",
                 "next_page_token",
@@ -207,6 +216,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_after",
                 "end_time_before",
                 "user_id",
+                "workflow_tags",
                 "next_page_token",
             ]
         )
