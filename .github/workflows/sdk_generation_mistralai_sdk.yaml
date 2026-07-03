@@ -117,23 +117,39 @@ jobs:
 
           CURRENT=$(grep '^version = ' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
           if [ "$CURRENT" = "$VERSION" ]; then
-            echo "Version already aligned to $VERSION"
-            exit 0
+            echo "pyproject.toml already aligned to $VERSION"
+          else
+            echo "Updating version from $CURRENT to $VERSION"
+            uv version "$VERSION"
           fi
 
-          echo "Updating version from $CURRENT to $VERSION"
-          uv version "$VERSION"
+          VERSION="$VERSION" python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          path = Path("src/mistralai/client/_version.py")
+          text = path.read_text()
+          text = re.sub(r'__version__: str = "[^"]+"', f'__version__: str = "{version}"', text)
+          text = re.sub(
+              r'__user_agent__: str = "speakeasy-sdk/python [^ ]+ ',
+              f'__user_agent__: str = "speakeasy-sdk/python {version} ',
+              text,
+          )
+          path.write_text(text)
+          PY
 
       - name: Commit and push
         if: steps.branch-exists.outputs.exists == 'true'
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git add pyproject.toml uv.lock
+          git add pyproject.toml uv.lock src/mistralai/client/_version.py
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             VERSION=$(grep '^version = ' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
-            git commit -m "chore: align pyproject.toml and uv.lock to version $VERSION"
+            git commit -m "chore: align package version files to version $VERSION"
             git push
           fi
