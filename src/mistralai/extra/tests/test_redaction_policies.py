@@ -1,4 +1,7 @@
+from typing import cast
+
 import pytest
+from opentelemetry.util.types import AttributeValue
 
 from mistralai.extra.observability.redaction_policies import (
     DEFAULT_REDACTED_VALUE,
@@ -114,7 +117,9 @@ class TestAttributeRedactionMetadata:
 
     def test_mapping_redaction_emits_count(self):
         policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
-        out = policy.redact_attributes({"data": {"a": 1, "b": 2}})
+        out = policy.redact_attributes(
+            cast(dict[str, AttributeValue], {"data": {"a": 1, "b": 2}})
+        )
         assert out["data"] == DEFAULT_REDACTED_VALUE
         assert out["data.redacted_count"] == 2
 
@@ -126,7 +131,9 @@ class TestAttributeRedactionMetadata:
 
     def test_other_type_emits_type_name(self):
         policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
-        out = policy.redact_attributes({"obj": {1, 2}})
+        out = policy.redact_attributes(
+            cast(dict[str, AttributeValue], {"obj": {1, 2}})
+        )
         assert out["obj"] == DEFAULT_REDACTED_VALUE
         assert out["obj.redacted_type"] == "set"
 
