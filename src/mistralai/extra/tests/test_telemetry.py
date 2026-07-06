@@ -12,17 +12,15 @@ from mistralai.client.models import Security
 from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.client.utils.logger import get_default_logger
 from mistralai.extra.observability import (
+    AttributeRedactionPolicy,
+    CallbackRedactionPolicy,
+    RedactingSpanExporter,
+    RegexRedactionPolicy,
     configure_telemetry,
     get_telemetry_tracer,
     set_tracer_provider,
 )
 from mistralai.extra.observability.otel import MISTRAL_SDK_OTEL_TRACER_NAME
-from mistralai.extra.observability.redaction import (
-    AttributeRedactionPolicy,
-    CallbackRedactionPolicy,
-    RedactingSpanExporter,
-    RegexRedactionPolicy,
-)
 from mistralai.extra.observability.telemetry import (
     MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
     MISTRAL_SDK_TELEMETRY_ENV,

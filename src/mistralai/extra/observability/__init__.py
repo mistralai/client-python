@@ -5,14 +5,20 @@ from opentelemetry import trace as otel_trace
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME
 from .redaction import (
+    RedactingSpanExporter,
+)
+from .redaction_policies import (
+    DEFAULT_PII_SECRET_PATTERNS,
+    DEFAULT_REDACTED_VALUE,
+    DEFAULT_SAFE_ATTRIBUTE_KEYS,
+    DEFAULT_SENSITIVE_ATTRIBUTE_FRAGMENTS,
+    DEFAULT_SENSITIVE_ATTRIBUTE_KEYS,
+    DEFAULT_TOKEN_PATTERNS,
     AttributeRedactionPolicy,
     CallbackRedactionPolicy,
-    RedactingSpanExporter,
     RedactionPolicy,
     RegexRedactionPolicy,
     default_redaction_policy,
-    redact_span,
-    resolve_policy,
 )
 from .telemetry import (
     TelemetryConfigurationError,
@@ -56,6 +62,12 @@ def set_tracer_provider(
 
 
 __all__ = [
+    "DEFAULT_PII_SECRET_PATTERNS",
+    "DEFAULT_REDACTED_VALUE",
+    "DEFAULT_SAFE_ATTRIBUTE_KEYS",
+    "DEFAULT_SENSITIVE_ATTRIBUTE_FRAGMENTS",
+    "DEFAULT_SENSITIVE_ATTRIBUTE_KEYS",
+    "DEFAULT_TOKEN_PATTERNS",
     "AttributeRedactionPolicy",
     "CallbackRedactionPolicy",
     "RedactingSpanExporter",
@@ -65,8 +77,6 @@ __all__ = [
     "configure_telemetry",
     "default_redaction_policy",
     "get_telemetry_tracer",
-    "redact_span",
-    "resolve_policy",
     "set_tracer_provider",
     "trace",
 ]

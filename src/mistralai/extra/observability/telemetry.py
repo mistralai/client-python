@@ -15,7 +15,7 @@ from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
 from .redaction import (
     RedactingSpanExporter,
     RedactionPolicyLike,
-    resolve_redaction,
+    _resolve_redaction,
 )
 
 if TYPE_CHECKING:
@@ -336,7 +336,7 @@ def _create_telemetry_tracer_provider(
         endpoint=_resolve_mistral_telemetry_endpoint(),
         headers={"Authorization": _as_bearer_token(api_key)},
     )
-    policy = resolve_redaction(redaction)
+    policy = _resolve_redaction(redaction)
     if policy is not None:
         exporter = RedactingSpanExporter(exporter, policy)
     provider = tracer_provider_cls(
