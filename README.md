@@ -1377,6 +1377,35 @@ configure_telemetry(                                               # custom call
 | `AttributeRedactionPolicy` | Key-oriented: redacts whole values for sensitive keys (explicit set, fragment match, or non-primitive value), then scans kept values for secret token patterns. | Very conservative, but erases most prompt/response content. |
 | `CallbackRedactionPolicy` (`redaction=<callable>`) | Your `(key, value) -> value \| None` masker per attribute; return `None` to drop the attribute. | Full control; you own the logic. |
 
+The built-in defaults are exported as constants, so you can extend them instead of replacing them wholesale:
+
+```python
+import re
+
+from mistralai.extra.observability import (
+    DEFAULT_PII_SECRET_PATTERNS,
+    DEFAULT_SENSITIVE_ATTRIBUTE_KEYS,
+    AttributeRedactionPolicy,
+    RegexRedactionPolicy,
+)
+
+# Content-oriented: add a custom secret pattern to the default set.
+configure_telemetry(
+    client,
+    redaction=RegexRedactionPolicy(
+        patterns=(*DEFAULT_PII_SECRET_PATTERNS, re.compile(r"\bacme-[a-z0-9]{16}\b")),
+    ),
+)
+
+# Key-oriented: mask an extra application attribute on top of the defaults.
+configure_telemetry(
+    client,
+    redaction=AttributeRedactionPolicy(
+        sensitive_keys=DEFAULT_SENSITIVE_ATTRIBUTE_KEYS | {"app.customer.email"},
+    ),
+)
+```
+
 *Note: the `RedactingSpanExporter` primitive is reusable by any OpenTelemetry application, independent of the Mistral client.*
 
 ### Environment variables
