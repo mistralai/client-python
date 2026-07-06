@@ -99,6 +99,75 @@ class TestAttributeRedactionPolicy:
         assert out["http.url"] == "XXX"
 
 
+class TestAttributeRedactionMetadata:
+    def test_no_metadata_by_default(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
+        out = attribute_policy.redact_attributes({"gen_ai.input.messages": "hello"})
+        assert out == {"gen_ai.input.messages": DEFAULT_REDACTED_VALUE}
+
+    def test_string_redaction_emits_length(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes({"gen_ai.input.messages": "hello"})
+        assert out["gen_ai.input.messages"] == DEFAULT_REDACTED_VALUE
+        assert out["gen_ai.input.messages.redacted_length"] == 5
+
+    def test_mapping_redaction_emits_count(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes({"data": {"a": 1, "b": 2}})
+        assert out["data"] == DEFAULT_REDACTED_VALUE
+        assert out["data.redacted_count"] == 2
+
+    def test_sequence_redaction_emits_count(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes({"data": ("a", "b", "c")})
+        assert out["data"] == DEFAULT_REDACTED_VALUE
+        assert out["data.redacted_count"] == 3
+
+    def test_other_type_emits_type_name(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes({"obj": {1, 2}})
+        assert out["obj"] == DEFAULT_REDACTED_VALUE
+        assert out["obj.redacted_type"] == "set"
+
+    def test_kept_string_emits_match_count(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes(
+            {"note": "token ghp_abcdefghijklmnopqrstuvwxyz0123 now"}
+        )
+        assert out["note"] == "token [REDACTED] now"
+        assert out["note.redacted_matches"] == 1
+
+    def test_kept_sequence_sums_match_count(self):
+        policy = AttributeRedactionPolicy(
+            emit_redaction_metadata=True, redact_non_primitive=False
+        )
+        out = policy.redact_attributes(
+            {"tags": ["plain", "ghp_abcdefghijklmnopqrstuvwxyz0123", "Bearer abc.def"]}
+        )
+        assert out["tags"] == ["plain", DEFAULT_REDACTED_VALUE, DEFAULT_REDACTED_VALUE]
+        assert out["tags.redacted_matches"] == 2
+
+    def test_kept_string_without_match_has_no_metadata(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        out = policy.redact_attributes({"gen_ai.request.model": "mistral-large"})
+        assert out == {"gen_ai.request.model": "mistral-large"}
+
+    def test_idempotent_on_already_redacted_attributes(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        first = policy.redact_attributes({"gen_ai.input.messages": "hello"})
+        second = policy.redact_attributes(first)
+        assert second == first
+
+    def test_idempotent_on_kept_match_metadata(self):
+        policy = AttributeRedactionPolicy(emit_redaction_metadata=True)
+        first = policy.redact_attributes(
+            {"note": "token ghp_abcdefghijklmnopqrstuvwxyz0123 now"}
+        )
+        second = policy.redact_attributes(first)
+        assert second == first
+
+
 class TestRegexRedactionPolicy:
     def test_email_redacted_inline_preserving_structure(
         self, regex_policy: RegexRedactionPolicy

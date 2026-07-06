@@ -161,6 +161,12 @@ class AttributeRedactionPolicy(RedactionPolicy):
     of erasing most prompt/response content. It redacts whole values for keys judged sensitive
     (explicit set, fragment match, or non-primitive value), then runs token_patterns over the
     values it keeps to redact values.
+
+    When emit_redaction_metadata is enabled, each redaction emits a companion attribute.
+    For a value removed wholesale: {key}.redacted_length for strings/bytes,
+    {key}.redacted_count for collections, {key}.redacted_type otherwise. For matches scrubbed
+    from a value that is otherwise kept: {key}.redacted_matches, the number of substitutions
+    made (summed across sequence elements).
     """
 
     def __init__(
@@ -172,6 +178,7 @@ class AttributeRedactionPolicy(RedactionPolicy):
         token_patterns: Sequence[re.Pattern[str]] = DEFAULT_TOKEN_PATTERNS,
         redact_non_primitive: bool = True,
         redacted_value: str = DEFAULT_REDACTED_VALUE,
+        emit_redaction_metadata: bool = False,
     ) -> None:
         self._sensitive_keys = sensitive_keys
         self._safe_keys = safe_keys
@@ -179,6 +186,7 @@ class AttributeRedactionPolicy(RedactionPolicy):
         self._token_patterns = tuple(token_patterns)
         self._redact_non_primitive = redact_non_primitive
         self._redacted_value = redacted_value
+        self._emit_redaction_metadata = emit_redaction_metadata
 
     def _should_redact(self, key: str, value: object) -> bool:
         normalized_key = key.lower()
@@ -208,8 +216,21 @@ class AttributeRedactionPolicy(RedactionPolicy):
             return redacted
 
         for key, value in attributes.items():
+            if self._emit_redaction_metadata and _is_redaction_metadata(key):
+                redacted[key] = value
+                continue
             if self._should_redact(key, value):
                 redacted[key] = self._redacted_value
+                if self._emit_redaction_metadata:
+                    redacted.update(_redaction_metadata(key, value))
+                continue
+            if self._emit_redaction_metadata:
+                kept_value, matches = _redact_value_counting(
+                    value, self._token_patterns, self._redacted_value
+                )
+                redacted[key] = kept_value
+                if matches:
+                    redacted[f"{key}.redacted_matches"] = matches
                 continue
             redacted[key] = _redact_value(
                 value, self._token_patterns, self._redacted_value
@@ -307,17 +328,32 @@ def _redact_value(
     patterns: Sequence[re.Pattern[str]],
     redacted_value: str = DEFAULT_REDACTED_VALUE,
 ) -> AttributeValue:
+    redacted, _ = _redact_value_counting(value, patterns, redacted_value)
+    return redacted
+
+
+def _redact_value_counting(
+    value: AttributeValue,
+    patterns: Sequence[re.Pattern[str]],
+    redacted_value: str = DEFAULT_REDACTED_VALUE,
+) -> tuple[AttributeValue, int]:
     if isinstance(value, str):
-        return _redact_text(value, patterns, redacted_value)
+        return _redact_text_counting(value, patterns, redacted_value)
     if isinstance(value, (list, tuple)):
-        items = [
-            _redact_text(item, patterns, redacted_value)
-            if isinstance(item, str)
-            else item
-            for item in value
-        ]
-        return cast(AttributeValue, tuple(items) if isinstance(value, tuple) else items)
-    return value
+        total = 0
+        items: list[AttributeValue] = []
+        for item in value:
+            if isinstance(item, str):
+                redacted_item, count = _redact_text_counting(
+                    item, patterns, redacted_value
+                )
+                total += count
+                items.append(redacted_item)
+            else:
+                items.append(item)
+        result = tuple(items) if isinstance(value, tuple) else items
+        return cast(AttributeValue, result), total
+    return value, 0
 
 
 def _redact_text(
@@ -325,7 +361,40 @@ def _redact_text(
     patterns: Sequence[re.Pattern[str]],
     redacted_value: str = DEFAULT_REDACTED_VALUE,
 ) -> str:
-    redacted = text
-    for pattern in patterns:
-        redacted = pattern.sub(redacted_value, redacted)
+    redacted, _ = _redact_text_counting(text, patterns, redacted_value)
     return redacted
+
+
+def _redact_text_counting(
+    text: str,
+    patterns: Sequence[re.Pattern[str]],
+    redacted_value: str = DEFAULT_REDACTED_VALUE,
+) -> tuple[str, int]:
+    redacted = text
+    total = 0
+    for pattern in patterns:
+        redacted, count = pattern.subn(redacted_value, redacted)
+        total += count
+    return redacted, total
+
+
+_REDACTION_METADATA_SUFFIXES: Final[tuple[str, ...]] = (
+    ".redacted_count",
+    ".redacted_length",
+    ".redacted_matches",
+    ".redacted_type",
+)
+
+
+def _is_redaction_metadata(key: str) -> bool:
+    return key.lower().endswith(_REDACTION_METADATA_SUFFIXES)
+
+
+def _redaction_metadata(key: str, value: object) -> dict[str, AttributeValue]:
+    if isinstance(value, (str, bytes, bytearray)):
+        return {f"{key}.redacted_length": len(value)}
+    if isinstance(value, Mapping):
+        return {f"{key}.redacted_count": len(value)}
+    if isinstance(value, Sequence):
+        return {f"{key}.redacted_count": len(value)}
+    return {f"{key}.redacted_type": type(value).__name__}
