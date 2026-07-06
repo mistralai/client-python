@@ -300,6 +300,27 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertIs(hook.tracer_provider, dedicated_provider)
         self.assertIs(hook._auto_telemetry_provider, dedicated_provider)
 
+    def test_configure_telemetry_dedicated_reconfigure_applies_new_redaction(self):
+        first_provider = FakeProvider()
+        second_provider = FakeProvider()
+
+        with patch.dict(os.environ, {}, clear=True):
+            with patch(
+                "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
+                side_effect=[first_provider, second_provider],
+            ) as create_provider:
+                client = _make_client(api_key="test-key")
+                configure_telemetry(client)
+                configured = configure_telemetry(client, redaction=False)
+
+        hook = _get_tracing_hook(client)
+        self.assertTrue(configured)
+        self.assertEqual(create_provider.call_count, 2)
+        create_provider.assert_any_call(api_key="test-key", redaction=False)
+        self.assertTrue(first_provider.shutdown_called)
+        self.assertIs(hook.tracer_provider, second_provider)
+        self.assertIs(hook._auto_telemetry_provider, second_provider)
+
     def test_get_telemetry_tracer_dedicated_uses_auto_provider(self):
         provider = FakeProvider()
 
