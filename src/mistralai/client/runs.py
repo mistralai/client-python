@@ -33,6 +33,7 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
+        workflow_tags: OptionalNullable[List[str]] = UNSET,
         include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
@@ -55,6 +56,7 @@ class Runs(BaseSDK):
         :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
+        :param workflow_tags: Filter to runs of workflows tagged with all listed tags (AND).
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -89,6 +91,7 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
+            workflow_tags=workflow_tags,
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -165,6 +168,7 @@ class Runs(BaseSDK):
                 end_time_after=end_time_after,
                 end_time_before=end_time_before,
                 user_id=user_id,
+                workflow_tags=workflow_tags,
                 include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,
@@ -216,6 +220,7 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
+        workflow_tags: OptionalNullable[List[str]] = UNSET,
         include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
@@ -238,6 +243,7 @@ class Runs(BaseSDK):
         :param end_time_after: Include runs with end_time >= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
+        :param workflow_tags: Filter to runs of workflows tagged with all listed tags (AND).
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -272,6 +278,7 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
+            workflow_tags=workflow_tags,
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -353,6 +360,7 @@ class Runs(BaseSDK):
                 end_time_after=end_time_after,
                 end_time_before=end_time_before,
                 user_id=user_id,
+                workflow_tags=workflow_tags,
                 include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,
