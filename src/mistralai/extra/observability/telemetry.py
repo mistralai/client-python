@@ -211,12 +211,7 @@ def configure_telemetry_for_hook(
     replace_existing: bool = False,
     redaction: RedactionPolicyLike | bool = True,
 ) -> bool:
-    """Configure telemetry for a tracing hook when the user has opted in.
-
-    In dedicated mode the SDK-owned OTLP exporter is wrapped with a
-    RedactingSpanExporter unless redaction is False (safe by
-    default). See configure_telemetry for the accepted values.
-    """
+    """Configure telemetry for a tracing hook when the user has opted in."""
     # Fast path: already resolved and no explicit override requested.
     if telemetry is None and (
         hook._auto_telemetry_provider is not None or hook._telemetry_use_global_provider
@@ -266,7 +261,7 @@ def configure_telemetry_for_hook(
         hook._telemetry_auto_disabled = True
         return False
 
-    if hook._auto_telemetry_provider is not None:
+    if hook._auto_telemetry_provider is not None and not replace_existing:
         return True
 
     if hook.tracer_provider is not None:
