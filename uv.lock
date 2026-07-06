@@ -1047,7 +1047,7 @@ wheels = [
 
 [[package]]
 name = "mistralai"
-version = "2.5.2"
+version = "2.6.0"
 source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },

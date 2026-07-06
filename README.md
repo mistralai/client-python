@@ -46,7 +46,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Resource Management](#resource-management)
   * [Debugging](#debugging)
   * [IDE Support](#ide-support)
-  * [Telemetry \& Observability](#telemetry--observability)
+  * [Telemetry & Observability](#telemetry-observability)
 * [Development](#development)
   * [Contributions](#contributions)
 
@@ -837,7 +837,7 @@ print(res.choices[0].message.content)
 operations. These operations will expose the stream as [Generator][generator] that
 can be consumed using a simple `for` loop. The loop will
 terminate when the server no longer has any events to send and closes the
-underlying connection.
+underlying connection.  
 
 The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
 underlying connection when the context is exited.
