@@ -7,13 +7,17 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Mapping, Optional
+from typing import Mapping, Optional, Union
 
 
 class Users(BaseSDK):
     def get_identity(
         self,
         *,
+        security: Union[
+            models.UsersAPIGetIdentitySecurity,
+            models.UsersAPIGetIdentitySecurityTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -21,6 +25,7 @@ class Users(BaseSDK):
     ) -> models.UserIdentity:
         r"""Get Identity
 
+        :param security:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -50,7 +55,9 @@ class Users(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             http_headers=http_headers,
-            security=self.sdk_configuration.security,
+            security=utils.get_pydantic_model(
+                security, models.UsersAPIGetIdentitySecurity
+            ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
@@ -69,9 +76,7 @@ class Users(BaseSDK):
                 base_url=base_url or "",
                 operation_id="users_api_get_identity",
                 oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
+                security_source=get_security_from_env(security, models.Security),
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -92,6 +97,10 @@ class Users(BaseSDK):
     async def get_identity_async(
         self,
         *,
+        security: Union[
+            models.UsersAPIGetIdentitySecurity,
+            models.UsersAPIGetIdentitySecurityTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -99,6 +108,7 @@ class Users(BaseSDK):
     ) -> models.UserIdentity:
         r"""Get Identity
 
+        :param security:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -128,7 +138,9 @@ class Users(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             http_headers=http_headers,
-            security=self.sdk_configuration.security,
+            security=utils.get_pydantic_model(
+                security, models.UsersAPIGetIdentitySecurity
+            ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
@@ -147,9 +159,7 @@ class Users(BaseSDK):
                 base_url=base_url or "",
                 operation_id="users_api_get_identity",
                 oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
+                security_source=get_security_from_env(security, models.Security),
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

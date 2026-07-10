@@ -14,15 +14,12 @@ from typing_extensions import TypedDict
 
 class GetSearchIndexSchemaDetailResponseSchemaModelTypedDict(TypedDict):
     name: str
-    summary: Nullable[str]
     embedding_dimensions: Nullable[int]
     fields: List[GetSearchIndexSchemaDetailResponseFieldTypedDict]
 
 
 class GetSearchIndexSchemaDetailResponseSchemaModel(BaseModel):
     name: str
-
-    summary: Nullable[str]
 
     embedding_dimensions: Nullable[int]
 

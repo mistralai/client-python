@@ -22,6 +22,7 @@ class SpeechRequestTypedDict(TypedDict):
     model: NotRequired[Nullable[str]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     stream: NotRequired[bool]
+    prompt_cache_key: NotRequired[Nullable[str]]
     voice_id: NotRequired[Nullable[str]]
     r"""The preset or custom voice to use for generating the speech."""
     ref_audio: NotRequired[Nullable[str]]
@@ -44,6 +45,8 @@ class SpeechRequest(BaseModel):
 
     stream: Optional[bool] = False
 
+    prompt_cache_key: OptionalNullable[str] = UNSET
+
     voice_id: OptionalNullable[str] = UNSET
     r"""The preset or custom voice to use for generating the speech."""
 
@@ -63,9 +66,19 @@ class SpeechRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["model", "metadata", "stream", "voice_id", "ref_audio", "response_format"]
+            [
+                "model",
+                "metadata",
+                "stream",
+                "prompt_cache_key",
+                "voice_id",
+                "ref_audio",
+                "response_format",
+            ]
         )
-        nullable_fields = set(["model", "metadata", "voice_id", "ref_audio"])
+        nullable_fields = set(
+            ["model", "metadata", "prompt_cache_key", "voice_id", "ref_audio"]
+        )
         serialized = handler(self)
         m = {}
 
