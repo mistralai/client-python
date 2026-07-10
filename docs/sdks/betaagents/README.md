@@ -7,7 +7,8 @@
 ### Available Operations
 
 * [create](#create) - Create a agent that can be used within a conversation.
-* [list](#list) - List agent entities.
+* [~~list~~](#list) - List agent entities. :warning: **Deprecated** Use [list_pages](docs/sdks/betaagents/README.md#list_pages) instead.
+* [list_pages](#list_pages) - List agent entities, cursor-paginated.
 * [get](#get) - Retrieve an agent entity.
 * [update](#update) - Update an agent entity.
 * [delete](#delete) - Delete an agent entity.
@@ -72,9 +73,11 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
-## list
+## ~~list~~
 
-Retrieve a list of agent entities sorted by creation time.
+Retrieve a list of agent entities sorted by creation time. Deprecated: some features such as agent sharing are not supported by this endpoint. Use the cursor-paginated `GET /v1/agents/pages` instead.
+
+> :warning: **DEPRECATED**: Some features such as agent sharing are not supported by this endpoint.. Use `list_pages` instead.
 
 ### Example Usage
 
@@ -112,6 +115,56 @@ with Mistral(
 ### Response
 
 **[List[models.Agent]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## list_pages
+
+Retrieve a page of agent entities. Unlike the deprecated `GET /v1/agents`, this endpoint paginates by opaque cursor and honors per-agent sharing, returning only agents the caller is authorized to see.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="agents_api_v1_agents_list_pages" method="get" path="/v1/agents/pages" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.agents.list_pages(page_size=20)
+
+    while res is not None:
+        # Handle items
+
+        res = res.next()
+
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `page_size`                                                                                               | *Optional[int]*                                                                                           | :heavy_minus_sign:                                                                                        | Number of agents per page                                                                                 |
+| `deployment_chat`                                                                                         | *OptionalNullable[bool]*                                                                                  | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `sources`                                                                                                 | List[[models.RequestSource](../../models/requestsource.md)]                                               | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `name`                                                                                                    | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | Filter by agent name                                                                                      |
+| `search`                                                                                                  | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | Search agents by name or ID                                                                               |
+| `id`                                                                                                      | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `metadata`                                                                                                | Dict[str, *Any*]                                                                                          | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `page_token`                                                                                              | *OptionalNullable[str]*                                                                                   | :heavy_minus_sign:                                                                                        | Opaque cursor from a previous response's next_page_token. When set, results page forward from the cursor. |
+| `retries`                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                          | :heavy_minus_sign:                                                                                        | Configuration to override the default retry behavior of the client.                                       |
+
+### Response
+
+**[models.AgentsAPIV1AgentsListPagesResponse](../../models/agentsapiv1agentslistpagesresponse.md)**
 
 ### Errors
 

@@ -50,6 +50,7 @@ class ConnectorTypedDict(TypedDict):
     icon_url: NotRequired[Nullable[str]]
     server_card: NotRequired[Nullable[MCPServerCardTypedDict]]
     owner_id: NotRequired[Nullable[str]]
+    creator_id: NotRequired[Nullable[str]]
     locale: NotRequired[Nullable[ConnectorLocaleTypedDict]]
     system_prompt: NotRequired[Nullable[str]]
     supported_auth_methods: NotRequired[
@@ -97,6 +98,8 @@ class Connector(BaseModel):
 
     owner_id: OptionalNullable[str] = UNSET
 
+    creator_id: OptionalNullable[str] = UNSET
+
     locale: OptionalNullable[ConnectorLocale] = UNSET
 
     system_prompt: OptionalNullable[str] = UNSET
@@ -131,6 +134,7 @@ class Connector(BaseModel):
                 "icon_url",
                 "server_card",
                 "owner_id",
+                "creator_id",
                 "locale",
                 "system_prompt",
                 "supported_auth_methods",
@@ -152,6 +156,7 @@ class Connector(BaseModel):
                 "icon_url",
                 "server_card",
                 "owner_id",
+                "creator_id",
                 "locale",
                 "system_prompt",
                 "supported_auth_methods",

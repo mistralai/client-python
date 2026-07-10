@@ -2,12 +2,14 @@
 # @generated-id: b64ad29b7174
 
 from .basesdk import BaseSDK
+from jsonpath import JSONPath
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing_extensions import deprecated
 
 
 class BetaAgents(BaseSDK):
@@ -289,6 +291,9 @@ class BetaAgents(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - Some features such as agent sharing are not supported by this endpoint.. Use list_pages instead."
+    )
     def list(
         self,
         *,
@@ -307,7 +312,7 @@ class BetaAgents(BaseSDK):
     ) -> List[models.Agent]:
         r"""List agent entities.
 
-        Retrieve a list of agent entities sorted by creation time.
+        Retrieve a list of agent entities sorted by creation time. Deprecated: some features such as agent sharing are not supported by this endpoint. Use the cursor-paginated `GET /v1/agents/pages` instead.
 
         :param page: Page number (0-indexed)
         :param page_size: Number of agents per page
@@ -403,6 +408,9 @@ class BetaAgents(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - Some features such as agent sharing are not supported by this endpoint.. Use list_pages instead."
+    )
     async def list_async(
         self,
         *,
@@ -421,7 +429,7 @@ class BetaAgents(BaseSDK):
     ) -> List[models.Agent]:
         r"""List agent entities.
 
-        Retrieve a list of agent entities sorted by creation time.
+        Retrieve a list of agent entities sorted by creation time. Deprecated: some features such as agent sharing are not supported by this endpoint. Use the cursor-paginated `GET /v1/agents/pages` instead.
 
         :param page: Page number (0-indexed)
         :param page_size: Number of agents per page
@@ -503,6 +511,311 @@ class BetaAgents(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(List[models.Agent], http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def list_pages(
+        self,
+        *,
+        page_size: Optional[int] = 20,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        id: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        page_token: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.AgentsAPIV1AgentsListPagesResponse]:
+        r"""List agent entities, cursor-paginated.
+
+        Retrieve a page of agent entities. Unlike the deprecated `GET /v1/agents`, this endpoint paginates by opaque cursor and honors per-agent sharing, returning only agents the caller is authorized to see.
+
+        :param page_size: Number of agents per page
+        :param deployment_chat:
+        :param sources:
+        :param name: Filter by agent name
+        :param search: Search agents by name or ID
+        :param id:
+        :param metadata:
+        :param page_token: Opaque cursor from a previous response's next_page_token. When set, results page forward from the cursor.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsListPagesRequest(
+            page_size=page_size,
+            deployment_chat=deployment_chat,
+            sources=sources,
+            name=name,
+            search=search,
+            id=id,
+            metadata=metadata,
+            page_token=page_token,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/agents/pages",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_list_pages",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        def next_func() -> Optional[models.AgentsAPIV1AgentsListPagesResponse]:
+            body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
+
+            next_cursor = JSONPath("$.next_page_token").parse(body)
+
+            if len(next_cursor) == 0:
+                return None
+
+            next_cursor = next_cursor[0]
+            if next_cursor is None or str(next_cursor).strip() == "":
+                return None
+            results = JSONPath("$.data").parse(body)
+            if len(results) == 0 or len(results[0]) == 0:
+                return None
+            limit_ = request.page_size if isinstance(request.page_size, int) else 20
+            if len(results[0]) < limit_:
+                return None
+
+            return self.list_pages(
+                page_size=page_size,
+                deployment_chat=deployment_chat,
+                sources=sources,
+                name=name,
+                search=search,
+                id=id,
+                metadata=metadata,
+                page_token=next_cursor,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
+            )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return models.AgentsAPIV1AgentsListPagesResponse(
+                result=unmarshal_json_response(models.AgentListPage, http_res),
+                next=next_func,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def list_pages_async(
+        self,
+        *,
+        page_size: Optional[int] = 20,
+        deployment_chat: OptionalNullable[bool] = UNSET,
+        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        search: OptionalNullable[str] = UNSET,
+        id: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        page_token: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.AgentsAPIV1AgentsListPagesResponse]:
+        r"""List agent entities, cursor-paginated.
+
+        Retrieve a page of agent entities. Unlike the deprecated `GET /v1/agents`, this endpoint paginates by opaque cursor and honors per-agent sharing, returning only agents the caller is authorized to see.
+
+        :param page_size: Number of agents per page
+        :param deployment_chat:
+        :param sources:
+        :param name: Filter by agent name
+        :param search: Search agents by name or ID
+        :param id:
+        :param metadata:
+        :param page_token: Opaque cursor from a previous response's next_page_token. When set, results page forward from the cursor.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AgentsAPIV1AgentsListPagesRequest(
+            page_size=page_size,
+            deployment_chat=deployment_chat,
+            sources=sources,
+            name=name,
+            search=search,
+            id=id,
+            metadata=metadata,
+            page_token=page_token,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/agents/pages",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="agents_api_v1_agents_list_pages",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        def next_func() -> (
+            Awaitable[Optional[models.AgentsAPIV1AgentsListPagesResponse]]
+        ):
+            body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
+
+            async def empty_result():
+                return None
+
+            next_cursor = JSONPath("$.next_page_token").parse(body)
+
+            if len(next_cursor) == 0:
+                return empty_result()
+
+            next_cursor = next_cursor[0]
+            if next_cursor is None or str(next_cursor).strip() == "":
+                return empty_result()
+            results = JSONPath("$.data").parse(body)
+            if len(results) == 0 or len(results[0]) == 0:
+                return empty_result()
+            limit_ = request.page_size if isinstance(request.page_size, int) else 20
+            if len(results[0]) < limit_:
+                return empty_result()
+
+            return self.list_pages_async(
+                page_size=page_size,
+                deployment_chat=deployment_chat,
+                sources=sources,
+                name=name,
+                search=search,
+                id=id,
+                metadata=metadata,
+                page_token=next_cursor,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
+            )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return models.AgentsAPIV1AgentsListPagesResponse(
+                result=unmarshal_json_response(models.AgentListPage, http_res),
+                next=next_func,
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

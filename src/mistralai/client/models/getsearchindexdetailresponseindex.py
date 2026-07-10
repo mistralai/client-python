@@ -30,7 +30,6 @@ class GetSearchIndexDetailResponseIndexTypedDict(TypedDict):
     created_at: datetime
     modified_at: datetime
     vespa_version: Nullable[str]
-    summary: Nullable[str]
     schemas: List[GetSearchIndexDetailResponseSchemaModelTypedDict]
 
 
@@ -48,8 +47,6 @@ class GetSearchIndexDetailResponseIndex(BaseModel):
     modified_at: datetime
 
     vespa_version: Nullable[str]
-
-    summary: Nullable[str]
 
     schemas: List[GetSearchIndexDetailResponseSchemaModel]
 
