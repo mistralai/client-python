@@ -25,6 +25,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Union[Literal[False], None] = None,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -40,6 +41,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -59,6 +61,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Literal[True],
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -74,6 +77,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -92,6 +96,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Optional[bool] = False,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -107,6 +112,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -134,6 +140,7 @@ class Speech(BaseSDK):
             model=model,
             metadata=metadata,
             stream=stream,
+            prompt_cache_key=prompt_cache_key,
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,
@@ -221,6 +228,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Union[Literal[False], None] = None,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -236,6 +244,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -255,6 +264,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Literal[True],
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -270,6 +280,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -288,6 +299,7 @@ class Speech(BaseSDK):
         model: OptionalNullable[str] = UNSET,
         metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         stream: Optional[bool] = False,
+        prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
@@ -303,6 +315,7 @@ class Speech(BaseSDK):
         :param model:
         :param metadata:
         :param stream:
+        :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
         :param response_format:
@@ -330,6 +343,7 @@ class Speech(BaseSDK):
             model=model,
             metadata=metadata,
             stream=stream,
+            prompt_cache_key=prompt_cache_key,
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,

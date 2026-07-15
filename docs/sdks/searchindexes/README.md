@@ -9,9 +9,13 @@
 * [unregister](#unregister) - Unregister Search Index
 * [update_index_metrics](#update_index_metrics) - Update Index Metrics
 * [get_index_detail](#get_index_detail) - Get Index Details
+* [get_index_summary](#get_index_summary) - Get Index Summary
+* [generate_index_summary](#generate_index_summary) - Generate a summary field for an index
 * [set_index_summary](#set_index_summary) - Set Index Summary
-* [get_index_schema_detail](#get_index_schema_detail) - Get Index Schema Detail
+* [get_schema_summary](#get_schema_summary) - Get Schema Summary
+* [generate_schema_summary](#generate_schema_summary) - Generate a summary field for a schema
 * [set_schema_summary](#set_schema_summary) - Set Schema Summary
+* [get_index_schema_detail](#get_index_schema_detail) - Get Index Schema Detail
 * [get_index_schema_file](#get_index_schema_file) - Get Index Schema File
 * [document_lookup](#document_lookup) - Document Lookup
 * [documents_fetch](#documents_fetch) - Document Fetch
@@ -244,13 +248,13 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
-## set_index_summary
+## get_index_summary
 
-Update the summary field for an index
+Retrieve the summary field for an index if it exists
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="set_index_summary_v1_rag_indexes_index__index_id__summary_field_put" method="put" path="/v1/rag/indexes/index/{index_id}/summary_field" -->
+<!-- UsageSnippet language="python" operationID="get_index_summary_v1_rag_indexes_index__index_id__summary_field__language__get" method="get" path="/v1/rag/indexes/index/{index_id}/summary_field/{language}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -260,7 +264,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.search_indexes.set_index_summary(index_id="e77375ab-1284-42f3-9224-d42f3c120e57", summary="<value>")
+    res = mistral.beta.rag.search_indexes.get_index_summary(index_id="d83e93f2-1d03-4133-90d2-fae51463c71e", language="pt_br")
 
     # Handle response
     print(res)
@@ -269,11 +273,240 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `index_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `summary`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                              | *str*                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `language`                                                                                                                                                              | [models.GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetLanguage](../../models/getindexsummaryv1ragindexesindexindexidsummaryfieldlanguagegetlanguage.md) | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `retries`                                                                                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                        | :heavy_minus_sign:                                                                                                                                                      | Configuration to override the default retry behavior of the client.                                                                                                     |
+
+### Response
+
+**[models.GetSummaryResponseSummary](../../models/getsummaryresponsesummary.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## generate_index_summary
+
+Streams a summary for the index in chunks of json.
+
+The first chunk contains metadata for the summary, the following contain
+chunks of 'content' that should be joined together to form a full summary.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="generate_index_summary_v1_rag_indexes_index__index_id__summary_field__language__post" method="post" path="/v1/rag/indexes/index/{index_id}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.generate_index_summary(index_id="b0cfd77c-9cc3-46b6-ad70-1024386259b9", language="pl")
+
+    with res as jsonl_stream:
+        for event in jsonl_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                           | Type                                                                                                                                                                                | Required                                                                                                                                                                            | Description                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                                          | *str*                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                  | N/A                                                                                                                                                                                 |
+| `language`                                                                                                                                                                          | [models.GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostLanguage](../../models/generateindexsummaryv1ragindexesindexindexidsummaryfieldlanguagepostlanguage.md) | :heavy_check_mark:                                                                                                                                                                  | N/A                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                 |
+
+### Response
+
+**[Union[jsonl.JsonLStream[models.GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypes], jsonl.JsonLStreamAsync[models.GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypes]]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## set_index_summary
+
+Update the summary field for an index
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="set_index_summary_v1_rag_indexes_index__index_id__summary_field__language__put" method="put" path="/v1/rag/indexes/index/{index_id}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.set_index_summary(index_id="e199a723-75b3-43fe-98fb-5d576435c591", language="pt_br", content="<value>", status="handwritten", translated=True)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                              | *str*                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `language`                                                                                                                                                              | [models.SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutLanguage](../../models/setindexsummaryv1ragindexesindexindexidsummaryfieldlanguageputlanguage.md) | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `content`                                                                                                                                                               | *str*                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `status`                                                                                                                                                                | [models.UpdateSummaryRequestSummaryStatus](../../models/updatesummaryrequestsummarystatus.md)                                                                           | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `translated`                                                                                                                                                            | *bool*                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `retries`                                                                                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                        | :heavy_minus_sign:                                                                                                                                                      | Configuration to override the default retry behavior of the client.                                                                                                     |
+
+### Response
+
+**[Any](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_schema_summary
+
+Retrieve the summary field for a schema if it exists
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_schema_summary_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field__language__get" method="get" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.get_schema_summary(index_id="077fb72c-10cd-442d-832e-51fd35136195", schema_id="39f80401-7fc3-4ade-8b1c-b2cd613bab20", language="en")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                           | Type                                                                                                                                                                                                                | Required                                                                                                                                                                                                            | Description                                                                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                                                                          | *str*                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `schema_id`                                                                                                                                                                                                         | *str*                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `language`                                                                                                                                                                                                          | [models.GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetLanguage](../../models/getschemasummaryv1ragindexesindexindexidschemasschemaschemaidsummaryfieldlanguagegetlanguage.md) | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                 |
+
+### Response
+
+**[models.GetSummaryResponseSummary](../../models/getsummaryresponsesummary.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## generate_schema_summary
+
+Streams a summary for the schema in chunks of json.
+
+The first chunk contains metadata for the summary, the following contain
+chunks of 'content' that should be joined together to form a full summary.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="generate_schema_summary_post_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field__language__post" method="post" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.generate_schema_summary(index_id="582076c8-276e-4a50-b7a6-2f266925a448", schema_id="5c471724-f36e-41cc-a302-af4f92ea7413", language="it")
+
+    with res as jsonl_stream:
+        for event in jsonl_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                               | Type                                                                                                                                                                                                                                    | Required                                                                                                                                                                                                                                | Description                                                                                                                                                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                                                                                              | *str*                                                                                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                                                                                      | N/A                                                                                                                                                                                                                                     |
+| `schema_id`                                                                                                                                                                                                                             | *str*                                                                                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                                                                                      | N/A                                                                                                                                                                                                                                     |
+| `language`                                                                                                                                                                                                                              | [models.GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostLanguage](../../models/generateschemasummarypostv1ragindexesindexindexidschemasschemaschemaidsummaryfieldlanguagepostlanguage.md) | :heavy_check_mark:                                                                                                                                                                                                                      | N/A                                                                                                                                                                                                                                     |
+| `retries`                                                                                                                                                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                                      | Configuration to override the default retry behavior of the client.                                                                                                                                                                     |
+
+### Response
+
+**[Union[jsonl.JsonLStream[models.GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypes], jsonl.JsonLStreamAsync[models.GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypes]]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## set_schema_summary
+
+Update the summary field for an index
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="set_schema_summary_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field__language__put" method="put" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.set_schema_summary(index_id="d22ebdfa-6465-4f25-9a27-3e59d85ee544", schema_id="cc29f795-986b-483d-a658-acb000a16f70", language="nl", content="<value>", status="generated_confirmed", translated=True)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                           | Type                                                                                                                                                                                                                | Required                                                                                                                                                                                                            | Description                                                                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index_id`                                                                                                                                                                                                          | *str*                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `schema_id`                                                                                                                                                                                                         | *str*                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `language`                                                                                                                                                                                                          | [models.SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutLanguage](../../models/setschemasummaryv1ragindexesindexindexidschemasschemaschemaidsummaryfieldlanguageputlanguage.md) | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `content`                                                                                                                                                                                                           | *str*                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `status`                                                                                                                                                                                                            | [models.UpdateSummaryRequestSummaryStatus](../../models/updatesummaryrequestsummarystatus.md)                                                                                                                       | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `translated`                                                                                                                                                                                                        | *bool*                                                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                  | N/A                                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                 |
 
 ### Response
 
@@ -320,49 +553,6 @@ with Mistral(
 ### Response
 
 **[models.GetSearchIndexSchemaDetailResponseSchemaModel](../../models/getsearchindexschemadetailresponseschemamodel.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
-
-## set_schema_summary
-
-Update the summary field for an index
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="set_schema_summary_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field_put" method="put" path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.rag.search_indexes.set_schema_summary(index_id="1a7d0662-5542-453a-8120-6e22a4fa6187", schema_id="bb5f0528-b652-4c47-81eb-574cb5c442a5", summary="<value>")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `index_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `schema_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `summary`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[Any](../../models/.md)**
 
 ### Errors
 

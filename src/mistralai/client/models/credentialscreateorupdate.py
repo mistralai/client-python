@@ -19,6 +19,8 @@ class CredentialsCreateOrUpdateTypedDict(TypedDict):
 
     name: str
     r"""Name of the credentials. Use this name to access or modify your credentials."""
+    title: NotRequired[Nullable[str]]
+    r"""Human-readable title for the credentials."""
     is_default: NotRequired[Nullable[bool]]
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
     credentials: NotRequired[Nullable[ConnectionCredentialsTypedDict]]
@@ -31,6 +33,9 @@ class CredentialsCreateOrUpdate(BaseModel):
     name: str
     r"""Name of the credentials. Use this name to access or modify your credentials."""
 
+    title: OptionalNullable[str] = UNSET
+    r"""Human-readable title for the credentials."""
+
     is_default: OptionalNullable[bool] = UNSET
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
 
@@ -39,8 +44,8 @@ class CredentialsCreateOrUpdate(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["is_default", "credentials"])
-        nullable_fields = set(["is_default", "credentials"])
+        optional_fields = set(["title", "is_default", "credentials"])
+        nullable_fields = set(["title", "is_default", "credentials"])
         serialized = handler(self)
         m = {}
 

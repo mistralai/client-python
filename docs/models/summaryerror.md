@@ -1,8 +1,10 @@
-# UpdateSchemaSummaryRequestSummary
+# SummaryError
+
+If an error is encountered while streaming responses this is returned.
 
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `summary`          | *str*              | :heavy_check_mark: | N/A                |
+| `error`            | *str*              | :heavy_check_mark: | N/A                |

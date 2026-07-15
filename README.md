@@ -36,6 +36,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Providers' SDKs Example Usage](#providers-sdks-example-usage)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Server-sent event streaming](#server-sent-event-streaming)
+  * [Json Streaming](#json-streaming)
   * [Pagination](#pagination)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
@@ -498,7 +499,8 @@ print(res.choices[0].message.content)
 ### [Beta.Agents](docs/sdks/betaagents/README.md)
 
 * [create](docs/sdks/betaagents/README.md#create) - Create a agent that can be used within a conversation.
-* [list](docs/sdks/betaagents/README.md#list) - List agent entities.
+* [~~list~~](docs/sdks/betaagents/README.md#list) - List agent entities. :warning: **Deprecated** Use [list_pages](docs/sdks/betaagents/README.md#list_pages) instead.
+* [list_pages](docs/sdks/betaagents/README.md#list_pages) - List agent entities, cursor-paginated.
 * [get](docs/sdks/betaagents/README.md#get) - Retrieve an agent entity.
 * [update](docs/sdks/betaagents/README.md#update) - Update an agent entity.
 * [delete](docs/sdks/betaagents/README.md#delete) - Delete an agent entity.
@@ -530,6 +532,7 @@ print(res.choices[0].message.content)
 * [create_or_update_workspace_credentials](docs/sdks/connectors/README.md#create_or_update_workspace_credentials) - Create or update workspace credentials for a connector.
 * [list_user_credentials](docs/sdks/connectors/README.md#list_user_credentials) - List user credentials for a connector.
 * [create_or_update_user_credentials](docs/sdks/connectors/README.md#create_or_update_user_credentials) - Create or update user credentials for a connector.
+* [delete_all_user_credentials](docs/sdks/connectors/README.md#delete_all_user_credentials) - Delete all user credentials for a connector.
 * [delete_organization_credentials](docs/sdks/connectors/README.md#delete_organization_credentials) - Delete organization credentials for a connector.
 * [delete_workspace_credentials](docs/sdks/connectors/README.md#delete_workspace_credentials) - Delete workspace credentials for a connector.
 * [delete_user_credentials](docs/sdks/connectors/README.md#delete_user_credentials) - Delete user credentials for a connector.
@@ -689,9 +692,13 @@ print(res.choices[0].message.content)
 * [unregister](docs/sdks/searchindexes/README.md#unregister) - Unregister Search Index
 * [update_index_metrics](docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
 * [get_index_detail](docs/sdks/searchindexes/README.md#get_index_detail) - Get Index Details
+* [get_index_summary](docs/sdks/searchindexes/README.md#get_index_summary) - Get Index Summary
+* [generate_index_summary](docs/sdks/searchindexes/README.md#generate_index_summary) - Generate a summary field for an index
 * [set_index_summary](docs/sdks/searchindexes/README.md#set_index_summary) - Set Index Summary
-* [get_index_schema_detail](docs/sdks/searchindexes/README.md#get_index_schema_detail) - Get Index Schema Detail
+* [get_schema_summary](docs/sdks/searchindexes/README.md#get_schema_summary) - Get Schema Summary
+* [generate_schema_summary](docs/sdks/searchindexes/README.md#generate_schema_summary) - Generate a summary field for a schema
 * [set_schema_summary](docs/sdks/searchindexes/README.md#set_schema_summary) - Set Schema Summary
+* [get_index_schema_detail](docs/sdks/searchindexes/README.md#get_index_schema_detail) - Get Index Schema Detail
 * [get_index_schema_file](docs/sdks/searchindexes/README.md#get_index_schema_file) - Get Index Schema File
 * [document_lookup](docs/sdks/searchindexes/README.md#document_lookup) - Document Lookup
 * [documents_fetch](docs/sdks/searchindexes/README.md#documents_fetch) - Document Fetch
@@ -876,6 +883,41 @@ with Mistral(
 [context-manager]: https://book.pythontips.com/en/latest/context_managers.html
 <!-- End Server-sent event streaming [eventstream] -->
 
+<!-- Start Json Streaming [jsonl] -->
+## Json Streaming
+
+Json Streaming ([jsonl][jsonl-format] / [x-ndjson][x-ndjson]) content type can be used to stream content from certain operations. These operations will expose the stream as [Generator][generator] that
+can be consumed using a simple `for` loop. The loop will
+terminate when the server no longer has any events to send and closes the
+underlying connection.
+
+The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
+underlying connection when the context is exited.
+
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.search_indexes.generate_index_summary(index_id="b0cfd77c-9cc3-46b6-ad70-1024386259b9", language="pl")
+
+    with res as jsonl_stream:
+        for event in jsonl_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+[jsonl-format]: https://jsonlines.org/
+[x-ndjson]: https://github.com/ndjson/ndjson-spec
+[generator]: https://book.pythontips.com/en/latest/generators.html
+[context-manager]: https://book.pythontips.com/en/latest/context_managers.html
+<!-- End Json Streaming [jsonl] -->
+
 <!-- Start Pagination [pagination] -->
 ## Pagination
 
@@ -1045,8 +1087,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 146 of 243 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 243 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 152 of 249 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 249 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1061,9 +1103,11 @@ with Mistral(
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name | Server                   | Description          |
-| ---- | ------------------------ | -------------------- |
-| `eu` | `https://api.mistral.ai` | EU Production server |
+| Name     | Server                      | Description              |
+| -------- | --------------------------- | ------------------------ |
+| `global` | `https://api.mistral.ai`    | Global Production server |
+| `eu`     | `https://api.eu.mistral.ai` | EU Production server     |
+| `us`     | `https://api.us.mistral.ai` | US Production server     |
 
 #### Example
 
@@ -1073,7 +1117,7 @@ import os
 
 
 with Mistral(
-    server="eu",
+    server="global",
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
@@ -1217,6 +1261,25 @@ with Mistral(
         # Handle items
 
         res = res.next()
+
+```
+
+### Per-Operation Security Schemes
+
+Some operations in this SDK require the security scheme to be specified at the request level. For example:
+```python
+from mistralai.client import Mistral, models
+import os
+
+
+with Mistral() as mistral:
+
+    res = mistral.beta.users.get_identity(security=models.UsersAPIGetIdentitySecurity(
+        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+    ))
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->

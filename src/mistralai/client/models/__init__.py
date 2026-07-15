@@ -76,6 +76,7 @@ if TYPE_CHECKING:
         AgentHandoffStartedEvent,
         AgentHandoffStartedEventTypedDict,
     )
+    from .agentlistpage import AgentListPage, AgentListPageTypedDict
     from .agents_api_v1_agents_create_or_update_aliasop import (
         AgentsAPIV1AgentsCreateOrUpdateAliasRequest,
         AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict,
@@ -97,6 +98,12 @@ if TYPE_CHECKING:
         AgentsAPIV1AgentsGetAgentVersionTypedDict,
         AgentsAPIV1AgentsGetRequest,
         AgentsAPIV1AgentsGetRequestTypedDict,
+    )
+    from .agents_api_v1_agents_list_pagesop import (
+        AgentsAPIV1AgentsListPagesRequest,
+        AgentsAPIV1AgentsListPagesRequestTypedDict,
+        AgentsAPIV1AgentsListPagesResponse,
+        AgentsAPIV1AgentsListPagesResponseTypedDict,
     )
     from .agents_api_v1_agents_list_version_aliasesop import (
         AgentsAPIV1AgentsListVersionAliasesRequest,
@@ -411,6 +418,10 @@ if TYPE_CHECKING:
     from .connector_deactivate_for_workspace_v1op import (
         ConnectorDeactivateForWorkspaceV1Request,
         ConnectorDeactivateForWorkspaceV1RequestTypedDict,
+    )
+    from .connector_delete_all_user_credentials_v1op import (
+        ConnectorDeleteAllUserCredentialsV1Request,
+        ConnectorDeleteAllUserCredentialsV1RequestTypedDict,
     )
     from .connector_delete_organization_credentials_v1op import (
         ConnectorDeleteOrganizationCredentialsV1Request,
@@ -958,6 +969,20 @@ if TYPE_CHECKING:
     from .functionname import FunctionName, FunctionNameTypedDict
     from .functionresultentry import FunctionResultEntry, FunctionResultEntryTypedDict
     from .functiontool import FunctionTool, FunctionToolTypedDict
+    from .generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop import (
+        GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostLanguage,
+        GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequest,
+        GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequestTypedDict,
+        GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypes,
+        GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict,
+    )
+    from .generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop import (
+        GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostLanguage,
+        GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequest,
+        GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequestTypedDict,
+        GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypes,
+        GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict,
+    )
     from .get_campaign_by_id_v1_observability_campaigns_campaign_id_getop import (
         GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequest,
         GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequestTypedDict,
@@ -1036,6 +1061,11 @@ if TYPE_CHECKING:
         GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest,
         GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict,
     )
+    from .get_index_summary_v1_rag_indexes_index_index_id_summary_field_language_getop import (
+        GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetLanguage,
+        GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequest,
+        GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequestTypedDict,
+    )
     from .get_judge_by_id_v1_observability_judges_judge_id_getop import (
         GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest,
         GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict,
@@ -1066,6 +1096,11 @@ if TYPE_CHECKING:
         GetSchedulesV1WorkflowsSchedulesGetResponse,
         GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict,
         GetSchedulesV1WorkflowsSchedulesGetStatus,
+    )
+    from .get_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_getop import (
+        GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetLanguage,
+        GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequest,
+        GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequestTypedDict,
     )
     from .get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop import (
         GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest,
@@ -1231,6 +1266,10 @@ if TYPE_CHECKING:
     from .getspanfieldoptions import GetSpanFieldOptions, GetSpanFieldOptionsTypedDict
     from .getspanfields import GetSpanFields, GetSpanFieldsTypedDict
     from .getspans import GetSpans, GetSpansTypedDict
+    from .getsummaryresponsesummary import (
+        GetSummaryResponseSummary,
+        GetSummaryResponseSummaryTypedDict,
+    )
     from .gettrace import GetTrace, GetTraceStatusCode, GetTraceTypedDict
     from .gettracefieldoptions import (
         GetTraceFieldOptions,
@@ -2007,13 +2046,15 @@ if TYPE_CHECKING:
         ServerTasksRequestsCapability,
         ServerTasksRequestsCapabilityTypedDict,
     )
-    from .set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop import (
-        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest,
-        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict,
+    from .set_index_summary_v1_rag_indexes_index_index_id_summary_field_language_putop import (
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutLanguage,
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequest,
+        SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequestTypedDict,
     )
-    from .set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop import (
-        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest,
-        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict,
+    from .set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_putop import (
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutLanguage,
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequest,
+        SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequestTypedDict,
     )
     from .shareenum import ShareEnum
     from .sharing import Sharing, SharingTypedDict
@@ -2144,6 +2185,11 @@ if TYPE_CHECKING:
         StreamEventWorkflowContext,
         StreamEventWorkflowContextTypedDict,
     )
+    from .summarychunk import SummaryChunk, SummaryChunkTypedDict
+    from .summaryerror import SummaryError, SummaryErrorTypedDict
+    from .summarymetadata import SummaryMetadata, SummaryMetadataTypedDict
+    from .summarystatus import SummaryStatus
+    from .summarystatus_dollar_defs import SummaryStatusDollarDefs
     from .systemmessage import (
         SystemMessage,
         SystemMessageContent,
@@ -2432,10 +2478,6 @@ if TYPE_CHECKING:
         UpdateIndexMetricsRequestSchemaMetrics,
         UpdateIndexMetricsRequestSchemaMetricsTypedDict,
     )
-    from .updateindexsummaryrequestsummary import (
-        UpdateIndexSummaryRequestSummary,
-        UpdateIndexSummaryRequestSummaryTypedDict,
-    )
     from .updateinvocationbody import (
         UpdateInvocationBody,
         UpdateInvocationBodyInput,
@@ -2454,9 +2496,10 @@ if TYPE_CHECKING:
     )
     from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
     from .updateruninfo import UpdateRunInfo, UpdateRunInfoTypedDict
-    from .updateschemasummaryrequestsummary import (
-        UpdateSchemaSummaryRequestSummary,
-        UpdateSchemaSummaryRequestSummaryTypedDict,
+    from .updatesummaryrequestsummary import (
+        UpdateSummaryRequestSummary,
+        UpdateSummaryRequestSummaryStatus,
+        UpdateSummaryRequestSummaryTypedDict,
     )
     from .updateworkflowresponse import (
         UpdateWorkflowResponse,
@@ -2470,6 +2513,10 @@ if TYPE_CHECKING:
         UserMessageContent,
         UserMessageContentTypedDict,
         UserMessageTypedDict,
+    )
+    from .users_api_get_identityop import (
+        UsersAPIGetIdentitySecurity,
+        UsersAPIGetIdentitySecurityTypedDict,
     )
     from .validationerror import (
         Context,
@@ -2732,6 +2779,8 @@ __all__ = [
     "AgentHandoffEntryTypedDict",
     "AgentHandoffStartedEvent",
     "AgentHandoffStartedEventTypedDict",
+    "AgentListPage",
+    "AgentListPageTypedDict",
     "AgentTool",
     "AgentToolTypedDict",
     "AgentTypedDict",
@@ -2747,6 +2796,10 @@ __all__ = [
     "AgentsAPIV1AgentsGetRequestTypedDict",
     "AgentsAPIV1AgentsGetVersionRequest",
     "AgentsAPIV1AgentsGetVersionRequestTypedDict",
+    "AgentsAPIV1AgentsListPagesRequest",
+    "AgentsAPIV1AgentsListPagesRequestTypedDict",
+    "AgentsAPIV1AgentsListPagesResponse",
+    "AgentsAPIV1AgentsListPagesResponseTypedDict",
     "AgentsAPIV1AgentsListRequest",
     "AgentsAPIV1AgentsListRequestTypedDict",
     "AgentsAPIV1AgentsListVersionAliasesRequest",
@@ -2979,6 +3032,8 @@ __all__ = [
     "ConnectorDeactivateForUserV1RequestTypedDict",
     "ConnectorDeactivateForWorkspaceV1Request",
     "ConnectorDeactivateForWorkspaceV1RequestTypedDict",
+    "ConnectorDeleteAllUserCredentialsV1Request",
+    "ConnectorDeleteAllUserCredentialsV1RequestTypedDict",
     "ConnectorDeleteOrganizationCredentialsV1Request",
     "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict",
     "ConnectorDeleteUserCredentialsV1Request",
@@ -3347,6 +3402,16 @@ __all__ = [
     "FunctionTool",
     "FunctionToolTypedDict",
     "FunctionTypedDict",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostLanguage",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequest",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequestTypedDict",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypes",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostLanguage",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequest",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequestTypedDict",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypes",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict",
     "GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequest",
     "GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequestTypedDict",
     "GetCampaignSelectedEventsV1ObservabilityCampaignsCampaignIDSelectedEventsGetRequest",
@@ -3388,6 +3453,9 @@ __all__ = [
     "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict",
     "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest",
     "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetLanguage",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequest",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequestTypedDict",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict",
     "GetJudgesV1ObservabilityJudgesGetRequest",
@@ -3413,6 +3481,9 @@ __all__ = [
     "GetSchedulesV1WorkflowsSchedulesGetResponse",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict",
     "GetSchedulesV1WorkflowsSchedulesGetStatus",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetLanguage",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequest",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequestTypedDict",
     "GetSearchIndexDetailResponseIndex",
     "GetSearchIndexDetailResponseIndexStatus",
     "GetSearchIndexDetailResponseIndexTypedDict",
@@ -3466,6 +3537,8 @@ __all__ = [
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict",
+    "GetSummaryResponseSummary",
+    "GetSummaryResponseSummaryTypedDict",
     "GetTrace",
     "GetTraceByIDV1ObservabilityTracesTraceIDGetRequest",
     "GetTraceByIDV1ObservabilityTracesTraceIDGetRequestTypedDict",
@@ -4098,10 +4171,12 @@ __all__ = [
     "ServerTasksCapabilityTypedDict",
     "ServerTasksRequestsCapability",
     "ServerTasksRequestsCapabilityTypedDict",
-    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest",
-    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict",
-    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest",
-    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutLanguage",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequest",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequestTypedDict",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutLanguage",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequest",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequestTypedDict",
     "ShareEnum",
     "Sharing",
     "SharingDelete",
@@ -4201,6 +4276,14 @@ __all__ = [
     "StreamWorkflowExecutionLogsRequestTypedDict",
     "StreamWorkflowExecutionLogsResponseBody",
     "StreamWorkflowExecutionLogsResponseBodyTypedDict",
+    "SummaryChunk",
+    "SummaryChunkTypedDict",
+    "SummaryError",
+    "SummaryErrorTypedDict",
+    "SummaryMetadata",
+    "SummaryMetadataTypedDict",
+    "SummaryStatus",
+    "SummaryStatusDollarDefs",
     "SystemMessage",
     "SystemMessageContent",
     "SystemMessageContentChunks",
@@ -4399,8 +4482,6 @@ __all__ = [
     "UpdateIndexMetricsRequestSchemaMetricsTypedDict",
     "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest",
     "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequestTypedDict",
-    "UpdateIndexSummaryRequestSummary",
-    "UpdateIndexSummaryRequestSummaryTypedDict",
     "UpdateInvocationBody",
     "UpdateInvocationBodyInput",
     "UpdateInvocationBodyInputTypedDict",
@@ -4425,12 +4506,13 @@ __all__ = [
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict",
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest",
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict",
-    "UpdateSchemaSummaryRequestSummary",
-    "UpdateSchemaSummaryRequestSummaryTypedDict",
     "UpdateSkillRequest",
     "UpdateSkillRequestTypedDict",
     "UpdateSkillVersionRequest",
     "UpdateSkillVersionRequestTypedDict",
+    "UpdateSummaryRequestSummary",
+    "UpdateSummaryRequestSummaryStatus",
+    "UpdateSummaryRequestSummaryTypedDict",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest",
@@ -4449,6 +4531,8 @@ __all__ = [
     "UserMessageContent",
     "UserMessageContentTypedDict",
     "UserMessageTypedDict",
+    "UsersAPIGetIdentitySecurity",
+    "UsersAPIGetIdentitySecurityTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
     "VespaGetRetrievableResponseRetrievable",
@@ -4615,6 +4699,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentHandoffEntryTypedDict": ".agenthandoffentry",
     "AgentHandoffStartedEvent": ".agenthandoffstartedevent",
     "AgentHandoffStartedEventTypedDict": ".agenthandoffstartedevent",
+    "AgentListPage": ".agentlistpage",
+    "AgentListPageTypedDict": ".agentlistpage",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequest": ".agents_api_v1_agents_create_or_update_aliasop",
     "AgentsAPIV1AgentsCreateOrUpdateAliasRequestTypedDict": ".agents_api_v1_agents_create_or_update_aliasop",
     "AgentsAPIV1AgentsDeleteAliasRequest": ".agents_api_v1_agents_delete_aliasop",
@@ -4627,6 +4713,10 @@ _dynamic_imports: dict[str, str] = {
     "AgentsAPIV1AgentsGetAgentVersionTypedDict": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsGetRequest": ".agents_api_v1_agents_getop",
     "AgentsAPIV1AgentsGetRequestTypedDict": ".agents_api_v1_agents_getop",
+    "AgentsAPIV1AgentsListPagesRequest": ".agents_api_v1_agents_list_pagesop",
+    "AgentsAPIV1AgentsListPagesRequestTypedDict": ".agents_api_v1_agents_list_pagesop",
+    "AgentsAPIV1AgentsListPagesResponse": ".agents_api_v1_agents_list_pagesop",
+    "AgentsAPIV1AgentsListPagesResponseTypedDict": ".agents_api_v1_agents_list_pagesop",
     "AgentsAPIV1AgentsListVersionAliasesRequest": ".agents_api_v1_agents_list_version_aliasesop",
     "AgentsAPIV1AgentsListVersionAliasesRequestTypedDict": ".agents_api_v1_agents_list_version_aliasesop",
     "AgentsAPIV1AgentsListVersionsRequest": ".agents_api_v1_agents_list_versionsop",
@@ -4847,6 +4937,8 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorDeactivateForUserV1RequestTypedDict": ".connector_deactivate_for_user_v1op",
     "ConnectorDeactivateForWorkspaceV1Request": ".connector_deactivate_for_workspace_v1op",
     "ConnectorDeactivateForWorkspaceV1RequestTypedDict": ".connector_deactivate_for_workspace_v1op",
+    "ConnectorDeleteAllUserCredentialsV1Request": ".connector_delete_all_user_credentials_v1op",
+    "ConnectorDeleteAllUserCredentialsV1RequestTypedDict": ".connector_delete_all_user_credentials_v1op",
     "ConnectorDeleteOrganizationCredentialsV1Request": ".connector_delete_organization_credentials_v1op",
     "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict": ".connector_delete_organization_credentials_v1op",
     "ConnectorDeleteUserCredentialsV1Request": ".connector_delete_user_credentials_v1op",
@@ -5227,6 +5319,16 @@ _dynamic_imports: dict[str, str] = {
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostLanguage": ".generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequest": ".generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostRequestTypedDict": ".generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypes": ".generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop",
+    "GenerateIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict": ".generate_index_summary_v1_rag_indexes_index_index_id_summary_field_language_postop",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostLanguage": ".generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequest": ".generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostRequestTypedDict": ".generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypes": ".generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop",
+    "GenerateSchemaSummaryPostV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePostSummaryStreamTypesTypedDict": ".generate_schema_summary_post_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_postop",
     "GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequest": ".get_campaign_by_id_v1_observability_campaigns_campaign_id_getop",
     "GetCampaignByIDV1ObservabilityCampaignsCampaignIDGetRequestTypedDict": ".get_campaign_by_id_v1_observability_campaigns_campaign_id_getop",
     "GetCampaignSelectedEventsV1ObservabilityCampaignsCampaignIDSelectedEventsGetRequest": ".get_campaign_selected_events_v1_observability_campaigns_campaign_id_selected_events_getop",
@@ -5267,6 +5369,9 @@ _dynamic_imports: dict[str, str] = {
     "GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequestTypedDict": ".get_index_schema_detail_v1_rag_indexes_index_index_id_schemas_schema_schema_id_detail_getop",
     "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
     "GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequestTypedDict": ".get_index_schema_file_v1_rag_indexes_index_index_id_schemas_schema_schema_id_file_getop",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetLanguage": ".get_index_summary_v1_rag_indexes_index_index_id_summary_field_language_getop",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequest": ".get_index_summary_v1_rag_indexes_index_index_id_summary_field_language_getop",
+    "GetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguageGetRequestTypedDict": ".get_index_summary_v1_rag_indexes_index_index_id_summary_field_language_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
     "GetJudgesV1ObservabilityJudgesGetRequest": ".get_judges_v1_observability_judges_getop",
@@ -5284,6 +5389,9 @@ _dynamic_imports: dict[str, str] = {
     "GetSchedulesV1WorkflowsSchedulesGetResponse": ".get_schedules_v1_workflows_schedules_getop",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict": ".get_schedules_v1_workflows_schedules_getop",
     "GetSchedulesV1WorkflowsSchedulesGetStatus": ".get_schedules_v1_workflows_schedules_getop",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetLanguage": ".get_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_getop",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequest": ".get_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_getop",
+    "GetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguageGetRequestTypedDict": ".get_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequestTypedDict": ".get_similar_chat_completion_events_v1_observability_chat_completion_events_event_id_similar_events_getop",
     "GetSpanByIDV1ObservabilityTracesTraceIDSpansSpanIDGetRequest": ".get_span_by_id_v1_observability_traces_trace_id_spans_span_id_getop",
@@ -5392,6 +5500,8 @@ _dynamic_imports: dict[str, str] = {
     "GetSpanFieldsTypedDict": ".getspanfields",
     "GetSpans": ".getspans",
     "GetSpansTypedDict": ".getspans",
+    "GetSummaryResponseSummary": ".getsummaryresponsesummary",
+    "GetSummaryResponseSummaryTypedDict": ".getsummaryresponsesummary",
     "GetTrace": ".gettrace",
     "GetTraceStatusCode": ".gettrace",
     "GetTraceTypedDict": ".gettrace",
@@ -5976,10 +6086,12 @@ _dynamic_imports: dict[str, str] = {
     "ServerTasksCapabilityTypedDict": ".servertaskscapability",
     "ServerTasksRequestsCapability": ".servertasksrequestscapability",
     "ServerTasksRequestsCapabilityTypedDict": ".servertasksrequestscapability",
-    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
-    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequestTypedDict": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_putop",
-    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
-    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequestTypedDict": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_putop",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutLanguage": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_language_putop",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequest": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_language_putop",
+    "SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldLanguagePutRequestTypedDict": ".set_index_summary_v1_rag_indexes_index_index_id_summary_field_language_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutLanguage": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequest": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_putop",
+    "SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldLanguagePutRequestTypedDict": ".set_schema_summary_v1_rag_indexes_index_index_id_schemas_schema_schema_id_summary_field_language_putop",
     "ShareEnum": ".shareenum",
     "Sharing": ".sharing",
     "SharingTypedDict": ".sharing",
@@ -6086,6 +6198,14 @@ _dynamic_imports: dict[str, str] = {
     "StreamEventSsePayloadTypedDict": ".streameventssepayload",
     "StreamEventWorkflowContext": ".streameventworkflowcontext",
     "StreamEventWorkflowContextTypedDict": ".streameventworkflowcontext",
+    "SummaryChunk": ".summarychunk",
+    "SummaryChunkTypedDict": ".summarychunk",
+    "SummaryError": ".summaryerror",
+    "SummaryErrorTypedDict": ".summaryerror",
+    "SummaryMetadata": ".summarymetadata",
+    "SummaryMetadataTypedDict": ".summarymetadata",
+    "SummaryStatus": ".summarystatus",
+    "SummaryStatusDollarDefs": ".summarystatus_dollar_defs",
     "SystemMessage": ".systemmessage",
     "SystemMessageContent": ".systemmessage",
     "SystemMessageContentTypedDict": ".systemmessage",
@@ -6287,8 +6407,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict": ".updateindexmetricsrequestindexmetricsonline",
     "UpdateIndexMetricsRequestSchemaMetrics": ".updateindexmetricsrequestschemametrics",
     "UpdateIndexMetricsRequestSchemaMetricsTypedDict": ".updateindexmetricsrequestschemametrics",
-    "UpdateIndexSummaryRequestSummary": ".updateindexsummaryrequestsummary",
-    "UpdateIndexSummaryRequestSummaryTypedDict": ".updateindexsummaryrequestsummary",
     "UpdateInvocationBody": ".updateinvocationbody",
     "UpdateInvocationBodyInput": ".updateinvocationbody",
     "UpdateInvocationBodyInputTypedDict": ".updateinvocationbody",
@@ -6303,8 +6421,9 @@ _dynamic_imports: dict[str, str] = {
     "UpdateModelRequestTypedDict": ".updatemodelrequest",
     "UpdateRunInfo": ".updateruninfo",
     "UpdateRunInfoTypedDict": ".updateruninfo",
-    "UpdateSchemaSummaryRequestSummary": ".updateschemasummaryrequestsummary",
-    "UpdateSchemaSummaryRequestSummaryTypedDict": ".updateschemasummaryrequestsummary",
+    "UpdateSummaryRequestSummary": ".updatesummaryrequestsummary",
+    "UpdateSummaryRequestSummaryStatus": ".updatesummaryrequestsummary",
+    "UpdateSummaryRequestSummaryTypedDict": ".updatesummaryrequestsummary",
     "UpdateWorkflowResponse": ".updateworkflowresponse",
     "UpdateWorkflowResponseTypedDict": ".updateworkflowresponse",
     "UsageInfo": ".usageinfo",
@@ -6317,6 +6436,8 @@ _dynamic_imports: dict[str, str] = {
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
     "UserMessageTypedDict": ".usermessage",
+    "UsersAPIGetIdentitySecurity": ".users_api_get_identityop",
+    "UsersAPIGetIdentitySecurityTypedDict": ".users_api_get_identityop",
     "Context": ".validationerror",
     "ContextTypedDict": ".validationerror",
     "Loc": ".validationerror",
