@@ -10,6 +10,7 @@ repos:
   rev: v1.1.401
   hooks:
     - id: pyright
+      additional_dependencies: [pydantic]
       files: ^(examples/|src/mistralai/|packages/(azure|gcp)/src/mistralai/).*\.py$
       exclude: ^src/mistralai/(__init__|sdkhooks|types)\.py$
 - repo: https://github.com/pre-commit/mirrors-mypy

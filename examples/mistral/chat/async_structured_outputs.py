@@ -20,7 +20,7 @@ async def main():
         final_answer: str
 
     chat_response = await client.chat.parse_async(
-        model="mistral-large-2411",
+        model="mistral-large-latest",
         messages=[
             {
                 "role": "system",
@@ -30,7 +30,10 @@ async def main():
         ],
         response_format=MathDemonstration,
     )
-    print(chat_response.choices[0].message.parsed)
+    if chat_response.choices:
+        message = chat_response.choices[0].message
+        if message is not None:
+            print(message.parsed)
 
 
 if __name__ == "__main__":

@@ -21,14 +21,17 @@ async def main():
                     {"type": "text", "text": "What's in this image?"},
                     {
                         "type": "image_url",
-                        "image_url": "https://cms.mistral.ai/assets/a64b3821-3a4c-4d4d-b718-d653f3eb7a5e.png?",
+                        "image_url": "https://mistral.ai/_astro/ai-app_Z2q9iqE.webp?dpl=6a57bb9ad483ec680851599b",
                     },
                 ]
             )
         ],
     )
 
-    print(chat_response.choices[0].message.content)
+    if chat_response.choices:
+        message = chat_response.choices[0].message
+        if message is not None:
+            print(message.content)
 
 
 if __name__ == "__main__":
