@@ -21,7 +21,7 @@ async def main():
                     {"type": "text", "text": "What's in this image?"},
                     {
                         "type": "image_url",
-                        "image_url": "https://mistral.ai/_astro/ai-app_Z2q9iqE.webp?dpl=6a57bb9ad483ec680851599b",
+                        "image_url": "https://raw.githubusercontent.com/mistralai/mistral-common/7edf6f651b3579135f44686e345d51b7e19a536a/docs/assets/logo_favicon.png",
                     },
                 ]
             )
