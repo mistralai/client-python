@@ -2,7 +2,6 @@
 # @generated-id: 4c6ad704479b
 
 from __future__ import annotations
-from .connectortool import ConnectorTool, ConnectorToolTypedDict
 from .mcptool import MCPTool, MCPToolTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -88,13 +87,12 @@ class ConnectorListToolsV1Request(BaseModel):
 
 ResponseConnectorListToolsV1TypedDict = TypeAliasType(
     "ResponseConnectorListToolsV1TypedDict",
-    Union[List[ConnectorToolTypedDict], List[MCPToolTypedDict], List[Dict[str, Any]]],
+    Union[List[MCPToolTypedDict], List[Dict[str, Any]]],
 )
 r"""Successful Response"""
 
 
 ResponseConnectorListToolsV1 = TypeAliasType(
-    "ResponseConnectorListToolsV1",
-    Union[List[ConnectorTool], List[MCPTool], List[Dict[str, Any]]],
+    "ResponseConnectorListToolsV1", Union[List[MCPTool], List[Dict[str, Any]]]
 )
 r"""Successful Response"""

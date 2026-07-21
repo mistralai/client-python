@@ -784,7 +784,13 @@ print(res.choices[0].message.content)
 #### [Workflows.Deployments](docs/sdks/deployments/README.md)
 
 * [list_deployments](docs/sdks/deployments/README.md#list_deployments) - List Deployments
+* [create_deployment](docs/sdks/deployments/README.md#create_deployment) - Create Deployment
+* [update_deployment](docs/sdks/deployments/README.md#update_deployment) - Update Deployment
+* [delete_deployment](docs/sdks/deployments/README.md#delete_deployment) - Delete Deployment
 * [get_deployment](docs/sdks/deployments/README.md#get_deployment) - Get Deployment
+* [stop_deployment](docs/sdks/deployments/README.md#stop_deployment) - Stop Deployment
+* [start_deployment](docs/sdks/deployments/README.md#start_deployment) - Start Deployment
+* [restart_deployment](docs/sdks/deployments/README.md#restart_deployment) - Restart Deployment
 * [get_deployment_logs](docs/sdks/deployments/README.md#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](docs/sdks/deployments/README.md#stream_deployment_logs) - Stream Deployment Logs
 
@@ -1087,8 +1093,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 152 of 249 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 249 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 158 of 255 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 255 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

@@ -71,11 +71,13 @@ class OCRRequestTypedDict(TypedDict):
     r"""Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided."""
     table_format: NotRequired[Nullable[TableFormat]]
     extract_header: NotRequired[bool]
+    r"""Extract the page header into the response's `header` field and remove it from the markdown content"""
     extract_footer: NotRequired[bool]
+    r"""Extract the page footer into the response's `footer` field and remove it from the markdown content"""
     include_blocks: NotRequired[bool]
     r"""Return paragraph-level bounding boxes for all content blocks in the response"""
     confidence_scores_granularity: NotRequired[Nullable[ConfidenceScoresGranularity]]
-    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
+    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small."""
 
 
 class OCRRequest(BaseModel):
@@ -108,14 +110,16 @@ class OCRRequest(BaseModel):
     table_format: OptionalNullable[TableFormat] = UNSET
 
     extract_header: Optional[bool] = None
+    r"""Extract the page header into the response's `header` field and remove it from the markdown content"""
 
     extract_footer: Optional[bool] = None
+    r"""Extract the page footer into the response's `footer` field and remove it from the markdown content"""
 
-    include_blocks: Optional[bool] = False
+    include_blocks: Optional[bool] = True
     r"""Return paragraph-level bounding boxes for all content blocks in the response"""
 
     confidence_scores_granularity: OptionalNullable[ConfidenceScoresGranularity] = UNSET
-    r"""Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small."""
+    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

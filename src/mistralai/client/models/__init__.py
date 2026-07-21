@@ -542,7 +542,6 @@ if TYPE_CHECKING:
         ConversationMessages,
         ConversationMessagesTypedDict,
     )
-    from .conversationpayload import ConversationPayload, ConversationPayloadTypedDict
     from .conversationrequest import (
         ConversationRequest,
         ConversationRequestAgentVersion,
@@ -572,7 +571,6 @@ if TYPE_CHECKING:
         ConversationRestartStreamRequestHandoffExecution,
         ConversationRestartStreamRequestTypedDict,
     )
-    from .conversationsource import ConversationSource
     from .conversationstreamrequest import (
         ConversationStreamRequest,
         ConversationStreamRequestAgentVersion,
@@ -615,6 +613,10 @@ if TYPE_CHECKING:
     from .createdatasetrequest import (
         CreateDatasetRequest,
         CreateDatasetRequestTypedDict,
+    )
+    from .createdeploymentrequest import (
+        CreateDeploymentRequest,
+        CreateDeploymentRequestTypedDict,
     )
     from .createfileresponse import CreateFileResponse, CreateFileResponseTypedDict
     from .createingestionpipelineconfigurationrequest import (
@@ -711,6 +713,7 @@ if TYPE_CHECKING:
     from .datasetimporttask import DatasetImportTask, DatasetImportTaskTypedDict
     from .datasetpreview import DatasetPreview, DatasetPreviewTypedDict
     from .datasetrecord import DatasetRecord, DatasetRecordTypedDict
+    from .datasetrecordsource import DatasetRecordSource
     from .delete_campaign_v1_observability_campaigns_campaign_id_deleteop import (
         DeleteCampaignV1ObservabilityCampaignsCampaignIDDeleteRequest,
         DeleteCampaignV1ObservabilityCampaignsCampaignIDDeleteRequestTypedDict,
@@ -722,6 +725,10 @@ if TYPE_CHECKING:
     from .delete_dataset_v1_observability_datasets_dataset_id_deleteop import (
         DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequest,
         DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequestTypedDict,
+    )
+    from .delete_deployment_v1_workflows_deployments_name_deleteop import (
+        DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequest,
+        DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequestTypedDict,
     )
     from .delete_judge_v1_observability_judges_judge_id_deleteop import (
         DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest,
@@ -756,6 +763,10 @@ if TYPE_CHECKING:
         DeltaMessageContentTypedDict,
         DeltaMessageTypedDict,
     )
+    from .deploymentbuildstate import (
+        DeploymentBuildState,
+        DeploymentBuildStateTypedDict,
+    )
     from .deploymentdetailresponse import (
         DeploymentDetailResponse,
         DeploymentDetailResponseTypedDict,
@@ -770,10 +781,30 @@ if TYPE_CHECKING:
         DeploymentLogSearchResponse,
         DeploymentLogSearchResponseTypedDict,
     )
+    from .deploymentobservedstate import (
+        DeploymentObservedState,
+        DeploymentObservedStateTypedDict,
+    )
+    from .deploymentresourceconfig import (
+        DeploymentResourceConfig,
+        DeploymentResourceConfigTypedDict,
+    )
+    from .deploymentresourceconfigupdate import (
+        DeploymentResourceConfigUpdate,
+        DeploymentResourceConfigUpdateTypedDict,
+    )
     from .deploymentresponse import DeploymentResponse, DeploymentResponseTypedDict
     from .deploymentworkerresponse import (
         DeploymentWorkerResponse,
         DeploymentWorkerResponseTypedDict,
+    )
+    from .deploymentworkerspecinput import (
+        DeploymentWorkerSpecInput,
+        DeploymentWorkerSpecInputTypedDict,
+    )
+    from .deploymentworkerspecresponse import (
+        DeploymentWorkerSpecResponse,
+        DeploymentWorkerSpecResponseTypedDict,
     )
     from .document import Document, DocumentTypedDict
     from .document_fetch_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_getop import (
@@ -1577,6 +1608,10 @@ if TYPE_CHECKING:
     )
     from .locationtype import LocationType
     from .logsrequest import LogsRequest, LogsRequestTypedDict, Order
+    from .manageddeploymentresponse import (
+        ManagedDeploymentResponse,
+        ManagedDeploymentResponseTypedDict,
+    )
     from .mcpprompt import MCPPrompt, MCPPromptTypedDict
     from .mcpresource import MCPResource, MCPResourceTypedDict
     from .mcpserverauthenticationrequirement import (
@@ -1956,6 +1991,10 @@ if TYPE_CHECKING:
         ResponseStartedEvent,
         ResponseStartedEventTypedDict,
     )
+    from .restart_deployment_v1_workflows_deployments_name_restart_postop import (
+        RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequest,
+        RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequestTypedDict,
+    )
     from .resume_schedule_v1_workflows_schedules_schedule_id_resume_postop import (
         ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest,
         ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict,
@@ -2148,6 +2187,14 @@ if TYPE_CHECKING:
     from .speechstreamdone import SpeechStreamDone, SpeechStreamDoneTypedDict
     from .speechstreameventtypes import SpeechStreamEventTypes
     from .ssetypes import SSETypes
+    from .start_deployment_v1_workflows_deployments_name_start_postop import (
+        StartDeploymentV1WorkflowsDeploymentsNameStartPostRequest,
+        StartDeploymentV1WorkflowsDeploymentsNameStartPostRequestTypedDict,
+    )
+    from .stop_deployment_v1_workflows_deployments_name_stop_postop import (
+        StopDeploymentV1WorkflowsDeploymentsNameStopPostRequest,
+        StopDeploymentV1WorkflowsDeploymentsNameStopPostRequestTypedDict,
+    )
     from .stream_deployment_logsop import (
         StreamDeploymentLogsData,
         StreamDeploymentLogsDataTypedDict,
@@ -2407,6 +2454,10 @@ if TYPE_CHECKING:
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest,
         UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict,
     )
+    from .update_deployment_v1_workflows_deployments_name_patchop import (
+        UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequest,
+        UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict,
+    )
     from .update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop import (
         MetricsData,
         MetricsDataTypedDict,
@@ -2460,6 +2511,10 @@ if TYPE_CHECKING:
         UpdateDatasetRequestTypedDict,
     )
     from .updatedefinition import UpdateDefinition, UpdateDefinitionTypedDict
+    from .updatedeploymentrequest import (
+        UpdateDeploymentRequest,
+        UpdateDeploymentRequestTypedDict,
+    )
     from .updatedocumentrequest import (
         Attributes,
         AttributesTypedDict,
@@ -2508,6 +2563,15 @@ if TYPE_CHECKING:
     from .usageinfo import UsageInfo, UsageInfoTypedDict
     from .usageinfo_dollar_defs import UsageInfoDollarDefs, UsageInfoDollarDefsTypedDict
     from .useridentity import UserIdentity, UserIdentityTypedDict
+    from .useridentityapikey import UserIdentityAPIKey, UserIdentityAPIKeyTypedDict
+    from .useridentityorganization import (
+        UserIdentityOrganization,
+        UserIdentityOrganizationTypedDict,
+    )
+    from .useridentityworkspace import (
+        UserIdentityWorkspace,
+        UserIdentityWorkspaceTypedDict,
+    )
     from .usermessage import (
         UserMessage,
         UserMessageContent,
@@ -2709,6 +2773,10 @@ if TYPE_CHECKING:
         WorkflowScheduleUpdateRequestTypedDict,
     )
     from .workflowstreamerror import WorkflowStreamError, WorkflowStreamErrorTypedDict
+    from .workflowsworkerspecupdate import (
+        WorkflowsWorkerSpecUpdate,
+        WorkflowsWorkerSpecUpdateTypedDict,
+    )
     from .workflowtaskfailedattributes import (
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
@@ -3101,8 +3169,6 @@ __all__ = [
     "ConversationInputsTypedDict",
     "ConversationMessages",
     "ConversationMessagesTypedDict",
-    "ConversationPayload",
-    "ConversationPayloadTypedDict",
     "ConversationRequest",
     "ConversationRequestAgentVersion",
     "ConversationRequestAgentVersionTypedDict",
@@ -3124,7 +3190,6 @@ __all__ = [
     "ConversationRestartStreamRequestAgentVersionTypedDict",
     "ConversationRestartStreamRequestHandoffExecution",
     "ConversationRestartStreamRequestTypedDict",
-    "ConversationSource",
     "ConversationStreamRequest",
     "ConversationStreamRequestAgentVersion",
     "ConversationStreamRequestAgentVersionTypedDict",
@@ -3150,6 +3215,8 @@ __all__ = [
     "CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequestTypedDict",
     "CreateDatasetRequest",
     "CreateDatasetRequestTypedDict",
+    "CreateDeploymentRequest",
+    "CreateDeploymentRequestTypedDict",
     "CreateFileResponse",
     "CreateFileResponseTypedDict",
     "CreateIngestionPipelineConfigurationRequest",
@@ -3211,6 +3278,7 @@ __all__ = [
     "DatasetPreview",
     "DatasetPreviewTypedDict",
     "DatasetRecord",
+    "DatasetRecordSource",
     "DatasetRecordTypedDict",
     "DatasetTypedDict",
     "DeleteBatchJobResponse",
@@ -3223,6 +3291,8 @@ __all__ = [
     "DeleteDatasetRecordsRequestTypedDict",
     "DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequest",
     "DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequestTypedDict",
+    "DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequest",
+    "DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequestTypedDict",
     "DeleteFileResponse",
     "DeleteFileResponseTypedDict",
     "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest",
@@ -3241,6 +3311,8 @@ __all__ = [
     "DeltaMessageContent",
     "DeltaMessageContentTypedDict",
     "DeltaMessageTypedDict",
+    "DeploymentBuildState",
+    "DeploymentBuildStateTypedDict",
     "DeploymentDetailResponse",
     "DeploymentDetailResponseTypedDict",
     "DeploymentListResponse",
@@ -3251,11 +3323,21 @@ __all__ = [
     "DeploymentLogRecordTypedDict",
     "DeploymentLogSearchResponse",
     "DeploymentLogSearchResponseTypedDict",
+    "DeploymentObservedState",
+    "DeploymentObservedStateTypedDict",
+    "DeploymentResourceConfig",
+    "DeploymentResourceConfigTypedDict",
+    "DeploymentResourceConfigUpdate",
+    "DeploymentResourceConfigUpdateTypedDict",
     "DeploymentResponse",
     "DeploymentResponseTypedDict",
     "DeploymentStatus",
     "DeploymentWorkerResponse",
     "DeploymentWorkerResponseTypedDict",
+    "DeploymentWorkerSpecInput",
+    "DeploymentWorkerSpecInputTypedDict",
+    "DeploymentWorkerSpecResponse",
+    "DeploymentWorkerSpecResponseTypedDict",
     "Document",
     "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest",
     "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequestTypedDict",
@@ -3810,6 +3892,8 @@ __all__ = [
     "MCPToolTypedDict",
     "MCPUIToolMeta",
     "MCPUIToolMetaTypedDict",
+    "ManagedDeploymentResponse",
+    "ManagedDeploymentResponseTypedDict",
     "MessageEntries",
     "MessageEntriesTypedDict",
     "MessageInputContentChunks",
@@ -4105,6 +4189,8 @@ __all__ = [
     "ResponseStartedEventTypedDict",
     "ResponseV1ConversationsGet",
     "ResponseV1ConversationsGetTypedDict",
+    "RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequest",
+    "RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequestTypedDict",
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest",
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
@@ -4248,6 +4334,10 @@ __all__ = [
     "SpeechV1AudioSpeechPostDataTypedDict",
     "SpeechV1AudioSpeechPostResponse",
     "SpeechV1AudioSpeechPostResponseTypedDict",
+    "StartDeploymentV1WorkflowsDeploymentsNameStartPostRequest",
+    "StartDeploymentV1WorkflowsDeploymentsNameStartPostRequestTypedDict",
+    "StopDeploymentV1WorkflowsDeploymentsNameStopPostRequest",
+    "StopDeploymentV1WorkflowsDeploymentsNameStopPostRequestTypedDict",
     "StreamDeploymentLogsData",
     "StreamDeploymentLogsDataTypedDict",
     "StreamDeploymentLogsEvent",
@@ -4472,6 +4562,10 @@ __all__ = [
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict",
     "UpdateDefinition",
     "UpdateDefinitionTypedDict",
+    "UpdateDeploymentRequest",
+    "UpdateDeploymentRequestTypedDict",
+    "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequest",
+    "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict",
     "UpdateDocumentRequest",
     "UpdateDocumentRequestTypedDict",
     "UpdateIndexMetricsRequestIndexMetricsOffline",
@@ -4526,7 +4620,13 @@ __all__ = [
     "UsageInfoDollarDefsTypedDict",
     "UsageInfoTypedDict",
     "UserIdentity",
+    "UserIdentityAPIKey",
+    "UserIdentityAPIKeyTypedDict",
+    "UserIdentityOrganization",
+    "UserIdentityOrganizationTypedDict",
     "UserIdentityTypedDict",
+    "UserIdentityWorkspace",
+    "UserIdentityWorkspaceTypedDict",
     "UserMessage",
     "UserMessageContent",
     "UserMessageContentTypedDict",
@@ -4663,6 +4763,8 @@ __all__ = [
     "WorkflowUpdateResponseTypedDict",
     "WorkflowWithWorkerStatus",
     "WorkflowWithWorkerStatusTypedDict",
+    "WorkflowsWorkerSpecUpdate",
+    "WorkflowsWorkerSpecUpdateTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -5014,8 +5116,6 @@ _dynamic_imports: dict[str, str] = {
     "ConversationInputsTypedDict": ".conversationinputs",
     "ConversationMessages": ".conversationmessages",
     "ConversationMessagesTypedDict": ".conversationmessages",
-    "ConversationPayload": ".conversationpayload",
-    "ConversationPayloadTypedDict": ".conversationpayload",
     "ConversationRequest": ".conversationrequest",
     "ConversationRequestAgentVersion": ".conversationrequest",
     "ConversationRequestAgentVersionTypedDict": ".conversationrequest",
@@ -5037,7 +5137,6 @@ _dynamic_imports: dict[str, str] = {
     "ConversationRestartStreamRequestAgentVersionTypedDict": ".conversationrestartstreamrequest",
     "ConversationRestartStreamRequestHandoffExecution": ".conversationrestartstreamrequest",
     "ConversationRestartStreamRequestTypedDict": ".conversationrestartstreamrequest",
-    "ConversationSource": ".conversationsource",
     "ConversationStreamRequest": ".conversationstreamrequest",
     "ConversationStreamRequestAgentVersion": ".conversationstreamrequest",
     "ConversationStreamRequestAgentVersionTypedDict": ".conversationstreamrequest",
@@ -5063,6 +5162,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateDatasetRecordRequestTypedDict": ".createdatasetrecordrequest",
     "CreateDatasetRequest": ".createdatasetrequest",
     "CreateDatasetRequestTypedDict": ".createdatasetrequest",
+    "CreateDeploymentRequest": ".createdeploymentrequest",
+    "CreateDeploymentRequestTypedDict": ".createdeploymentrequest",
     "CreateFileResponse": ".createfileresponse",
     "CreateFileResponseTypedDict": ".createfileresponse",
     "CreateIngestionPipelineConfigurationRequest": ".createingestionpipelineconfigurationrequest",
@@ -5129,12 +5230,15 @@ _dynamic_imports: dict[str, str] = {
     "DatasetPreviewTypedDict": ".datasetpreview",
     "DatasetRecord": ".datasetrecord",
     "DatasetRecordTypedDict": ".datasetrecord",
+    "DatasetRecordSource": ".datasetrecordsource",
     "DeleteCampaignV1ObservabilityCampaignsCampaignIDDeleteRequest": ".delete_campaign_v1_observability_campaigns_campaign_id_deleteop",
     "DeleteCampaignV1ObservabilityCampaignsCampaignIDDeleteRequestTypedDict": ".delete_campaign_v1_observability_campaigns_campaign_id_deleteop",
     "DeleteDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDDeleteRequest": ".delete_dataset_record_v1_observability_dataset_records_dataset_record_id_deleteop",
     "DeleteDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDDeleteRequestTypedDict": ".delete_dataset_record_v1_observability_dataset_records_dataset_record_id_deleteop",
     "DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequest": ".delete_dataset_v1_observability_datasets_dataset_id_deleteop",
     "DeleteDatasetV1ObservabilityDatasetsDatasetIDDeleteRequestTypedDict": ".delete_dataset_v1_observability_datasets_dataset_id_deleteop",
+    "DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequest": ".delete_deployment_v1_workflows_deployments_name_deleteop",
+    "DeleteDeploymentV1WorkflowsDeploymentsNameDeleteRequestTypedDict": ".delete_deployment_v1_workflows_deployments_name_deleteop",
     "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest": ".delete_judge_v1_observability_judges_judge_id_deleteop",
     "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequestTypedDict": ".delete_judge_v1_observability_judges_judge_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequest": ".delete_model_v1_models_model_id_deleteop",
@@ -5157,6 +5261,8 @@ _dynamic_imports: dict[str, str] = {
     "DeltaMessageContent": ".deltamessage",
     "DeltaMessageContentTypedDict": ".deltamessage",
     "DeltaMessageTypedDict": ".deltamessage",
+    "DeploymentBuildState": ".deploymentbuildstate",
+    "DeploymentBuildStateTypedDict": ".deploymentbuildstate",
     "DeploymentDetailResponse": ".deploymentdetailresponse",
     "DeploymentDetailResponseTypedDict": ".deploymentdetailresponse",
     "DeploymentListResponse": ".deploymentlistresponse",
@@ -5167,10 +5273,20 @@ _dynamic_imports: dict[str, str] = {
     "DeploymentLogRecordTypedDict": ".deploymentlogrecord",
     "DeploymentLogSearchResponse": ".deploymentlogsearchresponse",
     "DeploymentLogSearchResponseTypedDict": ".deploymentlogsearchresponse",
+    "DeploymentObservedState": ".deploymentobservedstate",
+    "DeploymentObservedStateTypedDict": ".deploymentobservedstate",
+    "DeploymentResourceConfig": ".deploymentresourceconfig",
+    "DeploymentResourceConfigTypedDict": ".deploymentresourceconfig",
+    "DeploymentResourceConfigUpdate": ".deploymentresourceconfigupdate",
+    "DeploymentResourceConfigUpdateTypedDict": ".deploymentresourceconfigupdate",
     "DeploymentResponse": ".deploymentresponse",
     "DeploymentResponseTypedDict": ".deploymentresponse",
     "DeploymentWorkerResponse": ".deploymentworkerresponse",
     "DeploymentWorkerResponseTypedDict": ".deploymentworkerresponse",
+    "DeploymentWorkerSpecInput": ".deploymentworkerspecinput",
+    "DeploymentWorkerSpecInputTypedDict": ".deploymentworkerspecinput",
+    "DeploymentWorkerSpecResponse": ".deploymentworkerspecresponse",
+    "DeploymentWorkerSpecResponseTypedDict": ".deploymentworkerspecresponse",
     "Document": ".document",
     "DocumentTypedDict": ".document",
     "DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest": ".document_fetch_v1_rag_indexes_index_index_id_schemas_schema_schema_id_retrievables_getop",
@@ -5709,6 +5825,8 @@ _dynamic_imports: dict[str, str] = {
     "LogsRequest": ".logsrequest",
     "LogsRequestTypedDict": ".logsrequest",
     "Order": ".logsrequest",
+    "ManagedDeploymentResponse": ".manageddeploymentresponse",
+    "ManagedDeploymentResponseTypedDict": ".manageddeploymentresponse",
     "MCPPrompt": ".mcpprompt",
     "MCPPromptTypedDict": ".mcpprompt",
     "MCPResource": ".mcpresource",
@@ -6020,6 +6138,8 @@ _dynamic_imports: dict[str, str] = {
     "ResponseFormats": ".responseformats",
     "ResponseStartedEvent": ".responsestartedevent",
     "ResponseStartedEventTypedDict": ".responsestartedevent",
+    "RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequest": ".restart_deployment_v1_workflows_deployments_name_restart_postop",
+    "RestartDeploymentV1WorkflowsDeploymentsNameRestartPostRequestTypedDict": ".restart_deployment_v1_workflows_deployments_name_restart_postop",
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest": ".resume_schedule_v1_workflows_schedules_schedule_id_resume_postop",
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict": ".resume_schedule_v1_workflows_schedules_schedule_id_resume_postop",
     "ResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",
@@ -6170,6 +6290,10 @@ _dynamic_imports: dict[str, str] = {
     "SpeechStreamDoneTypedDict": ".speechstreamdone",
     "SpeechStreamEventTypes": ".speechstreameventtypes",
     "SSETypes": ".ssetypes",
+    "StartDeploymentV1WorkflowsDeploymentsNameStartPostRequest": ".start_deployment_v1_workflows_deployments_name_start_postop",
+    "StartDeploymentV1WorkflowsDeploymentsNameStartPostRequestTypedDict": ".start_deployment_v1_workflows_deployments_name_start_postop",
+    "StopDeploymentV1WorkflowsDeploymentsNameStopPostRequest": ".stop_deployment_v1_workflows_deployments_name_stop_postop",
+    "StopDeploymentV1WorkflowsDeploymentsNameStopPostRequestTypedDict": ".stop_deployment_v1_workflows_deployments_name_stop_postop",
     "StreamDeploymentLogsData": ".stream_deployment_logsop",
     "StreamDeploymentLogsDataTypedDict": ".stream_deployment_logsop",
     "StreamDeploymentLogsEvent": ".stream_deployment_logsop",
@@ -6367,6 +6491,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequestTypedDict": ".update_dataset_record_properties_v1_observability_dataset_records_dataset_record_id_properties_putop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
+    "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequest": ".update_deployment_v1_workflows_deployments_name_patchop",
+    "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict": ".update_deployment_v1_workflows_deployments_name_patchop",
     "MetricsData": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
     "MetricsDataTypedDict": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
     "UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest": ".update_index_metrics_v1_rag_indexes_index_index_id_metrics_putop",
@@ -6397,6 +6523,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetRequestTypedDict": ".updatedatasetrequest",
     "UpdateDefinition": ".updatedefinition",
     "UpdateDefinitionTypedDict": ".updatedefinition",
+    "UpdateDeploymentRequest": ".updatedeploymentrequest",
+    "UpdateDeploymentRequestTypedDict": ".updatedeploymentrequest",
     "Attributes": ".updatedocumentrequest",
     "AttributesTypedDict": ".updatedocumentrequest",
     "UpdateDocumentRequest": ".updatedocumentrequest",
@@ -6432,6 +6560,12 @@ _dynamic_imports: dict[str, str] = {
     "UsageInfoDollarDefsTypedDict": ".usageinfo_dollar_defs",
     "UserIdentity": ".useridentity",
     "UserIdentityTypedDict": ".useridentity",
+    "UserIdentityAPIKey": ".useridentityapikey",
+    "UserIdentityAPIKeyTypedDict": ".useridentityapikey",
+    "UserIdentityOrganization": ".useridentityorganization",
+    "UserIdentityOrganizationTypedDict": ".useridentityorganization",
+    "UserIdentityWorkspace": ".useridentityworkspace",
+    "UserIdentityWorkspaceTypedDict": ".useridentityworkspace",
     "UserMessage": ".usermessage",
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
@@ -6554,6 +6688,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowScheduleUpdateRequestTypedDict": ".workflowscheduleupdaterequest",
     "WorkflowStreamError": ".workflowstreamerror",
     "WorkflowStreamErrorTypedDict": ".workflowstreamerror",
+    "WorkflowsWorkerSpecUpdate": ".workflowsworkerspecupdate",
+    "WorkflowsWorkerSpecUpdateTypedDict": ".workflowsworkerspecupdate",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",

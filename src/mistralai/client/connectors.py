@@ -5084,8 +5084,6 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
-        connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
-        connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
@@ -5106,8 +5104,6 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
-        :param connection_config: Optional new connection config.
-        :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
         :param headers: New headers for your mcp connector.
         :param auth_data: New authentication data for your mcp connector.
@@ -5137,8 +5133,6 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
-                connection_config=connection_config,
-                connection_secrets=connection_secrets,
                 server=server,
                 headers=headers,
                 auth_data=utils.get_pydantic_model(
@@ -5220,8 +5214,6 @@ class Connectors(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
-        connection_config: OptionalNullable[Dict[str, Any]] = UNSET,
-        connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET,
         server: OptionalNullable[str] = UNSET,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
         auth_data: OptionalNullable[
@@ -5242,8 +5234,6 @@ class Connectors(BaseSDK):
         :param description: The description of the connector.
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
-        :param connection_config: Optional new connection config.
-        :param connection_secrets: Optional new connection secrets
         :param server: New server url for your mcp connector.
         :param headers: New headers for your mcp connector.
         :param auth_data: New authentication data for your mcp connector.
@@ -5273,8 +5263,6 @@ class Connectors(BaseSDK):
                 description=description,
                 icon_url=icon_url,
                 system_prompt=system_prompt,
-                connection_config=connection_config,
-                connection_secrets=connection_secrets,
                 server=server,
                 headers=headers,
                 auth_data=utils.get_pydantic_model(

@@ -797,7 +797,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        payload: Dict[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -806,7 +806,7 @@ class Records(BaseSDK):
         r"""Update a dataset record conversation payload
 
         :param dataset_record_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -828,7 +828,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
             ),
         )
 
@@ -902,7 +902,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
+        payload: Dict[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -911,7 +911,7 @@ class Records(BaseSDK):
         r"""Update a dataset record conversation payload
 
         :param dataset_record_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -933,7 +933,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
             ),
         )
 

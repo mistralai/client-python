@@ -1047,7 +1047,7 @@ wheels = [
 
 [[package]]
 name = "mistralai"
-version = "2.7.0"
+version = "2.7.1"
 source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },
@@ -1132,7 +1132,7 @@ lint = [
 requires-dist = [
     { name = "aioboto3", marker = "extra == 'workflow-payload-offloading-s3'", specifier = ">=12.4.0,<13.0.0" },
     { name = "authlib", marker = "extra == 'agents'", specifier = ">=1.5.2,<2.0" },
-    { name = "azure-identity", extras = ["aio"], marker = "extra == 'workflow-payload-offloading-azure'", specifier = ">=1.25.0,<2.0.0" },
+    { name = "azure-identity", marker = "extra == 'workflow-payload-offloading-azure'", specifier = ">=1.25.0,<2.0.0" },
     { name = "azure-storage-blob", extras = ["aio"], marker = "extra == 'workflow-payload-offloading-azure'", specifier = ">=12.28.0,<13.0.0" },
     { name = "cryptography", marker = "extra == 'workflow-payload-encryption'", specifier = ">=41.0.0,<47.0.0" },
     { name = "eval-type-backport", specifier = ">=0.2.0" },
