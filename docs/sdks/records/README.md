@@ -194,7 +194,7 @@ Update a dataset record conversation payload
 
 <!-- UsageSnippet language="python" operationID="update_dataset_record_payload_v1_observability_dataset_records__dataset_record_id__payload_put" method="put" path="/v1/observability/dataset-records/{dataset_record_id}/payload" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -202,8 +202,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    mistral.beta.observability.datasets.records.update_payload(dataset_record_id="17506b15-748e-4e7c-9737-c97c44d04b0f", payload=models.ConversationPayload(
-        messages=[
+    mistral.beta.observability.datasets.records.update_payload(dataset_record_id="17506b15-748e-4e7c-9737-c97c44d04b0f", payload={
+        "messages": [
             {
                 "key": "<value>",
             },
@@ -214,7 +214,7 @@ with Mistral(
                 "key": "<value>",
             },
         ],
-    ))
+    })
 
     # Use the SDK ...
 
@@ -225,7 +225,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_record_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
+| `payload`                                                           | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | Caller-authored input object stored on a dataset record.            |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors

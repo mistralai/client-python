@@ -29,10 +29,6 @@ class UpdateConnectorRequestTypedDict(TypedDict):
     r"""The optional url of the icon you want to associate to the connector."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
-    connection_config: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Optional new connection config."""
-    connection_secrets: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Optional new connection secrets"""
     protocol: Literal["mcp"]
     server: NotRequired[Nullable[str]]
     r"""New server url for your mcp connector."""
@@ -58,12 +54,6 @@ class UpdateConnectorRequest(BaseModel):
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
 
-    connection_config: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Optional new connection config."""
-
-    connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Optional new connection secrets"""
-
     protocol: Annotated[
         Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
         pydantic.Field(alias="protocol"),
@@ -87,8 +77,6 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "connection_config",
-                "connection_secrets",
                 "protocol",
                 "server",
                 "headers",
@@ -102,8 +90,6 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "connection_config",
-                "connection_secrets",
                 "server",
                 "headers",
                 "auth_data",

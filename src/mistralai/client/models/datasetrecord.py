@@ -2,8 +2,7 @@
 # @generated-id: 87ddebf2a0ce
 
 from __future__ import annotations
-from .conversationpayload import ConversationPayload, ConversationPayloadTypedDict
-from .conversationsource import ConversationSource
+from .datasetrecordsource import DatasetRecordSource
 from datetime import datetime
 from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -17,9 +16,10 @@ class DatasetRecordTypedDict(TypedDict):
     updated_at: datetime
     deleted_at: Nullable[datetime]
     dataset_id: str
-    payload: ConversationPayloadTypedDict
+    payload: Dict[str, Any]
+    r"""Caller-authored input object stored on a dataset record."""
     properties: Dict[str, Any]
-    source: ConversationSource
+    source: DatasetRecordSource
 
 
 class DatasetRecord(BaseModel):
@@ -33,11 +33,12 @@ class DatasetRecord(BaseModel):
 
     dataset_id: str
 
-    payload: ConversationPayload
+    payload: Dict[str, Any]
+    r"""Caller-authored input object stored on a dataset record."""
 
     properties: Dict[str, Any]
 
-    source: ConversationSource
+    source: DatasetRecordSource
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
