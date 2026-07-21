@@ -3,6 +3,10 @@
 
 from __future__ import annotations
 from .deploymentlocation import DeploymentLocation, DeploymentLocationTypedDict
+from .manageddeploymentresponse import (
+    ManagedDeploymentResponse,
+    ManagedDeploymentResponseTypedDict,
+)
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -31,6 +35,8 @@ class DeploymentResponseTypedDict(TypedDict):
     r"""Whether the deployment has at least one authorized credential"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
     r"""Where the deployment is running"""
+    managed: NotRequired[Nullable[ManagedDeploymentResponseTypedDict]]
+    r"""Live managed service state for managed deployments; null for self-hosted deployments or when managed services are unavailable"""
 
 
 class DeploymentResponse(BaseModel):
@@ -55,10 +61,13 @@ class DeploymentResponse(BaseModel):
     location: OptionalNullable[DeploymentLocation] = UNSET
     r"""Where the deployment is running"""
 
+    managed: OptionalNullable[ManagedDeploymentResponse] = UNSET
+    r"""Live managed service state for managed deployments; null for self-hosted deployments or when managed services are unavailable"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["is_hardened", "location"])
-        nullable_fields = set(["location"])
+        optional_fields = set(["is_hardened", "location", "managed"])
+        nullable_fields = set(["location", "managed"])
         serialized = handler(self)
         m = {}
 

@@ -5,7 +5,13 @@
 ### Available Operations
 
 * [list_deployments](#list_deployments) - List Deployments
+* [create_deployment](#create_deployment) - Create Deployment
+* [update_deployment](#update_deployment) - Update Deployment
+* [delete_deployment](#delete_deployment) - Delete Deployment
 * [get_deployment](#get_deployment) - Get Deployment
+* [stop_deployment](#stop_deployment) - Stop Deployment
+* [start_deployment](#start_deployment) - Start Deployment
+* [restart_deployment](#restart_deployment) - Restart Deployment
 * [get_deployment_logs](#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](#stream_deployment_logs) - Stream Deployment Logs
 
@@ -56,6 +62,135 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## create_deployment
+
+Create Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="create_deployment_v1_workflows_deployments_post" method="post" path="/v1/workflows/deployments" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.create_deployment(name="<value>", spec={
+        "github_url": "https://ugly-parade.com",
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `name`                                                                                        | *str*                                                                                         | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `spec`                                                                                        | [models.DeploymentWorkerSpecInput](../../models/deploymentworkerspecinput.md)                 | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `resources`                                                                                   | [OptionalNullable[models.DeploymentResourceConfig]](../../models/deploymentresourceconfig.md) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## update_deployment
+
+Update Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="update_deployment_v1_workflows_deployments__name__patch" method="patch" path="/v1/workflows/deployments/{name}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.update_deployment(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                    | *str*                                                                                                     | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `spec`                                                                                                    | [OptionalNullable[models.WorkflowsWorkerSpecUpdate]](../../models/workflowsworkerspecupdate.md)           | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `resources`                                                                                               | [OptionalNullable[models.DeploymentResourceConfigUpdate]](../../models/deploymentresourceconfigupdate.md) | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `retries`                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                          | :heavy_minus_sign:                                                                                        | Configuration to override the default retry behavior of the client.                                       |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## delete_deployment
+
+Delete Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="delete_deployment_v1_workflows_deployments__name__delete" method="delete" path="/v1/workflows/deployments/{name}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.delete_deployment(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## get_deployment
 
 Get Deployment
@@ -89,6 +224,129 @@ with Mistral(
 ### Response
 
 **[models.DeploymentDetailResponse](../../models/deploymentdetailresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## stop_deployment
+
+Stop Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="stop_deployment_v1_workflows_deployments__name__stop_post" method="post" path="/v1/workflows/deployments/{name}/stop" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.stop_deployment(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## start_deployment
+
+Start Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="start_deployment_v1_workflows_deployments__name__start_post" method="post" path="/v1/workflows/deployments/{name}/start" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.start_deployment(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## restart_deployment
+
+Restart Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="restart_deployment_v1_workflows_deployments__name__restart_post" method="post" path="/v1/workflows/deployments/{name}/restart" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.restart_deployment(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ManagedDeploymentResponse](../../models/manageddeploymentresponse.md)**
 
 ### Errors
 
