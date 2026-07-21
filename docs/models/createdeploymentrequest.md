@@ -1,0 +1,10 @@
+# CreateDeploymentRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `name`                                                                                     | *str*                                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `spec`                                                                                     | [models.DeploymentWorkerSpecInput](../models/deploymentworkerspecinput.md)                 | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `resources`                                                                                | [OptionalNullable[models.DeploymentResourceConfig]](../models/deploymentresourceconfig.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |

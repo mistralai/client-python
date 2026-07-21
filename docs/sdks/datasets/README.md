@@ -276,7 +276,7 @@ Add a conversation to the dataset
 
 <!-- UsageSnippet language="python" operationID="create_dataset_record_v1_observability_datasets__dataset_id__records_post" method="post" path="/v1/observability/datasets/{dataset_id}/records" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -284,8 +284,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload=models.ConversationPayload(
-        messages=[
+    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload={
+        "messages": [
             {
                 "key": "<value>",
             },
@@ -294,10 +294,6 @@ with Mistral(
                 "key1": "<value>",
             },
         ],
-    ), properties={
-        "key": "<value>",
-        "key1": "<value>",
-        "key2": "<value>",
     })
 
     # Handle response
@@ -310,8 +306,8 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
-| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | N/A                                                                 |
+| `payload`                                                           | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | Caller-authored input object stored on a dataset record.            |
+| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
