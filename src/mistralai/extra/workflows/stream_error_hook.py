@@ -8,7 +8,7 @@ import httpx
 from httpx._types import AsyncByteStream, SyncByteStream
 
 from mistralai.client._hooks.types import AfterSuccessContext, AfterSuccessHook
-from mistralai.extra.workflows.errors import (
+from mistralai.extra.exceptions import (
     StreamDisconnectReason,
     StreamDisconnectedError,
 )

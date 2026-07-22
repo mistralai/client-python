@@ -4,7 +4,7 @@ from httpx._types import AsyncByteStream, SyncByteStream
 
 from mistralai.client import Mistral
 from mistralai.client._hooks.types import AfterSuccessContext, HookContext
-from mistralai.extra.workflows.errors import StreamDisconnectedError
+from mistralai.extra.exceptions import StreamDisconnectedError
 from mistralai.extra.workflows.stream_error_hook import WorkflowStreamErrorHook
 
 STREAM_OPERATION_ID = "get_stream_events_v1_workflows_events_stream_get"

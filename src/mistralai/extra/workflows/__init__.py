@@ -22,10 +22,6 @@ from .encoding import (
     configure_workflow_encoding,
     generate_two_part_id,
 )
-from .errors import (
-    StreamDisconnectReason,
-    StreamDisconnectedError,
-)
 
 __all__ = [
     "ConnectorAuthTaskState",
@@ -46,6 +42,4 @@ __all__ = [
     "EncryptedStrField",
     "configure_workflow_encoding",
     "generate_two_part_id",
-    "StreamDisconnectedError",
-    "StreamDisconnectReason",
 ]
