@@ -110,6 +110,7 @@ def test_hook_detects_error_frame_split_across_chunks():
     result = WorkflowStreamErrorHook().after_success(
         _hook_ctx(STREAM_OPERATION_ID), response
     )
+    assert isinstance(result, httpx.Response)
 
     with pytest.raises(StreamDisconnectedError) as exc_info:
         list(result.iter_bytes())
@@ -124,6 +125,7 @@ def test_hook_defaults_reason_when_missing_or_invalid():
     result = WorkflowStreamErrorHook().after_success(
         _hook_ctx(STREAM_OPERATION_ID), response
     )
+    assert isinstance(result, httpx.Response)
 
     with pytest.raises(StreamDisconnectedError) as exc_info:
         list(result.iter_bytes())
@@ -137,6 +139,7 @@ def test_hook_passes_normal_stream_through_without_raising():
     result = WorkflowStreamErrorHook().after_success(
         _hook_ctx(STREAM_OPERATION_ID), response
     )
+    assert isinstance(result, httpx.Response)
 
     body = b"".join(result.iter_bytes())
     assert body.count(b"workflow.event") == 2
