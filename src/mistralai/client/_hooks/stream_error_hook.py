@@ -56,7 +56,9 @@ def _find_boundary(buffer: bytearray) -> Optional[Tuple[int, int]]:
 def _parse_error_payload(data: str) -> Tuple[str, StreamDisconnectReason]:
     payload: Dict[str, Any] = {}
     try:
-        parsed = json.loads(data.strip())
+        # strict=False: SSE joins multi-line data with "\n", so a value spanning
+        # several data: lines contains literal newlines that strict JSON rejects.
+        parsed = json.loads(data.strip(), strict=False)
         if isinstance(parsed, dict):
             payload = parsed
     except json.JSONDecodeError:

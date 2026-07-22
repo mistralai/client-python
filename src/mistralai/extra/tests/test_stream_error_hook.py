@@ -147,6 +147,25 @@ def test_hook_raises_on_error_frame_without_trailing_boundary():
     assert exc_info.value.error == "boom"
 
 
+def test_hook_handles_error_frame_split_across_data_lines():
+    frame = (
+        b"event: error\r\n"
+        b'data: {"error": "connection\r\n'
+        b'data: lost", "reason": "read_error"}\r\n\r\n'
+    )
+    response = _sse_response(_SyncSource([frame]))
+    result = WorkflowStreamErrorHook().after_success(
+        _hook_ctx(STREAM_OPERATION_ID), response
+    )
+    assert isinstance(result, httpx.Response)
+
+    with pytest.raises(StreamDisconnectedError) as exc_info:
+        list(result.iter_bytes())
+
+    assert exc_info.value.reason == "read_error"
+    assert exc_info.value.error == "connection\nlost"
+
+
 def test_hook_defaults_reason_when_missing_or_invalid():
     frame = b'event: error\ndata: {"error": "no reason given"}\n\n'
     response = _sse_response(_SyncSource([frame]))
