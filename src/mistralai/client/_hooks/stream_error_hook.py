@@ -37,12 +37,6 @@ _BOUNDARIES = [
 ]
 
 
-def _strip_content_encoding_header(headers: httpx.Headers) -> httpx.Headers:
-    return httpx.Headers(
-        [(k, v) for k, v in headers.items() if k.lower() != "content-encoding"]
-    )
-
-
 def _find_boundary(buffer: bytearray) -> Optional[Tuple[int, int]]:
     """Return (index, length) of the earliest frame boundary, or None if incomplete."""
     best: Optional[Tuple[int, int]] = None
@@ -181,9 +175,11 @@ class WorkflowStreamErrorHook(AfterSuccessHook):
         else:
             return response
 
+        # Keep the original headers: this hook forwards the raw stream unchanged,
+        # so httpx still applies any Content-Encoding when the consumer iterates.
         return httpx.Response(
             status_code=response.status_code,
-            headers=_strip_content_encoding_header(response.headers),
+            headers=response.headers,
             stream=wrapped,
             request=response.request,
             extensions=response.extensions,

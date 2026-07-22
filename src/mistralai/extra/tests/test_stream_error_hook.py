@@ -1,10 +1,20 @@
 import httpx
 import pytest
 from httpx._types import AsyncByteStream, SyncByteStream
+from pydantic import SecretStr
 
 from mistralai.client import Mistral
 from mistralai.client._hooks.types import AfterSuccessContext, HookContext
+from mistralai.client._hooks.workflow_encoding_hook import (
+    WorkflowEncodingHook,
+    configure_workflow_encoding,
+)
 from mistralai.extra.exceptions import StreamDisconnectedError
+from mistralai.extra.workflows import (
+    PayloadEncryptionConfig,
+    PayloadEncryptionMode,
+    WorkflowEncodingConfig,
+)
 from mistralai.client._hooks.stream_error_hook import (
     STREAM_OPERATIONS_WITH_ERROR_EVENT,
     WorkflowStreamErrorHook,
@@ -174,6 +184,46 @@ def test_hook_raises_for_every_workflow_stream_operation(operation_id: str):
 
     assert exc_info.value.reason == "read_error"
     assert exc_info.value.error == "boom"
+
+
+@pytest.mark.asyncio
+async def test_encoding_and_error_hooks_compose():
+    client = Mistral(api_key="test-key")
+    configure_workflow_encoding(
+        WorkflowEncodingConfig(
+            payload_encryption=PayloadEncryptionConfig(
+                mode=PayloadEncryptionMode.FULL, main_key=SecretStr("0" * 64)
+            )
+        ),
+        namespace="demo",
+        sdk_config=client.sdk_configuration,
+    )
+    ctx = AfterSuccessContext(
+        HookContext(
+            config=client.sdk_configuration,
+            base_url="https://api.example.com",
+            operation_id=STREAM_OPERATION_ID,
+            oauth2_scopes=[],
+            security_source=None,
+        )
+    )
+    benign = b'event: message\ndata: {"hello": "world"}\n\n'
+    response = _sse_response(_AsyncSource([benign, ERROR_FRAME]))
+
+    # Encoding hook wraps first (decryption), then the error hook wraps that stream.
+    decrypted = WorkflowEncodingHook().after_success(ctx, response)
+    assert isinstance(decrypted, httpx.Response)
+    final = WorkflowStreamErrorHook().after_success(ctx, decrypted)
+    assert isinstance(final, httpx.Response)
+
+    collected: list[bytes] = []
+    with pytest.raises(StreamDisconnectedError) as exc_info:
+        async for chunk in final.aiter_bytes():
+            collected.append(chunk)
+
+    assert exc_info.value.reason == "read_error"
+    assert exc_info.value.error == "boom"
+    assert b'"hello": "world"' in b"".join(collected)
 
 
 def test_hook_ignores_non_stream_operations():
