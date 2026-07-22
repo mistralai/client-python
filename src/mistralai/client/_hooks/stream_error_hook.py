@@ -13,7 +13,7 @@ from mistralai.extra.exceptions import (
 
 # Operation IDs of the SSE-backed workflow stream endpoints that can emit a
 # terminal ``event: error`` frame (event, execution, and logs streams).
-STREAM_OPERATIONS = {
+STREAM_OPERATIONS_WITH_ERROR_EVENT = {
     "get_stream_events_v1_workflows_events_stream_get",
     "stream_v1_workflows_executions__execution_id__stream_get",
     "stream_deployment_logs",
@@ -167,7 +167,7 @@ class WorkflowStreamErrorHook(AfterSuccessHook):
         hook_ctx: AfterSuccessContext,
         response: httpx.Response,
     ) -> Union[httpx.Response, Exception]:
-        if hook_ctx.operation_id not in STREAM_OPERATIONS:
+        if hook_ctx.operation_id not in STREAM_OPERATIONS_WITH_ERROR_EVENT:
             return response
         if "text/event-stream" not in response.headers.get("content-type", ""):
             return response

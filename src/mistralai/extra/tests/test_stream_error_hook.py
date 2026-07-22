@@ -6,7 +6,7 @@ from mistralai.client import Mistral
 from mistralai.client._hooks.types import AfterSuccessContext, HookContext
 from mistralai.extra.exceptions import StreamDisconnectedError
 from mistralai.client._hooks.stream_error_hook import (
-    STREAM_OPERATIONS,
+    STREAM_OPERATIONS_WITH_ERROR_EVENT,
     WorkflowStreamErrorHook,
 )
 
@@ -163,7 +163,7 @@ def test_hook_passes_normal_stream_through_without_raising():
     assert body.count(b"workflow.event") == 2
 
 
-@pytest.mark.parametrize("operation_id", sorted(STREAM_OPERATIONS))
+@pytest.mark.parametrize("operation_id", sorted(STREAM_OPERATIONS_WITH_ERROR_EVENT))
 def test_hook_raises_for_every_workflow_stream_operation(operation_id: str):
     response = _sse_response(_SyncSource([ERROR_FRAME]))
     result = WorkflowStreamErrorHook().after_success(_hook_ctx(operation_id), response)
