@@ -3,8 +3,8 @@ from .deprecation_warning import DeprecationWarningHook
 from .traceparent import TraceparentInjectionHook
 from .tracing import TracingHook
 from .types import Hooks
+from .stream_error_hook import WorkflowStreamErrorHook
 from .workflow_encoding_hook import WorkflowEncodingHook
-from mistralai.extra.workflows.stream_error_hook import WorkflowStreamErrorHook
 
 # This file is only ever generated once on the first generation and then is free to be modified.
 # Any hooks you wish to add should be registered in the init_hooks function. Feel free to define them

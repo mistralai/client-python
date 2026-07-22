@@ -1,26 +1,27 @@
-from __future__ import annotations
-
 import json
 import re
-from typing import Any, AsyncIterator, Iterator, Optional, Tuple, Union
+from typing import Any, AsyncIterator, Dict, Iterator, Optional, Tuple, Union, get_args
 
 import httpx
 from httpx._types import AsyncByteStream, SyncByteStream
 
-from mistralai.client._hooks.types import AfterSuccessContext, AfterSuccessHook
+from .types import AfterSuccessContext, AfterSuccessHook
 from mistralai.extra.exceptions import (
     StreamDisconnectReason,
     StreamDisconnectedError,
 )
 
-# Operation IDs of the two SSE-backed workflow stream endpoints.
+# Operation IDs of the SSE-backed workflow stream endpoints that can emit a
+# terminal ``event: error`` frame (event, execution, and logs streams).
 STREAM_OPERATIONS = {
     "get_stream_events_v1_workflows_events_stream_get",
     "stream_v1_workflows_executions__execution_id__stream_get",
+    "stream_deployment_logs",
+    "stream_workflow_execution_logs",
 }
 
 _ERROR_EVENT = "error"
-_VALID_REASONS = ("read_error", "stream_error", "internal_error")
+_VALID_REASONS = get_args(StreamDisconnectReason)
 _DEFAULT_REASON: StreamDisconnectReason = "stream_error"
 
 # SSE frame boundaries (blank line), longest first so the full separator is consumed.
@@ -59,7 +60,7 @@ def _find_boundary(buffer: bytearray) -> Optional[Tuple[int, int]]:
 
 
 def _parse_error_payload(data: str) -> Tuple[str, StreamDisconnectReason]:
-    payload: dict[str, Any] = {}
+    payload: Dict[str, Any] = {}
     try:
         parsed = json.loads(data.strip())
         if isinstance(parsed, dict):
@@ -156,7 +157,7 @@ class _ErrorDetectingAsyncByteStream(AsyncByteStream):
 class WorkflowStreamErrorHook(AfterSuccessHook):
     """Raise StreamDisconnectedError when a workflow SSE stream sends an error frame.
 
-    Wraps the response byte stream for the two workflow SSE operations so that an
+    Wraps the response byte stream for the workflow SSE operations so that an
     ``event: error`` frame raises during iteration, terminating the consumer's
     ``for event in stream`` loop instead of yielding the error as a normal event.
     """

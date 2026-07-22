@@ -5,7 +5,10 @@ from httpx._types import AsyncByteStream, SyncByteStream
 from mistralai.client import Mistral
 from mistralai.client._hooks.types import AfterSuccessContext, HookContext
 from mistralai.extra.exceptions import StreamDisconnectedError
-from mistralai.extra.workflows.stream_error_hook import WorkflowStreamErrorHook
+from mistralai.client._hooks.stream_error_hook import (
+    STREAM_OPERATIONS,
+    WorkflowStreamErrorHook,
+)
 
 STREAM_OPERATION_ID = "get_stream_events_v1_workflows_events_stream_get"
 NON_STREAM_OPERATION_ID = "chat_completion_v1_chat_completions_post"
@@ -119,6 +122,21 @@ def test_hook_detects_error_frame_split_across_chunks():
     assert exc_info.value.error == "x"
 
 
+def test_hook_raises_on_error_frame_without_trailing_boundary():
+    frame = b'event: error\ndata: {"error": "boom", "reason": "read_error"}'
+    response = _sse_response(_SyncSource([frame]))
+    result = WorkflowStreamErrorHook().after_success(
+        _hook_ctx(STREAM_OPERATION_ID), response
+    )
+    assert isinstance(result, httpx.Response)
+
+    with pytest.raises(StreamDisconnectedError) as exc_info:
+        list(result.iter_bytes())
+
+    assert exc_info.value.reason == "read_error"
+    assert exc_info.value.error == "boom"
+
+
 def test_hook_defaults_reason_when_missing_or_invalid():
     frame = b'event: error\ndata: {"error": "no reason given"}\n\n'
     response = _sse_response(_SyncSource([frame]))
@@ -143,6 +161,19 @@ def test_hook_passes_normal_stream_through_without_raising():
 
     body = b"".join(result.iter_bytes())
     assert body.count(b"workflow.event") == 2
+
+
+@pytest.mark.parametrize("operation_id", sorted(STREAM_OPERATIONS))
+def test_hook_raises_for_every_workflow_stream_operation(operation_id: str):
+    response = _sse_response(_SyncSource([ERROR_FRAME]))
+    result = WorkflowStreamErrorHook().after_success(_hook_ctx(operation_id), response)
+    assert isinstance(result, httpx.Response)
+
+    with pytest.raises(StreamDisconnectedError) as exc_info:
+        list(result.iter_bytes())
+
+    assert exc_info.value.reason == "read_error"
+    assert exc_info.value.error == "boom"
 
 
 def test_hook_ignores_non_stream_operations():
