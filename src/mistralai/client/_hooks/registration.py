@@ -4,6 +4,7 @@ from .traceparent import TraceparentInjectionHook
 from .tracing import TracingHook
 from .types import Hooks
 from .workflow_encoding_hook import WorkflowEncodingHook
+from mistralai.extra.workflows.stream_error_hook import WorkflowStreamErrorHook
 
 # This file is only ever generated once on the first generation and then is free to be modified.
 # Any hooks you wish to add should be registered in the init_hooks function. Feel free to define them
@@ -26,3 +27,4 @@ def init_hooks(hooks: Hooks):
     hooks.register_after_error_hook(tracing_hook)
     hooks.register_before_request_hook(workflow_encoding_hook)
     hooks.register_after_success_hook(workflow_encoding_hook)
+    hooks.register_after_success_hook(WorkflowStreamErrorHook())
