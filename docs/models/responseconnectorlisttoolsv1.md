@@ -5,12 +5,6 @@ Successful Response
 
 ## Supported Types
 
-### `List[models.ConnectorTool]`
-
-```python
-value: List[models.ConnectorTool] = /* values here */
-```
-
 ### `List[models.MCPTool]`
 
 ```python

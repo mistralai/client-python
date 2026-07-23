@@ -29,7 +29,8 @@ if TYPE_CHECKING:
     # Inherit from the real base only for static analysis: linters verify our
     # export/shutdown/force_flush signatures. At runtime the base is object so
     # the optional OpenTelemetry SDK is not required to import this module.
-    _SpanExporterBase = SpanExporter
+    # Imported (not assigned to a variable) so type checkers accept it as a base.
+    from opentelemetry.sdk.trace.export import SpanExporter as _SpanExporterBase
 else:
     _SpanExporterBase = object
 

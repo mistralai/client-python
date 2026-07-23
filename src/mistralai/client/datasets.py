@@ -9,7 +9,7 @@ from mistralai.client.records import Records
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional
 
 
 class Datasets(BaseSDK):
@@ -1215,8 +1215,8 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
-        properties: Dict[str, Any],
+        payload: Dict[str, Any],
+        properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1225,7 +1225,7 @@ class Datasets(BaseSDK):
         r"""Add a conversation to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1248,7 +1248,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
                 properties=properties,
             ),
         )
@@ -1323,8 +1323,8 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
-        properties: Dict[str, Any],
+        payload: Dict[str, Any],
+        properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1333,7 +1333,7 @@ class Datasets(BaseSDK):
         r"""Add a conversation to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1356,7 +1356,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
                 properties=properties,
             ),
         )

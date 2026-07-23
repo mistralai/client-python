@@ -34,7 +34,7 @@ jobs:
 
       - name: Install client with extras
         run: |
-          PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
+          PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents,telemetry]"
           uv pip install --system "$PACKAGE"
 
   examples:
@@ -73,7 +73,7 @@ jobs:
 
       - name: Install client with extras and run all examples.
         run: |
-          PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents]"
+          PACKAGE="dist/$(ls dist | grep whl | head -n 1)[agents,telemetry]"
           uv pip install --system "$PACKAGE"
           ./scripts/run_examples.sh
         env:
