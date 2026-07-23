@@ -2,14 +2,16 @@
 # @generated-id: bd45f357a538
 
 from __future__ import annotations
-from .conversationpayload import ConversationPayload, ConversationPayloadTypedDict
 from mistralai.client.types import BaseModel
+from typing import Any, Dict
 from typing_extensions import TypedDict
 
 
 class UpdateDatasetRecordPayloadRequestTypedDict(TypedDict):
-    payload: ConversationPayloadTypedDict
+    payload: Dict[str, Any]
+    r"""Caller-authored input object stored on a dataset record."""
 
 
 class UpdateDatasetRecordPayloadRequest(BaseModel):
-    payload: ConversationPayload
+    payload: Dict[str, Any]
+    r"""Caller-authored input object stored on a dataset record."""

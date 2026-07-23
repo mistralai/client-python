@@ -1,12 +1,12 @@
-# ConversationSource
+# DatasetRecordSource
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import ConversationSource
+from mistralai.client.models import DatasetRecordSource
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: ConversationSource = "EXPLORER"
+value: DatasetRecordSource = "EXPLORER"
 ```
 
 
