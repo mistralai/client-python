@@ -517,6 +517,7 @@ print(res.choices[0].message.content)
 * [list](docs/sdks/connectors/README.md#list) - List all connectors.
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [share](docs/sdks/connectors/README.md#share) - Share a private connector to the current workspace.
+* [unshare](docs/sdks/connectors/README.md#unshare) - Unshare a connector from the current workspace.
 * [activate_for_organization](docs/sdks/connectors/README.md#activate_for_organization) - Activate a connector for an organization.
 * [deactivate_for_organization](docs/sdks/connectors/README.md#deactivate_for_organization) - Deactivate a connector for an organization.
 * [activate_for_workspace](docs/sdks/connectors/README.md#activate_for_workspace) - Activate a connector for a workspace.
@@ -1093,8 +1094,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 158 of 255 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 255 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 159 of 256 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 256 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
