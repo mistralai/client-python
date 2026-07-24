@@ -243,6 +243,7 @@ class Deployments(BaseSDK):
                 models.DeploymentResourceConfigTypedDict,
             ]
         ] = UNSET,
+        hardened: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -253,6 +254,7 @@ class Deployments(BaseSDK):
         :param name:
         :param spec:
         :param resources:
+        :param hardened:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -277,6 +279,7 @@ class Deployments(BaseSDK):
             resources=utils.get_pydantic_model(
                 resources, OptionalNullable[models.DeploymentResourceConfig]
             ),
+            hardened=hardened,
         )
 
         req = self._build_request(
@@ -352,6 +355,7 @@ class Deployments(BaseSDK):
                 models.DeploymentResourceConfigTypedDict,
             ]
         ] = UNSET,
+        hardened: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -362,6 +366,7 @@ class Deployments(BaseSDK):
         :param name:
         :param spec:
         :param resources:
+        :param hardened:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -386,6 +391,7 @@ class Deployments(BaseSDK):
             resources=utils.get_pydantic_model(
                 resources, OptionalNullable[models.DeploymentResourceConfig]
             ),
+            hardened=hardened,
         )
 
         req = self._build_request_async(

@@ -18,6 +18,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -25,6 +26,7 @@ class CreateDeploymentRequestTypedDict(TypedDict):
     name: str
     spec: DeploymentWorkerSpecInputTypedDict
     resources: NotRequired[Nullable[DeploymentResourceConfigTypedDict]]
+    hardened: NotRequired[bool]
 
 
 class CreateDeploymentRequest(BaseModel):
@@ -34,9 +36,11 @@ class CreateDeploymentRequest(BaseModel):
 
     resources: OptionalNullable[DeploymentResourceConfig] = UNSET
 
+    hardened: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["resources"])
+        optional_fields = set(["resources", "hardened"])
         nullable_fields = set(["resources"])
         serialized = handler(self)
         m = {}

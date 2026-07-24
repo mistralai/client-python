@@ -477,6 +477,10 @@ if TYPE_CHECKING:
         ConnectorShareV1Request,
         ConnectorShareV1RequestTypedDict,
     )
+    from .connector_unshare_v1op import (
+        ConnectorUnshareV1Request,
+        ConnectorUnshareV1RequestTypedDict,
+    )
     from .connector_update_v1op import (
         ConnectorUpdateV1Request,
         ConnectorUpdateV1RequestTypedDict,
@@ -1885,6 +1889,7 @@ if TYPE_CHECKING:
         PublicExecutionConnectorTypedDict,
     )
     from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
+    from .publicresourcevisibility import PublicResourceVisibility
     from .query_workflow_execution_v1_workflows_executions_execution_id_queries_postop import (
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest,
         QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict,
@@ -1981,7 +1986,6 @@ if TYPE_CHECKING:
     from .resetinvocationbody import ResetInvocationBody, ResetInvocationBodyTypedDict
     from .resourcelink import ResourceLink, ResourceLinkTypedDict
     from .resourcescapability import ResourcesCapability, ResourcesCapabilityTypedDict
-    from .resourcetype import ResourceType
     from .resourcevisibility import ResourceVisibility
     from .responsedoneevent import ResponseDoneEvent, ResponseDoneEventTypedDict
     from .responseerrorevent import ResponseErrorEvent, ResponseErrorEventTypedDict
@@ -3144,6 +3148,8 @@ __all__ = [
     "ConnectorToolResultMetadataTypedDict",
     "ConnectorToolTypedDict",
     "ConnectorTypedDict",
+    "ConnectorUnshareV1Request",
+    "ConnectorUnshareV1RequestTypedDict",
     "ConnectorUpdateV1Request",
     "ConnectorUpdateV1RequestTypedDict",
     "ConnectorsQueryFilters",
@@ -4100,6 +4106,7 @@ __all__ = [
     "PublicExecutionConnectorTypedDict",
     "PublicExecutionEnv",
     "PublicExecutionEnvTypedDict",
+    "PublicResourceVisibility",
     "QueryDefinition",
     "QueryDefinitionTypedDict",
     "QueryInvocationBody",
@@ -4163,7 +4170,6 @@ __all__ = [
     "Resource",
     "ResourceLink",
     "ResourceLinkTypedDict",
-    "ResourceType",
     "ResourceTypedDict",
     "ResourceVisibility",
     "Resources",
@@ -5069,6 +5075,8 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorListWorkspaceCredentialsV1RequestTypedDict": ".connector_list_workspace_credentials_v1op",
     "ConnectorShareV1Request": ".connector_share_v1op",
     "ConnectorShareV1RequestTypedDict": ".connector_share_v1op",
+    "ConnectorUnshareV1Request": ".connector_unshare_v1op",
+    "ConnectorUnshareV1RequestTypedDict": ".connector_unshare_v1op",
     "ConnectorUpdateV1Request": ".connector_update_v1op",
     "ConnectorUpdateV1RequestTypedDict": ".connector_update_v1op",
     "ConnectorAuthenticationHeader": ".connectorauthenticationheader",
@@ -6067,6 +6075,7 @@ _dynamic_imports: dict[str, str] = {
     "PublicExecutionConnectorTypedDict": ".publicexecutionconnector",
     "PublicExecutionEnv": ".publicexecutionenv",
     "PublicExecutionEnvTypedDict": ".publicexecutionenv",
+    "PublicResourceVisibility": ".publicresourcevisibility",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequest": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict": ".query_workflow_execution_v1_workflows_executions_execution_id_queries_postop",
     "QueryDefinition": ".querydefinition",
@@ -6127,7 +6136,6 @@ _dynamic_imports: dict[str, str] = {
     "ResourceLinkTypedDict": ".resourcelink",
     "ResourcesCapability": ".resourcescapability",
     "ResourcesCapabilityTypedDict": ".resourcescapability",
-    "ResourceType": ".resourcetype",
     "ResourceVisibility": ".resourcevisibility",
     "ResponseDoneEvent": ".responsedoneevent",
     "ResponseDoneEventTypedDict": ".responsedoneevent",

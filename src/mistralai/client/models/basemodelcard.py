@@ -35,6 +35,7 @@ class BaseModelCardTypedDict(TypedDict):
     deprecation: NotRequired[Nullable[datetime]]
     deprecation_replacement_model: NotRequired[Nullable[str]]
     default_model_temperature: NotRequired[Nullable[float]]
+    internal: NotRequired[bool]
     type: Literal["base"]
 
 
@@ -66,6 +67,8 @@ class BaseModelCard(BaseModel):
 
     default_model_temperature: OptionalNullable[float] = UNSET
 
+    internal: Optional[bool] = False
+
     type: Annotated[
         Annotated[Literal["base"], AfterValidator(validate_const("base"))],
         pydantic.Field(alias="type"),
@@ -85,6 +88,7 @@ class BaseModelCard(BaseModel):
                 "deprecation",
                 "deprecation_replacement_model",
                 "default_model_temperature",
+                "internal",
             ]
         )
         nullable_fields = set(

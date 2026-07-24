@@ -7,6 +7,7 @@ from .deploymentworkerresponse import (
     DeploymentWorkerResponse,
     DeploymentWorkerResponseTypedDict,
 )
+from .locationtype import LocationType
 from .manageddeploymentresponse import (
     ManagedDeploymentResponse,
     ManagedDeploymentResponseTypedDict,
@@ -41,6 +42,12 @@ class DeploymentDetailResponseTypedDict(TypedDict):
     r"""Whether the deployment has at least one authorized credential"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
     r"""Where the deployment is running"""
+    worker_count: NotRequired[int]
+    r"""Number of workers registered to the deployment"""
+    active_worker_count: NotRequired[int]
+    r"""Number of workers currently live within the liveness cutoff"""
+    locations: NotRequired[List[LocationType]]
+    r"""Distinct location types reported by the deployment's workers"""
     managed: NotRequired[Nullable[ManagedDeploymentResponseTypedDict]]
     r"""Live managed service state for managed deployments; null for self-hosted deployments or when managed services are unavailable"""
 
@@ -70,12 +77,30 @@ class DeploymentDetailResponse(BaseModel):
     location: OptionalNullable[DeploymentLocation] = UNSET
     r"""Where the deployment is running"""
 
+    worker_count: Optional[int] = 0
+    r"""Number of workers registered to the deployment"""
+
+    active_worker_count: Optional[int] = 0
+    r"""Number of workers currently live within the liveness cutoff"""
+
+    locations: Optional[List[LocationType]] = None
+    r"""Distinct location types reported by the deployment's workers"""
+
     managed: OptionalNullable[ManagedDeploymentResponse] = UNSET
     r"""Live managed service state for managed deployments; null for self-hosted deployments or when managed services are unavailable"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["is_hardened", "location", "managed"])
+        optional_fields = set(
+            [
+                "is_hardened",
+                "location",
+                "worker_count",
+                "active_worker_count",
+                "locations",
+                "managed",
+            ]
+        )
         nullable_fields = set(["location", "managed"])
         serialized = handler(self)
         m = {}
