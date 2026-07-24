@@ -82,6 +82,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Number of items per page"""
     next_page_token: NotRequired[Nullable[str]]
     r"""Token for the next page of results"""
+    search_key: NotRequired[Nullable[List[str]]]
+    r"""Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3)."""
 
 
 class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
@@ -181,6 +183,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Token for the next page of results"""
 
+    search_key: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3)."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -201,6 +209,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "include_internal",
                 "page_size",
                 "next_page_token",
+                "search_key",
             ]
         )
         nullable_fields = set(
@@ -218,6 +227,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "user_id",
                 "workflow_tags",
                 "next_page_token",
+                "search_key",
             ]
         )
         serialized = handler(self)
