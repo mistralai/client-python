@@ -7,7 +7,7 @@ from .extendedoauthservermetadata import (
     ExtendedOAuthServerMetadata,
     ExtendedOAuthServerMetadataTypedDict,
 )
-from .resourcevisibility import ResourceVisibility
+from .publicresourcevisibility import PublicResourceVisibility
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -15,27 +15,35 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CreateConnectorRequestTypedDict(TypedDict):
+    r"""Public create schema for MCP connectors.
+
+    Standalone model that excludes internal-only fields (``hosted_internally``,
+    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
+    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
+    (no ``shared_global``).
+    """
+
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
     description: str
     r"""The description of the connector."""
     server: str
     r"""The url of the MCP server."""
-    protocol: Literal["mcp"]
     title: NotRequired[Nullable[str]]
     r"""Optional human-readable title for the connector."""
     icon_url: NotRequired[Nullable[str]]
     r"""The optional url of the icon you want to associate to the connector."""
-    visibility: NotRequired[ResourceVisibility]
+    visibility: NotRequired[PublicResourceVisibility]
+    r"""Visibility options available to public API callers.
+
+    Excludes ``shared_global`` which is reserved for system-owned connectors.
+    """
     headers: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
@@ -49,6 +57,14 @@ class CreateConnectorRequestTypedDict(TypedDict):
 
 
 class CreateConnectorRequest(BaseModel):
+    r"""Public create schema for MCP connectors.
+
+    Standalone model that excludes internal-only fields (``hosted_internally``,
+    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
+    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
+    (no ``shared_global``).
+    """
+
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
 
@@ -58,18 +74,17 @@ class CreateConnectorRequest(BaseModel):
     server: str
     r"""The url of the MCP server."""
 
-    protocol: Annotated[
-        Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
-        pydantic.Field(alias="protocol"),
-    ] = "mcp"
-
     title: OptionalNullable[str] = UNSET
     r"""Optional human-readable title for the connector."""
 
     icon_url: OptionalNullable[str] = UNSET
     r"""The optional url of the icon you want to associate to the connector."""
 
-    visibility: Optional[ResourceVisibility] = None
+    visibility: Optional[PublicResourceVisibility] = None
+    r"""Visibility options available to public API callers.
+
+    Excludes ``shared_global`` which is reserved for system-owned connectors.
+    """
 
     headers: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
@@ -90,7 +105,6 @@ class CreateConnectorRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "protocol",
                 "title",
                 "icon_url",
                 "visibility",
@@ -132,9 +146,3 @@ class CreateConnectorRequest(BaseModel):
                     m[k] = val
 
         return m
-
-
-try:
-    CreateConnectorRequest.model_rebuild()
-except NameError:
-    pass
