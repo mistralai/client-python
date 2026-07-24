@@ -81,6 +81,7 @@ class Mistral(BaseSDK):
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
         timeout_ms: Optional[int] = None,
+        stream_timeout_ms: Optional[int] = None,
         debug_logger: Optional[Logger] = None,
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
@@ -93,6 +94,7 @@ class Mistral(BaseSDK):
         :param async_client: The Async HTTP client to use for all asynchronous methods
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
+        :param stream_timeout_ms: Optional idle-read timeout for SSE streaming operations in milliseconds (default 20 000 ms). Overrides timeout_ms for streaming calls only.
         """
         client_supplied = True
         if client is None:
@@ -140,6 +142,7 @@ class Mistral(BaseSDK):
                 server=server,
                 retry_config=retry_config,
                 timeout_ms=timeout_ms,
+                stream_timeout_ms=stream_timeout_ms,
                 debug_logger=debug_logger,
             ),
             parent_ref=self,
