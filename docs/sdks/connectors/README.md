@@ -10,6 +10,7 @@
 * [list](#list) - List all connectors.
 * [get_auth_url](#get_auth_url) - Get the auth URL for a connector.
 * [share](#share) - Share a private connector to the current workspace.
+* [unshare](#unshare) - Unshare a connector from the current workspace.
 * [activate_for_organization](#activate_for_organization) - Activate a connector for an organization.
 * [deactivate_for_organization](#deactivate_for_organization) - Deactivate a connector for an organization.
 * [activate_for_workspace](#activate_for_workspace) - Activate a connector for a workspace.
@@ -65,7 +66,7 @@ with Mistral(
 | `server`                                                                                                                                                                                                                    | *str*                                                                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                                                                          | The url of the MCP server.                                                                                                                                                                                                  |
 | `title`                                                                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                          | Optional human-readable title for the connector.                                                                                                                                                                            |
 | `icon_url`                                                                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                          | The optional url of the icon you want to associate to the connector.                                                                                                                                                        |
-| `visibility`                                                                                                                                                                                                                | [Optional[models.ResourceVisibility]](../../models/resourcevisibility.md)                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                          | N/A                                                                                                                                                                                                                         |
+| `visibility`                                                                                                                                                                                                                | [Optional[models.PublicResourceVisibility]](../../models/publicresourcevisibility.md)                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                          | Visibility options available to public API callers.<br/><br/>Excludes ``shared_global`` which is reserved for system-owned connectors.                                                                                      |
 | `headers`                                                                                                                                                                                                                   | Dict[str, *Any*]                                                                                                                                                                                                            | :heavy_minus_sign:                                                                                                                                                                                                          | Optional organization-level headers to be sent with the request to the mcp server.                                                                                                                                          |
 | `auth_data`                                                                                                                                                                                                                 | [OptionalNullable[models.AuthData]](../../models/authdata.md)                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                          | Optional additional authentication data for the connector.                                                                                                                                                                  |
 | `oauth2_server_metadata`                                                                                                                                                                                                    | [OptionalNullable[models.ExtendedOAuthServerMetadata]](../../models/extendedoauthservermetadata.md)                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                          | Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.                                                 |
@@ -174,7 +175,7 @@ with Mistral(
 
 ## share
 
-Transfers ownership of a private user-owned connector to the current workspace, making it available to all workspace members. This action is irreversible: once shared, the connector belongs to the workspace and can no longer be used privately across other workspaces. Any authentication flows that rely on the original owner's identity (e.g. OAuth on-behalf-of) will be affected and must be reconfigured after sharing. Only the connector's creator can call this endpoint. Requires the ShareConnectorToWorkspace workspace permission.
+Transfers ownership of a private user-owned connector to the current workspace, making it available to all workspace members. The creator can later revert this via the unshare endpoint. Any authentication flows that rely on the original owner's identity (e.g. OAuth on-behalf-of) will be affected and must be reconfigured after sharing. Only the connector's creator can call this endpoint. Requires the ShareConnectorToWorkspace workspace permission.
 
 ### Example Usage
 
@@ -189,6 +190,47 @@ with Mistral(
 ) as mistral:
 
     res = mistral.beta.connectors.share(connector_id="cf748b50-632b-46d6-98c3-b015086cb194")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `connector_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.MessageResponse](../../models/messageresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## unshare
+
+Reverts a workspace-shared connector back to a private, creator-owned connector. Workspace-scoped connections and other members' connections are removed; the creator's own connection is preserved. Only the connector's creator can call this endpoint. Requires the ShareConnectorToWorkspace workspace permission.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="connector_unshare_v1" method="delete" path="/v1/connectors/{connector_id}/share" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.connectors.unshare(connector_id="d5bd99ac-c46d-43bb-835c-cb4833bf101d")
 
     # Handle response
     print(res)

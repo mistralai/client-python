@@ -80,7 +80,7 @@ with Mistral(
 
     res = mistral.workflows.deployments.create_deployment(name="<value>", spec={
         "github_url": "https://ugly-parade.com",
-    })
+    }, hardened=False)
 
     # Handle response
     print(res)
@@ -94,6 +94,7 @@ with Mistral(
 | `name`                                                                                        | *str*                                                                                         | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `spec`                                                                                        | [models.DeploymentWorkerSpecInput](../../models/deploymentworkerspecinput.md)                 | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `resources`                                                                                   | [OptionalNullable[models.DeploymentResourceConfig]](../../models/deploymentresourceconfig.md) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `hardened`                                                                                    | *Optional[bool]*                                                                              | :heavy_minus_sign:                                                                            | N/A                                                                                           |
 | `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |
 
 ### Response

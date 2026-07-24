@@ -41,6 +41,7 @@ class ManagedDeploymentResponseTypedDict(TypedDict):
     updated_by: NotRequired[Nullable[str]]
     deployed_by: NotRequired[Nullable[str]]
     deployed_at: NotRequired[Nullable[datetime]]
+    is_hardened: NotRequired[bool]
 
 
 class ManagedDeploymentResponse(BaseModel):
@@ -70,6 +71,8 @@ class ManagedDeploymentResponse(BaseModel):
 
     deployed_at: OptionalNullable[datetime] = UNSET
 
+    is_hardened: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -80,6 +83,7 @@ class ManagedDeploymentResponse(BaseModel):
                 "updated_by",
                 "deployed_by",
                 "deployed_at",
+                "is_hardened",
             ]
         )
         nullable_fields = set(
