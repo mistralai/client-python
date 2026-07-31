@@ -19,6 +19,10 @@ class Deployments(BaseSDK):
         is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
+        order_by: OptionalNullable[
+            models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
+        ] = UNSET,
+        order: Optional[models.ListDeploymentsV1WorkflowsDeploymentsGetOrder] = "desc",
         limit: OptionalNullable[int] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
@@ -33,6 +37,8 @@ class Deployments(BaseSDK):
         :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
         :param search: Filter deployments by name or ID prefix
+        :param order_by: Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping.
+        :param order: Sort direction. Applied to order_by when set, or within each activity group when omitted.
         :param limit: Maximum number of deployments to return
         :param cursor: Cursor from a previous response for pagination
         :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
@@ -59,6 +65,8 @@ class Deployments(BaseSDK):
             is_hardened=is_hardened,
             workflow_name=workflow_name,
             search=search,
+            order_by=order_by,
+            order=order,
             limit=limit,
             cursor=cursor,
             workspace_id=workspace_id,
@@ -128,6 +136,10 @@ class Deployments(BaseSDK):
         is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
+        order_by: OptionalNullable[
+            models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
+        ] = UNSET,
+        order: Optional[models.ListDeploymentsV1WorkflowsDeploymentsGetOrder] = "desc",
         limit: OptionalNullable[int] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
@@ -142,6 +154,8 @@ class Deployments(BaseSDK):
         :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
         :param search: Filter deployments by name or ID prefix
+        :param order_by: Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping.
+        :param order: Sort direction. Applied to order_by when set, or within each activity group when omitted.
         :param limit: Maximum number of deployments to return
         :param cursor: Cursor from a previous response for pagination
         :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
@@ -168,6 +182,8 @@ class Deployments(BaseSDK):
             is_hardened=is_hardened,
             workflow_name=workflow_name,
             search=search,
+            order_by=order_by,
+            order=order,
             limit=limit,
             cursor=cursor,
             workspace_id=workspace_id,
@@ -1590,6 +1606,214 @@ class Deployments(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "202", "application/json"):
             return unmarshal_json_response(models.ManagedDeploymentResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def list_deployment_workers(
+        self,
+        *,
+        name: str,
+        worker_status: OptionalNullable[models.WorkerStatus] = UNSET,
+        limit: Optional[int] = 50,
+        cursor: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.DeploymentWorkerListResponse:
+        r"""List Deployment Workers
+
+        :param name:
+        :param worker_status: Filter by worker activity. active=only active, inactive=only inactive, None=no filter
+        :param limit: Maximum number of workers to return
+        :param cursor: Cursor from a previous response's `next_cursor`. Resend `worker_status` unchanged alongside it.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.ListDeploymentWorkersV1WorkflowsDeploymentsNameWorkersGetRequest(
+                name=name,
+                worker_status=worker_status,
+                limit=limit,
+                cursor=cursor,
+            )
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/workflows/deployments/{name}/workers",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="list_deployment_workers_v1_workflows_deployments__name__workers_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.DeploymentWorkerListResponse, http_res
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def list_deployment_workers_async(
+        self,
+        *,
+        name: str,
+        worker_status: OptionalNullable[models.WorkerStatus] = UNSET,
+        limit: Optional[int] = 50,
+        cursor: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.DeploymentWorkerListResponse:
+        r"""List Deployment Workers
+
+        :param name:
+        :param worker_status: Filter by worker activity. active=only active, inactive=only inactive, None=no filter
+        :param limit: Maximum number of workers to return
+        :param cursor: Cursor from a previous response's `next_cursor`. Resend `worker_status` unchanged alongside it.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.ListDeploymentWorkersV1WorkflowsDeploymentsNameWorkersGetRequest(
+                name=name,
+                worker_status=worker_status,
+                limit=limit,
+                cursor=cursor,
+            )
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/workflows/deployments/{name}/workers",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="list_deployment_workers_v1_workflows_deployments__name__workers_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.DeploymentWorkerListResponse, http_res
+            )
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
