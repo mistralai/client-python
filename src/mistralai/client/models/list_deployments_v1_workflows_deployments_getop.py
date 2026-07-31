@@ -11,8 +11,22 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Optional
+from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+ListDeploymentsV1WorkflowsDeploymentsGetOrderBy = Literal[
+    "updated_at",
+    "created_at",
+]
+r"""Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping."""
+
+
+ListDeploymentsV1WorkflowsDeploymentsGetOrder = Literal[
+    "asc",
+    "desc",
+]
+r"""Sort direction. Applied to order_by when set, or within each activity group when omitted."""
 
 
 class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
@@ -22,6 +36,10 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     workflow_name: NotRequired[Nullable[str]]
     search: NotRequired[Nullable[str]]
     r"""Filter deployments by name or ID prefix"""
+    order_by: NotRequired[Nullable[ListDeploymentsV1WorkflowsDeploymentsGetOrderBy]]
+    r"""Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping."""
+    order: NotRequired[ListDeploymentsV1WorkflowsDeploymentsGetOrder]
+    r"""Sort direction. Applied to order_by when set, or within each activity group when omitted."""
     limit: NotRequired[Nullable[int]]
     r"""Maximum number of deployments to return"""
     cursor: NotRequired[Nullable[str]]
@@ -53,6 +71,18 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter deployments by name or ID prefix"""
 
+    order_by: Annotated[
+        OptionalNullable[ListDeploymentsV1WorkflowsDeploymentsGetOrderBy],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping."""
+
+    order: Annotated[
+        Optional[ListDeploymentsV1WorkflowsDeploymentsGetOrder],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "desc"
+    r"""Sort direction. Applied to order_by when set, or within each activity group when omitted."""
+
     limit: Annotated[
         OptionalNullable[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -79,6 +109,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "is_hardened",
                 "workflow_name",
                 "search",
+                "order_by",
+                "order",
                 "limit",
                 "cursor",
                 "workspace_id",
@@ -89,6 +121,7 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "is_hardened",
                 "workflow_name",
                 "search",
+                "order_by",
                 "limit",
                 "cursor",
                 "workspace_id",

@@ -10,12 +10,12 @@
 * [delete](#delete) - Delete a dataset
 * [update](#update) - Patch dataset
 * [list_records](#list_records) - List existing records in the dataset
-* [create_record](#create_record) - Add a conversation to the dataset
-* [import_from_campaign](#import_from_campaign) - Populate the dataset with a campaign
-* [import_from_explorer](#import_from_explorer) - Populate the dataset with samples from the explorer
-* [import_from_file](#import_from_file) - Populate the dataset with samples from an uploaded file
-* [import_from_playground](#import_from_playground) - Populate the dataset with samples from the playground
-* [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with samples from another dataset
+* [create_record](#create_record) - Add a record to the dataset
+* [import_from_campaign](#import_from_campaign) - Populate the dataset with records from a campaign
+* [import_from_explorer](#import_from_explorer) - Populate the dataset with records from the explorer
+* [import_from_file](#import_from_file) - Populate the dataset with records from an uploaded file
+* [import_from_playground](#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](#fetch_task) - Get status of a dataset import task
 * [list_tasks](#list_tasks) - List import tasks for the given dataset
@@ -270,7 +270,7 @@ with Mistral(
 
 ## create_record
 
-Add a conversation to the dataset
+Add a record to the dataset
 
 ### Example Usage
 
@@ -323,7 +323,7 @@ with Mistral(
 
 ## import_from_campaign
 
-Populate the dataset with a campaign
+Populate the dataset with records from a campaign
 
 ### Example Usage
 
@@ -365,7 +365,7 @@ with Mistral(
 
 ## import_from_explorer
 
-Populate the dataset with samples from the explorer
+Populate the dataset with records from the explorer
 
 ### Example Usage
 
@@ -411,7 +411,7 @@ with Mistral(
 
 ## import_from_file
 
-Populate the dataset with samples from an uploaded file
+Populate the dataset with records from an uploaded file
 
 ### Example Usage
 
@@ -453,7 +453,7 @@ with Mistral(
 
 ## import_from_playground
 
-Populate the dataset with samples from the playground
+Populate the dataset with records from playground conversations
 
 ### Example Usage
 
@@ -495,7 +495,7 @@ with Mistral(
 
 ## import_from_dataset_records
 
-Populate the dataset with samples from another dataset
+Populate the dataset with records from another dataset
 
 ### Example Usage
 

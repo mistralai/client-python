@@ -56,7 +56,7 @@ class Ocr(BaseSDK):
         :param extract_header: Extract the page header into the response's `header` field and remove it from the markdown content
         :param extract_footer: Extract the page footer into the response's `footer` field and remove it from the markdown content
         :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
-        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small.
+        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -199,7 +199,7 @@ class Ocr(BaseSDK):
         :param extract_header: Extract the page header into the response's `header` field and remove it from the markdown content
         :param extract_footer: Extract the page footer into the response's `footer` field and remove it from the markdown content
         :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
-        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small.
+        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

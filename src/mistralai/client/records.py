@@ -20,7 +20,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Get the content of a given conversation from a dataset
+        r"""Get the content of a given dataset record
 
         :param dataset_record_id:
         :param retries: Override the default retry configuration for this method
@@ -113,7 +113,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Get the content of a given conversation from a dataset
+        r"""Get the content of a given dataset record
 
         :param dataset_record_id:
         :param retries: Override the default retry configuration for this method
@@ -803,7 +803,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ):
-        r"""Update a dataset record conversation payload
+        r"""Update a dataset record payload
 
         :param dataset_record_id:
         :param payload: Caller-authored input object stored on a dataset record.
@@ -908,7 +908,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ):
-        r"""Update a dataset record conversation payload
+        r"""Update a dataset record payload
 
         :param dataset_record_id:
         :param payload: Caller-authored input object stored on a dataset record.
@@ -1013,7 +1013,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ):
-        r"""Update conversation properties
+        r"""Update dataset record properties
 
         :param dataset_record_id:
         :param properties:
@@ -1118,7 +1118,7 @@ class Records(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ):
-        r"""Update conversation properties
+        r"""Update dataset record properties
 
         :param dataset_record_id:
         :param properties:

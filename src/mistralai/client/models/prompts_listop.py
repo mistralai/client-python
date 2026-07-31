@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 from .listpromptsresponse import ListPromptsResponse, ListPromptsResponseTypedDict
+from .listsortdirection import ListSortDirection
+from .listsortfield import ListSortField
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -16,6 +18,14 @@ class PromptsListRequestTypedDict(TypedDict):
     page_token: NotRequired[str]
     alias: NotRequired[str]
     fields: NotRequired[List[str]]
+    sort_field: NotRequired[ListSortField]
+    r"""Defaults to created_at when omitted."""
+    sort_direction_query_parameter: NotRequired[ListSortDirection]
+    r"""Defaults to descending for timestamp fields and ascending for text fields."""
+    sort_by: NotRequired[str]
+    r"""REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title."""
+    sort_direction_query_parameter1: NotRequired[str]
+    r"""REST-friendly alias for sort.direction. Supported values: asc, desc."""
 
 
 class PromptsListRequest(BaseModel):
@@ -41,9 +51,47 @@ class PromptsListRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
 
+    sort_field: Annotated[
+        Optional[ListSortField],
+        pydantic.Field(alias="sort.field"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Defaults to created_at when omitted."""
+
+    sort_direction_query_parameter: Annotated[
+        Optional[ListSortDirection],
+        pydantic.Field(alias="sort.direction"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Defaults to descending for timestamp fields and ascending for text fields."""
+
+    sort_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title."""
+
+    sort_direction_query_parameter1: Annotated[
+        Optional[str],
+        pydantic.Field(alias="sort_direction"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""REST-friendly alias for sort.direction. Supported values: asc, desc."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["pageSize", "pageToken", "alias", "fields"])
+        optional_fields = set(
+            [
+                "pageSize",
+                "pageToken",
+                "alias",
+                "fields",
+                "sort.field",
+                "sort.directionQueryParameter",
+                "sort_by",
+                "sort_directionQueryParameter1",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

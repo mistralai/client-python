@@ -36,7 +36,6 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Providers' SDKs Example Usage](#providers-sdks-example-usage)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Server-sent event streaming](#server-sent-event-streaming)
-  * [Json Streaming](#json-streaming)
   * [Pagination](#pagination)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
@@ -518,12 +517,8 @@ print(res.choices[0].message.content)
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [share](docs/sdks/connectors/README.md#share) - Share a private connector to the current workspace.
 * [unshare](docs/sdks/connectors/README.md#unshare) - Unshare a connector from the current workspace.
-* [activate_for_organization](docs/sdks/connectors/README.md#activate_for_organization) - Activate a connector for an organization.
-* [deactivate_for_organization](docs/sdks/connectors/README.md#deactivate_for_organization) - Deactivate a connector for an organization.
-* [activate_for_workspace](docs/sdks/connectors/README.md#activate_for_workspace) - Activate a connector for a workspace.
-* [deactivate_for_workspace](docs/sdks/connectors/README.md#deactivate_for_workspace) - Deactivate a connector for a workspace.
-* [activate_for_user](docs/sdks/connectors/README.md#activate_for_user) - Activate a connector for the current user.
-* [deactivate_for_user](docs/sdks/connectors/README.md#deactivate_for_user) - Deactivate a connector for the current user.
+* [activate_for_consumer](docs/sdks/connectors/README.md#activate_for_consumer) - Activate a connector for the given consumer (organization, workspace, user).
+* [deactivate_for_consumer](docs/sdks/connectors/README.md#deactivate_for_consumer) - Deactivate a connector for the current consumer (at organization, workspace or user level).
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get_authentication_methods](docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
@@ -615,24 +610,24 @@ print(res.choices[0].message.content)
 * [delete](docs/sdks/datasets/README.md#delete) - Delete a dataset
 * [update](docs/sdks/datasets/README.md#update) - Patch dataset
 * [list_records](docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
-* [create_record](docs/sdks/datasets/README.md#create_record) - Add a conversation to the dataset
-* [import_from_campaign](docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with a campaign
-* [import_from_explorer](docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with samples from the explorer
-* [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with samples from an uploaded file
-* [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with samples from the playground
-* [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with samples from another dataset
+* [create_record](docs/sdks/datasets/README.md#create_record) - Add a record to the dataset
+* [import_from_campaign](docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with records from a campaign
+* [import_from_explorer](docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with records from the explorer
+* [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with records from an uploaded file
+* [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
 * [list_tasks](docs/sdks/datasets/README.md#list_tasks) - List import tasks for the given dataset
 
 #### [Beta.Observability.Datasets.Records](docs/sdks/records/README.md)
 
-* [fetch](docs/sdks/records/README.md#fetch) - Get the content of a given conversation from a dataset
+* [fetch](docs/sdks/records/README.md#fetch) - Get the content of a given dataset record
 * [delete](docs/sdks/records/README.md#delete) - Delete a record from a dataset
 * [bulk_delete](docs/sdks/records/README.md#bulk_delete) - Delete multiple records from datasets
 * [judge](docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
-* [update_payload](docs/sdks/records/README.md#update_payload) - Update a dataset record conversation payload
-* [update_properties](docs/sdks/records/README.md#update_properties) - Update conversation properties
+* [update_payload](docs/sdks/records/README.md#update_payload) - Update a dataset record payload
+* [update_properties](docs/sdks/records/README.md#update_properties) - Update dataset record properties
 
 ### [Beta.Observability.Judges](docs/sdks/judges/README.md)
 
@@ -652,6 +647,7 @@ print(res.choices[0].message.content)
 ### [Beta.Observability.Spans](docs/sdks/spans/README.md)
 
 * [search_spans](docs/sdks/spans/README.md#search_spans) - Search spans
+* [aggregate](docs/sdks/spans/README.md#aggregate) - Aggregate spans
 * [search_span_evaluations](docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
 * [list_span_fields](docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
@@ -662,6 +658,7 @@ print(res.choices[0].message.content)
 ### [Beta.Observability.Traces](docs/sdks/traces/README.md)
 
 * [search](docs/sdks/traces/README.md#search) - Search traces
+* [aggregate](docs/sdks/traces/README.md#aggregate) - Aggregate traces
 * [get_trace_fields](docs/sdks/traces/README.md#get_trace_fields) - Get trace field definitions
 * [get_trace_by_id](docs/sdks/traces/README.md#get_trace_by_id) - Get trace by id
 * [get_trace_spans](docs/sdks/traces/README.md#get_trace_spans) - Get trace spans
@@ -688,21 +685,10 @@ print(res.choices[0].message.content)
 
 ### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
 
+* [get_indexes](docs/sdks/searchindexes/README.md#get_indexes) - Get Index Summaries
 * [register](docs/sdks/searchindexes/README.md#register) - Register (or re-register) a search index
-* [get_index_summaries](docs/sdks/searchindexes/README.md#get_index_summaries) - Get Index Summaries
 * [unregister](docs/sdks/searchindexes/README.md#unregister) - Unregister Search Index
 * [update_index_metrics](docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
-* [get_index_detail](docs/sdks/searchindexes/README.md#get_index_detail) - Get Index Details
-* [get_index_summary](docs/sdks/searchindexes/README.md#get_index_summary) - Get Index Summary
-* [generate_index_summary](docs/sdks/searchindexes/README.md#generate_index_summary) - Generate a summary field for an index
-* [set_index_summary](docs/sdks/searchindexes/README.md#set_index_summary) - Set Index Summary
-* [get_schema_summary](docs/sdks/searchindexes/README.md#get_schema_summary) - Get Schema Summary
-* [generate_schema_summary](docs/sdks/searchindexes/README.md#generate_schema_summary) - Generate a summary field for a schema
-* [set_schema_summary](docs/sdks/searchindexes/README.md#set_schema_summary) - Set Schema Summary
-* [get_index_schema_detail](docs/sdks/searchindexes/README.md#get_index_schema_detail) - Get Index Schema Detail
-* [get_index_schema_file](docs/sdks/searchindexes/README.md#get_index_schema_file) - Get Index Schema File
-* [document_lookup](docs/sdks/searchindexes/README.md#document_lookup) - Document Lookup
-* [documents_fetch](docs/sdks/searchindexes/README.md#documents_fetch) - Document Fetch
 
 ### [Beta.Skills](docs/sdks/skills/README.md)
 
@@ -792,6 +778,7 @@ print(res.choices[0].message.content)
 * [stop_deployment](docs/sdks/deployments/README.md#stop_deployment) - Stop Deployment
 * [start_deployment](docs/sdks/deployments/README.md#start_deployment) - Start Deployment
 * [restart_deployment](docs/sdks/deployments/README.md#restart_deployment) - Restart Deployment
+* [list_deployment_workers](docs/sdks/deployments/README.md#list_deployment_workers) - List Deployment Workers
 * [get_deployment_logs](docs/sdks/deployments/README.md#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](docs/sdks/deployments/README.md#stream_deployment_logs) - Stream Deployment Logs
 
@@ -889,41 +876,6 @@ with Mistral(
 [generator]: https://book.pythontips.com/en/latest/generators.html
 [context-manager]: https://book.pythontips.com/en/latest/context_managers.html
 <!-- End Server-sent event streaming [eventstream] -->
-
-<!-- Start Json Streaming [jsonl] -->
-## Json Streaming
-
-Json Streaming ([jsonl][jsonl-format] / [x-ndjson][x-ndjson]) content type can be used to stream content from certain operations. These operations will expose the stream as [Generator][generator] that
-can be consumed using a simple `for` loop. The loop will
-terminate when the server no longer has any events to send and closes the
-underlying connection.
-
-The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
-underlying connection when the context is exited.
-
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.rag.search_indexes.generate_index_summary(index_id="b0cfd77c-9cc3-46b6-ad70-1024386259b9", language="pl")
-
-    with res as jsonl_stream:
-        for event in jsonl_stream:
-            # handle event
-            print(event, flush=True)
-
-```
-
-[jsonl-format]: https://jsonlines.org/
-[x-ndjson]: https://github.com/ndjson/ndjson-spec
-[generator]: https://book.pythontips.com/en/latest/generators.html
-[context-manager]: https://book.pythontips.com/en/latest/context_managers.html
-<!-- End Json Streaming [jsonl] -->
 
 <!-- Start Pagination [pagination] -->
 ## Pagination
@@ -1094,8 +1046,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 159 of 256 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 57 of 256 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 145 of 244 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 59 of 244 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

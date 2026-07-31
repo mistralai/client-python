@@ -20,6 +20,7 @@ class Schedules(BaseSDK):
         status: OptionalNullable[
             models.GetSchedulesV1WorkflowsSchedulesGetStatus
         ] = UNSET,
+        search: OptionalNullable[str] = UNSET,
         page_size: OptionalNullable[int] = UNSET,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -29,9 +30,10 @@ class Schedules(BaseSDK):
     ) -> Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]:
         r"""Get Schedules
 
-        :param workflow_name: Filter by workflow name
+        :param workflow_name: Filter by exact workflow name
         :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
         :param status: Filter by schedule status: 'active' or 'paused'
+        :param search: Prefix search query for workflow name
         :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -56,6 +58,7 @@ class Schedules(BaseSDK):
             workflow_name=workflow_name,
             user_id=user_id,
             status=status,
+            search=search,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -122,6 +125,7 @@ class Schedules(BaseSDK):
                 workflow_name=workflow_name,
                 user_id=user_id,
                 status=status,
+                search=search,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
@@ -160,6 +164,7 @@ class Schedules(BaseSDK):
         status: OptionalNullable[
             models.GetSchedulesV1WorkflowsSchedulesGetStatus
         ] = UNSET,
+        search: OptionalNullable[str] = UNSET,
         page_size: OptionalNullable[int] = UNSET,
         next_page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -169,9 +174,10 @@ class Schedules(BaseSDK):
     ) -> Optional[models.GetSchedulesV1WorkflowsSchedulesGetResponse]:
         r"""Get Schedules
 
-        :param workflow_name: Filter by workflow name
+        :param workflow_name: Filter by exact workflow name
         :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
         :param status: Filter by schedule status: 'active' or 'paused'
+        :param search: Prefix search query for workflow name
         :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -196,6 +202,7 @@ class Schedules(BaseSDK):
             workflow_name=workflow_name,
             user_id=user_id,
             status=status,
+            search=search,
             page_size=page_size,
             next_page_token=next_page_token,
         )
@@ -267,6 +274,7 @@ class Schedules(BaseSDK):
                 workflow_name=workflow_name,
                 user_id=user_id,
                 status=status,
+                search=search,
                 page_size=page_size,
                 next_page_token=next_cursor,
                 retries=retries,
