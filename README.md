@@ -685,9 +685,9 @@ print(res.choices[0].message.content)
 
 ### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
 
-* [get_indexes](docs/sdks/searchindexes/README.md#get_indexes) - Get Index Summaries
-* [register](docs/sdks/searchindexes/README.md#register) - Register (or re-register) a search index
-* [unregister](docs/sdks/searchindexes/README.md#unregister) - Unregister Search Index
+* [get_deployment_summaries](docs/sdks/searchindexes/README.md#get_deployment_summaries) - Get Deployment Summaries
+* [register_deployment](docs/sdks/searchindexes/README.md#register_deployment) - Register (or re-register) a search index
+* [unregister_deployment](docs/sdks/searchindexes/README.md#unregister_deployment) - Unregister Deployment
 * [update_index_metrics](docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
 
 ### [Beta.Skills](docs/sdks/skills/README.md)

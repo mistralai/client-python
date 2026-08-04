@@ -1,12 +1,12 @@
-# GetSearchIndexSummaryResponseIndexStatus
+# GetDeploymentSummariesResponseDeploymentStatus
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import GetSearchIndexSummaryResponseIndexStatus
+from mistralai.client.models import GetDeploymentSummariesResponseDeploymentStatus
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: GetSearchIndexSummaryResponseIndexStatus = "online"
+value: GetDeploymentSummariesResponseDeploymentStatus = "online"
 ```
 
 

@@ -1,4 +1,4 @@
-# GetSearchIndexSummaryResponseVespaSchemaModel
+# GetDeploymentSummariesResponseVespaIndex
 
 
 ## Fields

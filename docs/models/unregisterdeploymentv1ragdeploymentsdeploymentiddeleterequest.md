@@ -1,8 +1,8 @@
-# UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest
+# UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest
 
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `index_id`         | *str*              | :heavy_check_mark: | N/A                |
+| `deployment_id`    | *str*              | :heavy_check_mark: | N/A                |
