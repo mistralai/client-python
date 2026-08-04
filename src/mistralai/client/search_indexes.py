@@ -11,15 +11,15 @@ from typing import Any, Mapping, Optional, Union
 
 
 class SearchIndexes(BaseSDK):
-    def get_indexes(
+    def get_deployment_summaries(
         self,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSummaryResponse:
-        r"""Get Index Summaries
+    ) -> models.GetDeploymentSummariesResponse:
+        r"""Get Deployment Summaries
 
         Fetch all indexes available to a user
 
@@ -42,7 +42,7 @@ class SearchIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
         req = self._build_request(
             method="GET",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=None,
@@ -69,7 +69,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_index_summaries_v1_rag_indexes_get",
+                operation_id="get_deployment_summaries_v1_rag_deployments_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -82,7 +82,7 @@ class SearchIndexes(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.GetSearchIndexSummaryResponse, http_res
+                models.GetDeploymentSummariesResponse, http_res
             )
         if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
@@ -93,15 +93,15 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def get_indexes_async(
+    async def get_deployment_summaries_async(
         self,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSummaryResponse:
-        r"""Get Index Summaries
+    ) -> models.GetDeploymentSummariesResponse:
+        r"""Get Deployment Summaries
 
         Fetch all indexes available to a user
 
@@ -124,7 +124,7 @@ class SearchIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
         req = self._build_request_async(
             method="GET",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=None,
@@ -151,7 +151,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_index_summaries_v1_rag_indexes_get",
+                operation_id="get_deployment_summaries_v1_rag_deployments_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -164,7 +164,7 @@ class SearchIndexes(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                models.GetSearchIndexSummaryResponse, http_res
+                models.GetDeploymentSummariesResponse, http_res
             )
         if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
@@ -175,15 +175,15 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def register(
+    def register_deployment(
         self,
         *,
         name: str,
-        index: Union[
-            models.RegisterSearchIndexRequestIndexIndex,
-            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        deployment: Union[
+            models.RegisterDeploymentRequestDeploymentDeployment,
+            models.RegisterDeploymentRequestDeploymentDeploymentTypedDict,
         ],
-        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
+        status: Optional[models.RegisterDeploymentRequestDeploymentStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -192,7 +192,7 @@ class SearchIndexes(BaseSDK):
         r"""Register (or re-register) a search index
 
         :param name:
-        :param index:
+        :param deployment:
         :param status:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -212,17 +212,17 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RegisterSearchIndexRequestIndex(
+        request = models.RegisterDeploymentRequestDeployment(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(
-                index, models.RegisterSearchIndexRequestIndexIndex
+            deployment=utils.get_pydantic_model(
+                deployment, models.RegisterDeploymentRequestDeploymentDeployment
             ),
         )
 
         req = self._build_request(
             method="PUT",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -234,7 +234,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.RegisterSearchIndexRequestIndex
+                request,
+                False,
+                False,
+                "json",
+                models.RegisterDeploymentRequestDeployment,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -252,7 +256,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="register_search_index_v1_rag_indexes_put",
+                operation_id="register_deployment_v1_rag_deployments_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -282,15 +286,15 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def register_async(
+    async def register_deployment_async(
         self,
         *,
         name: str,
-        index: Union[
-            models.RegisterSearchIndexRequestIndexIndex,
-            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        deployment: Union[
+            models.RegisterDeploymentRequestDeploymentDeployment,
+            models.RegisterDeploymentRequestDeploymentDeploymentTypedDict,
         ],
-        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
+        status: Optional[models.RegisterDeploymentRequestDeploymentStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -299,7 +303,7 @@ class SearchIndexes(BaseSDK):
         r"""Register (or re-register) a search index
 
         :param name:
-        :param index:
+        :param deployment:
         :param status:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -319,17 +323,17 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RegisterSearchIndexRequestIndex(
+        request = models.RegisterDeploymentRequestDeployment(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(
-                index, models.RegisterSearchIndexRequestIndexIndex
+            deployment=utils.get_pydantic_model(
+                deployment, models.RegisterDeploymentRequestDeploymentDeployment
             ),
         )
 
         req = self._build_request_async(
             method="PUT",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -341,7 +345,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.RegisterSearchIndexRequestIndex
+                request,
+                False,
+                False,
+                "json",
+                models.RegisterDeploymentRequestDeployment,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -359,7 +367,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="register_search_index_v1_rag_indexes_put",
+                operation_id="register_deployment_v1_rag_deployments_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -389,20 +397,20 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def unregister(
+    def unregister_deployment(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
-        r"""Unregister Search Index
+        r"""Unregister Deployment
 
-        Delete all information about an index
+        Delete all information about a deployment
 
-        :param index_id:
+        :param deployment_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -421,13 +429,13 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest(
-            index_id=index_id,
+        request = models.UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest(
+            deployment_id=deployment_id,
         )
 
         req = self._build_request(
             method="DELETE",
-            path="/v1/rag/indexes/{index_id}",
+            path="/v1/rag/deployments/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -454,7 +462,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="unregister_search_index_v1_rag_indexes__index_id__delete",
+                operation_id="unregister_deployment_v1_rag_deployments__deployment_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -482,20 +490,20 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def unregister_async(
+    async def unregister_deployment_async(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
-        r"""Unregister Search Index
+        r"""Unregister Deployment
 
-        Delete all information about an index
+        Delete all information about a deployment
 
-        :param index_id:
+        :param deployment_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -514,13 +522,13 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest(
-            index_id=index_id,
+        request = models.UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest(
+            deployment_id=deployment_id,
         )
 
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/rag/indexes/{index_id}",
+            path="/v1/rag/deployments/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -547,7 +555,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="unregister_search_index_v1_rag_indexes__index_id__delete",
+                operation_id="unregister_deployment_v1_rag_deployments__deployment_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -578,7 +586,7 @@ class SearchIndexes(BaseSDK):
     def update_index_metrics(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         request_body: Union[models.MetricsData, models.MetricsDataTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -589,7 +597,7 @@ class SearchIndexes(BaseSDK):
 
         Update the metrics for a given index
 
-        :param index_id:
+        :param deployment_id:
         :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -609,14 +617,16 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequest(
-            index_id=index_id,
-            request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+        request = (
+            models.UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest(
+                deployment_id=deployment_id,
+                request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+            )
         )
 
         req = self._build_request(
             method="PUT",
-            path="/v1/rag/indexes/{index_id}/metrics",
+            path="/v1/rag/deployments/{deployment_id}/metrics",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -646,7 +656,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_metrics_v1_rag_indexes__index_id__metrics_put",
+                operation_id="update_index_metrics_v1_rag_deployments__deployment_id__metrics_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -671,7 +681,7 @@ class SearchIndexes(BaseSDK):
     async def update_index_metrics_async(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         request_body: Union[models.MetricsData, models.MetricsDataTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -682,7 +692,7 @@ class SearchIndexes(BaseSDK):
 
         Update the metrics for a given index
 
-        :param index_id:
+        :param deployment_id:
         :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -702,14 +712,16 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequest(
-            index_id=index_id,
-            request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+        request = (
+            models.UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest(
+                deployment_id=deployment_id,
+                request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+            )
         )
 
         req = self._build_request_async(
             method="PUT",
-            path="/v1/rag/indexes/{index_id}/metrics",
+            path="/v1/rag/deployments/{deployment_id}/metrics",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -739,7 +751,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_metrics_v1_rag_indexes__index_id__metrics_put",
+                operation_id="update_index_metrics_v1_rag_deployments__deployment_id__metrics_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
