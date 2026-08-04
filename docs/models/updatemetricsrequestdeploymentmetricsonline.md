@@ -1,0 +1,10 @@
+# UpdateMetricsRequestDeploymentMetricsOnline
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `status`                                                                                       | *Literal["online"]*                                                                            | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `document_count`                                                                               | *int*                                                                                          | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `index_metrics`                                                                                | List[[models.UpdateMetricsRequestIndexMetrics](../models/updatemetricsrequestindexmetrics.md)] | :heavy_check_mark:                                                                             | N/A                                                                                            |

@@ -1204,31 +1204,31 @@ if TYPE_CHECKING:
         GetWorkflowsV1WorkflowsGetStatus,
         GetWorkflowsV1WorkflowsGetStatusTypedDict,
     )
+    from .getdeploymentsummariesresponse import (
+        GetDeploymentSummariesResponse,
+        GetDeploymentSummariesResponseTypedDict,
+    )
+    from .getdeploymentsummariesresponsedeployment import (
+        GetDeploymentSummariesResponseDeployment,
+        GetDeploymentSummariesResponseDeploymentDeployment,
+        GetDeploymentSummariesResponseDeploymentDeploymentTypedDict,
+        GetDeploymentSummariesResponseDeploymentStatus,
+        GetDeploymentSummariesResponseDeploymentTypedDict,
+        UnknownGetDeploymentSummariesResponseDeploymentDeployment,
+    )
+    from .getdeploymentsummariesresponsevespadeployment import (
+        GetDeploymentSummariesResponseVespaDeployment,
+        GetDeploymentSummariesResponseVespaDeploymentTypedDict,
+    )
+    from .getdeploymentsummariesresponsevespaindex import (
+        GetDeploymentSummariesResponseVespaIndex,
+        GetDeploymentSummariesResponseVespaIndexTypedDict,
+    )
     from .getfileresponse import GetFileResponse, GetFileResponseTypedDict
     from .getlog import GetLog, GetLogTypedDict
     from .getlogfieldoptions import GetLogFieldOptions, GetLogFieldOptionsTypedDict
     from .getlogfields import GetLogFields, GetLogFieldsTypedDict
     from .getlogs import GetLogs, GetLogsTypedDict
-    from .getsearchindexsummaryresponse import (
-        GetSearchIndexSummaryResponse,
-        GetSearchIndexSummaryResponseTypedDict,
-    )
-    from .getsearchindexsummaryresponseindex import (
-        GetSearchIndexSummaryResponseIndex,
-        GetSearchIndexSummaryResponseIndexIndex,
-        GetSearchIndexSummaryResponseIndexIndexTypedDict,
-        GetSearchIndexSummaryResponseIndexStatus,
-        GetSearchIndexSummaryResponseIndexTypedDict,
-        UnknownGetSearchIndexSummaryResponseIndexIndex,
-    )
-    from .getsearchindexsummaryresponsevespaindex import (
-        GetSearchIndexSummaryResponseVespaIndex,
-        GetSearchIndexSummaryResponseVespaIndexTypedDict,
-    )
-    from .getsearchindexsummaryresponsevespaschemamodel import (
-        GetSearchIndexSummaryResponseVespaSchemaModel,
-        GetSearchIndexSummaryResponseVespaSchemaModelTypedDict,
-    )
     from .getsignedurlresponse import (
         GetSignedURLResponse,
         GetSignedURLResponseTypedDict,
@@ -1913,24 +1913,24 @@ if TYPE_CHECKING:
         ReferenceID,
         ReferenceIDTypedDict,
     )
-    from .registersearchindexrequestindex import (
-        RegisterSearchIndexRequestIndex,
-        RegisterSearchIndexRequestIndexIndex,
-        RegisterSearchIndexRequestIndexIndexTypedDict,
-        RegisterSearchIndexRequestIndexStatus,
-        RegisterSearchIndexRequestIndexTypedDict,
+    from .registerdeploymentrequestdeployment import (
+        RegisterDeploymentRequestDeployment,
+        RegisterDeploymentRequestDeploymentDeployment,
+        RegisterDeploymentRequestDeploymentDeploymentTypedDict,
+        RegisterDeploymentRequestDeploymentStatus,
+        RegisterDeploymentRequestDeploymentTypedDict,
     )
-    from .registersearchindexrequestvespaindex import (
-        RegisterSearchIndexRequestVespaIndex,
-        RegisterSearchIndexRequestVespaIndexTypedDict,
+    from .registerdeploymentrequestvespadeployment import (
+        RegisterDeploymentRequestVespaDeployment,
+        RegisterDeploymentRequestVespaDeploymentTypedDict,
     )
-    from .registersearchindexrequestvespaschemafield import (
-        RegisterSearchIndexRequestVespaSchemaField,
-        RegisterSearchIndexRequestVespaSchemaFieldTypedDict,
+    from .registerdeploymentrequestvespafield import (
+        RegisterDeploymentRequestVespaField,
+        RegisterDeploymentRequestVespaFieldTypedDict,
     )
-    from .registersearchindexrequestvespaschemamodel import (
-        RegisterSearchIndexRequestVespaSchemaModel,
-        RegisterSearchIndexRequestVespaSchemaModelTypedDict,
+    from .registerdeploymentrequestvespaindex import (
+        RegisterDeploymentRequestVespaIndex,
+        RegisterDeploymentRequestVespaIndexTypedDict,
     )
     from .registersearchindexresponseindex import (
         RegisterSearchIndexResponseIndex,
@@ -2383,9 +2383,9 @@ if TYPE_CHECKING:
         UnarchiveModelResponse,
         UnarchiveModelResponseTypedDict,
     )
-    from .unregister_search_index_v1_rag_indexes_index_id_deleteop import (
-        UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest,
-        UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequestTypedDict,
+    from .unregister_deployment_v1_rag_deployments_deployment_id_deleteop import (
+        UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest,
+        UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequestTypedDict,
     )
     from .unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop import (
         UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest,
@@ -2407,11 +2407,11 @@ if TYPE_CHECKING:
         UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequest,
         UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict,
     )
-    from .update_index_metrics_v1_rag_indexes_index_id_metrics_putop import (
+    from .update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop import (
         MetricsData,
         MetricsDataTypedDict,
-        UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequest,
-        UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequestTypedDict,
+        UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest,
+        UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequestTypedDict,
     )
     from .update_judge_v1_observability_judges_judge_id_putop import (
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
@@ -2470,18 +2470,6 @@ if TYPE_CHECKING:
         UpdateDocumentRequest,
         UpdateDocumentRequestTypedDict,
     )
-    from .updateindexmetricsrequestindexmetricsoffline import (
-        UpdateIndexMetricsRequestIndexMetricsOffline,
-        UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict,
-    )
-    from .updateindexmetricsrequestindexmetricsonline import (
-        UpdateIndexMetricsRequestIndexMetricsOnline,
-        UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict,
-    )
-    from .updateindexmetricsrequestschemametrics import (
-        UpdateIndexMetricsRequestSchemaMetrics,
-        UpdateIndexMetricsRequestSchemaMetricsTypedDict,
-    )
     from .updateinvocationbody import (
         UpdateInvocationBody,
         UpdateInvocationBodyInput,
@@ -2497,6 +2485,18 @@ if TYPE_CHECKING:
     from .updatelibraryrequest import (
         UpdateLibraryRequest,
         UpdateLibraryRequestTypedDict,
+    )
+    from .updatemetricsrequestdeploymentmetricsoffline import (
+        UpdateMetricsRequestDeploymentMetricsOffline,
+        UpdateMetricsRequestDeploymentMetricsOfflineTypedDict,
+    )
+    from .updatemetricsrequestdeploymentmetricsonline import (
+        UpdateMetricsRequestDeploymentMetricsOnline,
+        UpdateMetricsRequestDeploymentMetricsOnlineTypedDict,
+    )
+    from .updatemetricsrequestindexmetrics import (
+        UpdateMetricsRequestIndexMetrics,
+        UpdateMetricsRequestIndexMetricsTypedDict,
     )
     from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
     from .updateruninfo import UpdateRunInfo, UpdateRunInfoTypedDict
@@ -3462,6 +3462,17 @@ __all__ = [
     "GetDeploymentLogsOrder",
     "GetDeploymentLogsRequest",
     "GetDeploymentLogsRequestTypedDict",
+    "GetDeploymentSummariesResponse",
+    "GetDeploymentSummariesResponseDeployment",
+    "GetDeploymentSummariesResponseDeploymentDeployment",
+    "GetDeploymentSummariesResponseDeploymentDeploymentTypedDict",
+    "GetDeploymentSummariesResponseDeploymentStatus",
+    "GetDeploymentSummariesResponseDeploymentTypedDict",
+    "GetDeploymentSummariesResponseTypedDict",
+    "GetDeploymentSummariesResponseVespaDeployment",
+    "GetDeploymentSummariesResponseVespaDeploymentTypedDict",
+    "GetDeploymentSummariesResponseVespaIndex",
+    "GetDeploymentSummariesResponseVespaIndexTypedDict",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequest",
     "GetDeploymentV1WorkflowsDeploymentsNameGetRequestTypedDict",
     "GetFileResponse",
@@ -3491,17 +3502,6 @@ __all__ = [
     "GetSchedulesV1WorkflowsSchedulesGetResponse",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict",
     "GetSchedulesV1WorkflowsSchedulesGetStatus",
-    "GetSearchIndexSummaryResponse",
-    "GetSearchIndexSummaryResponseIndex",
-    "GetSearchIndexSummaryResponseIndexIndex",
-    "GetSearchIndexSummaryResponseIndexIndexTypedDict",
-    "GetSearchIndexSummaryResponseIndexStatus",
-    "GetSearchIndexSummaryResponseIndexTypedDict",
-    "GetSearchIndexSummaryResponseTypedDict",
-    "GetSearchIndexSummaryResponseVespaIndex",
-    "GetSearchIndexSummaryResponseVespaIndexTypedDict",
-    "GetSearchIndexSummaryResponseVespaSchemaModel",
-    "GetSearchIndexSummaryResponseVespaSchemaModelTypedDict",
     "GetSignedURLResponse",
     "GetSignedURLResponseTypedDict",
     "GetSimilarChatCompletionEventsV1ObservabilityChatCompletionEventsEventIDSimilarEventsGetRequest",
@@ -4070,17 +4070,17 @@ __all__ = [
     "ReferenceChunkTypedDict",
     "ReferenceID",
     "ReferenceIDTypedDict",
-    "RegisterSearchIndexRequestIndex",
-    "RegisterSearchIndexRequestIndexIndex",
-    "RegisterSearchIndexRequestIndexIndexTypedDict",
-    "RegisterSearchIndexRequestIndexStatus",
-    "RegisterSearchIndexRequestIndexTypedDict",
-    "RegisterSearchIndexRequestVespaIndex",
-    "RegisterSearchIndexRequestVespaIndexTypedDict",
-    "RegisterSearchIndexRequestVespaSchemaField",
-    "RegisterSearchIndexRequestVespaSchemaFieldTypedDict",
-    "RegisterSearchIndexRequestVespaSchemaModel",
-    "RegisterSearchIndexRequestVespaSchemaModelTypedDict",
+    "RegisterDeploymentRequestDeployment",
+    "RegisterDeploymentRequestDeploymentDeployment",
+    "RegisterDeploymentRequestDeploymentDeploymentTypedDict",
+    "RegisterDeploymentRequestDeploymentStatus",
+    "RegisterDeploymentRequestDeploymentTypedDict",
+    "RegisterDeploymentRequestVespaDeployment",
+    "RegisterDeploymentRequestVespaDeploymentTypedDict",
+    "RegisterDeploymentRequestVespaField",
+    "RegisterDeploymentRequestVespaFieldTypedDict",
+    "RegisterDeploymentRequestVespaIndex",
+    "RegisterDeploymentRequestVespaIndexTypedDict",
     "RegisterSearchIndexResponseIndex",
     "RegisterSearchIndexResponseIndexTypedDict",
     "RegistrySharingScope",
@@ -4446,7 +4446,7 @@ __all__ = [
     "UnknownConnectorToolCallResponseContent",
     "UnknownContentChunk",
     "UnknownConversationEventsData",
-    "UnknownGetSearchIndexSummaryResponseIndexIndex",
+    "UnknownGetDeploymentSummariesResponseDeploymentDeployment",
     "UnknownJSONPatch",
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
     "UnknownJudgeOutputUnion",
@@ -4456,8 +4456,8 @@ __all__ = [
     "UnknownResponseRetrieveModelV1ModelsModelIDGet",
     "UnknownSpeechV1AudioSpeechPostData",
     "UnknownTranscriptionStreamEventsData",
-    "UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest",
-    "UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequestTypedDict",
+    "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest",
+    "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequestTypedDict",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict",
     "UpdateAgentRequest",
@@ -4486,14 +4486,8 @@ __all__ = [
     "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict",
     "UpdateDocumentRequest",
     "UpdateDocumentRequestTypedDict",
-    "UpdateIndexMetricsRequestIndexMetricsOffline",
-    "UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict",
-    "UpdateIndexMetricsRequestIndexMetricsOnline",
-    "UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict",
-    "UpdateIndexMetricsRequestSchemaMetrics",
-    "UpdateIndexMetricsRequestSchemaMetricsTypedDict",
-    "UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequest",
-    "UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequestTypedDict",
+    "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest",
+    "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequestTypedDict",
     "UpdateInvocationBody",
     "UpdateInvocationBodyInput",
     "UpdateInvocationBodyInputTypedDict",
@@ -4506,6 +4500,12 @@ __all__ = [
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict",
     "UpdateLibraryRequest",
     "UpdateLibraryRequestTypedDict",
+    "UpdateMetricsRequestDeploymentMetricsOffline",
+    "UpdateMetricsRequestDeploymentMetricsOfflineTypedDict",
+    "UpdateMetricsRequestDeploymentMetricsOnline",
+    "UpdateMetricsRequestDeploymentMetricsOnlineTypedDict",
+    "UpdateMetricsRequestIndexMetrics",
+    "UpdateMetricsRequestIndexMetricsTypedDict",
     "UpdateModelRequest",
     "UpdateModelRequestTypedDict",
     "UpdatePromptRequest",
@@ -5466,6 +5466,18 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowsV1WorkflowsGetResponseTypedDict": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetStatus": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetStatusTypedDict": ".get_workflows_v1_workflows_getop",
+    "GetDeploymentSummariesResponse": ".getdeploymentsummariesresponse",
+    "GetDeploymentSummariesResponseTypedDict": ".getdeploymentsummariesresponse",
+    "GetDeploymentSummariesResponseDeployment": ".getdeploymentsummariesresponsedeployment",
+    "GetDeploymentSummariesResponseDeploymentDeployment": ".getdeploymentsummariesresponsedeployment",
+    "GetDeploymentSummariesResponseDeploymentDeploymentTypedDict": ".getdeploymentsummariesresponsedeployment",
+    "GetDeploymentSummariesResponseDeploymentStatus": ".getdeploymentsummariesresponsedeployment",
+    "GetDeploymentSummariesResponseDeploymentTypedDict": ".getdeploymentsummariesresponsedeployment",
+    "UnknownGetDeploymentSummariesResponseDeploymentDeployment": ".getdeploymentsummariesresponsedeployment",
+    "GetDeploymentSummariesResponseVespaDeployment": ".getdeploymentsummariesresponsevespadeployment",
+    "GetDeploymentSummariesResponseVespaDeploymentTypedDict": ".getdeploymentsummariesresponsevespadeployment",
+    "GetDeploymentSummariesResponseVespaIndex": ".getdeploymentsummariesresponsevespaindex",
+    "GetDeploymentSummariesResponseVespaIndexTypedDict": ".getdeploymentsummariesresponsevespaindex",
     "GetFileResponse": ".getfileresponse",
     "GetFileResponseTypedDict": ".getfileresponse",
     "GetLog": ".getlog",
@@ -5476,18 +5488,6 @@ _dynamic_imports: dict[str, str] = {
     "GetLogFieldsTypedDict": ".getlogfields",
     "GetLogs": ".getlogs",
     "GetLogsTypedDict": ".getlogs",
-    "GetSearchIndexSummaryResponse": ".getsearchindexsummaryresponse",
-    "GetSearchIndexSummaryResponseTypedDict": ".getsearchindexsummaryresponse",
-    "GetSearchIndexSummaryResponseIndex": ".getsearchindexsummaryresponseindex",
-    "GetSearchIndexSummaryResponseIndexIndex": ".getsearchindexsummaryresponseindex",
-    "GetSearchIndexSummaryResponseIndexIndexTypedDict": ".getsearchindexsummaryresponseindex",
-    "GetSearchIndexSummaryResponseIndexStatus": ".getsearchindexsummaryresponseindex",
-    "GetSearchIndexSummaryResponseIndexTypedDict": ".getsearchindexsummaryresponseindex",
-    "UnknownGetSearchIndexSummaryResponseIndexIndex": ".getsearchindexsummaryresponseindex",
-    "GetSearchIndexSummaryResponseVespaIndex": ".getsearchindexsummaryresponsevespaindex",
-    "GetSearchIndexSummaryResponseVespaIndexTypedDict": ".getsearchindexsummaryresponsevespaindex",
-    "GetSearchIndexSummaryResponseVespaSchemaModel": ".getsearchindexsummaryresponsevespaschemamodel",
-    "GetSearchIndexSummaryResponseVespaSchemaModelTypedDict": ".getsearchindexsummaryresponsevespaschemamodel",
     "GetSignedURLResponse": ".getsignedurlresponse",
     "GetSignedURLResponseTypedDict": ".getsignedurlresponse",
     "GetSpan": ".getspan",
@@ -6010,17 +6010,17 @@ _dynamic_imports: dict[str, str] = {
     "ReferenceChunkTypedDict": ".referencechunk",
     "ReferenceID": ".referencechunk",
     "ReferenceIDTypedDict": ".referencechunk",
-    "RegisterSearchIndexRequestIndex": ".registersearchindexrequestindex",
-    "RegisterSearchIndexRequestIndexIndex": ".registersearchindexrequestindex",
-    "RegisterSearchIndexRequestIndexIndexTypedDict": ".registersearchindexrequestindex",
-    "RegisterSearchIndexRequestIndexStatus": ".registersearchindexrequestindex",
-    "RegisterSearchIndexRequestIndexTypedDict": ".registersearchindexrequestindex",
-    "RegisterSearchIndexRequestVespaIndex": ".registersearchindexrequestvespaindex",
-    "RegisterSearchIndexRequestVespaIndexTypedDict": ".registersearchindexrequestvespaindex",
-    "RegisterSearchIndexRequestVespaSchemaField": ".registersearchindexrequestvespaschemafield",
-    "RegisterSearchIndexRequestVespaSchemaFieldTypedDict": ".registersearchindexrequestvespaschemafield",
-    "RegisterSearchIndexRequestVespaSchemaModel": ".registersearchindexrequestvespaschemamodel",
-    "RegisterSearchIndexRequestVespaSchemaModelTypedDict": ".registersearchindexrequestvespaschemamodel",
+    "RegisterDeploymentRequestDeployment": ".registerdeploymentrequestdeployment",
+    "RegisterDeploymentRequestDeploymentDeployment": ".registerdeploymentrequestdeployment",
+    "RegisterDeploymentRequestDeploymentDeploymentTypedDict": ".registerdeploymentrequestdeployment",
+    "RegisterDeploymentRequestDeploymentStatus": ".registerdeploymentrequestdeployment",
+    "RegisterDeploymentRequestDeploymentTypedDict": ".registerdeploymentrequestdeployment",
+    "RegisterDeploymentRequestVespaDeployment": ".registerdeploymentrequestvespadeployment",
+    "RegisterDeploymentRequestVespaDeploymentTypedDict": ".registerdeploymentrequestvespadeployment",
+    "RegisterDeploymentRequestVespaField": ".registerdeploymentrequestvespafield",
+    "RegisterDeploymentRequestVespaFieldTypedDict": ".registerdeploymentrequestvespafield",
+    "RegisterDeploymentRequestVespaIndex": ".registerdeploymentrequestvespaindex",
+    "RegisterDeploymentRequestVespaIndexTypedDict": ".registerdeploymentrequestvespaindex",
     "RegisterSearchIndexResponseIndex": ".registersearchindexresponseindex",
     "RegisterSearchIndexResponseIndexTypedDict": ".registersearchindexresponseindex",
     "RegistrySharingScope": ".registrysharingscope",
@@ -6374,8 +6374,8 @@ _dynamic_imports: dict[str, str] = {
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
     "UnarchiveModelResponseTypedDict": ".unarchivemodelresponse",
-    "UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequest": ".unregister_search_index_v1_rag_indexes_index_id_deleteop",
-    "UnregisterSearchIndexV1RagIndexesIndexIDDeleteRequestTypedDict": ".unregister_search_index_v1_rag_indexes_index_id_deleteop",
+    "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest": ".unregister_deployment_v1_rag_deployments_deployment_id_deleteop",
+    "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequestTypedDict": ".unregister_deployment_v1_rag_deployments_deployment_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequestTypedDict": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",
     "UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest": ".update_dataset_record_payload_v1_observability_dataset_records_dataset_record_id_payload_putop",
@@ -6386,10 +6386,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict": ".update_dataset_v1_observability_datasets_dataset_id_patchop",
     "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequest": ".update_deployment_v1_workflows_deployments_name_patchop",
     "UpdateDeploymentV1WorkflowsDeploymentsNamePatchRequestTypedDict": ".update_deployment_v1_workflows_deployments_name_patchop",
-    "MetricsData": ".update_index_metrics_v1_rag_indexes_index_id_metrics_putop",
-    "MetricsDataTypedDict": ".update_index_metrics_v1_rag_indexes_index_id_metrics_putop",
-    "UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequest": ".update_index_metrics_v1_rag_indexes_index_id_metrics_putop",
-    "UpdateIndexMetricsV1RagIndexesIndexIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_indexes_index_id_metrics_putop",
+    "MetricsData": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
+    "MetricsDataTypedDict": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
+    "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
+    "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
@@ -6422,12 +6422,6 @@ _dynamic_imports: dict[str, str] = {
     "AttributesTypedDict": ".updatedocumentrequest",
     "UpdateDocumentRequest": ".updatedocumentrequest",
     "UpdateDocumentRequestTypedDict": ".updatedocumentrequest",
-    "UpdateIndexMetricsRequestIndexMetricsOffline": ".updateindexmetricsrequestindexmetricsoffline",
-    "UpdateIndexMetricsRequestIndexMetricsOfflineTypedDict": ".updateindexmetricsrequestindexmetricsoffline",
-    "UpdateIndexMetricsRequestIndexMetricsOnline": ".updateindexmetricsrequestindexmetricsonline",
-    "UpdateIndexMetricsRequestIndexMetricsOnlineTypedDict": ".updateindexmetricsrequestindexmetricsonline",
-    "UpdateIndexMetricsRequestSchemaMetrics": ".updateindexmetricsrequestschemametrics",
-    "UpdateIndexMetricsRequestSchemaMetricsTypedDict": ".updateindexmetricsrequestschemametrics",
     "UpdateInvocationBody": ".updateinvocationbody",
     "UpdateInvocationBodyInput": ".updateinvocationbody",
     "UpdateInvocationBodyInputTypedDict": ".updateinvocationbody",
@@ -6438,6 +6432,12 @@ _dynamic_imports: dict[str, str] = {
     "UpdateJudgeRequestTypedDict": ".updatejudgerequest",
     "UpdateLibraryRequest": ".updatelibraryrequest",
     "UpdateLibraryRequestTypedDict": ".updatelibraryrequest",
+    "UpdateMetricsRequestDeploymentMetricsOffline": ".updatemetricsrequestdeploymentmetricsoffline",
+    "UpdateMetricsRequestDeploymentMetricsOfflineTypedDict": ".updatemetricsrequestdeploymentmetricsoffline",
+    "UpdateMetricsRequestDeploymentMetricsOnline": ".updatemetricsrequestdeploymentmetricsonline",
+    "UpdateMetricsRequestDeploymentMetricsOnlineTypedDict": ".updatemetricsrequestdeploymentmetricsonline",
+    "UpdateMetricsRequestIndexMetrics": ".updatemetricsrequestindexmetrics",
+    "UpdateMetricsRequestIndexMetricsTypedDict": ".updatemetricsrequestindexmetrics",
     "UpdateModelRequest": ".updatemodelrequest",
     "UpdateModelRequestTypedDict": ".updatemodelrequest",
     "UpdateRunInfo": ".updateruninfo",

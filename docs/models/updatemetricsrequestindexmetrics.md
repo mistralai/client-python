@@ -1,4 +1,4 @@
-# UpdateIndexMetricsRequestSchemaMetrics
+# UpdateMetricsRequestIndexMetrics
 
 
 ## Fields
