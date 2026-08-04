@@ -1222,7 +1222,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Add a conversation to the dataset
+        r"""Add a record to the dataset
 
         :param dataset_id:
         :param payload: Caller-authored input object stored on a dataset record.
@@ -1330,7 +1330,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Add a conversation to the dataset
+        r"""Add a record to the dataset
 
         :param dataset_id:
         :param payload: Caller-authored input object stored on a dataset record.
@@ -1437,7 +1437,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with a campaign
+        r"""Populate the dataset with records from a campaign
 
         :param dataset_id:
         :param campaign_id:
@@ -1542,7 +1542,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with a campaign
+        r"""Populate the dataset with records from a campaign
 
         :param dataset_id:
         :param campaign_id:
@@ -1647,7 +1647,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the explorer
+        r"""Populate the dataset with records from the explorer
 
         :param dataset_id:
         :param completion_event_ids:
@@ -1752,7 +1752,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the explorer
+        r"""Populate the dataset with records from the explorer
 
         :param dataset_id:
         :param completion_event_ids:
@@ -1857,7 +1857,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from an uploaded file
+        r"""Populate the dataset with records from an uploaded file
 
         :param dataset_id:
         :param file_id:
@@ -1962,7 +1962,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from an uploaded file
+        r"""Populate the dataset with records from an uploaded file
 
         :param dataset_id:
         :param file_id:
@@ -2067,7 +2067,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the playground
+        r"""Populate the dataset with records from playground conversations
 
         :param dataset_id:
         :param conversation_ids:
@@ -2172,7 +2172,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the playground
+        r"""Populate the dataset with records from playground conversations
 
         :param dataset_id:
         :param conversation_ids:
@@ -2277,7 +2277,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from another dataset
+        r"""Populate the dataset with records from another dataset
 
         :param dataset_id:
         :param dataset_record_ids:
@@ -2382,7 +2382,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from another dataset
+        r"""Populate the dataset with records from another dataset
 
         :param dataset_id:
         :param dataset_record_ids:

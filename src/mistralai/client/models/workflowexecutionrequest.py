@@ -25,6 +25,8 @@ class WorkflowExecutionRequestTypedDict(TypedDict):
     timeout_seconds: NotRequired[Nullable[float]]
     r"""Maximum time to wait for completion when wait_for_result is true."""
     custom_tracing_attributes: NotRequired[Nullable[Dict[str, str]]]
+    force_new_trace: NotRequired[bool]
+    r"""If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace."""
     extensions: NotRequired[Nullable[Dict[str, Any]]]
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
     task_queue: NotRequired[Nullable[str]]
@@ -47,6 +49,9 @@ class WorkflowExecutionRequest(BaseModel):
     r"""Maximum time to wait for completion when wait_for_result is true."""
 
     custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET
+
+    force_new_trace: Optional[bool] = False
+    r"""If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace."""
 
     extensions: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
@@ -71,6 +76,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "wait_for_result",
                 "timeout_seconds",
                 "custom_tracing_attributes",
+                "force_new_trace",
                 "extensions",
                 "task_queue",
                 "deployment_name",

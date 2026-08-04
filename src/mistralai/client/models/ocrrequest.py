@@ -48,6 +48,7 @@ TableFormat = Literal[
 ConfidenceScoresGranularity = Literal[
     "word",
     "page",
+    "block",
 ]
 
 
@@ -77,7 +78,7 @@ class OCRRequestTypedDict(TypedDict):
     include_blocks: NotRequired[bool]
     r"""Return paragraph-level bounding boxes for all content blocks in the response"""
     confidence_scores_granularity: NotRequired[Nullable[ConfidenceScoresGranularity]]
-    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small."""
+    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small."""
 
 
 class OCRRequest(BaseModel):
@@ -119,7 +120,7 @@ class OCRRequest(BaseModel):
     r"""Return paragraph-level bounding boxes for all content blocks in the response"""
 
     confidence_scores_granularity: OptionalNullable[ConfidenceScoresGranularity] = UNSET
-    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores). Defaults to None (no confidence scores) to keep response payload small."""
+    r"""Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

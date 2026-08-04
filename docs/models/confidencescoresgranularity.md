@@ -12,3 +12,4 @@ value: ConfidenceScoresGranularity = "word"
 
 - `"word"`
 - `"page"`
+- `"block"`

@@ -2,18 +2,14 @@
 # @generated-id: c391391d0988
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from typing import Literal
 
 
-SchemaFieldDataType = Union[
-    Literal[
-        "int",
-        "bool",
-        "string",
-        "embedding",
-        "long",
-        "float",
-    ],
-    UnrecognizedStr,
+SchemaFieldDataType = Literal[
+    "int",
+    "bool",
+    "string",
+    "embedding",
+    "long",
+    "float",
 ]

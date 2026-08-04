@@ -5,6 +5,7 @@
 ### Available Operations
 
 * [search](#search) - Search traces
+* [aggregate](#aggregate) - Aggregate traces
 * [get_trace_fields](#get_trace_fields) - Get trace field definitions
 * [get_trace_by_id](#get_trace_by_id) - Get trace by id
 * [get_trace_spans](#get_trace_spans) - Get trace spans
@@ -48,6 +49,57 @@ with Mistral(
 ### Response
 
 **[models.GetTraces](../../models/gettraces.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## aggregate
+
+Aggregate traces
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="aggregate_traces_v1_observability_traces_aggregate_post" method="post" path="/v1/observability/traces/aggregate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.traces.aggregate(metric={
+        "measure": "<value>",
+        "aggregation": "p95",
+    }, limit=1000)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `metric`                                                                | [models.MetricDefinition](../../models/metricdefinition.md)             | :heavy_check_mark:                                                      | N/A                                                                     |
+| `from_`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)    | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `to`                                                                    | [date](https://docs.python.org/3/library/datetime.html#date-objects)    | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `dimensions`                                                            | List[*str*]                                                             | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `time_dimension`                                                        | [OptionalNullable[models.TimeDimension]](../../models/timedimension.md) | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `search_expression`                                                     | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `order_by`                                                              | List[[models.OrderByClause](../../models/orderbyclause.md)]             | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `limit`                                                                 | *Optional[int]*                                                         | :heavy_minus_sign:                                                      | N/A                                                                     |
+| `retries`                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)        | :heavy_minus_sign:                                                      | Configuration to override the default retry behavior of the client.     |
+
+### Response
+
+**[models.Aggregation](../../models/aggregation.md)**
 
 ### Errors
 

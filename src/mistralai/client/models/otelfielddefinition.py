@@ -2,6 +2,7 @@
 # @generated-id: 4bf75d7f4f70
 
 from __future__ import annotations
+from .metricaggregation import MetricAggregation
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -66,6 +67,7 @@ class OtelFieldDefinitionTypedDict(TypedDict):
     label: str
     type: OtelFieldDefinitionType
     supported_operators: List[OtelFieldDefinitionSupportedOperator]
+    supported_aggregations: List[MetricAggregation]
     group: NotRequired[Nullable[str]]
 
 
@@ -77,6 +79,8 @@ class OtelFieldDefinition(BaseModel):
     type: OtelFieldDefinitionType
 
     supported_operators: List[OtelFieldDefinitionSupportedOperator]
+
+    supported_aggregations: List[MetricAggregation]
 
     group: OptionalNullable[str] = UNSET
 

@@ -19,6 +19,10 @@ class Skills(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -30,6 +34,10 @@ class Skills(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -53,6 +61,10 @@ class Skills(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request(
@@ -118,6 +130,10 @@ class Skills(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -145,6 +161,10 @@ class Skills(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -156,6 +176,10 @@ class Skills(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -179,6 +203,10 @@ class Skills(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request_async(
@@ -247,6 +275,10 @@ class Skills(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,

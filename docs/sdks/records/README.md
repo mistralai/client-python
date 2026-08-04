@@ -4,16 +4,16 @@
 
 ### Available Operations
 
-* [fetch](#fetch) - Get the content of a given conversation from a dataset
+* [fetch](#fetch) - Get the content of a given dataset record
 * [delete](#delete) - Delete a record from a dataset
 * [bulk_delete](#bulk_delete) - Delete multiple records from datasets
 * [judge](#judge) - Run Judge on a dataset record based on the given options
-* [update_payload](#update_payload) - Update a dataset record conversation payload
-* [update_properties](#update_properties) - Update conversation properties
+* [update_payload](#update_payload) - Update a dataset record payload
+* [update_properties](#update_properties) - Update dataset record properties
 
 ## fetch
 
-Get the content of a given conversation from a dataset
+Get the content of a given dataset record
 
 ### Example Usage
 
@@ -188,7 +188,7 @@ with Mistral(
 
 ## update_payload
 
-Update a dataset record conversation payload
+Update a dataset record payload
 
 ### Example Usage
 
@@ -237,7 +237,7 @@ with Mistral(
 
 ## update_properties
 
-Update conversation properties
+Update dataset record properties
 
 ### Example Usage
 
