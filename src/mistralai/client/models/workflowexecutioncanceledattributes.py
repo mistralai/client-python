@@ -10,6 +10,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -20,6 +21,8 @@ class WorkflowExecutionCanceledAttributesTypedDict(TypedDict):
     r"""Unique identifier for the task within the workflow execution."""
     reason: NotRequired[Nullable[str]]
     r"""Optional reason provided for the cancellation."""
+    attempt: NotRequired[int]
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
 
 
 class WorkflowExecutionCanceledAttributes(BaseModel):
@@ -31,9 +34,12 @@ class WorkflowExecutionCanceledAttributes(BaseModel):
     reason: OptionalNullable[str] = UNSET
     r"""Optional reason provided for the cancellation."""
 
+    attempt: Optional[int] = 1
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["reason"])
+        optional_fields = set(["reason", "attempt"])
         nullable_fields = set(["reason"])
         serialized = handler(self)
         m = {}
