@@ -12,6 +12,19 @@ _EXECUTE_OPERATION_IDS = {
     "execute_workflow_registration_v1_workflows_registrations__workflow_registration_id__execute_post",
 }
 
+_SAMPLED_FLAG = 0x01
+
+
+# https://www.w3.org/TR/trace-context/#traceparent-header
+def _is_sampled(traceparent: str) -> bool:
+    parts = traceparent.split("-")
+    if len(parts) != 4:
+        return False
+    try:
+        return bool(int(parts[3], 16) & _SAMPLED_FLAG)
+    except ValueError:
+        return False
+
 
 class TraceparentInjectionHook(BeforeRequestHook):
     """Inject a sampled traceparent on /execute requests so worker traces are always recorded."""
@@ -29,7 +42,7 @@ class TraceparentInjectionHook(BeforeRequestHook):
         carrier: Dict[str, str] = {}
         inject(carrier)
         traceparent = carrier.get("traceparent", "")
-        if not traceparent.endswith("-01"):
+        if not _is_sampled(traceparent):
             trace_id = random.getrandbits(128)
             span_id = random.getrandbits(64)
             traceparent = f"00-{trace_id:032x}-{span_id:016x}-01"
