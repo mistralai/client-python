@@ -86,7 +86,7 @@ class TestTraceparentInjectionHook(unittest.TestCase):
 
         assert isinstance(result, httpx.Request)
         injected = result.headers["traceparent"]
-        self.assertTrue(injected.endswith("-01"))
+        self.assertTrue(int(injected.split("-")[3], 16) & 0x01)
         trace_id_hex = f"{span.get_span_context().trace_id:032x}"
         self.assertIn(trace_id_hex, injected)
 
