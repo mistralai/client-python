@@ -760,3 +760,83 @@ async def test_workflow_encoding_hook_handles_gzipped_response():
     assert isinstance(result, httpx.Response)
     response_body = json.loads(result.content)
     assert response_body["result"] == original_data
+
+
+@pytest.mark.asyncio
+async def test_encode_payload_content_does_not_offload_below_threshold(monkeypatch):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1024,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    context = WorkflowContext(namespace="test", execution_id="exec")
+
+    data, options = await encoder.encode_payload_content(b"tiny", context)
+
+    assert options == []
+    assert storage.blobs == {}
+    assert data == b"tiny"
+
+
+@pytest.mark.asyncio
+async def test_encode_payload_content_force_offload_bypasses_threshold(monkeypatch):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1024,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    context = WorkflowContext(namespace="test", execution_id="exec")
+
+    data, options = await encoder.encode_payload_content(
+        b"tiny", context, force_offload=True
+    )
+
+    assert EncodedPayloadOptions.OFFLOADED in options
+    assert len(storage.blobs) == 1
+    ref = json.loads(data)
+    assert storage.blobs[ref["key"]] == b"tiny"
+
+
+@pytest.mark.asyncio
+async def test_encode_payload_content_force_offload_is_idempotent(monkeypatch):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1024,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    encoder = PayloadEncoder(encoding_config=config)
+    context = WorkflowContext(namespace="test", execution_id="exec")
+
+    await encoder.encode_payload_content(b"same", context, force_offload=True)
+    await encoder.encode_payload_content(b"same", context, force_offload=True)
+
+    assert len(storage.blobs) == 1
