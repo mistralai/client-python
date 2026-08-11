@@ -48,6 +48,7 @@ class ExtendedOAuthServerMetadataTypedDict(TypedDict):
     code_challenge_methods_supported: NotRequired[Nullable[List[str]]]
     client_id_metadata_document_supported: NotRequired[Nullable[bool]]
     x_resource_url: NotRequired[Nullable[str]]
+    x_scope: NotRequired[Nullable[str]]
 
 
 class ExtendedOAuthServerMetadata(BaseModel):
@@ -109,6 +110,8 @@ class ExtendedOAuthServerMetadata(BaseModel):
 
     x_resource_url: OptionalNullable[str] = UNSET
 
+    x_scope: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -133,6 +136,7 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
                 "x_resource_url",
+                "x_scope",
             ]
         )
         nullable_fields = set(
@@ -156,6 +160,7 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
                 "x_resource_url",
+                "x_scope",
             ]
         )
         serialized = handler(self)

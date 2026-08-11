@@ -15,9 +15,12 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateConnectorRequestTypedDict(TypedDict):
@@ -35,6 +38,8 @@ class CreateConnectorRequestTypedDict(TypedDict):
     r"""The description of the connector."""
     server: str
     r"""The url of the MCP server."""
+    protocol: Literal["mcp"]
+    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
     title: NotRequired[Nullable[str]]
     r"""Optional human-readable title for the connector."""
     icon_url: NotRequired[Nullable[str]]
@@ -74,6 +79,12 @@ class CreateConnectorRequest(BaseModel):
     server: str
     r"""The url of the MCP server."""
 
+    protocol: Annotated[
+        Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
+        pydantic.Field(alias="protocol"),
+    ] = "mcp"
+    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
+
     title: OptionalNullable[str] = UNSET
     r"""Optional human-readable title for the connector."""
 
@@ -105,6 +116,7 @@ class CreateConnectorRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "protocol",
                 "title",
                 "icon_url",
                 "visibility",
@@ -146,3 +158,9 @@ class CreateConnectorRequest(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    CreateConnectorRequest.model_rebuild()
+except NameError:
+    pass

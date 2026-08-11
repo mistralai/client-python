@@ -2,6 +2,7 @@
 # @generated-id: e56d154527fd
 
 from __future__ import annotations
+from .gitcommitmetadata import GitCommitMetadata, GitCommitMetadataTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -9,9 +10,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DeploymentWorkerSpecResponseTypedDict(TypedDict):
@@ -22,6 +24,7 @@ class DeploymentWorkerSpecResponseTypedDict(TypedDict):
     working_dir: NotRequired[Nullable[str]]
     restarted_at: NotRequired[Nullable[str]]
     commit_sha: NotRequired[Nullable[str]]
+    commit: NotRequired[Nullable[GitCommitMetadataTypedDict]]
 
 
 class DeploymentWorkerSpecResponse(BaseModel):
@@ -37,7 +40,14 @@ class DeploymentWorkerSpecResponse(BaseModel):
 
     restarted_at: OptionalNullable[str] = UNSET
 
-    commit_sha: OptionalNullable[str] = UNSET
+    commit_sha: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+
+    commit: OptionalNullable[GitCommitMetadata] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -49,10 +59,18 @@ class DeploymentWorkerSpecResponse(BaseModel):
                 "working_dir",
                 "restarted_at",
                 "commit_sha",
+                "commit",
             ]
         )
         nullable_fields = set(
-            ["revision", "entrypoint", "working_dir", "restarted_at", "commit_sha"]
+            [
+                "revision",
+                "entrypoint",
+                "working_dir",
+                "restarted_at",
+                "commit_sha",
+                "commit",
+            ]
         )
         serialized = handler(self)
         m = {}

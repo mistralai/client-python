@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 from .failure import Failure, FailureTypedDict
-from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class WorkflowExecutionFailedAttributesTypedDict(TypedDict):
@@ -14,6 +16,8 @@ class WorkflowExecutionFailedAttributesTypedDict(TypedDict):
     r"""Unique identifier for the task within the workflow execution."""
     failure: FailureTypedDict
     r"""Represents an error or exception that occurred during execution."""
+    attempt: NotRequired[int]
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
 
 
 class WorkflowExecutionFailedAttributes(BaseModel):
@@ -24,3 +28,22 @@ class WorkflowExecutionFailedAttributes(BaseModel):
 
     failure: Failure
     r"""Represents an error or exception that occurred during execution."""
+
+    attempt: Optional[int] = 1
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["attempt"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

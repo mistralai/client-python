@@ -237,9 +237,16 @@ if TYPE_CHECKING:
         AudioTranscriptionRequestStreamTypedDict,
     )
     from .authdata import AuthData, AuthDataTypedDict
+    from .authdirection import AuthDirection
     from .authenticationconfiguration import (
         AuthenticationConfiguration,
         AuthenticationConfigurationTypedDict,
+    )
+    from .authenticationmethodcreateorupdaterequest import (
+        AuthenticationMethodCreateOrUpdateRequest,
+        AuthenticationMethodCreateOrUpdateRequestTypedDict,
+        MethodType,
+        MethodTypeTypedDict,
     )
     from .authstatus import AuthStatus
     from .authurlresponse import AuthURLResponse, AuthURLResponseTypedDict
@@ -1254,6 +1261,8 @@ if TYPE_CHECKING:
     )
     from .gettracefields import GetTraceFields, GetTraceFieldsTypedDict
     from .gettraces import GetTraces, GetTracesTypedDict
+    from .gitcommitauthor import GitCommitAuthor, GitCommitAuthorTypedDict
+    from .gitcommitmetadata import GitCommitMetadata, GitCommitMetadataTypedDict
     from .granularity import Granularity
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .httpstatus import HTTPStatus
@@ -1287,6 +1296,7 @@ if TYPE_CHECKING:
         ImportDatasetFromPlaygroundRequest,
         ImportDatasetFromPlaygroundRequestTypedDict,
     )
+    from .inboundauthenticationtype import InboundAuthenticationType
     from .ingestionpipelineconfiguration import (
         IngestionPipelineConfiguration,
         IngestionPipelineConfigurationTypedDict,
@@ -1668,6 +1678,10 @@ if TYPE_CHECKING:
     from .moderationobject import ModerationObject, ModerationObjectTypedDict
     from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
     from .networkencodedinput import NetworkEncodedInput, NetworkEncodedInputTypedDict
+    from .oauth2metadatasecrets import (
+        Oauth2MetadataSecrets,
+        Oauth2MetadataSecretsTypedDict,
+    )
     from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
     from .observabilityerrorcode import ObservabilityErrorCode
@@ -1937,6 +1951,7 @@ if TYPE_CHECKING:
         RegisterSearchIndexResponseIndexTypedDict,
     )
     from .registrysharingscope import RegistrySharingScope
+    from .requestedservicetier import RequestedServiceTier
     from .requestsource import RequestSource
     from .reset_workflow_v1_workflows_executions_execution_id_reset_postop import (
         ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequest,
@@ -2904,11 +2919,14 @@ __all__ = [
     "AudioTranscriptionRequestTypedDict",
     "AuthData",
     "AuthDataTypedDict",
+    "AuthDirection",
     "AuthStatus",
     "AuthURLResponse",
     "AuthURLResponseTypedDict",
     "AuthenticationConfiguration",
     "AuthenticationConfigurationTypedDict",
+    "AuthenticationMethodCreateOrUpdateRequest",
+    "AuthenticationMethodCreateOrUpdateRequestTypedDict",
     "Authorization",
     "AuthorizationTypedDict",
     "BaseFieldDefinition",
@@ -3586,6 +3604,10 @@ __all__ = [
     "GetWorkflowsV1WorkflowsGetResponseTypedDict",
     "GetWorkflowsV1WorkflowsGetStatus",
     "GetWorkflowsV1WorkflowsGetStatusTypedDict",
+    "GitCommitAuthor",
+    "GitCommitAuthorTypedDict",
+    "GitCommitMetadata",
+    "GitCommitMetadataTypedDict",
     "Granularity",
     "GuardrailConfig",
     "GuardrailConfigTypedDict",
@@ -3611,6 +3633,7 @@ __all__ = [
     "ImportDatasetFromFileRequestTypedDict",
     "ImportDatasetFromPlaygroundRequest",
     "ImportDatasetFromPlaygroundRequestTypedDict",
+    "InboundAuthenticationType",
     "IngestionPipelineConfiguration",
     "IngestionPipelineConfigurationTypedDict",
     "InputEntries",
@@ -3838,6 +3861,8 @@ __all__ = [
     "MessageResponseTypedDict",
     "MessageTokens",
     "MessageTokensTypedDict",
+    "MethodType",
+    "MethodTypeTypedDict",
     "MetricAggregation",
     "MetricDefinition",
     "MetricDefinitionTypedDict",
@@ -3923,6 +3948,8 @@ __all__ = [
     "OCRTitleBlockTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
+    "Oauth2MetadataSecrets",
+    "Oauth2MetadataSecretsTypedDict",
     "ObservabilityErrorCode",
     "ObservabilityErrorDetail",
     "ObservabilityErrorDetailTypedDict",
@@ -4085,6 +4112,7 @@ __all__ = [
     "RegisterSearchIndexResponseIndexTypedDict",
     "RegistrySharingScope",
     "RequestSource",
+    "RequestedServiceTier",
     "RequiresConfirmation",
     "RequiresConfirmationTypedDict",
     "ResetInvocationBody",
@@ -4828,8 +4856,13 @@ _dynamic_imports: dict[str, str] = {
     "AudioTranscriptionRequestStreamTypedDict": ".audiotranscriptionrequeststream",
     "AuthData": ".authdata",
     "AuthDataTypedDict": ".authdata",
+    "AuthDirection": ".authdirection",
     "AuthenticationConfiguration": ".authenticationconfiguration",
     "AuthenticationConfigurationTypedDict": ".authenticationconfiguration",
+    "AuthenticationMethodCreateOrUpdateRequest": ".authenticationmethodcreateorupdaterequest",
+    "AuthenticationMethodCreateOrUpdateRequestTypedDict": ".authenticationmethodcreateorupdaterequest",
+    "MethodType": ".authenticationmethodcreateorupdaterequest",
+    "MethodTypeTypedDict": ".authenticationmethodcreateorupdaterequest",
     "AuthStatus": ".authstatus",
     "AuthURLResponse": ".authurlresponse",
     "AuthURLResponseTypedDict": ".authurlresponse",
@@ -5516,6 +5549,10 @@ _dynamic_imports: dict[str, str] = {
     "GetTraceFieldsTypedDict": ".gettracefields",
     "GetTraces": ".gettraces",
     "GetTracesTypedDict": ".gettraces",
+    "GitCommitAuthor": ".gitcommitauthor",
+    "GitCommitAuthorTypedDict": ".gitcommitauthor",
+    "GitCommitMetadata": ".gitcommitmetadata",
+    "GitCommitMetadataTypedDict": ".gitcommitmetadata",
     "Granularity": ".granularity",
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
@@ -5541,6 +5578,7 @@ _dynamic_imports: dict[str, str] = {
     "ImportDatasetFromFileRequestTypedDict": ".importdatasetfromfilerequest",
     "ImportDatasetFromPlaygroundRequest": ".importdatasetfromplaygroundrequest",
     "ImportDatasetFromPlaygroundRequestTypedDict": ".importdatasetfromplaygroundrequest",
+    "InboundAuthenticationType": ".inboundauthenticationtype",
     "IngestionPipelineConfiguration": ".ingestionpipelineconfiguration",
     "IngestionPipelineConfigurationTypedDict": ".ingestionpipelineconfiguration",
     "InputEntries": ".inputentries",
@@ -5812,6 +5850,8 @@ _dynamic_imports: dict[str, str] = {
     "ModerationResponseTypedDict": ".moderationresponse",
     "NetworkEncodedInput": ".networkencodedinput",
     "NetworkEncodedInputTypedDict": ".networkencodedinput",
+    "Oauth2MetadataSecrets": ".oauth2metadatasecrets",
+    "Oauth2MetadataSecretsTypedDict": ".oauth2metadatasecrets",
     "OAuth2Token": ".oauth2token",
     "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
@@ -6024,6 +6064,7 @@ _dynamic_imports: dict[str, str] = {
     "RegisterSearchIndexResponseIndex": ".registersearchindexresponseindex",
     "RegisterSearchIndexResponseIndexTypedDict": ".registersearchindexresponseindex",
     "RegistrySharingScope": ".registrysharingscope",
+    "RequestedServiceTier": ".requestedservicetier",
     "RequestSource": ".requestsource",
     "ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequest": ".reset_workflow_v1_workflows_executions_execution_id_reset_postop",
     "ResetWorkflowV1WorkflowsExecutionsExecutionIDResetPostRequestTypedDict": ".reset_workflow_v1_workflows_executions_execution_id_reset_postop",
