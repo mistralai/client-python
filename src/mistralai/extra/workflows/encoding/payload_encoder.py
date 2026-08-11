@@ -213,7 +213,10 @@ class PayloadEncoder:
             ) from main_exc
 
     async def _handle_offloading(
-        self, data: bytes, context: Optional[WorkflowContext]
+        self,
+        data: bytes,
+        context: Optional[WorkflowContext],
+        force: bool = False,
     ) -> tuple[bytes, bool]:
         if (
             self.offloading_config is None
@@ -223,7 +226,7 @@ class PayloadEncoder:
                 "You must configure payload offloading storage"
             )
 
-        if len(data) < self.offloading_config.min_size_bytes:
+        if not force and len(data) < self.offloading_config.min_size_bytes:
             return data, False
 
         if not context:
@@ -325,6 +328,7 @@ class PayloadEncoder:
         context: Optional[WorkflowContext] = None,
         *,
         allow_offloading: bool = True,
+        force_offload: bool = False,
     ) -> tuple[bytes, list[EncodedPayloadOptions]]:
         """Handle payload encoding.
 
@@ -353,7 +357,9 @@ class PayloadEncoder:
             encoding_options.append(EncodedPayloadOptions.COMPRESSED)
 
         if allow_offloading and self.offloading_config is not None:
-            data, offloaded = await self._handle_offloading(data, context)
+            data, offloaded = await self._handle_offloading(
+                data, context, force=force_offload
+            )
             if offloaded:
                 encoding_options.append(EncodedPayloadOptions.OFFLOADED)
 
