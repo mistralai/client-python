@@ -4375,9 +4375,11 @@ class Connectors(BaseSDK):
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
         server: OptionalNullable[str] = UNSET,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
-        auth_data: OptionalNullable[
-            Union[models.AuthData, models.AuthDataTypedDict]
+        auth_methods: OptionalNullable[
+            Union[
+                List[models.AuthenticationMethodCreateOrUpdateRequest],
+                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -4395,8 +4397,7 @@ class Connectors(BaseSDK):
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
         :param server: New server url for your mcp connector.
-        :param headers: New headers for your mcp connector.
-        :param auth_data: New authentication data for your mcp connector.
+        :param auth_methods: list of authentication methods to add to the connector or to update
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -4424,9 +4425,11 @@ class Connectors(BaseSDK):
                 icon_url=icon_url,
                 system_prompt=system_prompt,
                 server=server,
-                headers=headers,
-                auth_data=utils.get_pydantic_model(
-                    auth_data, OptionalNullable[models.AuthData]
+                auth_methods=utils.get_pydantic_model(
+                    auth_methods,
+                    OptionalNullable[
+                        List[models.AuthenticationMethodCreateOrUpdateRequest]
+                    ],
                 ),
             ),
         )
@@ -4505,9 +4508,11 @@ class Connectors(BaseSDK):
         icon_url: OptionalNullable[str] = UNSET,
         system_prompt: OptionalNullable[str] = UNSET,
         server: OptionalNullable[str] = UNSET,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
-        auth_data: OptionalNullable[
-            Union[models.AuthData, models.AuthDataTypedDict]
+        auth_methods: OptionalNullable[
+            Union[
+                List[models.AuthenticationMethodCreateOrUpdateRequest],
+                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
+            ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -4525,8 +4530,7 @@ class Connectors(BaseSDK):
         :param icon_url: The optional url of the icon you want to associate to the connector.
         :param system_prompt: Optional system prompt for the connector.
         :param server: New server url for your mcp connector.
-        :param headers: New headers for your mcp connector.
-        :param auth_data: New authentication data for your mcp connector.
+        :param auth_methods: list of authentication methods to add to the connector or to update
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -4554,9 +4558,11 @@ class Connectors(BaseSDK):
                 icon_url=icon_url,
                 system_prompt=system_prompt,
                 server=server,
-                headers=headers,
-                auth_data=utils.get_pydantic_model(
-                    auth_data, OptionalNullable[models.AuthData]
+                auth_methods=utils.get_pydantic_model(
+                    auth_methods,
+                    OptionalNullable[
+                        List[models.AuthenticationMethodCreateOrUpdateRequest]
+                    ],
                 ),
             ),
         )

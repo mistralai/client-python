@@ -30,6 +30,12 @@ class WorkflowTaskTimedOutResponseTypedDict(TypedDict):
     r"""Execution ID of the root workflow that initiated this execution chain."""
     parent_workflow_exec_id: Nullable[str]
     r"""Execution ID of the parent workflow that initiated this execution. If this is a root workflow, this field is not set."""
+    continued_run_id: Nullable[str]
+    r"""Run ID of the execution this run continued from. Non-null for continue-as-new runs."""
+    first_execution_run_id: Nullable[str]
+    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on fresh starts and resets (chain anchor resets on reset); differs on CAN and Retry runs where it stays anchored to the original first run."""
+    schedule_id: Nullable[str]
+    r"""Temporal schedule ID that triggered this execution, if any."""
     workflow_exec_id: str
     r"""Execution ID of the workflow that emitted this event."""
     workflow_run_id: str
@@ -61,6 +67,15 @@ class WorkflowTaskTimedOutResponse(BaseModel):
     parent_workflow_exec_id: Nullable[str]
     r"""Execution ID of the parent workflow that initiated this execution. If this is a root workflow, this field is not set."""
 
+    continued_run_id: Nullable[str]
+    r"""Run ID of the execution this run continued from. Non-null for continue-as-new runs."""
+
+    first_execution_run_id: Nullable[str]
+    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on fresh starts and resets (chain anchor resets on reset); differs on CAN and Retry runs where it stays anchored to the original first run."""
+
+    schedule_id: Nullable[str]
+    r"""Temporal schedule ID that triggered this execution, if any."""
+
     workflow_exec_id: str
     r"""Execution ID of the workflow that emitted this event."""
 
@@ -85,7 +100,14 @@ class WorkflowTaskTimedOutResponse(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["event_type"])
-        nullable_fields = set(["parent_workflow_exec_id"])
+        nullable_fields = set(
+            [
+                "parent_workflow_exec_id",
+                "continued_run_id",
+                "first_execution_run_id",
+                "schedule_id",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

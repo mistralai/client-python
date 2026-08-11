@@ -59,6 +59,7 @@ class Agents(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -85,6 +86,7 @@ class Agents(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -134,6 +136,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             agent_id=agent_id,
         )
 
@@ -243,6 +246,7 @@ class Agents(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -269,6 +273,7 @@ class Agents(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -318,6 +323,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             agent_id=agent_id,
         )
 
@@ -427,6 +433,7 @@ class Agents(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -455,6 +462,7 @@ class Agents(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -504,6 +512,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             agent_id=agent_id,
         )
 
@@ -621,6 +630,7 @@ class Agents(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -649,6 +659,7 @@ class Agents(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -698,6 +709,7 @@ class Agents(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             agent_id=agent_id,
         )
 
