@@ -1047,7 +1047,7 @@ wheels = [
 
 [[package]]
 name = "mistralai"
-version = "2.9.1"
+version = "2.9.2"
 source = { editable = "." }
 dependencies = [
     { name = "eval-type-backport" },
@@ -1149,7 +1149,7 @@ requires-dist = [
     { name = "opentelemetry-api", specifier = ">=1.33.1,<2.0.0" },
     { name = "opentelemetry-exporter-otlp-proto-http", marker = "extra == 'telemetry'", specifier = ">=1.33.1,<2.0.0" },
     { name = "opentelemetry-sdk", marker = "extra == 'telemetry'", specifier = ">=1.33.1,<2.0.0" },
-    { name = "opentelemetry-semantic-conventions", specifier = ">=0.60b1,<0.61" },
+    { name = "opentelemetry-semantic-conventions", specifier = ">=0.60b1" },
     { name = "pydantic", specifier = ">=2.11.2" },
     { name = "python-dateutil", specifier = ">=2.8.2" },
     { name = "requests", marker = "extra == 'gcp'", specifier = ">=2.32.3" },
@@ -1168,7 +1168,7 @@ dev = [
     { name = "msgpack", specifier = ">=1.1.0,<2.0.0" },
     { name = "mypy", specifier = "==1.15.0" },
     { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.33.1,<2.0.0" },
-    { name = "opentelemetry-instrumentation-httpx", specifier = ">=0.60b1,<0.61" },
+    { name = "opentelemetry-instrumentation-httpx", specifier = ">=0.60b1" },
     { name = "opentelemetry-sdk", specifier = ">=1.33.1,<2.0.0" },
     { name = "pylint", specifier = "==3.2.3" },
     { name = "pytest", specifier = ">=8.2.2,<9" },

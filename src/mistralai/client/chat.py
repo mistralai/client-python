@@ -146,6 +146,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -175,6 +176,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -228,6 +230,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             safe_prompt=safe_prompt,
         )
 
@@ -339,6 +342,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -368,6 +372,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -421,6 +426,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             safe_prompt=safe_prompt,
         )
 
@@ -532,6 +538,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -563,6 +570,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -616,6 +624,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             safe_prompt=safe_prompt,
         )
 
@@ -735,6 +744,7 @@ class Chat(BaseSDK):
             Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
+        service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
         safe_prompt: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -766,6 +776,7 @@ class Chat(BaseSDK):
         :param prompt_mode: Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used.
         :param guardrails:
         :param prompt_cache_key:
+        :param service_tier: Determines whether to serve the request using priority or standard capacity.
         :param safe_prompt: Whether to inject a safety prompt before all conversations.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -819,6 +830,7 @@ class Chat(BaseSDK):
                 guardrails, OptionalNullable[List[models.GuardrailConfig]]
             ),
             prompt_cache_key=prompt_cache_key,
+            service_tier=service_tier,
             safe_prompt=safe_prompt,
         )
 

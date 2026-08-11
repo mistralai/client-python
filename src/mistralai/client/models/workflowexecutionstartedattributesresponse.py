@@ -11,6 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -30,6 +31,8 @@ class WorkflowExecutionStartedAttributesResponseTypedDict(TypedDict):
     """
     display_name: NotRequired[Nullable[str]]
     r"""The user-friendly display name of the workflow, if available."""
+    attempt: NotRequired[int]
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
 
 
 class WorkflowExecutionStartedAttributesResponse(BaseModel):
@@ -52,9 +55,12 @@ class WorkflowExecutionStartedAttributesResponse(BaseModel):
     display_name: OptionalNullable[str] = UNSET
     r"""The user-friendly display name of the workflow, if available."""
 
+    attempt: Optional[int] = 1
+    r"""Workflow retry attempt number. 1 on first run and CAN; >1 on workflow-level retries."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["display_name"])
+        optional_fields = set(["display_name", "attempt"])
         nullable_fields = set(["display_name"])
         serialized = handler(self)
         m = {}

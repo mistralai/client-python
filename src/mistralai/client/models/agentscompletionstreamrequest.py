@@ -11,6 +11,7 @@ from .imagegenerationtool import ImageGenerationTool, ImageGenerationToolTypedDi
 from .mistralpromptmode import MistralPromptMode
 from .prediction import Prediction, PredictionTypedDict
 from .reasoningeffort import ReasoningEffort
+from .requestedservicetier import RequestedServiceTier
 from .responseformat import ResponseFormat, ResponseFormatTypedDict
 from .systemmessage import SystemMessage, SystemMessageTypedDict
 from .tool import Tool, ToolTypedDict
@@ -137,6 +138,8 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     r"""Allows toggling between the reasoning mode and no system prompt. When set to `reasoning` the system prompt for reasoning models will be used."""
     guardrails: NotRequired[Nullable[List[GuardrailConfigTypedDict]]]
     prompt_cache_key: NotRequired[Nullable[str]]
+    service_tier: NotRequired[Nullable[RequestedServiceTier]]
+    r"""Determines whether to serve the request using priority or standard capacity."""
 
 
 class AgentsCompletionStreamRequest(BaseModel):
@@ -189,6 +192,9 @@ class AgentsCompletionStreamRequest(BaseModel):
 
     prompt_cache_key: OptionalNullable[str] = UNSET
 
+    service_tier: OptionalNullable[RequestedServiceTier] = UNSET
+    r"""Determines whether to serve the request using priority or standard capacity."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -210,6 +216,7 @@ class AgentsCompletionStreamRequest(BaseModel):
                 "prompt_mode",
                 "guardrails",
                 "prompt_cache_key",
+                "service_tier",
             ]
         )
         nullable_fields = set(
@@ -226,6 +233,7 @@ class AgentsCompletionStreamRequest(BaseModel):
                 "prompt_mode",
                 "guardrails",
                 "prompt_cache_key",
+                "service_tier",
             ]
         )
         serialized = handler(self)
