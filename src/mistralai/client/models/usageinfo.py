@@ -20,6 +20,8 @@ class UsageInfoTypedDict(TypedDict):
     completion_tokens: NotRequired[int]
     total_tokens: NotRequired[int]
     prompt_audio_seconds: NotRequired[Nullable[int]]
+    service_tier: NotRequired[Nullable[str]]
+    r"""The service tier at which the request was processed: standard or priority."""
 
 
 class UsageInfo(BaseModel):
@@ -35,6 +37,9 @@ class UsageInfo(BaseModel):
     total_tokens: Optional[int] = 0
 
     prompt_audio_seconds: OptionalNullable[int] = UNSET
+
+    service_tier: OptionalNullable[str] = UNSET
+    r"""The service tier at which the request was processed: standard or priority."""
 
     @property
     def additional_properties(self):
@@ -52,9 +57,10 @@ class UsageInfo(BaseModel):
                 "completion_tokens",
                 "total_tokens",
                 "prompt_audio_seconds",
+                "service_tier",
             ]
         )
-        nullable_fields = set(["prompt_audio_seconds"])
+        nullable_fields = set(["prompt_audio_seconds", "service_tier"])
         serialized = handler(self)
         m = {}
 

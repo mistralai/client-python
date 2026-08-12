@@ -37,6 +37,7 @@ class Libraries(BaseSDK):
         self,
         *,
         page_size: Optional[int] = 100,
+        page_token: OptionalNullable[str] = UNSET,
         page: Optional[int] = 0,
         search: OptionalNullable[str] = UNSET,
         filter_owned_by_me: OptionalNullable[bool] = UNSET,
@@ -50,7 +51,8 @@ class Libraries(BaseSDK):
         List all libraries that you have created or have been shared with you.
 
         :param page_size:
-        :param page:
+        :param page_token: Continuation token from a previous response's next_page_token. Preferred over `page`.
+        :param page: Deprecated: use page_token. Offset paging re-scans earlier pages and is being phased out.
         :param search: Case-insensitive search on the library name.
         :param filter_owned_by_me: Deprecated: this parameter will be removed in a future version.
         :param retries: Override the default retry configuration for this method
@@ -73,6 +75,7 @@ class Libraries(BaseSDK):
 
         request = models.LibrariesListV1Request(
             page_size=page_size,
+            page_token=page_token,
             page=page,
             search=search,
             filter_owned_by_me=filter_owned_by_me,
@@ -139,6 +142,7 @@ class Libraries(BaseSDK):
         self,
         *,
         page_size: Optional[int] = 100,
+        page_token: OptionalNullable[str] = UNSET,
         page: Optional[int] = 0,
         search: OptionalNullable[str] = UNSET,
         filter_owned_by_me: OptionalNullable[bool] = UNSET,
@@ -152,7 +156,8 @@ class Libraries(BaseSDK):
         List all libraries that you have created or have been shared with you.
 
         :param page_size:
-        :param page:
+        :param page_token: Continuation token from a previous response's next_page_token. Preferred over `page`.
+        :param page: Deprecated: use page_token. Offset paging re-scans earlier pages and is being phased out.
         :param search: Case-insensitive search on the library name.
         :param filter_owned_by_me: Deprecated: this parameter will be removed in a future version.
         :param retries: Override the default retry configuration for this method
@@ -175,6 +180,7 @@ class Libraries(BaseSDK):
 
         request = models.LibrariesListV1Request(
             page_size=page_size,
+            page_token=page_token,
             page=page,
             search=search,
             filter_owned_by_me=filter_owned_by_me,

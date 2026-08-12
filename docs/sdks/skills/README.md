@@ -41,13 +41,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `page_token`                                                        | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `page_size`                                                                                      | *Optional[int]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `page_token`                                                                                     | *Optional[str]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `alias`                                                                                          | *Optional[str]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `fields`                                                                                         | List[*str*]                                                                                      | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `sort_field`                                                                                     | [Optional[models.ListSortField]](../../models/listsortfield.md)                                  | :heavy_minus_sign:                                                                               | Defaults to created_at when omitted.                                                             |
+| `sort_direction_query_parameter`                                                                 | [Optional[models.ListSortDirection]](../../models/listsortdirection.md)                          | :heavy_minus_sign:                                                                               | Defaults to descending for timestamp fields and ascending for text fields.                       |
+| `sort_by`                                                                                        | *Optional[str]*                                                                                  | :heavy_minus_sign:                                                                               | REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title. |
+| `sort_direction_query_parameter1`                                                                | *Optional[str]*                                                                                  | :heavy_minus_sign:                                                                               | REST-friendly alias for sort.direction. Supported values: asc, desc.                             |
+| `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
 
 ### Response
 
@@ -75,9 +79,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.skills.create(name="<value>", definition={
-        "body": "<value>",
-    })
+    res = mistral.beta.skills.create(name="<value>", definition={})
 
     # Handle response
     print(res)
@@ -97,7 +99,7 @@ with Mistral(
 
 ### Response
 
-**[models.SkillsCreateResponse](../../models/skillscreateresponse.md)**
+**[models.Skill](../../models/skill.md)**
 
 ### Errors
 
@@ -121,7 +123,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.skills.get(skill_id="<id>")
+    res = mistral.beta.skills.get(skill_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -130,17 +132,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `skill_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `skill_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `version`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 | 1                                                                   |
+| `alias`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[models.SkillsGetResponse](../../models/skillsgetresponse.md)**
+**[models.Skill](../../models/skill.md)**
 
 ### Errors
 
@@ -180,7 +182,7 @@ with Mistral(
 
 ### Response
 
-**[models.SkillsDeleteResponse](../../models/skillsdeleteresponse.md)**
+**[models.DeleteSkillResponse](../../models/deleteskillresponse.md)**
 
 ### Errors
 
@@ -221,7 +223,7 @@ with Mistral(
 
 ### Response
 
-**[models.SkillsUpdateResponse](../../models/skillsupdateresponse.md)**
+**[models.Skill](../../models/skill.md)**
 
 ### Errors
 
@@ -261,7 +263,7 @@ with Mistral(
 
 ### Response
 
-**[models.SkillsListVersionsResponse](../../models/skillslistversionsresponse.md)**
+**[models.ListSkillVersionsResponse](../../models/listskillversionsresponse.md)**
 
 ### Errors
 
@@ -285,9 +287,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.skills.create_version(skill_id="<id>", definition={
-        "body": "<value>",
-    })
+    res = mistral.beta.skills.create_version(skill_id="<id>", definition={})
 
     # Handle response
     print(res)
@@ -306,7 +306,7 @@ with Mistral(
 
 ### Response
 
-**[models.SkillsCreateVersionResponse](../../models/skillscreateversionresponse.md)**
+**[models.CreateSkillVersionResponse](../../models/createskillversionresponse.md)**
 
 ### Errors
 
@@ -330,7 +330,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.skills.get_version(skill_id="<id>", version=808285)
+    res = mistral.beta.skills.get_version(skill_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -339,16 +339,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `skill_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `skill_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `version`                                                           | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 | 1                                                                   |
+| `fields`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |                                                                     |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[models.SkillsGetVersionResponse](../../models/skillsgetversionresponse.md)**
+**[models.Skill](../../models/skill.md)**
 
 ### Errors
 
@@ -372,7 +372,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.skills.update_version_metadata(skill_id="<id>", version=521507)
+    res = mistral.beta.skills.update_version_metadata(skill_id="<id>", version=1)
 
     # Handle response
     print(res)
@@ -381,17 +381,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                       | Type                                                                                                                                                                                                                            | Required                                                                                                                                                                                                                        | Description                                                                                                                                                                                                                     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `skill_id`                                                                                                                                                                                                                      | *str*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |
-| `version`                                                                                                                                                                                                                       | *int*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |
-| `notes`                                                                                                                                                                                                                         | *OptionalNullable[str]*                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Notes for this version.                                                                                                                                                                                                         |
-| `aliases`                                                                                                                                                                                                                       | [Optional[models.AliasList]](../../models/aliaslist.md)                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Presence wrapper for a set of alias labels on update RPCs. As a message field it carries presence, so callers can distinguish "leave aliases unchanged" (field omitted) from "clear all aliases" (field set, empty ``values``). |
-| `retries`                                                                                                                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                              | Configuration to override the default retry behavior of the client.                                                                                                                                                             |
+| Parameter                                                                                                                                                                                                                       | Type                                                                                                                                                                                                                            | Required                                                                                                                                                                                                                        | Description                                                                                                                                                                                                                     | Example                                                                                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `skill_id`                                                                                                                                                                                                                      | *str*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             |                                                                                                                                                                                                                                 |
+| `version`                                                                                                                                                                                                                       | *int*                                                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                              | N/A                                                                                                                                                                                                                             | 1                                                                                                                                                                                                                               |
+| `notes`                                                                                                                                                                                                                         | *OptionalNullable[str]*                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Notes for this version.                                                                                                                                                                                                         |                                                                                                                                                                                                                                 |
+| `aliases`                                                                                                                                                                                                                       | [Optional[models.AliasList]](../../models/aliaslist.md)                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                              | Presence wrapper for a set of alias labels on update RPCs. As a message field it carries presence, so callers can distinguish "leave aliases unchanged" (field omitted) from "clear all aliases" (field set, empty ``values``). |                                                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                              | Configuration to override the default retry behavior of the client.                                                                                                                                                             |                                                                                                                                                                                                                                 |
 
 ### Response
 
-**[models.SkillsUpdateVersionMetadataResponse](../../models/skillsupdateversionmetadataresponse.md)**
+**[models.Skill](../../models/skill.md)**
 
 ### Errors
 

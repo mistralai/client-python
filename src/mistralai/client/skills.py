@@ -19,6 +19,10 @@ class Skills(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -30,6 +34,10 @@ class Skills(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -53,6 +61,10 @@ class Skills(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request(
@@ -118,6 +130,10 @@ class Skills(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
             )
 
@@ -132,11 +148,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return models.SkillsListResponse(
-                result=unmarshal_json_response(models.ConnectError, http_res),
-                next=next_func,
-            )
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -147,6 +158,10 @@ class Skills(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -158,6 +173,10 @@ class Skills(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -181,6 +200,10 @@ class Skills(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request_async(
@@ -249,6 +272,10 @@ class Skills(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
             )
 
@@ -263,11 +290,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return models.SkillsListResponse(
-                result=unmarshal_json_response(models.ConnectError, http_res),
-                next=next_func,
-            )
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -283,7 +305,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsCreateResponse:
+    ) -> models.Skill:
         r"""CreateSkill
 
         :param name: Stable object name.
@@ -368,8 +390,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -385,7 +405,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsCreateResponse:
+    ) -> models.Skill:
         r"""CreateSkill
 
         :param name: Stable object name.
@@ -470,8 +490,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -486,7 +504,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsGetResponse:
+    ) -> models.Skill:
         r"""GetSkill
 
         :param skill_id:
@@ -566,8 +584,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -582,7 +598,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsGetResponse:
+    ) -> models.Skill:
         r"""GetSkill
 
         :param skill_id:
@@ -662,8 +678,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -675,7 +689,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsDeleteResponse:
+    ) -> models.DeleteSkillResponse:
         r"""DeleteSkill
 
         :param skill_id:
@@ -749,8 +763,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -762,7 +774,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsDeleteResponse:
+    ) -> models.DeleteSkillResponse:
         r"""DeleteSkill
 
         :param skill_id:
@@ -836,8 +848,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -850,7 +860,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsUpdateResponse:
+    ) -> models.Skill:
         r"""UpdateSkill
 
         :param skill_id:
@@ -931,8 +941,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -945,7 +953,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsUpdateResponse:
+    ) -> models.Skill:
         r"""UpdateSkill
 
         :param skill_id:
@@ -1026,8 +1034,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1039,7 +1045,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsListVersionsResponse:
+    ) -> models.ListSkillVersionsResponse:
         r"""ListSkillVersions
 
         :param skill_id:
@@ -1113,8 +1119,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1126,7 +1130,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsListVersionsResponse:
+    ) -> models.ListSkillVersionsResponse:
         r"""ListSkillVersions
 
         :param skill_id:
@@ -1200,8 +1204,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1216,7 +1218,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsCreateVersionResponse:
+    ) -> models.CreateSkillVersionResponse:
         r"""CreateSkillVersion
 
         :param skill_id:
@@ -1305,8 +1307,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1321,7 +1321,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsCreateVersionResponse:
+    ) -> models.CreateSkillVersionResponse:
         r"""CreateSkillVersion
 
         :param skill_id:
@@ -1410,8 +1410,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1425,7 +1423,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsGetVersionResponse:
+    ) -> models.Skill:
         r"""GetSkillVersion
 
         :param skill_id:
@@ -1503,8 +1501,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1518,7 +1514,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsGetVersionResponse:
+    ) -> models.Skill:
         r"""GetSkillVersion
 
         :param skill_id:
@@ -1596,8 +1592,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1612,7 +1606,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsUpdateVersionMetadataResponse:
+    ) -> models.Skill:
         r"""UpdateSkillVersionMetadata
 
         :param skill_id:
@@ -1701,8 +1695,6 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1717,7 +1709,7 @@ class Skills(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SkillsUpdateVersionMetadataResponse:
+    ) -> models.Skill:
         r"""UpdateSkillVersionMetadata
 
         :param skill_id:
@@ -1806,7 +1798,5 @@ class Skills(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)

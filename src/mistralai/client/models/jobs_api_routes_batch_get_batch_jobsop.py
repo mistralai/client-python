@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-OrderBy = Literal[
+JobsAPIRoutesBatchGetBatchJobsOrderBy = Literal[
     "created",
     "-created",
 ]
@@ -32,7 +32,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequestTypedDict(TypedDict):
     created_after: NotRequired[Nullable[datetime]]
     created_by_me: NotRequired[bool]
     status: NotRequired[Nullable[List[BatchJobStatus]]]
-    order_by: NotRequired[OrderBy]
+    order_by: NotRequired[JobsAPIRoutesBatchGetBatchJobsOrderBy]
 
 
 class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
@@ -77,7 +77,7 @@ class JobsAPIRoutesBatchGetBatchJobsRequest(BaseModel):
     ] = UNSET
 
     order_by: Annotated[
-        Optional[OrderBy],
+        Optional[JobsAPIRoutesBatchGetBatchJobsOrderBy],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = "-created"
 

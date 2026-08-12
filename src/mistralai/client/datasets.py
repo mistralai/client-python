@@ -9,7 +9,7 @@ from mistralai.client.records import Records
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional
 
 
 class Datasets(BaseSDK):
@@ -1215,17 +1215,17 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
-        properties: Dict[str, Any],
+        payload: Dict[str, Any],
+        properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Add a conversation to the dataset
+        r"""Add a record to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1248,7 +1248,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
                 properties=properties,
             ),
         )
@@ -1323,17 +1323,17 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Union[models.ConversationPayload, models.ConversationPayloadTypedDict],
-        properties: Dict[str, Any],
+        payload: Dict[str, Any],
+        properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetRecord:
-        r"""Add a conversation to the dataset
+        r"""Add a record to the dataset
 
         :param dataset_id:
-        :param payload:
+        :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1356,7 +1356,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=utils.get_pydantic_model(payload, models.ConversationPayload),
+                payload=payload,
                 properties=properties,
             ),
         )
@@ -1437,7 +1437,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with a campaign
+        r"""Populate the dataset with records from a campaign
 
         :param dataset_id:
         :param campaign_id:
@@ -1542,7 +1542,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with a campaign
+        r"""Populate the dataset with records from a campaign
 
         :param dataset_id:
         :param campaign_id:
@@ -1647,7 +1647,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the explorer
+        r"""Populate the dataset with records from the explorer
 
         :param dataset_id:
         :param completion_event_ids:
@@ -1752,7 +1752,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the explorer
+        r"""Populate the dataset with records from the explorer
 
         :param dataset_id:
         :param completion_event_ids:
@@ -1857,7 +1857,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from an uploaded file
+        r"""Populate the dataset with records from an uploaded file
 
         :param dataset_id:
         :param file_id:
@@ -1962,7 +1962,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from an uploaded file
+        r"""Populate the dataset with records from an uploaded file
 
         :param dataset_id:
         :param file_id:
@@ -2067,7 +2067,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the playground
+        r"""Populate the dataset with records from playground conversations
 
         :param dataset_id:
         :param conversation_ids:
@@ -2172,7 +2172,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from the playground
+        r"""Populate the dataset with records from playground conversations
 
         :param dataset_id:
         :param conversation_ids:
@@ -2277,7 +2277,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from another dataset
+        r"""Populate the dataset with records from another dataset
 
         :param dataset_id:
         :param dataset_record_ids:
@@ -2382,7 +2382,7 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetImportTask:
-        r"""Populate the dataset with samples from another dataset
+        r"""Populate the dataset with records from another dataset
 
         :param dataset_id:
         :param dataset_record_ids:

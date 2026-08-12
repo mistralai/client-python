@@ -22,13 +22,15 @@ if TYPE_CHECKING:
     from mistralai.client.beta import Beta
     from mistralai.client.chat import Chat
     from mistralai.client.classifiers import Classifiers
+    from mistralai.client.client_sessions import ClientSessions
     from mistralai.client.embeddings import Embeddings
     from mistralai.client.events import Events
     from mistralai.client.files import Files
     from mistralai.client.fim import Fim
-    from mistralai.client.fine_tuning import FineTuning
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
+    from mistralai.client.public import Public
+    from mistralai.client.realtime import Realtime
     from mistralai.client.workflows import Workflows
 
 
@@ -39,9 +41,11 @@ class Mistral(BaseSDK):
     audio: "Audio"
     models: "Models"
     r"""Model Management API"""
+    public: "Public"
+    client_sessions: "ClientSessions"
+    realtime: "Realtime"
     files: "Files"
     r"""Files API"""
-    fine_tuning: "FineTuning"
     batch: "Batch"
     chat: "Chat"
     r"""Chat Completion API."""
@@ -61,8 +65,10 @@ class Mistral(BaseSDK):
         "beta": ("mistralai.client.beta", "Beta"),
         "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
+        "public": ("mistralai.client.public", "Public"),
+        "client_sessions": ("mistralai.client.client_sessions", "ClientSessions"),
+        "realtime": ("mistralai.client.realtime", "Realtime"),
         "files": ("mistralai.client.files", "Files"),
-        "fine_tuning": ("mistralai.client.fine_tuning", "FineTuning"),
         "batch": ("mistralai.client.batch", "Batch"),
         "chat": ("mistralai.client.chat", "Chat"),
         "fim": ("mistralai.client.fim", "Fim"),

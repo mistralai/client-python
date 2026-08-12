@@ -21,6 +21,7 @@ class AuthenticationConfigurationTypedDict(TypedDict):
     name: str
     authentication_type: OutboundAuthenticationType
     scope: ConsumerType
+    title: NotRequired[Nullable[str]]
     status: NotRequired[Nullable[CredentialsStatusTypedDict]]
     is_default: NotRequired[bool]
 
@@ -32,14 +33,16 @@ class AuthenticationConfiguration(BaseModel):
 
     scope: ConsumerType
 
+    title: OptionalNullable[str] = UNSET
+
     status: OptionalNullable[CredentialsStatus] = UNSET
 
     is_default: Optional[bool] = False
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["status", "is_default"])
-        nullable_fields = set(["status"])
+        optional_fields = set(["title", "status", "is_default"])
+        nullable_fields = set(["title", "status"])
         serialized = handler(self)
         m = {}
 

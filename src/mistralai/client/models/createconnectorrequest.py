@@ -7,7 +7,7 @@ from .extendedoauthservermetadata import (
     ExtendedOAuthServerMetadata,
     ExtendedOAuthServerMetadataTypedDict,
 )
-from .resourcevisibility import ResourceVisibility
+from .publicresourcevisibility import PublicResourceVisibility
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -24,6 +24,14 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateConnectorRequestTypedDict(TypedDict):
+    r"""Public create schema for MCP connectors.
+
+    Standalone model that excludes internal-only fields (``hosted_internally``,
+    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
+    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
+    (no ``shared_global``).
+    """
+
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
     description: str
@@ -31,11 +39,16 @@ class CreateConnectorRequestTypedDict(TypedDict):
     server: str
     r"""The url of the MCP server."""
     protocol: Literal["mcp"]
+    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
     title: NotRequired[Nullable[str]]
     r"""Optional human-readable title for the connector."""
     icon_url: NotRequired[Nullable[str]]
     r"""The optional url of the icon you want to associate to the connector."""
-    visibility: NotRequired[ResourceVisibility]
+    visibility: NotRequired[PublicResourceVisibility]
+    r"""Visibility options available to public API callers.
+
+    Excludes ``shared_global`` which is reserved for system-owned connectors.
+    """
     headers: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
@@ -49,6 +62,14 @@ class CreateConnectorRequestTypedDict(TypedDict):
 
 
 class CreateConnectorRequest(BaseModel):
+    r"""Public create schema for MCP connectors.
+
+    Standalone model that excludes internal-only fields (``hosted_internally``,
+    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
+    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
+    (no ``shared_global``).
+    """
+
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
 
@@ -62,6 +83,7 @@ class CreateConnectorRequest(BaseModel):
         Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
         pydantic.Field(alias="protocol"),
     ] = "mcp"
+    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
 
     title: OptionalNullable[str] = UNSET
     r"""Optional human-readable title for the connector."""
@@ -69,7 +91,11 @@ class CreateConnectorRequest(BaseModel):
     icon_url: OptionalNullable[str] = UNSET
     r"""The optional url of the icon you want to associate to the connector."""
 
-    visibility: Optional[ResourceVisibility] = None
+    visibility: Optional[PublicResourceVisibility] = None
+    r"""Visibility options available to public API callers.
+
+    Excludes ``shared_global`` which is reserved for system-owned connectors.
+    """
 
     headers: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional organization-level headers to be sent with the request to the mcp server."""

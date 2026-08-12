@@ -74,12 +74,16 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them."""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
+    workflow_tags: NotRequired[Nullable[List[str]]]
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
     include_internal: NotRequired[bool]
     r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
     page_size: NotRequired[int]
     r"""Number of items per page"""
     next_page_token: NotRequired[Nullable[str]]
     r"""Token for the next page of results"""
+    search_key: NotRequired[Nullable[List[str]]]
+    r"""Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3)."""
 
 
 class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
@@ -155,6 +159,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
 
+    workflow_tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter to runs of workflows tagged with all listed tags (AND)."""
+
     include_internal: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -173,6 +183,12 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Token for the next page of results"""
 
+    search_key: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3)."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -189,9 +205,11 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_after",
                 "end_time_before",
                 "user_id",
+                "workflow_tags",
                 "include_internal",
                 "page_size",
                 "next_page_token",
+                "search_key",
             ]
         )
         nullable_fields = set(
@@ -207,7 +225,9 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_after",
                 "end_time_before",
                 "user_id",
+                "workflow_tags",
                 "next_page_token",
+                "search_key",
             ]
         )
         serialized = handler(self)

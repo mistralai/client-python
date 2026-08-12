@@ -26,6 +26,7 @@ class ModelCapabilitiesTypedDict(TypedDict):
     audio_transcription: NotRequired[bool]
     audio_transcription_realtime: NotRequired[bool]
     audio_speech: NotRequired[bool]
+    unified_resources: NotRequired[bool]
 
 
 class ModelCapabilities(BaseModel):
@@ -59,6 +60,8 @@ class ModelCapabilities(BaseModel):
 
     audio_speech: Optional[bool] = False
 
+    unified_resources: Optional[bool] = False
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -76,6 +79,7 @@ class ModelCapabilities(BaseModel):
                 "audio_transcription",
                 "audio_transcription_realtime",
                 "audio_speech",
+                "unified_resources",
             ]
         )
         serialized = handler(self)

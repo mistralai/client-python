@@ -10,6 +10,7 @@ LocationType = Union[
     Literal[
         "local",
         "k8s",
+        "managed",
     ],
     UnrecognizedStr,
 ]

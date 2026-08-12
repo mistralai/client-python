@@ -16,3 +16,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"local"`
 - `"k8s"`
+- `"managed"`

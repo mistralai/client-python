@@ -2,6 +2,10 @@
 # @generated-id: dada7ebd13b0
 
 from __future__ import annotations
+from .ocrblockconfidencescores import (
+    OCRBlockConfidenceScores,
+    OCRBlockConfidenceScoresTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -24,6 +28,8 @@ class OCRTableBlockTypedDict(TypedDict):
     bottom_right_y: int
     content: str
     r"""Text/markdown/html content of this block"""
+    confidence_scores: NotRequired[Nullable[OCRBlockConfidenceScoresTypedDict]]
+    r"""Confidence scores for this block. Populated when confidence_scores_granularity is set to 'block'."""
     type: Literal["table"]
     table_id: NotRequired[Nullable[str]]
     r"""References the corresponding entry in OCRPageObject.tables, when tables are extracted"""
@@ -41,6 +47,9 @@ class OCRTableBlock(BaseModel):
     content: str
     r"""Text/markdown/html content of this block"""
 
+    confidence_scores: OptionalNullable[OCRBlockConfidenceScores] = UNSET
+    r"""Confidence scores for this block. Populated when confidence_scores_granularity is set to 'block'."""
+
     type: Annotated[
         Annotated[Literal["table"], AfterValidator(validate_const("table"))],
         pydantic.Field(alias="type"),
@@ -51,8 +60,8 @@ class OCRTableBlock(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["table_id"])
-        nullable_fields = set(["table_id"])
+        optional_fields = set(["confidence_scores", "table_id"])
+        nullable_fields = set(["confidence_scores", "table_id"])
         serialized = handler(self)
         m = {}
 

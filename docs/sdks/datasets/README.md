@@ -10,12 +10,12 @@
 * [delete](#delete) - Delete a dataset
 * [update](#update) - Patch dataset
 * [list_records](#list_records) - List existing records in the dataset
-* [create_record](#create_record) - Add a conversation to the dataset
-* [import_from_campaign](#import_from_campaign) - Populate the dataset with a campaign
-* [import_from_explorer](#import_from_explorer) - Populate the dataset with samples from the explorer
-* [import_from_file](#import_from_file) - Populate the dataset with samples from an uploaded file
-* [import_from_playground](#import_from_playground) - Populate the dataset with samples from the playground
-* [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with samples from another dataset
+* [create_record](#create_record) - Add a record to the dataset
+* [import_from_campaign](#import_from_campaign) - Populate the dataset with records from a campaign
+* [import_from_explorer](#import_from_explorer) - Populate the dataset with records from the explorer
+* [import_from_file](#import_from_file) - Populate the dataset with records from an uploaded file
+* [import_from_playground](#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](#fetch_task) - Get status of a dataset import task
 * [list_tasks](#list_tasks) - List import tasks for the given dataset
@@ -270,13 +270,13 @@ with Mistral(
 
 ## create_record
 
-Add a conversation to the dataset
+Add a record to the dataset
 
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="create_dataset_record_v1_observability_datasets__dataset_id__records_post" method="post" path="/v1/observability/datasets/{dataset_id}/records" -->
 ```python
-from mistralai.client import Mistral, models
+from mistralai.client import Mistral
 import os
 
 
@@ -284,8 +284,8 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload=models.ConversationPayload(
-        messages=[
+    res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload={
+        "messages": [
             {
                 "key": "<value>",
             },
@@ -294,10 +294,6 @@ with Mistral(
                 "key1": "<value>",
             },
         ],
-    ), properties={
-        "key": "<value>",
-        "key1": "<value>",
-        "key2": "<value>",
     })
 
     # Handle response
@@ -310,8 +306,8 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | [models.ConversationPayload](../../models/conversationpayload.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
-| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | N/A                                                                 |
+| `payload`                                                           | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | Caller-authored input object stored on a dataset record.            |
+| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -327,7 +323,7 @@ with Mistral(
 
 ## import_from_campaign
 
-Populate the dataset with a campaign
+Populate the dataset with records from a campaign
 
 ### Example Usage
 
@@ -369,7 +365,7 @@ with Mistral(
 
 ## import_from_explorer
 
-Populate the dataset with samples from the explorer
+Populate the dataset with records from the explorer
 
 ### Example Usage
 
@@ -415,7 +411,7 @@ with Mistral(
 
 ## import_from_file
 
-Populate the dataset with samples from an uploaded file
+Populate the dataset with records from an uploaded file
 
 ### Example Usage
 
@@ -457,7 +453,7 @@ with Mistral(
 
 ## import_from_playground
 
-Populate the dataset with samples from the playground
+Populate the dataset with records from playground conversations
 
 ### Example Usage
 
@@ -499,7 +495,7 @@ with Mistral(
 
 ## import_from_dataset_records
 
-Populate the dataset with samples from another dataset
+Populate the dataset with records from another dataset
 
 ### Example Usage
 

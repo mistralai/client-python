@@ -2,15 +2,11 @@
 # @generated-id: 9501fc2b7fa1
 
 from __future__ import annotations
-from mistralai.client.types import UnrecognizedStr
-from typing import Literal, Union
+from typing import Literal
 
 
-SchemaFieldIndex = Union[
-    Literal[
-        "ann",
-        "bm25",
-        "attribute",
-    ],
-    UnrecognizedStr,
+SchemaFieldIndex = Literal[
+    "ann",
+    "bm25",
+    "attribute",
 ]

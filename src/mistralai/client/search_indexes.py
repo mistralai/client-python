@@ -7,19 +7,183 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Mapping, Optional, Union
 
 
 class SearchIndexes(BaseSDK):
-    def register(
+    def get_deployment_summaries(
+        self,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.GetDeploymentSummariesResponse:
+        r"""Get Deployment Summaries
+
+        Fetch all indexes available to a user
+
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+        req = self._build_request(
+            method="GET",
+            path="/v1/rag/deployments",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=None,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_deployment_summaries_v1_rag_deployments_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.GetDeploymentSummariesResponse, http_res
+            )
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_deployment_summaries_async(
+        self,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.GetDeploymentSummariesResponse:
+        r"""Get Deployment Summaries
+
+        Fetch all indexes available to a user
+
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/rag/deployments",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=None,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_deployment_summaries_v1_rag_deployments_get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.GetDeploymentSummariesResponse, http_res
+            )
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def register_deployment(
         self,
         *,
         name: str,
-        index: Union[
-            models.RegisterSearchIndexRequestIndexIndex,
-            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        deployment: Union[
+            models.RegisterDeploymentRequestDeploymentDeployment,
+            models.RegisterDeploymentRequestDeploymentDeploymentTypedDict,
         ],
-        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
+        status: Optional[models.RegisterDeploymentRequestDeploymentStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -28,7 +192,7 @@ class SearchIndexes(BaseSDK):
         r"""Register (or re-register) a search index
 
         :param name:
-        :param index:
+        :param deployment:
         :param status:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -48,17 +212,17 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RegisterSearchIndexRequestIndex(
+        request = models.RegisterDeploymentRequestDeployment(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(
-                index, models.RegisterSearchIndexRequestIndexIndex
+            deployment=utils.get_pydantic_model(
+                deployment, models.RegisterDeploymentRequestDeploymentDeployment
             ),
         )
 
         req = self._build_request(
             method="PUT",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -70,7 +234,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.RegisterSearchIndexRequestIndex
+                request,
+                False,
+                False,
+                "json",
+                models.RegisterDeploymentRequestDeployment,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -88,7 +256,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="register_search_index_v1_rag_indexes_put",
+                operation_id="register_deployment_v1_rag_deployments_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -118,15 +286,15 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def register_async(
+    async def register_deployment_async(
         self,
         *,
         name: str,
-        index: Union[
-            models.RegisterSearchIndexRequestIndexIndex,
-            models.RegisterSearchIndexRequestIndexIndexTypedDict,
+        deployment: Union[
+            models.RegisterDeploymentRequestDeploymentDeployment,
+            models.RegisterDeploymentRequestDeploymentDeploymentTypedDict,
         ],
-        status: Optional[models.RegisterSearchIndexRequestIndexStatus] = "offline",
+        status: Optional[models.RegisterDeploymentRequestDeploymentStatus] = "offline",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -135,7 +303,7 @@ class SearchIndexes(BaseSDK):
         r"""Register (or re-register) a search index
 
         :param name:
-        :param index:
+        :param deployment:
         :param status:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -155,17 +323,17 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.RegisterSearchIndexRequestIndex(
+        request = models.RegisterDeploymentRequestDeployment(
             name=name,
             status=status,
-            index=utils.get_pydantic_model(
-                index, models.RegisterSearchIndexRequestIndexIndex
+            deployment=utils.get_pydantic_model(
+                deployment, models.RegisterDeploymentRequestDeploymentDeployment
             ),
         )
 
         req = self._build_request_async(
             method="PUT",
-            path="/v1/rag/indexes",
+            path="/v1/rag/deployments",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -177,7 +345,11 @@ class SearchIndexes(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.RegisterSearchIndexRequestIndex
+                request,
+                False,
+                False,
+                "json",
+                models.RegisterDeploymentRequestDeployment,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -195,7 +367,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="register_search_index_v1_rag_indexes_put",
+                operation_id="register_deployment_v1_rag_deployments_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -225,184 +397,20 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    def get_index_summaries(
+    def unregister_deployment(
         self,
         *,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.GetSearchIndexSummaryResponseIndex]:
-        r"""Get Index Summaries
-
-        Fetch summary view of all indexes available to a user
-
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/summary",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=None,
-            request_body_required=False,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_summaries_v1_rag_indexes_summary_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                List[models.GetSearchIndexSummaryResponseIndex], http_res
-            )
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def get_index_summaries_async(
-        self,
-        *,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.GetSearchIndexSummaryResponseIndex]:
-        r"""Get Index Summaries
-
-        Fetch summary view of all indexes available to a user
-
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/summary",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=None,
-            request_body_required=False,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_summaries_v1_rag_indexes_summary_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                List[models.GetSearchIndexSummaryResponseIndex], http_res
-            )
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def unregister(
-        self,
-        *,
-        index_id: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
-        r"""Unregister Search Index
+        r"""Unregister Deployment
 
-        Delete all information about an index
+        Delete all information about a deployment
 
-        :param index_id:
+        :param deployment_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -421,13 +429,13 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest(
-            index_id=index_id,
+        request = models.UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest(
+            deployment_id=deployment_id,
         )
 
         req = self._build_request(
             method="DELETE",
-            path="/v1/rag/indexes/index/{index_id}",
+            path="/v1/rag/deployments/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -454,7 +462,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="unregister_search_index_v1_rag_indexes_index__index_id__delete",
+                operation_id="unregister_deployment_v1_rag_deployments__deployment_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -482,20 +490,20 @@ class SearchIndexes(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
-    async def unregister_async(
+    async def unregister_deployment_async(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Any:
-        r"""Unregister Search Index
+        r"""Unregister Deployment
 
-        Delete all information about an index
+        Delete all information about a deployment
 
-        :param index_id:
+        :param deployment_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -514,13 +522,13 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UnregisterSearchIndexV1RagIndexesIndexIndexIDDeleteRequest(
-            index_id=index_id,
+        request = models.UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest(
+            deployment_id=deployment_id,
         )
 
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/rag/indexes/index/{index_id}",
+            path="/v1/rag/deployments/{deployment_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -547,7 +555,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="unregister_search_index_v1_rag_indexes_index__index_id__delete",
+                operation_id="unregister_deployment_v1_rag_deployments__deployment_id__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -578,7 +586,7 @@ class SearchIndexes(BaseSDK):
     def update_index_metrics(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         request_body: Union[models.MetricsData, models.MetricsDataTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -589,7 +597,7 @@ class SearchIndexes(BaseSDK):
 
         Update the metrics for a given index
 
-        :param index_id:
+        :param deployment_id:
         :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -609,14 +617,16 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest(
-            index_id=index_id,
-            request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+        request = (
+            models.UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest(
+                deployment_id=deployment_id,
+                request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+            )
         )
 
         req = self._build_request(
             method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/metrics",
+            path="/v1/rag/deployments/{deployment_id}/metrics",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -646,7 +656,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_metrics_v1_rag_indexes_index__index_id__metrics_put",
+                operation_id="update_index_metrics_v1_rag_deployments__deployment_id__metrics_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -671,7 +681,7 @@ class SearchIndexes(BaseSDK):
     async def update_index_metrics_async(
         self,
         *,
-        index_id: str,
+        deployment_id: str,
         request_body: Union[models.MetricsData, models.MetricsDataTypedDict],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -682,7 +692,7 @@ class SearchIndexes(BaseSDK):
 
         Update the metrics for a given index
 
-        :param index_id:
+        :param deployment_id:
         :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -702,14 +712,16 @@ class SearchIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexMetricsV1RagIndexesIndexIndexIDMetricsPutRequest(
-            index_id=index_id,
-            request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+        request = (
+            models.UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest(
+                deployment_id=deployment_id,
+                request_body=utils.get_pydantic_model(request_body, models.MetricsData),
+            )
         )
 
         req = self._build_request_async(
             method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/metrics",
+            path="/v1/rag/deployments/{deployment_id}/metrics",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -739,7 +751,7 @@ class SearchIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_metrics_v1_rag_indexes_index__index_id__metrics_put",
+                operation_id="update_index_metrics_v1_rag_deployments__deployment_id__metrics_put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -753,1414 +765,6 @@ class SearchIndexes(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(Any, http_res)
         if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def get_index_detail(
-        self,
-        *,
-        index_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexDetailResponseIndex:
-        r"""Get Index Details
-
-        Get a detailed view of the stored data for a single index
-
-        :param index_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest(
-            index_id=index_id,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/detail",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_details_v1_rag_indexes_index__index_id__detail_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexDetailResponseIndex, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def get_index_detail_async(
-        self,
-        *,
-        index_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexDetailResponseIndex:
-        r"""Get Index Details
-
-        Get a detailed view of the stored data for a single index
-
-        :param index_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexDetailsV1RagIndexesIndexIndexIDDetailGetRequest(
-            index_id=index_id,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/detail",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_details_v1_rag_indexes_index__index_id__detail_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexDetailResponseIndex, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def set_index_summary(
-        self,
-        *,
-        index_id: str,
-        summary: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        r"""Set Index Summary
-
-        Update the summary field for an index
-
-        :param index_id:
-        :param summary:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(
-            index_id=index_id,
-            update_index_summary_request_summary=models.UpdateIndexSummaryRequestSummary(
-                summary=summary,
-            ),
-        )
-
-        req = self._build_request(
-            method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/summary_field",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_index_summary_request_summary,
-                False,
-                False,
-                "json",
-                models.UpdateIndexSummaryRequestSummary,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="set_index_summary_v1_rag_indexes_index__index_id__summary_field_put",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def set_index_summary_async(
-        self,
-        *,
-        index_id: str,
-        summary: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        r"""Set Index Summary
-
-        Update the summary field for an index
-
-        :param index_id:
-        :param summary:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.SetIndexSummaryV1RagIndexesIndexIndexIDSummaryFieldPutRequest(
-            index_id=index_id,
-            update_index_summary_request_summary=models.UpdateIndexSummaryRequestSummary(
-                summary=summary,
-            ),
-        )
-
-        req = self._build_request_async(
-            method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/summary_field",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_index_summary_request_summary,
-                False,
-                False,
-                "json",
-                models.UpdateIndexSummaryRequestSummary,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="set_index_summary_v1_rag_indexes_index__index_id__summary_field_put",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def get_index_schema_detail(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSchemaDetailResponseSchemaModel:
-        r"""Get Index Schema Detail
-
-        Get a detailed view of the stored information for a schema
-
-        :param index_id:
-        :param schema_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/detail",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_schema_detail_v1_rag_indexes_index__index_id__schemas_schema__schema_id__detail_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexSchemaDetailResponseSchemaModel, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def get_index_schema_detail_async(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSchemaDetailResponseSchemaModel:
-        r"""Get Index Schema Detail
-
-        Get a detailed view of the stored information for a schema
-
-        :param index_id:
-        :param schema_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexSchemaDetailV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDDetailGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/detail",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_schema_detail_v1_rag_indexes_index__index_id__schemas_schema__schema_id__detail_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexSchemaDetailResponseSchemaModel, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def set_schema_summary(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        summary: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        r"""Set Schema Summary
-
-        Update the summary field for an index
-
-        :param index_id:
-        :param schema_id:
-        :param summary:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            update_schema_summary_request_summary=models.UpdateSchemaSummaryRequestSummary(
-                summary=summary,
-            ),
-        )
-
-        req = self._build_request(
-            method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_schema_summary_request_summary,
-                False,
-                False,
-                "json",
-                models.UpdateSchemaSummaryRequestSummary,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="set_schema_summary_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field_put",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def set_schema_summary_async(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        summary: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        r"""Set Schema Summary
-
-        Update the summary field for an index
-
-        :param index_id:
-        :param schema_id:
-        :param summary:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.SetSchemaSummaryV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDSummaryFieldPutRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            update_schema_summary_request_summary=models.UpdateSchemaSummaryRequestSummary(
-                summary=summary,
-            ),
-        )
-
-        req = self._build_request_async(
-            method="PUT",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/summary_field",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_schema_summary_request_summary,
-                False,
-                False,
-                "json",
-                models.UpdateSchemaSummaryRequestSummary,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="set_schema_summary_v1_rag_indexes_index__index_id__schemas_schema__schema_id__summary_field_put",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Any, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def get_index_schema_file(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSchemaSDFileResponseSDFile:
-        r"""Get Index Schema File
-
-        :param index_id:
-        :param schema_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/file",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_schema_file_v1_rag_indexes_index__index_id__schemas_schema__schema_id__file_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexSchemaSDFileResponseSDFile, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def get_index_schema_file_async(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.GetSearchIndexSchemaSDFileResponseSDFile:
-        r"""Get Index Schema File
-
-        :param index_id:
-        :param schema_id:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.GetIndexSchemaFileV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDFileGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/file",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="get_index_schema_file_v1_rag_indexes_index__index_id__schemas_schema__schema_id__file_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.GetSearchIndexSchemaSDFileResponseSDFile, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def document_lookup(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        document_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.VespaGetRetrievableResponseRetrievable:
-        r"""Document Lookup
-
-        Fetch stored information about a retrievable element stored in an index
-
-        :param index_id:
-        :param schema_id:
-        :param document_id: the native ID in the underlying index
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            document_id=document_id,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables/retrievable/{document_id}",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="document_lookup_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_retrievable__document_id__get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.VespaGetRetrievableResponseRetrievable, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "412", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def document_lookup_async(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        document_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.VespaGetRetrievableResponseRetrievable:
-        r"""Document Lookup
-
-        Fetch stored information about a retrievable element stored in an index
-
-        :param index_id:
-        :param schema_id:
-        :param document_id: the native ID in the underlying index
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.DocumentLookupV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesRetrievableDocumentIDGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            document_id=document_id,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables/retrievable/{document_id}",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="document_lookup_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_retrievable__document_id__get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.VespaGetRetrievableResponseRetrievable, http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "412", "4XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def documents_fetch(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        group_id: OptionalNullable[str] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.VespaGetRetrievableResponseRetrievable]:
-        r"""Document Fetch
-
-        Fetch a few stored retrievable elements from the index/schema
-
-        :param index_id:
-        :param schema_id:
-        :param group_id: Only retrieve from this group
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            group_id=group_id,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="document_fetch_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                List[models.VespaGetRetrievableResponseRetrievable], http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "412", "4XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, ["500", "5XX"], "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def documents_fetch_async(
-        self,
-        *,
-        index_id: str,
-        schema_id: str,
-        group_id: OptionalNullable[str] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.VespaGetRetrievableResponseRetrievable]:
-        r"""Document Fetch
-
-        Fetch a few stored retrievable elements from the index/schema
-
-        :param index_id:
-        :param schema_id:
-        :param group_id: Only retrieve from this group
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.DocumentFetchV1RagIndexesIndexIndexIDSchemasSchemaSchemaIDRetrievablesGetRequest(
-            index_id=index_id,
-            schema_id=schema_id,
-            group_id=group_id,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/v1/rag/indexes/index/{index_id}/schemas/schema/{schema_id}/retrievables",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="document_fetch_v1_rag_indexes_index__index_id__schemas_schema__schema_id__retrievables_get",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            error_status_codes=["400", "403", "404", "412", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                List[models.VespaGetRetrievableResponseRetrievable], http_res
-            )
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "412", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, ["500", "5XX"], "*"):
