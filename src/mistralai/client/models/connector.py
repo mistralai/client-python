@@ -10,6 +10,7 @@ from .connectionpreference import ConnectionPreference, ConnectionPreferenceType
 from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
 from .connectorprotocol import ConnectorProtocol
 from .connectortool import ConnectorTool, ConnectorToolTypedDict
+from .consumertype import ConsumerType
 from .mcpservercard import MCPServerCard, MCPServerCardTypedDict
 from .publicauthenticationmethod import (
     PublicAuthenticationMethod,
@@ -20,7 +21,6 @@ from .publicconnectionconfig import (
     PublicConnectionConfigTypedDict,
 )
 from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
-from .resourcetype import ResourceType
 from .resourcevisibility import ResourceVisibility
 from datetime import datetime
 from mistralai.client.types import (
@@ -41,7 +41,7 @@ class ConnectorTypedDict(TypedDict):
     description: str
     created_at: datetime
     modified_at: datetime
-    owner_type: ResourceType
+    owner_type: ConsumerType
     visibility: ResourceVisibility
     private_tool_execution: bool
     title: NotRequired[Nullable[str]]
@@ -50,6 +50,7 @@ class ConnectorTypedDict(TypedDict):
     icon_url: NotRequired[Nullable[str]]
     server_card: NotRequired[Nullable[MCPServerCardTypedDict]]
     owner_id: NotRequired[Nullable[str]]
+    creator_id: NotRequired[Nullable[str]]
     locale: NotRequired[Nullable[ConnectorLocaleTypedDict]]
     system_prompt: NotRequired[Nullable[str]]
     supported_auth_methods: NotRequired[
@@ -79,7 +80,7 @@ class Connector(BaseModel):
 
     modified_at: datetime
 
-    owner_type: ResourceType
+    owner_type: ConsumerType
 
     visibility: ResourceVisibility
 
@@ -96,6 +97,8 @@ class Connector(BaseModel):
     server_card: OptionalNullable[MCPServerCard] = UNSET
 
     owner_id: OptionalNullable[str] = UNSET
+
+    creator_id: OptionalNullable[str] = UNSET
 
     locale: OptionalNullable[ConnectorLocale] = UNSET
 
@@ -131,6 +134,7 @@ class Connector(BaseModel):
                 "icon_url",
                 "server_card",
                 "owner_id",
+                "creator_id",
                 "locale",
                 "system_prompt",
                 "supported_auth_methods",
@@ -152,6 +156,7 @@ class Connector(BaseModel):
                 "icon_url",
                 "server_card",
                 "owner_id",
+                "creator_id",
                 "locale",
                 "system_prompt",
                 "supported_auth_methods",

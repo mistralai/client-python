@@ -2,15 +2,13 @@
 # @generated-id: 0a4f50bb358b
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
 from .registrysharingscope import RegistrySharingScope
-from .skill import Skill, SkillTypedDict
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateSkillRequestTypedDict(TypedDict):
@@ -53,14 +51,6 @@ class SkillsUpdateRequest(BaseModel):
         UpdateSkillRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
-
-
-SkillsUpdateResponseTypedDict = TypeAliasType(
-    "SkillsUpdateResponseTypedDict", Union[ConnectErrorTypedDict, SkillTypedDict]
-)
-
-
-SkillsUpdateResponse = TypeAliasType("SkillsUpdateResponse", Union[ConnectError, Skill])
 
 
 try:

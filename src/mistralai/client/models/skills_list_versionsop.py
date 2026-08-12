@@ -2,15 +2,9 @@
 # @generated-id: 620d89bcbb10
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .listskillversionsresponse import (
-    ListSkillVersionsResponse,
-    ListSkillVersionsResponseTypedDict,
-)
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from typing import Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class SkillsListVersionsRequestTypedDict(TypedDict):
@@ -21,14 +15,3 @@ class SkillsListVersionsRequest(BaseModel):
     skill_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-
-
-SkillsListVersionsResponseTypedDict = TypeAliasType(
-    "SkillsListVersionsResponseTypedDict",
-    Union[ListSkillVersionsResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-SkillsListVersionsResponse = TypeAliasType(
-    "SkillsListVersionsResponse", Union[ListSkillVersionsResponse, ConnectError]
-)

@@ -2,7 +2,10 @@
 # @generated-id: a761cd154109
 
 from __future__ import annotations
-from .authdata import AuthData, AuthDataTypedDict
+from .authenticationmethodcreateorupdaterequest import (
+    AuthenticationMethodCreateOrUpdateRequest,
+    AuthenticationMethodCreateOrUpdateRequestTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -14,7 +17,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
+from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -29,17 +32,13 @@ class UpdateConnectorRequestTypedDict(TypedDict):
     r"""The optional url of the icon you want to associate to the connector."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
-    connection_config: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Optional new connection config."""
-    connection_secrets: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Optional new connection secrets"""
     protocol: Literal["mcp"]
     server: NotRequired[Nullable[str]]
     r"""New server url for your mcp connector."""
-    headers: NotRequired[Nullable[Dict[str, Any]]]
-    r"""New headers for your mcp connector."""
-    auth_data: NotRequired[Nullable[AuthDataTypedDict]]
-    r"""New authentication data for your mcp connector."""
+    auth_methods: NotRequired[
+        Nullable[List[AuthenticationMethodCreateOrUpdateRequestTypedDict]]
+    ]
+    r"""list of authentication methods to add to the connector or to update"""
 
 
 class UpdateConnectorRequest(BaseModel):
@@ -58,12 +57,6 @@ class UpdateConnectorRequest(BaseModel):
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
 
-    connection_config: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Optional new connection config."""
-
-    connection_secrets: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Optional new connection secrets"""
-
     protocol: Annotated[
         Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
         pydantic.Field(alias="protocol"),
@@ -72,11 +65,10 @@ class UpdateConnectorRequest(BaseModel):
     server: OptionalNullable[str] = UNSET
     r"""New server url for your mcp connector."""
 
-    headers: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""New headers for your mcp connector."""
-
-    auth_data: OptionalNullable[AuthData] = UNSET
-    r"""New authentication data for your mcp connector."""
+    auth_methods: OptionalNullable[List[AuthenticationMethodCreateOrUpdateRequest]] = (
+        UNSET
+    )
+    r"""list of authentication methods to add to the connector or to update"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -87,12 +79,9 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "connection_config",
-                "connection_secrets",
                 "protocol",
                 "server",
-                "headers",
-                "auth_data",
+                "auth_methods",
             ]
         )
         nullable_fields = set(
@@ -102,11 +91,8 @@ class UpdateConnectorRequest(BaseModel):
                 "description",
                 "icon_url",
                 "system_prompt",
-                "connection_config",
-                "connection_secrets",
                 "server",
-                "headers",
-                "auth_data",
+                "auth_methods",
             ]
         )
         serialized = handler(self)

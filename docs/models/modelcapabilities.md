@@ -21,3 +21,4 @@ that we don't want to expose in the API.
 | `audio_transcription`          | *Optional[bool]*               | :heavy_minus_sign:             | N/A                            |
 | `audio_transcription_realtime` | *Optional[bool]*               | :heavy_minus_sign:             | N/A                            |
 | `audio_speech`                 | *Optional[bool]*               | :heavy_minus_sign:             | N/A                            |
+| `unified_resources`            | *Optional[bool]*               | :heavy_minus_sign:             | N/A                            |

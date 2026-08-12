@@ -2,12 +2,9 @@
 # @generated-id: 2d91d8419da1
 
 from __future__ import annotations
-from .connecterror import ConnectError, ConnectErrorTypedDict
-from .deleteskillresponse import DeleteSkillResponse, DeleteSkillResponseTypedDict
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from typing import Union
-from typing_extensions import Annotated, TypeAliasType, TypedDict
+from typing_extensions import Annotated, TypedDict
 
 
 class SkillsDeleteRequestTypedDict(TypedDict):
@@ -18,14 +15,3 @@ class SkillsDeleteRequest(BaseModel):
     skill_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-
-
-SkillsDeleteResponseTypedDict = TypeAliasType(
-    "SkillsDeleteResponseTypedDict",
-    Union[DeleteSkillResponseTypedDict, ConnectErrorTypedDict],
-)
-
-
-SkillsDeleteResponse = TypeAliasType(
-    "SkillsDeleteResponse", Union[DeleteSkillResponse, ConnectError]
-)

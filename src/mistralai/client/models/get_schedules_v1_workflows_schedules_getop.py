@@ -28,11 +28,13 @@ r"""Filter by schedule status: 'active' or 'paused'"""
 
 class GetSchedulesV1WorkflowsSchedulesGetRequestTypedDict(TypedDict):
     workflow_name: NotRequired[Nullable[str]]
-    r"""Filter by workflow name"""
+    r"""Filter by exact workflow name"""
     user_id: NotRequired[Nullable[str]]
     r"""Filter by user ID. Pass 'current' to resolve to the authenticated user's ID."""
     status: NotRequired[Nullable[GetSchedulesV1WorkflowsSchedulesGetStatus]]
     r"""Filter by schedule status: 'active' or 'paused'"""
+    search: NotRequired[Nullable[str]]
+    r"""Prefix search query for workflow name"""
     page_size: NotRequired[Nullable[int]]
     r"""Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination)."""
     next_page_token: NotRequired[Nullable[str]]
@@ -44,7 +46,7 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Filter by workflow name"""
+    r"""Filter by exact workflow name"""
 
     user_id: Annotated[
         OptionalNullable[str],
@@ -57,6 +59,12 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Filter by schedule status: 'active' or 'paused'"""
+
+    search: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Prefix search query for workflow name"""
 
     page_size: Annotated[
         OptionalNullable[int],
@@ -73,10 +81,24 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["workflow_name", "user_id", "status", "page_size", "next_page_token"]
+            [
+                "workflow_name",
+                "user_id",
+                "status",
+                "search",
+                "page_size",
+                "next_page_token",
+            ]
         )
         nullable_fields = set(
-            ["workflow_name", "user_id", "status", "page_size", "next_page_token"]
+            [
+                "workflow_name",
+                "user_id",
+                "status",
+                "search",
+                "page_size",
+                "next_page_token",
+            ]
         )
         serialized = handler(self)
         m = {}

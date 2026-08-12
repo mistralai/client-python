@@ -3,7 +3,7 @@
 
 ## Fields
 
-| Field                                                          | Type                                                           | Required                                                       | Description                                                    |
-| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| `payload`                                                      | [models.ConversationPayload](../models/conversationpayload.md) | :heavy_check_mark:                                             | N/A                                                            |
-| `properties`                                                   | Dict[str, *Any*]                                               | :heavy_check_mark:                                             | N/A                                                            |
+| Field                                                    | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `payload`                                                | Dict[str, *Any*]                                         | :heavy_check_mark:                                       | Caller-authored input object stored on a dataset record. |
+| `properties`                                             | Dict[str, *Any*]                                         | :heavy_minus_sign:                                       | N/A                                                      |

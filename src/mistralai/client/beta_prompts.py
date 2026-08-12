@@ -19,6 +19,10 @@ class BetaPrompts(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -30,6 +34,10 @@ class BetaPrompts(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -53,6 +61,10 @@ class BetaPrompts(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request(
@@ -118,6 +130,10 @@ class BetaPrompts(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
             )
 
@@ -132,11 +148,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return models.PromptsListResponse(
-                result=unmarshal_json_response(models.ConnectError, http_res),
-                next=next_func,
-            )
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -147,6 +158,10 @@ class BetaPrompts(BaseSDK):
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
         fields: Optional[List[str]] = None,
+        sort_field: Optional[models.ListSortField] = None,
+        sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
+        sort_by: Optional[str] = None,
+        sort_direction_query_parameter1: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -158,6 +173,10 @@ class BetaPrompts(BaseSDK):
         :param page_token:
         :param alias:
         :param fields:
+        :param sort_field: Defaults to created_at when omitted.
+        :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
+        :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
+        :param sort_direction_query_parameter1: REST-friendly alias for sort.direction. Supported values: asc, desc.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -181,6 +200,10 @@ class BetaPrompts(BaseSDK):
             page_token=page_token,
             alias=alias,
             fields=fields,
+            sort_field=sort_field,
+            sort_direction_query_parameter=sort_direction_query_parameter,
+            sort_by=sort_by,
+            sort_direction_query_parameter1=sort_direction_query_parameter1,
         )
 
         req = self._build_request_async(
@@ -249,6 +272,10 @@ class BetaPrompts(BaseSDK):
                 page_token=next_cursor,
                 alias=alias,
                 fields=fields,
+                sort_field=sort_field,
+                sort_direction_query_parameter=sort_direction_query_parameter,
+                sort_by=sort_by,
+                sort_direction_query_parameter1=sort_direction_query_parameter1,
                 retries=retries,
             )
 
@@ -263,11 +290,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return models.PromptsListResponse(
-                result=unmarshal_json_response(models.ConnectError, http_res),
-                next=next_func,
-            )
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -285,7 +307,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsCreateResponse:
+    ) -> models.Prompt:
         r"""CreatePrompt
 
         :param name: Stable object name.
@@ -374,8 +396,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -393,7 +413,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsCreateResponse:
+    ) -> models.Prompt:
         r"""CreatePrompt
 
         :param name: Stable object name.
@@ -482,8 +502,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -498,7 +516,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsGetResponse:
+    ) -> models.Prompt:
         r"""GetPrompt
 
         :param prompt_id:
@@ -578,8 +596,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -594,7 +610,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsGetResponse:
+    ) -> models.Prompt:
         r"""GetPrompt
 
         :param prompt_id:
@@ -674,8 +690,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -687,7 +701,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsDeleteResponse:
+    ) -> models.DeletePromptResponse:
         r"""DeletePrompt
 
         :param prompt_id:
@@ -761,8 +775,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -774,7 +786,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsDeleteResponse:
+    ) -> models.DeletePromptResponse:
         r"""DeletePrompt
 
         :param prompt_id:
@@ -848,8 +860,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -864,7 +874,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateResponse:
+    ) -> models.Prompt:
         r"""UpdatePrompt
 
         :param prompt_id:
@@ -949,8 +959,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -965,7 +973,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateResponse:
+    ) -> models.Prompt:
         r"""UpdatePrompt
 
         :param prompt_id:
@@ -1050,8 +1058,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1063,7 +1069,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsListVersionsResponse:
+    ) -> models.ListPromptVersionsResponse:
         r"""ListPromptVersions
 
         :param prompt_id:
@@ -1137,8 +1143,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1150,7 +1154,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsListVersionsResponse:
+    ) -> models.ListPromptVersionsResponse:
         r"""ListPromptVersions
 
         :param prompt_id:
@@ -1224,8 +1228,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1240,7 +1242,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsCreateVersionResponse:
+    ) -> models.CreatePromptVersionResponse:
         r"""CreatePromptVersion
 
         :param prompt_id:
@@ -1331,8 +1333,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1347,7 +1347,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsCreateVersionResponse:
+    ) -> models.CreatePromptVersionResponse:
         r"""CreatePromptVersion
 
         :param prompt_id:
@@ -1438,8 +1438,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1453,7 +1451,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsGetVersionResponse:
+    ) -> models.Prompt:
         r"""GetPromptVersion
 
         :param prompt_id:
@@ -1531,8 +1529,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1546,7 +1542,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsGetVersionResponse:
+    ) -> models.Prompt:
         r"""GetPromptVersion
 
         :param prompt_id:
@@ -1624,8 +1620,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1640,7 +1634,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateVersionMetadataResponse:
+    ) -> models.Prompt:
         r"""UpdatePromptVersionMetadata
 
         :param prompt_id:
@@ -1729,8 +1723,6 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)
 
@@ -1745,7 +1737,7 @@ class BetaPrompts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.PromptsUpdateVersionMetadataResponse:
+    ) -> models.Prompt:
         r"""UpdatePromptVersionMetadata
 
         :param prompt_id:
@@ -1834,7 +1826,5 @@ class BetaPrompts(BaseSDK):
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "default", "application/json"):
-            return unmarshal_json_response(models.ConnectError, http_res)
 
         raise errors.SDKError("Unexpected response received", http_res)

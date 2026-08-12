@@ -12,10 +12,10 @@ from typing_extensions import NotRequired, TypedDict
 class SkillDefinitionTypedDict(TypedDict):
     r"""Versioned skill content."""
 
-    body: str
-    r"""Skill body content."""
     description: NotRequired[str]
     r"""Model-facing trigger and usage description."""
+    body: NotRequired[str]
+    r"""Skill body content."""
     assets: NotRequired[Dict[str, SkillAssetContentTypedDict]]
     r"""Additional files available to the skill."""
 
@@ -23,18 +23,18 @@ class SkillDefinitionTypedDict(TypedDict):
 class SkillDefinition(BaseModel):
     r"""Versioned skill content."""
 
-    body: str
-    r"""Skill body content."""
-
     description: Optional[str] = None
     r"""Model-facing trigger and usage description."""
+
+    body: Optional[str] = None
+    r"""Skill body content."""
 
     assets: Optional[Dict[str, SkillAssetContent]] = None
     r"""Additional files available to the skill."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "assets"])
+        optional_fields = set(["description", "body", "assets"])
         serialized = handler(self)
         m = {}
 
