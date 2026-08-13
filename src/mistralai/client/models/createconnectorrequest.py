@@ -7,6 +7,7 @@ from .extendedoauthservermetadata import (
     ExtendedOAuthServerMetadata,
     ExtendedOAuthServerMetadataTypedDict,
 )
+from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
 from .publicresourcevisibility import PublicResourceVisibility
 from mistralai.client.types import (
     BaseModel,
@@ -51,6 +52,8 @@ class CreateConnectorRequestTypedDict(TypedDict):
     """
     headers: NotRequired[Nullable[Dict[str, Any]]]
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
+    global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
+    r"""Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
     r"""Optional additional authentication data for the connector."""
     oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
@@ -100,6 +103,9 @@ class CreateConnectorRequest(BaseModel):
     headers: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Optional organization-level headers to be sent with the request to the mcp server."""
 
+    global_headers: Optional[Dict[str, GlobalHeaderValue]] = None
+    r"""Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear."""
+
     auth_data: OptionalNullable[AuthData] = UNSET
     r"""Optional additional authentication data for the connector."""
 
@@ -121,6 +127,7 @@ class CreateConnectorRequest(BaseModel):
                 "icon_url",
                 "visibility",
                 "headers",
+                "global_headers",
                 "auth_data",
                 "oauth2_server_metadata",
                 "oauth2_server_metadata_url",

@@ -23,6 +23,12 @@ class Connectors(BaseSDK):
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.PublicResourceVisibility] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        global_headers: Optional[
+            Union[
+                Dict[str, models.GlobalHeaderValue],
+                Dict[str, models.GlobalHeaderValueTypedDict],
+            ]
+        ] = None,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
@@ -52,6 +58,7 @@ class Connectors(BaseSDK):
 
             Excludes ``shared_global`` which is reserved for system-owned connectors.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param global_headers: Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear.
         :param auth_data: Optional additional authentication data for the connector.
         :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
         :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
@@ -82,6 +89,9 @@ class Connectors(BaseSDK):
             visibility=visibility,
             server=server,
             headers=headers,
+            global_headers=utils.get_pydantic_model(
+                global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
+            ),
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
@@ -163,6 +173,12 @@ class Connectors(BaseSDK):
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.PublicResourceVisibility] = None,
         headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        global_headers: Optional[
+            Union[
+                Dict[str, models.GlobalHeaderValue],
+                Dict[str, models.GlobalHeaderValueTypedDict],
+            ]
+        ] = None,
         auth_data: OptionalNullable[
             Union[models.AuthData, models.AuthDataTypedDict]
         ] = UNSET,
@@ -192,6 +208,7 @@ class Connectors(BaseSDK):
 
             Excludes ``shared_global`` which is reserved for system-owned connectors.
         :param headers: Optional organization-level headers to be sent with the request to the mcp server.
+        :param global_headers: Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear.
         :param auth_data: Optional additional authentication data for the connector.
         :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
         :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
@@ -222,6 +239,9 @@ class Connectors(BaseSDK):
             visibility=visibility,
             server=server,
             headers=headers,
+            global_headers=utils.get_pydantic_model(
+                global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
+            ),
             auth_data=utils.get_pydantic_model(
                 auth_data, OptionalNullable[models.AuthData]
             ),
