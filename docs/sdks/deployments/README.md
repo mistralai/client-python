@@ -223,6 +223,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `workflow_name`                                                     | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Scope serving status to this workflow                               |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

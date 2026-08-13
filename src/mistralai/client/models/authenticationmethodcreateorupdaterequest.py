@@ -11,6 +11,7 @@ from .extendedoauthservermetadata import (
     ExtendedOAuthServerMetadata,
     ExtendedOAuthServerMetadataTypedDict,
 )
+from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
 from .inboundauthenticationtype import InboundAuthenticationType
 from .oauth2metadatasecrets import Oauth2MetadataSecrets, Oauth2MetadataSecretsTypedDict
 from .outboundauthenticationtype import OutboundAuthenticationType
@@ -22,7 +23,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Optional, Union
+from typing import Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -44,6 +45,8 @@ class AuthenticationMethodCreateOrUpdateRequestTypedDict(TypedDict):
     auth_direction: NotRequired[AuthDirection]
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
     r"""Set of headers to connect to the connector"""
+    global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
+    r"""Connector-wide headers keyed by header name, applied to every credential. Secret values are encrypted at rest and never returned in clear."""
     oauth2_metadata_secrets: NotRequired[Nullable[Oauth2MetadataSecretsTypedDict]]
     r"""New OAuth2 client credentials (client_id and client_secret)."""
     oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
@@ -59,6 +62,9 @@ class AuthenticationMethodCreateOrUpdateRequest(BaseModel):
     headers: OptionalNullable[List[ConnectorAuthenticationHeader]] = UNSET
     r"""Set of headers to connect to the connector"""
 
+    global_headers: Optional[Dict[str, GlobalHeaderValue]] = None
+    r"""Connector-wide headers keyed by header name, applied to every credential. Secret values are encrypted at rest and never returned in clear."""
+
     oauth2_metadata_secrets: OptionalNullable[Oauth2MetadataSecrets] = UNSET
     r"""New OAuth2 client credentials (client_id and client_secret)."""
 
@@ -71,6 +77,7 @@ class AuthenticationMethodCreateOrUpdateRequest(BaseModel):
             [
                 "auth_direction",
                 "headers",
+                "global_headers",
                 "oauth2_metadata_secrets",
                 "oauth2_server_metadata",
             ]

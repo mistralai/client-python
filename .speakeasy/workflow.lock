@@ -16,11 +16,11 @@ sources:
             - speakeasy-mistralai-gcp-sdk-26292830187-1
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:5d604f8bee46f59eae32165470d5fa10143ecdd76da683b5a2f1df148f31b19e
-        sourceBlobDigest: sha256:7697ea237b99d8b459a7f3853b08046e1f94f07d1478196486c259f17697d135
+        sourceRevisionDigest: sha256:d0ce984b4c030ab9d532545d8935f6e4e12ab160e77dc5ca0b8d5924f7d78480
+        sourceBlobDigest: sha256:72d88796291d78aaa55ee4eb609cfc5f62065ee3795180d4d57404c72aa19657
         tags:
             - latest
-            - speakeasy-mistralai-sdk-31439429658-1
+            - speakeasy-mistralai-sdk-31716300632-1
 targets:
     mistralai-azure-sdk:
         source: mistral-azure-source
@@ -39,10 +39,10 @@ targets:
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:5d604f8bee46f59eae32165470d5fa10143ecdd76da683b5a2f1df148f31b19e
-        sourceBlobDigest: sha256:7697ea237b99d8b459a7f3853b08046e1f94f07d1478196486c259f17697d135
+        sourceRevisionDigest: sha256:d0ce984b4c030ab9d532545d8935f6e4e12ab160e77dc5ca0b8d5924f7d78480
+        sourceBlobDigest: sha256:72d88796291d78aaa55ee4eb609cfc5f62065ee3795180d4d57404c72aa19657
         codeSamplesNamespace: mistral-openapi-code-samples
-        codeSamplesRevisionDigest: sha256:a59cce64a521156ff070c23b436edcf77ffd6354b2e74b07f3194918dab44007
+        codeSamplesRevisionDigest: sha256:724b545fa704fae1cf00637e8707f37543ddfa00bf96ed4a2d81198eca9715f4
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.763.6

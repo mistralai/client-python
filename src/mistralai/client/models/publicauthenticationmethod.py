@@ -6,6 +6,11 @@ from .connectorauthenticationheader import (
     ConnectorAuthenticationHeader,
     ConnectorAuthenticationHeaderTypedDict,
 )
+from .extendedoauthservermetadata import (
+    ExtendedOAuthServerMetadata,
+    ExtendedOAuthServerMetadataTypedDict,
+)
+from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
 from .outboundauthenticationtype import OutboundAuthenticationType
 from mistralai.client.types import (
     BaseModel,
@@ -15,7 +20,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List
+from typing import Dict, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -25,6 +30,8 @@ class PublicAuthenticationMethodTypedDict(TypedDict):
     method_type: OutboundAuthenticationType
     has_default_credentials: bool
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
+    global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
+    oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
 
 
 class PublicAuthenticationMethod(BaseModel):
@@ -36,10 +43,14 @@ class PublicAuthenticationMethod(BaseModel):
 
     headers: OptionalNullable[List[ConnectorAuthenticationHeader]] = UNSET
 
+    global_headers: Optional[Dict[str, GlobalHeaderValue]] = None
+
+    oauth2_server_metadata: OptionalNullable[ExtendedOAuthServerMetadata] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["headers"])
-        nullable_fields = set(["headers"])
+        optional_fields = set(["headers", "global_headers", "oauth2_server_metadata"])
+        nullable_fields = set(["headers", "oauth2_server_metadata"])
         serialized = handler(self)
         m = {}
 

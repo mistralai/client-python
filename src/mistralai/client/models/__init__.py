@@ -367,6 +367,8 @@ if TYPE_CHECKING:
         ClassifierTargetResultTypedDict,
     )
     from .clientcapabilities import ClientCapabilities, ClientCapabilitiesTypedDict
+    from .clientsecret import ClientSecret, ClientSecretTypedDict
+    from .clientsessionpurpose import ClientSessionPurpose
     from .clienttaskscapability import (
         ClientTasksCapability,
         ClientTasksCapabilityTypedDict,
@@ -598,6 +600,7 @@ if TYPE_CHECKING:
         ConversationUsageInfo,
         ConversationUsageInfoTypedDict,
     )
+    from .create_client_session_v1_client_sessions_postop import Body, BodyTypedDict
     from .create_dataset_record_v1_observability_datasets_dataset_id_records_postop import (
         CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest,
         CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequestTypedDict,
@@ -652,6 +655,14 @@ if TYPE_CHECKING:
     from .createpromptversionresponse import (
         CreatePromptVersionResponse,
         CreatePromptVersionResponseTypedDict,
+    )
+    from .createrealtimesessionrequest import (
+        CreateRealtimeSessionRequest,
+        CreateRealtimeSessionRequestTypedDict,
+    )
+    from .createrealtimesessionresponse import (
+        CreateRealtimeSessionResponse,
+        CreateRealtimeSessionResponseTypedDict,
     )
     from .createskillrequest import CreateSkillRequest, CreateSkillRequestTypedDict
     from .createskillversionresponse import (
@@ -1263,6 +1274,7 @@ if TYPE_CHECKING:
     from .gettraces import GetTraces, GetTracesTypedDict
     from .gitcommitauthor import GitCommitAuthor, GitCommitAuthorTypedDict
     from .gitcommitmetadata import GitCommitMetadata, GitCommitMetadataTypedDict
+    from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
     from .granularity import Granularity
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .httpstatus import HTTPStatus
@@ -1300,6 +1312,10 @@ if TYPE_CHECKING:
     from .ingestionpipelineconfiguration import (
         IngestionPipelineConfiguration,
         IngestionPipelineConfigurationTypedDict,
+    )
+    from .ingestionpipelinetargetindexref import (
+        IngestionPipelineTargetIndexRef,
+        IngestionPipelineTargetIndexRefTypedDict,
     )
     from .inputentries import InputEntries, InputEntriesTypedDict
     from .inputs import Inputs, InputsTypedDict
@@ -1553,6 +1569,10 @@ if TYPE_CHECKING:
         ListLibrariesResponse,
         ListLibrariesResponseTypedDict,
     )
+    from .listorganizationsresponse import (
+        ListOrganizationsResponse,
+        ListOrganizationsResponseTypedDict,
+    )
     from .listpromptsresponse import ListPromptsResponse, ListPromptsResponseTypedDict
     from .listpromptversionsresponse import (
         ListPromptVersionsResponse,
@@ -1571,6 +1591,10 @@ if TYPE_CHECKING:
         ListWorkflowEventResponseEvent,
         ListWorkflowEventResponseEventTypedDict,
         ListWorkflowEventResponseTypedDict,
+    )
+    from .listworkspacesresponse import (
+        ListWorkspacesResponse,
+        ListWorkspacesResponseTypedDict,
     )
     from .locationtype import LocationType
     from .logsrequest import LogsRequest, LogsRequestTypedDict, Order
@@ -1684,6 +1708,7 @@ if TYPE_CHECKING:
     )
     from .oauth2token import OAuth2Token, OAuth2TokenTypedDict
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
+    from .oauthmetadatasource import OAuthMetadataSource
     from .observabilityerrorcode import ObservabilityErrorCode
     from .observabilityerrordetail import (
         ObservabilityErrorDetail,
@@ -2537,10 +2562,28 @@ if TYPE_CHECKING:
         UserMessageContentTypedDict,
         UserMessageTypedDict,
     )
+    from .userorganization import UserOrganization, UserOrganizationTypedDict
     from .users_api_get_identityop import (
         UsersAPIGetIdentitySecurity,
         UsersAPIGetIdentitySecurityTypedDict,
     )
+    from .users_api_list_organizationsop import (
+        UsersAPIListOrganizationsRequest,
+        UsersAPIListOrganizationsRequestTypedDict,
+        UsersAPIListOrganizationsResponse,
+        UsersAPIListOrganizationsResponseTypedDict,
+        UsersAPIListOrganizationsSecurity,
+        UsersAPIListOrganizationsSecurityTypedDict,
+    )
+    from .users_api_list_workspacesop import (
+        UsersAPIListWorkspacesRequest,
+        UsersAPIListWorkspacesRequestTypedDict,
+        UsersAPIListWorkspacesResponse,
+        UsersAPIListWorkspacesResponseTypedDict,
+        UsersAPIListWorkspacesSecurity,
+        UsersAPIListWorkspacesSecurityTypedDict,
+    )
+    from .userworkspace import UserWorkspace, UserWorkspaceTypedDict
     from .validationerror import (
         Context,
         ContextTypedDict,
@@ -2953,6 +2996,8 @@ __all__ = [
     "BlobResourceContentsTypedDict",
     "Block",
     "BlockTypedDict",
+    "Body",
+    "BodyTypedDict",
     "BuiltInConnectors",
     "Campaign",
     "CampaignTypedDict",
@@ -3017,6 +3062,9 @@ __all__ = [
     "ClassifierTargetResultTypedDict",
     "ClientCapabilities",
     "ClientCapabilitiesTypedDict",
+    "ClientSecret",
+    "ClientSecretTypedDict",
+    "ClientSessionPurpose",
     "ClientTasksCapability",
     "ClientTasksCapabilityTypedDict",
     "ClientTasksRequestsCapability",
@@ -3199,6 +3247,10 @@ __all__ = [
     "CreatePromptVersionRequestTypedDict",
     "CreatePromptVersionResponse",
     "CreatePromptVersionResponseTypedDict",
+    "CreateRealtimeSessionRequest",
+    "CreateRealtimeSessionRequestTypedDict",
+    "CreateRealtimeSessionResponse",
+    "CreateRealtimeSessionResponseTypedDict",
     "CreateSkillRequest",
     "CreateSkillRequestTypedDict",
     "CreateSkillVersionRequest",
@@ -3608,6 +3660,8 @@ __all__ = [
     "GitCommitAuthorTypedDict",
     "GitCommitMetadata",
     "GitCommitMetadataTypedDict",
+    "GlobalHeaderValue",
+    "GlobalHeaderValueTypedDict",
     "Granularity",
     "GuardrailConfig",
     "GuardrailConfigTypedDict",
@@ -3636,6 +3690,8 @@ __all__ = [
     "InboundAuthenticationType",
     "IngestionPipelineConfiguration",
     "IngestionPipelineConfigurationTypedDict",
+    "IngestionPipelineTargetIndexRef",
+    "IngestionPipelineTargetIndexRefTypedDict",
     "InputEntries",
     "InputEntriesTypedDict",
     "Inputs",
@@ -3776,6 +3832,8 @@ __all__ = [
     "ListLibrariesResponseTypedDict",
     "ListModelsV1ModelsGetRequest",
     "ListModelsV1ModelsGetRequestTypedDict",
+    "ListOrganizationsResponse",
+    "ListOrganizationsResponseTypedDict",
     "ListPromptVersionsResponse",
     "ListPromptVersionsResponseTypedDict",
     "ListPromptsResponse",
@@ -3802,6 +3860,8 @@ __all__ = [
     "ListWorkflowEventResponseEvent",
     "ListWorkflowEventResponseEventTypedDict",
     "ListWorkflowEventResponseTypedDict",
+    "ListWorkspacesResponse",
+    "ListWorkspacesResponseTypedDict",
     "Loc",
     "LocTypedDict",
     "LocationType",
@@ -3902,6 +3962,7 @@ __all__ = [
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
     "OAuth2TokenTypedDict",
+    "OAuthMetadataSource",
     "OCRAsideTextBlock",
     "OCRAsideTextBlockTypedDict",
     "OCRBlockConfidenceScores",
@@ -4574,8 +4635,24 @@ __all__ = [
     "UserMessageContent",
     "UserMessageContentTypedDict",
     "UserMessageTypedDict",
+    "UserOrganization",
+    "UserOrganizationTypedDict",
+    "UserWorkspace",
+    "UserWorkspaceTypedDict",
     "UsersAPIGetIdentitySecurity",
     "UsersAPIGetIdentitySecurityTypedDict",
+    "UsersAPIListOrganizationsRequest",
+    "UsersAPIListOrganizationsRequestTypedDict",
+    "UsersAPIListOrganizationsResponse",
+    "UsersAPIListOrganizationsResponseTypedDict",
+    "UsersAPIListOrganizationsSecurity",
+    "UsersAPIListOrganizationsSecurityTypedDict",
+    "UsersAPIListWorkspacesRequest",
+    "UsersAPIListWorkspacesRequestTypedDict",
+    "UsersAPIListWorkspacesResponse",
+    "UsersAPIListWorkspacesResponseTypedDict",
+    "UsersAPIListWorkspacesSecurity",
+    "UsersAPIListWorkspacesSecurityTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
     "Visibility",
@@ -4952,6 +5029,9 @@ _dynamic_imports: dict[str, str] = {
     "ClassifierTargetResultTypedDict": ".classifiertargetresult",
     "ClientCapabilities": ".clientcapabilities",
     "ClientCapabilitiesTypedDict": ".clientcapabilities",
+    "ClientSecret": ".clientsecret",
+    "ClientSecretTypedDict": ".clientsecret",
+    "ClientSessionPurpose": ".clientsessionpurpose",
     "ClientTasksCapability": ".clienttaskscapability",
     "ClientTasksCapabilityTypedDict": ".clienttaskscapability",
     "ClientTasksRequestsCapability": ".clienttasksrequestscapability",
@@ -5103,6 +5183,8 @@ _dynamic_imports: dict[str, str] = {
     "ConversationStreamRequestTypedDict": ".conversationstreamrequest",
     "ConversationUsageInfo": ".conversationusageinfo",
     "ConversationUsageInfoTypedDict": ".conversationusageinfo",
+    "Body": ".create_client_session_v1_client_sessions_postop",
+    "BodyTypedDict": ".create_client_session_v1_client_sessions_postop",
     "CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest": ".create_dataset_record_v1_observability_datasets_dataset_id_records_postop",
     "CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequestTypedDict": ".create_dataset_record_v1_observability_datasets_dataset_id_records_postop",
     "CreateAgentRequest": ".createagentrequest",
@@ -5136,6 +5218,10 @@ _dynamic_imports: dict[str, str] = {
     "CreatePromptRequestTypedDict": ".createpromptrequest",
     "CreatePromptVersionResponse": ".createpromptversionresponse",
     "CreatePromptVersionResponseTypedDict": ".createpromptversionresponse",
+    "CreateRealtimeSessionRequest": ".createrealtimesessionrequest",
+    "CreateRealtimeSessionRequestTypedDict": ".createrealtimesessionrequest",
+    "CreateRealtimeSessionResponse": ".createrealtimesessionresponse",
+    "CreateRealtimeSessionResponseTypedDict": ".createrealtimesessionresponse",
     "CreateSkillRequest": ".createskillrequest",
     "CreateSkillRequestTypedDict": ".createskillrequest",
     "CreateSkillVersionResponse": ".createskillversionresponse",
@@ -5553,6 +5639,8 @@ _dynamic_imports: dict[str, str] = {
     "GitCommitAuthorTypedDict": ".gitcommitauthor",
     "GitCommitMetadata": ".gitcommitmetadata",
     "GitCommitMetadataTypedDict": ".gitcommitmetadata",
+    "GlobalHeaderValue": ".globalheadervalue",
+    "GlobalHeaderValueTypedDict": ".globalheadervalue",
     "Granularity": ".granularity",
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
@@ -5581,6 +5669,8 @@ _dynamic_imports: dict[str, str] = {
     "InboundAuthenticationType": ".inboundauthenticationtype",
     "IngestionPipelineConfiguration": ".ingestionpipelineconfiguration",
     "IngestionPipelineConfigurationTypedDict": ".ingestionpipelineconfiguration",
+    "IngestionPipelineTargetIndexRef": ".ingestionpipelinetargetindexref",
+    "IngestionPipelineTargetIndexRefTypedDict": ".ingestionpipelinetargetindexref",
     "InputEntries": ".inputentries",
     "InputEntriesTypedDict": ".inputentries",
     "Inputs": ".inputs",
@@ -5740,6 +5830,8 @@ _dynamic_imports: dict[str, str] = {
     "ListJudgesResponseTypedDict": ".listjudgesresponse",
     "ListLibrariesResponse": ".listlibrariesresponse",
     "ListLibrariesResponseTypedDict": ".listlibrariesresponse",
+    "ListOrganizationsResponse": ".listorganizationsresponse",
+    "ListOrganizationsResponseTypedDict": ".listorganizationsresponse",
     "ListPromptsResponse": ".listpromptsresponse",
     "ListPromptsResponseTypedDict": ".listpromptsresponse",
     "ListPromptVersionsResponse": ".listpromptversionsresponse",
@@ -5756,6 +5848,8 @@ _dynamic_imports: dict[str, str] = {
     "ListWorkflowEventResponseEvent": ".listworkfloweventresponse",
     "ListWorkflowEventResponseEventTypedDict": ".listworkfloweventresponse",
     "ListWorkflowEventResponseTypedDict": ".listworkfloweventresponse",
+    "ListWorkspacesResponse": ".listworkspacesresponse",
+    "ListWorkspacesResponseTypedDict": ".listworkspacesresponse",
     "LocationType": ".locationtype",
     "LogsRequest": ".logsrequest",
     "LogsRequestTypedDict": ".logsrequest",
@@ -5856,6 +5950,7 @@ _dynamic_imports: dict[str, str] = {
     "OAuth2TokenTypedDict": ".oauth2token",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
+    "OAuthMetadataSource": ".oauthmetadatasource",
     "ObservabilityErrorCode": ".observabilityerrorcode",
     "ObservabilityErrorDetail": ".observabilityerrordetail",
     "ObservabilityErrorDetailTypedDict": ".observabilityerrordetail",
@@ -6501,8 +6596,24 @@ _dynamic_imports: dict[str, str] = {
     "UserMessageContent": ".usermessage",
     "UserMessageContentTypedDict": ".usermessage",
     "UserMessageTypedDict": ".usermessage",
+    "UserOrganization": ".userorganization",
+    "UserOrganizationTypedDict": ".userorganization",
     "UsersAPIGetIdentitySecurity": ".users_api_get_identityop",
     "UsersAPIGetIdentitySecurityTypedDict": ".users_api_get_identityop",
+    "UsersAPIListOrganizationsRequest": ".users_api_list_organizationsop",
+    "UsersAPIListOrganizationsRequestTypedDict": ".users_api_list_organizationsop",
+    "UsersAPIListOrganizationsResponse": ".users_api_list_organizationsop",
+    "UsersAPIListOrganizationsResponseTypedDict": ".users_api_list_organizationsop",
+    "UsersAPIListOrganizationsSecurity": ".users_api_list_organizationsop",
+    "UsersAPIListOrganizationsSecurityTypedDict": ".users_api_list_organizationsop",
+    "UsersAPIListWorkspacesRequest": ".users_api_list_workspacesop",
+    "UsersAPIListWorkspacesRequestTypedDict": ".users_api_list_workspacesop",
+    "UsersAPIListWorkspacesResponse": ".users_api_list_workspacesop",
+    "UsersAPIListWorkspacesResponseTypedDict": ".users_api_list_workspacesop",
+    "UsersAPIListWorkspacesSecurity": ".users_api_list_workspacesop",
+    "UsersAPIListWorkspacesSecurityTypedDict": ".users_api_list_workspacesop",
+    "UserWorkspace": ".userworkspace",
+    "UserWorkspaceTypedDict": ".userworkspace",
     "Context": ".validationerror",
     "ContextTypedDict": ".validationerror",
     "Loc": ".validationerror",

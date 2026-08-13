@@ -896,6 +896,7 @@ class Deployments(BaseSDK):
         self,
         *,
         name: str,
+        workflow_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -904,6 +905,7 @@ class Deployments(BaseSDK):
         r"""Get Deployment
 
         :param name:
+        :param workflow_name: Scope serving status to this workflow
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -924,6 +926,7 @@ class Deployments(BaseSDK):
 
         request = models.GetDeploymentV1WorkflowsDeploymentsNameGetRequest(
             name=name,
+            workflow_name=workflow_name,
         )
 
         req = self._build_request(
@@ -987,6 +990,7 @@ class Deployments(BaseSDK):
         self,
         *,
         name: str,
+        workflow_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -995,6 +999,7 @@ class Deployments(BaseSDK):
         r"""Get Deployment
 
         :param name:
+        :param workflow_name: Scope serving status to this workflow
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1015,6 +1020,7 @@ class Deployments(BaseSDK):
 
         request = models.GetDeploymentV1WorkflowsDeploymentsNameGetRequest(
             name=name,
+            workflow_name=workflow_name,
         )
 
         req = self._build_request_async(

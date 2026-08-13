@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     from mistralai.client.fim import Fim
     from mistralai.client.models_ import Models
     from mistralai.client.ocr import Ocr
+    from mistralai.client.realtime import Realtime
     from mistralai.client.workflows import Workflows
 
 
@@ -38,6 +39,7 @@ class Mistral(BaseSDK):
     audio: "Audio"
     models: "Models"
     r"""Model Management API"""
+    realtime: "Realtime"
     files: "Files"
     r"""Files API"""
     batch: "Batch"
@@ -59,6 +61,7 @@ class Mistral(BaseSDK):
         "beta": ("mistralai.client.beta", "Beta"),
         "audio": ("mistralai.client.audio", "Audio"),
         "models": ("mistralai.client.models_", "Models"),
+        "realtime": ("mistralai.client.realtime", "Realtime"),
         "files": ("mistralai.client.files", "Files"),
         "batch": ("mistralai.client.batch", "Batch"),
         "chat": ("mistralai.client.chat", "Chat"),
