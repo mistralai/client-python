@@ -2,6 +2,10 @@
 # @generated-id: 480f219c27e5
 
 from __future__ import annotations
+from .ingestionpipelinetargetindexref import (
+    IngestionPipelineTargetIndexRef,
+    IngestionPipelineTargetIndexRefTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,13 +14,16 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Dict
+from typing import Dict, List
 from typing_extensions import NotRequired, TypedDict
 
 
 class CreateIngestionPipelineConfigurationRequestTypedDict(TypedDict):
     name: str
     pipeline_composition: NotRequired[Nullable[Dict[str, str]]]
+    target_indexes: NotRequired[
+        Nullable[List[IngestionPipelineTargetIndexRefTypedDict]]
+    ]
 
 
 class CreateIngestionPipelineConfigurationRequest(BaseModel):
@@ -24,10 +31,12 @@ class CreateIngestionPipelineConfigurationRequest(BaseModel):
 
     pipeline_composition: OptionalNullable[Dict[str, str]] = UNSET
 
+    target_indexes: OptionalNullable[List[IngestionPipelineTargetIndexRef]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["pipeline_composition"])
-        nullable_fields = set(["pipeline_composition"])
+        optional_fields = set(["pipeline_composition", "target_indexes"])
+        nullable_fields = set(["pipeline_composition", "target_indexes"])
         serialized = handler(self)
         m = {}
 

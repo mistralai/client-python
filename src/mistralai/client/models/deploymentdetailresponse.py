@@ -20,9 +20,10 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DeploymentDetailResponseTypedDict(TypedDict):
@@ -74,7 +75,12 @@ class DeploymentDetailResponse(BaseModel):
     is_hardened: Optional[bool] = False
     r"""Whether the deployment has at least one authorized credential"""
 
-    location: OptionalNullable[DeploymentLocation] = UNSET
+    location: Annotated[
+        OptionalNullable[DeploymentLocation],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
     r"""Where the deployment is running"""
 
     worker_count: Optional[int] = 0
