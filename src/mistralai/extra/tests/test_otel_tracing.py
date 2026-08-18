@@ -78,7 +78,10 @@ from mistralai.client.models import (
     UserMessage,
 )
 from mistralai.client.sdk import Mistral
-from mistralai.extra.observability.otel import TracedResponse
+from mistralai.extra.observability.otel import (
+    WORKFLOW_EXECUTION_ID_ATTRIBUTE,
+    TracedResponse,
+)
 from mistralai.extra.run.tools import (
     RunFunction,
     create_function_result,
@@ -1734,6 +1737,77 @@ class TestOtelTracing(unittest.TestCase):
 
         span = self._get_single_span()
         self.assertNotIn("gen_ai.conversation.id", span.attributes)
+
+    # -- Baggage propagation: wf.workflow.execution_id ------------------------
+
+    def test_workflow_execution_id_from_baggage(self):
+        """When wf.workflow.execution_id is set in OTEL baggage, it must appear as a span attribute."""
+        request = ChatCompletionRequest(
+            model="mistral-small-latest",
+            messages=[UserMessage(content="Hello from a workflow activity")],
+        )
+        response = ChatCompletionResponse(
+            id="cmpl-workflow-baggage-001",
+            object="chat.completion",
+            model="mistral-small-latest",
+            created=1700000012,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Hi!", tool_calls=None),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=UsageInfo(prompt_tokens=8, completion_tokens=2, total_tokens=10),
+        )
+
+        expected_execution_id = "workflow-exec-from-baggage-123"
+        ctx = set_baggage(WORKFLOW_EXECUTION_ID_ATTRIBUTE, expected_execution_id)
+        token = context_api.attach(ctx)
+        try:
+            self._run_hook_lifecycle(
+                "chat_completion_v1_chat_completions_post",
+                request,
+                response,
+            )
+        finally:
+            context_api.detach(token)
+
+        span = self._get_single_span()
+        self.assertEqual(
+            span.attributes[WORKFLOW_EXECUTION_ID_ATTRIBUTE],
+            expected_execution_id,
+        )
+
+    def test_no_workflow_execution_id_without_baggage(self):
+        """When no baggage is set, wf.workflow.execution_id must NOT appear on a chat span."""
+        request = ChatCompletionRequest(
+            model="mistral-small-latest",
+            messages=[UserMessage(content="Hello outside a workflow")],
+        )
+        response = ChatCompletionResponse(
+            id="cmpl-workflow-nobag-001",
+            object="chat.completion",
+            model="mistral-small-latest",
+            created=1700000013,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Hi!", tool_calls=None),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=UsageInfo(prompt_tokens=6, completion_tokens=2, total_tokens=8),
+        )
+
+        self._run_hook_lifecycle(
+            "chat_completion_v1_chat_completions_post",
+            request,
+            response,
+        )
+
+        span = self._get_single_span()
+        self.assertNotIn(WORKFLOW_EXECUTION_ID_ATTRIBUTE, span.attributes)
 
     # -- Concurrency: interleaved requests on shared hook ----------------------
 
