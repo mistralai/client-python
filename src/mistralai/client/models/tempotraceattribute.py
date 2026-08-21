@@ -10,6 +10,10 @@ from .tempotraceattributeboolvalue import (
     TempoTraceAttributeBoolValue,
     TempoTraceAttributeBoolValueTypedDict,
 )
+from .tempotraceattributedoublevalue import (
+    TempoTraceAttributeDoubleValue,
+    TempoTraceAttributeDoubleValueTypedDict,
+)
 from .tempotraceattributeintvalue import (
     TempoTraceAttributeIntValue,
     TempoTraceAttributeIntValueTypedDict,
@@ -28,6 +32,7 @@ TempoTraceAttributeValueTypedDict = TypeAliasType(
     Union[
         TempoTraceAttributeStringValueTypedDict,
         TempoTraceAttributeIntValueTypedDict,
+        TempoTraceAttributeDoubleValueTypedDict,
         TempoTraceAttributeBoolValueTypedDict,
         TempoTraceAttributeArrayValueTypedDict,
     ],
@@ -40,6 +45,7 @@ TempoTraceAttributeValue = TypeAliasType(
     Union[
         TempoTraceAttributeStringValue,
         TempoTraceAttributeIntValue,
+        TempoTraceAttributeDoubleValue,
         TempoTraceAttributeBoolValue,
         TempoTraceAttributeArrayValue,
     ],

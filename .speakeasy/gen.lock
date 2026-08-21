@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: d31579d67584c7ae3e4757057ff737bb
+  docChecksum: fba239e4f19befe05dc9ca1211759a61
   docVersion: 1.0.0
   speakeasyVersion: 1.763.6
   generationVersion: 2.884.13
-  releaseVersion: 2.9.3
-  configChecksum: 7083e0ed928566c2c43a9f501c3291b5
+  releaseVersion: 2.9.4
+  configChecksum: f10ecec9092b2223bb3fd46460b22e95
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: ed4a7adf-e447-41b1-92c8-7ec4b97f7935
-  pristine_commit_hash: e26f8994eba9afd57e65b7482d30643dff1a2e16
-  pristine_tree_hash: 5e0d4db2cc74696ce363a4045768104029d15f9f
+  generation_id: 3fff1d7a-4200-4325-bedb-7e5614ba04ae
+  pristine_commit_hash: ca70374cee691fd2ebd601f17670d13cd698f02b
+  pristine_tree_hash: 3b7227286e31a906bfca3b0195ccfc1f908b65ad
 features:
   python:
     acceptHeaders: 3.0.0
@@ -998,8 +998,8 @@ trackedFiles:
     pristine_git_object: b6ea6b5d9049d0ddc0e73325d88171ce773b2371
   docs/models/createrealtimesessionrequest.md:
     id: 430cc39e70f1
-    last_write_checksum: sha1:641a1914e6f302cd5704fc3d7f8c877be39365b7
-    pristine_git_object: fecfa68a41fc4c9f0f0d77d62e94a5a0ad7d9820
+    last_write_checksum: sha1:553b9a00805e0b396fbdfc61d7ae29809ec65331
+    pristine_git_object: a56e643c242a583415e926bb6d8ccee1477983f2
   docs/models/createrealtimesessionresponse.md:
     id: 4608ebc5e4af
     last_write_checksum: sha1:d0050833b12d7f25d71639e1b9bbf90283b50812
@@ -2422,8 +2422,8 @@ trackedFiles:
     pristine_git_object: 504aa9de165ea21ffd7178dd092b7532fc3f9e6a
   docs/models/messagetokens.md:
     id: c348c2448aaa
-    last_write_checksum: sha1:5f99a25a3f689030756a63e925113030121c5d7e
-    pristine_git_object: 427e09b524964c521a6b63962e5f71ae0ca1b485
+    last_write_checksum: sha1:745a41b9189a9a48cbde2838bf9432e60bb9df62
+    pristine_git_object: 79b126d9a6a72f84fa491417bff0f891206f59b4
   docs/models/methodtype.md:
     id: 7c7e0f30b36b
     last_write_checksum: sha1:1d3d6335473dc65c4964ebfd578ee955403dde7d
@@ -2754,8 +2754,8 @@ trackedFiles:
     pristine_git_object: 68313743c4d926b2cb29037d0e59a2f9d8d25f1c
   docs/models/prompt.md:
     id: faf3fe7a5a2e
-    last_write_checksum: sha1:43f2bc5e4d717a2bb1a63ec069c2a07ee22cc960
-    pristine_git_object: 8e572c285c9908f1d10acc8859b600312959a0d4
+    last_write_checksum: sha1:42190fe2c5f720fe02366ba7ceb41a8b57577ccf
+    pristine_git_object: e9e37448180ba556e17e300e1142d07f5ee488a8
   docs/models/promptargument.md:
     id: 5e744dafa422
     last_write_checksum: sha1:4b7a10005ef27e91c191ab71e76c8ba0eff789aa
@@ -2950,8 +2950,8 @@ trackedFiles:
     pristine_git_object: 016f77ca191b2bccaa444e70b12b09f04a819ce2
   docs/models/registerdeploymentrequestvespaindex.md:
     id: b1acca3ed627
-    last_write_checksum: sha1:944eff9b4e7cda3bf66456f3c760734fa9a8aae0
-    pristine_git_object: 59c8181f722b5acdbd1fb68a5082dff8f17378ae
+    last_write_checksum: sha1:cf79e860676213ab6a38096699a59edfe992d891
+    pristine_git_object: e10a763afe7a58ffade4bfbd7565fa980ad22a33
   docs/models/registersearchindexresponseindex.md:
     id: 762403047d13
     last_write_checksum: sha1:e2d57be7f7a862a6a44d181c5480d597909ea945
@@ -3462,8 +3462,8 @@ trackedFiles:
     pristine_git_object: 049dce7d7b8b7da965af6629e45be77e81aa4302
   docs/models/tempotraceattributearrayelement.md:
     id: be9d9005df77
-    last_write_checksum: sha1:e970ae3b60c1adaf0bb79e109ec675338f2095de
-    pristine_git_object: a4b8208099ff361160ad3c403f427eeb5fc143e5
+    last_write_checksum: sha1:dbcfaa671dbf005385a4e67f47ee571e14cb2850
+    pristine_git_object: 734ca58d705e82191574945654dd16f79e6846d5
   docs/models/tempotraceattributearrayvalue.md:
     id: 619f60780ece
     last_write_checksum: sha1:889052cfcc2f44c882bbfe32cfbaeb104b9927f4
@@ -3472,6 +3472,10 @@ trackedFiles:
     id: 0e2767bf14da
     last_write_checksum: sha1:6e09bcab345a7cbe376c41fd20955017f54243bc
     pristine_git_object: 07b77e43cd17be26c620a30a8ec627310d67886f
+  docs/models/tempotraceattributedoublevalue.md:
+    id: 32cb7a1fb59c
+    last_write_checksum: sha1:dd6635cbb99d4c6100fee8fc6f1c0da351822c43
+    pristine_git_object: bbb97512643dc162ed2a80772e554c536e3e02f8
   docs/models/tempotraceattributeintvalue.md:
     id: 55a1d75f3e12
     last_write_checksum: sha1:2381b0f0f84aeb42d9a0a97fe3764ebaa9dee0d9
@@ -3482,8 +3486,8 @@ trackedFiles:
     pristine_git_object: 61e7eb8ac7f91e718e85fd46b7298095300821f5
   docs/models/tempotraceattributevalue.md:
     id: b5a74866dcac
-    last_write_checksum: sha1:2acdf3c2c1c7e163ded5d12c51eb649f2a11b95d
-    pristine_git_object: 3b0a18692fce0a107217c3f274626ece86f22aa2
+    last_write_checksum: sha1:0788ed4463c464f9b7785a030339dc9c543d7bf5
+    pristine_git_object: 4dd8b56437a422f929a22a8a9932f48aeb985956
   docs/models/tempotracebatch.md:
     id: 1a73bb7f3ee0
     last_write_checksum: sha1:778e8837929ee817567c02653ae9daca8d564ea7
@@ -3886,8 +3890,8 @@ trackedFiles:
     pristine_git_object: fb460774fe5e9affe5d1c0e6795ed6255cf06587
   docs/models/usageinfodollardefs.md:
     id: db2412f29163
-    last_write_checksum: sha1:22376657c6afb47bd1d3c6629bca91f7c956fc64
-    pristine_git_object: 8e405fc0bc409e1cd5a34742886b87036b5b8235
+    last_write_checksum: sha1:a1caeb2f5d3d76a7a3474ebbb475cdce6e0c7d8e
+    pristine_git_object: 2d8b2ed4bd93d67e45e834e012cb175c45249dbf
   docs/models/useridentity.md:
     id: 959b5b6bb365
     last_write_checksum: sha1:57c19208b5cccac6058c850e34f98bdb7d6b04e9
@@ -4414,8 +4418,8 @@ trackedFiles:
     pristine_git_object: 036d44b8cfc51599873bd5c401a6aed30450536c
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:0eb57e3022495b4758b082c3e051422892d5142d
-    pristine_git_object: e57779051a9ecf145e958ca205451c7de260eced
+    last_write_checksum: sha1:c15f0e9d80b73265ba1128d017942fbbcf6bf30f
+    pristine_git_object: 1469c92c2caaa81852e34df6a30f072fffb9b186
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:33d8a0663a647b7a7e1946064d05c3b40e538816
@@ -4566,8 +4570,8 @@ trackedFiles:
     pristine_git_object: d0b6b4fc091393e6e8a75f158363baa8e2ea21d4
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:c21173f2a0b39ce671fd13f5f5b832fbb4962b1e
-    pristine_git_object: b24fd3fa3e2cf4b254fcda6d835db1e7a35d17b9
+    last_write_checksum: sha1:4caa638259aaeb903692d74228b9f903f1926b2b
+    pristine_git_object: 2836ced9ce1dd1837c8135800fbe86aeecb191f6
   src/mistralai/client/models/activitytaskcompletedattributesresponse.py:
     id: 8174941767cc
     last_write_checksum: sha1:b5246e203765ba0532a6a65d391bdd237ab2c891
@@ -5242,8 +5246,8 @@ trackedFiles:
     pristine_git_object: 32c96a41aef6c5f592c660c2107cd5948d582822
   src/mistralai/client/models/createrealtimesessionrequest.py:
     id: 285bf15f71b1
-    last_write_checksum: sha1:4dd0aef3412b0662e47842214fff3f0805e461ed
-    pristine_git_object: fc5c1f8cf5f21dc85c9c29f4ebb31fff735f1f77
+    last_write_checksum: sha1:802d79bb0c9a6e4ad428d863765dc187a6baa90f
+    pristine_git_object: 10b034121d1352c1bd1df3d31ce636190a450edb
   src/mistralai/client/models/createrealtimesessionresponse.py:
     id: 9183c3301002
     last_write_checksum: sha1:88de386c1e96d4e5fc0c5d8a0771b8d0523680b6
@@ -6478,8 +6482,8 @@ trackedFiles:
     pristine_git_object: c8fbdff77b3464b630b0cd18f25d9179c5ff9eca
   src/mistralai/client/models/messagetokens.py:
     id: e2a5171d27c5
-    last_write_checksum: sha1:361fdea88fe10abec7f0e49ad918e8a02354a801
-    pristine_git_object: f3e292bd722e7a0a0b50a7c66a61b0f9808e7b4d
+    last_write_checksum: sha1:43a2e057d01c19060951f085a6582c3b2eb5a3df
+    pristine_git_object: a3864640a302f2b1f2ddac9c719689e5190e501b
   src/mistralai/client/models/metricaggregation.py:
     id: d83c8202faad
     last_write_checksum: sha1:40101cc7ab13ece5b0a01c3558ffde92cf769ea2
@@ -6746,8 +6750,8 @@ trackedFiles:
     pristine_git_object: 15bdce2056f2f642096fbbdb2ac32ce1e5b8c9cf
   src/mistralai/client/models/prompt.py:
     id: 488f0cfc226c
-    last_write_checksum: sha1:853d76b80d8ffc400824934bce1666f0a80cb68e
-    pristine_git_object: bd12a86255235f3c98abe6c802b9367a0722455b
+    last_write_checksum: sha1:0a29c102c1aa7b28069b7720ed015a53958d5290
+    pristine_git_object: 3679093e233777faee8db7b157d77c25eb4fb74c
   src/mistralai/client/models/promptargument.py:
     id: 52e5c885f761
     last_write_checksum: sha1:a71c2398080cb96acf20772e3c9436910c5a5b22
@@ -6910,8 +6914,8 @@ trackedFiles:
     pristine_git_object: a2a4d6b79604ff8c4af0e374afd3f33a8a0a8432
   src/mistralai/client/models/registerdeploymentrequestvespaindex.py:
     id: 2fb0584f27cf
-    last_write_checksum: sha1:1f439e57926a50e7e5907bb9c17f7c6718e1d7d3
-    pristine_git_object: 6478919dda3dd4c7ad218f0c3b11031ec16e2ba8
+    last_write_checksum: sha1:408fa9f42cc1c591fe9444a97b1dbb94cf0c589c
+    pristine_git_object: b8ea5946ac3ee6f04fb74d073225c24ed1356231
   src/mistralai/client/models/registersearchindexresponseindex.py:
     id: e66c7b574b75
     last_write_checksum: sha1:7a8397ef0b393f59b61f9dacd2aac124f05fb169
@@ -7286,16 +7290,16 @@ trackedFiles:
     pristine_git_object: 8575b95430e10a9b8d7e1df0f0e131cda68bb685
   src/mistralai/client/models/tempotraceattribute.py:
     id: 7d0ec3402dc0
-    last_write_checksum: sha1:663896264ac81d443679ca397fdad95a96683455
-    pristine_git_object: dea530ea8fc2ee80d5218b3e1437b23fa94daf4b
+    last_write_checksum: sha1:dde2dc49a2e1e3c6340bfcf1533988974bf78e5f
+    pristine_git_object: bc2da3e0e08b45d80d30ab572f6896b292d0fef4
   src/mistralai/client/models/tempotraceattributearraycontainer.py:
     id: afca3b2e0b21
     last_write_checksum: sha1:b4f8414e509c84ca90f2d859f222a313b9948b39
     pristine_git_object: 082060373b99b74bfe6c29a30048758f3023bdcb
   src/mistralai/client/models/tempotraceattributearrayelement.py:
     id: 4f3b1d9264a3
-    last_write_checksum: sha1:d1922dd0b17d26b2aa0e4858a35a90662ebba626
-    pristine_git_object: 6fa0ec60f028712573e8947ef2d34e526c64ef81
+    last_write_checksum: sha1:84294dee61c41e7ce2a225e403d178225de3975c
+    pristine_git_object: f506b40eee5968725a0e6da4f5716f508fc92e75
   src/mistralai/client/models/tempotraceattributearrayvalue.py:
     id: d75dd416f9e3
     last_write_checksum: sha1:47995b569301c6d8b7a6ca1ad8c04717f16d0868
@@ -7304,6 +7308,10 @@ trackedFiles:
     id: c7c383a6c05f
     last_write_checksum: sha1:a40945504a6845a3e43a80d5f901af9f5c5ee96b
     pristine_git_object: 72fb79d022533d8a7af27c5d7e91258e7cf3a3b5
+  src/mistralai/client/models/tempotraceattributedoublevalue.py:
+    id: 30d063ab0023
+    last_write_checksum: sha1:bac10cc4f203fd2dbc471a5c36fc16778f789aff
+    pristine_git_object: ccad9f4075802a1e629ce097ab416c85578c992b
   src/mistralai/client/models/tempotraceattributeintvalue.py:
     id: c4659ad7a2a5
     last_write_checksum: sha1:471273678346f841dd718fce1899a6ae8ad7cd1d
@@ -7638,8 +7646,8 @@ trackedFiles:
     pristine_git_object: 5b09dafad3cde3da2fd96b8dbece0386641f8a44
   src/mistralai/client/models/usageinfo_dollar_defs.py:
     id: d543506af998
-    last_write_checksum: sha1:dafbaf51ce3997baf25141bdef8b34a92b48ed31
-    pristine_git_object: 20686bff2118fc96adf50a0b775d719d68310041
+    last_write_checksum: sha1:dca4d64bbb3b067c7089bd10793de09c74dff32e
+    pristine_git_object: 0c1dd85b7bbb33068b9b10bed888d30ab3a2e282
   src/mistralai/client/models/useridentity.py:
     id: 8b1effdfe1ba
     last_write_checksum: sha1:7ad7c16feb0b452585a4a30f8f7a7b56deafaf8c
@@ -11180,7 +11188,7 @@ examples:
         application/json: {"name": "<value>", "definition": {"content": "<value>"}}
       responses:
         "200":
-          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1}
+          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1, "versionCreatedAt": "1s"}
         default:
           application/json: {"code": "not_found"}
   prompts_get:
@@ -11192,7 +11200,7 @@ examples:
           version: 1
       responses:
         "200":
-          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1}
+          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1, "versionCreatedAt": "1s"}
         default:
           application/json: {"code": "not_found"}
   prompts_delete:
@@ -11214,7 +11222,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1}
+          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1, "versionCreatedAt": "1s"}
         default:
           application/json: {"code": "not_found"}
   prompts_list_versions:
@@ -11247,7 +11255,7 @@ examples:
           version: 600480
       responses:
         "200":
-          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1}
+          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1, "versionCreatedAt": "1s"}
         default:
           application/json: {"code": "not_found"}
   prompts_update_version_metadata:
@@ -11260,7 +11268,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1}
+          application/json: {"version": 1, "createdAt": "1s", "updatedAt": "1s", "latestVersion": 1, "versionCreatedAt": "1s"}
         default:
           application/json: {"code": "not_found"}
   skills_list:
