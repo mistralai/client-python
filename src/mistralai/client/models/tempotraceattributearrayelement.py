@@ -19,6 +19,8 @@ class TempoTraceAttributeArrayElementTypedDict(TypedDict):
     r"""A string element in the array"""
     int_value: NotRequired[Nullable[str]]
     r"""An integer element in the array"""
+    double_value: NotRequired[Nullable[float]]
+    r"""A floating point element in the array"""
     bool_value: NotRequired[Nullable[bool]]
     r"""A boolean element in the array"""
 
@@ -34,6 +36,11 @@ class TempoTraceAttributeArrayElement(BaseModel):
     )
     r"""An integer element in the array"""
 
+    double_value: Annotated[
+        OptionalNullable[float], pydantic.Field(alias="doubleValue")
+    ] = UNSET
+    r"""A floating point element in the array"""
+
     bool_value: Annotated[OptionalNullable[bool], pydantic.Field(alias="boolValue")] = (
         UNSET
     )
@@ -41,8 +48,8 @@ class TempoTraceAttributeArrayElement(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["stringValue", "intValue", "boolValue"])
-        nullable_fields = set(["stringValue", "intValue", "boolValue"])
+        optional_fields = set(["stringValue", "intValue", "doubleValue", "boolValue"])
+        nullable_fields = set(["stringValue", "intValue", "doubleValue", "boolValue"])
         serialized = handler(self)
         m = {}
 

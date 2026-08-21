@@ -20,6 +20,7 @@ class MessageTokensTypedDict(TypedDict):
 
     role: Roles
     total_tokens: NotRequired[Nullable[int]]
+    settings_tokens: NotRequired[Nullable[int]]
     truncated: NotRequired[bool]
     usage_count: NotRequired[int]
 
@@ -31,14 +32,18 @@ class MessageTokens(BaseModel):
 
     total_tokens: OptionalNullable[int] = UNSET
 
+    settings_tokens: OptionalNullable[int] = UNSET
+
     truncated: Optional[bool] = False
 
     usage_count: Optional[int] = 1
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["total_tokens", "truncated", "usage_count"])
-        nullable_fields = set(["total_tokens"])
+        optional_fields = set(
+            ["total_tokens", "settings_tokens", "truncated", "usage_count"]
+        )
+        nullable_fields = set(["total_tokens", "settings_tokens"])
         serialized = handler(self)
         m = {}
 
