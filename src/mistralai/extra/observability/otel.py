@@ -40,6 +40,11 @@ MISTRAL_SDK_DEBUG_TRACING: bool = (
     os.getenv("MISTRAL_SDK_DEBUG_TRACING", "false").lower() == "true"
 )
 DEBUG_HINT: str = "To see detailed tracing logs, set MISTRAL_SDK_DEBUG_TRACING=true."
+WORKFLOW_EXECUTION_ID_ATTRIBUTE: str = "wf.workflow.execution_id"
+BAGGAGE_SPAN_ATTRIBUTES: tuple[str, ...] = (
+    gen_ai_attributes.GEN_AI_CONVERSATION_ID,
+    WORKFLOW_EXECUTION_ID_ATTRIBUTE,
+)
 
 
 class MistralAIAttributes:
@@ -125,6 +130,13 @@ def set_available_attributes(span: Span, attributes: dict[str, Any]) -> None:
     for attribute, value in attributes.items():
         if value:
             span.set_attribute(attribute, value)
+
+
+def _set_baggage_attributes(span: Span) -> None:
+    for attribute in BAGGAGE_SPAN_ATTRIBUTES:
+        value = get_baggage(attribute)
+        if value:
+            span.set_attribute(attribute, str(value))
 
 
 def _set_http_attributes(span: Span, operation_id: str, request: httpx.Request) -> None:
@@ -462,12 +474,7 @@ def get_traced_request_and_span(
     try:
         span = tracer.start_span(name=operation_id)
         span.set_attributes({"agent.trace.public": ""})
-        # Propagate gen_ai.conversation.id from OTEL baggage if present
-        conversation_id = get_baggage(gen_ai_attributes.GEN_AI_CONVERSATION_ID)
-        if conversation_id:
-            span.set_attribute(
-                gen_ai_attributes.GEN_AI_CONVERSATION_ID, str(conversation_id)
-            )
+        _set_baggage_attributes(span)
         # Inject the span context into the request headers to be used by the backend service to continue the trace
         propagate.inject(request.headers, context=set_span_in_context(span))
         span = enrich_span_from_request(span, operation_id, request)
