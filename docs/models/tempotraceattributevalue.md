@@ -17,6 +17,12 @@ value: models.TempoTraceAttributeStringValue = /* values here */
 value: models.TempoTraceAttributeIntValue = /* values here */
 ```
 
+### `models.TempoTraceAttributeDoubleValue`
+
+```python
+value: models.TempoTraceAttributeDoubleValue = /* values here */
+```
+
 ### `models.TempoTraceAttributeBoolValue`
 
 ```python

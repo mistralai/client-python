@@ -2273,6 +2273,10 @@ if TYPE_CHECKING:
         TempoTraceAttributeBoolValue,
         TempoTraceAttributeBoolValueTypedDict,
     )
+    from .tempotraceattributedoublevalue import (
+        TempoTraceAttributeDoubleValue,
+        TempoTraceAttributeDoubleValueTypedDict,
+    )
     from .tempotraceattributeintvalue import (
         TempoTraceAttributeIntValue,
         TempoTraceAttributeIntValueTypedDict,
@@ -4404,6 +4408,8 @@ __all__ = [
     "TempoTraceAttributeArrayValueTypedDict",
     "TempoTraceAttributeBoolValue",
     "TempoTraceAttributeBoolValueTypedDict",
+    "TempoTraceAttributeDoubleValue",
+    "TempoTraceAttributeDoubleValueTypedDict",
     "TempoTraceAttributeIntValue",
     "TempoTraceAttributeIntValueTypedDict",
     "TempoTraceAttributeStringValue",
@@ -6383,6 +6389,8 @@ _dynamic_imports: dict[str, str] = {
     "TempoTraceAttributeArrayValueTypedDict": ".tempotraceattributearrayvalue",
     "TempoTraceAttributeBoolValue": ".tempotraceattributeboolvalue",
     "TempoTraceAttributeBoolValueTypedDict": ".tempotraceattributeboolvalue",
+    "TempoTraceAttributeDoubleValue": ".tempotraceattributedoublevalue",
+    "TempoTraceAttributeDoubleValueTypedDict": ".tempotraceattributedoublevalue",
     "TempoTraceAttributeIntValue": ".tempotraceattributeintvalue",
     "TempoTraceAttributeIntValueTypedDict": ".tempotraceattributeintvalue",
     "TempoTraceAttributeStringValue": ".tempotraceattributestringvalue",

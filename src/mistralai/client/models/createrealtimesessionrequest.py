@@ -2,12 +2,19 @@
 # @generated-id: 285bf15f71b1
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateRealtimeSessionRequestTypedDict(TypedDict):
@@ -15,6 +22,7 @@ class CreateRealtimeSessionRequestTypedDict(TypedDict):
 
     model: str
     purpose: Literal["realtime"]
+    ttl_seconds: NotRequired[Nullable[int]]
 
 
 class CreateRealtimeSessionRequest(BaseModel):
@@ -26,6 +34,33 @@ class CreateRealtimeSessionRequest(BaseModel):
         Annotated[Literal["realtime"], AfterValidator(validate_const("realtime"))],
         pydantic.Field(alias="purpose"),
     ] = "realtime"
+
+    ttl_seconds: OptionalNullable[int] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["ttl_seconds"])
+        nullable_fields = set(["ttl_seconds"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
 
 
 try:

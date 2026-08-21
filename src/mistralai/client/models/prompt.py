@@ -34,6 +34,9 @@ class PromptTypedDict(TypedDict):
     r"""Display title."""
     description: NotRequired[str]
     r"""Display description."""
+    created_by: NotRequired[str]
+    version_created_at: NotRequired[datetime]
+    r"""RFC 3339 timestamp."""
 
 
 class Prompt(BaseModel):
@@ -74,6 +77,13 @@ class Prompt(BaseModel):
     description: Optional[str] = None
     r"""Display description."""
 
+    created_by: Annotated[Optional[str], pydantic.Field(alias="createdBy")] = None
+
+    version_created_at: Annotated[
+        Optional[datetime], pydantic.Field(alias="versionCreatedAt")
+    ] = None
+    r"""RFC 3339 timestamp."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -90,6 +100,8 @@ class Prompt(BaseModel):
                 "latestVersion",
                 "title",
                 "description",
+                "createdBy",
+                "versionCreatedAt",
             ]
         )
         serialized = handler(self)
