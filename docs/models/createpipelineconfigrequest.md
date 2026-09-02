@@ -1,0 +1,14 @@
+# CreatePipelineConfigRequest
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `pipeline_kind`                                                            | [models.PipelineKind](../models/pipelinekind.md)                           | :heavy_check_mark:                                                         | N/A                                                                        |
+| `selectors`                                                                | List[[models.PipelineConfigSelector](../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                         | N/A                                                                        |
+| `slug`                                                                     | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `group`                                                                    | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `definition`                                                               | [models.PipelineConfigDefinition](../models/pipelineconfigdefinition.md)   | :heavy_check_mark:                                                         | N/A                                                                        |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `enabled`                                                                  | *Optional[bool]*                                                           | :heavy_minus_sign:                                                         | N/A                                                                        |
