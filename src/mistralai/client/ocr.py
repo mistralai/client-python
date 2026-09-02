@@ -78,7 +78,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             document=utils.get_pydantic_model(document, models.DocumentUnion),
-            pages=pages,
+            pages=utils.unmarshal(pages, OptionalNullable[models.Pages]),
             include_image_base64=include_image_base64,
             image_limit=image_limit,
             image_min_size=image_min_size,
@@ -133,6 +133,8 @@ class Ocr(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["ocr"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -221,7 +223,7 @@ class Ocr(BaseSDK):
         request = models.OCRRequest(
             model=model,
             document=utils.get_pydantic_model(document, models.DocumentUnion),
-            pages=pages,
+            pages=utils.unmarshal(pages, OptionalNullable[models.Pages]),
             include_image_base64=include_image_base64,
             image_limit=image_limit,
             image_min_size=image_min_size,
@@ -276,6 +278,8 @@ class Ocr(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["ocr"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

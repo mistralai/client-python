@@ -651,6 +651,10 @@ if TYPE_CHECKING:
         CreateLibraryRequestTypedDict,
         OwnerType,
     )
+    from .createpipelineconfigrequest import (
+        CreatePipelineConfigRequest,
+        CreatePipelineConfigRequestTypedDict,
+    )
     from .createpromptrequest import CreatePromptRequest, CreatePromptRequestTypedDict
     from .createpromptversionresponse import (
         CreatePromptVersionResponse,
@@ -763,6 +767,10 @@ if TYPE_CHECKING:
         DeleteModelV1ModelsModelIDDeleteRequest,
         DeleteModelV1ModelsModelIDDeleteRequestTypedDict,
     )
+    from .delete_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_deleteop import (
+        DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequest,
+        DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequestTypedDict,
+    )
     from .delete_voice_v1_audio_voices_voice_id_deleteop import (
         DeleteVoiceV1AudioVoicesVoiceIDDeleteRequest,
         DeleteVoiceV1AudioVoicesVoiceIDDeleteRequestTypedDict,
@@ -835,6 +843,8 @@ if TYPE_CHECKING:
         DeploymentWorkerSpecResponse,
         DeploymentWorkerSpecResponseTypedDict,
     )
+    from .detectiondefinition import DetectionDefinition, DetectionDefinitionTypedDict
+    from .detectionpattern import DetectionPattern, DetectionPatternTypedDict
     from .document import Document, DocumentTypedDict
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
@@ -899,6 +909,7 @@ if TYPE_CHECKING:
         ExportDatasetResponse,
         ExportDatasetResponseTypedDict,
     )
+    from .exportdefinition import ExportDefinition, ExportDefinitionTypedDict
     from .extendedoauthservermetadata import (
         ExtendedOAuthServerMetadata,
         ExtendedOAuthServerMetadataTypedDict,
@@ -1098,6 +1109,10 @@ if TYPE_CHECKING:
     from .get_log_field_options_v1_observability_logs_fields_field_name_options_getop import (
         GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest,
         GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict,
+    )
+    from .get_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_getop import (
+        GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequest,
+        GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequestTypedDict,
     )
     from .get_run_history_v1_workflows_runs_run_id_history_getop import (
         GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest,
@@ -1416,6 +1431,7 @@ if TYPE_CHECKING:
         JudgeDatasetRecordRequest,
         JudgeDatasetRecordRequestTypedDict,
     )
+    from .judgedefinition import JudgeDefinition, JudgeDefinitionTypedDict
     from .judgeoutput import Answer, AnswerTypedDict, JudgeOutput, JudgeOutputTypedDict
     from .judgeoutputtype import JudgeOutputType
     from .judgeregressionoutput import (
@@ -1515,6 +1531,10 @@ if TYPE_CHECKING:
     from .list_models_v1_models_getop import (
         ListModelsV1ModelsGetRequest,
         ListModelsV1ModelsGetRequestTypedDict,
+    )
+    from .list_pipeline_configs_v1_observability_pipeline_configs_getop import (
+        ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest,
+        ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequestTypedDict,
     )
     from .list_runs_v1_workflows_runs_getop import (
         ListRunsV1WorkflowsRunsGetOrder,
@@ -1682,6 +1702,10 @@ if TYPE_CHECKING:
         ModelListTypedDict,
         UnknownModelListData,
     )
+    from .moderationdefinition import (
+        ModerationDefinition,
+        ModerationDefinitionTypedDict,
+    )
     from .moderationllmaction import ModerationLLMAction
     from .moderationllmv1categorythresholds import (
         ModerationLlmv1CategoryThresholds,
@@ -1765,6 +1789,7 @@ if TYPE_CHECKING:
         OtelFieldDefinitionType,
         OtelFieldDefinitionTypedDict,
     )
+    from .otlpdestination import OTLPDestination, OTLPDestinationTypedDict
     from .outboundauthenticationtype import OutboundAuthenticationType
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
     from .paginatedconnectors import PaginatedConnectors, PaginatedConnectorsTypedDict
@@ -1802,6 +1827,25 @@ if TYPE_CHECKING:
         PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest,
         PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict,
     )
+    from .pipelineconfig import PipelineConfig, PipelineConfigTypedDict
+    from .pipelineconfigdefinition import (
+        PipelineConfigDefinition,
+        PipelineConfigDefinitionTypedDict,
+    )
+    from .pipelineconfigheader import (
+        PipelineConfigHeader,
+        PipelineConfigHeaderTypedDict,
+    )
+    from .pipelineconfigscope import PipelineConfigScope
+    from .pipelineconfigselector import (
+        PipelineConfigSelector,
+        PipelineConfigSelectorTypedDict,
+    )
+    from .pipelineconfigsresponse import (
+        PipelineConfigsResponse,
+        PipelineConfigsResponseTypedDict,
+    )
+    from .pipelinekind import PipelineKind
     from .post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop import (
         PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest,
         PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict,
@@ -2155,6 +2199,7 @@ if TYPE_CHECKING:
     )
     from .skillversion import SkillVersion, SkillVersionTypedDict
     from .source import Source
+    from .sourcekind import SourceKind
     from .spanevaluationsrequest import (
         SpanEvaluationsRequest,
         SpanEvaluationsRequestTypedDict,
@@ -2461,6 +2506,10 @@ if TYPE_CHECKING:
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
         UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict,
     )
+    from .update_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_putop import (
+        UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest,
+        UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequestTypedDict,
+    )
     from .update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop import (
         UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest,
         UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict,
@@ -2543,6 +2592,10 @@ if TYPE_CHECKING:
         UpdateMetricsRequestIndexMetricsTypedDict,
     )
     from .updatemodelrequest import UpdateModelRequest, UpdateModelRequestTypedDict
+    from .updatepipelineconfigrequest import (
+        UpdatePipelineConfigRequest,
+        UpdatePipelineConfigRequestTypedDict,
+    )
     from .updateruninfo import UpdateRunInfo, UpdateRunInfoTypedDict
     from .updateworkflowresponse import (
         UpdateWorkflowResponse,
@@ -3245,6 +3298,8 @@ __all__ = [
     "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
+    "CreatePipelineConfigRequest",
+    "CreatePipelineConfigRequestTypedDict",
     "CreatePromptRequest",
     "CreatePromptRequestTypedDict",
     "CreatePromptVersionRequest",
@@ -3323,6 +3378,8 @@ __all__ = [
     "DeleteModelResponseTypedDict",
     "DeleteModelV1ModelsModelIDDeleteRequest",
     "DeleteModelV1ModelsModelIDDeleteRequestTypedDict",
+    "DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequest",
+    "DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequestTypedDict",
     "DeletePromptResponse",
     "DeletePromptResponseTypedDict",
     "DeleteSkillResponse",
@@ -3362,6 +3419,10 @@ __all__ = [
     "DeploymentWorkerSpecInputTypedDict",
     "DeploymentWorkerSpecResponse",
     "DeploymentWorkerSpecResponseTypedDict",
+    "DetectionDefinition",
+    "DetectionDefinitionTypedDict",
+    "DetectionPattern",
+    "DetectionPatternTypedDict",
     "Direction",
     "Document",
     "DocumentLibraryTool",
@@ -3416,6 +3477,8 @@ __all__ = [
     "ExportDatasetResponseTypedDict",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequest",
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict",
+    "ExportDefinition",
+    "ExportDefinitionTypedDict",
     "Expression",
     "ExpressionTypedDict",
     "ExtendedOAuthServerMetadata",
@@ -3565,6 +3628,8 @@ __all__ = [
     "GetLogTypedDict",
     "GetLogs",
     "GetLogsTypedDict",
+    "GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequest",
+    "GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequestTypedDict",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict",
     "GetRunV1WorkflowsRunsRunIDGetRequest",
@@ -3758,6 +3823,8 @@ __all__ = [
     "JudgeDatasetRecordRequestTypedDict",
     "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest",
     "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict",
+    "JudgeDefinition",
+    "JudgeDefinitionTypedDict",
     "JudgeOutput",
     "JudgeOutputType",
     "JudgeOutputTypedDict",
@@ -3838,6 +3905,8 @@ __all__ = [
     "ListModelsV1ModelsGetRequestTypedDict",
     "ListOrganizationsResponse",
     "ListOrganizationsResponseTypedDict",
+    "ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest",
+    "ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequestTypedDict",
     "ListPromptVersionsResponse",
     "ListPromptVersionsResponseTypedDict",
     "ListPromptsResponse",
@@ -3945,6 +4014,8 @@ __all__ = [
     "ModelListData",
     "ModelListDataTypedDict",
     "ModelListTypedDict",
+    "ModerationDefinition",
+    "ModerationDefinitionTypedDict",
     "ModerationLLMAction",
     "ModerationLlmv1CategoryThresholds",
     "ModerationLlmv1CategoryThresholdsTypedDict",
@@ -4013,6 +4084,8 @@ __all__ = [
     "OCRTitleBlockTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
+    "OTLPDestination",
+    "OTLPDestinationTypedDict",
     "Oauth2MetadataSecrets",
     "Oauth2MetadataSecretsTypedDict",
     "ObservabilityErrorCode",
@@ -4061,6 +4134,18 @@ __all__ = [
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict",
     "Payload",
     "PayloadTypedDict",
+    "PipelineConfig",
+    "PipelineConfigDefinition",
+    "PipelineConfigDefinitionTypedDict",
+    "PipelineConfigHeader",
+    "PipelineConfigHeaderTypedDict",
+    "PipelineConfigScope",
+    "PipelineConfigSelector",
+    "PipelineConfigSelectorTypedDict",
+    "PipelineConfigTypedDict",
+    "PipelineConfigsResponse",
+    "PipelineConfigsResponseTypedDict",
+    "PipelineKind",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict",
     "PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest",
@@ -4331,6 +4416,7 @@ __all__ = [
     "SkipConfirmationTypedDict",
     "SortBy",
     "Source",
+    "SourceKind",
     "SpanEvaluationsRequest",
     "SpanEvaluationsRequestTypedDict",
     "SpansRequest",
@@ -4603,6 +4689,10 @@ __all__ = [
     "UpdateMetricsRequestIndexMetricsTypedDict",
     "UpdateModelRequest",
     "UpdateModelRequestTypedDict",
+    "UpdatePipelineConfigRequest",
+    "UpdatePipelineConfigRequestTypedDict",
+    "UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest",
+    "UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequestTypedDict",
     "UpdatePromptRequest",
     "UpdatePromptRequestTypedDict",
     "UpdatePromptVersionRequest",
@@ -5220,6 +5310,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
     "OwnerType": ".createlibraryrequest",
+    "CreatePipelineConfigRequest": ".createpipelineconfigrequest",
+    "CreatePipelineConfigRequestTypedDict": ".createpipelineconfigrequest",
     "CreatePromptRequest": ".createpromptrequest",
     "CreatePromptRequestTypedDict": ".createpromptrequest",
     "CreatePromptVersionResponse": ".createpromptversionresponse",
@@ -5292,6 +5384,8 @@ _dynamic_imports: dict[str, str] = {
     "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequestTypedDict": ".delete_judge_v1_observability_judges_judge_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequest": ".delete_model_v1_models_model_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequestTypedDict": ".delete_model_v1_models_model_id_deleteop",
+    "DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequest": ".delete_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_deleteop",
+    "DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequestTypedDict": ".delete_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_deleteop",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequest": ".delete_voice_v1_audio_voices_voice_id_deleteop",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequestTypedDict": ".delete_voice_v1_audio_voices_voice_id_deleteop",
     "DeleteBatchJobResponse": ".deletebatchjobresponse",
@@ -5338,6 +5432,10 @@ _dynamic_imports: dict[str, str] = {
     "DeploymentWorkerSpecInputTypedDict": ".deploymentworkerspecinput",
     "DeploymentWorkerSpecResponse": ".deploymentworkerspecresponse",
     "DeploymentWorkerSpecResponseTypedDict": ".deploymentworkerspecresponse",
+    "DetectionDefinition": ".detectiondefinition",
+    "DetectionDefinitionTypedDict": ".detectiondefinition",
+    "DetectionPattern": ".detectionpattern",
+    "DetectionPatternTypedDict": ".detectionpattern",
     "Document": ".document",
     "DocumentTypedDict": ".document",
     "DocumentLibraryTool": ".documentlibrarytool",
@@ -5391,6 +5489,8 @@ _dynamic_imports: dict[str, str] = {
     "ExportDatasetToJsonlV1ObservabilityDatasetsDatasetIDExportsToJsonlGetRequestTypedDict": ".export_dataset_to_jsonl_v1_observability_datasets_dataset_id_exports_to_jsonl_getop",
     "ExportDatasetResponse": ".exportdatasetresponse",
     "ExportDatasetResponseTypedDict": ".exportdatasetresponse",
+    "ExportDefinition": ".exportdefinition",
+    "ExportDefinitionTypedDict": ".exportdefinition",
     "ExtendedOAuthServerMetadata": ".extendedoauthservermetadata",
     "ExtendedOAuthServerMetadataTypedDict": ".extendedoauthservermetadata",
     "Failure": ".failure",
@@ -5522,6 +5622,8 @@ _dynamic_imports: dict[str, str] = {
     "GetJudgesV1ObservabilityJudgesGetRequestTypedDict": ".get_judges_v1_observability_judges_getop",
     "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
     "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
+    "GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequest": ".get_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_getop",
+    "GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequestTypedDict": ".get_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequest": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunHistoryV1WorkflowsRunsRunIDHistoryGetRequestTypedDict": ".get_run_history_v1_workflows_runs_run_id_history_getop",
     "GetRunV1WorkflowsRunsRunIDGetRequest": ".get_run_v1_workflows_runs_run_id_getop",
@@ -5745,6 +5847,8 @@ _dynamic_imports: dict[str, str] = {
     "JudgeConversationRequestTypedDict": ".judgeconversationrequest",
     "JudgeDatasetRecordRequest": ".judgedatasetrecordrequest",
     "JudgeDatasetRecordRequestTypedDict": ".judgedatasetrecordrequest",
+    "JudgeDefinition": ".judgedefinition",
+    "JudgeDefinitionTypedDict": ".judgedefinition",
     "Answer": ".judgeoutput",
     "AnswerTypedDict": ".judgeoutput",
     "JudgeOutput": ".judgeoutput",
@@ -5803,6 +5907,8 @@ _dynamic_imports: dict[str, str] = {
     "ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict": ".list_deployments_v1_workflows_deployments_getop",
     "ListModelsV1ModelsGetRequest": ".list_models_v1_models_getop",
     "ListModelsV1ModelsGetRequestTypedDict": ".list_models_v1_models_getop",
+    "ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest": ".list_pipeline_configs_v1_observability_pipeline_configs_getop",
+    "ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequestTypedDict": ".list_pipeline_configs_v1_observability_pipeline_configs_getop",
     "ListRunsV1WorkflowsRunsGetOrder": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequest": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetRequestTypedDict": ".list_runs_v1_workflows_runs_getop",
@@ -5935,6 +6041,8 @@ _dynamic_imports: dict[str, str] = {
     "ModelListDataTypedDict": ".modellist",
     "ModelListTypedDict": ".modellist",
     "UnknownModelListData": ".modellist",
+    "ModerationDefinition": ".moderationdefinition",
+    "ModerationDefinitionTypedDict": ".moderationdefinition",
     "ModerationLLMAction": ".moderationllmaction",
     "ModerationLlmv1CategoryThresholds": ".moderationllmv1categorythresholds",
     "ModerationLlmv1CategoryThresholdsTypedDict": ".moderationllmv1categorythresholds",
@@ -6023,6 +6131,8 @@ _dynamic_imports: dict[str, str] = {
     "OtelFieldDefinitionSupportedOperator": ".otelfielddefinition",
     "OtelFieldDefinitionType": ".otelfielddefinition",
     "OtelFieldDefinitionTypedDict": ".otelfielddefinition",
+    "OTLPDestination": ".otlpdestination",
+    "OTLPDestinationTypedDict": ".otlpdestination",
     "OutboundAuthenticationType": ".outboundauthenticationtype",
     "OutputContentChunks": ".outputcontentchunks",
     "OutputContentChunksTypedDict": ".outputcontentchunks",
@@ -6048,6 +6158,18 @@ _dynamic_imports: dict[str, str] = {
     "PartialScheduleDefinitionTypedDict": ".partialscheduledefinition",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequest": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
     "PauseScheduleV1WorkflowsSchedulesScheduleIDPausePostRequestTypedDict": ".pause_schedule_v1_workflows_schedules_schedule_id_pause_postop",
+    "PipelineConfig": ".pipelineconfig",
+    "PipelineConfigTypedDict": ".pipelineconfig",
+    "PipelineConfigDefinition": ".pipelineconfigdefinition",
+    "PipelineConfigDefinitionTypedDict": ".pipelineconfigdefinition",
+    "PipelineConfigHeader": ".pipelineconfigheader",
+    "PipelineConfigHeaderTypedDict": ".pipelineconfigheader",
+    "PipelineConfigScope": ".pipelineconfigscope",
+    "PipelineConfigSelector": ".pipelineconfigselector",
+    "PipelineConfigSelectorTypedDict": ".pipelineconfigselector",
+    "PipelineConfigsResponse": ".pipelineconfigsresponse",
+    "PipelineConfigsResponseTypedDict": ".pipelineconfigsresponse",
+    "PipelineKind": ".pipelinekind",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequest": ".post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop",
     "PostDatasetRecordsFromCampaignV1ObservabilityDatasetsDatasetIDImportsFromCampaignPostRequestTypedDict": ".post_dataset_records_from_campaign_v1_observability_datasets_dataset_id_imports_from_campaign_postop",
     "PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest": ".post_dataset_records_from_dataset_v1_observability_datasets_dataset_id_imports_from_dataset_postop",
@@ -6309,6 +6431,7 @@ _dynamic_imports: dict[str, str] = {
     "SkillVersion": ".skillversion",
     "SkillVersionTypedDict": ".skillversion",
     "Source": ".source",
+    "SourceKind": ".sourcekind",
     "SpanEvaluationsRequest": ".spanevaluationsrequest",
     "SpanEvaluationsRequestTypedDict": ".spanevaluationsrequest",
     "SpansRequest": ".spansrequest",
@@ -6536,6 +6659,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
+    "UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest": ".update_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_putop",
+    "UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequestTypedDict": ".update_pipeline_config_v1_observability_pipeline_configs_pipeline_config_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequestTypedDict": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequest": ".update_schedule_v1_workflows_schedules_schedule_id_patchop",
@@ -6584,6 +6709,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateMetricsRequestIndexMetricsTypedDict": ".updatemetricsrequestindexmetrics",
     "UpdateModelRequest": ".updatemodelrequest",
     "UpdateModelRequestTypedDict": ".updatemodelrequest",
+    "UpdatePipelineConfigRequest": ".updatepipelineconfigrequest",
+    "UpdatePipelineConfigRequestTypedDict": ".updatepipelineconfigrequest",
     "UpdateRunInfo": ".updateruninfo",
     "UpdateRunInfoTypedDict": ".updateruninfo",
     "UpdateWorkflowResponse": ".updateworkflowresponse",

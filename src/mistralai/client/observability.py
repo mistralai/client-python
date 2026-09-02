@@ -18,8 +18,8 @@ class Observability(BaseSDK):
     judges: Judges
     campaigns: Campaigns
     datasets: Datasets
-    logs: Logs
     traces: Traces
+    logs: Logs
     spans: Spans
 
     def __init__(
@@ -36,6 +36,6 @@ class Observability(BaseSDK):
         self.judges = Judges(self.sdk_configuration, parent_ref=self.parent_ref)
         self.campaigns = Campaigns(self.sdk_configuration, parent_ref=self.parent_ref)
         self.datasets = Datasets(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.logs = Logs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.traces = Traces(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.logs = Logs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.spans = Spans(self.sdk_configuration, parent_ref=self.parent_ref)

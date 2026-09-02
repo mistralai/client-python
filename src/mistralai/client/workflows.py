@@ -15,7 +15,7 @@ from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from mistralai.client.workflows_events import WorkflowsEvents
-from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
 # region imports
@@ -303,10 +303,10 @@ class Workflows(BaseSDK):
         ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
-        deployment_name: OptionalNullable[List[str]] = UNSET,
+        deployment_name: OptionalNullable[Iterable[str]] = UNSET,
         deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
@@ -350,13 +350,17 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[models.GetWorkflowsV1WorkflowsGetStatus]
+            ),
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
-            deployment_name=deployment_name,
+            deployment_name=utils.unmarshal(
+                deployment_name, OptionalNullable[List[str]]
+            ),
             deployment_status=deployment_status,
             archived=archived,
-            tags=tags,
+            tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             order=order,
             cursor=cursor,
             limit=limit,
@@ -398,6 +402,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -472,10 +478,10 @@ class Workflows(BaseSDK):
         ] = UNSET,
         include_shared: Optional[bool] = True,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
-        deployment_name: OptionalNullable[List[str]] = UNSET,
+        deployment_name: OptionalNullable[Iterable[str]] = UNSET,
         deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
@@ -519,13 +525,17 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetWorkflowsV1WorkflowsGetRequest(
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[models.GetWorkflowsV1WorkflowsGetStatus]
+            ),
             include_shared=include_shared,
             available_in_chat_assistant=available_in_chat_assistant,
-            deployment_name=deployment_name,
+            deployment_name=utils.unmarshal(
+                deployment_name, OptionalNullable[List[str]]
+            ),
             deployment_status=deployment_status,
             archived=archived,
-            tags=tags,
+            tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             order=order,
             cursor=cursor,
             limit=limit,
@@ -567,6 +577,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -730,6 +742,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -850,6 +864,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -883,9 +899,9 @@ class Workflows(BaseSDK):
         input: OptionalNullable[Any] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
-        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
-        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
+        extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -930,9 +946,13 @@ class Workflows(BaseSDK):
                 input=input,
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
-                custom_tracing_attributes=custom_tracing_attributes,
+                custom_tracing_attributes=utils.unmarshal(
+                    custom_tracing_attributes, OptionalNullable[Dict[str, str]]
+                ),
                 force_new_trace=force_new_trace,
-                extensions=extensions,
+                extensions=utils.unmarshal(
+                    extensions, OptionalNullable[Dict[str, Any]]
+                ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -979,6 +999,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1013,9 +1035,9 @@ class Workflows(BaseSDK):
         input: OptionalNullable[Any] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
-        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
-        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
+        extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1060,9 +1082,13 @@ class Workflows(BaseSDK):
                 input=input,
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
-                custom_tracing_attributes=custom_tracing_attributes,
+                custom_tracing_attributes=utils.unmarshal(
+                    custom_tracing_attributes, OptionalNullable[Dict[str, str]]
+                ),
                 force_new_trace=force_new_trace,
-                extensions=extensions,
+                extensions=utils.unmarshal(
+                    extensions, OptionalNullable[Dict[str, Any]]
+                ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1109,6 +1135,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1146,9 +1174,9 @@ class Workflows(BaseSDK):
         input: OptionalNullable[Any] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
-        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
-        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
+        extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1193,9 +1221,13 @@ class Workflows(BaseSDK):
                 input=input,
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
-                custom_tracing_attributes=custom_tracing_attributes,
+                custom_tracing_attributes=utils.unmarshal(
+                    custom_tracing_attributes, OptionalNullable[Dict[str, str]]
+                ),
                 force_new_trace=force_new_trace,
-                extensions=extensions,
+                extensions=utils.unmarshal(
+                    extensions, OptionalNullable[Dict[str, Any]]
+                ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1242,6 +1274,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1279,9 +1313,9 @@ class Workflows(BaseSDK):
         input: OptionalNullable[Any] = UNSET,
         wait_for_result: Optional[bool] = False,
         timeout_seconds: OptionalNullable[float] = UNSET,
-        custom_tracing_attributes: OptionalNullable[Dict[str, str]] = UNSET,
+        custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
-        extensions: OptionalNullable[Dict[str, Any]] = UNSET,
+        extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1326,9 +1360,13 @@ class Workflows(BaseSDK):
                 input=input,
                 wait_for_result=wait_for_result,
                 timeout_seconds=timeout_seconds,
-                custom_tracing_attributes=custom_tracing_attributes,
+                custom_tracing_attributes=utils.unmarshal(
+                    custom_tracing_attributes, OptionalNullable[Dict[str, str]]
+                ),
                 force_new_trace=force_new_trace,
-                extensions=extensions,
+                extensions=utils.unmarshal(
+                    extensions, OptionalNullable[Dict[str, Any]]
+                ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
             ),
@@ -1375,6 +1413,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1469,6 +1509,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1560,6 +1602,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1590,7 +1634,7 @@ class Workflows(BaseSDK):
         display_name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1627,7 +1671,7 @@ class Workflows(BaseSDK):
                 display_name=display_name,
                 description=description,
                 available_in_chat_assistant=available_in_chat_assistant,
-                tags=tags,
+                tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             ),
         )
 
@@ -1672,6 +1716,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1702,7 +1748,7 @@ class Workflows(BaseSDK):
         display_name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1739,7 +1785,7 @@ class Workflows(BaseSDK):
                 display_name=display_name,
                 description=description,
                 available_in_chat_assistant=available_in_chat_assistant,
-                tags=tags,
+                tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             ),
         )
 
@@ -1784,6 +1830,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1881,6 +1929,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1980,6 +2030,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2008,7 +2060,7 @@ class Workflows(BaseSDK):
     def bulk_archive_workflows(
         self,
         *,
-        workflow_ids: List[str],
+        workflow_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2036,7 +2088,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.WorkflowBulkArchiveRequest(
-            workflow_ids=workflow_ids,
+            workflow_ids=utils.unmarshal(workflow_ids, List[str]),
         )
 
         req = self._build_request(
@@ -2076,6 +2128,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2102,7 +2156,7 @@ class Workflows(BaseSDK):
     async def bulk_archive_workflows_async(
         self,
         *,
-        workflow_ids: List[str],
+        workflow_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2130,7 +2184,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.WorkflowBulkArchiveRequest(
-            workflow_ids=workflow_ids,
+            workflow_ids=utils.unmarshal(workflow_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -2170,6 +2224,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2196,7 +2252,7 @@ class Workflows(BaseSDK):
     def bulk_unarchive_workflows(
         self,
         *,
-        workflow_ids: List[str],
+        workflow_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2224,7 +2280,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.WorkflowBulkUnarchiveRequest(
-            workflow_ids=workflow_ids,
+            workflow_ids=utils.unmarshal(workflow_ids, List[str]),
         )
 
         req = self._build_request(
@@ -2264,6 +2320,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2292,7 +2350,7 @@ class Workflows(BaseSDK):
     async def bulk_unarchive_workflows_async(
         self,
         *,
-        workflow_ids: List[str],
+        workflow_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2320,7 +2378,7 @@ class Workflows(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.WorkflowBulkUnarchiveRequest(
-            workflow_ids=workflow_ids,
+            workflow_ids=utils.unmarshal(workflow_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -2360,6 +2418,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2453,6 +2513,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2544,6 +2606,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2637,6 +2701,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2730,6 +2796,8 @@ class Workflows(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

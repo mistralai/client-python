@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class BetaPrompts(BaseSDK):
@@ -18,7 +18,7 @@ class BetaPrompts(BaseSDK):
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         sort_field: Optional[models.ListSortField] = None,
         sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
         sort_by: Optional[str] = None,
@@ -60,7 +60,7 @@ class BetaPrompts(BaseSDK):
             page_size=page_size,
             page_token=page_token,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
             sort_field=sort_field,
             sort_direction_query_parameter=sort_direction_query_parameter,
             sort_by=sort_by,
@@ -101,6 +101,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -160,7 +162,7 @@ class BetaPrompts(BaseSDK):
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         sort_field: Optional[models.ListSortField] = None,
         sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
         sort_by: Optional[str] = None,
@@ -202,7 +204,7 @@ class BetaPrompts(BaseSDK):
             page_size=page_size,
             page_token=page_token,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
             sort_field=sort_field,
             sort_direction_query_parameter=sort_direction_query_parameter,
             sort_by=sort_by,
@@ -243,6 +245,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -308,7 +312,7 @@ class BetaPrompts(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         notes: OptionalNullable[str] = UNSET,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -348,7 +352,7 @@ class BetaPrompts(BaseSDK):
             description=description,
             notes=notes,
             sharing_scope=sharing_scope,
-            aliases=aliases,
+            aliases=utils.unmarshal(aliases, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -388,6 +392,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -414,7 +420,7 @@ class BetaPrompts(BaseSDK):
         description: OptionalNullable[str] = UNSET,
         notes: OptionalNullable[str] = UNSET,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -454,7 +460,7 @@ class BetaPrompts(BaseSDK):
             description=description,
             notes=notes,
             sharing_scope=sharing_scope,
-            aliases=aliases,
+            aliases=utils.unmarshal(aliases, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -494,6 +500,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -517,7 +525,7 @@ class BetaPrompts(BaseSDK):
         prompt_id: str,
         version: Optional[int] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -551,7 +559,7 @@ class BetaPrompts(BaseSDK):
             prompt_id=prompt_id,
             version=version,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -588,6 +596,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -611,7 +621,7 @@ class BetaPrompts(BaseSDK):
         prompt_id: str,
         version: Optional[int] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -645,7 +655,7 @@ class BetaPrompts(BaseSDK):
             prompt_id=prompt_id,
             version=version,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -682,6 +692,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -767,6 +779,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -852,6 +866,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -951,6 +967,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1050,6 +1068,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1135,6 +1155,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1220,6 +1242,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1243,7 +1267,7 @@ class BetaPrompts(BaseSDK):
         prompt_id: str,
         definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1280,7 +1304,7 @@ class BetaPrompts(BaseSDK):
                     definition, models.PromptDefinition
                 ),
                 notes=notes,
-                aliases=aliases,
+                aliases=utils.unmarshal(aliases, Optional[List[str]]),
             ),
         )
 
@@ -1325,6 +1349,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1348,7 +1374,7 @@ class BetaPrompts(BaseSDK):
         prompt_id: str,
         definition: Union[models.PromptDefinition, models.PromptDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1385,7 +1411,7 @@ class BetaPrompts(BaseSDK):
                     definition, models.PromptDefinition
                 ),
                 notes=notes,
-                aliases=aliases,
+                aliases=utils.unmarshal(aliases, Optional[List[str]]),
             ),
         )
 
@@ -1430,6 +1456,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1452,7 +1480,7 @@ class BetaPrompts(BaseSDK):
         *,
         prompt_id: str,
         version: int,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1484,7 +1512,7 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsGetVersionRequest(
             prompt_id=prompt_id,
             version=version,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -1521,6 +1549,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1543,7 +1573,7 @@ class BetaPrompts(BaseSDK):
         *,
         prompt_id: str,
         version: int,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1575,7 +1605,7 @@ class BetaPrompts(BaseSDK):
         request = models.PromptsGetVersionRequest(
             prompt_id=prompt_id,
             version=version,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -1612,6 +1642,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1715,6 +1747,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1818,6 +1852,8 @@ class BetaPrompts(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.prompts"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

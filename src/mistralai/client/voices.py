@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class Voices(BaseSDK):
@@ -88,6 +88,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -187,6 +189,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -216,10 +220,10 @@ class Voices(BaseSDK):
         name: str,
         sample_audio: str,
         slug: OptionalNullable[str] = UNSET,
-        languages: Optional[List[str]] = None,
+        languages: Optional[Iterable[str]] = None,
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retention_notice: Optional[int] = 30,
@@ -265,10 +269,10 @@ class Voices(BaseSDK):
         request = models.VoiceCreateRequest(
             name=name,
             slug=slug,
-            languages=languages,
+            languages=utils.unmarshal(languages, Optional[List[str]]),
             gender=gender,
             age=age,
-            tags=tags,
+            tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             color=color,
             description=description,
             retention_notice=retention_notice,
@@ -313,6 +317,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -342,10 +348,10 @@ class Voices(BaseSDK):
         name: str,
         sample_audio: str,
         slug: OptionalNullable[str] = UNSET,
-        languages: Optional[List[str]] = None,
+        languages: Optional[Iterable[str]] = None,
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retention_notice: Optional[int] = 30,
@@ -391,10 +397,10 @@ class Voices(BaseSDK):
         request = models.VoiceCreateRequest(
             name=name,
             slug=slug,
-            languages=languages,
+            languages=utils.unmarshal(languages, Optional[List[str]]),
             gender=gender,
             age=age,
-            tags=tags,
+            tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
             color=color,
             description=description,
             retention_notice=retention_notice,
@@ -439,6 +445,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -532,6 +540,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -625,6 +635,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -653,10 +665,10 @@ class Voices(BaseSDK):
         *,
         voice_id: str,
         name: OptionalNullable[str] = UNSET,
-        languages: OptionalNullable[List[str]] = UNSET,
+        languages: OptionalNullable[Iterable[str]] = UNSET,
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -696,10 +708,10 @@ class Voices(BaseSDK):
             voice_id=voice_id,
             voice_update_request=models.VoiceUpdateRequest(
                 name=name,
-                languages=languages,
+                languages=utils.unmarshal(languages, OptionalNullable[List[str]]),
                 gender=gender,
                 age=age,
-                tags=tags,
+                tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
                 description=description,
             ),
         )
@@ -745,6 +757,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -773,10 +787,10 @@ class Voices(BaseSDK):
         *,
         voice_id: str,
         name: OptionalNullable[str] = UNSET,
-        languages: OptionalNullable[List[str]] = UNSET,
+        languages: OptionalNullable[Iterable[str]] = UNSET,
         gender: OptionalNullable[str] = UNSET,
         age: OptionalNullable[int] = UNSET,
-        tags: OptionalNullable[List[str]] = UNSET,
+        tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -816,10 +830,10 @@ class Voices(BaseSDK):
             voice_id=voice_id,
             voice_update_request=models.VoiceUpdateRequest(
                 name=name,
-                languages=languages,
+                languages=utils.unmarshal(languages, OptionalNullable[List[str]]),
                 gender=gender,
                 age=age,
-                tags=tags,
+                tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
                 description=description,
             ),
         )
@@ -865,6 +879,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -958,6 +974,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1051,6 +1069,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1144,6 +1164,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1240,6 +1262,8 @@ class Voices(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.voices"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

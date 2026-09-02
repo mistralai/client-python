@@ -9,7 +9,7 @@ from mistralai.client.fields import Fields
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Iterable, List, Mapping, Optional, Union
 
 
 class ChatCompletionEvents(BaseSDK):
@@ -31,7 +31,7 @@ class ChatCompletionEvents(BaseSDK):
         search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         page_size: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
-        extra_fields: OptionalNullable[List[str]] = UNSET,
+        extra_fields: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -68,7 +68,7 @@ class ChatCompletionEvents(BaseSDK):
                 search_params=utils.get_pydantic_model(
                     search_params, models.FilterPayload
                 ),
-                extra_fields=extra_fields,
+                extra_fields=utils.unmarshal(extra_fields, OptionalNullable[List[str]]),
             ),
         )
 
@@ -113,6 +113,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -146,7 +148,7 @@ class ChatCompletionEvents(BaseSDK):
         search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
         page_size: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
-        extra_fields: OptionalNullable[List[str]] = UNSET,
+        extra_fields: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -183,7 +185,7 @@ class ChatCompletionEvents(BaseSDK):
                 search_params=utils.get_pydantic_model(
                     search_params, models.FilterPayload
                 ),
-                extra_fields=extra_fields,
+                extra_fields=utils.unmarshal(extra_fields, OptionalNullable[List[str]]),
             ),
         )
 
@@ -228,6 +230,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -259,7 +263,7 @@ class ChatCompletionEvents(BaseSDK):
         self,
         *,
         search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
-        extra_fields: OptionalNullable[List[str]] = UNSET,
+        extra_fields: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -289,7 +293,7 @@ class ChatCompletionEvents(BaseSDK):
 
         request = models.SearchChatCompletionEventIdsRequest(
             search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
-            extra_fields=extra_fields,
+            extra_fields=utils.unmarshal(extra_fields, OptionalNullable[List[str]]),
         )
 
         req = self._build_request(
@@ -333,6 +337,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -364,7 +370,7 @@ class ChatCompletionEvents(BaseSDK):
         self,
         *,
         search_params: Union[models.FilterPayload, models.FilterPayloadTypedDict],
-        extra_fields: OptionalNullable[List[str]] = UNSET,
+        extra_fields: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -394,7 +400,7 @@ class ChatCompletionEvents(BaseSDK):
 
         request = models.SearchChatCompletionEventIdsRequest(
             search_params=utils.get_pydantic_model(search_params, models.FilterPayload),
-            extra_fields=extra_fields,
+            extra_fields=utils.unmarshal(extra_fields, OptionalNullable[List[str]]),
         )
 
         req = self._build_request_async(
@@ -438,6 +444,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -533,6 +541,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -626,6 +636,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -719,6 +731,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -814,6 +828,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -925,6 +941,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1034,6 +1052,8 @@ class ChatCompletionEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.chat_completion_events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

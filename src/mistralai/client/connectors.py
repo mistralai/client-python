@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Connectors(BaseSDK):
@@ -22,11 +22,11 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.PublicResourceVisibility] = None,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        headers: OptionalNullable[Mapping[str, Any]] = UNSET,
         global_headers: Optional[
             Union[
-                Dict[str, models.GlobalHeaderValue],
-                Dict[str, models.GlobalHeaderValueTypedDict],
+                Mapping[str, models.GlobalHeaderValue],
+                Mapping[str, models.GlobalHeaderValueTypedDict],
             ]
         ] = None,
         auth_data: OptionalNullable[
@@ -88,7 +88,7 @@ class Connectors(BaseSDK):
             icon_url=icon_url,
             visibility=visibility,
             server=server,
-            headers=headers,
+            headers=utils.unmarshal(headers, OptionalNullable[Dict[str, Any]]),
             global_headers=utils.get_pydantic_model(
                 global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
             ),
@@ -140,6 +140,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -172,11 +174,11 @@ class Connectors(BaseSDK):
         title: OptionalNullable[str] = UNSET,
         icon_url: OptionalNullable[str] = UNSET,
         visibility: Optional[models.PublicResourceVisibility] = None,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        headers: OptionalNullable[Mapping[str, Any]] = UNSET,
         global_headers: Optional[
             Union[
-                Dict[str, models.GlobalHeaderValue],
-                Dict[str, models.GlobalHeaderValueTypedDict],
+                Mapping[str, models.GlobalHeaderValue],
+                Mapping[str, models.GlobalHeaderValueTypedDict],
             ]
         ] = None,
         auth_data: OptionalNullable[
@@ -238,7 +240,7 @@ class Connectors(BaseSDK):
             icon_url=icon_url,
             visibility=visibility,
             server=server,
-            headers=headers,
+            headers=utils.unmarshal(headers, OptionalNullable[Dict[str, Any]]),
             global_headers=utils.get_pydantic_model(
                 global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
             ),
@@ -290,6 +292,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -393,6 +397,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -496,6 +502,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -604,6 +612,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -712,6 +722,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -805,6 +817,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -898,6 +912,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -991,6 +1007,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1084,6 +1102,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1180,6 +1200,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1276,6 +1298,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1372,6 +1396,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1468,6 +1494,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1497,7 +1525,7 @@ class Connectors(BaseSDK):
         tool_name: str,
         connector_id_or_name: str,
         credentials_name: OptionalNullable[str] = UNSET,
-        arguments: Optional[Dict[str, Any]] = None,
+        arguments: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1534,7 +1562,7 @@ class Connectors(BaseSDK):
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
-                arguments=arguments,
+                arguments=utils.unmarshal(arguments, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1579,6 +1607,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1608,7 +1638,7 @@ class Connectors(BaseSDK):
         tool_name: str,
         connector_id_or_name: str,
         credentials_name: OptionalNullable[str] = UNSET,
-        arguments: Optional[Dict[str, Any]] = None,
+        arguments: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1645,7 +1675,7 @@ class Connectors(BaseSDK):
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
-                arguments=arguments,
+                arguments=utils.unmarshal(arguments, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1690,6 +1720,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1798,6 +1830,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1908,6 +1942,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2003,6 +2039,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2098,6 +2136,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2199,6 +2239,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2298,6 +2340,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2416,6 +2460,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2534,6 +2580,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2633,6 +2681,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2732,6 +2782,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2850,6 +2902,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2968,6 +3022,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3067,6 +3123,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3166,6 +3224,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3284,6 +3344,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3402,6 +3464,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3495,6 +3559,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3588,6 +3654,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3684,6 +3752,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3780,6 +3850,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3876,6 +3948,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3972,6 +4046,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4068,6 +4144,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4164,6 +4242,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4263,6 +4343,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4362,6 +4444,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4397,8 +4481,8 @@ class Connectors(BaseSDK):
         server: OptionalNullable[str] = UNSET,
         auth_methods: OptionalNullable[
             Union[
-                List[models.AuthenticationMethodCreateOrUpdateRequest],
-                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
+                Iterable[models.AuthenticationMethodCreateOrUpdateRequest],
+                Iterable[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -4495,6 +4579,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4530,8 +4616,8 @@ class Connectors(BaseSDK):
         server: OptionalNullable[str] = UNSET,
         auth_methods: OptionalNullable[
             Union[
-                List[models.AuthenticationMethodCreateOrUpdateRequest],
-                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
+                Iterable[models.AuthenticationMethodCreateOrUpdateRequest],
+                Iterable[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -4628,6 +4714,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4721,6 +4809,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4814,6 +4904,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

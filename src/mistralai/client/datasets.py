@@ -9,7 +9,7 @@ from mistralai.client.records import Records
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 
 class Datasets(BaseSDK):
@@ -99,6 +99,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -198,6 +200,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -297,6 +301,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -396,6 +402,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -489,6 +497,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -582,6 +592,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -675,6 +687,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -768,6 +782,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -876,6 +892,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -984,6 +1002,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1085,6 +1105,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1186,6 +1208,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1215,8 +1239,8 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Dict[str, Any],
-        properties: Optional[Dict[str, Any]] = None,
+        payload: Mapping[str, Any],
+        properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1248,8 +1272,8 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=payload,
-                properties=properties,
+                payload=utils.unmarshal(payload, Dict[str, Any]),
+                properties=utils.unmarshal(properties, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1294,6 +1318,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1323,8 +1349,8 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        payload: Dict[str, Any],
-        properties: Optional[Dict[str, Any]] = None,
+        payload: Mapping[str, Any],
+        properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1356,8 +1382,8 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(
             dataset_id=dataset_id,
             create_dataset_record_request=models.CreateDatasetRecordRequest(
-                payload=payload,
-                properties=properties,
+                payload=utils.unmarshal(payload, Dict[str, Any]),
+                properties=utils.unmarshal(properties, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1402,6 +1428,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1507,6 +1535,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1612,6 +1642,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1641,7 +1673,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        completion_event_ids: List[str],
+        completion_event_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1672,7 +1704,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromExplorerV1ObservabilityDatasetsDatasetIDImportsFromExplorerPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_explorer_request=models.ImportDatasetFromExplorerRequest(
-                completion_event_ids=completion_event_ids,
+                completion_event_ids=utils.unmarshal(completion_event_ids, List[str]),
             ),
         )
 
@@ -1717,6 +1749,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1746,7 +1780,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        completion_event_ids: List[str],
+        completion_event_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1777,7 +1811,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromExplorerV1ObservabilityDatasetsDatasetIDImportsFromExplorerPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_explorer_request=models.ImportDatasetFromExplorerRequest(
-                completion_event_ids=completion_event_ids,
+                completion_event_ids=utils.unmarshal(completion_event_ids, List[str]),
             ),
         )
 
@@ -1822,6 +1856,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1927,6 +1963,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2032,6 +2070,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2061,7 +2101,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        conversation_ids: List[str],
+        conversation_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2092,7 +2132,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
-                conversation_ids=conversation_ids,
+                conversation_ids=utils.unmarshal(conversation_ids, List[str]),
             ),
         )
 
@@ -2137,6 +2177,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2166,7 +2208,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        conversation_ids: List[str],
+        conversation_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2197,7 +2239,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
-                conversation_ids=conversation_ids,
+                conversation_ids=utils.unmarshal(conversation_ids, List[str]),
             ),
         )
 
@@ -2242,6 +2284,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2271,7 +2315,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        dataset_record_ids: List[str],
+        dataset_record_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2302,7 +2346,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_dataset_request=models.ImportDatasetFromDatasetRequest(
-                dataset_record_ids=dataset_record_ids,
+                dataset_record_ids=utils.unmarshal(dataset_record_ids, List[str]),
             ),
         )
 
@@ -2347,6 +2391,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2376,7 +2422,7 @@ class Datasets(BaseSDK):
         self,
         *,
         dataset_id: str,
-        dataset_record_ids: List[str],
+        dataset_record_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2407,7 +2453,7 @@ class Datasets(BaseSDK):
         request = models.PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDatasetPostRequest(
             dataset_id=dataset_id,
             import_dataset_from_dataset_request=models.ImportDatasetFromDatasetRequest(
-                dataset_record_ids=dataset_record_ids,
+                dataset_record_ids=utils.unmarshal(dataset_record_ids, List[str]),
             ),
         )
 
@@ -2452,6 +2498,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2545,6 +2593,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2638,6 +2688,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2734,6 +2786,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2830,6 +2884,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2931,6 +2987,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3034,6 +3092,8 @@ class Datasets(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
