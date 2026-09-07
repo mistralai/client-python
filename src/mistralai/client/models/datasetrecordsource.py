@@ -12,6 +12,7 @@ DatasetRecordSource = Union[
         "UPLOADED_FILE",
         "DIRECT_INPUT",
         "PLAYGROUND",
+        "TELEMETRY_SPAN",
     ],
     UnrecognizedStr,
 ]

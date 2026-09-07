@@ -40,6 +40,7 @@ class FTModelCardTypedDict(TypedDict):
     deprecation_replacement_model: NotRequired[Nullable[str]]
     default_model_temperature: NotRequired[Nullable[float]]
     internal: NotRequired[bool]
+    billing_model_name: NotRequired[Nullable[str]]
     type: Literal["fine-tuned"]
     archived: NotRequired[bool]
 
@@ -80,6 +81,8 @@ class FTModelCard(BaseModel):
 
     internal: Optional[bool] = False
 
+    billing_model_name: OptionalNullable[str] = UNSET
+
     type: Annotated[
         Annotated[Literal["fine-tuned"], AfterValidator(validate_const("fine-tuned"))],
         pydantic.Field(alias="type"),
@@ -102,6 +105,7 @@ class FTModelCard(BaseModel):
                 "deprecation_replacement_model",
                 "default_model_temperature",
                 "internal",
+                "billing_model_name",
                 "archived",
             ]
         )
@@ -112,6 +116,7 @@ class FTModelCard(BaseModel):
                 "deprecation",
                 "deprecation_replacement_model",
                 "default_model_temperature",
+                "billing_model_name",
             ]
         )
         serialized = handler(self)

@@ -16,7 +16,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Any
+from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -47,6 +47,8 @@ class WorkflowExecutionTraceSummaryResponseTypedDict(TypedDict):
     r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
+    search_keys: NotRequired[Nullable[Dict[str, str]]]
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
     span_tree: NotRequired[Nullable[WorkflowExecutionTraceSummarySpanTypedDict]]
     r"""The root span of the trace"""
 
@@ -91,6 +93,9 @@ class WorkflowExecutionTraceSummaryResponse(BaseModel):
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
+    search_keys: OptionalNullable[Dict[str, str]] = UNSET
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
+
     span_tree: OptionalNullable[WorkflowExecutionTraceSummarySpan] = UNSET
     r"""The root span of the trace"""
 
@@ -104,6 +109,7 @@ class WorkflowExecutionTraceSummaryResponse(BaseModel):
                 "run_id",
                 "user_id",
                 "total_duration_ms",
+                "search_keys",
                 "span_tree",
             ]
         )
@@ -118,6 +124,7 @@ class WorkflowExecutionTraceSummaryResponse(BaseModel):
                 "end_time",
                 "total_duration_ms",
                 "result",
+                "search_keys",
                 "span_tree",
             ]
         )

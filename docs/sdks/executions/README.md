@@ -38,7 +38,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.executions.get_workflow_execution(execution_id="<id>")
+    res = mistral.workflows.executions.get_workflow_execution(execution_id="<id>", include_search_keys=False)
 
     # Handle response
     print(res)
@@ -50,6 +50,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `execution_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `include_search_keys`                                               | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | Include the execution's search keys (metadata) in the response.     |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

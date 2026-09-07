@@ -18,3 +18,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"UPLOADED_FILE"`
 - `"DIRECT_INPUT"`
 - `"PLAYGROUND"`
+- `"TELEMETRY_SPAN"`

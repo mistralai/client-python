@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Jobs(BaseSDK):
@@ -19,10 +19,10 @@ class Jobs(BaseSDK):
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        status: OptionalNullable[Iterable[models.BatchJobStatus]] = UNSET,
         order_by: Optional[models.JobsAPIRoutesBatchGetBatchJobsOrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -65,10 +65,12 @@ class Jobs(BaseSDK):
             page_size=page_size,
             model=model,
             agent_id=agent_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             created_after=created_after,
             created_by_me=created_by_me,
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[List[models.BatchJobStatus]]
+            ),
             order_by=order_by,
         )
 
@@ -106,6 +108,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -130,10 +134,10 @@ class Jobs(BaseSDK):
         page_size: Optional[int] = 100,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         created_after: OptionalNullable[datetime] = UNSET,
         created_by_me: Optional[bool] = False,
-        status: OptionalNullable[List[models.BatchJobStatus]] = UNSET,
+        status: OptionalNullable[Iterable[models.BatchJobStatus]] = UNSET,
         order_by: Optional[models.JobsAPIRoutesBatchGetBatchJobsOrderBy] = "-created",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -176,10 +180,12 @@ class Jobs(BaseSDK):
             page_size=page_size,
             model=model,
             agent_id=agent_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             created_after=created_after,
             created_by_me=created_by_me,
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[List[models.BatchJobStatus]]
+            ),
             order_by=order_by,
         )
 
@@ -217,6 +223,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -238,13 +246,13 @@ class Jobs(BaseSDK):
         self,
         *,
         endpoint: models.APIEndpoint,
-        input_files: OptionalNullable[List[str]] = UNSET,
+        input_files: OptionalNullable[Iterable[str]] = UNSET,
         requests: OptionalNullable[
-            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
+            Union[Iterable[models.BatchRequest], Iterable[models.BatchRequestTypedDict]]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, str]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, str]] = UNSET,
         timeout_hours: Optional[int] = 24,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -286,14 +294,14 @@ class Jobs(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateBatchJobRequest(
-            input_files=input_files,
+            input_files=utils.unmarshal(input_files, OptionalNullable[List[str]]),
             requests=utils.get_pydantic_model(
                 requests, OptionalNullable[List[models.BatchRequest]]
             ),
             endpoint=endpoint,
             model=model,
             agent_id=agent_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, str]]),
             timeout_hours=timeout_hours,
         )
 
@@ -334,6 +342,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -355,13 +365,13 @@ class Jobs(BaseSDK):
         self,
         *,
         endpoint: models.APIEndpoint,
-        input_files: OptionalNullable[List[str]] = UNSET,
+        input_files: OptionalNullable[Iterable[str]] = UNSET,
         requests: OptionalNullable[
-            Union[List[models.BatchRequest], List[models.BatchRequestTypedDict]]
+            Union[Iterable[models.BatchRequest], Iterable[models.BatchRequestTypedDict]]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         agent_id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, str]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, str]] = UNSET,
         timeout_hours: Optional[int] = 24,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -403,14 +413,14 @@ class Jobs(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateBatchJobRequest(
-            input_files=input_files,
+            input_files=utils.unmarshal(input_files, OptionalNullable[List[str]]),
             requests=utils.get_pydantic_model(
                 requests, OptionalNullable[List[models.BatchRequest]]
             ),
             endpoint=endpoint,
             model=model,
             agent_id=agent_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, str]]),
             timeout_hours=timeout_hours,
         )
 
@@ -451,6 +461,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -544,6 +556,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -637,6 +651,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -724,6 +740,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -811,6 +829,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -898,6 +918,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -985,6 +1007,8 @@ class Jobs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["batch.jobs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

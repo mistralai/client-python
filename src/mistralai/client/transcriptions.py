@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import List, Mapping, Optional, Union
+from typing import Iterable, List, Mapping, Optional, Union
 
 
 class Transcriptions(BaseSDK):
@@ -23,8 +23,8 @@ class Transcriptions(BaseSDK):
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
-        context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        context_bias: Optional[Iterable[str]] = None,
+        timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -67,8 +67,10 @@ class Transcriptions(BaseSDK):
             language=language,
             temperature=temperature,
             diarize=diarize,
-            context_bias=context_bias,
-            timestamp_granularities=timestamp_granularities,
+            context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            timestamp_granularities=utils.unmarshal(
+                timestamp_granularities, Optional[List[models.TimestampGranularity]]
+            ),
         )
 
         req = self._build_request(
@@ -108,6 +110,8 @@ class Transcriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.transcriptions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -135,8 +139,8 @@ class Transcriptions(BaseSDK):
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
-        context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        context_bias: Optional[Iterable[str]] = None,
+        timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -179,8 +183,10 @@ class Transcriptions(BaseSDK):
             language=language,
             temperature=temperature,
             diarize=diarize,
-            context_bias=context_bias,
-            timestamp_granularities=timestamp_granularities,
+            context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            timestamp_granularities=utils.unmarshal(
+                timestamp_granularities, Optional[List[models.TimestampGranularity]]
+            ),
         )
 
         req = self._build_request_async(
@@ -220,6 +226,8 @@ class Transcriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.transcriptions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -247,8 +255,8 @@ class Transcriptions(BaseSDK):
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
-        context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        context_bias: Optional[Iterable[str]] = None,
+        timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -291,8 +299,10 @@ class Transcriptions(BaseSDK):
             language=language,
             temperature=temperature,
             diarize=diarize,
-            context_bias=context_bias,
-            timestamp_granularities=timestamp_granularities,
+            context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            timestamp_granularities=utils.unmarshal(
+                timestamp_granularities, Optional[List[models.TimestampGranularity]]
+            ),
         )
 
         req = self._build_request(
@@ -336,6 +346,8 @@ class Transcriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.transcriptions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -346,7 +358,9 @@ class Transcriptions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.TranscriptionStreamEvents),
+                lambda raw: unmarshal_json_response(
+                    models.TranscriptionStreamEvents, http_res, raw
+                ),
                 client_ref=self,
             )
         if utils.match_response(http_res, "4XX", "*"):
@@ -369,8 +383,8 @@ class Transcriptions(BaseSDK):
         language: OptionalNullable[str] = UNSET,
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
-        context_bias: Optional[List[str]] = None,
-        timestamp_granularities: Optional[List[models.TimestampGranularity]] = None,
+        context_bias: Optional[Iterable[str]] = None,
+        timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -413,8 +427,10 @@ class Transcriptions(BaseSDK):
             language=language,
             temperature=temperature,
             diarize=diarize,
-            context_bias=context_bias,
-            timestamp_granularities=timestamp_granularities,
+            context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            timestamp_granularities=utils.unmarshal(
+                timestamp_granularities, Optional[List[models.TimestampGranularity]]
+            ),
         )
 
         req = self._build_request_async(
@@ -458,6 +474,8 @@ class Transcriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["audio.transcriptions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -468,7 +486,9 @@ class Transcriptions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.TranscriptionStreamEvents),
+                lambda raw: unmarshal_json_response(
+                    models.TranscriptionStreamEvents, http_res, raw
+                ),
                 client_ref=self,
             )
         if utils.match_response(http_res, "4XX", "*"):

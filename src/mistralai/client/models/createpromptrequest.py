@@ -4,6 +4,7 @@
 from __future__ import annotations
 from .promptdefinition import PromptDefinition, PromptDefinitionTypedDict
 from .registrysharingscope import RegistrySharingScope
+from .sharerelation import ShareRelation
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -31,6 +32,8 @@ class CreatePromptRequestTypedDict(TypedDict):
     sharing_scope: NotRequired[RegistrySharingScope]
     aliases: NotRequired[List[str]]
     r"""Aliases pointing to this version."""
+    workspace_relation: NotRequired[ShareRelation]
+    r"""Relation a subject holds on a shared registry object."""
 
 
 class CreatePromptRequest(BaseModel):
@@ -56,10 +59,22 @@ class CreatePromptRequest(BaseModel):
     aliases: Optional[List[str]] = None
     r"""Aliases pointing to this version."""
 
+    workspace_relation: Annotated[
+        Optional[ShareRelation], pydantic.Field(alias="workspaceRelation")
+    ] = None
+    r"""Relation a subject holds on a shared registry object."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["title", "description", "notes", "sharingScope", "aliases"]
+            [
+                "title",
+                "description",
+                "notes",
+                "sharingScope",
+                "aliases",
+                "workspaceRelation",
+            ]
         )
         nullable_fields = set(["title", "description", "notes"])
         serialized = handler(self)

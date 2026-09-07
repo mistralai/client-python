@@ -24,6 +24,7 @@ class AuthenticationConfigurationTypedDict(TypedDict):
     title: NotRequired[Nullable[str]]
     status: NotRequired[Nullable[CredentialsStatusTypedDict]]
     is_default: NotRequired[bool]
+    creator_id: NotRequired[Nullable[str]]
 
 
 class AuthenticationConfiguration(BaseModel):
@@ -39,10 +40,12 @@ class AuthenticationConfiguration(BaseModel):
 
     is_default: Optional[bool] = False
 
+    creator_id: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["title", "status", "is_default"])
-        nullable_fields = set(["title", "status"])
+        optional_fields = set(["title", "status", "is_default", "creator_id"])
+        nullable_fields = set(["title", "status", "creator_id"])
         serialized = handler(self)
         m = {}
 

@@ -10,6 +10,7 @@ from mistralai.client.conversations import Conversations
 from mistralai.client.libraries import Libraries
 from mistralai.client.observability import Observability
 from mistralai.client.rag import Rag
+from mistralai.client.service_accounts import ServiceAccounts
 from mistralai.client.skills import Skills
 from mistralai.client.users import Users
 from typing import Optional
@@ -18,6 +19,7 @@ from typing import Optional
 class Beta(BaseSDK):
     prompts: BetaPrompts
     skills: Skills
+    service_accounts: ServiceAccounts
     conversations: Conversations
     r"""(beta) Conversations API"""
     agents: BetaAgents
@@ -40,6 +42,9 @@ class Beta(BaseSDK):
     def _init_sdks(self):
         self.prompts = BetaPrompts(self.sdk_configuration, parent_ref=self.parent_ref)
         self.skills = Skills(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.service_accounts = ServiceAccounts(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
         self.conversations = Conversations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )

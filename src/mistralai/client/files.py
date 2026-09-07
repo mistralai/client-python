@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import List, Mapping, Optional, Union
+from typing import Iterable, List, Mapping, Optional, Union
 
 
 class Files(BaseSDK):
@@ -110,6 +110,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -223,6 +225,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -246,11 +250,11 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
-        source: OptionalNullable[List[models.Source]] = UNSET,
+        sample_type: OptionalNullable[Iterable[models.SampleType]] = UNSET,
+        source: OptionalNullable[Iterable[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         purpose: OptionalNullable[models.FilePurpose] = UNSET,
-        mimetypes: OptionalNullable[List[str]] = UNSET,
+        mimetypes: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -290,11 +294,13 @@ class Files(BaseSDK):
             page=page,
             page_size=page_size,
             include_total=include_total,
-            sample_type=sample_type,
-            source=source,
+            sample_type=utils.unmarshal(
+                sample_type, OptionalNullable[List[models.SampleType]]
+            ),
+            source=utils.unmarshal(source, OptionalNullable[List[models.Source]]),
             search=search,
             purpose=purpose,
-            mimetypes=mimetypes,
+            mimetypes=utils.unmarshal(mimetypes, OptionalNullable[List[str]]),
         )
 
         req = self._build_request(
@@ -331,6 +337,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -354,11 +362,11 @@ class Files(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 100,
         include_total: Optional[bool] = True,
-        sample_type: OptionalNullable[List[models.SampleType]] = UNSET,
-        source: OptionalNullable[List[models.Source]] = UNSET,
+        sample_type: OptionalNullable[Iterable[models.SampleType]] = UNSET,
+        source: OptionalNullable[Iterable[models.Source]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         purpose: OptionalNullable[models.FilePurpose] = UNSET,
-        mimetypes: OptionalNullable[List[str]] = UNSET,
+        mimetypes: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -398,11 +406,13 @@ class Files(BaseSDK):
             page=page,
             page_size=page_size,
             include_total=include_total,
-            sample_type=sample_type,
-            source=source,
+            sample_type=utils.unmarshal(
+                sample_type, OptionalNullable[List[models.SampleType]]
+            ),
+            source=utils.unmarshal(source, OptionalNullable[List[models.Source]]),
             search=search,
             purpose=purpose,
-            mimetypes=mimetypes,
+            mimetypes=utils.unmarshal(mimetypes, OptionalNullable[List[str]]),
         )
 
         req = self._build_request_async(
@@ -439,6 +449,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -526,6 +538,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -613,6 +627,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -700,6 +716,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -787,6 +805,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -874,6 +894,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -963,6 +985,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1053,6 +1077,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1141,6 +1167,8 @@ class Files(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["files"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
