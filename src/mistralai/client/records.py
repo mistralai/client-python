@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Records(BaseSDK):
@@ -79,6 +79,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -172,6 +174,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -265,6 +269,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -358,6 +364,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -386,7 +394,7 @@ class Records(BaseSDK):
     def bulk_delete(
         self,
         *,
-        dataset_record_ids: List[str],
+        dataset_record_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -414,7 +422,7 @@ class Records(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteDatasetRecordsRequest(
-            dataset_record_ids=dataset_record_ids,
+            dataset_record_ids=utils.unmarshal(dataset_record_ids, List[str]),
         )
 
         req = self._build_request(
@@ -454,6 +462,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -482,7 +492,7 @@ class Records(BaseSDK):
     async def bulk_delete_async(
         self,
         *,
-        dataset_record_ids: List[str],
+        dataset_record_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -510,7 +520,7 @@ class Records(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteDatasetRecordsRequest(
-            dataset_record_ids=dataset_record_ids,
+            dataset_record_ids=utils.unmarshal(dataset_record_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -550,6 +560,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -659,6 +671,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -768,6 +782,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -797,7 +813,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Dict[str, Any],
+        payload: Mapping[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -828,7 +844,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=payload,
+                payload=utils.unmarshal(payload, Dict[str, Any]),
             ),
         )
 
@@ -873,6 +889,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -902,7 +920,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        payload: Dict[str, Any],
+        payload: Mapping[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -933,7 +951,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPayloadV1ObservabilityDatasetRecordsDatasetRecordIDPayloadPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_payload_request=models.UpdateDatasetRecordPayloadRequest(
-                payload=payload,
+                payload=utils.unmarshal(payload, Dict[str, Any]),
             ),
         )
 
@@ -978,6 +996,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1007,7 +1027,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        properties: Dict[str, Any],
+        properties: Mapping[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1038,7 +1058,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_properties_request=models.UpdateDatasetRecordPropertiesRequest(
-                properties=properties,
+                properties=utils.unmarshal(properties, Dict[str, Any]),
             ),
         )
 
@@ -1083,6 +1103,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1112,7 +1134,7 @@ class Records(BaseSDK):
         self,
         *,
         dataset_record_id: str,
-        properties: Dict[str, Any],
+        properties: Mapping[str, Any],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1143,7 +1165,7 @@ class Records(BaseSDK):
         request = models.UpdateDatasetRecordPropertiesV1ObservabilityDatasetRecordsDatasetRecordIDPropertiesPutRequest(
             dataset_record_id=dataset_record_id,
             update_dataset_record_properties_request=models.UpdateDatasetRecordPropertiesRequest(
-                properties=properties,
+                properties=utils.unmarshal(properties, Dict[str, Any]),
             ),
         )
 
@@ -1188,6 +1210,8 @@ class Records(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.datasets.records"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

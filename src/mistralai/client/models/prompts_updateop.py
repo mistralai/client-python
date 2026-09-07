@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .registrysharingscope import RegistrySharingScope
+from .sharerelation import ShareRelation
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -23,6 +24,8 @@ class UpdatePromptRequestTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
     r"""Display description."""
     sharing_scope: NotRequired[RegistrySharingScope]
+    workspace_relation: NotRequired[ShareRelation]
+    r"""Relation a subject holds on a shared registry object."""
 
 
 class UpdatePromptRequest(BaseModel):
@@ -36,9 +39,16 @@ class UpdatePromptRequest(BaseModel):
         Optional[RegistrySharingScope], pydantic.Field(alias="sharingScope")
     ] = None
 
+    workspace_relation: Annotated[
+        Optional[ShareRelation], pydantic.Field(alias="workspaceRelation")
+    ] = None
+    r"""Relation a subject holds on a shared registry object."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["title", "description", "sharingScope"])
+        optional_fields = set(
+            ["title", "description", "sharingScope", "workspaceRelation"]
+        )
         nullable_fields = set(["title", "description"])
         serialized = handler(self)
         m = {}

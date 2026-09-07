@@ -103,6 +103,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -214,6 +216,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -323,6 +327,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -432,6 +438,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -528,6 +536,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -624,6 +634,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -654,7 +666,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Mapping[str, models.Attributes],
+                Mapping[str, models.AttributesTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -694,7 +709,9 @@ class Documents(BaseSDK):
             document_id=document_id,
             update_document_request=models.UpdateDocumentRequest(
                 name=name,
-                attributes=attributes,
+                attributes=utils.unmarshal(
+                    attributes, OptionalNullable[Dict[str, models.Attributes]]
+                ),
                 expires_at=expires_at,
             ),
         )
@@ -740,6 +757,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -770,7 +789,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Mapping[str, models.Attributes],
+                Mapping[str, models.AttributesTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -810,7 +832,9 @@ class Documents(BaseSDK):
             document_id=document_id,
             update_document_request=models.UpdateDocumentRequest(
                 name=name,
-                attributes=attributes,
+                attributes=utils.unmarshal(
+                    attributes, OptionalNullable[Dict[str, models.Attributes]]
+                ),
                 expires_at=expires_at,
             ),
         )
@@ -856,6 +880,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -889,7 +915,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Mapping[str, models.Attributes],
+                Mapping[str, models.AttributesTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -929,7 +958,9 @@ class Documents(BaseSDK):
             document_id=document_id,
             update_document_request=models.UpdateDocumentRequest(
                 name=name,
-                attributes=attributes,
+                attributes=utils.unmarshal(
+                    attributes, OptionalNullable[Dict[str, models.Attributes]]
+                ),
                 expires_at=expires_at,
             ),
         )
@@ -975,6 +1006,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1008,7 +1041,10 @@ class Documents(BaseSDK):
         document_id: str,
         name: Optional[str] = None,
         attributes: OptionalNullable[
-            Union[Dict[str, models.Attributes], Dict[str, models.AttributesTypedDict]]
+            Union[
+                Mapping[str, models.Attributes],
+                Mapping[str, models.AttributesTypedDict],
+            ]
         ] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1048,7 +1084,9 @@ class Documents(BaseSDK):
             document_id=document_id,
             update_document_request=models.UpdateDocumentRequest(
                 name=name,
-                attributes=attributes,
+                attributes=utils.unmarshal(
+                    attributes, OptionalNullable[Dict[str, models.Attributes]]
+                ),
                 expires_at=expires_at,
             ),
         )
@@ -1094,6 +1132,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1190,6 +1230,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1286,6 +1328,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1388,6 +1432,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1490,6 +1536,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1586,6 +1634,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1682,6 +1732,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1778,6 +1830,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1874,6 +1928,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1970,6 +2026,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2066,6 +2124,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2162,6 +2222,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2258,6 +2320,8 @@ class Documents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.libraries.documents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

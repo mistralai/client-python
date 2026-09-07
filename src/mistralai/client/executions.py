@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Iterable, List, Mapping, Optional, Union
 
 
 class Executions(BaseSDK):
@@ -16,6 +16,7 @@ class Executions(BaseSDK):
         self,
         *,
         execution_id: str,
+        include_search_keys: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -24,6 +25,7 @@ class Executions(BaseSDK):
         r"""Get Workflow Execution
 
         :param execution_id:
+        :param include_search_keys: Include the execution's search keys (metadata) in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -44,6 +46,7 @@ class Executions(BaseSDK):
 
         request = models.GetWorkflowExecutionV1WorkflowsExecutionsExecutionIDGetRequest(
             execution_id=execution_id,
+            include_search_keys=include_search_keys,
         )
 
         req = self._build_request(
@@ -80,6 +83,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -107,6 +112,7 @@ class Executions(BaseSDK):
         self,
         *,
         execution_id: str,
+        include_search_keys: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -115,6 +121,7 @@ class Executions(BaseSDK):
         r"""Get Workflow Execution
 
         :param execution_id:
+        :param include_search_keys: Include the execution's search keys (metadata) in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -135,6 +142,7 @@ class Executions(BaseSDK):
 
         request = models.GetWorkflowExecutionV1WorkflowsExecutionsExecutionIDGetRequest(
             execution_id=execution_id,
+            include_search_keys=include_search_keys,
         )
 
         req = self._build_request_async(
@@ -171,6 +179,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -265,6 +275,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -359,6 +371,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -472,6 +486,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -585,6 +601,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -698,6 +716,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -811,6 +831,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -902,6 +924,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -993,6 +1017,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1019,7 +1045,7 @@ class Executions(BaseSDK):
     def batch_terminate_workflow_executions(
         self,
         *,
-        execution_ids: List[str],
+        execution_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1047,7 +1073,7 @@ class Executions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchExecutionBody(
-            execution_ids=execution_ids,
+            execution_ids=utils.unmarshal(execution_ids, List[str]),
         )
 
         req = self._build_request(
@@ -1087,6 +1113,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1113,7 +1141,7 @@ class Executions(BaseSDK):
     async def batch_terminate_workflow_executions_async(
         self,
         *,
-        execution_ids: List[str],
+        execution_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1141,7 +1169,7 @@ class Executions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchExecutionBody(
-            execution_ids=execution_ids,
+            execution_ids=utils.unmarshal(execution_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -1181,6 +1209,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1272,6 +1302,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1363,6 +1395,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1389,7 +1423,7 @@ class Executions(BaseSDK):
     def batch_cancel_workflow_executions(
         self,
         *,
-        execution_ids: List[str],
+        execution_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1417,7 +1451,7 @@ class Executions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchExecutionBody(
-            execution_ids=execution_ids,
+            execution_ids=utils.unmarshal(execution_ids, List[str]),
         )
 
         req = self._build_request(
@@ -1457,6 +1491,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1483,7 +1519,7 @@ class Executions(BaseSDK):
     async def batch_cancel_workflow_executions_async(
         self,
         *,
-        execution_ids: List[str],
+        execution_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1511,7 +1547,7 @@ class Executions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.BatchExecutionBody(
-            execution_ids=execution_ids,
+            execution_ids=utils.unmarshal(execution_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -1551,6 +1587,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1663,6 +1701,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1775,6 +1815,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1888,6 +1930,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2001,6 +2045,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2092,6 +2138,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2183,6 +2231,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2274,6 +2324,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2367,6 +2419,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2460,6 +2514,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2553,6 +2609,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2652,6 +2710,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2751,6 +2811,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2852,6 +2914,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2863,9 +2927,10 @@ class Executions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw,
+                lambda raw: unmarshal_json_response(
                     models.StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody,
+                    http_res,
+                    raw,
                 ),
                 client_ref=self,
                 data_required=False,
@@ -2962,6 +3027,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2973,9 +3040,10 @@ class Executions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw,
+                lambda raw: unmarshal_json_response(
                     models.StreamV1WorkflowsExecutionsExecutionIDStreamGetResponseBody,
+                    http_res,
+                    raw,
                 ),
                 client_ref=self,
                 data_required=False,
@@ -3090,6 +3158,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3207,6 +3277,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3315,6 +3387,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3326,8 +3400,8 @@ class Executions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.StreamWorkflowExecutionLogsResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.StreamWorkflowExecutionLogsResponseBody, http_res, raw
                 ),
                 client_ref=self,
                 data_required=False,
@@ -3435,6 +3509,8 @@ class Executions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.executions"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3446,8 +3522,8 @@ class Executions(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.StreamWorkflowExecutionLogsResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.StreamWorkflowExecutionLogsResponseBody, http_res, raw
                 ),
                 client_ref=self,
                 data_required=False,

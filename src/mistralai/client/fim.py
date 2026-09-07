@@ -29,7 +29,7 @@ class Fim(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
@@ -78,9 +78,11 @@ class Fim(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.FIMCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -124,6 +126,8 @@ class Fim(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["fim"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -163,7 +167,7 @@ class Fim(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
@@ -212,9 +216,11 @@ class Fim(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.FIMCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -258,6 +264,8 @@ class Fim(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["fim"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -297,7 +305,7 @@ class Fim(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
@@ -346,9 +354,11 @@ class Fim(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.FIMCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -392,6 +402,8 @@ class Fim(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["fim"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -403,7 +415,9 @@ class Fim(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )
@@ -439,7 +453,7 @@ class Fim(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         suffix: OptionalNullable[str] = UNSET,
         min_tokens: OptionalNullable[int] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
@@ -488,9 +502,11 @@ class Fim(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.FIMCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             prompt=prompt,
             suffix=suffix,
             min_tokens=min_tokens,
@@ -534,6 +550,8 @@ class Fim(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["fim"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -545,7 +563,9 @@ class Fim(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )

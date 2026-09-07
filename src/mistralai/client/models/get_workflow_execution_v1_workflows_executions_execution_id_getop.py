@@ -2,18 +2,44 @@
 # @generated-id: 25bc5d3fec8d
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel
-from mistralai.client.utils import FieldMetadata, PathParamMetadata
-from typing_extensions import Annotated, TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
+from pydantic import model_serializer
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GetWorkflowExecutionV1WorkflowsExecutionsExecutionIDGetRequestTypedDict(
     TypedDict
 ):
     execution_id: str
+    include_search_keys: NotRequired[bool]
+    r"""Include the execution's search keys (metadata) in the response."""
 
 
 class GetWorkflowExecutionV1WorkflowsExecutionsExecutionIDGetRequest(BaseModel):
     execution_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+
+    include_search_keys: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Include the execution's search keys (metadata) in the response."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["include_search_keys"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

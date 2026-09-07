@@ -32,7 +32,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.9.4
+  version: 2.10.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -47,13 +47,19 @@ python:
   authors:
     - Mistral
   baseErrorName: MistralError
+  bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
   constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
+  durationFormat: false
   enableCustomCodeRegions: true
   enumFormat: union
   envVarPrefix: MISTRAL
+  errorSchemaValidation: true
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
   fixFlags:
     asyncPaginationSep2025: true
     conflictResistantModelImportsFeb2026: true
@@ -64,6 +70,7 @@ python:
   flatteningOrder: parameters-first
   forwardCompatibleEnumsByDefault: true
   forwardCompatibleUnionsByDefault: tagged-only
+  httpClientLibrary: httpx
   imports:
     option: openapi
     paths:
@@ -74,18 +81,25 @@ python:
       webhooks: ""
   inferUnionDiscriminators: true
   inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
   license: ""
   maxMethodParams: 999
   methodArguments: infer-optional-args
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
   moduleName: mistralai.client
   multipartArrayFormat: standard
+  optionalDependencies: {}
   outputModelSuffix: output
   packageManager: uv
   packageName: mistralai
   preApplyUnionDiscriminators: true
   pytestFilterWarnings: []
   pytestTimeout: 0
+  rawResponseHelpers: false
   responseFormat: flat
+  responseSchemaValidation: true
   sseFlatResponse: false
   templateVersion: v2
   useAsyncHooks: false
+  uuidFormat: false

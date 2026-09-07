@@ -12,7 +12,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Any
+from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -43,6 +43,8 @@ class WorkflowExecutionResponseTypedDict(TypedDict):
     r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
+    search_keys: NotRequired[Nullable[Dict[str, str]]]
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
 
 
 class WorkflowExecutionResponse(BaseModel):
@@ -85,6 +87,9 @@ class WorkflowExecutionResponse(BaseModel):
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
+    search_keys: OptionalNullable[Dict[str, str]] = UNSET
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -95,6 +100,7 @@ class WorkflowExecutionResponse(BaseModel):
                 "run_id",
                 "user_id",
                 "total_duration_ms",
+                "search_keys",
             ]
         )
         nullable_fields = set(
@@ -108,6 +114,7 @@ class WorkflowExecutionResponse(BaseModel):
                 "end_time",
                 "total_duration_ms",
                 "result",
+                "search_keys",
             ]
         )
         serialized = handler(self)

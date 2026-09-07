@@ -1,0 +1,10 @@
+# ConnectorUpdateCredentialsRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `connector_id_or_name`                                                                                 | *str*                                                                                                  | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `consumer_scope`                                                                                       | [models.ConnectorUpdateCredentialsConsumerScope](../models/connectorupdatecredentialsconsumerscope.md) | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `credentials_create_or_update`                                                                         | [models.CredentialsCreateOrUpdate](../models/credentialscreateorupdate.md)                             | :heavy_check_mark:                                                                                     | N/A                                                                                                    |

@@ -2,7 +2,10 @@
 # @generated-id: 9927546f2487
 
 from __future__ import annotations
-from .connectioncredentials import ConnectionCredentials, ConnectionCredentialsTypedDict
+from .connectioncredentialsinput import (
+    ConnectionCredentialsInput,
+    ConnectionCredentialsInputTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -15,7 +18,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class CredentialsCreateOrUpdateTypedDict(TypedDict):
-    r"""Request to create or update non-OAuth2 credentials for a connector."""
+    r"""Request to create or update credentials for a connector."""
 
     name: str
     r"""Name of the credentials. Use this name to access or modify your credentials."""
@@ -23,12 +26,12 @@ class CredentialsCreateOrUpdateTypedDict(TypedDict):
     r"""Human-readable title for the credentials."""
     is_default: NotRequired[Nullable[bool]]
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
-    credentials: NotRequired[Nullable[ConnectionCredentialsTypedDict]]
-    r"""The credential data (headers, bearer_token)."""
+    credentials: NotRequired[Nullable[ConnectionCredentialsInputTypedDict]]
+    r"""The credential data (headers, bearer_token, or OAuth2 client credentials)."""
 
 
 class CredentialsCreateOrUpdate(BaseModel):
-    r"""Request to create or update non-OAuth2 credentials for a connector."""
+    r"""Request to create or update credentials for a connector."""
 
     name: str
     r"""Name of the credentials. Use this name to access or modify your credentials."""
@@ -39,8 +42,8 @@ class CredentialsCreateOrUpdate(BaseModel):
     is_default: OptionalNullable[bool] = UNSET
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
 
-    credentials: OptionalNullable[ConnectionCredentials] = UNSET
-    r"""The credential data (headers, bearer_token)."""
+    credentials: OptionalNullable[ConnectionCredentialsInput] = UNSET
+    r"""The credential data (headers, bearer_token, or OAuth2 client credentials)."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from .registrysharingscope import RegistrySharingScope
+from .sharerelation import ShareRelation
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
@@ -13,6 +14,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class UpdateSkillRequestTypedDict(TypedDict):
     sharing_scope: NotRequired[RegistrySharingScope]
+    workspace_relation: NotRequired[ShareRelation]
+    r"""Relation a subject holds on a shared registry object."""
 
 
 class UpdateSkillRequest(BaseModel):
@@ -20,9 +23,14 @@ class UpdateSkillRequest(BaseModel):
         Optional[RegistrySharingScope], pydantic.Field(alias="sharingScope")
     ] = None
 
+    workspace_relation: Annotated[
+        Optional[ShareRelation], pydantic.Field(alias="workspaceRelation")
+    ] = None
+    r"""Relation a subject holds on a shared registry object."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["sharingScope"])
+        optional_fields = set(["sharingScope", "workspaceRelation"])
         serialized = handler(self)
         m = {}
 

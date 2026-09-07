@@ -8,7 +8,7 @@
 
 ## create
 
-Create Client Session
+Create a client session. Requires the `create_client_session` permission.
 
 ### Example Usage
 

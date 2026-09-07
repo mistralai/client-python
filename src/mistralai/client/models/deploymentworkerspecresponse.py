@@ -2,7 +2,16 @@
 # @generated-id: e56d154527fd
 
 from __future__ import annotations
+from .deploymentk8sbackendspec import (
+    DeploymentK8sBackendSpec,
+    DeploymentK8sBackendSpecTypedDict,
+)
+from .deploymentkoyebbackendspec import (
+    DeploymentKoyebBackendSpec,
+    DeploymentKoyebBackendSpecTypedDict,
+)
 from .gitcommitmetadata import GitCommitMetadata, GitCommitMetadataTypedDict
+from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,66 +19,115 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from mistralai.client.utils.unions import parse_open_union
 import pydantic
-from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+DeploymentWorkerSpecResponseBackendSpecTypedDict = TypeAliasType(
+    "DeploymentWorkerSpecResponseBackendSpecTypedDict",
+    Union[DeploymentK8sBackendSpecTypedDict, DeploymentKoyebBackendSpecTypedDict],
+)
+r"""Backend-specific configuration. The arm's 'type' says where the worker runs: 'koyeb' or 'kubernetes'."""
+
+
+class UnknownDeploymentWorkerSpecResponseBackendSpec(BaseModel):
+    r"""A DeploymentWorkerSpecResponseBackendSpec variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_DEPLOYMENT_WORKER_SPEC_RESPONSE_BACKEND_SPEC_VARIANTS: dict[str, Any] = {
+    "koyeb": DeploymentKoyebBackendSpec,
+    "kubernetes": DeploymentK8sBackendSpec,
+}
+
+
+DeploymentWorkerSpecResponseBackendSpec = Annotated[
+    Union[
+        DeploymentKoyebBackendSpec,
+        DeploymentK8sBackendSpec,
+        UnknownDeploymentWorkerSpecResponseBackendSpec,
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_DEPLOYMENT_WORKER_SPEC_RESPONSE_BACKEND_SPEC_VARIANTS,
+            unknown_cls=UnknownDeploymentWorkerSpecResponseBackendSpec,
+            union_name="DeploymentWorkerSpecResponseBackendSpec",
+        )
+    ),
+]
+r"""Backend-specific configuration. The arm's 'type' says where the worker runs: 'koyeb' or 'kubernetes'."""
 
 
 class DeploymentWorkerSpecResponseTypedDict(TypedDict):
     github_url: str
+    backend_spec: DeploymentWorkerSpecResponseBackendSpecTypedDict
+    r"""Backend-specific configuration. The arm's 'type' says where the worker runs: 'koyeb' or 'kubernetes'."""
+    commit_sha: Nullable[str]
+    entrypoint: Nullable[str]
+    working_dir: Nullable[str]
     type: NotRequired[str]
     revision: NotRequired[Nullable[str]]
-    entrypoint: NotRequired[Nullable[str]]
-    working_dir: NotRequired[Nullable[str]]
     restarted_at: NotRequired[Nullable[str]]
-    commit_sha: NotRequired[Nullable[str]]
     commit: NotRequired[Nullable[GitCommitMetadataTypedDict]]
 
 
 class DeploymentWorkerSpecResponse(BaseModel):
     github_url: str
 
+    backend_spec: DeploymentWorkerSpecResponseBackendSpec
+    r"""Backend-specific configuration. The arm's 'type' says where the worker runs: 'koyeb' or 'kubernetes'."""
+
+    commit_sha: Annotated[
+        Nullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+
+    entrypoint: Annotated[
+        Nullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+
+    working_dir: Annotated[
+        Nullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+
     type: Optional[str] = "workflows_worker"
 
     revision: OptionalNullable[str] = UNSET
 
-    entrypoint: OptionalNullable[str] = UNSET
-
-    working_dir: OptionalNullable[str] = UNSET
-
     restarted_at: OptionalNullable[str] = UNSET
-
-    commit_sha: Annotated[
-        OptionalNullable[str],
-        pydantic.Field(
-            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-        ),
-    ] = UNSET
 
     commit: OptionalNullable[GitCommitMetadata] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "type",
-                "revision",
-                "entrypoint",
-                "working_dir",
-                "restarted_at",
-                "commit_sha",
-                "commit",
-            ]
-        )
+        optional_fields = set(["type", "revision", "restarted_at", "commit"])
         nullable_fields = set(
             [
                 "revision",
+                "restarted_at",
+                "commit",
+                "commit_sha",
                 "entrypoint",
                 "working_dir",
-                "restarted_at",
-                "commit_sha",
-                "commit",
             ]
         )
         serialized = handler(self)

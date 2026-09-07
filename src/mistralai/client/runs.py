@@ -9,7 +9,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Runs(BaseSDK):
@@ -33,11 +33,11 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
-        workflow_tags: OptionalNullable[List[str]] = UNSET,
+        workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
         include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
-        search_key: OptionalNullable[List[str]] = UNSET,
+        search_key: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -84,7 +84,9 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             root_execution_id=root_execution_id,
             search=search,
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[models.ListRunsV1WorkflowsRunsGetStatus]
+            ),
             deployment_name=deployment_name,
             sort_by=sort_by,
             order=order,
@@ -93,11 +95,11 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
-            workflow_tags=workflow_tags,
+            workflow_tags=utils.unmarshal(workflow_tags, OptionalNullable[List[str]]),
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
-            search_key=search_key,
+            search_key=utils.unmarshal(search_key, OptionalNullable[List[str]]),
         )
 
         req = self._build_request(
@@ -134,6 +136,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -224,11 +228,11 @@ class Runs(BaseSDK):
         end_time_after: OptionalNullable[datetime] = UNSET,
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
-        workflow_tags: OptionalNullable[List[str]] = UNSET,
+        workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
         include_internal: Optional[bool] = True,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
-        search_key: OptionalNullable[List[str]] = UNSET,
+        search_key: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -275,7 +279,9 @@ class Runs(BaseSDK):
             workflow_identifier=workflow_identifier,
             root_execution_id=root_execution_id,
             search=search,
-            status=status,
+            status=utils.unmarshal(
+                status, OptionalNullable[models.ListRunsV1WorkflowsRunsGetStatus]
+            ),
             deployment_name=deployment_name,
             sort_by=sort_by,
             order=order,
@@ -284,11 +290,11 @@ class Runs(BaseSDK):
             end_time_after=end_time_after,
             end_time_before=end_time_before,
             user_id=user_id,
-            workflow_tags=workflow_tags,
+            workflow_tags=utils.unmarshal(workflow_tags, OptionalNullable[List[str]]),
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
-            search_key=search_key,
+            search_key=utils.unmarshal(search_key, OptionalNullable[List[str]]),
         )
 
         req = self._build_request_async(
@@ -325,6 +331,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -468,6 +476,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -559,6 +569,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -653,6 +665,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -747,6 +761,8 @@ class Runs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.runs"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

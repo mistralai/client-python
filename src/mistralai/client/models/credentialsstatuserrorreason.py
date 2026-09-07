@@ -11,6 +11,7 @@ CredentialsStatusErrorReason = Union[
         "oauth expired",
         "oauth near expiry",
         "empty credentials",
+        "blank bearer token",
         "unparsable credentials",
         "you need to reconnect",
         "oauth refresh error",

@@ -20,7 +20,7 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
         encoding_format: Optional[models.EncodingFormat] = None,
@@ -59,8 +59,8 @@ class Embeddings(BaseSDK):
 
         request = models.EmbeddingRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.EmbeddingRequestInputs),
             output_dimension=output_dimension,
             output_dtype=output_dtype,
             encoding_format=encoding_format,
@@ -103,6 +103,8 @@ class Embeddings(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["embeddings"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -133,7 +135,7 @@ class Embeddings(BaseSDK):
         inputs: Union[
             models.EmbeddingRequestInputs, models.EmbeddingRequestInputsTypedDict
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         output_dimension: OptionalNullable[int] = UNSET,
         output_dtype: Optional[models.EmbeddingDtype] = None,
         encoding_format: Optional[models.EncodingFormat] = None,
@@ -172,8 +174,8 @@ class Embeddings(BaseSDK):
 
         request = models.EmbeddingRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.EmbeddingRequestInputs),
             output_dimension=output_dimension,
             output_dtype=output_dtype,
             encoding_format=encoding_format,
@@ -216,6 +218,8 @@ class Embeddings(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["embeddings"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
