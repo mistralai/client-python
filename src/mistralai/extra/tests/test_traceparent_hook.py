@@ -26,6 +26,8 @@ def _make_hook_ctx(operation_id: str = _EXECUTE_OP_ID) -> BeforeRequestContext:
         operation_id=operation_id,
         oauth2_scopes=None,
         security_source=None,
+        tags=None,
+        extensions=None,
     )
     return BeforeRequestContext(ctx)
 

@@ -52,8 +52,7 @@ ignore=CVS
 # ignore-list. The regex matches against paths and can be in Posix or Windows
 # format. Because '\\' represents the directory delimiter on Windows systems,
 # it can't be used as an escape character.
-ignore-paths=^src/mistralai/extra/.*$,
-             ^src/mistralai/conversations.py
+ignore-paths=
 
 # Files or directories matching the regular expression patterns are skipped.
 # The regex matches against base names, not paths. The default value ignores
@@ -103,7 +102,7 @@ source-roots=src
 
 # When enabled, pylint would attempt to guess common misconfiguration and emit
 # user-friendly hints instead of false-positive error messages.
-# Note: suggestion-mode was removed in pylint 3.0
+suggestion-mode=yes
 
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
@@ -189,8 +188,13 @@ good-names=i,
            Run,
            _,
            e,
+           id,
            n,
-           id
+           op,
+           q,
+           sd,
+           to,
+           ui
 
 # Good variable names regexes, separated by a comma. If names match any regex,
 # they will always be accepted
@@ -459,7 +463,9 @@ disable=raw-checker-failed,
         relative-beyond-top-level,
         consider-using-with,
         wildcard-import,
-        unused-wildcard-import
+        unused-wildcard-import,
+        too-many-return-statements,
+        redefined-builtin
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

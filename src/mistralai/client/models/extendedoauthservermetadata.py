@@ -23,8 +23,8 @@ class ExtendedOAuthServerMetadataTypedDict(TypedDict):
     """
 
     issuer: str
-    authorization_endpoint: str
     token_endpoint: str
+    authorization_endpoint: NotRequired[Nullable[str]]
     registration_endpoint: NotRequired[Nullable[str]]
     scopes_supported: NotRequired[Nullable[List[str]]]
     response_types_supported: NotRequired[List[str]]
@@ -62,9 +62,9 @@ class ExtendedOAuthServerMetadata(BaseModel):
 
     issuer: str
 
-    authorization_endpoint: str
-
     token_endpoint: str
+
+    authorization_endpoint: OptionalNullable[str] = UNSET
 
     registration_endpoint: OptionalNullable[str] = UNSET
 
@@ -120,6 +120,7 @@ class ExtendedOAuthServerMetadata(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "authorization_endpoint",
                 "registration_endpoint",
                 "scopes_supported",
                 "response_types_supported",
@@ -146,6 +147,7 @@ class ExtendedOAuthServerMetadata(BaseModel):
         )
         nullable_fields = set(
             [
+                "authorization_endpoint",
                 "registration_endpoint",
                 "scopes_supported",
                 "response_modes_supported",

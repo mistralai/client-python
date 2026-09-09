@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union
+from typing import Any, Iterable, List, Mapping, Optional, Union
 
 
 class Spans(BaseSDK):
@@ -97,6 +97,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -207,6 +209,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -238,13 +242,15 @@ class Spans(BaseSDK):
         metric: Union[models.MetricDefinition, models.MetricDefinitionTypedDict],
         from_: OptionalNullable[datetime] = UNSET,
         to: OptionalNullable[datetime] = UNSET,
-        dimensions: Optional[List[str]] = None,
+        dimensions: Optional[Iterable[str]] = None,
         time_dimension: OptionalNullable[
             Union[models.TimeDimension, models.TimeDimensionTypedDict]
         ] = UNSET,
         search_expression: OptionalNullable[str] = UNSET,
         order_by: OptionalNullable[
-            Union[List[models.OrderByClause], List[models.OrderByClauseTypedDict]]
+            Union[
+                Iterable[models.OrderByClause], Iterable[models.OrderByClauseTypedDict]
+            ]
         ] = UNSET,
         limit: Optional[int] = 1000,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -285,7 +291,7 @@ class Spans(BaseSDK):
             to=to,
             aggregation_request=models.AggregationRequest(
                 metric=utils.get_pydantic_model(metric, models.MetricDefinition),
-                dimensions=dimensions,
+                dimensions=utils.unmarshal(dimensions, Optional[List[str]]),
                 time_dimension=utils.get_pydantic_model(
                     time_dimension, OptionalNullable[models.TimeDimension]
                 ),
@@ -338,6 +344,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -369,13 +377,15 @@ class Spans(BaseSDK):
         metric: Union[models.MetricDefinition, models.MetricDefinitionTypedDict],
         from_: OptionalNullable[datetime] = UNSET,
         to: OptionalNullable[datetime] = UNSET,
-        dimensions: Optional[List[str]] = None,
+        dimensions: Optional[Iterable[str]] = None,
         time_dimension: OptionalNullable[
             Union[models.TimeDimension, models.TimeDimensionTypedDict]
         ] = UNSET,
         search_expression: OptionalNullable[str] = UNSET,
         order_by: OptionalNullable[
-            Union[List[models.OrderByClause], List[models.OrderByClauseTypedDict]]
+            Union[
+                Iterable[models.OrderByClause], Iterable[models.OrderByClauseTypedDict]
+            ]
         ] = UNSET,
         limit: Optional[int] = 1000,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -416,7 +426,7 @@ class Spans(BaseSDK):
             to=to,
             aggregation_request=models.AggregationRequest(
                 metric=utils.get_pydantic_model(metric, models.MetricDefinition),
-                dimensions=dimensions,
+                dimensions=utils.unmarshal(dimensions, Optional[List[str]]),
                 time_dimension=utils.get_pydantic_model(
                     time_dimension, OptionalNullable[models.TimeDimension]
                 ),
@@ -469,6 +479,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -583,6 +595,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -697,6 +711,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -811,6 +827,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -925,6 +943,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1011,6 +1031,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1097,6 +1119,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1183,6 +1207,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1269,6 +1295,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1368,6 +1396,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1467,6 +1497,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1566,6 +1598,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1667,6 +1701,8 @@ class Spans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.spans"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

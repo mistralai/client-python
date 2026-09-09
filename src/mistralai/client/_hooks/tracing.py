@@ -118,7 +118,7 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
             request.extensions[_SPAN_FINISHED_EXT_KEY] = True
             request.extensions[_SPAN_EXT_KEY] = None
         except RuntimeError:
-            return
+            pass
 
     @staticmethod
     def _attach_request_span_context(request: httpx.Request):

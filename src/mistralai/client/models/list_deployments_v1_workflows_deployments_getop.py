@@ -2,6 +2,7 @@
 # @generated-id: 0c6586ffcab0
 
 from __future__ import annotations
+from .locationtype import LocationType
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,7 +12,7 @@ from mistralai.client.types import (
 )
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -34,6 +35,10 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     is_hardened: NotRequired[Nullable[bool]]
     r"""Filter deployments by hardened status"""
     workflow_name: NotRequired[Nullable[str]]
+    created_by: NotRequired[Nullable[str]]
+    r"""Filter deployments by creator's user id"""
+    location_types: NotRequired[Nullable[List[LocationType]]]
+    r"""Filter deployments with at least one worker on any of these location types (OR)"""
     search: NotRequired[Nullable[str]]
     r"""Filter deployments by name or ID prefix"""
     order_by: NotRequired[Nullable[ListDeploymentsV1WorkflowsDeploymentsGetOrderBy]]
@@ -64,6 +69,18 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
+
+    created_by: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter deployments by creator's user id"""
+
+    location_types: Annotated[
+        OptionalNullable[List[LocationType]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter deployments with at least one worker on any of these location types (OR)"""
 
     search: Annotated[
         OptionalNullable[str],
@@ -108,6 +125,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "active_only",
                 "is_hardened",
                 "workflow_name",
+                "created_by",
+                "location_types",
                 "search",
                 "order_by",
                 "order",
@@ -120,6 +139,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
             [
                 "is_hardened",
                 "workflow_name",
+                "created_by",
+                "location_types",
                 "search",
                 "order_by",
                 "limit",

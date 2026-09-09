@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class IngestionPipelineConfigurations(BaseSDK):
@@ -75,6 +75,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -157,6 +159,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -180,11 +184,11 @@ class IngestionPipelineConfigurations(BaseSDK):
         self,
         *,
         name: str,
-        pipeline_composition: OptionalNullable[Dict[str, str]] = UNSET,
+        pipeline_composition: OptionalNullable[Mapping[str, str]] = UNSET,
         target_indexes: OptionalNullable[
             Union[
-                List[models.IngestionPipelineTargetIndexRef],
-                List[models.IngestionPipelineTargetIndexRefTypedDict],
+                Iterable[models.IngestionPipelineTargetIndexRef],
+                Iterable[models.IngestionPipelineTargetIndexRefTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -219,7 +223,9 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         request = models.CreateIngestionPipelineConfigurationRequest(
             name=name,
-            pipeline_composition=pipeline_composition,
+            pipeline_composition=utils.unmarshal(
+                pipeline_composition, OptionalNullable[Dict[str, str]]
+            ),
             target_indexes=utils.get_pydantic_model(
                 target_indexes,
                 OptionalNullable[List[models.IngestionPipelineTargetIndexRef]],
@@ -267,6 +273,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -296,11 +304,11 @@ class IngestionPipelineConfigurations(BaseSDK):
         self,
         *,
         name: str,
-        pipeline_composition: OptionalNullable[Dict[str, str]] = UNSET,
+        pipeline_composition: OptionalNullable[Mapping[str, str]] = UNSET,
         target_indexes: OptionalNullable[
             Union[
-                List[models.IngestionPipelineTargetIndexRef],
-                List[models.IngestionPipelineTargetIndexRefTypedDict],
+                Iterable[models.IngestionPipelineTargetIndexRef],
+                Iterable[models.IngestionPipelineTargetIndexRefTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -335,7 +343,9 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         request = models.CreateIngestionPipelineConfigurationRequest(
             name=name,
-            pipeline_composition=pipeline_composition,
+            pipeline_composition=utils.unmarshal(
+                pipeline_composition, OptionalNullable[Dict[str, str]]
+            ),
             target_indexes=utils.get_pydantic_model(
                 target_indexes,
                 OptionalNullable[List[models.IngestionPipelineTargetIndexRef]],
@@ -383,6 +393,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -489,6 +501,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -595,6 +609,8 @@ class IngestionPipelineConfigurations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.rag.ingestion_pipeline_configurations"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

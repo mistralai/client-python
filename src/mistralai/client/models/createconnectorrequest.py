@@ -3,11 +3,14 @@
 
 from __future__ import annotations
 from .authdata import AuthData, AuthDataTypedDict
+from .bearerauthmethod import BearerAuthMethod, BearerAuthMethodTypedDict
 from .extendedoauthservermetadata import (
     ExtendedOAuthServerMetadata,
     ExtendedOAuthServerMetadataTypedDict,
 )
 from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
+from .noneauthmethod import NoneAuthMethod, NoneAuthMethodTypedDict
+from .oauth2authmethod import OAuth2AuthMethod, OAuth2AuthMethodTypedDict
 from .publicresourcevisibility import PublicResourceVisibility
 from mistralai.client.types import (
     BaseModel,
@@ -16,42 +19,41 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from mistralai.client.utils import validate_const
+from mistralai.client.utils import get_discriminator, validate_const
 import pydantic
-from pydantic import model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, List, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+CreateConnectorRequestAuthMethodTypedDict = TypeAliasType(
+    "CreateConnectorRequestAuthMethodTypedDict",
+    Union[
+        BearerAuthMethodTypedDict, NoneAuthMethodTypedDict, OAuth2AuthMethodTypedDict
+    ],
+)
+
+
+CreateConnectorRequestAuthMethod = Annotated[
+    Union[
+        Annotated[BearerAuthMethod, Tag("bearer")],
+        Annotated[NoneAuthMethod, Tag("none")],
+        Annotated[OAuth2AuthMethod, Tag("oauth2")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "method_type", "method_type")),
+]
 
 
 class CreateConnectorRequestTypedDict(TypedDict):
-    r"""Public create schema for MCP connectors.
-
-    Standalone model that excludes internal-only fields (``hosted_internally``,
-    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
-    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
-    (no ``shared_global``).
-    """
-
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
     description: str
     r"""The description of the connector."""
     server: str
-    r"""The url of the MCP server."""
-    protocol: Literal["mcp"]
-    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
-    title: NotRequired[Nullable[str]]
-    r"""Optional human-readable title for the connector."""
-    icon_url: NotRequired[Nullable[str]]
-    r"""The optional url of the icon you want to associate to the connector."""
-    visibility: NotRequired[PublicResourceVisibility]
-    r"""Visibility options available to public API callers.
-
-    Excludes ``shared_global`` which is reserved for system-owned connectors.
-    """
+    r"""The URL of the connector server."""
     headers: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Optional organization-level headers to be sent with the request to the mcp server."""
+    r"""Optional scoped credentials to be sent with connector requests."""
     global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
     r"""Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear."""
     auth_data: NotRequired[Nullable[AuthDataTypedDict]]
@@ -60,19 +62,21 @@ class CreateConnectorRequestTypedDict(TypedDict):
     r"""Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly."""
     oauth2_server_metadata_url: NotRequired[Nullable[str]]
     r"""Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata."""
+    title: NotRequired[Nullable[str]]
+    r"""Optional human-readable title for the connector."""
+    icon_url: NotRequired[Nullable[str]]
+    r"""The optional url of the icon you want to associate to the connector."""
+    visibility: NotRequired[PublicResourceVisibility]
+    r"""Connector visibility options."""
+    auth_methods: NotRequired[Nullable[List[CreateConnectorRequestAuthMethodTypedDict]]]
+    r"""Authentication methods supported by the connector."""
     system_prompt: NotRequired[Nullable[str]]
     r"""Optional system prompt for the connector."""
+    protocol: Literal["mcp"]
+    r"""Protocol of the connector. Use 'mcp' for MCP connectors."""
 
 
 class CreateConnectorRequest(BaseModel):
-    r"""Public create schema for MCP connectors.
-
-    Standalone model that excludes internal-only fields (``hosted_internally``,
-    ``mistral_integration``, ``private_tool_execution``, ``auth_scheme``, ``locale``,
-    ``github_app_data``) and restricts visibility to :class:`PublicResourceVisibility`
-    (no ``shared_global``).
-    """
-
     name: str
     r"""The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes."""
 
@@ -80,28 +84,10 @@ class CreateConnectorRequest(BaseModel):
     r"""The description of the connector."""
 
     server: str
-    r"""The url of the MCP server."""
-
-    protocol: Annotated[
-        Annotated[Optional[Literal["mcp"]], AfterValidator(validate_const("mcp"))],
-        pydantic.Field(alias="protocol"),
-    ] = "mcp"
-    r"""Protocol of the connector. Only 'mcp' is supported on the public endpoint; creating HTTP connectors here is explicitly refused."""
-
-    title: OptionalNullable[str] = UNSET
-    r"""Optional human-readable title for the connector."""
-
-    icon_url: OptionalNullable[str] = UNSET
-    r"""The optional url of the icon you want to associate to the connector."""
-
-    visibility: Optional[PublicResourceVisibility] = None
-    r"""Visibility options available to public API callers.
-
-    Excludes ``shared_global`` which is reserved for system-owned connectors.
-    """
+    r"""The URL of the connector server."""
 
     headers: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Optional organization-level headers to be sent with the request to the mcp server."""
+    r"""Optional scoped credentials to be sent with connector requests."""
 
     global_headers: Optional[Dict[str, GlobalHeaderValue]] = None
     r"""Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear."""
@@ -115,33 +101,52 @@ class CreateConnectorRequest(BaseModel):
     oauth2_server_metadata_url: OptionalNullable[str] = UNSET
     r"""Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata."""
 
+    title: OptionalNullable[str] = UNSET
+    r"""Optional human-readable title for the connector."""
+
+    icon_url: OptionalNullable[str] = UNSET
+    r"""The optional url of the icon you want to associate to the connector."""
+
+    visibility: Optional[PublicResourceVisibility] = None
+    r"""Connector visibility options."""
+
+    auth_methods: OptionalNullable[List[CreateConnectorRequestAuthMethod]] = UNSET
+    r"""Authentication methods supported by the connector."""
+
     system_prompt: OptionalNullable[str] = UNSET
     r"""Optional system prompt for the connector."""
+
+    protocol: Annotated[
+        Annotated[Literal["mcp"], AfterValidator(validate_const("mcp"))],
+        pydantic.Field(alias="protocol"),
+    ] = "mcp"
+    r"""Protocol of the connector. Use 'mcp' for MCP connectors."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "protocol",
-                "title",
-                "icon_url",
-                "visibility",
                 "headers",
                 "global_headers",
                 "auth_data",
                 "oauth2_server_metadata",
                 "oauth2_server_metadata_url",
+                "title",
+                "icon_url",
+                "visibility",
+                "auth_methods",
                 "system_prompt",
             ]
         )
         nullable_fields = set(
             [
-                "title",
-                "icon_url",
                 "headers",
                 "auth_data",
                 "oauth2_server_metadata",
                 "oauth2_server_metadata_url",
+                "title",
+                "icon_url",
+                "auth_methods",
                 "system_prompt",
             ]
         )

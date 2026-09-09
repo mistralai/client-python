@@ -19,8 +19,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class TranscriptionSegmentChunkTypedDict(TypedDict):
     text: str
-    start: float
-    end: float
+    start: Nullable[float]
+    end: Nullable[float]
     type: Literal["transcription_segment"]
     score: NotRequired[Nullable[float]]
     speaker_id: NotRequired[Nullable[str]]
@@ -34,9 +34,9 @@ class TranscriptionSegmentChunk(BaseModel):
 
     text: str
 
-    start: float
+    start: Nullable[float]
 
-    end: float
+    end: Nullable[float]
 
     type: Annotated[
         Annotated[
@@ -61,7 +61,7 @@ class TranscriptionSegmentChunk(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["type", "score", "speaker_id"])
-        nullable_fields = set(["score", "speaker_id"])
+        nullable_fields = set(["start", "end", "score", "speaker_id"])
         serialized = handler(self)
         m = {}
 

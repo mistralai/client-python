@@ -10,7 +10,4 @@ PublicResourceVisibility = Literal[
     "shared_workspace",
     "private",
 ]
-r"""Visibility options available to public API callers.
-
-Excludes ``shared_global`` which is reserved for system-owned connectors.
-"""
+r"""Connector visibility options."""

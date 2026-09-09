@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Agents(BaseSDK):
@@ -17,8 +17,8 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionRequestMessage],
-            List[models.AgentsCompletionRequestMessageTypedDict],
+            Iterable[models.AgentsCompletionRequestMessage],
+            Iterable[models.AgentsCompletionRequestMessageTypedDict],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -30,14 +30,14 @@ class Agents(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.AgentsCompletionRequestTool],
-                List[models.AgentsCompletionRequestToolTypedDict],
+                Iterable[models.AgentsCompletionRequestTool],
+                Iterable[models.AgentsCompletionRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -56,7 +56,10 @@ class Agents(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -108,9 +111,11 @@ class Agents(BaseSDK):
         request = models.AgentsCompletionRequest(
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.AgentsCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionRequestMessage]
             ),
@@ -177,6 +182,8 @@ class Agents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -204,8 +211,8 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionRequestMessage],
-            List[models.AgentsCompletionRequestMessageTypedDict],
+            Iterable[models.AgentsCompletionRequestMessage],
+            Iterable[models.AgentsCompletionRequestMessageTypedDict],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -217,14 +224,14 @@ class Agents(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.AgentsCompletionRequestTool],
-                List[models.AgentsCompletionRequestToolTypedDict],
+                Iterable[models.AgentsCompletionRequestTool],
+                Iterable[models.AgentsCompletionRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -243,7 +250,10 @@ class Agents(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -295,9 +305,11 @@ class Agents(BaseSDK):
         request = models.AgentsCompletionRequest(
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.AgentsCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionRequestMessage]
             ),
@@ -364,6 +376,8 @@ class Agents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -391,8 +405,8 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionStreamRequestMessage],
-            List[models.AgentsCompletionStreamRequestMessageTypedDict],
+            Iterable[models.AgentsCompletionStreamRequestMessage],
+            Iterable[models.AgentsCompletionStreamRequestMessageTypedDict],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -404,14 +418,14 @@ class Agents(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.AgentsCompletionStreamRequestTool],
-                List[models.AgentsCompletionStreamRequestToolTypedDict],
+                Iterable[models.AgentsCompletionStreamRequestTool],
+                Iterable[models.AgentsCompletionStreamRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -430,7 +444,10 @@ class Agents(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -484,9 +501,11 @@ class Agents(BaseSDK):
         request = models.AgentsCompletionStreamRequest(
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.AgentsCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionStreamRequestMessage]
             ),
@@ -553,6 +572,8 @@ class Agents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -564,7 +585,9 @@ class Agents(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )
@@ -588,8 +611,8 @@ class Agents(BaseSDK):
         self,
         *,
         messages: Union[
-            List[models.AgentsCompletionStreamRequestMessage],
-            List[models.AgentsCompletionStreamRequestMessageTypedDict],
+            Iterable[models.AgentsCompletionStreamRequestMessage],
+            Iterable[models.AgentsCompletionStreamRequestMessageTypedDict],
         ],
         agent_id: str,
         max_tokens: OptionalNullable[int] = UNSET,
@@ -601,14 +624,14 @@ class Agents(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.AgentsCompletionStreamRequestTool],
-                List[models.AgentsCompletionStreamRequestToolTypedDict],
+                Iterable[models.AgentsCompletionStreamRequestTool],
+                Iterable[models.AgentsCompletionStreamRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -627,7 +650,10 @@ class Agents(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -681,9 +707,11 @@ class Agents(BaseSDK):
         request = models.AgentsCompletionStreamRequest(
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.AgentsCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.AgentsCompletionStreamRequestMessage]
             ),
@@ -750,6 +778,8 @@ class Agents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -761,7 +791,9 @@ class Agents(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )

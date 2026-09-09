@@ -517,18 +517,19 @@ print(res.choices[0].message.content)
 * [get_auth_url](docs/sdks/connectors/README.md#get_auth_url) - Get the auth URL for a connector.
 * [share](docs/sdks/connectors/README.md#share) - Share a private connector to the current workspace.
 * [unshare](docs/sdks/connectors/README.md#unshare) - Unshare a connector from the current workspace.
+* [share_to_organization](docs/sdks/connectors/README.md#share_to_organization) - Share a connector to the current organization.
+* [unshare_from_organization](docs/sdks/connectors/README.md#unshare_from_organization) - Unshare a connector from the current organization.
 * [activate_for_consumer](docs/sdks/connectors/README.md#activate_for_consumer) - Activate a connector for the given consumer (organization, workspace, user).
 * [deactivate_for_consumer](docs/sdks/connectors/README.md#deactivate_for_consumer) - Deactivate a connector for the current consumer (at organization, workspace or user level).
 * [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
 * [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get_authentication_methods](docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
 * [list_organization_credentials](docs/sdks/connectors/README.md#list_organization_credentials) - List organization credentials for a connector.
-* [create_or_update_organization_credentials](docs/sdks/connectors/README.md#create_or_update_organization_credentials) - Create or update organization credentials for a connector.
 * [list_workspace_credentials](docs/sdks/connectors/README.md#list_workspace_credentials) - List workspace credentials for a connector.
-* [create_or_update_workspace_credentials](docs/sdks/connectors/README.md#create_or_update_workspace_credentials) - Create or update workspace credentials for a connector.
 * [list_user_credentials](docs/sdks/connectors/README.md#list_user_credentials) - List user credentials for a connector.
-* [create_or_update_user_credentials](docs/sdks/connectors/README.md#create_or_update_user_credentials) - Create or update user credentials for a connector.
 * [delete_all_user_credentials](docs/sdks/connectors/README.md#delete_all_user_credentials) - Delete all user credentials for a connector.
+* [create_credentials](docs/sdks/connectors/README.md#create_credentials) - Create consumer credentials for a connector.
+* [update_credentials](docs/sdks/connectors/README.md#update_credentials) - Create or update consumer credentials for a connector.
 * [delete_organization_credentials](docs/sdks/connectors/README.md#delete_organization_credentials) - Delete organization credentials for a connector.
 * [delete_workspace_credentials](docs/sdks/connectors/README.md#delete_workspace_credentials) - Delete workspace credentials for a connector.
 * [delete_user_credentials](docs/sdks/connectors/README.md#delete_user_credentials) - Delete user credentials for a connector.
@@ -579,29 +580,6 @@ print(res.choices[0].message.content)
 * [extracted_text_signed_url](docs/sdks/documents/README.md#extracted_text_signed_url) - Retrieve the signed URL of text extracted from a given document.
 * [reprocess](docs/sdks/documents/README.md#reprocess) - Reprocess a document.
 
-### [Beta.Observability.Campaigns](docs/sdks/campaigns/README.md)
-
-* [create](docs/sdks/campaigns/README.md#create) - Create and start a new campaign
-* [list](docs/sdks/campaigns/README.md#list) - Get all campaigns
-* [fetch](docs/sdks/campaigns/README.md#fetch) - Get campaign by id
-* [delete](docs/sdks/campaigns/README.md#delete) - Delete a campaign
-* [fetch_status](docs/sdks/campaigns/README.md#fetch_status) - Get campaign status by campaign id
-* [list_events](docs/sdks/campaigns/README.md#list_events) - Get event ids that were selected by the given campaign
-
-### [Beta.Observability.ChatCompletionEvents](docs/sdks/chatcompletionevents/README.md)
-
-* [search](docs/sdks/chatcompletionevents/README.md#search) - Get Chat Completion Events
-* [search_ids](docs/sdks/chatcompletionevents/README.md#search_ids) - Alternative to /search that returns only the IDs and that can return many IDs at once
-* [fetch](docs/sdks/chatcompletionevents/README.md#fetch) - Get Chat Completion Event
-* [fetch_similar_events](docs/sdks/chatcompletionevents/README.md#fetch_similar_events) - Get Similar Chat Completion Events
-* [judge](docs/sdks/chatcompletionevents/README.md#judge) - Run Judge on an event based on the given options
-
-#### [Beta.Observability.ChatCompletionEvents.Fields](docs/sdks/fields/README.md)
-
-* [list](docs/sdks/fields/README.md#list) - Get Chat Completion Fields
-* [fetch_options](docs/sdks/fields/README.md#fetch_options) - Get Chat Completion Field Options
-* [fetch_option_counts](docs/sdks/fields/README.md#fetch_option_counts) - Get Chat Completion Field Options Counts
-
 ### [Beta.Observability.Datasets](docs/sdks/datasets/README.md)
 
 * [create](docs/sdks/datasets/README.md#create) - Create a new empty dataset
@@ -611,8 +589,6 @@ print(res.choices[0].message.content)
 * [update](docs/sdks/datasets/README.md#update) - Patch dataset
 * [list_records](docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
 * [create_record](docs/sdks/datasets/README.md#create_record) - Add a record to the dataset
-* [import_from_campaign](docs/sdks/datasets/README.md#import_from_campaign) - Populate the dataset with records from a campaign
-* [import_from_explorer](docs/sdks/datasets/README.md#import_from_explorer) - Populate the dataset with records from the explorer
 * [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with records from an uploaded file
 * [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with records from playground conversations
 * [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with records from another dataset
@@ -628,6 +604,14 @@ print(res.choices[0].message.content)
 * [judge](docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
 * [update_payload](docs/sdks/records/README.md#update_payload) - Update a dataset record payload
 * [update_properties](docs/sdks/records/README.md#update_properties) - Update dataset record properties
+
+### [Beta.Observability.Evaluations](docs/sdks/evaluations/README.md)
+
+* [create_pipeline_config](docs/sdks/evaluations/README.md#create_pipeline_config) - Create a worker pipeline configuration
+* [list_pipeline_configs](docs/sdks/evaluations/README.md#list_pipeline_configs) - List worker pipeline configurations
+* [get_pipeline_config](docs/sdks/evaluations/README.md#get_pipeline_config) - Get a worker pipeline configuration
+* [update_pipeline_config](docs/sdks/evaluations/README.md#update_pipeline_config) - Replace a worker pipeline configuration
+* [delete_pipeline_config](docs/sdks/evaluations/README.md#delete_pipeline_config) - Delete a worker pipeline configuration
 
 ### [Beta.Observability.Judges](docs/sdks/judges/README.md)
 
@@ -689,6 +673,17 @@ print(res.choices[0].message.content)
 * [register_deployment](docs/sdks/searchindexes/README.md#register_deployment) - Register (or re-register) a search index
 * [unregister_deployment](docs/sdks/searchindexes/README.md#unregister_deployment) - Unregister Deployment
 * [update_index_metrics](docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
+
+### [Beta.ServiceAccounts](docs/sdks/serviceaccounts/README.md)
+
+* [create](docs/sdks/serviceaccounts/README.md#create) - Create Service Account
+* [list](docs/sdks/serviceaccounts/README.md#list) - List Service Accounts
+* [list_assignable_roles](docs/sdks/serviceaccounts/README.md#list_assignable_roles) - List Assignable Service Account Roles
+* [get](docs/sdks/serviceaccounts/README.md#get) - Get Service Account
+* [update](docs/sdks/serviceaccounts/README.md#update) - Update Service Account
+* [delete](docs/sdks/serviceaccounts/README.md#delete) - Delete Service Account
+* [set_roles](docs/sdks/serviceaccounts/README.md#set_roles) - Set Service Account Roles
+* [list_roles](docs/sdks/serviceaccounts/README.md#list_roles) - List Service Account Roles
 
 ### [Beta.Skills](docs/sdks/skills/README.md)
 
@@ -1014,11 +1009,7 @@ with Mistral(
     res = None
     try:
 
-        res = mistral.beta.conversations.start(inputs="<value>", completion_args={
-            "response_format": {
-                "type": "text",
-            },
-        })
+        res = mistral.beta.service_accounts.create(name="<value>", workspace_id="cf2146d0-158c-4b19-b8b1-ca0c68f41143")
 
         # Handle response
         print(res)
@@ -1052,8 +1043,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 146 of 247 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 59 of 247 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 155 of 245 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 245 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1197,6 +1188,20 @@ class CustomClient(AsyncHttpClient):
 
 s = Mistral(async_client=CustomClient(httpx.AsyncClient()))
 ```
+### httpx2 (Pydantic's httpx fork)
+
+[httpx2](https://httpx2.pydantic.dev/) is Pydantic's maintained fork of `httpx`. To run this SDK on httpx2, call `alias_httpx()` at your program's entry point, before importing the SDK, so every `import httpx` — including the ones inside the SDK — resolves to `httpx2`:
+```python
+import httpx2
+
+httpx2.alias_httpx()
+
+from mistralai.client import Mistral
+
+s = Mistral()
+```
+
+An SDK can also be generated against httpx2 directly, so it depends on the fork instead of `httpx`, by setting `python.httpClientLibrary: httpx2` in `gen.yaml`.
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Authentication [security] -->

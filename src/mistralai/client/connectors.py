@@ -4,10 +4,10 @@
 from .basesdk import BaseSDK
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.types import OptionalNullable, UNSET
+from mistralai.client.types import BaseModel, OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
 
 class Connectors(BaseSDK):
@@ -16,30 +16,9 @@ class Connectors(BaseSDK):
     def create(
         self,
         *,
-        name: str,
-        description: str,
-        server: str,
-        title: OptionalNullable[str] = UNSET,
-        icon_url: OptionalNullable[str] = UNSET,
-        visibility: Optional[models.PublicResourceVisibility] = None,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
-        global_headers: Optional[
-            Union[
-                Dict[str, models.GlobalHeaderValue],
-                Dict[str, models.GlobalHeaderValueTypedDict],
-            ]
-        ] = None,
-        auth_data: OptionalNullable[
-            Union[models.AuthData, models.AuthDataTypedDict]
-        ] = UNSET,
-        oauth2_server_metadata: OptionalNullable[
-            Union[
-                models.ExtendedOAuthServerMetadata,
-                models.ExtendedOAuthServerMetadataTypedDict,
-            ]
-        ] = UNSET,
-        oauth2_server_metadata_url: OptionalNullable[str] = UNSET,
-        system_prompt: OptionalNullable[str] = UNSET,
+        request: Union[
+            models.ConnectorCreateV1Payload, models.ConnectorCreateV1PayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -47,22 +26,9 @@ class Connectors(BaseSDK):
     ) -> models.Connector:
         r"""Create a new connector.
 
-        Create a new MCP connector. You can customize its visibility, url and auth type.
+        Create a new MCP or HTTP connector. You can customize its visibility, URL, and auth type.
 
-        :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
-        :param description: The description of the connector.
-        :param server: The url of the MCP server.
-        :param title: Optional human-readable title for the connector.
-        :param icon_url: The optional url of the icon you want to associate to the connector.
-        :param visibility: Visibility options available to public API callers.
-
-            Excludes ``shared_global`` which is reserved for system-owned connectors.
-        :param headers: Optional organization-level headers to be sent with the request to the mcp server.
-        :param global_headers: Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear.
-        :param auth_data: Optional additional authentication data for the connector.
-        :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
-        :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
-        :param system_prompt: Optional system prompt for the connector.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -81,27 +47,9 @@ class Connectors(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateConnectorRequest(
-            name=name,
-            title=title,
-            description=description,
-            icon_url=icon_url,
-            visibility=visibility,
-            server=server,
-            headers=headers,
-            global_headers=utils.get_pydantic_model(
-                global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
-            ),
-            auth_data=utils.get_pydantic_model(
-                auth_data, OptionalNullable[models.AuthData]
-            ),
-            oauth2_server_metadata=utils.get_pydantic_model(
-                oauth2_server_metadata,
-                OptionalNullable[models.ExtendedOAuthServerMetadata],
-            ),
-            oauth2_server_metadata_url=oauth2_server_metadata_url,
-            system_prompt=system_prompt,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ConnectorCreateV1Payload)
+        request = cast(models.ConnectorCreateV1Payload, request)
 
         req = self._build_request(
             method="POST",
@@ -117,7 +65,7 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateConnectorRequest
+                request, False, False, "json", models.ConnectorCreateV1Payload
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -140,6 +88,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -166,30 +116,9 @@ class Connectors(BaseSDK):
     async def create_async(
         self,
         *,
-        name: str,
-        description: str,
-        server: str,
-        title: OptionalNullable[str] = UNSET,
-        icon_url: OptionalNullable[str] = UNSET,
-        visibility: Optional[models.PublicResourceVisibility] = None,
-        headers: OptionalNullable[Dict[str, Any]] = UNSET,
-        global_headers: Optional[
-            Union[
-                Dict[str, models.GlobalHeaderValue],
-                Dict[str, models.GlobalHeaderValueTypedDict],
-            ]
-        ] = None,
-        auth_data: OptionalNullable[
-            Union[models.AuthData, models.AuthDataTypedDict]
-        ] = UNSET,
-        oauth2_server_metadata: OptionalNullable[
-            Union[
-                models.ExtendedOAuthServerMetadata,
-                models.ExtendedOAuthServerMetadataTypedDict,
-            ]
-        ] = UNSET,
-        oauth2_server_metadata_url: OptionalNullable[str] = UNSET,
-        system_prompt: OptionalNullable[str] = UNSET,
+        request: Union[
+            models.ConnectorCreateV1Payload, models.ConnectorCreateV1PayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -197,22 +126,9 @@ class Connectors(BaseSDK):
     ) -> models.Connector:
         r"""Create a new connector.
 
-        Create a new MCP connector. You can customize its visibility, url and auth type.
+        Create a new MCP or HTTP connector. You can customize its visibility, URL, and auth type.
 
-        :param name: The name of the connector. Should be 64 char length maximum, alphanumeric, only underscores/dashes.
-        :param description: The description of the connector.
-        :param server: The url of the MCP server.
-        :param title: Optional human-readable title for the connector.
-        :param icon_url: The optional url of the icon you want to associate to the connector.
-        :param visibility: Visibility options available to public API callers.
-
-            Excludes ``shared_global`` which is reserved for system-owned connectors.
-        :param headers: Optional organization-level headers to be sent with the request to the mcp server.
-        :param global_headers: Optional connector-wide headers, keyed by header name, set at creation and applied to every credential. Secret values are encrypted at rest and never returned in clear.
-        :param auth_data: Optional additional authentication data for the connector.
-        :param oauth2_server_metadata: Optional OAuth2 authorization server metadata (authorization_endpoint, token_endpoint, etc.). When provided, skips .well-known discovery and uses these endpoints directly.
-        :param oauth2_server_metadata_url: Optional URL to fetch OAuth2 authorization server metadata from (RFC 8414). When provided, the metadata is fetched from this URL and used instead of .well-known discovery. Mutually exclusive with oauth2_server_metadata.
-        :param system_prompt: Optional system prompt for the connector.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -231,27 +147,9 @@ class Connectors(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateConnectorRequest(
-            name=name,
-            title=title,
-            description=description,
-            icon_url=icon_url,
-            visibility=visibility,
-            server=server,
-            headers=headers,
-            global_headers=utils.get_pydantic_model(
-                global_headers, Optional[Dict[str, models.GlobalHeaderValue]]
-            ),
-            auth_data=utils.get_pydantic_model(
-                auth_data, OptionalNullable[models.AuthData]
-            ),
-            oauth2_server_metadata=utils.get_pydantic_model(
-                oauth2_server_metadata,
-                OptionalNullable[models.ExtendedOAuthServerMetadata],
-            ),
-            oauth2_server_metadata_url=oauth2_server_metadata_url,
-            system_prompt=system_prompt,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ConnectorCreateV1Payload)
+        request = cast(models.ConnectorCreateV1Payload, request)
 
         req = self._build_request_async(
             method="POST",
@@ -267,7 +165,7 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateConnectorRequest
+                request, False, False, "json", models.ConnectorCreateV1Payload
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -290,6 +188,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -393,6 +293,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -496,6 +398,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -604,6 +508,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -712,6 +618,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -805,6 +713,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -898,6 +808,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -991,6 +903,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1084,6 +998,388 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def share_to_organization(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Share a connector to the current organization.
+
+        Transfers ownership of a private user-owned connector to the current organization, making it available to all organization members. The creator can later revert this via the unshare endpoint. Any authentication flows that rely on the original owner's identity (e.g. OAuth on-behalf-of) will be affected and must be reconfigured after sharing. Requires the ShareConnectorToOrg organization permission.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorShareToOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="PUT",
+            path="/v1/connectors/{connector_id}/organization/share",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_share_to_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def share_to_organization_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Share a connector to the current organization.
+
+        Transfers ownership of a private user-owned connector to the current organization, making it available to all organization members. The creator can later revert this via the unshare endpoint. Any authentication flows that rely on the original owner's identity (e.g. OAuth on-behalf-of) will be affected and must be reconfigured after sharing. Requires the ShareConnectorToOrg organization permission.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorShareToOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="PUT",
+            path="/v1/connectors/{connector_id}/organization/share",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_share_to_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def unshare_from_organization(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Unshare a connector from the current organization.
+
+        Reverts an organization-shared connector back to a private, creator-owned connector. Organization-scoped connections and other members' connections are removed; the creator's own connection is preserved. Requires the ShareConnectorToOrg organization permission.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorUnshareFromOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/v1/connectors/{connector_id}/organization/share",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_unshare_from_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def unshare_from_organization_async(
+        self,
+        *,
+        connector_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Unshare a connector from the current organization.
+
+        Reverts an organization-shared connector back to a private, creator-owned connector. Organization-scoped connections and other members' connections are removed; the creator's own connection is preserved. Requires the ShareConnectorToOrg organization permission.
+
+        :param connector_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorUnshareFromOrganizationV1Request(
+            connector_id=connector_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/v1/connectors/{connector_id}/organization/share",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_unshare_from_organization_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1180,6 +1476,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1276,6 +1574,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1372,6 +1672,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1468,6 +1770,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1497,7 +1801,7 @@ class Connectors(BaseSDK):
         tool_name: str,
         connector_id_or_name: str,
         credentials_name: OptionalNullable[str] = UNSET,
-        arguments: Optional[Dict[str, Any]] = None,
+        arguments: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1534,7 +1838,7 @@ class Connectors(BaseSDK):
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
-                arguments=arguments,
+                arguments=utils.unmarshal(arguments, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1579,6 +1883,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1608,7 +1914,7 @@ class Connectors(BaseSDK):
         tool_name: str,
         connector_id_or_name: str,
         credentials_name: OptionalNullable[str] = UNSET,
-        arguments: Optional[Dict[str, Any]] = None,
+        arguments: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1645,7 +1951,7 @@ class Connectors(BaseSDK):
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
             connector_call_tool_request=models.ConnectorCallToolRequest(
-                arguments=arguments,
+                arguments=utils.unmarshal(arguments, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -1690,6 +1996,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1798,6 +2106,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1908,6 +2218,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2003,6 +2315,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2098,6 +2412,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2199,6 +2515,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2298,6 +2616,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2307,242 +2627,6 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.CredentialsResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def create_or_update_organization_credentials(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update organization credentials for a connector.
-
-        Create or update credentials at the organization level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateOrganizationCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/organization/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_organization_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def create_or_update_organization_credentials_async(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update organization credentials for a connector.
-
-        Create or update credentials at the organization level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateOrganizationCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/organization/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_organization_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -2633,6 +2717,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2732,6 +2818,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2741,242 +2829,6 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.CredentialsResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def create_or_update_workspace_credentials(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update workspace credentials for a connector.
-
-        Create or update credentials at the workspace level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateWorkspaceCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/workspace/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_workspace_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def create_or_update_workspace_credentials_async(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update workspace credentials for a connector.
-
-        Create or update credentials at the workspace level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateWorkspaceCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/workspace/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_workspace_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3067,6 +2919,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3166,6 +3020,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3175,242 +3031,6 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.CredentialsResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def create_or_update_user_credentials(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update user credentials for a connector.
-
-        Create or update credentials at the user level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateUserCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/user/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_user_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
-        if utils.match_response(http_res, "422", "application/json"):
-            response_data = unmarshal_json_response(
-                errors.HTTPValidationErrorData, http_res
-            )
-            raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def create_or_update_user_credentials_async(
-        self,
-        *,
-        connector_id_or_name: str,
-        name: str,
-        title: OptionalNullable[str] = UNSET,
-        is_default: OptionalNullable[bool] = UNSET,
-        credentials: OptionalNullable[
-            Union[models.ConnectionCredentials, models.ConnectionCredentialsTypedDict]
-        ] = UNSET,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.MessageResponse:
-        r"""Create or update user credentials for a connector.
-
-        Create or update credentials at the user level for a given connector.
-
-        :param connector_id_or_name:
-        :param name: Name of the credentials. Use this name to access or modify your credentials.
-        :param title: Human-readable title for the credentials.
-        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token).
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.ConnectorCreateOrUpdateUserCredentialsV1Request(
-            connector_id_or_name=connector_id_or_name,
-            credentials_create_or_update=models.CredentialsCreateOrUpdate(
-                name=name,
-                title=title,
-                is_default=is_default,
-                credentials=utils.get_pydantic_model(
-                    credentials, OptionalNullable[models.ConnectionCredentials]
-                ),
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/connectors/{connector_id_or_name}/user/credentials",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.credentials_create_or_update,
-                False,
-                False,
-                "json",
-                models.CredentialsCreateOrUpdate,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="connector_create_or_update_user_credentials_v1",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.MessageResponse, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3495,6 +3115,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3588,6 +3210,512 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def create_credentials(
+        self,
+        *,
+        connector_id_or_name: str,
+        consumer_scope: models.ConnectorCreateCredentialsV1ConsumerScope,
+        name: str,
+        title: OptionalNullable[str] = UNSET,
+        is_default: OptionalNullable[bool] = UNSET,
+        credentials: OptionalNullable[
+            Union[
+                models.ConnectionCredentialsInput,
+                models.ConnectionCredentialsInputTypedDict,
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Create consumer credentials for a connector.
+
+        Create consumer credentials for a given connector and consumer scope (organization, workspace, user)
+
+        :param connector_id_or_name:
+        :param consumer_scope:
+        :param name: Name of the credentials. Use this name to access or modify your credentials.
+        :param title: Human-readable title for the credentials.
+        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
+        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorCreateCredentialsV1Request(
+            connector_id_or_name=connector_id_or_name,
+            consumer_scope=consumer_scope,
+            credentials_create_or_update=models.CredentialsCreateOrUpdate(
+                name=name,
+                title=title,
+                is_default=is_default,
+                credentials=utils.get_pydantic_model(
+                    credentials, OptionalNullable[models.ConnectionCredentialsInput]
+                ),
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/connectors/{connector_id_or_name}/{consumer_scope}/credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.credentials_create_or_update,
+                False,
+                False,
+                "json",
+                models.CredentialsCreateOrUpdate,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_create_credentials_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def create_credentials_async(
+        self,
+        *,
+        connector_id_or_name: str,
+        consumer_scope: models.ConnectorCreateCredentialsV1ConsumerScope,
+        name: str,
+        title: OptionalNullable[str] = UNSET,
+        is_default: OptionalNullable[bool] = UNSET,
+        credentials: OptionalNullable[
+            Union[
+                models.ConnectionCredentialsInput,
+                models.ConnectionCredentialsInputTypedDict,
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Create consumer credentials for a connector.
+
+        Create consumer credentials for a given connector and consumer scope (organization, workspace, user)
+
+        :param connector_id_or_name:
+        :param consumer_scope:
+        :param name: Name of the credentials. Use this name to access or modify your credentials.
+        :param title: Human-readable title for the credentials.
+        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
+        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorCreateCredentialsV1Request(
+            connector_id_or_name=connector_id_or_name,
+            consumer_scope=consumer_scope,
+            credentials_create_or_update=models.CredentialsCreateOrUpdate(
+                name=name,
+                title=title,
+                is_default=is_default,
+                credentials=utils.get_pydantic_model(
+                    credentials, OptionalNullable[models.ConnectionCredentialsInput]
+                ),
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/connectors/{connector_id_or_name}/{consumer_scope}/credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.credentials_create_or_update,
+                False,
+                False,
+                "json",
+                models.CredentialsCreateOrUpdate,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_create_credentials_v1",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def update_credentials(
+        self,
+        *,
+        connector_id_or_name: str,
+        consumer_scope: models.ConnectorUpdateCredentialsConsumerScope,
+        name: str,
+        title: OptionalNullable[str] = UNSET,
+        is_default: OptionalNullable[bool] = UNSET,
+        credentials: OptionalNullable[
+            Union[
+                models.ConnectionCredentialsInput,
+                models.ConnectionCredentialsInputTypedDict,
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Create or update consumer credentials for a connector.
+
+        Create or update consumer credentials for a given connector.
+
+        :param connector_id_or_name:
+        :param consumer_scope:
+        :param name: Name of the credentials. Use this name to access or modify your credentials.
+        :param title: Human-readable title for the credentials.
+        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
+        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorUpdateCredentialsRequest(
+            connector_id_or_name=connector_id_or_name,
+            consumer_scope=consumer_scope,
+            credentials_create_or_update=models.CredentialsCreateOrUpdate(
+                name=name,
+                title=title,
+                is_default=is_default,
+                credentials=utils.get_pydantic_model(
+                    credentials, OptionalNullable[models.ConnectionCredentialsInput]
+                ),
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/v1/connectors/{connector_id_or_name}/{consumer_scope}/credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.credentials_create_or_update,
+                False,
+                False,
+                "json",
+                models.CredentialsCreateOrUpdate,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_update_credentials",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def update_credentials_async(
+        self,
+        *,
+        connector_id_or_name: str,
+        consumer_scope: models.ConnectorUpdateCredentialsConsumerScope,
+        name: str,
+        title: OptionalNullable[str] = UNSET,
+        is_default: OptionalNullable[bool] = UNSET,
+        credentials: OptionalNullable[
+            Union[
+                models.ConnectionCredentialsInput,
+                models.ConnectionCredentialsInputTypedDict,
+            ]
+        ] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MessageResponse:
+        r"""Create or update consumer credentials for a connector.
+
+        Create or update consumer credentials for a given connector.
+
+        :param connector_id_or_name:
+        :param consumer_scope:
+        :param name: Name of the credentials. Use this name to access or modify your credentials.
+        :param title: Human-readable title for the credentials.
+        :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
+        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ConnectorUpdateCredentialsRequest(
+            connector_id_or_name=connector_id_or_name,
+            consumer_scope=consumer_scope,
+            credentials_create_or_update=models.CredentialsCreateOrUpdate(
+                name=name,
+                title=title,
+                is_default=is_default,
+                credentials=utils.get_pydantic_model(
+                    credentials, OptionalNullable[models.ConnectionCredentialsInput]
+                ),
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/v1/connectors/{connector_id_or_name}/{consumer_scope}/credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.credentials_create_or_update,
+                False,
+                False,
+                "json",
+                models.CredentialsCreateOrUpdate,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="connector_update_credentials",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3684,6 +3812,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3780,6 +3910,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3876,6 +4008,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3972,6 +4106,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4068,6 +4204,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4164,6 +4302,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4263,6 +4403,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4362,6 +4504,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4389,18 +4533,9 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id: str,
-        title: OptionalNullable[str] = UNSET,
-        name: OptionalNullable[str] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        icon_url: OptionalNullable[str] = UNSET,
-        system_prompt: OptionalNullable[str] = UNSET,
-        server: OptionalNullable[str] = UNSET,
-        auth_methods: OptionalNullable[
-            Union[
-                List[models.AuthenticationMethodCreateOrUpdateRequest],
-                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
-            ]
-        ] = UNSET,
+        request_body: Union[
+            models.ConnectorUpdateV1Payload, models.ConnectorUpdateV1PayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -4411,13 +4546,7 @@ class Connectors(BaseSDK):
         Update a connector by its ID.
 
         :param connector_id:
-        :param title: Optional human-readable title for the connector.
-        :param name: The name of the connector.
-        :param description: The description of the connector.
-        :param icon_url: The optional url of the icon you want to associate to the connector.
-        :param system_prompt: Optional system prompt for the connector.
-        :param server: New server url for your mcp connector.
-        :param auth_methods: list of authentication methods to add to the connector or to update
+        :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -4438,19 +4567,8 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
-            update_connector_request=models.UpdateConnectorRequest(
-                title=title,
-                name=name,
-                description=description,
-                icon_url=icon_url,
-                system_prompt=system_prompt,
-                server=server,
-                auth_methods=utils.get_pydantic_model(
-                    auth_methods,
-                    OptionalNullable[
-                        List[models.AuthenticationMethodCreateOrUpdateRequest]
-                    ],
-                ),
+            request_body=utils.get_pydantic_model(
+                request_body, models.ConnectorUpdateV1Payload
             ),
         )
 
@@ -4468,11 +4586,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_connector_request,
+                request.request_body,
                 False,
                 False,
                 "json",
-                models.UpdateConnectorRequest,
+                models.ConnectorUpdateV1Payload,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -4495,6 +4613,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4522,18 +4642,9 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id: str,
-        title: OptionalNullable[str] = UNSET,
-        name: OptionalNullable[str] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        icon_url: OptionalNullable[str] = UNSET,
-        system_prompt: OptionalNullable[str] = UNSET,
-        server: OptionalNullable[str] = UNSET,
-        auth_methods: OptionalNullable[
-            Union[
-                List[models.AuthenticationMethodCreateOrUpdateRequest],
-                List[models.AuthenticationMethodCreateOrUpdateRequestTypedDict],
-            ]
-        ] = UNSET,
+        request_body: Union[
+            models.ConnectorUpdateV1Payload, models.ConnectorUpdateV1PayloadTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -4544,13 +4655,7 @@ class Connectors(BaseSDK):
         Update a connector by its ID.
 
         :param connector_id:
-        :param title: Optional human-readable title for the connector.
-        :param name: The name of the connector.
-        :param description: The description of the connector.
-        :param icon_url: The optional url of the icon you want to associate to the connector.
-        :param system_prompt: Optional system prompt for the connector.
-        :param server: New server url for your mcp connector.
-        :param auth_methods: list of authentication methods to add to the connector or to update
+        :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -4571,19 +4676,8 @@ class Connectors(BaseSDK):
 
         request = models.ConnectorUpdateV1Request(
             connector_id=connector_id,
-            update_connector_request=models.UpdateConnectorRequest(
-                title=title,
-                name=name,
-                description=description,
-                icon_url=icon_url,
-                system_prompt=system_prompt,
-                server=server,
-                auth_methods=utils.get_pydantic_model(
-                    auth_methods,
-                    OptionalNullable[
-                        List[models.AuthenticationMethodCreateOrUpdateRequest]
-                    ],
-                ),
+            request_body=utils.get_pydantic_model(
+                request_body, models.ConnectorUpdateV1Payload
             ),
         )
 
@@ -4601,11 +4695,11 @@ class Connectors(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.update_connector_request,
+                request.request_body,
                 False,
                 False,
                 "json",
-                models.UpdateConnectorRequest,
+                models.ConnectorUpdateV1Payload,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -4628,6 +4722,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4721,6 +4817,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4814,6 +4912,8 @@ class Connectors(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.connectors"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

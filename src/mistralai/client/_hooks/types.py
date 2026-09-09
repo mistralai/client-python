@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 import httpx
 from mistralai.client.httpclient import HttpClient
 from mistralai.client.sdkconfiguration import SDKConfiguration
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 
 class HookContext:
@@ -14,6 +14,8 @@ class HookContext:
     operation_id: str
     oauth2_scopes: Optional[List[str]] = None
     security_source: Optional[Union[Any, Callable[[], Any]]] = None
+    tags: Optional[List[str]] = None
+    extensions: Optional[Dict[str, Any]] = None
 
     def __init__(
         self,
@@ -22,12 +24,16 @@ class HookContext:
         operation_id: str,
         oauth2_scopes: Optional[List[str]],
         security_source: Optional[Union[Any, Callable[[], Any]]],
+        tags: Optional[List[str]],
+        extensions: Optional[Dict[str, Any]],
     ):
         self.config = config
         self.base_url = base_url
         self.operation_id = operation_id
         self.oauth2_scopes = oauth2_scopes
         self.security_source = security_source
+        self.tags = tags
+        self.extensions = extensions
 
 
 class BeforeRequestContext(HookContext):
@@ -38,6 +44,8 @@ class BeforeRequestContext(HookContext):
             hook_ctx.operation_id,
             hook_ctx.oauth2_scopes,
             hook_ctx.security_source,
+            hook_ctx.tags,
+            hook_ctx.extensions,
         )
 
 
@@ -49,6 +57,8 @@ class AfterSuccessContext(HookContext):
             hook_ctx.operation_id,
             hook_ctx.oauth2_scopes,
             hook_ctx.security_source,
+            hook_ctx.tags,
+            hook_ctx.extensions,
         )
 
 
@@ -60,6 +70,8 @@ class AfterErrorContext(HookContext):
             hook_ctx.operation_id,
             hook_ctx.oauth2_scopes,
             hook_ctx.security_source,
+            hook_ctx.tags,
+            hook_ctx.extensions,
         )
 
 

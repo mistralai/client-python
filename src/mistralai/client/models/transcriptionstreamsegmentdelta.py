@@ -19,8 +19,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class TranscriptionStreamSegmentDeltaTypedDict(TypedDict):
     text: str
-    start: float
-    end: float
+    start: Nullable[float]
+    end: Nullable[float]
     type: Literal["transcription.segment"]
     speaker_id: NotRequired[Nullable[str]]
 
@@ -33,9 +33,9 @@ class TranscriptionStreamSegmentDelta(BaseModel):
 
     text: str
 
-    start: float
+    start: Nullable[float]
 
-    end: float
+    end: Nullable[float]
 
     type: Annotated[
         Annotated[
@@ -58,7 +58,7 @@ class TranscriptionStreamSegmentDelta(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["speaker_id"])
-        nullable_fields = set(["speaker_id"])
+        nullable_fields = set(["start", "end", "speaker_id"])
         serialized = handler(self)
         m = {}
 

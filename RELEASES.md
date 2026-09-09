@@ -849,3 +849,54 @@ Based on:
 - [python v2.9.4] .
 ### Releases
 - [PyPI v2.9.4] https://pypi.org/project/mistralai/2.9.4 - .
+
+## 2026-09-09 10:25:27
+### API changes
+Removed (19):
+- campaigns.create
+- campaigns.delete
+- campaigns.fetch
+- campaigns.fetch_status
+- campaigns.list
+- campaigns.list_events
+- chatcompletionevents.fetch
+- chatcompletionevents.fetch_similar_events
+- chatcompletionevents.judge
+- chatcompletionevents.search
+- chatcompletionevents.search_ids
+- connectors.create_or_update_organization_credentials
+- connectors.create_or_update_user_credentials
+- connectors.create_or_update_workspace_credentials
+- datasets.import_from_campaign
+- datasets.import_from_explorer
+- fields.fetch_option_counts
+- fields.fetch_options
+- fields.list
+
+Added (17):
+- connectors.create_credentials
+- connectors.share_to_organization
+- connectors.unshare_from_organization
+- connectors.update_credentials
+- evaluations.create_pipeline_config
+- evaluations.delete_pipeline_config
+- evaluations.get_pipeline_config
+- evaluations.list_pipeline_configs
+- evaluations.update_pipeline_config
+- serviceaccounts.create
+- serviceaccounts.delete
+- serviceaccounts.get
+- serviceaccounts.list
+- serviceaccounts.list_assignable_roles
+- serviceaccounts.list_roles
+- serviceaccounts.set_roles
+- serviceaccounts.update
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.1 (2.933.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.10.0] .
+### Releases
+- [PyPI v2.10.0] https://pypi.org/project/mistralai/2.10.0 - .

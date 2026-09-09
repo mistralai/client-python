@@ -68,6 +68,8 @@ async def get_scheduler_namespace(
             security_source=get_security_from_env(
                 client.sdk_configuration.security, models.Security
             ),
+            tags=None,
+            extensions=None,
         ),
         request=req,
         is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

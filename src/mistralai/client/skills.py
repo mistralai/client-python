@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Skills(BaseSDK):
@@ -18,7 +18,7 @@ class Skills(BaseSDK):
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         sort_field: Optional[models.ListSortField] = None,
         sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
         sort_by: Optional[str] = None,
@@ -60,7 +60,7 @@ class Skills(BaseSDK):
             page_size=page_size,
             page_token=page_token,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
             sort_field=sort_field,
             sort_direction_query_parameter=sort_direction_query_parameter,
             sort_by=sort_by,
@@ -101,6 +101,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -160,7 +162,7 @@ class Skills(BaseSDK):
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         sort_field: Optional[models.ListSortField] = None,
         sort_direction_query_parameter: Optional[models.ListSortDirection] = None,
         sort_by: Optional[str] = None,
@@ -202,7 +204,7 @@ class Skills(BaseSDK):
             page_size=page_size,
             page_token=page_token,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
             sort_field=sort_field,
             sort_direction_query_parameter=sort_direction_query_parameter,
             sort_by=sort_by,
@@ -243,6 +245,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -306,7 +310,8 @@ class Skills(BaseSDK):
         definition: Union[models.SkillDefinition, models.SkillDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
+        workspace_relation: Optional[models.ShareRelation] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -319,6 +324,7 @@ class Skills(BaseSDK):
         :param notes: Notes for this version.
         :param sharing_scope:
         :param aliases: Aliases pointing to this version.
+        :param workspace_relation: Relation a subject holds on a shared registry object.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -342,7 +348,8 @@ class Skills(BaseSDK):
             definition=utils.get_pydantic_model(definition, models.SkillDefinition),
             notes=notes,
             sharing_scope=sharing_scope,
-            aliases=aliases,
+            aliases=utils.unmarshal(aliases, Optional[List[str]]),
+            workspace_relation=workspace_relation,
         )
 
         req = self._build_request(
@@ -382,6 +389,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -406,7 +415,8 @@ class Skills(BaseSDK):
         definition: Union[models.SkillDefinition, models.SkillDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
+        workspace_relation: Optional[models.ShareRelation] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -419,6 +429,7 @@ class Skills(BaseSDK):
         :param notes: Notes for this version.
         :param sharing_scope:
         :param aliases: Aliases pointing to this version.
+        :param workspace_relation: Relation a subject holds on a shared registry object.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -442,7 +453,8 @@ class Skills(BaseSDK):
             definition=utils.get_pydantic_model(definition, models.SkillDefinition),
             notes=notes,
             sharing_scope=sharing_scope,
-            aliases=aliases,
+            aliases=utils.unmarshal(aliases, Optional[List[str]]),
+            workspace_relation=workspace_relation,
         )
 
         req = self._build_request_async(
@@ -482,6 +494,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -505,7 +519,7 @@ class Skills(BaseSDK):
         skill_id: str,
         version: Optional[int] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -539,7 +553,7 @@ class Skills(BaseSDK):
             skill_id=skill_id,
             version=version,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -576,6 +590,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -599,7 +615,7 @@ class Skills(BaseSDK):
         skill_id: str,
         version: Optional[int] = None,
         alias: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -633,7 +649,7 @@ class Skills(BaseSDK):
             skill_id=skill_id,
             version=version,
             alias=alias,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -670,6 +686,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -755,6 +773,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -840,6 +860,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -862,6 +884,7 @@ class Skills(BaseSDK):
         *,
         skill_id: str,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
+        workspace_relation: Optional[models.ShareRelation] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -871,6 +894,7 @@ class Skills(BaseSDK):
 
         :param skill_id:
         :param sharing_scope:
+        :param workspace_relation: Relation a subject holds on a shared registry object.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -893,6 +917,7 @@ class Skills(BaseSDK):
             skill_id=skill_id,
             request_body=models.UpdateSkillRequest(
                 sharing_scope=sharing_scope,
+                workspace_relation=workspace_relation,
             ),
         )
 
@@ -933,6 +958,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -955,6 +982,7 @@ class Skills(BaseSDK):
         *,
         skill_id: str,
         sharing_scope: Optional[models.RegistrySharingScope] = None,
+        workspace_relation: Optional[models.ShareRelation] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -964,6 +992,7 @@ class Skills(BaseSDK):
 
         :param skill_id:
         :param sharing_scope:
+        :param workspace_relation: Relation a subject holds on a shared registry object.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -986,6 +1015,7 @@ class Skills(BaseSDK):
             skill_id=skill_id,
             request_body=models.UpdateSkillRequest(
                 sharing_scope=sharing_scope,
+                workspace_relation=workspace_relation,
             ),
         )
 
@@ -1026,6 +1056,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1111,6 +1143,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1196,6 +1230,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1219,7 +1255,7 @@ class Skills(BaseSDK):
         skill_id: str,
         definition: Union[models.SkillDefinition, models.SkillDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1254,7 +1290,7 @@ class Skills(BaseSDK):
             request_body=models.CreateSkillVersionRequest(
                 definition=utils.get_pydantic_model(definition, models.SkillDefinition),
                 notes=notes,
-                aliases=aliases,
+                aliases=utils.unmarshal(aliases, Optional[List[str]]),
             ),
         )
 
@@ -1299,6 +1335,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1322,7 +1360,7 @@ class Skills(BaseSDK):
         skill_id: str,
         definition: Union[models.SkillDefinition, models.SkillDefinitionTypedDict],
         notes: OptionalNullable[str] = UNSET,
-        aliases: Optional[List[str]] = None,
+        aliases: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1357,7 +1395,7 @@ class Skills(BaseSDK):
             request_body=models.CreateSkillVersionRequest(
                 definition=utils.get_pydantic_model(definition, models.SkillDefinition),
                 notes=notes,
-                aliases=aliases,
+                aliases=utils.unmarshal(aliases, Optional[List[str]]),
             ),
         )
 
@@ -1402,6 +1440,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1424,7 +1464,7 @@ class Skills(BaseSDK):
         *,
         skill_id: str,
         version: int,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1456,7 +1496,7 @@ class Skills(BaseSDK):
         request = models.SkillsGetVersionRequest(
             skill_id=skill_id,
             version=version,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -1493,6 +1533,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1515,7 +1557,7 @@ class Skills(BaseSDK):
         *,
         skill_id: str,
         version: int,
-        fields: Optional[List[str]] = None,
+        fields: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1547,7 +1589,7 @@ class Skills(BaseSDK):
         request = models.SkillsGetVersionRequest(
             skill_id=skill_id,
             version=version,
-            fields=fields,
+            fields=utils.unmarshal(fields, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -1584,6 +1626,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1687,6 +1731,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1790,6 +1836,8 @@ class Skills(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.skills"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

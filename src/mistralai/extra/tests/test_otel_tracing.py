@@ -136,6 +136,8 @@ def _make_hook_context(
         operation_id=operation_id,
         oauth2_scopes=None,
         security_source=None,
+        tags=None,
+        extensions=None,
     )
 
 

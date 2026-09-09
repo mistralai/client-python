@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Iterable, List, Mapping, Optional, Union
 
 
 class Deployments(BaseSDK):
@@ -18,6 +18,8 @@ class Deployments(BaseSDK):
         active_only: Optional[bool] = True,
         is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
+        created_by: OptionalNullable[str] = UNSET,
+        location_types: OptionalNullable[Iterable[models.LocationType]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         order_by: OptionalNullable[
             models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
@@ -36,6 +38,8 @@ class Deployments(BaseSDK):
         :param active_only:
         :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
+        :param created_by: Filter deployments by creator's user id
+        :param location_types: Filter deployments with at least one worker on any of these location types (OR)
         :param search: Filter deployments by name or ID prefix
         :param order_by: Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping.
         :param order: Sort direction. Applied to order_by when set, or within each activity group when omitted.
@@ -64,6 +68,10 @@ class Deployments(BaseSDK):
             active_only=active_only,
             is_hardened=is_hardened,
             workflow_name=workflow_name,
+            created_by=created_by,
+            location_types=utils.unmarshal(
+                location_types, OptionalNullable[List[models.LocationType]]
+            ),
             search=search,
             order_by=order_by,
             order=order,
@@ -106,6 +114,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -135,6 +145,8 @@ class Deployments(BaseSDK):
         active_only: Optional[bool] = True,
         is_hardened: OptionalNullable[bool] = UNSET,
         workflow_name: OptionalNullable[str] = UNSET,
+        created_by: OptionalNullable[str] = UNSET,
+        location_types: OptionalNullable[Iterable[models.LocationType]] = UNSET,
         search: OptionalNullable[str] = UNSET,
         order_by: OptionalNullable[
             models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
@@ -153,6 +165,8 @@ class Deployments(BaseSDK):
         :param active_only:
         :param is_hardened: Filter deployments by hardened status
         :param workflow_name:
+        :param created_by: Filter deployments by creator's user id
+        :param location_types: Filter deployments with at least one worker on any of these location types (OR)
         :param search: Filter deployments by name or ID prefix
         :param order_by: Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping.
         :param order: Sort direction. Applied to order_by when set, or within each activity group when omitted.
@@ -181,6 +195,10 @@ class Deployments(BaseSDK):
             active_only=active_only,
             is_hardened=is_hardened,
             workflow_name=workflow_name,
+            created_by=created_by,
+            location_types=utils.unmarshal(
+                location_types, OptionalNullable[List[models.LocationType]]
+            ),
             search=search,
             order_by=order_by,
             order=order,
@@ -223,6 +241,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -335,6 +355,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -447,6 +469,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -567,6 +591,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -687,6 +713,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -778,6 +806,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -869,6 +899,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -963,6 +995,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1057,6 +1091,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1148,6 +1184,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1239,6 +1277,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1330,6 +1370,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1421,6 +1463,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1512,6 +1556,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1603,6 +1649,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1705,6 +1753,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1809,6 +1859,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1928,6 +1980,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2045,6 +2099,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2153,6 +2209,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2164,8 +2222,8 @@ class Deployments(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.StreamDeploymentLogsResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.StreamDeploymentLogsResponseBody, http_res, raw
                 ),
                 client_ref=self,
                 data_required=False,
@@ -2271,6 +2329,8 @@ class Deployments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.deployments"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2282,8 +2342,8 @@ class Deployments(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.StreamDeploymentLogsResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.StreamDeploymentLogsResponseBody, http_res, raw
                 ),
                 client_ref=self,
                 data_required=False,

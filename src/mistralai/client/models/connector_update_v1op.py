@@ -2,18 +2,36 @@
 # @generated-id: 6f884d18ac56
 
 from __future__ import annotations
-from .updateconnectorrequest import (
-    UpdateConnectorRequest,
-    UpdateConnectorRequestTypedDict,
+from .connectormcppublicupdate import (
+    ConnectorMCPPublicUpdate,
+    ConnectorMCPPublicUpdateTypedDict,
+)
+from .updatehttpconnectorrequest import (
+    UpdateHTTPConnectorRequest,
+    UpdateHTTPConnectorRequestTypedDict,
 )
 from mistralai.client.types import BaseModel
 from mistralai.client.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing_extensions import Annotated, TypedDict
+from pydantic import Field
+from typing import Union
+from typing_extensions import Annotated, TypeAliasType, TypedDict
+
+
+ConnectorUpdateV1PayloadTypedDict = TypeAliasType(
+    "ConnectorUpdateV1PayloadTypedDict",
+    Union[UpdateHTTPConnectorRequestTypedDict, ConnectorMCPPublicUpdateTypedDict],
+)
+
+
+ConnectorUpdateV1Payload = Annotated[
+    Union[ConnectorMCPPublicUpdate, UpdateHTTPConnectorRequest],
+    Field(discriminator="protocol"),
+]
 
 
 class ConnectorUpdateV1RequestTypedDict(TypedDict):
     connector_id: str
-    update_connector_request: UpdateConnectorRequestTypedDict
+    request_body: ConnectorUpdateV1PayloadTypedDict
 
 
 class ConnectorUpdateV1Request(BaseModel):
@@ -21,7 +39,7 @@ class ConnectorUpdateV1Request(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 
-    update_connector_request: Annotated[
-        UpdateConnectorRequest,
+    request_body: Annotated[
+        ConnectorUpdateV1Payload,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
