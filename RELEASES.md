@@ -892,6 +892,29 @@ Added (17):
 - serviceaccounts.set_roles
 - serviceaccounts.update
 
+### Breaking changes
+
+Connectors
+
+- `connectors.create` now takes a single request object, and `connectors.update`
+  a `request_body`. The named arguments (`name`, `description`, `server`,
+  `title`, ...) are no longer accepted.
+- `Connector` is now a union of `HTTPConnector` and `MCPConnector`, discriminated
+  on `protocol`. Fields that were flat on `Connector` now live on the variant.
+- `protocol` is required on the create payload. In TypeScript it no longer
+  defaults to `"mcp"`, so it must be passed explicitly. Python still defaults it.
+
+Other models
+
+- `ExtendedOAuthServerMetadata.authorization_endpoint` is now optional.
+- `UsageInfoDollarDefs.service_tier` has been removed.
+- Three fields on `DeploymentWorkerSpecResponse` are now required.
+
+### Fixed
+
+- Transcription segment `start` and `end` are now nullable. The API can return
+  null for these, so diarized transcriptions previously failed to parse.
+
 ### Changes
 Based on:
 - OpenAPI Doc
