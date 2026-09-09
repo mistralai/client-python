@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 
 class WorkflowsEvents(BaseSDK):
@@ -23,8 +23,10 @@ class WorkflowsEvents(BaseSDK):
         parent_workflow_exec_id: Optional[str] = "*",
         stream: Optional[str] = "*",
         start_seq: Optional[int] = 0,
-        metadata_filters: OptionalNullable[Dict[str, Any]] = UNSET,
-        workflow_event_types: OptionalNullable[List[models.WorkflowEventType]] = UNSET,
+        metadata_filters: OptionalNullable[Mapping[str, Any]] = UNSET,
+        workflow_event_types: OptionalNullable[
+            Iterable[models.WorkflowEventType]
+        ] = UNSET,
         last_event_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -75,8 +77,12 @@ class WorkflowsEvents(BaseSDK):
             parent_workflow_exec_id=parent_workflow_exec_id,
             stream=stream,
             start_seq=start_seq,
-            metadata_filters=metadata_filters,
-            workflow_event_types=workflow_event_types,
+            metadata_filters=utils.unmarshal(
+                metadata_filters, OptionalNullable[Dict[str, Any]]
+            ),
+            workflow_event_types=utils.unmarshal(
+                workflow_event_types, OptionalNullable[List[models.WorkflowEventType]]
+            ),
             last_event_id=last_event_id,
         )
 
@@ -114,6 +120,8 @@ class WorkflowsEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["events", "workflows.events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -125,8 +133,10 @@ class WorkflowsEvents(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody,
+                    http_res,
+                    raw,
                 ),
                 client_ref=self,
                 data_required=False,
@@ -159,8 +169,10 @@ class WorkflowsEvents(BaseSDK):
         parent_workflow_exec_id: Optional[str] = "*",
         stream: Optional[str] = "*",
         start_seq: Optional[int] = 0,
-        metadata_filters: OptionalNullable[Dict[str, Any]] = UNSET,
-        workflow_event_types: OptionalNullable[List[models.WorkflowEventType]] = UNSET,
+        metadata_filters: OptionalNullable[Mapping[str, Any]] = UNSET,
+        workflow_event_types: OptionalNullable[
+            Iterable[models.WorkflowEventType]
+        ] = UNSET,
         last_event_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -211,8 +223,12 @@ class WorkflowsEvents(BaseSDK):
             parent_workflow_exec_id=parent_workflow_exec_id,
             stream=stream,
             start_seq=start_seq,
-            metadata_filters=metadata_filters,
-            workflow_event_types=workflow_event_types,
+            metadata_filters=utils.unmarshal(
+                metadata_filters, OptionalNullable[Dict[str, Any]]
+            ),
+            workflow_event_types=utils.unmarshal(
+                workflow_event_types, OptionalNullable[List[models.WorkflowEventType]]
+            ),
             last_event_id=last_event_id,
         )
 
@@ -250,6 +266,8 @@ class WorkflowsEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["events", "workflows.events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -261,8 +279,10 @@ class WorkflowsEvents(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(
-                    raw, models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody
+                lambda raw: unmarshal_json_response(
+                    models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody,
+                    http_res,
+                    raw,
                 ),
                 client_ref=self,
                 data_required=False,
@@ -363,6 +383,8 @@ class WorkflowsEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["events", "workflows.events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -466,6 +488,8 @@ class WorkflowsEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["events", "workflows.events"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

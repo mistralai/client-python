@@ -8,7 +8,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Awaitable, Dict, List, Mapping, Optional, Union
+from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
 
@@ -23,19 +23,22 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                Iterable[models.CreateAgentRequestTool],
+                Iterable[models.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        handoffs: OptionalNullable[Iterable[str]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -88,8 +91,8 @@ class BetaAgents(BaseSDK):
             model=model,
             name=name,
             description=description,
-            handoffs=handoffs,
-            metadata=metadata,
+            handoffs=utils.unmarshal(handoffs, OptionalNullable[List[str]]),
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             version_message=version_message,
         )
 
@@ -130,6 +133,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -161,19 +166,22 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.CreateAgentRequestTool],
-                List[models.CreateAgentRequestToolTypedDict],
+                Iterable[models.CreateAgentRequestTool],
+                Iterable[models.CreateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        handoffs: OptionalNullable[List[str]] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        handoffs: OptionalNullable[Iterable[str]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -226,8 +234,8 @@ class BetaAgents(BaseSDK):
             model=model,
             name=name,
             description=description,
-            handoffs=handoffs,
-            metadata=metadata,
+            handoffs=utils.unmarshal(handoffs, OptionalNullable[List[str]]),
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             version_message=version_message,
         )
 
@@ -268,6 +276,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -300,11 +310,11 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[Iterable[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -344,11 +354,13 @@ class BetaAgents(BaseSDK):
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
-            sources=sources,
+            sources=utils.unmarshal(
+                sources, OptionalNullable[List[models.RequestSource]]
+            ),
             name=name,
             search=search,
             id=id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
         )
 
         req = self._build_request(
@@ -385,6 +397,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -417,11 +431,11 @@ class BetaAgents(BaseSDK):
         page: Optional[int] = 0,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[Iterable[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -461,11 +475,13 @@ class BetaAgents(BaseSDK):
             page=page,
             page_size=page_size,
             deployment_chat=deployment_chat,
-            sources=sources,
+            sources=utils.unmarshal(
+                sources, OptionalNullable[List[models.RequestSource]]
+            ),
             name=name,
             search=search,
             id=id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
         )
 
         req = self._build_request_async(
@@ -502,6 +518,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -530,11 +548,11 @@ class BetaAgents(BaseSDK):
         *,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[Iterable[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -574,11 +592,13 @@ class BetaAgents(BaseSDK):
         request = models.AgentsAPIV1AgentsListPagesRequest(
             page_size=page_size,
             deployment_chat=deployment_chat,
-            sources=sources,
+            sources=utils.unmarshal(
+                sources, OptionalNullable[List[models.RequestSource]]
+            ),
             name=name,
             search=search,
             id=id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             page_token=page_token,
         )
 
@@ -616,6 +636,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -680,11 +702,11 @@ class BetaAgents(BaseSDK):
         *,
         page_size: Optional[int] = 20,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        sources: OptionalNullable[List[models.RequestSource]] = UNSET,
+        sources: OptionalNullable[Iterable[models.RequestSource]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         search: OptionalNullable[str] = UNSET,
         id: OptionalNullable[str] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         page_token: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -724,11 +746,13 @@ class BetaAgents(BaseSDK):
         request = models.AgentsAPIV1AgentsListPagesRequest(
             page_size=page_size,
             deployment_chat=deployment_chat,
-            sources=sources,
+            sources=utils.unmarshal(
+                sources, OptionalNullable[List[models.RequestSource]]
+            ),
             name=name,
             search=search,
             id=id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             page_token=page_token,
         )
 
@@ -766,6 +790,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -908,6 +934,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1009,6 +1037,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1039,22 +1069,25 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                Iterable[models.UpdateAgentRequestTool],
+                Iterable[models.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        handoffs: OptionalNullable[List[str]] = UNSET,
+        handoffs: OptionalNullable[Iterable[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1111,9 +1144,9 @@ class BetaAgents(BaseSDK):
                 model=model,
                 name=name,
                 description=description,
-                handoffs=handoffs,
+                handoffs=utils.unmarshal(handoffs, OptionalNullable[List[str]]),
                 deployment_chat=deployment_chat,
-                metadata=metadata,
+                metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
                 version_message=version_message,
             ),
         )
@@ -1159,6 +1192,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1189,22 +1224,25 @@ class BetaAgents(BaseSDK):
         instructions: OptionalNullable[str] = UNSET,
         tools: Optional[
             Union[
-                List[models.UpdateAgentRequestTool],
-                List[models.UpdateAgentRequestToolTypedDict],
+                Iterable[models.UpdateAgentRequestTool],
+                Iterable[models.UpdateAgentRequestToolTypedDict],
             ]
         ] = None,
         completion_args: Optional[
             Union[models.CompletionArgs, models.CompletionArgsTypedDict]
         ] = None,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         model: OptionalNullable[str] = UNSET,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        handoffs: OptionalNullable[List[str]] = UNSET,
+        handoffs: OptionalNullable[Iterable[str]] = UNSET,
         deployment_chat: OptionalNullable[bool] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         version_message: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1261,9 +1299,9 @@ class BetaAgents(BaseSDK):
                 model=model,
                 name=name,
                 description=description,
-                handoffs=handoffs,
+                handoffs=utils.unmarshal(handoffs, OptionalNullable[List[str]]),
                 deployment_chat=deployment_chat,
-                metadata=metadata,
+                metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
                 version_message=version_message,
             ),
         )
@@ -1309,6 +1347,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1400,6 +1440,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1491,6 +1533,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1587,6 +1631,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1683,6 +1729,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1782,6 +1830,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1881,6 +1931,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1977,6 +2029,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2073,6 +2127,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2172,6 +2228,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2271,6 +2329,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2364,6 +2424,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2457,6 +2519,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2553,6 +2617,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2649,6 +2715,8 @@ class BetaAgents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.agents"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

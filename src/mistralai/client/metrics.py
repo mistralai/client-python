@@ -38,7 +38,7 @@ class Metrics(BaseSDK):
         - success_count: Number of successful executions
         - error_count: Number of failed/terminated executions
         - average_latency_ms: Average execution duration in milliseconds
-        - retry_rate: Proportion of workflows with retries
+        - retry_rate: Deprecated, always -1. Never measured retries; use error_count instead
         - latency_over_time: Time-series data of execution durations
 
         Example:
@@ -107,6 +107,8 @@ class Metrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.metrics"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -156,7 +158,7 @@ class Metrics(BaseSDK):
         - success_count: Number of successful executions
         - error_count: Number of failed/terminated executions
         - average_latency_ms: Average execution duration in milliseconds
-        - retry_rate: Proportion of workflows with retries
+        - retry_rate: Deprecated, always -1. Never measured retries; use error_count instead
         - latency_over_time: Time-series data of execution durations
 
         Example:
@@ -225,6 +227,8 @@ class Metrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["workflows.metrics"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

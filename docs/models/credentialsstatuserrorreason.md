@@ -17,6 +17,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"oauth expired"`
 - `"oauth near expiry"`
 - `"empty credentials"`
+- `"blank bearer token"`
 - `"unparsable credentials"`
 - `"you need to reconnect"`
 - `"oauth refresh error"`

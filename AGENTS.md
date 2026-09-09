@@ -20,7 +20,6 @@ At the repo root, that currently includes files such as:
 - `examples/*`
 - `utils/*`
 - `src/mistralai/extra/*`
-- `pylintrc`
 - `scripts/prepare_readme.py`
 
 There are also package-specific ownership files:

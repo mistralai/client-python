@@ -849,3 +849,77 @@ Based on:
 - [python v2.9.4] .
 ### Releases
 - [PyPI v2.9.4] https://pypi.org/project/mistralai/2.9.4 - .
+
+## 2026-09-09 10:25:27
+### API changes
+Removed (19):
+- campaigns.create
+- campaigns.delete
+- campaigns.fetch
+- campaigns.fetch_status
+- campaigns.list
+- campaigns.list_events
+- chatcompletionevents.fetch
+- chatcompletionevents.fetch_similar_events
+- chatcompletionevents.judge
+- chatcompletionevents.search
+- chatcompletionevents.search_ids
+- connectors.create_or_update_organization_credentials
+- connectors.create_or_update_user_credentials
+- connectors.create_or_update_workspace_credentials
+- datasets.import_from_campaign
+- datasets.import_from_explorer
+- fields.fetch_option_counts
+- fields.fetch_options
+- fields.list
+
+Added (17):
+- connectors.create_credentials
+- connectors.share_to_organization
+- connectors.unshare_from_organization
+- connectors.update_credentials
+- evaluations.create_pipeline_config
+- evaluations.delete_pipeline_config
+- evaluations.get_pipeline_config
+- evaluations.list_pipeline_configs
+- evaluations.update_pipeline_config
+- serviceaccounts.create
+- serviceaccounts.delete
+- serviceaccounts.get
+- serviceaccounts.list
+- serviceaccounts.list_assignable_roles
+- serviceaccounts.list_roles
+- serviceaccounts.set_roles
+- serviceaccounts.update
+
+### Breaking changes
+
+Connectors
+
+- `connectors.create` now takes a single request object, and `connectors.update`
+  a `request_body`. The named arguments (`name`, `description`, `server`,
+  `title`, ...) are no longer accepted.
+- `Connector` is now a union of `HTTPConnector` and `MCPConnector`, discriminated
+  on `protocol`. Fields that were flat on `Connector` now live on the variant.
+- `protocol` is required on the create payload. In TypeScript it no longer
+  defaults to `"mcp"`, so it must be passed explicitly. Python still defaults it.
+
+Other models
+
+- `ExtendedOAuthServerMetadata.authorization_endpoint` is now optional.
+- `UsageInfoDollarDefs.service_tier` has been removed.
+- Three fields on `DeploymentWorkerSpecResponse` are now required.
+
+### Fixed
+
+- Transcription segment `start` and `end` are now nullable. The API can return
+  null for these, so diarized transcriptions previously failed to parse.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.1 (2.933.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.10.0] .
+### Releases
+- [PyPI v2.10.0] https://pypi.org/project/mistralai/2.10.0 - .

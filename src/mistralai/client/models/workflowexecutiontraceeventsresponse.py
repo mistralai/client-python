@@ -20,7 +20,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
@@ -66,6 +66,8 @@ class WorkflowExecutionTraceEventsResponseTypedDict(TypedDict):
     r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
+    search_keys: NotRequired[Nullable[Dict[str, str]]]
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
     events: NotRequired[List[WorkflowExecutionTraceEventsResponseEventTypedDict]]
     r"""The events of the workflow execution"""
 
@@ -110,6 +112,9 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
+    search_keys: OptionalNullable[Dict[str, str]] = UNSET
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
+
     events: Optional[List[WorkflowExecutionTraceEventsResponseEvent]] = None
     r"""The events of the workflow execution"""
 
@@ -123,6 +128,7 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
                 "run_id",
                 "user_id",
                 "total_duration_ms",
+                "search_keys",
                 "events",
             ]
         )
@@ -137,6 +143,7 @@ class WorkflowExecutionTraceEventsResponse(BaseModel):
                 "end_time",
                 "total_duration_ms",
                 "result",
+                "search_keys",
             ]
         )
         serialized = handler(self)

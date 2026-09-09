@@ -4,14 +4,23 @@
 from __future__ import annotations
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Literal, Optional
 from typing_extensions import NotRequired, TypedDict
+
+
+CreateDatasetRecordRequestSource = Literal[
+    "DIRECT_INPUT",
+    "TELEMETRY_SPAN",
+]
+r"""Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source."""
 
 
 class CreateDatasetRecordRequestTypedDict(TypedDict):
     payload: Dict[str, Any]
     r"""Caller-authored input object stored on a dataset record."""
     properties: NotRequired[Dict[str, Any]]
+    source: NotRequired[CreateDatasetRecordRequestSource]
+    r"""Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source."""
 
 
 class CreateDatasetRecordRequest(BaseModel):
@@ -20,9 +29,12 @@ class CreateDatasetRecordRequest(BaseModel):
 
     properties: Optional[Dict[str, Any]] = None
 
+    source: Optional[CreateDatasetRecordRequestSource] = "DIRECT_INPUT"
+    r"""Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["properties"])
+        optional_fields = set(["properties", "source"])
         serialized = handler(self)
         m = {}
 

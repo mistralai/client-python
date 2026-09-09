@@ -64,6 +64,8 @@ def _hook_ctx(operation_id: str) -> AfterSuccessContext:
             operation_id=operation_id,
             oauth2_scopes=[],
             security_source=None,
+            tags=None,
+            extensions=None,
         )
     )
 
@@ -224,6 +226,8 @@ async def test_encoding_and_error_hooks_compose():
             operation_id=STREAM_OPERATION_ID,
             oauth2_scopes=[],
             security_source=None,
+            tags=None,
+            extensions=None,
         )
     )
     benign = b'event: message\ndata: {"hello": "world"}\n\n'

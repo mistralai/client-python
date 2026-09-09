@@ -749,6 +749,8 @@ async def test_workflow_encoding_hook_handles_gzipped_response():
             operation_id=EXECUTE_WORKFLOW_OPERATION_ID,
             oauth2_scopes=[],
             security_source=None,
+            tags=None,
+            extensions=None,
         )
     )
 

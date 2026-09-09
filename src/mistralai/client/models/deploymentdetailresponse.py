@@ -40,7 +40,7 @@ class DeploymentDetailResponseTypedDict(TypedDict):
     workers: List[DeploymentWorkerResponseTypedDict]
     r"""Workers registered for the deployment"""
     is_hardened: NotRequired[bool]
-    r"""Whether the deployment has at least one authorized credential"""
+    r"""Whether the deployment only accepts registrations from authorized principals"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
     r"""Where the deployment is running"""
     worker_count: NotRequired[int]
@@ -73,7 +73,7 @@ class DeploymentDetailResponse(BaseModel):
     r"""Workers registered for the deployment"""
 
     is_hardened: Optional[bool] = False
-    r"""Whether the deployment has at least one authorized credential"""
+    r"""Whether the deployment only accepts registrations from authorized principals"""
 
     location: Annotated[
         OptionalNullable[DeploymentLocation],

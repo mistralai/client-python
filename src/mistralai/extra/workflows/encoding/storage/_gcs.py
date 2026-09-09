@@ -24,7 +24,15 @@ class GCSBlobStorage(BlobStorage):
 
     async def __aenter__(self) -> "GCSBlobStorage":
         self._session = aiohttp.ClientSession()
-        self._storage = Storage(session=self._session)
+        # gcloud-aio binds `Session` behind a runtime flag:
+        #   if BUILD_GCLOUD_REST: from requests import Session
+        #   else:                 from aiohttp import ClientSession as Session
+        # Type checkers take the first branch (the library carries its own
+        # `type: ignore` on the second), so they read the parameter as
+        # `requests.Session` while the async package really binds
+        # `aiohttp.ClientSession` -- what we pass. Cast rather than
+        # `type: ignore`, which older gcloud-aio-auth would report as unused.
+        self._storage = Storage(session=cast(Any, self._session))
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:

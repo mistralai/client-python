@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Judges(BaseSDK):
@@ -21,7 +21,7 @@ class Judges(BaseSDK):
             models.CreateJudgeRequestOutput, models.CreateJudgeRequestOutputTypedDict
         ],
         instructions: str,
-        tools: List[str],
+        tools: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -59,7 +59,7 @@ class Judges(BaseSDK):
             model_name=model_name,
             output=utils.get_pydantic_model(output, models.CreateJudgeRequestOutput),
             instructions=instructions,
-            tools=tools,
+            tools=utils.unmarshal(tools, List[str]),
         )
 
         req = self._build_request(
@@ -99,6 +99,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -134,7 +136,7 @@ class Judges(BaseSDK):
             models.CreateJudgeRequestOutput, models.CreateJudgeRequestOutputTypedDict
         ],
         instructions: str,
-        tools: List[str],
+        tools: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -172,7 +174,7 @@ class Judges(BaseSDK):
             model_name=model_name,
             output=utils.get_pydantic_model(output, models.CreateJudgeRequestOutput),
             instructions=instructions,
-            tools=tools,
+            tools=utils.unmarshal(tools, List[str]),
         )
 
         req = self._build_request_async(
@@ -212,6 +214,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -240,8 +244,8 @@ class Judges(BaseSDK):
     def list(
         self,
         *,
-        type_filter: OptionalNullable[List[models.JudgeOutputType]] = UNSET,
-        model_filter: OptionalNullable[List[str]] = UNSET,
+        type_filter: OptionalNullable[Iterable[models.JudgeOutputType]] = UNSET,
+        model_filter: OptionalNullable[Iterable[str]] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
         q: OptionalNullable[str] = UNSET,
@@ -276,8 +280,10 @@ class Judges(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetJudgesV1ObservabilityJudgesGetRequest(
-            type_filter=type_filter,
-            model_filter=model_filter,
+            type_filter=utils.unmarshal(
+                type_filter, OptionalNullable[List[models.JudgeOutputType]]
+            ),
+            model_filter=utils.unmarshal(model_filter, OptionalNullable[List[str]]),
             page_size=page_size,
             page=page,
             q=q,
@@ -317,6 +323,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -345,8 +353,8 @@ class Judges(BaseSDK):
     async def list_async(
         self,
         *,
-        type_filter: OptionalNullable[List[models.JudgeOutputType]] = UNSET,
-        model_filter: OptionalNullable[List[str]] = UNSET,
+        type_filter: OptionalNullable[Iterable[models.JudgeOutputType]] = UNSET,
+        model_filter: OptionalNullable[Iterable[str]] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
         q: OptionalNullable[str] = UNSET,
@@ -381,8 +389,10 @@ class Judges(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetJudgesV1ObservabilityJudgesGetRequest(
-            type_filter=type_filter,
-            model_filter=model_filter,
+            type_filter=utils.unmarshal(
+                type_filter, OptionalNullable[List[models.JudgeOutputType]]
+            ),
+            model_filter=utils.unmarshal(model_filter, OptionalNullable[List[str]]),
             page_size=page_size,
             page=page,
             q=q,
@@ -422,6 +432,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -515,6 +527,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -608,6 +622,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -701,6 +717,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -794,6 +812,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -830,7 +850,7 @@ class Judges(BaseSDK):
             models.UpdateJudgeRequestOutput, models.UpdateJudgeRequestOutputTypedDict
         ],
         instructions: str,
-        tools: List[str],
+        tools: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -873,7 +893,7 @@ class Judges(BaseSDK):
                     output, models.UpdateJudgeRequestOutput
                 ),
                 instructions=instructions,
-                tools=tools,
+                tools=utils.unmarshal(tools, List[str]),
             ),
         )
 
@@ -918,6 +938,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -954,7 +976,7 @@ class Judges(BaseSDK):
             models.UpdateJudgeRequestOutput, models.UpdateJudgeRequestOutputTypedDict
         ],
         instructions: str,
-        tools: List[str],
+        tools: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -997,7 +1019,7 @@ class Judges(BaseSDK):
                     output, models.UpdateJudgeRequestOutput
                 ),
                 instructions=instructions,
-                tools=tools,
+                tools=utils.unmarshal(tools, List[str]),
             ),
         )
 
@@ -1042,6 +1064,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1071,8 +1095,8 @@ class Judges(BaseSDK):
         self,
         *,
         judge_id: str,
-        messages: List[Dict[str, Any]],
-        properties: OptionalNullable[Dict[str, Any]] = UNSET,
+        messages: Iterable[Mapping[str, Any]],
+        properties: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1105,8 +1129,10 @@ class Judges(BaseSDK):
             models.JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest(
                 judge_id=judge_id,
                 judge_conversation_request=models.JudgeConversationRequest(
-                    messages=messages,
-                    properties=properties,
+                    messages=utils.unmarshal(messages, List[Dict[str, Any]]),
+                    properties=utils.unmarshal(
+                        properties, OptionalNullable[Dict[str, Any]]
+                    ),
                 ),
             )
         )
@@ -1152,6 +1178,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1181,8 +1209,8 @@ class Judges(BaseSDK):
         self,
         *,
         judge_id: str,
-        messages: List[Dict[str, Any]],
-        properties: OptionalNullable[Dict[str, Any]] = UNSET,
+        messages: Iterable[Mapping[str, Any]],
+        properties: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1215,8 +1243,10 @@ class Judges(BaseSDK):
             models.JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest(
                 judge_id=judge_id,
                 judge_conversation_request=models.JudgeConversationRequest(
-                    messages=messages,
-                    properties=properties,
+                    messages=utils.unmarshal(messages, List[Dict[str, Any]]),
+                    properties=utils.unmarshal(
+                        properties, OptionalNullable[Dict[str, Any]]
+                    ),
                 ),
             )
         )
@@ -1262,6 +1292,8 @@ class Judges(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["beta.observability.judges"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

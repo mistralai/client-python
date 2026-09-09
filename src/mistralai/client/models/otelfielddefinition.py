@@ -31,7 +31,7 @@ OtelFieldDefinitionType = Union[
 ]
 
 
-OtelFieldDefinitionSupportedOperator = Union[
+SupportedOperator = Union[
     Literal[
         "eq",
         "neq",
@@ -66,7 +66,7 @@ class OtelFieldDefinitionTypedDict(TypedDict):
     name: str
     label: str
     type: OtelFieldDefinitionType
-    supported_operators: List[OtelFieldDefinitionSupportedOperator]
+    supported_operators: List[SupportedOperator]
     supported_aggregations: List[MetricAggregation]
     group: NotRequired[Nullable[str]]
 
@@ -78,7 +78,7 @@ class OtelFieldDefinition(BaseModel):
 
     type: OtelFieldDefinitionType
 
-    supported_operators: List[OtelFieldDefinitionSupportedOperator]
+    supported_operators: List[SupportedOperator]
 
     supported_aggregations: List[MetricAggregation]
 

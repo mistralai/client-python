@@ -44,7 +44,7 @@ def _find_boundary(buffer: bytearray) -> Optional[Tuple[int, int]]:
         idx = buffer.find(boundary)
         if idx == -1:
             continue
-        if (
+        if (  # pylint: disable=unsubscriptable-object
             best is None
             or idx < best[0]
             or (idx == best[0] and len(boundary) > best[1])

@@ -13,7 +13,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Any
+from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -46,6 +46,8 @@ class WorkflowExecutionTraceOTelResponseTypedDict(TypedDict):
     r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
+    search_keys: NotRequired[Nullable[Dict[str, str]]]
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
     otel_trace_id: NotRequired[Nullable[str]]
     r"""The ID of the trace"""
     otel_trace_data: NotRequired[Nullable[TempoGetTraceResponseTypedDict]]
@@ -95,6 +97,9 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
+    search_keys: OptionalNullable[Dict[str, str]] = UNSET
+    r"""The execution's search keys (metadata), if requested via include_search_keys."""
+
     otel_trace_id: OptionalNullable[str] = UNSET
     r"""The ID of the trace"""
 
@@ -111,6 +116,7 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
                 "run_id",
                 "user_id",
                 "total_duration_ms",
+                "search_keys",
                 "otel_trace_id",
                 "otel_trace_data",
             ]
@@ -126,6 +132,7 @@ class WorkflowExecutionTraceOTelResponse(BaseModel):
                 "end_time",
                 "total_duration_ms",
                 "result",
+                "search_keys",
                 "otel_trace_id",
                 "otel_trace_data",
             ]

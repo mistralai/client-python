@@ -2,191 +2,47 @@
 # @generated-id: 1a4facac922d
 
 from __future__ import annotations
-from .authenticationconfiguration import (
-    AuthenticationConfiguration,
-    AuthenticationConfigurationTypedDict,
+from .httpconnector import HTTPConnector, HTTPConnectorTypedDict
+from .mcpconnector import MCPConnector, MCPConnectorTypedDict
+from functools import partial
+from mistralai.client.types import BaseModel
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
+from typing_extensions import Annotated, TypeAliasType
+
+
+ConnectorTypedDict = TypeAliasType(
+    "ConnectorTypedDict", Union[MCPConnectorTypedDict, HTTPConnectorTypedDict]
 )
-from .connectionpreference import ConnectionPreference, ConnectionPreferenceTypedDict
-from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
-from .connectorprotocol import ConnectorProtocol
-from .connectortool import ConnectorTool, ConnectorToolTypedDict
-from .consumertype import ConsumerType
-from .mcpservercard import MCPServerCard, MCPServerCardTypedDict
-from .publicauthenticationmethod import (
-    PublicAuthenticationMethod,
-    PublicAuthenticationMethodTypedDict,
-)
-from .publicconnectionconfig import (
-    PublicConnectionConfig,
-    PublicConnectionConfigTypedDict,
-)
-from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
-from .resourcevisibility import ResourceVisibility
-from datetime import datetime
-from mistralai.client.types import (
-    BaseModel,
-    Nullable,
-    OptionalNullable,
-    UNSET,
-    UNSET_SENTINEL,
-)
-from pydantic import model_serializer
-from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
 
 
-class ConnectorTypedDict(TypedDict):
-    id: str
-    name: str
-    description: str
-    created_at: datetime
-    modified_at: datetime
-    owner_type: ConsumerType
-    visibility: ResourceVisibility
-    private_tool_execution: bool
-    title: NotRequired[Nullable[str]]
-    server: NotRequired[Nullable[str]]
-    protocol: NotRequired[ConnectorProtocol]
-    icon_url: NotRequired[Nullable[str]]
-    server_card: NotRequired[Nullable[MCPServerCardTypedDict]]
-    owner_id: NotRequired[Nullable[str]]
-    creator_id: NotRequired[Nullable[str]]
-    locale: NotRequired[Nullable[ConnectorLocaleTypedDict]]
-    system_prompt: NotRequired[Nullable[str]]
-    supported_auth_methods: NotRequired[
-        Nullable[List[PublicAuthenticationMethodTypedDict]]
-    ]
-    connection_preferences: NotRequired[Nullable[List[ConnectionPreferenceTypedDict]]]
-    connection_credentials: NotRequired[
-        Nullable[List[AuthenticationConfigurationTypedDict]]
-    ]
-    active: NotRequired[Nullable[bool]]
-    mistral: NotRequired[bool]
-    is_authenticated: NotRequired[Nullable[bool]]
-    tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
-    system_prompt_route: NotRequired[Nullable[str]]
-    connection_config: NotRequired[Nullable[PublicConnectionConfigTypedDict]]
-    execution_env: NotRequired[Nullable[PublicExecutionEnvTypedDict]]
+class UnknownConnector(BaseModel):
+    r"""A Connector variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    protocol: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
 
 
-class Connector(BaseModel):
-    id: str
+_CONNECTOR_VARIANTS: dict[str, Any] = {
+    "http": HTTPConnector,
+    "mcp": MCPConnector,
+}
 
-    name: str
 
-    description: str
-
-    created_at: datetime
-
-    modified_at: datetime
-
-    owner_type: ConsumerType
-
-    visibility: ResourceVisibility
-
-    private_tool_execution: bool
-
-    title: OptionalNullable[str] = UNSET
-
-    server: OptionalNullable[str] = UNSET
-
-    protocol: Optional[ConnectorProtocol] = None
-
-    icon_url: OptionalNullable[str] = UNSET
-
-    server_card: OptionalNullable[MCPServerCard] = UNSET
-
-    owner_id: OptionalNullable[str] = UNSET
-
-    creator_id: OptionalNullable[str] = UNSET
-
-    locale: OptionalNullable[ConnectorLocale] = UNSET
-
-    system_prompt: OptionalNullable[str] = UNSET
-
-    supported_auth_methods: OptionalNullable[List[PublicAuthenticationMethod]] = UNSET
-
-    connection_preferences: OptionalNullable[List[ConnectionPreference]] = UNSET
-
-    connection_credentials: OptionalNullable[List[AuthenticationConfiguration]] = UNSET
-
-    active: OptionalNullable[bool] = UNSET
-
-    mistral: Optional[bool] = False
-
-    is_authenticated: OptionalNullable[bool] = UNSET
-
-    tools: OptionalNullable[List[ConnectorTool]] = UNSET
-
-    system_prompt_route: OptionalNullable[str] = UNSET
-
-    connection_config: OptionalNullable[PublicConnectionConfig] = UNSET
-
-    execution_env: OptionalNullable[PublicExecutionEnv] = UNSET
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "title",
-                "server",
-                "protocol",
-                "icon_url",
-                "server_card",
-                "owner_id",
-                "creator_id",
-                "locale",
-                "system_prompt",
-                "supported_auth_methods",
-                "connection_preferences",
-                "connection_credentials",
-                "active",
-                "mistral",
-                "is_authenticated",
-                "tools",
-                "system_prompt_route",
-                "connection_config",
-                "execution_env",
-            ]
+Connector = Annotated[
+    Union[HTTPConnector, MCPConnector, UnknownConnector],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="protocol",
+            variants=_CONNECTOR_VARIANTS,
+            unknown_cls=UnknownConnector,
+            union_name="Connector",
         )
-        nullable_fields = set(
-            [
-                "title",
-                "server",
-                "icon_url",
-                "server_card",
-                "owner_id",
-                "creator_id",
-                "locale",
-                "system_prompt",
-                "supported_auth_methods",
-                "connection_preferences",
-                "connection_credentials",
-                "active",
-                "is_authenticated",
-                "tools",
-                "system_prompt_route",
-                "connection_config",
-                "execution_env",
-            ]
-        )
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
-
-            if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
-
-        return m
+    ),
+]

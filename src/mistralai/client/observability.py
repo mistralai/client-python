@@ -3,9 +3,8 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
-from mistralai.client.campaigns import Campaigns
-from mistralai.client.chat_completion_events import ChatCompletionEvents
 from mistralai.client.datasets import Datasets
+from mistralai.client.evaluations import Evaluations
 from mistralai.client.judges import Judges
 from mistralai.client.logs import Logs
 from mistralai.client.spans import Spans
@@ -14,10 +13,9 @@ from typing import Optional
 
 
 class Observability(BaseSDK):
-    chat_completion_events: ChatCompletionEvents
     judges: Judges
-    campaigns: Campaigns
     datasets: Datasets
+    evaluations: Evaluations
     logs: Logs
     traces: Traces
     spans: Spans
@@ -30,12 +28,11 @@ class Observability(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.chat_completion_events = ChatCompletionEvents(
+        self.judges = Judges(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.datasets = Datasets(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.evaluations = Evaluations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
-        self.judges = Judges(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.campaigns = Campaigns(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.datasets = Datasets(self.sdk_configuration, parent_ref=self.parent_ref)
         self.logs = Logs(self.sdk_configuration, parent_ref=self.parent_ref)
         self.traces = Traces(self.sdk_configuration, parent_ref=self.parent_ref)
         self.spans = Spans(self.sdk_configuration, parent_ref=self.parent_ref)

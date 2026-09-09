@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 # region imports
 from typing import Type
@@ -103,8 +103,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionRequestMessage],
-            List[models.ChatCompletionRequestMessageTypedDict],
+            Iterable[models.ChatCompletionRequestMessage],
+            Iterable[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: OptionalNullable[float] = UNSET,
@@ -117,14 +117,14 @@ class Chat(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.ChatCompletionRequestTool],
-                List[models.ChatCompletionRequestToolTypedDict],
+                Iterable[models.ChatCompletionRequestTool],
+                Iterable[models.ChatCompletionRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -143,7 +143,10 @@ class Chat(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -202,9 +205,11 @@ class Chat(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.ChatCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionRequestMessage]
             ),
@@ -271,6 +276,8 @@ class Chat(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["chat"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -299,8 +306,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionRequestMessage],
-            List[models.ChatCompletionRequestMessageTypedDict],
+            Iterable[models.ChatCompletionRequestMessage],
+            Iterable[models.ChatCompletionRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: OptionalNullable[float] = UNSET,
@@ -313,14 +320,14 @@ class Chat(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.ChatCompletionRequestTool],
-                List[models.ChatCompletionRequestToolTypedDict],
+                Iterable[models.ChatCompletionRequestTool],
+                Iterable[models.ChatCompletionRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -339,7 +346,10 @@ class Chat(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -398,9 +408,11 @@ class Chat(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.ChatCompletionRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionRequestMessage]
             ),
@@ -467,6 +479,8 @@ class Chat(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["chat"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -495,8 +509,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionStreamRequestMessage],
-            List[models.ChatCompletionStreamRequestMessageTypedDict],
+            Iterable[models.ChatCompletionStreamRequestMessage],
+            Iterable[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: OptionalNullable[float] = UNSET,
@@ -509,14 +523,14 @@ class Chat(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.ChatCompletionStreamRequestTool],
-                List[models.ChatCompletionStreamRequestToolTypedDict],
+                Iterable[models.ChatCompletionStreamRequestTool],
+                Iterable[models.ChatCompletionStreamRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -535,7 +549,10 @@ class Chat(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -596,9 +613,11 @@ class Chat(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.ChatCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionStreamRequestMessage]
             ),
@@ -665,6 +684,8 @@ class Chat(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["chat"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -676,7 +697,9 @@ class Chat(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStream(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )
@@ -701,8 +724,8 @@ class Chat(BaseSDK):
         *,
         model: str,
         messages: Union[
-            List[models.ChatCompletionStreamRequestMessage],
-            List[models.ChatCompletionStreamRequestMessageTypedDict],
+            Iterable[models.ChatCompletionStreamRequestMessage],
+            Iterable[models.ChatCompletionStreamRequestMessageTypedDict],
         ],
         temperature: OptionalNullable[float] = UNSET,
         top_p: OptionalNullable[float] = UNSET,
@@ -715,14 +738,14 @@ class Chat(BaseSDK):
             ]
         ] = UNSET,
         random_seed: OptionalNullable[int] = UNSET,
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         response_format: Optional[
             Union[models.ResponseFormat, models.ResponseFormatTypedDict]
         ] = None,
         tools: OptionalNullable[
             Union[
-                List[models.ChatCompletionStreamRequestTool],
-                List[models.ChatCompletionStreamRequestToolTypedDict],
+                Iterable[models.ChatCompletionStreamRequestTool],
+                Iterable[models.ChatCompletionStreamRequestToolTypedDict],
             ]
         ] = UNSET,
         tool_choice: Optional[
@@ -741,7 +764,10 @@ class Chat(BaseSDK):
         reasoning_effort: OptionalNullable[models.ReasoningEffort] = UNSET,
         prompt_mode: OptionalNullable[models.MistralPromptMode] = UNSET,
         guardrails: OptionalNullable[
-            Union[List[models.GuardrailConfig], List[models.GuardrailConfigTypedDict]]
+            Union[
+                Iterable[models.GuardrailConfig],
+                Iterable[models.GuardrailConfigTypedDict],
+            ]
         ] = UNSET,
         prompt_cache_key: OptionalNullable[str] = UNSET,
         service_tier: OptionalNullable[models.RequestedServiceTier] = UNSET,
@@ -802,9 +828,11 @@ class Chat(BaseSDK):
             top_p=top_p,
             max_tokens=max_tokens,
             stream=stream,
-            stop=stop,
+            stop=utils.unmarshal(
+                stop, OptionalNullable[models.ChatCompletionStreamRequestStop]
+            ),
             random_seed=random_seed,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             messages=utils.get_pydantic_model(
                 messages, List[models.ChatCompletionStreamRequestMessage]
             ),
@@ -871,6 +899,8 @@ class Chat(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["chat"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -882,7 +912,9 @@ class Chat(BaseSDK):
         if utils.match_response(http_res, "200", "text/event-stream"):
             return eventstreaming.EventStreamAsync(
                 http_res,
-                lambda raw: utils.unmarshal_json(raw, models.CompletionEvent),
+                lambda raw: unmarshal_json_response(
+                    models.CompletionEvent, http_res, raw
+                ),
                 sentinel="[DONE]",
                 client_ref=self,
             )

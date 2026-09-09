@@ -2,6 +2,14 @@
 # @generated-id: 97b61c6693ee
 
 from __future__ import annotations
+from .deploymentk8sbackendspec import (
+    DeploymentK8sBackendSpec,
+    DeploymentK8sBackendSpecTypedDict,
+)
+from .deploymentkoyebbackendspec import (
+    DeploymentKoyebBackendSpec,
+    DeploymentKoyebBackendSpecTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -9,15 +17,33 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+import pydantic
+from pydantic import Field, SerializeAsAny, model_serializer
+from typing import Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+WorkflowsWorkerSpecUpdateBackendSpecTypedDict = TypeAliasType(
+    "WorkflowsWorkerSpecUpdateBackendSpecTypedDict",
+    Union[DeploymentK8sBackendSpecTypedDict, DeploymentKoyebBackendSpecTypedDict],
+)
+
+
+WorkflowsWorkerSpecUpdateBackendSpec = Annotated[
+    Union[DeploymentKoyebBackendSpec, DeploymentK8sBackendSpec],
+    Field(discriminator="type"),
+]
 
 
 class WorkflowsWorkerSpecUpdateTypedDict(TypedDict):
     github_url: NotRequired[Nullable[str]]
     revision: NotRequired[Nullable[str]]
+    backend_spec: NotRequired[Nullable[WorkflowsWorkerSpecUpdateBackendSpecTypedDict]]
+    r"""Backend-specific configuration. The arm's 'type' picks where the worker runs: 'koyeb' (the default for a new deployment) or 'kubernetes'. Cannot be combined with the deprecated top-level 'entrypoint' and 'working_dir'."""
     entrypoint: NotRequired[Nullable[str]]
+    r"""Kubernetes-only. Setting it without 'backend_spec' selects the kubernetes backend, which is not generally available; setting it alongside 'backend_spec' returns 422."""
     working_dir: NotRequired[Nullable[str]]
+    r"""Kubernetes-only. Setting it without 'backend_spec' selects the kubernetes backend, which is not generally available; setting it alongside 'backend_spec' returns 422."""
 
 
 class WorkflowsWorkerSpecUpdate(BaseModel):
@@ -25,14 +51,35 @@ class WorkflowsWorkerSpecUpdate(BaseModel):
 
     revision: OptionalNullable[str] = UNSET
 
-    entrypoint: OptionalNullable[str] = UNSET
+    backend_spec: SerializeAsAny[
+        OptionalNullable[WorkflowsWorkerSpecUpdateBackendSpec]
+    ] = UNSET
+    r"""Backend-specific configuration. The arm's 'type' picks where the worker runs: 'koyeb' (the default for a new deployment) or 'kubernetes'. Cannot be combined with the deprecated top-level 'entrypoint' and 'working_dir'."""
 
-    working_dir: OptionalNullable[str] = UNSET
+    entrypoint: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Kubernetes-only. Setting it without 'backend_spec' selects the kubernetes backend, which is not generally available; setting it alongside 'backend_spec' returns 422."""
+
+    working_dir: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Kubernetes-only. Setting it without 'backend_spec' selects the kubernetes backend, which is not generally available; setting it alongside 'backend_spec' returns 422."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["github_url", "revision", "entrypoint", "working_dir"])
-        nullable_fields = set(["github_url", "revision", "entrypoint", "working_dir"])
+        optional_fields = set(
+            ["github_url", "revision", "backend_spec", "entrypoint", "working_dir"]
+        )
+        nullable_fields = set(
+            ["github_url", "revision", "backend_spec", "entrypoint", "working_dir"]
+        )
         serialized = handler(self)
         m = {}
 

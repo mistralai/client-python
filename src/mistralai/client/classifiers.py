@@ -21,7 +21,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -52,8 +52,8 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
         )
 
         req = self._build_request(
@@ -93,6 +93,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -124,7 +126,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -155,8 +157,8 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
         )
 
         req = self._build_request_async(
@@ -196,6 +198,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -298,6 +302,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -400,6 +406,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -431,7 +439,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -462,8 +470,8 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
         )
 
         req = self._build_request(
@@ -503,6 +511,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -534,7 +544,7 @@ class Classifiers(BaseSDK):
             models.ClassificationRequestInputs,
             models.ClassificationRequestInputsTypedDict,
         ],
-        metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -565,8 +575,8 @@ class Classifiers(BaseSDK):
 
         request = models.ClassificationRequest(
             model=model,
-            metadata=metadata,
-            inputs=inputs,
+            metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
+            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
         )
 
         req = self._build_request_async(
@@ -606,6 +616,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -703,6 +715,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -800,6 +814,8 @@ class Classifiers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["classifiers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

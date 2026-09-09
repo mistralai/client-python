@@ -11,8 +11,6 @@
 * [update](#update) - Patch dataset
 * [list_records](#list_records) - List existing records in the dataset
 * [create_record](#create_record) - Add a record to the dataset
-* [import_from_campaign](#import_from_campaign) - Populate the dataset with records from a campaign
-* [import_from_explorer](#import_from_explorer) - Populate the dataset with records from the explorer
 * [import_from_file](#import_from_file) - Populate the dataset with records from an uploaded file
 * [import_from_playground](#import_from_playground) - Populate the dataset with records from playground conversations
 * [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with records from another dataset
@@ -294,7 +292,7 @@ with Mistral(
                 "key1": "<value>",
             },
         ],
-    })
+    }, source="DIRECT_INPUT")
 
     # Handle response
     print(res)
@@ -303,104 +301,17 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `payload`                                                           | Dict[str, *Any*]                                                    | :heavy_check_mark:                                                  | Caller-authored input object stored on a dataset record.            |
-| `properties`                                                        | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `dataset_id`                                                                                                                              | *str*                                                                                                                                     | :heavy_check_mark:                                                                                                                        | N/A                                                                                                                                       |
+| `payload`                                                                                                                                 | Dict[str, *Any*]                                                                                                                          | :heavy_check_mark:                                                                                                                        | Caller-authored input object stored on a dataset record.                                                                                  |
+| `properties`                                                                                                                              | Dict[str, *Any*]                                                                                                                          | :heavy_minus_sign:                                                                                                                        | N/A                                                                                                                                       |
+| `source`                                                                                                                                  | [Optional[models.CreateDatasetRecordRequestSource]](../../models/createdatasetrecordrequestsource.md)                                     | :heavy_minus_sign:                                                                                                                        | Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source. |
+| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |
 
 ### Response
 
 **[models.DatasetRecord](../../models/datasetrecord.md)**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
-| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
-
-## import_from_campaign
-
-Populate the dataset with records from a campaign
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="post_dataset_records_from_campaign_v1_observability_datasets__dataset_id__imports_from_campaign_post" method="post" path="/v1/observability/datasets/{dataset_id}/imports/from-campaign" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.observability.datasets.import_from_campaign(dataset_id="306b5f31-e31c-4e06-9220-e3008c61bf1b", campaign_id="71a2e42d-7414-4fe6-89cb-44a2122b6f6b")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `campaign_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.DatasetImportTask](../../models/datasetimporttask.md)**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
-| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
-
-## import_from_explorer
-
-Populate the dataset with records from the explorer
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="post_dataset_records_from_explorer_v1_observability_datasets__dataset_id__imports_from_explorer_post" method="post" path="/v1/observability/datasets/{dataset_id}/imports/from-explorer" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.observability.datasets.import_from_explorer(dataset_id="ee1930e9-54f7-4c68-aa8a-40fe5d2a3485", completion_event_ids=[
-        "<value 1>",
-        "<value 2>",
-        "<value 3>",
-    ])
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `completion_event_ids`                                              | List[*str*]                                                         | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.DatasetImportTask](../../models/datasetimporttask.md)**
 
 ### Errors
 
