@@ -1,7 +1,12 @@
 import json
 from typing import Generic
 
-from mistralai.client.models import AssistantMessage, ChatCompletionChoice, ChatCompletionResponse
+from mistralai.client.models import (
+    AssistantMessage,
+    ChatCompletionChoice,
+    ChatCompletionResponse,
+    TextChunk,
+)
 from .utils.response_format import CustomPydanticModel, pydantic_model_from_json
 
 
@@ -34,6 +39,16 @@ def convert_to_parsed_chat_completion_response(
                     parsed_message.parsed = pydantic_model_from_json(json.loads(parsed_message.content), response_format)
                 elif parsed_message.content is None:
                     parsed_message.parsed = None
+                elif isinstance(parsed_message.content, list):
+                    final_text = "".join(
+                        chunk.text
+                        for chunk in parsed_message.content
+                        if isinstance(chunk, TextChunk)
+                    )
+                    if not final_text:
+                        parsed_message.parsed = None
+                    else:
+                        parsed_message.parsed = pydantic_model_from_json(json.loads(final_text), response_format)
                 else:
                     raise TypeError(f"Unexpected type for message.content: {type(parsed_message.content)}")
                 choice_dict = choice.model_dump()
