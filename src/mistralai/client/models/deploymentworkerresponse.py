@@ -11,8 +11,9 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class DeploymentWorkerResponseTypedDict(TypedDict):
@@ -20,8 +21,10 @@ class DeploymentWorkerResponseTypedDict(TypedDict):
     r"""Worker name"""
     created_at: datetime
     r"""When the worker first registered"""
-    updated_at: datetime
+    last_heartbeat: datetime
     r"""When the worker last registered"""
+    updated_at: datetime
+    r"""Deprecated alias of last_heartbeat"""
     is_active: bool
     r"""Whether this worker's liveness key is currently alive"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
@@ -35,8 +38,16 @@ class DeploymentWorkerResponse(BaseModel):
     created_at: datetime
     r"""When the worker first registered"""
 
-    updated_at: datetime
+    last_heartbeat: datetime
     r"""When the worker last registered"""
+
+    updated_at: Annotated[
+        datetime,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+    r"""Deprecated alias of last_heartbeat"""
 
     is_active: bool
     r"""Whether this worker's liveness key is currently alive"""

@@ -1,3 +1,4 @@
+import json
 import re
 import unittest
 from unittest.mock import MagicMock
@@ -39,6 +40,17 @@ def _make_request(path: str, traceparent: str | None = None) -> httpx.Request:
     return httpx.Request("POST", f"https://api.mistral.ai{path}", headers=headers)
 
 
+def _make_json_request(
+    path: str, body: dict, traceparent: str | None = None
+) -> httpx.Request:
+    headers = {"content-type": "application/json"}
+    if traceparent is not None:
+        headers["traceparent"] = traceparent
+    return httpx.Request(
+        "POST", f"https://api.mistral.ai{path}", headers=headers, json=body
+    )
+
+
 class TestTraceparentInjectionHook(unittest.TestCase):
     def setUp(self):
         self.hook = TraceparentInjectionHook()
@@ -73,6 +85,62 @@ class TestTraceparentInjectionHook(unittest.TestCase):
         result = self.hook.before_request(_make_hook_ctx(_EXECUTE_OP_ID), req)
         assert isinstance(result, httpx.Request)
         self.assertEqual(result.headers["traceparent"], explicit)
+
+    # --- body param: what survives a gateway rewriting the header ---
+
+    def test_execute_sets_traceparent_in_body(self):
+        req = _make_json_request("/v1/workflows/my-wf/execute", {"input": {"a": 1}})
+        result = self.hook.before_request(_make_hook_ctx(_EXECUTE_OP_ID), req)
+        assert isinstance(result, httpx.Request)
+
+        body = json.loads(result.content)
+        self.assertRegex(body["traceparent"], TRACEPARENT_RE)
+        self.assertEqual(body["input"], {"a": 1})
+        # Both carriers agree, so either side of the API can read it.
+        self.assertEqual(body["traceparent"], result.headers["traceparent"])
+        self.assertEqual(result.headers["content-length"], str(len(result.content)))
+
+    def test_explicit_body_traceparent_is_not_overwritten(self):
+        explicit = "00-aabbccddeeff00112233445566778899-0102030405060708-01"
+        req = _make_json_request(
+            "/v1/workflows/my-wf/execute", {"input": {}, "traceparent": explicit}
+        )
+        result = self.hook.before_request(_make_hook_ctx(_EXECUTE_OP_ID), req)
+        assert isinstance(result, httpx.Request)
+
+        self.assertEqual(json.loads(result.content)["traceparent"], explicit)
+        self.assertEqual(result.headers["traceparent"], explicit)
+
+    def test_explicit_header_is_mirrored_into_the_body(self):
+        explicit = "00-aabbccddeeff00112233445566778899-0102030405060708-01"
+        req = _make_json_request(
+            "/v1/workflows/my-wf/execute", {"input": {}}, traceparent=explicit
+        )
+        result = self.hook.before_request(_make_hook_ctx(_EXECUTE_OP_ID), req)
+        assert isinstance(result, httpx.Request)
+
+        self.assertEqual(json.loads(result.content)["traceparent"], explicit)
+
+    def test_non_json_body_still_gets_the_header(self):
+        req = httpx.Request(
+            "POST",
+            "https://api.mistral.ai/v1/workflows/my-wf/execute",
+            headers={"content-type": "text/plain"},
+            content=b"not json",
+        )
+        result = self.hook.before_request(_make_hook_ctx(_EXECUTE_OP_ID), req)
+        assert isinstance(result, httpx.Request)
+
+        self.assertRegex(result.headers["traceparent"], TRACEPARENT_RE)
+        self.assertEqual(result.content, b"not json")
+
+    def test_other_operation_body_is_unchanged(self):
+        req = _make_json_request("/v1/workflows/my-wf/executions", {"input": {}})
+        result = self.hook.before_request(_make_hook_ctx(_OTHER_OP_ID), req)
+        assert isinstance(result, httpx.Request)
+
+        self.assertNotIn("traceparent", json.loads(result.content))
+        self.assertNotIn("traceparent", result.headers)
 
     # --- OTEL context propagation ---
 

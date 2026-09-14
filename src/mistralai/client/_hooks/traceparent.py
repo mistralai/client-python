@@ -1,5 +1,6 @@
+import json
 import random
-from typing import Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 from opentelemetry.propagate import inject
@@ -26,8 +27,31 @@ def _is_sampled(traceparent: str) -> bool:
         return False
 
 
+def _json_body(request: httpx.Request) -> Optional[Dict[str, Any]]:
+    if "application/json" not in request.headers.get("content-type", ""):
+        return None
+    try:
+        body = json.loads(request.content)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None
+    return body if isinstance(body, dict) else None
+
+
+def _sampled_traceparent() -> str:
+    carrier: Dict[str, str] = {}
+    inject(carrier)
+    traceparent = carrier.get("traceparent", "")
+    if _is_sampled(traceparent):
+        return traceparent
+    return f"00-{random.getrandbits(128):032x}-{random.getrandbits(64):016x}-01"
+
+
 class TraceparentInjectionHook(BeforeRequestHook):
-    """Inject a sampled traceparent on /execute requests so worker traces are always recorded."""
+    """Send a sampled traceparent on /execute requests so worker traces are always recorded.
+
+    Sent in both the request body and the header. The body param is authoritative; the header is
+    kept for API versions that predate it.
+    """
 
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
@@ -35,17 +59,26 @@ class TraceparentInjectionHook(BeforeRequestHook):
         if hook_ctx.operation_id not in _EXECUTE_OPERATION_IDS:
             return request
 
-        # Don't overwrite an explicitly provided traceparent.
-        if "traceparent" in request.headers:
-            return request
-
-        carrier: Dict[str, str] = {}
-        inject(carrier)
-        traceparent = carrier.get("traceparent", "")
-        if not _is_sampled(traceparent):
-            trace_id = random.getrandbits(128)
-            span_id = random.getrandbits(64)
-            traceparent = f"00-{trace_id:032x}-{span_id:016x}-01"
+        body = _json_body(request)
+        caller_traceparent = (body or {}).get("traceparent") or request.headers.get(
+            "traceparent"
+        )
+        traceparent = caller_traceparent or _sampled_traceparent()
 
         request.headers["traceparent"] = traceparent
-        return request
+
+        if body is None or body.get("traceparent"):
+            return request
+
+        body["traceparent"] = traceparent
+        content = json.dumps(body).encode("utf-8")
+        headers = httpx.Headers(request.headers)
+        headers["content-length"] = str(len(content))
+
+        return httpx.Request(
+            method=request.method,
+            url=request.url,
+            headers=headers,
+            content=content,
+            extensions=request.extensions,
+        )

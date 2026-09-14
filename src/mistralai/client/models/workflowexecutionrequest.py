@@ -27,6 +27,8 @@ class WorkflowExecutionRequestTypedDict(TypedDict):
     custom_tracing_attributes: NotRequired[Nullable[Dict[str, str]]]
     force_new_trace: NotRequired[bool]
     r"""If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace."""
+    traceparent: NotRequired[Nullable[str]]
+    r"""W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set."""
     extensions: NotRequired[Nullable[Dict[str, Any]]]
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
     task_queue: NotRequired[Nullable[str]]
@@ -53,6 +55,9 @@ class WorkflowExecutionRequest(BaseModel):
     force_new_trace: Optional[bool] = False
     r"""If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace."""
 
+    traceparent: OptionalNullable[str] = UNSET
+    r"""W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set."""
+
     extensions: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
 
@@ -77,6 +82,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "timeout_seconds",
                 "custom_tracing_attributes",
                 "force_new_trace",
+                "traceparent",
                 "extensions",
                 "task_queue",
                 "deployment_name",
@@ -88,6 +94,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "input",
                 "timeout_seconds",
                 "custom_tracing_attributes",
+                "traceparent",
                 "extensions",
                 "task_queue",
                 "deployment_name",

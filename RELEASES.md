@@ -923,3 +923,24 @@ Based on:
 - [python v2.10.0] .
 ### Releases
 - [PyPI v2.10.0] https://pypi.org/project/mistralai/2.10.0 - .
+
+## 2026-09-14 15:02:43
+### API changes
+Added (8):
+- managedindexes.create
+- managedindexes.delete
+- managedindexes.delete_documents
+- managedindexes.get
+- managedindexes.ingest_documents
+- managedindexes.list
+- managedindexes.search
+- managedindexes.update
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.10.1] .
+### Releases
+- [PyPI v2.10.1] https://pypi.org/project/mistralai/2.10.1 - .

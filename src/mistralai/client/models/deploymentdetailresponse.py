@@ -35,12 +35,16 @@ class DeploymentDetailResponseTypedDict(TypedDict):
     r"""Whether at least one worker is currently live"""
     created_at: datetime
     r"""When the deployment was first registered"""
+    last_heartbeat: datetime
+    r"""When the deployment last saw a worker registration"""
     updated_at: datetime
-    r"""When the deployment was last updated"""
+    r"""Deprecated alias of last_heartbeat"""
     workers: List[DeploymentWorkerResponseTypedDict]
     r"""Workers registered for the deployment"""
     is_hardened: NotRequired[bool]
     r"""Whether the deployment only accepts registrations from authorized principals"""
+    owner: NotRequired[Nullable[str]]
+    r"""User id that owns the deployment, or null when it is administrator-managed"""
     location: NotRequired[Nullable[DeploymentLocationTypedDict]]
     r"""Where the deployment is running"""
     worker_count: NotRequired[int]
@@ -66,14 +70,25 @@ class DeploymentDetailResponse(BaseModel):
     created_at: datetime
     r"""When the deployment was first registered"""
 
-    updated_at: datetime
-    r"""When the deployment was last updated"""
+    last_heartbeat: datetime
+    r"""When the deployment last saw a worker registration"""
+
+    updated_at: Annotated[
+        datetime,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+    r"""Deprecated alias of last_heartbeat"""
 
     workers: List[DeploymentWorkerResponse]
     r"""Workers registered for the deployment"""
 
     is_hardened: Optional[bool] = False
     r"""Whether the deployment only accepts registrations from authorized principals"""
+
+    owner: OptionalNullable[str] = UNSET
+    r"""User id that owns the deployment, or null when it is administrator-managed"""
 
     location: Annotated[
         OptionalNullable[DeploymentLocation],
@@ -100,6 +115,7 @@ class DeploymentDetailResponse(BaseModel):
         optional_fields = set(
             [
                 "is_hardened",
+                "owner",
                 "location",
                 "worker_count",
                 "active_worker_count",
@@ -107,7 +123,7 @@ class DeploymentDetailResponse(BaseModel):
                 "managed",
             ]
         )
-        nullable_fields = set(["location", "managed"])
+        nullable_fields = set(["owner", "location", "managed"])
         serialized = handler(self)
         m = {}
 

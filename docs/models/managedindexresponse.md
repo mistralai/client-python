@@ -1,0 +1,17 @@
+# ManagedIndexResponse
+
+Wire representation of a managed index (decoupled from the domain model).
+
+
+## Fields
+
+| Field                                                                         | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `id`                                                                          | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
+| `name`                                                                        | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
+| `status`                                                                      | [models.ManagedIndexStatus](../models/managedindexstatus.md)                  | :heavy_check_mark:                                                            | Lifecycle of an index. Derived, not stored -- see ``managed_index_from_row``. |
+| `status_message`                                                              | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `schema_`                                                                     | [models.ManagedIndexFields](../models/managedindexfields.md)                  | :heavy_check_mark:                                                            | N/A                                                                           |
+| `config`                                                                      | [models.ManagedIndexConfig](../models/managedindexconfig.md)                  | :heavy_check_mark:                                                            | N/A                                                                           |
+| `created_at`                                                                  | [date](https://docs.python.org/3/library/datetime.html#date-objects)          | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `modified_at`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)          | :heavy_minus_sign:                                                            | N/A                                                                           |

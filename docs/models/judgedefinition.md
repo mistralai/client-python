@@ -5,5 +5,5 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `model`            | *str*              | :heavy_check_mark: | N/A                |
-| `prompt`           | *str*              | :heavy_check_mark: | N/A                |
+| `slug`             | *str*              | :heavy_check_mark: | N/A                |
+| `mapping`          | Dict[str, *str*]   | :heavy_minus_sign: | N/A                |

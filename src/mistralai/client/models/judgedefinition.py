@@ -2,16 +2,34 @@
 # @generated-id: 6f9c96450465
 
 from __future__ import annotations
-from mistralai.client.types import BaseModel
-from typing_extensions import TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import Dict, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class JudgeDefinitionTypedDict(TypedDict):
-    model: str
-    prompt: str
+    slug: str
+    mapping: NotRequired[Dict[str, str]]
 
 
 class JudgeDefinition(BaseModel):
-    model: str
+    slug: str
 
-    prompt: str
+    mapping: Optional[Dict[str, str]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["mapping"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

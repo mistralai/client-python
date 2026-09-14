@@ -480,7 +480,7 @@ print(res.choices[0].message.content)
 
 ### [Audio.Voices](docs/sdks/voices/README.md)
 
-* [list](docs/sdks/voices/README.md#list) - List all voices
+* [~~list~~](docs/sdks/voices/README.md#list) - List all voices :warning: **Deprecated**
 * [create](docs/sdks/voices/README.md#create) - Create a new voice
 * [delete](docs/sdks/voices/README.md#delete) - Delete a custom voice
 * [update](docs/sdks/voices/README.md#update) - Update voice metadata
@@ -666,6 +666,17 @@ print(res.choices[0].message.content)
 * [list](docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 * [register](docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
 * [update_run_info](docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
+
+### [Beta.Rag.ManagedIndexes](docs/sdks/managedindexes/README.md)
+
+* [create](docs/sdks/managedindexes/README.md#create) - Create a managed index
+* [list](docs/sdks/managedindexes/README.md#list) - List managed indexes
+* [get](docs/sdks/managedindexes/README.md#get) - Get a managed index
+* [update](docs/sdks/managedindexes/README.md#update) - Update a managed index schema
+* [delete](docs/sdks/managedindexes/README.md#delete) - Delete a managed index
+* [ingest_documents](docs/sdks/managedindexes/README.md#ingest_documents) - Ingest documents into a managed index
+* [delete_documents](docs/sdks/managedindexes/README.md#delete_documents) - Delete documents from a managed index
+* [search](docs/sdks/managedindexes/README.md#search) - Search a managed index
 
 ### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
 
@@ -1043,8 +1054,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 155 of 245 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 245 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 162 of 253 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 253 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

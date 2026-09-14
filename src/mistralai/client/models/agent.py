@@ -108,6 +108,7 @@ class AgentTypedDict(TypedDict):
     handoffs: NotRequired[Nullable[List[str]]]
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     object: Literal["agent"]
+    owner_id: NotRequired[Nullable[str]]
     version_message: NotRequired[Nullable[str]]
 
 
@@ -152,6 +153,8 @@ class Agent(BaseModel):
         pydantic.Field(alias="object"),
     ] = "agent"
 
+    owner_id: OptionalNullable[str] = UNSET
+
     version_message: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
@@ -166,6 +169,7 @@ class Agent(BaseModel):
                 "handoffs",
                 "metadata",
                 "object",
+                "owner_id",
                 "version_message",
             ]
         )
@@ -176,6 +180,7 @@ class Agent(BaseModel):
                 "description",
                 "handoffs",
                 "metadata",
+                "owner_id",
                 "version_message",
             ]
         )

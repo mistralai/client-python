@@ -4,16 +4,18 @@
 
 ### Available Operations
 
-* [list](#list) - List all voices
+* [~~list~~](#list) - List all voices :warning: **Deprecated**
 * [create](#create) - Create a new voice
 * [delete](#delete) - Delete a custom voice
 * [update](#update) - Update voice metadata
 * [get](#get) - Get voice details
 * [get_sample_audio](#get_sample_audio) - Get voice sample audio
 
-## list
+## ~~list~~
 
-List all voices (excluding sample data)
+Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.
+
+> :warning: **DEPRECATED**: Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead..
 
 ### Example Usage
 

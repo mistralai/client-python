@@ -10,6 +10,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -17,6 +18,7 @@ class CreateServiceAccountRequestTypedDict(TypedDict):
     name: str
     workspace_id: str
     description: NotRequired[Nullable[str]]
+    role_ids: NotRequired[List[str]]
 
 
 class CreateServiceAccountRequest(BaseModel):
@@ -26,9 +28,11 @@ class CreateServiceAccountRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
+    role_ids: Optional[List[str]] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description"])
+        optional_fields = set(["description", "role_ids"])
         nullable_fields = set(["description"])
         serialized = handler(self)
         m = {}

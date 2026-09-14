@@ -26,10 +26,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.evaluations.create_pipeline_config(pipeline_kind="judge", selectors=[], definition={
-        "model": "Golf",
-        "prompt": "<value>",
-    }, name="<value>", enabled=True)
+    res = mistral.beta.observability.evaluations.create_pipeline_config(name="<value>", pipeline_kind="judge", selectors=[], definitions=[
+        {
+            "model": "mistral-moderation-latest",
+        },
+    ], enabled=True)
 
     # Handle response
     print(res)
@@ -38,17 +39,15 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `pipeline_kind`                                                               | [models.PipelineKind](../../models/pipelinekind.md)                           | :heavy_check_mark:                                                            | N/A                                                                           |
-| `selectors`                                                                   | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                            | N/A                                                                           |
-| `definition`                                                                  | [models.PipelineConfigDefinition](../../models/pipelineconfigdefinition.md)   | :heavy_check_mark:                                                            | N/A                                                                           |
-| `name`                                                                        | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
-| `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `slug`                                                                        | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `group`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `enabled`                                                                     | *Optional[bool]*                                                              | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `name`                                                                            | *str*                                                                             | :heavy_check_mark:                                                                | N/A                                                                               |
+| `pipeline_kind`                                                                   | [models.PipelineKind](../../models/pipelinekind.md)                               | :heavy_check_mark:                                                                | N/A                                                                               |
+| `selectors`                                                                       | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)]     | :heavy_check_mark:                                                                | N/A                                                                               |
+| `definitions`                                                                     | List[[models.PipelineConfigDefinition](../../models/pipelineconfigdefinition.md)] | :heavy_check_mark:                                                                | N/A                                                                               |
+| `description`                                                                     | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `enabled`                                                                         | *Optional[bool]*                                                                  | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 ### Response
 
@@ -89,7 +88,6 @@ with Mistral(
 | Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `pipeline_kind`                                                       | [OptionalNullable[models.PipelineKind]](../../models/pipelinekind.md) | :heavy_minus_sign:                                                    | N/A                                                                   |
-| `group`                                                               | *OptionalNullable[str]*                                               | :heavy_minus_sign:                                                    | N/A                                                                   |
 | `enabled`                                                             | *OptionalNullable[bool]*                                              | :heavy_minus_sign:                                                    | N/A                                                                   |
 | `page_size`                                                           | *Optional[int]*                                                       | :heavy_minus_sign:                                                    | N/A                                                                   |
 | `page`                                                                | *Optional[int]*                                                       | :heavy_minus_sign:                                                    | N/A                                                                   |
@@ -164,13 +162,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.evaluations.update_pipeline_config(pipeline_config_id="4ee75abd-cccd-4232-9858-0c535465bfd5", pipeline_kind="detection", selectors=[], definition={
-        "destination": {
-            "protocol": "<value>",
-            "endpoint": "<value>",
-            "insecure": False,
-        },
-    }, name="<value>", enabled=True)
+    res = mistral.beta.observability.evaluations.update_pipeline_config(pipeline_config_id="4ee75abd-cccd-4232-9858-0c535465bfd5", name="<value>", pipeline_kind="detection", selectors=[], definitions=[], enabled=True)
 
     # Handle response
     print(res)
@@ -179,18 +171,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `pipeline_config_id`                                                          | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
-| `pipeline_kind`                                                               | [models.PipelineKind](../../models/pipelinekind.md)                           | :heavy_check_mark:                                                            | N/A                                                                           |
-| `selectors`                                                                   | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                            | N/A                                                                           |
-| `definition`                                                                  | [models.PipelineConfigDefinition](../../models/pipelineconfigdefinition.md)   | :heavy_check_mark:                                                            | N/A                                                                           |
-| `name`                                                                        | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
-| `enabled`                                                                     | *bool*                                                                        | :heavy_check_mark:                                                            | N/A                                                                           |
-| `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `slug`                                                                        | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `group`                                                                       | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
-| `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `pipeline_config_id`                                                              | *str*                                                                             | :heavy_check_mark:                                                                | N/A                                                                               |
+| `name`                                                                            | *str*                                                                             | :heavy_check_mark:                                                                | N/A                                                                               |
+| `pipeline_kind`                                                                   | [models.PipelineKind](../../models/pipelinekind.md)                               | :heavy_check_mark:                                                                | N/A                                                                               |
+| `selectors`                                                                       | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)]     | :heavy_check_mark:                                                                | N/A                                                                               |
+| `definitions`                                                                     | List[[models.PipelineConfigDefinition](../../models/pipelineconfigdefinition.md)] | :heavy_check_mark:                                                                | N/A                                                                               |
+| `enabled`                                                                         | *bool*                                                                            | :heavy_check_mark:                                                                | N/A                                                                               |
+| `description`                                                                     | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 ### Response
 
