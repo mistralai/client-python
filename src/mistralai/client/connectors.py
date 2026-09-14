@@ -9,9 +9,68 @@ from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
+# region imports
+import httpx
+
+from mistralai.extra.connectors_gateway import (
+    call_http_endpoint_async as call_http_endpoint_via_gateway_async,
+    call_mcp_tool_async as call_mcp_tool_via_gateway_async,
+)
+# endregion imports
+
 
 class Connectors(BaseSDK):
     r"""(beta) Connectors API - manage your connectors"""
+
+    # region sdk-class-body
+    async def call_mcp_tool_async(
+        self,
+        *,
+        connector_id_or_name: str,
+        tool_name: str,
+        arguments: Optional[Mapping[str, Any]] = None,
+        credentials_name: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> models.ConnectorToolCallResponse:
+        r"""Call an MCP connector tool directly through the stateless connectors gateway.
+
+        This is the async replacement for ``call_tool`` and ``call_tool_async``.
+        """
+        return await call_mcp_tool_via_gateway_async(
+            self.sdk_configuration,
+            connector_id_or_name=connector_id_or_name,
+            tool_name=tool_name,
+            arguments=arguments,
+            credentials_name=credentials_name,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+        )
+
+    async def call_http_endpoint_async(
+        self,
+        *,
+        connector_id_or_name: str,
+        request: httpx.Request,
+        credentials_name: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> httpx.Response:
+        r"""Call an HTTP connector endpoint directly through the connectors gateway.
+
+        The supplied request must have a relative URL and is consumed by this call.
+        The raw HTTP response is returned without raising for upstream status codes.
+        """
+        return await call_http_endpoint_via_gateway_async(
+            self.sdk_configuration,
+            connector_id_or_name=connector_id_or_name,
+            request=request,
+            credentials_name=credentials_name,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+        )
+
+    # endregion sdk-class-body
 
     def create(
         self,
