@@ -944,3 +944,26 @@ Based on:
 - [python v2.10.1] .
 ### Releases
 - [PyPI v2.10.1] https://pypi.org/project/mistralai/2.10.1 - .
+
+### ⚠️ Breaking changes
+
+**Removed fields**
+- `JudgeDefinition`: `model` and `prompt` removed. Now requires `slug`; optional `mapping: Dict[str, str]`.
+- `PipelineConfig`, `CreatePipelineConfigRequest`, `UpdatePipelineConfigRequest`: `definition` replaced by required `definitions: List[PipelineConfigDefinition]`. `slug` and `group` removed. `definition_hash` also removed from `PipelineConfig`.
+- `ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest`: `group` query parameter removed.
+
+**New required fields**
+- `chain_run_id: Nullable[str]` on all workflow and task event responses (`WorkflowExecution*`, `ActivityTask*`, `CustomTask*`, `WorkflowTask*`).
+- `last_heartbeat: datetime` on `DeploymentResponse`, `DeploymentDetailResponse`, `DeploymentWorkerResponse`.
+- `supports_mcp: bool` on `HTTPConnector` and `MCPConnector`.
+- `type` on `VoiceResponse`, `managed_indexes` on `Rag`.
+
+**Type changes**
+- `search_keys` values are now nullable on `WorkflowExecutionResponse`, `WorkflowExecutionTraceEventsResponse`, `WorkflowExecutionTraceOTelResponse`, `WorkflowExecutionTraceSummaryResponse`: `Dict[str, str]` -> `Dict[str, Nullable[str]]`.
+- `And` and `Or` are objects again (`type`, `matches`) after being removed in 2.10.0. They were union aliases of `FilterGroup | FilterCondition` in 2.9.x.
+
+**Deprecated**
+- `updated_at` on the deployment models now emits a DeprecationWarning. Use `last_heartbeat`.
+
+**Relaxed (non-breaking)**
+- `ListServiceAccountsV1ServiceAccountsGetRequest.workspace_id` is now optional.
