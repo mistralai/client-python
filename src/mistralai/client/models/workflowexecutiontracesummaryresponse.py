@@ -47,7 +47,7 @@ class WorkflowExecutionTraceSummaryResponseTypedDict(TypedDict):
     r"""The ID of the user who triggered the execution"""
     total_duration_ms: NotRequired[Nullable[int]]
     r"""The total duration of the trace in milliseconds"""
-    search_keys: NotRequired[Nullable[Dict[str, str]]]
+    search_keys: NotRequired[Nullable[Dict[str, Nullable[str]]]]
     r"""The execution's search keys (metadata), if requested via include_search_keys."""
     span_tree: NotRequired[Nullable[WorkflowExecutionTraceSummarySpanTypedDict]]
     r"""The root span of the trace"""
@@ -93,7 +93,7 @@ class WorkflowExecutionTraceSummaryResponse(BaseModel):
     total_duration_ms: OptionalNullable[int] = UNSET
     r"""The total duration of the trace in milliseconds"""
 
-    search_keys: OptionalNullable[Dict[str, str]] = UNSET
+    search_keys: OptionalNullable[Dict[str, Nullable[str]]] = UNSET
     r"""The execution's search keys (metadata), if requested via include_search_keys."""
 
     span_tree: OptionalNullable[WorkflowExecutionTraceSummarySpan] = UNSET

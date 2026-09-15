@@ -9,7 +9,9 @@
 
 ## get_stream_events
 
-Get Stream Events
+Stream workflow events as Server-Sent Events (SSE).
+
+One of `root_workflow_exec_id`, `parent_workflow_exec_id` or `workflow_exec_id` is required.
 
 ### Example Usage
 

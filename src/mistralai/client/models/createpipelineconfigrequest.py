@@ -24,37 +24,31 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class CreatePipelineConfigRequestTypedDict(TypedDict):
+    name: str
     pipeline_kind: PipelineKind
     selectors: List[PipelineConfigSelectorTypedDict]
-    definition: PipelineConfigDefinitionTypedDict
-    name: str
+    definitions: List[PipelineConfigDefinitionTypedDict]
     description: NotRequired[Nullable[str]]
-    slug: NotRequired[Nullable[str]]
-    group: NotRequired[Nullable[str]]
     enabled: NotRequired[bool]
 
 
 class CreatePipelineConfigRequest(BaseModel):
+    name: str
+
     pipeline_kind: PipelineKind
 
     selectors: List[PipelineConfigSelector]
 
-    definition: PipelineConfigDefinition
-
-    name: str
+    definitions: List[PipelineConfigDefinition]
 
     description: OptionalNullable[str] = UNSET
-
-    slug: OptionalNullable[str] = UNSET
-
-    group: OptionalNullable[str] = UNSET
 
     enabled: Optional[bool] = True
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "slug", "group", "enabled"])
-        nullable_fields = set(["description", "slug", "group"])
+        optional_fields = set(["description", "enabled"])
+        nullable_fields = set(["description"])
         serialized = handler(self)
         m = {}
 

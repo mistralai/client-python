@@ -18,7 +18,6 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequestTypedDict(TypedDict):
     pipeline_kind: NotRequired[Nullable[PipelineKind]]
-    group: NotRequired[Nullable[str]]
     enabled: NotRequired[Nullable[bool]]
     page_size: NotRequired[int]
     page: NotRequired[int]
@@ -28,11 +27,6 @@ class ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequestTypedDict(Typed
 class ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest(BaseModel):
     pipeline_kind: Annotated[
         OptionalNullable[PipelineKind],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = UNSET
-
-    group: Annotated[
-        OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
 
@@ -58,10 +52,8 @@ class ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            ["pipeline_kind", "group", "enabled", "page_size", "page", "q"]
-        )
-        nullable_fields = set(["pipeline_kind", "group", "enabled", "q"])
+        optional_fields = set(["pipeline_kind", "enabled", "page_size", "page", "q"])
+        nullable_fields = set(["pipeline_kind", "enabled", "q"])
         serialized = handler(self)
         m = {}
 

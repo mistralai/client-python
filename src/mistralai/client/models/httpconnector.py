@@ -46,6 +46,8 @@ class HTTPConnectorTypedDict(TypedDict):
     owner_type: ConsumerType
     visibility: ResourceVisibility
     private_tool_execution: bool
+    supports_mcp: bool
+    r"""Whether this connector exposes an MCP-compatible tool interface."""
     title: NotRequired[Nullable[str]]
     server: NotRequired[Nullable[str]]
     icon_url: NotRequired[Nullable[str]]
@@ -88,6 +90,9 @@ class HTTPConnector(BaseModel):
     visibility: ResourceVisibility
 
     private_tool_execution: bool
+
+    supports_mcp: bool
+    r"""Whether this connector exposes an MCP-compatible tool interface."""
 
     title: OptionalNullable[str] = UNSET
 

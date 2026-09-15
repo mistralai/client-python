@@ -9,9 +9,13 @@ from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Iterable, List, Mapping, Optional
+from typing_extensions import deprecated
 
 
 class Voices(BaseSDK):
+    @deprecated(
+        "warning: ** DEPRECATED ** - Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.."
+    )
     def list(
         self,
         *,
@@ -25,7 +29,7 @@ class Voices(BaseSDK):
     ) -> models.VoiceListResponse:
         r"""List all voices
 
-        List all voices (excluding sample data)
+        Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
@@ -89,7 +93,11 @@ class Voices(BaseSDK):
                     self.sdk_configuration.security, models.Security
                 ),
                 tags=["audio.voices"],
-                extensions=None,
+                extensions={
+                    "x-deprecated-replacement": "/v2/audio/voices",
+                    "x-deprecation-date": "2026-09-07",
+                    "x-sunset-date": "2027-03-31",
+                },
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -113,6 +121,9 @@ class Voices(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.."
+    )
     async def list_async(
         self,
         *,
@@ -126,7 +137,7 @@ class Voices(BaseSDK):
     ) -> models.VoiceListResponse:
         r"""List all voices
 
-        List all voices (excluding sample data)
+        Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
@@ -190,7 +201,11 @@ class Voices(BaseSDK):
                     self.sdk_configuration.security, models.Security
                 ),
                 tags=["audio.voices"],
-                extensions=None,
+                extensions={
+                    "x-deprecated-replacement": "/v2/audio/voices",
+                    "x-deprecation-date": "2026-09-07",
+                    "x-sunset-date": "2027-03-31",
+                },
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

@@ -15,7 +15,7 @@
 
 ## create
 
-Create a service account in a workspace. Requires the `create_service_account` permission.
+Create a service account in a workspace. Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -43,6 +43,7 @@ with Mistral(
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `workspace_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `role_ids`                                                          | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -58,9 +59,11 @@ with Mistral(
 
 ## list
 
-List the service accounts in a workspace.
+List the service accounts in a workspace, or across the organization.
 
-Requires the `see_all_workspace_service_accounts` permission.
+Scoped to a workspace, this requires the Workspace admin (`workspace_admin`) role on
+it. Omitting the workspace lists the whole organization and requires the Organization
+admin (`organization_admin`) role instead.
 
 ### Example Usage
 
@@ -74,7 +77,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.service_accounts.list(workspace_id="96e67917-4b94-4dc0-b61a-bd713aa8a4e6", offset=251948, limit=234499, include_deleted=False)
+    res = mistral.beta.service_accounts.list(offset=251948, limit=234499, workspace_id="96e67917-4b94-4dc0-b61a-bd713aa8a4e6", include_deleted=False)
 
     while res is not None:
         # Handle items
@@ -87,9 +90,9 @@ with Mistral(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `workspace_id`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `offset`                                                            | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `limit`                                                             | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `workspace_id`                                                      | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `include_deleted`                                                   | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
@@ -108,7 +111,7 @@ with Mistral(
 
 List the workspace roles that can be assigned to a service account.
 
-Requires the `see_all_workspace_service_accounts` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -151,7 +154,7 @@ with Mistral(
 
 Retrieve a service account.
 
-Requires the `see_all_workspace_service_accounts` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -194,7 +197,7 @@ with Mistral(
 
 Update a service account.
 
-Requires the `manage_any_workspace_service_account` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -238,7 +241,7 @@ with Mistral(
 
 Delete a service account.
 
-Requires the `manage_any_workspace_service_account` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -276,7 +279,7 @@ with Mistral(
 
 Replace the workspace roles assigned to a service account.
 
-Requires the `manage_any_workspace_service_account` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 
@@ -320,7 +323,7 @@ with Mistral(
 
 List the workspace roles assigned to a service account.
 
-Requires the `see_all_workspace_service_accounts` permission.
+Requires the Workspace admin (`workspace_admin`) role.
 
 ### Example Usage
 

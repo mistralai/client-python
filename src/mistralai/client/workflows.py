@@ -901,6 +901,7 @@ class Workflows(BaseSDK):
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
+        traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
@@ -918,6 +919,7 @@ class Workflows(BaseSDK):
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
+        :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
@@ -950,6 +952,7 @@ class Workflows(BaseSDK):
                     custom_tracing_attributes, OptionalNullable[Dict[str, str]]
                 ),
                 force_new_trace=force_new_trace,
+                traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
                 ),
@@ -1037,6 +1040,7 @@ class Workflows(BaseSDK):
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
+        traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
@@ -1054,6 +1058,7 @@ class Workflows(BaseSDK):
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
+        :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
@@ -1086,6 +1091,7 @@ class Workflows(BaseSDK):
                     custom_tracing_attributes, OptionalNullable[Dict[str, str]]
                 ),
                 force_new_trace=force_new_trace,
+                traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
                 ),
@@ -1176,6 +1182,7 @@ class Workflows(BaseSDK):
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
+        traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
@@ -1193,6 +1200,7 @@ class Workflows(BaseSDK):
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
+        :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
@@ -1225,6 +1233,7 @@ class Workflows(BaseSDK):
                     custom_tracing_attributes, OptionalNullable[Dict[str, str]]
                 ),
                 force_new_trace=force_new_trace,
+                traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
                 ),
@@ -1315,6 +1324,7 @@ class Workflows(BaseSDK):
         timeout_seconds: OptionalNullable[float] = UNSET,
         custom_tracing_attributes: OptionalNullable[Mapping[str, str]] = UNSET,
         force_new_trace: Optional[bool] = False,
+        traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
@@ -1332,6 +1342,7 @@ class Workflows(BaseSDK):
         :param timeout_seconds: Maximum time to wait for completion when wait_for_result is true.
         :param custom_tracing_attributes:
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
+        :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
@@ -1364,6 +1375,7 @@ class Workflows(BaseSDK):
                     custom_tracing_attributes, OptionalNullable[Dict[str, str]]
                 ),
                 force_new_trace=force_new_trace,
+                traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
                 ),

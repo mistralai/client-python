@@ -18,6 +18,7 @@ class ServiceAccounts(BaseSDK):
         name: str,
         workspace_id: str,
         description: OptionalNullable[str] = UNSET,
+        role_ids: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -25,11 +26,12 @@ class ServiceAccounts(BaseSDK):
     ) -> models.ServiceAccount:
         r"""Create Service Account
 
-        Create a service account in a workspace. Requires the `create_service_account` permission.
+        Create a service account in a workspace. Requires the Workspace admin (`workspace_admin`) role.
 
         :param name:
         :param workspace_id:
         :param description:
+        :param role_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -52,6 +54,7 @@ class ServiceAccounts(BaseSDK):
             name=name,
             workspace_id=workspace_id,
             description=description,
+            role_ids=utils.unmarshal(role_ids, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -122,6 +125,7 @@ class ServiceAccounts(BaseSDK):
         name: str,
         workspace_id: str,
         description: OptionalNullable[str] = UNSET,
+        role_ids: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -129,11 +133,12 @@ class ServiceAccounts(BaseSDK):
     ) -> models.ServiceAccount:
         r"""Create Service Account
 
-        Create a service account in a workspace. Requires the `create_service_account` permission.
+        Create a service account in a workspace. Requires the Workspace admin (`workspace_admin`) role.
 
         :param name:
         :param workspace_id:
         :param description:
+        :param role_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -156,6 +161,7 @@ class ServiceAccounts(BaseSDK):
             name=name,
             workspace_id=workspace_id,
             description=description,
+            role_ids=utils.unmarshal(role_ids, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -223,9 +229,9 @@ class ServiceAccounts(BaseSDK):
     def list(
         self,
         *,
-        workspace_id: str,
         offset: int,
         limit: int,
+        workspace_id: OptionalNullable[str] = UNSET,
         include_deleted: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -234,13 +240,15 @@ class ServiceAccounts(BaseSDK):
     ) -> Optional[models.ListServiceAccountsV1ServiceAccountsGetResponse]:
         r"""List Service Accounts
 
-        List the service accounts in a workspace.
+        List the service accounts in a workspace, or across the organization.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Scoped to a workspace, this requires the Workspace admin (`workspace_admin`) role on
+        it. Omitting the workspace lists the whole organization and requires the Organization
+        admin (`organization_admin`) role instead.
 
-        :param workspace_id:
         :param offset:
         :param limit:
+        :param workspace_id:
         :param include_deleted:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -327,9 +335,9 @@ class ServiceAccounts(BaseSDK):
             next_offset = offset + len(results[0])
 
             return self.list(
-                workspace_id=workspace_id,
                 offset=next_offset,
                 limit=limit,
+                workspace_id=workspace_id,
                 include_deleted=include_deleted,
                 retries=retries,
                 server_url=server_url,
@@ -362,9 +370,9 @@ class ServiceAccounts(BaseSDK):
     async def list_async(
         self,
         *,
-        workspace_id: str,
         offset: int,
         limit: int,
+        workspace_id: OptionalNullable[str] = UNSET,
         include_deleted: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -373,13 +381,15 @@ class ServiceAccounts(BaseSDK):
     ) -> Optional[models.ListServiceAccountsV1ServiceAccountsGetResponse]:
         r"""List Service Accounts
 
-        List the service accounts in a workspace.
+        List the service accounts in a workspace, or across the organization.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Scoped to a workspace, this requires the Workspace admin (`workspace_admin`) role on
+        it. Omitting the workspace lists the whole organization and requires the Organization
+        admin (`organization_admin`) role instead.
 
-        :param workspace_id:
         :param offset:
         :param limit:
+        :param workspace_id:
         :param include_deleted:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -469,9 +479,9 @@ class ServiceAccounts(BaseSDK):
             next_offset = offset + len(results[0])
 
             return self.list_async(
-                workspace_id=workspace_id,
                 offset=next_offset,
                 limit=limit,
+                workspace_id=workspace_id,
                 include_deleted=include_deleted,
                 retries=retries,
                 server_url=server_url,
@@ -514,7 +524,7 @@ class ServiceAccounts(BaseSDK):
 
         List the workspace roles that can be assigned to a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param workspace_id:
         :param retries: Override the default retry configuration for this method
@@ -613,7 +623,7 @@ class ServiceAccounts(BaseSDK):
 
         List the workspace roles that can be assigned to a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param workspace_id:
         :param retries: Override the default retry configuration for this method
@@ -712,7 +722,7 @@ class ServiceAccounts(BaseSDK):
 
         Retrieve a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -809,7 +819,7 @@ class ServiceAccounts(BaseSDK):
 
         Retrieve a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -907,7 +917,7 @@ class ServiceAccounts(BaseSDK):
 
         Update a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param description:
@@ -1018,7 +1028,7 @@ class ServiceAccounts(BaseSDK):
 
         Update a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param description:
@@ -1128,7 +1138,7 @@ class ServiceAccounts(BaseSDK):
 
         Delete a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -1227,7 +1237,7 @@ class ServiceAccounts(BaseSDK):
 
         Delete a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -1327,7 +1337,7 @@ class ServiceAccounts(BaseSDK):
 
         Replace the workspace roles assigned to a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param role_ids:
@@ -1438,7 +1448,7 @@ class ServiceAccounts(BaseSDK):
 
         Replace the workspace roles assigned to a service account.
 
-        Requires the `manage_any_workspace_service_account` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param role_ids:
@@ -1548,7 +1558,7 @@ class ServiceAccounts(BaseSDK):
 
         List the workspace roles assigned to a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -1647,7 +1657,7 @@ class ServiceAccounts(BaseSDK):
 
         List the workspace roles assigned to a service account.
 
-        Requires the `see_all_workspace_service_accounts` permission.
+        Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method

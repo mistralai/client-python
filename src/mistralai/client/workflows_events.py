@@ -37,6 +37,10 @@ class WorkflowsEvents(BaseSDK):
     ]:
         r"""Get Stream Events
 
+        Stream workflow events as Server-Sent Events (SSE).
+
+        One of `root_workflow_exec_id`, `parent_workflow_exec_id` or `workflow_exec_id` is required.
+
         :param scope:
         :param activity_name:
         :param activity_id:
@@ -147,7 +151,7 @@ class WorkflowsEvents(BaseSDK):
                 errors.HTTPValidationErrorData, http_res, http_res_text
             )
             raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
+        if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -182,6 +186,10 @@ class WorkflowsEvents(BaseSDK):
         models.GetStreamEventsV1WorkflowsEventsStreamGetResponseBody
     ]:
         r"""Get Stream Events
+
+        Stream workflow events as Server-Sent Events (SSE).
+
+        One of `root_workflow_exec_id`, `parent_workflow_exec_id` or `workflow_exec_id` is required.
 
         :param scope:
         :param activity_name:
@@ -293,7 +301,7 @@ class WorkflowsEvents(BaseSDK):
                 errors.HTTPValidationErrorData, http_res, http_res_text
             )
             raise errors.HTTPValidationError(response_data, http_res, http_res_text)
-        if utils.match_response(http_res, "4XX", "*"):
+        if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):

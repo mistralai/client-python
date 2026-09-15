@@ -14,18 +14,17 @@ class Evaluations(BaseSDK):
     def create_pipeline_config(
         self,
         *,
+        name: str,
         pipeline_kind: models.PipelineKind,
         selectors: Union[
             Iterable[models.PipelineConfigSelector],
             Iterable[models.PipelineConfigSelectorTypedDict],
         ],
-        definition: Union[
-            models.PipelineConfigDefinition, models.PipelineConfigDefinitionTypedDict
+        definitions: Union[
+            Iterable[models.PipelineConfigDefinition],
+            Iterable[models.PipelineConfigDefinitionTypedDict],
         ],
-        name: str,
         description: OptionalNullable[str] = UNSET,
-        slug: OptionalNullable[str] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         enabled: Optional[bool] = True,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -34,13 +33,11 @@ class Evaluations(BaseSDK):
     ) -> models.PipelineConfig:
         r"""Create a worker pipeline configuration
 
+        :param name:
         :param pipeline_kind:
         :param selectors:
-        :param definition:
-        :param name:
+        :param definitions:
         :param description:
-        :param slug:
-        :param group:
         :param enabled:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -61,17 +58,15 @@ class Evaluations(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePipelineConfigRequest(
+            name=name,
             pipeline_kind=pipeline_kind,
             description=description,
             selectors=utils.get_pydantic_model(
                 selectors, List[models.PipelineConfigSelector]
             ),
-            slug=slug,
-            group=group,
-            definition=utils.get_pydantic_model(
-                definition, models.PipelineConfigDefinition
+            definitions=utils.get_pydantic_model(
+                definitions, List[models.PipelineConfigDefinition]
             ),
-            name=name,
             enabled=enabled,
         )
 
@@ -142,18 +137,17 @@ class Evaluations(BaseSDK):
     async def create_pipeline_config_async(
         self,
         *,
+        name: str,
         pipeline_kind: models.PipelineKind,
         selectors: Union[
             Iterable[models.PipelineConfigSelector],
             Iterable[models.PipelineConfigSelectorTypedDict],
         ],
-        definition: Union[
-            models.PipelineConfigDefinition, models.PipelineConfigDefinitionTypedDict
+        definitions: Union[
+            Iterable[models.PipelineConfigDefinition],
+            Iterable[models.PipelineConfigDefinitionTypedDict],
         ],
-        name: str,
         description: OptionalNullable[str] = UNSET,
-        slug: OptionalNullable[str] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         enabled: Optional[bool] = True,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -162,13 +156,11 @@ class Evaluations(BaseSDK):
     ) -> models.PipelineConfig:
         r"""Create a worker pipeline configuration
 
+        :param name:
         :param pipeline_kind:
         :param selectors:
-        :param definition:
-        :param name:
+        :param definitions:
         :param description:
-        :param slug:
-        :param group:
         :param enabled:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -189,17 +181,15 @@ class Evaluations(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePipelineConfigRequest(
+            name=name,
             pipeline_kind=pipeline_kind,
             description=description,
             selectors=utils.get_pydantic_model(
                 selectors, List[models.PipelineConfigSelector]
             ),
-            slug=slug,
-            group=group,
-            definition=utils.get_pydantic_model(
-                definition, models.PipelineConfigDefinition
+            definitions=utils.get_pydantic_model(
+                definitions, List[models.PipelineConfigDefinition]
             ),
-            name=name,
             enabled=enabled,
         )
 
@@ -271,7 +261,6 @@ class Evaluations(BaseSDK):
         self,
         *,
         pipeline_kind: OptionalNullable[models.PipelineKind] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         enabled: OptionalNullable[bool] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
@@ -284,7 +273,6 @@ class Evaluations(BaseSDK):
         r"""List worker pipeline configurations
 
         :param pipeline_kind:
-        :param group:
         :param enabled:
         :param page_size:
         :param page:
@@ -309,7 +297,6 @@ class Evaluations(BaseSDK):
 
         request = models.ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest(
             pipeline_kind=pipeline_kind,
-            group=group,
             enabled=enabled,
             page_size=page_size,
             page=page,
@@ -381,7 +368,6 @@ class Evaluations(BaseSDK):
         self,
         *,
         pipeline_kind: OptionalNullable[models.PipelineKind] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         enabled: OptionalNullable[bool] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
@@ -394,7 +380,6 @@ class Evaluations(BaseSDK):
         r"""List worker pipeline configurations
 
         :param pipeline_kind:
-        :param group:
         :param enabled:
         :param page_size:
         :param page:
@@ -419,7 +404,6 @@ class Evaluations(BaseSDK):
 
         request = models.ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest(
             pipeline_kind=pipeline_kind,
-            group=group,
             enabled=enabled,
             page_size=page_size,
             page=page,
@@ -681,19 +665,18 @@ class Evaluations(BaseSDK):
         self,
         *,
         pipeline_config_id: str,
+        name: str,
         pipeline_kind: models.PipelineKind,
         selectors: Union[
             Iterable[models.PipelineConfigSelector],
             Iterable[models.PipelineConfigSelectorTypedDict],
         ],
-        definition: Union[
-            models.PipelineConfigDefinition, models.PipelineConfigDefinitionTypedDict
+        definitions: Union[
+            Iterable[models.PipelineConfigDefinition],
+            Iterable[models.PipelineConfigDefinitionTypedDict],
         ],
-        name: str,
         enabled: bool,
         description: OptionalNullable[str] = UNSET,
-        slug: OptionalNullable[str] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -702,14 +685,12 @@ class Evaluations(BaseSDK):
         r"""Replace a worker pipeline configuration
 
         :param pipeline_config_id:
+        :param name:
         :param pipeline_kind:
         :param selectors:
-        :param definition:
-        :param name:
+        :param definitions:
         :param enabled:
         :param description:
-        :param slug:
-        :param group:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -731,17 +712,15 @@ class Evaluations(BaseSDK):
         request = models.UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest(
             pipeline_config_id=pipeline_config_id,
             update_pipeline_config_request=models.UpdatePipelineConfigRequest(
+                name=name,
                 pipeline_kind=pipeline_kind,
                 description=description,
                 selectors=utils.get_pydantic_model(
                     selectors, List[models.PipelineConfigSelector]
                 ),
-                slug=slug,
-                group=group,
-                definition=utils.get_pydantic_model(
-                    definition, models.PipelineConfigDefinition
+                definitions=utils.get_pydantic_model(
+                    definitions, List[models.PipelineConfigDefinition]
                 ),
-                name=name,
                 enabled=enabled,
             ),
         )
@@ -818,19 +797,18 @@ class Evaluations(BaseSDK):
         self,
         *,
         pipeline_config_id: str,
+        name: str,
         pipeline_kind: models.PipelineKind,
         selectors: Union[
             Iterable[models.PipelineConfigSelector],
             Iterable[models.PipelineConfigSelectorTypedDict],
         ],
-        definition: Union[
-            models.PipelineConfigDefinition, models.PipelineConfigDefinitionTypedDict
+        definitions: Union[
+            Iterable[models.PipelineConfigDefinition],
+            Iterable[models.PipelineConfigDefinitionTypedDict],
         ],
-        name: str,
         enabled: bool,
         description: OptionalNullable[str] = UNSET,
-        slug: OptionalNullable[str] = UNSET,
-        group: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -839,14 +817,12 @@ class Evaluations(BaseSDK):
         r"""Replace a worker pipeline configuration
 
         :param pipeline_config_id:
+        :param name:
         :param pipeline_kind:
         :param selectors:
-        :param definition:
-        :param name:
+        :param definitions:
         :param enabled:
         :param description:
-        :param slug:
-        :param group:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -868,17 +844,15 @@ class Evaluations(BaseSDK):
         request = models.UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest(
             pipeline_config_id=pipeline_config_id,
             update_pipeline_config_request=models.UpdatePipelineConfigRequest(
+                name=name,
                 pipeline_kind=pipeline_kind,
                 description=description,
                 selectors=utils.get_pydantic_model(
                     selectors, List[models.PipelineConfigSelector]
                 ),
-                slug=slug,
-                group=group,
-                definition=utils.get_pydantic_model(
-                    definition, models.PipelineConfigDefinition
+                definitions=utils.get_pydantic_model(
+                    definitions, List[models.PipelineConfigDefinition]
                 ),
-                name=name,
                 enabled=enabled,
             ),
         )

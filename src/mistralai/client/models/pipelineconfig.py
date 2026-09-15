@@ -36,11 +36,8 @@ class PipelineConfigTypedDict(TypedDict):
     pipeline_kind: PipelineKind
     selectors: List[PipelineConfigSelectorTypedDict]
     enabled: bool
-    definition_hash: str
-    definition: PipelineConfigDefinitionTypedDict
+    definitions: List[PipelineConfigDefinitionTypedDict]
     description: NotRequired[Nullable[str]]
-    slug: NotRequired[Nullable[str]]
-    group: NotRequired[Nullable[str]]
 
 
 class PipelineConfig(BaseModel):
@@ -64,20 +61,14 @@ class PipelineConfig(BaseModel):
 
     enabled: bool
 
-    definition_hash: str
-
-    definition: PipelineConfigDefinition
+    definitions: List[PipelineConfigDefinition]
 
     description: OptionalNullable[str] = UNSET
 
-    slug: OptionalNullable[str] = UNSET
-
-    group: OptionalNullable[str] = UNSET
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "slug", "group"])
-        nullable_fields = set(["deleted_at", "description", "slug", "group"])
+        optional_fields = set(["description"])
+        nullable_fields = set(["deleted_at", "description"])
         serialized = handler(self)
         m = {}
 

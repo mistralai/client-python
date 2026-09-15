@@ -9,10 +9,20 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    UnrecognizedStr,
 )
 from pydantic import model_serializer
-from typing import List, Optional
+from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypedDict
+
+
+VoiceResponseType = Union[
+    Literal[
+        "preset",
+        "custom",
+    ],
+    UnrecognizedStr,
+]
 
 
 class VoiceResponseTypedDict(TypedDict):
@@ -22,6 +32,7 @@ class VoiceResponseTypedDict(TypedDict):
     id: str
     created_at: datetime
     user_id: Nullable[str]
+    type: VoiceResponseType
     slug: NotRequired[Nullable[str]]
     languages: NotRequired[List[str]]
     gender: NotRequired[Nullable[str]]
@@ -43,6 +54,8 @@ class VoiceResponse(BaseModel):
     created_at: datetime
 
     user_id: Nullable[str]
+
+    type: VoiceResponseType
 
     slug: OptionalNullable[str] = UNSET
 

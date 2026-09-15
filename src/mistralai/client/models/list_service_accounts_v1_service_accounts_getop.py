@@ -6,7 +6,13 @@ from .listserviceaccountsresponse import (
     ListServiceAccountsResponse,
     ListServiceAccountsResponseTypedDict,
 )
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
 from typing import Awaitable, Callable, Optional, Union
@@ -14,17 +20,13 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListServiceAccountsV1ServiceAccountsGetRequestTypedDict(TypedDict):
-    workspace_id: str
     offset: int
     limit: int
+    workspace_id: NotRequired[Nullable[str]]
     include_deleted: NotRequired[bool]
 
 
 class ListServiceAccountsV1ServiceAccountsGetRequest(BaseModel):
-    workspace_id: Annotated[
-        str, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
-    ]
-
     offset: Annotated[
         int, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
@@ -33,6 +35,11 @@ class ListServiceAccountsV1ServiceAccountsGetRequest(BaseModel):
         int, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
 
+    workspace_id: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+
     include_deleted: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -40,16 +47,25 @@ class ListServiceAccountsV1ServiceAccountsGetRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["include_deleted"])
+        optional_fields = set(["workspace_id", "include_deleted"])
+        nullable_fields = set(["workspace_id"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

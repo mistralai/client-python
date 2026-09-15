@@ -32,7 +32,9 @@ class CustomTaskTimedOutResponseTypedDict(TypedDict):
     continued_run_id: Nullable[str]
     r"""Run ID of the execution this run continued from. Non-null for continue-as-new runs."""
     first_execution_run_id: Nullable[str]
-    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on fresh starts and resets (chain anchor resets on reset); differs on CAN and Retry runs where it stays anchored to the original first run."""
+    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on a fresh start. Continue-as-new, retry and reset runs keep the original value."""
+    chain_run_id: Nullable[str]
+    r"""Identifies one start of an execution. Shared by its continue-as-new, retry and reset runs, and by every sub-workflow below it. Starting the same execution ID again gives a new value."""
     schedule_id: Nullable[str]
     r"""Temporal schedule ID that triggered this execution, if any."""
     workflow_exec_id: str
@@ -69,7 +71,10 @@ class CustomTaskTimedOutResponse(BaseModel):
     r"""Run ID of the execution this run continued from. Non-null for continue-as-new runs."""
 
     first_execution_run_id: Nullable[str]
-    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on fresh starts and resets (chain anchor resets on reset); differs on CAN and Retry runs where it stays anchored to the original first run."""
+    r"""Run ID of the first execution in this workflow chain. Equals workflow_run_id on a fresh start. Continue-as-new, retry and reset runs keep the original value."""
+
+    chain_run_id: Nullable[str]
+    r"""Identifies one start of an execution. Shared by its continue-as-new, retry and reset runs, and by every sub-workflow below it. Starting the same execution ID again gives a new value."""
 
     schedule_id: Nullable[str]
     r"""Temporal schedule ID that triggered this execution, if any."""
@@ -103,6 +108,7 @@ class CustomTaskTimedOutResponse(BaseModel):
                 "parent_workflow_exec_id",
                 "continued_run_id",
                 "first_execution_run_id",
+                "chain_run_id",
                 "schedule_id",
             ]
         )

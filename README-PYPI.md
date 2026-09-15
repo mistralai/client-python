@@ -480,7 +480,7 @@ print(res.choices[0].message.content)
 
 ### [Audio.Voices](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md)
 
-* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#list) - List all voices
+* [~~list~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#list) - List all voices :warning: **Deprecated**
 * [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#create) - Create a new voice
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#delete) - Delete a custom voice
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#update) - Update voice metadata
@@ -666,6 +666,17 @@ print(res.choices[0].message.content)
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#list) - List ingestion pipeline configurations
 * [register](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
 * [update_run_info](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
+
+### [Beta.Rag.ManagedIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md)
+
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#create) - Create a managed index
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#list) - List managed indexes
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get) - Get a managed index
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#update) - Update a managed index schema
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#delete) - Delete a managed index
+* [ingest_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#ingest_documents) - Ingest documents into a managed index
+* [delete_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#delete_documents) - Delete documents from a managed index
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#search) - Search a managed index
 
 ### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md)
 
@@ -1043,8 +1054,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 155 of 245 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 245 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 162 of 253 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 253 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
