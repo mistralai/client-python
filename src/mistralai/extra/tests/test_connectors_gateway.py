@@ -38,19 +38,6 @@ async def _mistral_client(
 
 
 @pytest.mark.asyncio
-async def test_legacy_tool_call_async_is_deprecated() -> None:
-    async def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(200, json={"content": []})
-
-    async with _mistral_client(handler) as mistral:
-        with pytest.warns(DeprecationWarning, match="call_mcp_tool_async"):
-            await mistral.beta.connectors.call_tool_async(
-                connector_id_or_name="github",
-                tool_name="search",
-            )
-
-
-@pytest.mark.asyncio
 async def test_call_mcp_tool_async_calls_gateway_and_converts_result() -> None:
     requests: list[httpx.Request] = []
 

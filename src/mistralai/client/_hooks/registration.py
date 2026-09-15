@@ -1,4 +1,3 @@
-from .connector_deprecation import ConnectorToolDeprecationHook
 from .custom_user_agent import CustomUserAgentHook
 from .deprecation_warning import DeprecationWarningHook
 from .traceparent import TraceparentInjectionHook
@@ -21,7 +20,6 @@ def init_hooks(hooks: Hooks):
     tracing_hook = TracingHook()
     workflow_encoding_hook = WorkflowEncodingHook()
     hooks.register_before_request_hook(CustomUserAgentHook())
-    hooks.register_before_request_hook(ConnectorToolDeprecationHook())
     hooks.register_before_request_hook(TraceparentInjectionHook())
     hooks.register_after_success_hook(DeprecationWarningHook())
     hooks.register_after_success_hook(tracing_hook)
