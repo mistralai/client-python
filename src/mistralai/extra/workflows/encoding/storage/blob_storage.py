@@ -1,11 +1,17 @@
 from __future__ import annotations
 
+import sys
 from abc import ABC, abstractmethod
 from contextlib import asynccontextmanager
-from typing import Any, AsyncGenerator
+from typing import TYPE_CHECKING, Any, AsyncGenerator
 
 from mistralai.extra.workflows.encoding.config import BlobStorageConfig, StorageProvider
 from mistralai.extra.exceptions import WorkflowPayloadOffloadingException
+
+if TYPE_CHECKING:
+    from ._s3 import S3BlobStorage
+
+_S3_STORAGE_CACHE: dict[tuple[str | None, ...], "S3BlobStorage"] = {}
 
 
 class BlobNotFoundError(Exception):
@@ -59,6 +65,7 @@ async def get_blob_storage(
     """
     storage: BlobStorage
     prefix = blob_storage_config.prefix
+    cache_key: tuple[str | None, ...] | None = None
 
     if blob_storage_config.storage_provider == StorageProvider.AZURE:
         try:
@@ -116,30 +123,74 @@ async def get_blob_storage(
             raise WorkflowPayloadOffloadingException(
                 "bucket_name is required for S3 blob storage"
             )
-        storage = S3BlobStorage(
-            bucket_name=blob_storage_config.bucket_name,
-            prefix=prefix,
-            region_name=blob_storage_config.region_name,
-            endpoint_url=blob_storage_config.endpoint_url,
-            aws_access_key_id=(
-                blob_storage_config.aws_access_key_id.get_secret_value()
-                if blob_storage_config.aws_access_key_id
-                else None
-            ),
-            aws_secret_access_key=(
-                blob_storage_config.aws_secret_access_key.get_secret_value()
-                if blob_storage_config.aws_secret_access_key
-                else None
-            ),
+        access_key = (
+            blob_storage_config.aws_access_key_id.get_secret_value()
+            if blob_storage_config.aws_access_key_id
+            else None
         )
+        secret_key = (
+            blob_storage_config.aws_secret_access_key.get_secret_value()
+            if blob_storage_config.aws_secret_access_key
+            else None
+        )
+        if blob_storage_config.reuse_client:
+            cache_key = (
+                blob_storage_config.bucket_name,
+                prefix,
+                blob_storage_config.region_name,
+                blob_storage_config.endpoint_url,
+                access_key,
+                secret_key,
+            )
+            storage = _S3_STORAGE_CACHE.get(cache_key) or S3BlobStorage(
+                bucket_name=blob_storage_config.bucket_name,
+                prefix=prefix,
+                region_name=blob_storage_config.region_name,
+                endpoint_url=blob_storage_config.endpoint_url,
+                aws_access_key_id=access_key,
+                aws_secret_access_key=secret_key,
+                reuse_client=True,
+            )
+            _S3_STORAGE_CACHE[cache_key] = storage
+        else:
+            storage = S3BlobStorage(
+                bucket_name=blob_storage_config.bucket_name,
+                prefix=prefix,
+                region_name=blob_storage_config.region_name,
+                endpoint_url=blob_storage_config.endpoint_url,
+                aws_access_key_id=access_key,
+                aws_secret_access_key=secret_key,
+                reuse_client=False,
+            )
 
     else:
         raise ValueError(
             f"Unsupported storage provider: {blob_storage_config.storage_provider}"
         )
 
-    async with storage as blob_storage_instance:
-        yield blob_storage_instance
+    try:
+        entered = await storage.__aenter__()
+    except BaseException:
+        # A pooled client that never finished entering must not stay cached.
+        if cache_key is not None:
+            _S3_STORAGE_CACHE.pop(cache_key, None)
+        raise
+    try:
+        yield entered
+    finally:
+        await storage.__aexit__(*sys.exc_info())
 
 
-__all__ = ["BlobStorage", "BlobNotFoundError", "get_blob_storage"]
+async def close_cached_blob_storages() -> None:
+    storages = list(_S3_STORAGE_CACHE.values())
+    _S3_STORAGE_CACHE.clear()
+    for storage in storages:
+        await storage.aclose()
+
+
+__all__ = [
+    "BlobStorage",
+    "BlobNotFoundError",
+    "close_cached_blob_storages",
+    "get_blob_storage",
+]

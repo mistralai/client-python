@@ -17,6 +17,7 @@ class S3BlobStorage(BlobStorage):
         endpoint_url: str | None = None,
         aws_access_key_id: str | None = None,
         aws_secret_access_key: str | None = None,
+        reuse_client: bool = False,
     ):
         self.bucket_name = bucket_name
         self.prefix = prefix or ""
@@ -24,7 +25,9 @@ class S3BlobStorage(BlobStorage):
         self.endpoint_url = endpoint_url
         self.aws_access_key_id = aws_access_key_id
         self.aws_secret_access_key = aws_secret_access_key
+        self.reuse_client = reuse_client
         self._session: aioboto3.Session | None = None
+        self._client_context: Any = None
         self._client: Any = None
 
     def _get_full_key(self, key: str) -> str:
@@ -35,6 +38,8 @@ class S3BlobStorage(BlobStorage):
         return f"{self.prefix}/{key}"
 
     async def __aenter__(self) -> "S3BlobStorage":
+        if self._client is not None:
+            return self
         self._session = aioboto3.Session()
         assert self._session is not None
         kwargs: dict[str, Any] = {}
@@ -47,14 +52,21 @@ class S3BlobStorage(BlobStorage):
         if self.aws_secret_access_key:
             kwargs["aws_secret_access_key"] = self.aws_secret_access_key
 
-        self._client = self._session.client("s3", **kwargs)
-        self._client = await self._client.__aenter__()
+        self._client_context = self._session.client("s3", **kwargs)
+        self._client = await self._client_context.__aenter__()
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        if self._client:
-            await self._client.__aexit__(exc_type, exc_val, exc_tb)
+        if not self.reuse_client:
+            await self.aclose(exc_type, exc_val, exc_tb)
+
+    async def aclose(
+        self, exc_type: Any = None, exc_val: Any = None, exc_tb: Any = None
+    ) -> None:
+        if self._client_context is not None:
+            await self._client_context.__aexit__(exc_type, exc_val, exc_tb)
         self._session = None
+        self._client_context = None
         self._client = None
 
     async def upload_blob(self, key: str, content: bytes) -> str:
