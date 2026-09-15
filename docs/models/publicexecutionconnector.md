@@ -1,0 +1,10 @@
+# PublicExecutionConnector
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `id`                                                                                             | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `name`                                                                                           | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `connection_config`                                                                              | [Nullable[models.PublicExecutionConnectionConfig]](../models/publicexecutionconnectionconfig.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |

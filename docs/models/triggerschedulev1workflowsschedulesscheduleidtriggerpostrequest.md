@@ -1,0 +1,9 @@
+# TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `schedule_id`                                                                                          | *str*                                                                                                  | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `workflow_schedule_trigger_request`                                                                    | [OptionalNullable[models.WorkflowScheduleTriggerRequest]](../models/workflowscheduletriggerrequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

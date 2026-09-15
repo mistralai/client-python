@@ -1,0 +1,9 @@
+# ExecutionLogSearchResponse
+
+
+## Fields
+
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `results`                                                          | List[[models.ExecutionLogRecord](../models/executionlogrecord.md)] | :heavy_check_mark:                                                 | N/A                                                                |
+| `next_cursor`                                                      | *OptionalNullable[str]*                                            | :heavy_minus_sign:                                                 | N/A                                                                |

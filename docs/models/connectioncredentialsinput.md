@@ -1,0 +1,10 @@
+# ConnectionCredentialsInput
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `oauth`                                                                                            | [OptionalNullable[models.OAuth2ClientCredentialsInput]](../models/oauth2clientcredentialsinput.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `headers`                                                                                          | Dict[str, *str*]                                                                                   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `bearer_token`                                                                                     | *OptionalNullable[str]*                                                                            | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

@@ -1,0 +1,9 @@
+# ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequest
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `schedule_id`                                                                                      | *str*                                                                                              | :heavy_check_mark:                                                                                 | N/A                                                                                                |
+| `workflow_schedule_pause_request`                                                                  | [OptionalNullable[models.WorkflowSchedulePauseRequest]](../models/workflowschedulepauserequest.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

@@ -1,0 +1,15 @@
+# ClientCapabilities
+
+Capabilities a client may support.
+
+
+## Fields
+
+| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `experimental`                                                                       | Dict[str, Dict[str, *Any*]]                                                          | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `sampling`                                                                           | [OptionalNullable[models.SamplingCapability]](../models/samplingcapability.md)       | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `elicitation`                                                                        | [OptionalNullable[models.ElicitationCapability]](../models/elicitationcapability.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `roots`                                                                              | [OptionalNullable[models.RootsCapability]](../models/rootscapability.md)             | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `tasks`                                                                              | [OptionalNullable[models.ClientTasksCapability]](../models/clienttaskscapability.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `__pydantic_extra__`                                                                 | Dict[str, *Any*]                                                                     | :heavy_minus_sign:                                                                   | N/A                                                                                  |

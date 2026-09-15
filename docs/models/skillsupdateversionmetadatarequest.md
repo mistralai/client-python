@@ -1,0 +1,10 @@
+# SkillsUpdateVersionMetadataRequest
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                | Example                                                                    |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `skill_id`                                                                 | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |                                                                            |
+| `version`                                                                  | *int*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        | 1                                                                          |
+| `request_body`                                                             | [models.UpdateSkillVersionRequest](../models/updateskillversionrequest.md) | :heavy_check_mark:                                                         | N/A                                                                        |                                                                            |

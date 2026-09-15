@@ -1,0 +1,9 @@
+# WorkflowRegistrationGetResponse
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `workflow_registration`                                                                          | [models.WorkflowRegistrationWithWorkerStatus](../models/workflowregistrationwithworkerstatus.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `workflow_version`                                                                               | [models.WorkflowRegistrationWithWorkerStatus](../models/workflowregistrationwithworkerstatus.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |
