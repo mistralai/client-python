@@ -41,5 +41,5 @@ targets:
                 token: $pypi_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-code-samples
+                location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi-python-code-samples
             blocking: false
