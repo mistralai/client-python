@@ -49,6 +49,13 @@ jobs:
           verbose: true
           skip-existing: true
 
+      - name: Push code samples to Speakeasy registry
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/07977787cc394cb30b418a591b3332e40e209be1/install.sh | sh
+          speakeasy ci generate --push-code-samples-only --target mistralai-sdk --github-access-token ${{ secrets.CLIENT_PIPELINE }}
+
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
