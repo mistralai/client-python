@@ -1,0 +1,12 @@
+# StreamWorkflowExecutionLogsRequest
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `execution_id`                                                                   | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `run_id`                                                                         | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by workflow run ID                                                   |
+| `activity_id`                                                                    | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Filter logs by activity ID                                                       |
+| `after`                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)             | :heavy_minus_sign:                                                               | Start a fresh stream at this timestamp (ignored when resuming via last_event_id) |
+| `last_event_id`                                                                  | *OptionalNullable[str]*                                                          | :heavy_minus_sign:                                                               | Resume from this cursor (a prior response's SSE id)                              |

@@ -1,0 +1,15 @@
+# DatasetRecord
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `deleted_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `dataset_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `payload`                                                            | Dict[str, *Any*]                                                     | :heavy_check_mark:                                                   | Caller-authored input object stored on a dataset record.             |
+| `properties`                                                         | Dict[str, *Any*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |
+| `source`                                                             | [models.DatasetRecordSource](../models/datasetrecordsource.md)       | :heavy_check_mark:                                                   | N/A                                                                  |

@@ -1,0 +1,14 @@
+# AuthenticationConfiguration
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `name`                                                                       | *str*                                                                        | :heavy_check_mark:                                                           | N/A                                                                          |
+| `title`                                                                      | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `authentication_type`                                                        | [models.OutboundAuthenticationType](../models/outboundauthenticationtype.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `scope`                                                                      | [models.ConsumerType](../models/consumertype.md)                             | :heavy_check_mark:                                                           | N/A                                                                          |
+| `status`                                                                     | [OptionalNullable[models.CredentialsStatus]](../models/credentialsstatus.md) | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `is_default`                                                                 | *Optional[bool]*                                                             | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `creator_id`                                                                 | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | N/A                                                                          |

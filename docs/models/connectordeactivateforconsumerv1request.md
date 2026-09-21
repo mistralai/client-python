@@ -1,0 +1,9 @@
+# ConnectorDeactivateForConsumerV1Request
+
+
+## Fields
+
+| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `connector_id`                                                                                                     | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `consumer_scope`                                                                                                   | [models.ConnectorDeactivateForConsumerV1ConsumerScope](../models/connectordeactivateforconsumerv1consumerscope.md) | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
