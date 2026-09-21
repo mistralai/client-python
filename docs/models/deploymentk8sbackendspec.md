@@ -1,0 +1,12 @@
+# DeploymentK8sBackendSpec
+
+Worker configuration for the Kubernetes backend.
+
+
+## Fields
+
+| Field                                                                                                             | Type                                                                                                              | Required                                                                                                          | Description                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `type`                                                                                                            | *Literal["kubernetes"]*                                                                                           | :heavy_check_mark:                                                                                                | N/A                                                                                                               |
+| `entrypoint`                                                                                                      | *OptionalNullable[str]*                                                                                           | :heavy_minus_sign:                                                                                                | Either a 'module:function' reference (e.g. 'worker:main') or a '.py' script path relative to 'working_dir'.       |
+| `working_dir`                                                                                                     | *OptionalNullable[str]*                                                                                           | :heavy_minus_sign:                                                                                                | Path in the repo holding the worker's pyproject.toml, for monorepo layouts. Leave empty for single-package repos. |

@@ -1,0 +1,275 @@
+# Beta.Libraries
+
+## Overview
+
+(beta) Libraries API to create and manage libraries - index your documents to enhance agent capabilities.
+
+### Available Operations
+
+* [list](#list) - List all libraries you have access to.
+* [create](#create) - Create a new Library.
+* [get](#get) - Detailed information about a specific Library.
+* [delete](#delete) - Delete a library and all of it's document.
+* [update](#update) - Update a library.
+* [~~libraries_update_v1~~](#libraries_update_v1) - Update a library. :warning: **Deprecated**
+
+## list
+
+List all libraries that you have created or have been shared with you.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_list_v1" method="get" path="/v1/libraries" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.list(page_size=100, page=0)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                          | Type                                                                                                                                                                                                               | Required                                                                                                                                                                                                           | Description                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `page_size`                                                                                                                                                                                                        | *Optional[int]*                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                 | N/A                                                                                                                                                                                                                |
+| `page_token`                                                                                                                                                                                                       | *OptionalNullable[str]*                                                                                                                                                                                            | :heavy_minus_sign:                                                                                                                                                                                                 | Continuation token from a previous response's next_page_token. Preferred over `page`.                                                                                                                              |
+| `page`                                                                                                                                                                                                             | *Optional[int]*                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                 | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated: use page_token. Offset paging re-scans earlier pages and is being phased out. |
+| `search`                                                                                                                                                                                                           | *OptionalNullable[str]*                                                                                                                                                                                            | :heavy_minus_sign:                                                                                                                                                                                                 | Case-insensitive search on the library name.                                                                                                                                                                       |
+| `filter_owned_by_me`                                                                                                                                                                                               | *OptionalNullable[bool]*                                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                 | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated: this parameter will be removed in a future version.                   |
+| `retries`                                                                                                                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                 | Configuration to override the default retry behavior of the client.                                                                                                                                                |
+
+### Response
+
+**[models.ListLibrariesResponse](../../models/listlibrariesresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## create
+
+Create a new Library, you will be marked as the owner and only you will have the possibility to share it with others. When first created this will only be accessible by you.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_create_v1" method="post" path="/v1/libraries" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.create(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                                                                              | Type                                                                                                                                                                                                                                                                                                                                   | Required                                                                                                                                                                                                                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                                                                                                                                                                                                                                                 | *str*                                                                                                                                                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                     | N/A                                                                                                                                                                                                                                                                                                                                    |
+| `description`                                                                                                                                                                                                                                                                                                                          | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                     | N/A                                                                                                                                                                                                                                                                                                                                    |
+| `chunk_size`                                                                                                                                                                                                                                                                                                                           | *OptionalNullable[int]*                                                                                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                     | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>The size of the chunks (in characters) to split document text into. Must be between 256 and 32768.                                                                                                    |
+| `owner_type`                                                                                                                                                                                                                                                                                                                           | [OptionalNullable[models.OwnerType]](../../models/ownertype.md)                                                                                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                     | Determines who owns the created library. 'User' creates a private library accessible only to its owner. 'Workspace' creates a library shared with the workspace. Defaults to 'Workspace' for API key sessions. Only API keys with the 'Private and shared connectors' connector access scope can create private, user-owned libraries. |
+| `retries`                                                                                                                                                                                                                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                    |
+
+### Response
+
+**[models.Library](../../models/library.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get
+
+Given a library id, details information about that Library.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_get_v1" method="get" path="/v1/libraries/{library_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.get(library_id="d0d23a1e-bfe5-45e7-b7bb-22a4ea78d47f")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Library](../../models/library.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## delete
+
+Given a library id, deletes it together with all documents that have been uploaded to that library. Warning: the response will change from 200 (returning the deleted library) to 204 No Content in a future version.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_delete_v1" method="delete" path="/v1/libraries/{library_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.delete(library_id="6cad0b6e-fd2e-4d11-a48b-21d30fb7c17a")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Library](../../models/library.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## update
+
+Given a library id, you can update the name and description.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_patch_v1" method="patch" path="/v1/libraries/{library_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.update(library_id="74a30b7a-ba52-49f7-a8a3-7157e1adf565")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `name`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Library](../../models/library.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## ~~libraries_update_v1~~
+
+Given a library id, you can update the name and description.
+
+> :warning: **DEPRECATED**: Use the PATCH method instead. This PUT endpoint will be removed in a future version..
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="libraries_update_v1" method="put" path="/v1/libraries/{library_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.libraries.libraries_update_v1(library_id="e01880c3-d0b5-4a29-8b1b-abdb8ce917e4")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `library_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `name`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Library](../../models/library.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
