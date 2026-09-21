@@ -1,0 +1,11 @@
+# ToolExecutionConfiguration
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `requires_confirmation`                                                            | [OptionalNullable[models.RequiresConfirmation]](../models/requiresconfirmation.md) | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `skip_confirmation`                                                                | [OptionalNullable[models.SkipConfirmation]](../models/skipconfirmation.md)         | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `include`                                                                          | List[*str*]                                                                        | :heavy_minus_sign:                                                                 | N/A                                                                                |
+| `exclude`                                                                          | List[*str*]                                                                        | :heavy_minus_sign:                                                                 | N/A                                                                                |

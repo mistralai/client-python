@@ -1,0 +1,19 @@
+# GetStreamEventsV1WorkflowsEventsStreamGetRequest
+
+
+## Fields
+
+| Field                                                            | Type                                                             | Required                                                         | Description                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `scope`                                                          | [Optional[models.Scope]](../models/scope.md)                     | :heavy_minus_sign:                                               | N/A                                                              |
+| `activity_name`                                                  | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `activity_id`                                                    | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `workflow_name`                                                  | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `workflow_exec_id`                                               | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `root_workflow_exec_id`                                          | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `parent_workflow_exec_id`                                        | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `stream`                                                         | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `start_seq`                                                      | *Optional[int]*                                                  | :heavy_minus_sign:                                               | N/A                                                              |
+| `metadata_filters`                                               | Dict[str, *Any*]                                                 | :heavy_minus_sign:                                               | N/A                                                              |
+| `workflow_event_types`                                           | List[[models.WorkflowEventType](../models/workfloweventtype.md)] | :heavy_minus_sign:                                               | N/A                                                              |
+| `last_event_id`                                                  | *OptionalNullable[str]*                                          | :heavy_minus_sign:                                               | N/A                                                              |

@@ -1,0 +1,9 @@
+# UpdateDeploymentRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `spec`                                                                                                 | [OptionalNullable[models.WorkflowsWorkerSpecUpdate]](../models/workflowsworkerspecupdate.md)           | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `resources`                                                                                            | [OptionalNullable[models.DeploymentResourceConfigUpdate]](../models/deploymentresourceconfigupdate.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

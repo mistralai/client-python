@@ -1,0 +1,12 @@
+# StreamWorkflowExecutionLogsResponseBody
+
+Stream of Server-Sent Events (SSE): `log` events carry an ExecutionLogRecord; `error` events carry a StreamError payload.
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `event`                                                                                            | [Optional[models.StreamWorkflowExecutionLogsEvent]](../models/streamworkflowexecutionlogsevent.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `id`                                                                                               | *Optional[str]*                                                                                    | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `data`                                                                                             | [Optional[models.StreamWorkflowExecutionLogsData]](../models/streamworkflowexecutionlogsdata.md)   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
