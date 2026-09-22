@@ -1,0 +1,18 @@
+# PublicExecutionConnectionConfig
+
+Connection config exposed in the public, unauthenticated /connectors/mistral response.
+
+Unlike ConnectionConfig, this has no `headers` field and forbids extra fields, so
+connector credentials can never be serialized into this cacheable response.
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `type`                                                                                         | [models.ConnectionConfigType](../models/connectionconfigtype.md)                               | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `server`                                                                                       | *OptionalNullable[str]*                                                                        | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `name`                                                                                         | *OptionalNullable[str]*                                                                        | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `id`                                                                                           | *OptionalNullable[str]*                                                                        | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `tool_configuration`                                                                           | [OptionalNullable[models.ToolExecutionConfiguration]](../models/toolexecutionconfiguration.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `hosted_internally`                                                                            | *Optional[bool]*                                                                               | :heavy_minus_sign:                                                                             | N/A                                                                                            |
