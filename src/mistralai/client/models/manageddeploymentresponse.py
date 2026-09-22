@@ -14,6 +14,7 @@ from .deploymentworkerspecresponse import (
     DeploymentWorkerSpecResponse,
     DeploymentWorkerSpecResponseTypedDict,
 )
+from .principaltype import PrincipalType
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -42,6 +43,8 @@ class ManagedDeploymentResponseTypedDict(TypedDict):
     deployed_by: NotRequired[Nullable[str]]
     deployed_at: NotRequired[Nullable[datetime]]
     is_hardened: NotRequired[bool]
+    runtime_credential_id: NotRequired[Nullable[str]]
+    runtime_principal_type: NotRequired[Nullable[PrincipalType]]
 
 
 class ManagedDeploymentResponse(BaseModel):
@@ -73,6 +76,10 @@ class ManagedDeploymentResponse(BaseModel):
 
     is_hardened: Optional[bool] = False
 
+    runtime_credential_id: OptionalNullable[str] = UNSET
+
+    runtime_principal_type: OptionalNullable[PrincipalType] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -84,10 +91,20 @@ class ManagedDeploymentResponse(BaseModel):
                 "deployed_by",
                 "deployed_at",
                 "is_hardened",
+                "runtime_credential_id",
+                "runtime_principal_type",
             ]
         )
         nullable_fields = set(
-            ["rollout_status", "created_by", "updated_by", "deployed_by", "deployed_at"]
+            [
+                "rollout_status",
+                "created_by",
+                "updated_by",
+                "deployed_by",
+                "deployed_at",
+                "runtime_credential_id",
+                "runtime_principal_type",
+            ]
         )
         serialized = handler(self)
         m = {}

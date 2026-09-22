@@ -23,6 +23,7 @@ class ManagedIndexResponseTypedDict(TypedDict):
 
     id: str
     name: str
+    creator_id: str
     status: ManagedIndexStatus
     r"""Lifecycle of an index. Derived, not stored -- see ``managed_index_from_row``."""
     schema_: ManagedIndexFieldsTypedDict
@@ -38,6 +39,8 @@ class ManagedIndexResponse(BaseModel):
     id: str
 
     name: str
+
+    creator_id: str
 
     status: ManagedIndexStatus
     r"""Lifecycle of an index. Derived, not stored -- see ``managed_index_from_row``."""

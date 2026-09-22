@@ -37,6 +37,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     workflow_name: NotRequired[Nullable[str]]
     created_by: NotRequired[Nullable[str]]
     r"""Filter deployments by creator's user id"""
+    owner: NotRequired[Nullable[str]]
+    r"""Filter deployments by owner's user id"""
     location_types: NotRequired[Nullable[List[LocationType]]]
     r"""Filter deployments with at least one worker on any of these location types (OR)"""
     search: NotRequired[Nullable[str]]
@@ -75,6 +77,12 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
     r"""Filter deployments by creator's user id"""
+
+    owner: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter deployments by owner's user id"""
 
     location_types: Annotated[
         OptionalNullable[List[LocationType]],
@@ -126,6 +134,7 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "is_hardened",
                 "workflow_name",
                 "created_by",
+                "owner",
                 "location_types",
                 "search",
                 "order_by",
@@ -140,6 +149,7 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "is_hardened",
                 "workflow_name",
                 "created_by",
+                "owner",
                 "location_types",
                 "search",
                 "order_by",

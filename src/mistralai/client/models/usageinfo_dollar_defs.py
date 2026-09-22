@@ -27,6 +27,8 @@ class UsageInfoDollarDefsTypedDict(TypedDict):
     request_count: NotRequired[Nullable[int]]
     prompt_tokens_details: NotRequired[Nullable[PromptTokensDetailsTypedDict]]
     completion_tokens_details: NotRequired[Nullable[CompletionTokensDetailsTypedDict]]
+    service_tier: NotRequired[Nullable[str]]
+    r"""The service tier at which the request was processed: standard or priority."""
     prompt_token_details: NotRequired[Nullable[PromptTokensDetailsTypedDict]]
     num_cached_tokens: NotRequired[Nullable[int]]
 
@@ -46,6 +48,9 @@ class UsageInfoDollarDefs(BaseModel):
 
     completion_tokens_details: OptionalNullable[CompletionTokensDetails] = UNSET
 
+    service_tier: OptionalNullable[str] = UNSET
+    r"""The service tier at which the request was processed: standard or priority."""
+
     prompt_token_details: OptionalNullable[PromptTokensDetails] = UNSET
 
     num_cached_tokens: OptionalNullable[int] = UNSET
@@ -61,6 +66,7 @@ class UsageInfoDollarDefs(BaseModel):
                 "request_count",
                 "prompt_tokens_details",
                 "completion_tokens_details",
+                "service_tier",
                 "prompt_token_details",
                 "num_cached_tokens",
             ]
@@ -72,6 +78,7 @@ class UsageInfoDollarDefs(BaseModel):
                 "request_count",
                 "prompt_tokens_details",
                 "completion_tokens_details",
+                "service_tier",
                 "prompt_token_details",
                 "num_cached_tokens",
             ]

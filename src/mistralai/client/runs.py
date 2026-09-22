@@ -61,7 +61,7 @@ class Runs(BaseSDK):
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
-        :param search_key: Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3).
+        :param search_key: Filter executions by search key as repeated entries (max 3, AND'd together). 'key:value' matches a similar value, 'key==:value' matches the exact value, a bare 'key' matches executions that have the key set at all, and 'key==' matches executions whose value for the key is null.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -256,7 +256,7 @@ class Runs(BaseSDK):
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
-        :param search_key: Filter executions by search key as repeated 'key:value' entries. Each entry matches an exact key and a similar value; multiple entries are AND'd together (max 3).
+        :param search_key: Filter executions by search key as repeated entries (max 3, AND'd together). 'key:value' matches a similar value, 'key==:value' matches the exact value, a bare 'key' matches executions that have the key set at all, and 'key==' matches executions whose value for the key is null.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

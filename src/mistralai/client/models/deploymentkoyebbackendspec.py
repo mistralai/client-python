@@ -2,6 +2,10 @@
 # @generated-id: 04d04025faa2
 
 from __future__ import annotations
+from .deploymentsecretbinding import (
+    DeploymentSecretBinding,
+    DeploymentSecretBindingTypedDict,
+)
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -13,7 +17,7 @@ from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal
+from typing import List, Literal
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -25,6 +29,8 @@ class DeploymentKoyebBackendSpecTypedDict(TypedDict):
     r"""Docker build context, as a path in the repo. Defaults to the repo root."""
     dockerfile_path: NotRequired[Nullable[str]]
     r"""Path to the Dockerfile, relative to 'build_directory'. Defaults to 'Dockerfile'."""
+    secrets: NotRequired[Nullable[List[DeploymentSecretBindingTypedDict]]]
+    r"""Secrets to bind to the worker, as 'secret:workspace:<NAME>' references. Each is available during build and run: as a Dockerfile build arg (declare a matching 'ARG') and as an env var. On update, the field carries the complete set: send the full list to rebind, an empty list to unbind all, omit it to leave the bindings unchanged."""
 
 
 class DeploymentKoyebBackendSpec(BaseModel):
@@ -41,10 +47,13 @@ class DeploymentKoyebBackendSpec(BaseModel):
     dockerfile_path: OptionalNullable[str] = UNSET
     r"""Path to the Dockerfile, relative to 'build_directory'. Defaults to 'Dockerfile'."""
 
+    secrets: OptionalNullable[List[DeploymentSecretBinding]] = UNSET
+    r"""Secrets to bind to the worker, as 'secret:workspace:<NAME>' references. Each is available during build and run: as a Dockerfile build arg (declare a matching 'ARG') and as an env var. On update, the field carries the complete set: send the full list to rebind, an empty list to unbind all, omit it to leave the bindings unchanged."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["build_directory", "dockerfile_path"])
-        nullable_fields = set(["build_directory", "dockerfile_path"])
+        optional_fields = set(["build_directory", "dockerfile_path", "secrets"])
+        nullable_fields = set(["build_directory", "dockerfile_path", "secrets"])
         serialized = handler(self)
         m = {}
 

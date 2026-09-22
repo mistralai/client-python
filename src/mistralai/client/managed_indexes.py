@@ -239,6 +239,9 @@ class ManagedIndexes(BaseSDK):
         *,
         page_size: Optional[int] = 20,
         page_token: OptionalNullable[str] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        status: OptionalNullable[models.ManagedIndexStatus] = UNSET,
+        creator_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -250,6 +253,9 @@ class ManagedIndexes(BaseSDK):
 
         :param page_size: Maximum number of indexes to return
         :param page_token: Cursor returned as next_page_token by the previous page
+        :param name: Case-insensitive substring to match against index names
+        :param status: Status to match
+        :param creator_id: Creator ID to match
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -271,6 +277,9 @@ class ManagedIndexes(BaseSDK):
         request = models.ListIndexesV1RagManagedIndexesGetRequest(
             page_size=page_size,
             page_token=page_token,
+            name=name,
+            status=status,
+            creator_id=creator_id,
         )
 
         req = self._build_request(
@@ -336,6 +345,9 @@ class ManagedIndexes(BaseSDK):
             return self.list(
                 page_size=page_size,
                 page_token=next_cursor,
+                name=name,
+                status=status,
+                creator_id=creator_id,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -369,6 +381,9 @@ class ManagedIndexes(BaseSDK):
         *,
         page_size: Optional[int] = 20,
         page_token: OptionalNullable[str] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        status: OptionalNullable[models.ManagedIndexStatus] = UNSET,
+        creator_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -380,6 +395,9 @@ class ManagedIndexes(BaseSDK):
 
         :param page_size: Maximum number of indexes to return
         :param page_token: Cursor returned as next_page_token by the previous page
+        :param name: Case-insensitive substring to match against index names
+        :param status: Status to match
+        :param creator_id: Creator ID to match
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -401,6 +419,9 @@ class ManagedIndexes(BaseSDK):
         request = models.ListIndexesV1RagManagedIndexesGetRequest(
             page_size=page_size,
             page_token=page_token,
+            name=name,
+            status=status,
+            creator_id=creator_id,
         )
 
         req = self._build_request_async(
@@ -471,6 +492,9 @@ class ManagedIndexes(BaseSDK):
             return self.list_async(
                 page_size=page_size,
                 page_token=next_cursor,
+                name=name,
+                status=status,
+                creator_id=creator_id,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -1521,7 +1545,9 @@ class ManagedIndexes(BaseSDK):
         self,
         *,
         index_name: str,
-        retriever: Union[models.Retriever, models.RetrieverTypedDict],
+        retriever: Union[
+            models.SearchRequestRetriever, models.SearchRequestRetrieverTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1554,7 +1580,9 @@ class ManagedIndexes(BaseSDK):
         request = models.SearchIndexV1RagManagedIndexesIndexNameSearchPostRequest(
             index_name=index_name,
             search_request=models.SearchRequest(
-                retriever=utils.get_pydantic_model(retriever, models.Retriever),
+                retriever=utils.get_pydantic_model(
+                    retriever, models.SearchRequestRetriever
+                ),
             ),
         )
 
@@ -1624,7 +1652,9 @@ class ManagedIndexes(BaseSDK):
         self,
         *,
         index_name: str,
-        retriever: Union[models.Retriever, models.RetrieverTypedDict],
+        retriever: Union[
+            models.SearchRequestRetriever, models.SearchRequestRetrieverTypedDict
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1657,7 +1687,9 @@ class ManagedIndexes(BaseSDK):
         request = models.SearchIndexV1RagManagedIndexesIndexNameSearchPostRequest(
             index_name=index_name,
             search_request=models.SearchRequest(
-                retriever=utils.get_pydantic_model(retriever, models.Retriever),
+                retriever=utils.get_pydantic_model(
+                    retriever, models.SearchRequestRetriever
+                ),
             ),
         )
 
@@ -1715,6 +1747,902 @@ class ManagedIndexes(BaseSDK):
             )
             raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, ["400", "404", "409", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def navigate(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        start_offset: int,
+        end_offset: int,
+        direction: models.NavigationDirection,
+        top_k: Optional[int] = 1,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Navigate to adjacent chunks
+
+        Returns the chunks adjacent to a position within a source, in reading order. NEXT fetches chunks at or after the end offset; PREVIOUS fetches chunks before the start offset. A 200 with an empty list means the source exists but no chunk falls in the requested direction; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param start_offset:
+        :param end_offset:
+        :param direction:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest(
+            index_name=index_name,
+            navigate_request=models.NavigateRequest(
+                source_id=source_id,
+                start_offset=start_offset,
+                end_offset=end_offset,
+                direction=direction,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/navigate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.navigate_request, False, False, "json", models.NavigateRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="navigate_index_v1_rag_managed_indexes__index_name__navigate_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def navigate_async(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        start_offset: int,
+        end_offset: int,
+        direction: models.NavigationDirection,
+        top_k: Optional[int] = 1,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Navigate to adjacent chunks
+
+        Returns the chunks adjacent to a position within a source, in reading order. NEXT fetches chunks at or after the end offset; PREVIOUS fetches chunks before the start offset. A 200 with an empty list means the source exists but no chunk falls in the requested direction; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param start_offset:
+        :param end_offset:
+        :param direction:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest(
+            index_name=index_name,
+            navigate_request=models.NavigateRequest(
+                source_id=source_id,
+                start_offset=start_offset,
+                end_offset=end_offset,
+                direction=direction,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/navigate",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.navigate_request, False, False, "json", models.NavigateRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="navigate_index_v1_rag_managed_indexes__index_name__navigate_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def read(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        start_offset: OptionalNullable[int] = UNSET,
+        end_offset: OptionalNullable[int] = UNSET,
+        top_k: Optional[int] = 20,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Read chunks within a span
+
+        Returns the chunks of a source whose span falls within [start_offset, end_offset). Either bound may be omitted to leave that side open. A 200 with an empty list means the source exists but no chunk falls in the range; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param start_offset:
+        :param end_offset:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ReadIndexV1RagManagedIndexesIndexNameReadPostRequest(
+            index_name=index_name,
+            read_request=models.ReadRequest(
+                source_id=source_id,
+                start_offset=start_offset,
+                end_offset=end_offset,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/read",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.read_request, False, False, "json", models.ReadRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="read_index_v1_rag_managed_indexes__index_name__read_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def read_async(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        start_offset: OptionalNullable[int] = UNSET,
+        end_offset: OptionalNullable[int] = UNSET,
+        top_k: Optional[int] = 20,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Read chunks within a span
+
+        Returns the chunks of a source whose span falls within [start_offset, end_offset). Either bound may be omitted to leave that side open. A 200 with an empty list means the source exists but no chunk falls in the range; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param start_offset:
+        :param end_offset:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ReadIndexV1RagManagedIndexesIndexNameReadPostRequest(
+            index_name=index_name,
+            read_request=models.ReadRequest(
+                source_id=source_id,
+                start_offset=start_offset,
+                end_offset=end_offset,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/read",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.read_request, False, False, "json", models.ReadRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="read_index_v1_rag_managed_indexes__index_name__read_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def grep(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        pattern: str,
+        mode: Optional[models.GrepMode] = None,
+        top_k: Optional[int] = 5,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Grep for a pattern within a source
+
+        Lexical substring match within a single source, in reading order. PHRASE mode matches the pattern literally (whitespace-sensitive, case-insensitive); TERM mode requires every whitespace-split token present in any order. A 200 with an empty list means the source exists but no chunk matched; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param pattern:
+        :param mode:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest(
+            index_name=index_name,
+            grep_request=models.GrepRequest(
+                source_id=source_id,
+                pattern=pattern,
+                mode=mode,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/grep",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.grep_request, False, False, "json", models.GrepRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="grep_index_v1_rag_managed_indexes__index_name__grep_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def grep_async(
+        self,
+        *,
+        index_name: str,
+        source_id: str,
+        pattern: str,
+        mode: Optional[models.GrepMode] = None,
+        top_k: Optional[int] = 5,
+        content_type: Optional[str] = "content",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Grep for a pattern within a source
+
+        Lexical substring match within a single source, in reading order. PHRASE mode matches the pattern literally (whitespace-sensitive, case-insensitive); TERM mode requires every whitespace-split token present in any order. A 200 with an empty list means the source exists but no chunk matched; a 404 means the source has no chunks at all.
+
+        :param index_name:
+        :param source_id:
+        :param pattern:
+        :param mode:
+        :param top_k:
+        :param content_type:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest(
+            index_name=index_name,
+            grep_request=models.GrepRequest(
+                source_id=source_id,
+                pattern=pattern,
+                mode=mode,
+                top_k=top_k,
+                content_type=content_type,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/rag/managed_indexes/{index_name}/grep",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.grep_request, False, False, "json", models.GrepRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="grep_index_v1_rag_managed_indexes__index_name__grep_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def get_chunk(
+        self,
+        *,
+        index_name: str,
+        chunk_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Get a single chunk by id
+
+        Returns a single chunk by its canonical id. A 404 means no chunk with that id exists in the index.
+
+        :param index_name:
+        :param chunk_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest(
+                index_name=index_name,
+                chunk_id=chunk_id,
+            )
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_chunk_async(
+        self,
+        *,
+        index_name: str,
+        chunk_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.NavigationResponse:
+        r"""Get a single chunk by id
+
+        Returns a single chunk by its canonical id. A 404 means no chunk with that id exists in the index.
+
+        :param index_name:
+        :param chunk_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = (
+            models.GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest(
+                index_name=index_name,
+                chunk_id=chunk_id,
+            )
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.NavigationResponse, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, ["500", "5XX"], "*"):

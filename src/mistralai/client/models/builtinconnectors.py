@@ -13,6 +13,7 @@ BuiltInConnectors = Union[
         "code_interpreter",
         "image_generation",
         "document_library",
+        "mistral_mcp",
     ],
     UnrecognizedStr,
 ]

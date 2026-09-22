@@ -188,6 +188,10 @@ if TYPE_CHECKING:
         AgentsCompletionStreamRequestToolTypedDict,
         AgentsCompletionStreamRequestTypedDict,
     )
+    from .aggregate_span_evaluations_v1_observability_spans_evaluations_aggregate_postop import (
+        AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequest,
+        AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequestTypedDict,
+    )
     from .aggregate_spans_v1_observability_spans_aggregate_postop import (
         AggregateSpansV1ObservabilitySpansAggregatePostRequest,
         AggregateSpansV1ObservabilitySpansAggregatePostRequestTypedDict,
@@ -418,21 +422,14 @@ if TYPE_CHECKING:
         ConnectorDeleteAllUserCredentialsV1Request,
         ConnectorDeleteAllUserCredentialsV1RequestTypedDict,
     )
-    from .connector_delete_organization_credentials_v1op import (
-        ConnectorDeleteOrganizationCredentialsV1Request,
-        ConnectorDeleteOrganizationCredentialsV1RequestTypedDict,
-    )
-    from .connector_delete_user_credentials_v1op import (
-        ConnectorDeleteUserCredentialsV1Request,
-        ConnectorDeleteUserCredentialsV1RequestTypedDict,
+    from .connector_delete_credentialsop import (
+        ConnectorDeleteCredentialsConsumerScope,
+        ConnectorDeleteCredentialsRequest,
+        ConnectorDeleteCredentialsRequestTypedDict,
     )
     from .connector_delete_v1op import (
         ConnectorDeleteV1Request,
         ConnectorDeleteV1RequestTypedDict,
-    )
-    from .connector_delete_workspace_credentials_v1op import (
-        ConnectorDeleteWorkspaceCredentialsV1Request,
-        ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict,
     )
     from .connector_get_auth_url_v1op import (
         ConnectorGetAuthURLV1Request,
@@ -885,6 +882,10 @@ if TYPE_CHECKING:
         DeploymentResourceConfigUpdateTypedDict,
     )
     from .deploymentresponse import DeploymentResponse, DeploymentResponseTypedDict
+    from .deploymentsecretbinding import (
+        DeploymentSecretBinding,
+        DeploymentSecretBindingTypedDict,
+    )
     from .deploymentworkerlistresponse import (
         DeploymentWorkerListResponse,
         DeploymentWorkerListResponseTypedDict,
@@ -1077,6 +1078,10 @@ if TYPE_CHECKING:
     from .functionname import FunctionName, FunctionNameTypedDict
     from .functionresultentry import FunctionResultEntry, FunctionResultEntryTypedDict
     from .functiontool import FunctionTool, FunctionToolTypedDict
+    from .get_chunk_index_v1_rag_managed_indexes_index_name_chunks_chunk_id_getop import (
+        GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest,
+        GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequestTypedDict,
+    )
     from .get_dataset_by_id_v1_observability_datasets_dataset_id_getop import (
         GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequest,
         GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequestTypedDict,
@@ -1307,6 +1312,12 @@ if TYPE_CHECKING:
     from .gitcommitmetadata import GitCommitMetadata, GitCommitMetadataTypedDict
     from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
     from .granularity import Granularity
+    from .grep_index_v1_rag_managed_indexes_index_name_grep_postop import (
+        GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest,
+        GrepIndexV1RagManagedIndexesIndexNameGrepPostRequestTypedDict,
+    )
+    from .grepmode import GrepMode
+    from .greprequest import GrepRequest, GrepRequestTypedDict
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
     from .httpconnector import HTTPConnector, HTTPConnectorTypedDict
     from .httpstatus import HTTPStatus
@@ -1331,6 +1342,10 @@ if TYPE_CHECKING:
     from .importdatasetfromplaygroundrequest import (
         ImportDatasetFromPlaygroundRequest,
         ImportDatasetFromPlaygroundRequestTypedDict,
+    )
+    from .importdatasetfromspansrequest import (
+        ImportDatasetFromSpansRequest,
+        ImportDatasetFromSpansRequestTypedDict,
     )
     from .in_ import In, InTypedDict, InValue, InValueTypedDict
     from .inboundauthenticationtype import InboundAuthenticationType
@@ -1818,6 +1833,17 @@ if TYPE_CHECKING:
     )
     from .moderationobject import ModerationObject, ModerationObjectTypedDict
     from .moderationresponse import ModerationResponse, ModerationResponseTypedDict
+    from .navigate_index_v1_rag_managed_indexes_index_name_navigate_postop import (
+        NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest,
+        NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequestTypedDict,
+    )
+    from .navigaterequest import NavigateRequest, NavigateRequestTypedDict
+    from .navigationchunkresponse import (
+        NavigationChunkResponse,
+        NavigationChunkResponseTypedDict,
+    )
+    from .navigationdirection import NavigationDirection
+    from .navigationresponse import NavigationResponse, NavigationResponseTypedDict
     from .nearestneighbourretriever import (
         NearestNeighbourRetriever,
         NearestNeighbourRetrieverFilter,
@@ -1968,7 +1994,12 @@ if TYPE_CHECKING:
         PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest,
         PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequestTypedDict,
     )
+    from .post_dataset_records_from_spans_v1_observability_datasets_dataset_id_imports_from_spans_postop import (
+        PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequest,
+        PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequestTypedDict,
+    )
     from .prediction import Prediction, PredictionTypedDict
+    from .principaltype import PrincipalType
     from .processingstatus import ProcessingStatus, ProcessingStatusTypedDict
     from .processstatus import ProcessStatus
     from .prompt import Prompt, PromptTypedDict
@@ -2061,6 +2092,11 @@ if TYPE_CHECKING:
         Range,
         RangeTypedDict,
     )
+    from .read_index_v1_rag_managed_indexes_index_name_read_postop import (
+        ReadIndexV1RagManagedIndexesIndexNameReadPostRequest,
+        ReadIndexV1RagManagedIndexesIndexNameReadPostRequestTypedDict,
+    )
+    from .readrequest import ReadRequest, ReadRequestTypedDict
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -2173,6 +2209,14 @@ if TYPE_CHECKING:
     )
     from .roles import Roles
     from .rootscapability import RootsCapability, RootsCapabilityTypedDict
+    from .rrfretriever import (
+        RRFRetriever,
+        RRFRetrieverFilter,
+        RRFRetrieverFilterTypedDict,
+        RRFRetrieverRetriever,
+        RRFRetrieverRetrieverTypedDict,
+        RRFRetrieverTypedDict,
+    )
     from .sampletype import SampleType
     from .samplingcapability import SamplingCapability, SamplingCapabilityTypedDict
     from .scalarmetric import (
@@ -2230,9 +2274,9 @@ if TYPE_CHECKING:
     from .searchchunkresponse import SearchChunkResponse, SearchChunkResponseTypedDict
     from .searchhitresponse import SearchHitResponse, SearchHitResponseTypedDict
     from .searchrequest import (
-        Retriever,
-        RetrieverTypedDict,
         SearchRequest,
+        SearchRequestRetriever,
+        SearchRequestRetrieverTypedDict,
         SearchRequestTypedDict,
     )
     from .searchresponse import SearchResponse, SearchResponseTypedDict
@@ -2326,6 +2370,16 @@ if TYPE_CHECKING:
     from .skillversion import SkillVersion, SkillVersionTypedDict
     from .source import Source
     from .sourcekind import SourceKind
+    from .spandatasetmapping import SpanDatasetMapping, SpanDatasetMappingTypedDict
+    from .spandatasetmappingcontract import (
+        SpanDatasetMappingContract,
+        SpanDatasetMappingContractTypedDict,
+    )
+    from .spandatasetsourcenamespace import SpanDatasetSourceNamespace
+    from .spandatasetsourcereference import (
+        SpanDatasetSourceReference,
+        SpanDatasetSourceReferenceTypedDict,
+    )
     from .spanevaluationsrequest import (
         SpanEvaluationsRequest,
         SpanEvaluationsRequestTypedDict,
@@ -2417,6 +2471,10 @@ if TYPE_CHECKING:
     from .taskstoolscapability import (
         TasksToolsCapability,
         TasksToolsCapabilityTypedDict,
+    )
+    from .telemetryspanreference import (
+        TelemetrySpanReference,
+        TelemetrySpanReferenceTypedDict,
     )
     from .tempogettraceresponse import (
         TempoGetTraceResponse,
@@ -2610,6 +2668,10 @@ if TYPE_CHECKING:
     from .unarchivemodelresponse import (
         UnarchiveModelResponse,
         UnarchiveModelResponseTypedDict,
+    )
+    from .unharden_deployment_v1_workflows_deployments_deployment_id_unharden_postop import (
+        UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequest,
+        UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequestTypedDict,
     )
     from .unregister_deployment_v1_rag_deployments_deployment_id_deleteop import (
         UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest,
@@ -3139,6 +3201,8 @@ __all__ = [
     "AgentsCompletionStreamRequestToolChoiceTypedDict",
     "AgentsCompletionStreamRequestToolTypedDict",
     "AgentsCompletionStreamRequestTypedDict",
+    "AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequest",
+    "AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequestTypedDict",
     "AggregateSpansV1ObservabilitySpansAggregatePostRequest",
     "AggregateSpansV1ObservabilitySpansAggregatePostRequestTypedDict",
     "AggregateTracesV1ObservabilityTracesAggregatePostRequest",
@@ -3332,14 +3396,11 @@ __all__ = [
     "ConnectorDeactivateForConsumerV1RequestTypedDict",
     "ConnectorDeleteAllUserCredentialsV1Request",
     "ConnectorDeleteAllUserCredentialsV1RequestTypedDict",
-    "ConnectorDeleteOrganizationCredentialsV1Request",
-    "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict",
-    "ConnectorDeleteUserCredentialsV1Request",
-    "ConnectorDeleteUserCredentialsV1RequestTypedDict",
+    "ConnectorDeleteCredentialsConsumerScope",
+    "ConnectorDeleteCredentialsRequest",
+    "ConnectorDeleteCredentialsRequestTypedDict",
     "ConnectorDeleteV1Request",
     "ConnectorDeleteV1RequestTypedDict",
-    "ConnectorDeleteWorkspaceCredentialsV1Request",
-    "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict",
     "ConnectorGetAuthURLV1Request",
     "ConnectorGetAuthURLV1RequestTypedDict",
     "ConnectorGetAuthenticationMethodsV1Request",
@@ -3614,6 +3675,8 @@ __all__ = [
     "DeploymentResourceConfigUpdateTypedDict",
     "DeploymentResponse",
     "DeploymentResponseTypedDict",
+    "DeploymentSecretBinding",
+    "DeploymentSecretBindingTypedDict",
     "DeploymentStatus",
     "DeploymentWorkerListResponse",
     "DeploymentWorkerListResponseTypedDict",
@@ -3769,6 +3832,8 @@ __all__ = [
     "FunctionTool",
     "FunctionToolTypedDict",
     "FunctionTypedDict",
+    "GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest",
+    "GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequestTypedDict",
     "GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequest",
     "GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequestTypedDict",
     "GetDatasetImportTaskV1ObservabilityDatasetsDatasetIDTasksTaskIDGetRequest",
@@ -3919,6 +3984,11 @@ __all__ = [
     "GlobalHeaderValue",
     "GlobalHeaderValueTypedDict",
     "Granularity",
+    "GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest",
+    "GrepIndexV1RagManagedIndexesIndexNameGrepPostRequestTypedDict",
+    "GrepMode",
+    "GrepRequest",
+    "GrepRequestTypedDict",
     "Gt",
     "GtTypedDict",
     "Gte",
@@ -3945,6 +4015,8 @@ __all__ = [
     "ImportDatasetFromFileRequestTypedDict",
     "ImportDatasetFromPlaygroundRequest",
     "ImportDatasetFromPlaygroundRequestTypedDict",
+    "ImportDatasetFromSpansRequest",
+    "ImportDatasetFromSpansRequestTypedDict",
     "In",
     "InTypedDict",
     "InValue",
@@ -4275,6 +4347,15 @@ __all__ = [
     "ModerationResponseTypedDict",
     "MultiPartBodyParams",
     "MultiPartBodyParamsTypedDict",
+    "NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest",
+    "NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequestTypedDict",
+    "NavigateRequest",
+    "NavigateRequestTypedDict",
+    "NavigationChunkResponse",
+    "NavigationChunkResponseTypedDict",
+    "NavigationDirection",
+    "NavigationResponse",
+    "NavigationResponseTypedDict",
     "NearestNeighbourRetriever",
     "NearestNeighbourRetrieverFilter",
     "NearestNeighbourRetrieverFilterTypedDict",
@@ -4409,8 +4490,11 @@ __all__ = [
     "PostDatasetRecordsFromFileV1ObservabilityDatasetsDatasetIDImportsFromFilePostRequestTypedDict",
     "PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest",
     "PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequestTypedDict",
+    "PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequest",
+    "PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequestTypedDict",
     "Prediction",
     "PredictionTypedDict",
+    "PrincipalType",
     "ProcessStatus",
     "ProcessingStatus",
     "ProcessingStatusTypedDict",
@@ -4471,10 +4555,20 @@ __all__ = [
     "QueryWorkflowExecutionV1WorkflowsExecutionsExecutionIDQueriesPostRequestTypedDict",
     "QueryWorkflowResponse",
     "QueryWorkflowResponseTypedDict",
+    "RRFRetriever",
+    "RRFRetrieverFilter",
+    "RRFRetrieverFilterTypedDict",
+    "RRFRetrieverRetriever",
+    "RRFRetrieverRetrieverTypedDict",
+    "RRFRetrieverTypedDict",
     "Range",
     "RangeTypedDict",
     "RawContent",
     "RawContentTypedDict",
+    "ReadIndexV1RagManagedIndexesIndexNameReadPostRequest",
+    "ReadIndexV1RagManagedIndexesIndexNameReadPostRequestTypedDict",
+    "ReadRequest",
+    "ReadRequestTypedDict",
     "RealtimeTranscriptionError",
     "RealtimeTranscriptionErrorDetail",
     "RealtimeTranscriptionErrorDetailMessage",
@@ -4562,8 +4656,6 @@ __all__ = [
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
-    "Retriever",
-    "RetrieverTypedDict",
     "Role",
     "Roles",
     "RootsCapability",
@@ -4609,6 +4701,8 @@ __all__ = [
     "SearchLogsV1ObservabilityLogsSearchPostRequest",
     "SearchLogsV1ObservabilityLogsSearchPostRequestTypedDict",
     "SearchRequest",
+    "SearchRequestRetriever",
+    "SearchRequestRetrieverTypedDict",
     "SearchRequestTypedDict",
     "SearchResponse",
     "SearchResponseTypedDict",
@@ -4689,6 +4783,13 @@ __all__ = [
     "SortBy",
     "Source",
     "SourceKind",
+    "SpanDatasetMapping",
+    "SpanDatasetMappingContract",
+    "SpanDatasetMappingContractTypedDict",
+    "SpanDatasetMappingTypedDict",
+    "SpanDatasetSourceNamespace",
+    "SpanDatasetSourceReference",
+    "SpanDatasetSourceReferenceTypedDict",
     "SpanEvaluationsRequest",
     "SpanEvaluationsRequestTypedDict",
     "SpansRequest",
@@ -4756,6 +4857,8 @@ __all__ = [
     "TasksSamplingCapabilityTypedDict",
     "TasksToolsCapability",
     "TasksToolsCapabilityTypedDict",
+    "TelemetrySpanReference",
+    "TelemetrySpanReferenceTypedDict",
     "TempoGetTraceResponse",
     "TempoGetTraceResponseTypedDict",
     "TempoTraceAttribute",
@@ -4902,6 +5005,8 @@ __all__ = [
     "UnarchiveModelResponseTypedDict",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequest",
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict",
+    "UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequest",
+    "UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequestTypedDict",
     "UnknownAgentTool",
     "UnknownAuthorization",
     "UnknownBlock",
@@ -5291,6 +5396,8 @@ _dynamic_imports: dict[str, str] = {
     "AgentsCompletionStreamRequestToolChoiceTypedDict": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestToolTypedDict": ".agentscompletionstreamrequest",
     "AgentsCompletionStreamRequestTypedDict": ".agentscompletionstreamrequest",
+    "AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequest": ".aggregate_span_evaluations_v1_observability_spans_evaluations_aggregate_postop",
+    "AggregateSpanEvaluationsV1ObservabilitySpansEvaluationsAggregatePostRequestTypedDict": ".aggregate_span_evaluations_v1_observability_spans_evaluations_aggregate_postop",
     "AggregateSpansV1ObservabilitySpansAggregatePostRequest": ".aggregate_spans_v1_observability_spans_aggregate_postop",
     "AggregateSpansV1ObservabilitySpansAggregatePostRequestTypedDict": ".aggregate_spans_v1_observability_spans_aggregate_postop",
     "AggregateTracesV1ObservabilityTracesAggregatePostRequest": ".aggregate_traces_v1_observability_traces_aggregate_postop",
@@ -5469,14 +5576,11 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorDeactivateForConsumerV1RequestTypedDict": ".connector_deactivate_for_consumer_v1op",
     "ConnectorDeleteAllUserCredentialsV1Request": ".connector_delete_all_user_credentials_v1op",
     "ConnectorDeleteAllUserCredentialsV1RequestTypedDict": ".connector_delete_all_user_credentials_v1op",
-    "ConnectorDeleteOrganizationCredentialsV1Request": ".connector_delete_organization_credentials_v1op",
-    "ConnectorDeleteOrganizationCredentialsV1RequestTypedDict": ".connector_delete_organization_credentials_v1op",
-    "ConnectorDeleteUserCredentialsV1Request": ".connector_delete_user_credentials_v1op",
-    "ConnectorDeleteUserCredentialsV1RequestTypedDict": ".connector_delete_user_credentials_v1op",
+    "ConnectorDeleteCredentialsConsumerScope": ".connector_delete_credentialsop",
+    "ConnectorDeleteCredentialsRequest": ".connector_delete_credentialsop",
+    "ConnectorDeleteCredentialsRequestTypedDict": ".connector_delete_credentialsop",
     "ConnectorDeleteV1Request": ".connector_delete_v1op",
     "ConnectorDeleteV1RequestTypedDict": ".connector_delete_v1op",
-    "ConnectorDeleteWorkspaceCredentialsV1Request": ".connector_delete_workspace_credentials_v1op",
-    "ConnectorDeleteWorkspaceCredentialsV1RequestTypedDict": ".connector_delete_workspace_credentials_v1op",
     "ConnectorGetAuthURLV1Request": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthURLV1RequestTypedDict": ".connector_get_auth_url_v1op",
     "ConnectorGetAuthenticationMethodsV1Request": ".connector_get_authentication_methods_v1op",
@@ -5764,6 +5868,8 @@ _dynamic_imports: dict[str, str] = {
     "DeploymentResourceConfigUpdateTypedDict": ".deploymentresourceconfigupdate",
     "DeploymentResponse": ".deploymentresponse",
     "DeploymentResponseTypedDict": ".deploymentresponse",
+    "DeploymentSecretBinding": ".deploymentsecretbinding",
+    "DeploymentSecretBindingTypedDict": ".deploymentsecretbinding",
     "DeploymentWorkerListResponse": ".deploymentworkerlistresponse",
     "DeploymentWorkerListResponseTypedDict": ".deploymentworkerlistresponse",
     "DeploymentWorkerResponse": ".deploymentworkerresponse",
@@ -5917,6 +6023,8 @@ _dynamic_imports: dict[str, str] = {
     "FunctionResultEntryTypedDict": ".functionresultentry",
     "FunctionTool": ".functiontool",
     "FunctionToolTypedDict": ".functiontool",
+    "GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest": ".get_chunk_index_v1_rag_managed_indexes_index_name_chunks_chunk_id_getop",
+    "GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequestTypedDict": ".get_chunk_index_v1_rag_managed_indexes_index_name_chunks_chunk_id_getop",
     "GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequest": ".get_dataset_by_id_v1_observability_datasets_dataset_id_getop",
     "GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequestTypedDict": ".get_dataset_by_id_v1_observability_datasets_dataset_id_getop",
     "GetDatasetImportTaskV1ObservabilityDatasetsDatasetIDTasksTaskIDGetRequest": ".get_dataset_import_task_v1_observability_datasets_dataset_id_tasks_task_id_getop",
@@ -6070,6 +6178,11 @@ _dynamic_imports: dict[str, str] = {
     "GlobalHeaderValue": ".globalheadervalue",
     "GlobalHeaderValueTypedDict": ".globalheadervalue",
     "Granularity": ".granularity",
+    "GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest": ".grep_index_v1_rag_managed_indexes_index_name_grep_postop",
+    "GrepIndexV1RagManagedIndexesIndexNameGrepPostRequestTypedDict": ".grep_index_v1_rag_managed_indexes_index_name_grep_postop",
+    "GrepMode": ".grepmode",
+    "GrepRequest": ".greprequest",
+    "GrepRequestTypedDict": ".greprequest",
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
     "HTTPConnector": ".httpconnector",
@@ -6092,6 +6205,8 @@ _dynamic_imports: dict[str, str] = {
     "ImportDatasetFromFileRequestTypedDict": ".importdatasetfromfilerequest",
     "ImportDatasetFromPlaygroundRequest": ".importdatasetfromplaygroundrequest",
     "ImportDatasetFromPlaygroundRequestTypedDict": ".importdatasetfromplaygroundrequest",
+    "ImportDatasetFromSpansRequest": ".importdatasetfromspansrequest",
+    "ImportDatasetFromSpansRequestTypedDict": ".importdatasetfromspansrequest",
     "In": ".in_",
     "InTypedDict": ".in_",
     "InValue": ".in_",
@@ -6435,6 +6550,15 @@ _dynamic_imports: dict[str, str] = {
     "ModerationObjectTypedDict": ".moderationobject",
     "ModerationResponse": ".moderationresponse",
     "ModerationResponseTypedDict": ".moderationresponse",
+    "NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest": ".navigate_index_v1_rag_managed_indexes_index_name_navigate_postop",
+    "NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequestTypedDict": ".navigate_index_v1_rag_managed_indexes_index_name_navigate_postop",
+    "NavigateRequest": ".navigaterequest",
+    "NavigateRequestTypedDict": ".navigaterequest",
+    "NavigationChunkResponse": ".navigationchunkresponse",
+    "NavigationChunkResponseTypedDict": ".navigationchunkresponse",
+    "NavigationDirection": ".navigationdirection",
+    "NavigationResponse": ".navigationresponse",
+    "NavigationResponseTypedDict": ".navigationresponse",
     "NearestNeighbourRetriever": ".nearestneighbourretriever",
     "NearestNeighbourRetrieverFilter": ".nearestneighbourretriever",
     "NearestNeighbourRetrieverFilterTypedDict": ".nearestneighbourretriever",
@@ -6567,8 +6691,11 @@ _dynamic_imports: dict[str, str] = {
     "PostDatasetRecordsFromFileV1ObservabilityDatasetsDatasetIDImportsFromFilePostRequestTypedDict": ".post_dataset_records_from_file_v1_observability_datasets_dataset_id_imports_from_file_postop",
     "PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest": ".post_dataset_records_from_playground_v1_observability_datasets_dataset_id_imports_from_playground_postop",
     "PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequestTypedDict": ".post_dataset_records_from_playground_v1_observability_datasets_dataset_id_imports_from_playground_postop",
+    "PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequest": ".post_dataset_records_from_spans_v1_observability_datasets_dataset_id_imports_from_spans_postop",
+    "PostDatasetRecordsFromSpansV1ObservabilityDatasetsDatasetIDImportsFromSpansPostRequestTypedDict": ".post_dataset_records_from_spans_v1_observability_datasets_dataset_id_imports_from_spans_postop",
     "Prediction": ".prediction",
     "PredictionTypedDict": ".prediction",
+    "PrincipalType": ".principaltype",
     "ProcessingStatus": ".processingstatus",
     "ProcessingStatusTypedDict": ".processingstatus",
     "ProcessStatus": ".processstatus",
@@ -6643,6 +6770,10 @@ _dynamic_imports: dict[str, str] = {
     "LteTypedDict": ".range",
     "Range": ".range",
     "RangeTypedDict": ".range",
+    "ReadIndexV1RagManagedIndexesIndexNameReadPostRequest": ".read_index_v1_rag_managed_indexes_index_name_read_postop",
+    "ReadIndexV1RagManagedIndexesIndexNameReadPostRequestTypedDict": ".read_index_v1_rag_managed_indexes_index_name_read_postop",
+    "ReadRequest": ".readrequest",
+    "ReadRequestTypedDict": ".readrequest",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
@@ -6718,6 +6849,12 @@ _dynamic_imports: dict[str, str] = {
     "Roles": ".roles",
     "RootsCapability": ".rootscapability",
     "RootsCapabilityTypedDict": ".rootscapability",
+    "RRFRetriever": ".rrfretriever",
+    "RRFRetrieverFilter": ".rrfretriever",
+    "RRFRetrieverFilterTypedDict": ".rrfretriever",
+    "RRFRetrieverRetriever": ".rrfretriever",
+    "RRFRetrieverRetrieverTypedDict": ".rrfretriever",
+    "RRFRetrieverTypedDict": ".rrfretriever",
     "SampleType": ".sampletype",
     "SamplingCapability": ".samplingcapability",
     "SamplingCapabilityTypedDict": ".samplingcapability",
@@ -6762,9 +6899,9 @@ _dynamic_imports: dict[str, str] = {
     "SearchChunkResponseTypedDict": ".searchchunkresponse",
     "SearchHitResponse": ".searchhitresponse",
     "SearchHitResponseTypedDict": ".searchhitresponse",
-    "Retriever": ".searchrequest",
-    "RetrieverTypedDict": ".searchrequest",
     "SearchRequest": ".searchrequest",
+    "SearchRequestRetriever": ".searchrequest",
+    "SearchRequestRetrieverTypedDict": ".searchrequest",
     "SearchRequestTypedDict": ".searchrequest",
     "SearchResponse": ".searchresponse",
     "SearchResponseTypedDict": ".searchresponse",
@@ -6844,6 +6981,13 @@ _dynamic_imports: dict[str, str] = {
     "SkillVersionTypedDict": ".skillversion",
     "Source": ".source",
     "SourceKind": ".sourcekind",
+    "SpanDatasetMapping": ".spandatasetmapping",
+    "SpanDatasetMappingTypedDict": ".spandatasetmapping",
+    "SpanDatasetMappingContract": ".spandatasetmappingcontract",
+    "SpanDatasetMappingContractTypedDict": ".spandatasetmappingcontract",
+    "SpanDatasetSourceNamespace": ".spandatasetsourcenamespace",
+    "SpanDatasetSourceReference": ".spandatasetsourcereference",
+    "SpanDatasetSourceReferenceTypedDict": ".spandatasetsourcereference",
     "SpanEvaluationsRequest": ".spanevaluationsrequest",
     "SpanEvaluationsRequestTypedDict": ".spanevaluationsrequest",
     "SpansRequest": ".spansrequest",
@@ -6910,6 +7054,8 @@ _dynamic_imports: dict[str, str] = {
     "TasksSamplingCapabilityTypedDict": ".taskssamplingcapability",
     "TasksToolsCapability": ".taskstoolscapability",
     "TasksToolsCapabilityTypedDict": ".taskstoolscapability",
+    "TelemetrySpanReference": ".telemetryspanreference",
+    "TelemetrySpanReferenceTypedDict": ".telemetryspanreference",
     "TempoGetTraceResponse": ".tempogettraceresponse",
     "TempoGetTraceResponseTypedDict": ".tempogettraceresponse",
     "TempoTraceAttribute": ".tempotraceattribute",
@@ -7061,6 +7207,8 @@ _dynamic_imports: dict[str, str] = {
     "UnarchiveWorkflowV1WorkflowsWorkflowIdentifierUnarchivePutRequestTypedDict": ".unarchive_workflow_v1_workflows_workflow_identifier_unarchive_putop",
     "UnarchiveModelResponse": ".unarchivemodelresponse",
     "UnarchiveModelResponseTypedDict": ".unarchivemodelresponse",
+    "UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequest": ".unharden_deployment_v1_workflows_deployments_deployment_id_unharden_postop",
+    "UnhardenDeploymentV1WorkflowsDeploymentsDeploymentIDUnhardenPostRequestTypedDict": ".unharden_deployment_v1_workflows_deployments_deployment_id_unharden_postop",
     "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest": ".unregister_deployment_v1_rag_deployments_deployment_id_deleteop",
     "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequestTypedDict": ".unregister_deployment_v1_rag_deployments_deployment_id_deleteop",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest": ".unschedule_workflow_v1_workflows_schedules_schedule_id_deleteop",

@@ -6,6 +6,7 @@ from .listmanagedindexesresponse import (
     ListManagedIndexesResponse,
     ListManagedIndexesResponseTypedDict,
 )
+from .managedindexstatus import ManagedIndexStatus
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -24,6 +25,12 @@ class ListIndexesV1RagManagedIndexesGetRequestTypedDict(TypedDict):
     r"""Maximum number of indexes to return"""
     page_token: NotRequired[Nullable[str]]
     r"""Cursor returned as next_page_token by the previous page"""
+    name: NotRequired[Nullable[str]]
+    r"""Case-insensitive substring to match against index names"""
+    status: NotRequired[Nullable[ManagedIndexStatus]]
+    r"""Status to match"""
+    creator_id: NotRequired[Nullable[str]]
+    r"""Creator ID to match"""
 
 
 class ListIndexesV1RagManagedIndexesGetRequest(BaseModel):
@@ -39,10 +46,30 @@ class ListIndexesV1RagManagedIndexesGetRequest(BaseModel):
     ] = UNSET
     r"""Cursor returned as next_page_token by the previous page"""
 
+    name: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Case-insensitive substring to match against index names"""
+
+    status: Annotated[
+        OptionalNullable[ManagedIndexStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Status to match"""
+
+    creator_id: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Creator ID to match"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["page_size", "page_token"])
-        nullable_fields = set(["page_token"])
+        optional_fields = set(
+            ["page_size", "page_token", "name", "status", "creator_id"]
+        )
+        nullable_fields = set(["page_token", "name", "status", "creator_id"])
         serialized = handler(self)
         m = {}
 

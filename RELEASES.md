@@ -967,3 +967,14 @@ Based on:
 
 **Relaxed (non-breaking)**
 - `ListServiceAccountsV1ServiceAccountsGetRequest.workspace_id` is now optional.
+
+
+## 2026-09-22 14:29:51
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.796.1 (2.933.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v2.10.2] .
+### Releases
+- [PyPI v2.10.2] https://pypi.org/project/mistralai/2.10.2 - .

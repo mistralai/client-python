@@ -13,8 +13,6 @@ class ConnectorGetV1RequestTypedDict(TypedDict):
     connector_id_or_name: str
     fetch_user_data: NotRequired[bool]
     r"""Fetch the user-level data associated with the connector (e.g. connection credentials)."""
-    fetch_customer_data: NotRequired[bool]
-    r"""Fetch the customer data associated with the connector (e.g. customer secrets / config)."""
 
 
 class ConnectorGetV1Request(BaseModel):
@@ -28,15 +26,9 @@ class ConnectorGetV1Request(BaseModel):
     ] = False
     r"""Fetch the user-level data associated with the connector (e.g. connection credentials)."""
 
-    fetch_customer_data: Annotated[
-        Optional[bool],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = False
-    r"""Fetch the customer data associated with the connector (e.g. customer secrets / config)."""
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["fetch_user_data", "fetch_customer_data"])
+        optional_fields = set(["fetch_user_data"])
         serialized = handler(self)
         m = {}
 

@@ -19,3 +19,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"code_interpreter"`
 - `"image_generation"`
 - `"document_library"`
+- `"mistral_mcp"`

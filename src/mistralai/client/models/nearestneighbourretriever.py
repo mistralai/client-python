@@ -50,6 +50,7 @@ class NearestNeighbourRetrieverTypedDict(TypedDict):
     query_embedding: NotRequired[Nullable[List[float]]]
     field: NotRequired[Nullable[str]]
     filter_: NotRequired[Nullable[NearestNeighbourRetrieverFilterTypedDict]]
+    max_candidates: NotRequired[Nullable[int]]
 
 
 class NearestNeighbourRetriever(BaseModel):
@@ -76,10 +77,16 @@ class NearestNeighbourRetriever(BaseModel):
         pydantic.Field(alias="filter"),
     ] = UNSET
 
+    max_candidates: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["top_k", "query", "query_embedding", "field", "filter"])
-        nullable_fields = set(["query", "query_embedding", "field", "filter"])
+        optional_fields = set(
+            ["top_k", "query", "query_embedding", "field", "filter", "max_candidates"]
+        )
+        nullable_fields = set(
+            ["query", "query_embedding", "field", "filter", "max_candidates"]
+        )
         serialized = handler(self)
         m = {}
 

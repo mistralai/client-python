@@ -521,7 +521,7 @@ print(res.choices[0].message.content)
 * [unshare_from_organization](docs/sdks/connectors/README.md#unshare_from_organization) - Unshare a connector from the current organization.
 * [activate_for_consumer](docs/sdks/connectors/README.md#activate_for_consumer) - Activate a connector for the given consumer (organization, workspace, user).
 * [deactivate_for_consumer](docs/sdks/connectors/README.md#deactivate_for_consumer) - Deactivate a connector for the current consumer (at organization, workspace or user level).
-* [call_tool](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
+* [~~call_tool~~](docs/sdks/connectors/README.md#call_tool) - Call Connector Tool :warning: **Deprecated**
 * [list_tools](docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get_authentication_methods](docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
 * [list_organization_credentials](docs/sdks/connectors/README.md#list_organization_credentials) - List organization credentials for a connector.
@@ -530,9 +530,7 @@ print(res.choices[0].message.content)
 * [delete_all_user_credentials](docs/sdks/connectors/README.md#delete_all_user_credentials) - Delete all user credentials for a connector.
 * [create_credentials](docs/sdks/connectors/README.md#create_credentials) - Create consumer credentials for a connector.
 * [update_credentials](docs/sdks/connectors/README.md#update_credentials) - Create or update consumer credentials for a connector.
-* [delete_organization_credentials](docs/sdks/connectors/README.md#delete_organization_credentials) - Delete organization credentials for a connector.
-* [delete_workspace_credentials](docs/sdks/connectors/README.md#delete_workspace_credentials) - Delete workspace credentials for a connector.
-* [delete_user_credentials](docs/sdks/connectors/README.md#delete_user_credentials) - Delete user credentials for a connector.
+* [delete_credentials](docs/sdks/connectors/README.md#delete_credentials) - Delete credentials for a consumer.
 * [get](docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](docs/sdks/connectors/README.md#update) - Update a connector.
 * [delete](docs/sdks/connectors/README.md#delete) - Delete a connector.
@@ -591,6 +589,7 @@ print(res.choices[0].message.content)
 * [create_record](docs/sdks/datasets/README.md#create_record) - Add a record to the dataset
 * [import_from_file](docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with records from an uploaded file
 * [import_from_playground](docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_spans](docs/sdks/datasets/README.md#import_from_spans) - Populate the dataset with records mapped from telemetry spans
 * [import_from_dataset_records](docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
@@ -632,6 +631,7 @@ print(res.choices[0].message.content)
 
 * [search_spans](docs/sdks/spans/README.md#search_spans) - Search spans
 * [aggregate](docs/sdks/spans/README.md#aggregate) - Aggregate spans
+* [aggregate_span_evaluations](docs/sdks/spans/README.md#aggregate_span_evaluations) - Aggregate span evaluations
 * [search_span_evaluations](docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
 * [list_span_fields](docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
@@ -677,6 +677,10 @@ print(res.choices[0].message.content)
 * [ingest_documents](docs/sdks/managedindexes/README.md#ingest_documents) - Ingest documents into a managed index
 * [delete_documents](docs/sdks/managedindexes/README.md#delete_documents) - Delete documents from a managed index
 * [search](docs/sdks/managedindexes/README.md#search) - Search a managed index
+* [navigate](docs/sdks/managedindexes/README.md#navigate) - Navigate to adjacent chunks
+* [read](docs/sdks/managedindexes/README.md#read) - Read chunks within a span
+* [grep](docs/sdks/managedindexes/README.md#grep) - Grep for a pattern within a source
+* [get_chunk](docs/sdks/managedindexes/README.md#get_chunk) - Get a single chunk by id
 
 ### [Beta.Rag.SearchIndexes](docs/sdks/searchindexes/README.md)
 
@@ -782,6 +786,7 @@ print(res.choices[0].message.content)
 
 #### [Workflows.Deployments](docs/sdks/deployments/README.md)
 
+* [unharden_deployment](docs/sdks/deployments/README.md#unharden_deployment) - Unharden Deployment
 * [list_deployments](docs/sdks/deployments/README.md#list_deployments) - List Deployments
 * [create_deployment](docs/sdks/deployments/README.md#create_deployment) - Create Deployment
 * [update_deployment](docs/sdks/deployments/README.md#update_deployment) - Update Deployment
@@ -1054,8 +1059,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 162 of 253 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 253 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 164 of 258 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 50 of 258 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1250,13 +1255,12 @@ with Mistral(
 Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```python
 from mistralai.client import Mistral, models
-import os
 
 
 with Mistral() as mistral:
 
     res = mistral.beta.users.get_identity(security=models.UsersAPIGetIdentitySecurity(
-        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+
     ))
 
     # Handle response

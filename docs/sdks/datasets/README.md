@@ -13,6 +13,7 @@
 * [create_record](#create_record) - Add a record to the dataset
 * [import_from_file](#import_from_file) - Populate the dataset with records from an uploaded file
 * [import_from_playground](#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_spans](#import_from_spans) - Populate the dataset with records mapped from telemetry spans
 * [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](#fetch_task) - Get status of a dataset import task
@@ -392,6 +393,65 @@ with Mistral(
 | `dataset_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `conversation_ids`                                                  | List[*str*]                                                         | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.DatasetImportTask](../../models/datasetimporttask.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## import_from_spans
+
+Starts an asynchronous import of the requested telemetry spans. References not returned by the tenant-scoped telemetry query are skipped without distinguishing absence from access restrictions.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="post_dataset_records_from_spans_v1_observability_datasets__dataset_id__imports_from_spans_post" method="post" path="/v1/observability/datasets/{dataset_id}/imports/from-spans" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.datasets.import_from_spans(dataset_id="fd9efcfd-d8a6-4c7b-82cb-b2f9bde2b4bf", span_references=[
+        {
+            "trace_id": "<id>",
+            "span_id": "<id>",
+        },
+    ], mapping_contract={
+        "version": 1,
+        "mappings": [
+            {
+                "target_field": "<value>",
+                "source_field": {
+                    "namespace": "span_attributes",
+                    "key": "<key>",
+                },
+            },
+        ],
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                                                      | Type                                                                                                                                                                                                                                                                                                           | Required                                                                                                                                                                                                                                                                                                       | Description                                                                                                                                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dataset_id`                                                                                                                                                                                                                                                                                                   | *str*                                                                                                                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                                                                                                                             | N/A                                                                                                                                                                                                                                                                                                            |
+| `span_references`                                                                                                                                                                                                                                                                                              | List[[models.TelemetrySpanReference](../../models/telemetryspanreference.md)]                                                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                                                                             | Spans to attempt to import; unavailable references are skipped, and trace and span IDs are attached as record properties automatically.                                                                                                                                                                        |
+| `mapping_contract`                                                                                                                                                                                                                                                                                             | [models.SpanDatasetMappingContract](../../models/spandatasetmappingcontract.md)                                                                                                                                                                                                                                | :heavy_check_mark:                                                                                                                                                                                                                                                                                             | Mapping rules applied independently to every requested telemetry span.<br/><br/>Version 1 mappings are optional per span: a missing, null, blank-string, or empty-array<br/>source omits the target key. JSON object and array strings become structured values;<br/>scalar-looking and malformed JSON strings remain strings. |
+| `retries`                                                                                                                                                                                                                                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                                                                                                             | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                            |
 
 ### Response
 

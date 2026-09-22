@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 from .assistantmessage import AssistantMessage, AssistantMessageTypedDict
-from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
 from .customconnector import CustomConnector, CustomConnectorTypedDict
 from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
 from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
@@ -19,8 +18,6 @@ from .toolchoice import ToolChoice, ToolChoiceTypedDict
 from .toolchoiceenum import ToolChoiceEnum
 from .toolmessage import ToolMessage, ToolMessageTypedDict
 from .usermessage import UserMessage, UserMessageTypedDict
-from .websearchpremiumtool import WebSearchPremiumTool, WebSearchPremiumToolTypedDict
-from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -72,9 +69,6 @@ AgentsCompletionRequestToolTypedDict = TypeAliasType(
     "AgentsCompletionRequestToolTypedDict",
     Union[
         ToolTypedDict,
-        WebSearchToolTypedDict,
-        WebSearchPremiumToolTypedDict,
-        CodeInterpreterToolTypedDict,
         ImageGenerationToolTypedDict,
         DocumentLibraryToolTypedDict,
         CustomConnectorTypedDict,
@@ -85,9 +79,6 @@ AgentsCompletionRequestToolTypedDict = TypeAliasType(
 AgentsCompletionRequestTool = Annotated[
     Union[
         Annotated[Tool, Tag("function")],
-        Annotated[WebSearchTool, Tag("web_search")],
-        Annotated[WebSearchPremiumTool, Tag("web_search_premium")],
-        Annotated[CodeInterpreterTool, Tag("code_interpreter")],
         Annotated[ImageGenerationTool, Tag("image_generation")],
         Annotated[DocumentLibraryTool, Tag("document_library")],
         Annotated[CustomConnector, Tag("connector")],

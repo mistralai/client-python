@@ -42,7 +42,7 @@ KeywordRetrieverFilter = Annotated[
 
 
 class KeywordRetrieverTypedDict(TypedDict):
-    r"""Retrieve document chunks with similar keywrods to the given query."""
+    r"""Retrieve document chunks with similar keywords to the given query."""
 
     query: str
     top_k: NotRequired[int]
@@ -52,7 +52,7 @@ class KeywordRetrieverTypedDict(TypedDict):
 
 
 class KeywordRetriever(BaseModel):
-    r"""Retrieve document chunks with similar keywrods to the given query."""
+    r"""Retrieve document chunks with similar keywords to the given query."""
 
     query: str
 

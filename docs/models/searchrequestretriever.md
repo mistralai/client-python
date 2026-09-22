@@ -1,4 +1,4 @@
-# Retriever
+# SearchRequestRetriever
 
 
 ## Supported Types
@@ -13,5 +13,11 @@ value: models.KeywordRetriever = /* values here */
 
 ```python
 value: models.NearestNeighbourRetriever = /* values here */
+```
+
+### `models.RRFRetriever`
+
+```python
+value: models.RRFRetriever = /* values here */
 ```
 
