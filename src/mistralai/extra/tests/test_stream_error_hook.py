@@ -1,6 +1,6 @@
-import httpx
+import httpx2 as httpx
 import pytest
-from httpx._types import AsyncByteStream, SyncByteStream
+from httpx2._types import AsyncByteStream, SyncByteStream
 from pydantic import SecretStr
 
 from mistralai.client import Mistral

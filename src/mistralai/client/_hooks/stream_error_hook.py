@@ -2,8 +2,8 @@ import json
 import re
 from typing import Any, AsyncIterator, Dict, Iterator, Optional, Tuple, Union, get_args
 
-import httpx
-from httpx._types import AsyncByteStream, SyncByteStream
+import httpx2 as httpx
+from httpx2._types import AsyncByteStream, SyncByteStream
 
 from .types import AfterSuccessContext, AfterSuccessHook
 from mistralai.extra.exceptions import (

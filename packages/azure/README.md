@@ -325,14 +325,14 @@ if res is not None:
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+The Python SDK makes API calls using the [httpx2](https://httpx2.pydantic.dev/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
 Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocols ensuring that the client has the necessary methods to make API calls.
 This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this SDK makes as follows:
 ```python
 from mistralai.azure.client import MistralAzure
-import httpx
+import httpx2 as httpx
 import os
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
@@ -349,7 +349,7 @@ or you could wrap the client with your own custom logic:
 from typing import Any, Optional, Union
 from mistralai.azure.client import MistralAzure
 from mistralai.azure.client.httpclient import AsyncHttpClient
-import httpx
+import httpx2 as httpx
 
 class CustomClient(AsyncHttpClient):
     client: AsyncHttpClient
@@ -412,6 +412,9 @@ s = MistralAzure(
     async_client=CustomClient(httpx.AsyncClient()),
 )
 ```
+### httpx2
+
+This SDK is generated against [httpx2](https://httpx2.pydantic.dev/), Pydantic's maintained fork of `httpx`. The fork keeps the same public API, so everything above applies unchanged - `httpx2.Client` and `httpx2.AsyncClient` are what the SDK expects.
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Authentication [security] -->

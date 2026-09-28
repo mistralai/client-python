@@ -4,7 +4,7 @@ import json
 import os
 from typing import List
 
-import httpx
+import httpx2 as httpx
 from pydantic import BaseModel, Field
 
 from mistralai.client import Mistral

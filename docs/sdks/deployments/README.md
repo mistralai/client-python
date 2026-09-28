@@ -4,6 +4,7 @@
 
 ### Available Operations
 
+* [unharden_deployment](#unharden_deployment) - Unharden Deployment
 * [list_deployments](#list_deployments) - List Deployments
 * [create_deployment](#create_deployment) - Create Deployment
 * [update_deployment](#update_deployment) - Update Deployment
@@ -15,6 +16,42 @@
 * [list_deployment_workers](#list_deployment_workers) - List Deployment Workers
 * [get_deployment_logs](#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](#stream_deployment_logs) - Stream Deployment Logs
+
+## unharden_deployment
+
+Unharden Deployment
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="unharden_deployment_v1_workflows_deployments__deployment_id__unharden_post" method="post" path="/v1/workflows/deployments/{deployment_id}/unharden" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    mistral.workflows.deployments.unharden_deployment(deployment_id="f88c4734-ec6d-4ded-bc49-47a41d4be24b")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `deployment_id`                                                         | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `workspace_id`                                                          | *OptionalNullable[str]*                                                 | :heavy_minus_sign:                                                      | Workspace ID to scope the request to. Defaults to the caller's context. |
+| `retries`                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)        | :heavy_minus_sign:                                                      | Configuration to override the default retry behavior of the client.     |
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## list_deployments
 
@@ -47,6 +84,7 @@ with Mistral(
 | `is_hardened`                                                                                                                                                                             | *OptionalNullable[bool]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments by hardened status                                                                                                                                                     |
 | `workflow_name`                                                                                                                                                                           | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | N/A                                                                                                                                                                                       |
 | `created_by`                                                                                                                                                                              | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments by creator's user id                                                                                                                                                   |
+| `owner`                                                                                                                                                                                   | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments by owner's user id                                                                                                                                                     |
 | `location_types`                                                                                                                                                                          | List[[models.LocationType](../../models/locationtype.md)]                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments with at least one worker on any of these location types (OR)                                                                                                           |
 | `search`                                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments by name or ID prefix                                                                                                                                                   |
 | `order_by`                                                                                                                                                                                | [OptionalNullable[models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy]](../../models/listdeploymentsv1workflowsdeploymentsgetorderby.md)                                               | :heavy_minus_sign:                                                                                                                                                                        | Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping. |
@@ -413,6 +451,9 @@ Retrieve logs for a deployment (across all of its workers).
 Use `after`/`before`/`order` on the first request to set the time range and sort order; for
 the next pages pass the `cursor` from the previous response (it remembers the range and order).
 
+`log_type=build` serves the managed build pipeline's output instead. It pages the same way,
+and a null `next_cursor` means the window is drained.
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="get_deployment_logs" method="get" path="/v1/workflows/deployments/{name}/logs" -->
@@ -434,17 +475,18 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `name`                                                                                   | *str*                                                                                    | :heavy_check_mark:                                                                       | N/A                                                                                      |
-| `worker_name`                                                                            | *OptionalNullable[str]*                                                                  | :heavy_minus_sign:                                                                       | Filter logs by worker name                                                               |
-| `workflow_name`                                                                          | *OptionalNullable[str]*                                                                  | :heavy_minus_sign:                                                                       | Filter logs by workflow name                                                             |
-| `after`                                                                                  | [date](https://docs.python.org/3/library/datetime.html#date-objects)                     | :heavy_minus_sign:                                                                       | Only return logs at or after this timestamp                                              |
-| `before`                                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)                     | :heavy_minus_sign:                                                                       | Only return logs before this timestamp                                                   |
-| `order`                                                                                  | [Optional[models.GetDeploymentLogsOrder]](../../models/getdeploymentlogsorder.md)        | :heavy_minus_sign:                                                                       | First-page sort order: 'asc' (oldest first) or 'desc'. Ignored when `cursor` is set.     |
-| `cursor`                                                                                 | *OptionalNullable[str]*                                                                  | :heavy_minus_sign:                                                                       | Pagination cursor from a previous response's `next_cursor`; carries the window and order |
-| `limit`                                                                                  | *Optional[int]*                                                                          | :heavy_minus_sign:                                                                       | Maximum number of logs to return                                                         |
-| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
+| Parameter                                                                                                                         | Type                                                                                                                              | Required                                                                                                                          | Description                                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                                            | *str*                                                                                                                             | :heavy_check_mark:                                                                                                                | N/A                                                                                                                               |
+| `log_type`                                                                                                                        | [Optional[models.DeploymentLogType]](../../models/deploymentlogtype.md)                                                           | :heavy_minus_sign:                                                                                                                | Which stream to read. 'runtime' is the workers' own logs; 'build' reads the image build output and requires a managed deployment. |
+| `worker_name`                                                                                                                     | *OptionalNullable[str]*                                                                                                           | :heavy_minus_sign:                                                                                                                | Filter logs by worker name                                                                                                        |
+| `workflow_name`                                                                                                                   | *OptionalNullable[str]*                                                                                                           | :heavy_minus_sign:                                                                                                                | Filter logs by workflow name                                                                                                      |
+| `after`                                                                                                                           | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                              | :heavy_minus_sign:                                                                                                                | Only return logs at or after this timestamp                                                                                       |
+| `before`                                                                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                              | :heavy_minus_sign:                                                                                                                | Only return logs before this timestamp                                                                                            |
+| `order`                                                                                                                           | [Optional[models.GetDeploymentLogsOrder]](../../models/getdeploymentlogsorder.md)                                                 | :heavy_minus_sign:                                                                                                                | First-page sort order: 'asc' (oldest first) or 'desc'. Ignored when `cursor` is set.                                              |
+| `cursor`                                                                                                                          | *OptionalNullable[str]*                                                                                                           | :heavy_minus_sign:                                                                                                                | Pagination cursor from a previous response's `next_cursor`; carries the window and order                                          |
+| `limit`                                                                                                                           | *Optional[int]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | Maximum number of logs to return                                                                                                  |
+| `retries`                                                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                  | :heavy_minus_sign:                                                                                                                | Configuration to override the default retry behavior of the client.                                                               |
 
 ### Response
 

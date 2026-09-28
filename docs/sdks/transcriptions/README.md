@@ -99,7 +99,7 @@ with Mistral(
 
 ### Response
 
-**Union[eventstreaming.EventStream[models.TranscriptionStreamEvents], eventstreaming.EventStreamAsync[models.TranscriptionStreamEvents]]**
+**[Union[eventstreaming.EventStream[models.TranscriptionStreamEvents], eventstreaming.EventStreamAsync[models.TranscriptionStreamEvents]]](../../models/.md)**
 
 ### Errors
 

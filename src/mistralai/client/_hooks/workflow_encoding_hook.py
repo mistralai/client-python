@@ -7,8 +7,8 @@ import uuid
 import weakref
 from typing import Any, AsyncIterator, Coroutine, Dict, Optional, TypeVar, Union
 
-import httpx
-from httpx._types import AsyncByteStream
+import httpx2 as httpx
+from httpx2._types import AsyncByteStream
 
 from .types import (
     AfterSuccessContext,

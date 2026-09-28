@@ -57,7 +57,9 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
+    cast,
 )
+from uuid import UUID
 
 from pydantic import ValidationError
 
@@ -77,6 +79,7 @@ if TYPE_CHECKING:
 
 ReqBodyT = TypeVar("ReqBodyT", bound=BaseModel)
 RespBodyT = TypeVar("RespBodyT", bound=BaseModel)
+ResourceID = Union[str, UUID]
 
 # A job is still in flight while in one of these; anything else (including an
 # unrecognized future status) is treated as terminal so a poll loop can stop.
@@ -169,7 +172,7 @@ class BatchInputFile(Generic[ReqBodyT]):
     phantom marker recording the request-body type the file's lines carry, so
     ``BatchClient`` can type-check it against its endpoint."""
 
-    file_id: str
+    file_id: ResourceID
 
 
 @dataclass(frozen=True)
@@ -268,15 +271,14 @@ def _parse_output_obj(
         )
 
 
-def _file_id(value: OptionalNullable[str]) -> Optional[str]:
-    """Narrow a generated model's ``OptionalNullable[str]`` file id to ``Optional[str]``.
+def _file_id(value: OptionalNullable[ResourceID]) -> Optional[str]:
+    """Collapse a generated model's optional file id to a string resource id.
 
-    The generated ``BatchJob`` types its file ids as ``OptionalNullable``, so they carry
-    ``UNSET`` as a third state alongside ``str`` and ``None``. The helpers here take
-    ``Optional[str]`` and already treat a missing id as "no file" -- ``UNSET`` is falsy,
-    so this changes no behaviour, it just states the collapse where a type checker can
-    see it instead of relying on truthiness at every call site."""
-    return value if isinstance(value, str) else None
+    Before ``uuidFormat`` is regenerated these fields are strings; afterwards they are
+    UUIDs. Stringify either representation for the generated-client boundary and
+    discard only ``UNSET``/``None``.
+    """
+    return str(value) if isinstance(value, (str, UUID)) else None
 
 
 def _merge_disjoint(into: dict[str, Any], items: Iterable[Tuple[str, Any]]) -> None:
@@ -413,7 +415,7 @@ class BatchJobHandle(Generic[RespBodyT]):
 
     @property
     def id(self) -> str:
-        return self.job.id
+        return str(self.job.id)
 
     @property
     def status(self) -> BatchJobStatus:
@@ -549,33 +551,37 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         return BatchInputFile(response.id)
 
     async def download(
-        self, file_id: str, *, http_headers: Optional[Mapping[str, str]] = None
+        self, file_id: ResourceID, *, http_headers: Optional[Mapping[str, str]] = None
     ) -> bytes:
         """Download a result/error file's bytes in full."""
         response = await self._client.files.download_async(
-            file_id=file_id, **self._headers_kwarg(http_headers)
+            file_id=cast(Any, str(file_id)),
+            **self._headers_kwarg(http_headers),
         )
         return await stream_to_bytes_async(response)
 
     async def signed_url(
         self,
-        file_id: str,
+        file_id: ResourceID,
         *,
         expiry_hours: int = 24,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> str:
         """A temporary signed URL for a file, to stream large results directly."""
         response = await self._client.files.get_signed_url_async(
-            file_id=file_id, expiry=expiry_hours, **self._headers_kwarg(http_headers)
+            file_id=cast(Any, str(file_id)),
+            expiry=expiry_hours,
+            **self._headers_kwarg(http_headers),
         )
         return response.url
 
     async def delete(
-        self, file_id: str, *, http_headers: Optional[Mapping[str, str]] = None
+        self, file_id: ResourceID, *, http_headers: Optional[Mapping[str, str]] = None
     ) -> None:
         """Delete a batch file (input, output, or error)."""
         await self._client.files.delete_async(
-            file_id=file_id, **self._headers_kwarg(http_headers)
+            file_id=cast(Any, str(file_id)),
+            **self._headers_kwarg(http_headers),
         )
 
     # -- job primitives -----------------------------------------------------
@@ -603,25 +609,26 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         if http_headers is not None:
             kwargs["http_headers"] = http_headers
         if isinstance(input, BatchInputFile):
-            kwargs["input_files"] = [input.file_id]
+            kwargs["input_files"] = [str(input.file_id)]
         else:
             kwargs["requests"] = input.to_requests()
         job = await self._client.batch.jobs.create_async(**kwargs)
         return BatchJobHandle(job)
 
     async def get(
-        self, job_id: str, *, http_headers: Optional[Mapping[str, str]] = None
+        self, job_id: ResourceID, *, http_headers: Optional[Mapping[str, str]] = None
     ) -> "BatchJobHandle[RespBodyT]":
         """Fetch a job's current state once (no polling) and wrap it in a handle.
         This is how you rehydrate a handle for a job created in a prior process."""
         job = await self._client.batch.jobs.get_async(
-            job_id=job_id, **self._headers_kwarg(http_headers)
+            job_id=cast(Any, str(job_id)),
+            **self._headers_kwarg(http_headers),
         )
         return BatchJobHandle(job)
 
     async def refresh(
         self,
-        handle: Union["BatchJobHandle[RespBodyT]", str],
+        handle: Union["BatchJobHandle[RespBodyT]", ResourceID],
         *,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> "BatchJobHandle[RespBodyT]":
@@ -630,7 +637,7 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
 
     async def cancel(
         self,
-        handle: Union["BatchJobHandle[RespBodyT]", str],
+        handle: Union["BatchJobHandle[RespBodyT]", ResourceID],
         *,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> "BatchJobHandle[RespBodyT]":
@@ -638,13 +645,14 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         moves to CANCELLATION_REQUESTED (still in-flight, see ``RUNNING_STATUSES``)
         then settles on CANCELLED. Poll with ``wait``/``refresh`` to observe it."""
         job = await self._client.batch.jobs.cancel_async(
-            job_id=self._job_id(handle), **self._headers_kwarg(http_headers)
+            job_id=cast(Any, self._job_id(handle)),
+            **self._headers_kwarg(http_headers),
         )
         return BatchJobHandle(job)
 
     async def wait(
         self,
-        handle: Union["BatchJobHandle[RespBodyT]", str],
+        handle: Union["BatchJobHandle[RespBodyT]", ResourceID],
         *,
         poll_interval_seconds: float = 30.0,
         timeout_hours: int = 24,
@@ -812,7 +820,7 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
             and not isinstance(input, BatchInputFile)
             else None
         )
-        result_files: list[Optional[str]] = []
+        result_files: list[Optional[ResourceID]] = []
 
         deadline = time.monotonic() + timeout_hours * 3600
         handle: Optional[BatchJobHandle[RespBodyT]] = None
@@ -870,8 +878,10 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         return {} if http_headers is None else {"http_headers": http_headers}
 
     @staticmethod
-    def _job_id(handle: Union["BatchJobHandle[RespBodyT]", str]) -> str:
-        return handle if isinstance(handle, str) else handle.id
+    def _job_id(
+        handle: Union["BatchJobHandle[RespBodyT]", ResourceID],
+    ) -> str:
+        return str(handle if isinstance(handle, (str, UUID)) else handle.id)
 
     @staticmethod
     def _coerce(
@@ -931,7 +941,7 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         )
 
     async def _delete_quietly(
-        self, file_id: str, http_headers: Optional[Mapping[str, str]]
+        self, file_id: ResourceID, http_headers: Optional[Mapping[str, str]]
     ) -> None:
         """Best-effort file delete for run()'s cleanup -- a failed delete must never
         mask the real result (or the real exception on the abort path)."""
@@ -942,7 +952,7 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
 
     async def _delete_files_quietly(
         self,
-        file_ids: Iterable[Optional[str]],
+        file_ids: Iterable[Optional[ResourceID]],
         http_headers: Optional[Mapping[str, str]],
     ) -> None:
         """Best-effort delete of several files, skipping the empty/None ones."""
@@ -964,19 +974,22 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
             pass
 
     async def _download_optional(
-        self, file_id: Optional[str], http_headers: Optional[Mapping[str, str]]
+        self, file_id: Optional[ResourceID], http_headers: Optional[Mapping[str, str]]
     ) -> bytes:
         if not file_id:
             return b""
         return await self.download(file_id, http_headers=http_headers)
 
     async def _stream_file(
-        self, file_id: Optional[str], http_headers: Optional[Mapping[str, str]]
+        self,
+        file_id: Optional[ResourceID],
+        http_headers: Optional[Mapping[str, str]],
     ) -> AsyncIterator[Tuple[Optional[str], "BatchItem[RespBodyT]"]]:
         if not file_id:
             return
         response = await self._client.files.download_async(
-            file_id=file_id, **self._headers_kwarg(http_headers)
+            file_id=cast(Any, str(file_id)),
+            **self._headers_kwarg(http_headers),
         )
         try:
             async for line in response.aiter_lines():

@@ -15,7 +15,7 @@
 * [unshare_from_organization](#unshare_from_organization) - Unshare a connector from the current organization.
 * [activate_for_consumer](#activate_for_consumer) - Activate a connector for the given consumer (organization, workspace, user).
 * [deactivate_for_consumer](#deactivate_for_consumer) - Deactivate a connector for the current consumer (at organization, workspace or user level).
-* [call_tool](#call_tool) - Call Connector Tool
+* [~~call_tool~~](#call_tool) - Call Connector Tool :warning: **Deprecated**
 * [list_tools](#list_tools) - List tools for a connector.
 * [get_authentication_methods](#get_authentication_methods) - Get authentication methods for a connector.
 * [list_organization_credentials](#list_organization_credentials) - List organization credentials for a connector.
@@ -24,9 +24,7 @@
 * [delete_all_user_credentials](#delete_all_user_credentials) - Delete all user credentials for a connector.
 * [create_credentials](#create_credentials) - Create consumer credentials for a connector.
 * [update_credentials](#update_credentials) - Create or update consumer credentials for a connector.
-* [delete_organization_credentials](#delete_organization_credentials) - Delete organization credentials for a connector.
-* [delete_workspace_credentials](#delete_workspace_credentials) - Delete workspace credentials for a connector.
-* [delete_user_credentials](#delete_user_credentials) - Delete user credentials for a connector.
+* [delete_credentials](#delete_credentials) - Delete credentials for a consumer.
 * [get](#get) - Get a connector.
 * [update](#update) - Update a connector.
 * [delete](#delete) - Delete a connector.
@@ -414,9 +412,11 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
-## call_tool
+## ~~call_tool~~
 
 Call a tool on an MCP connector.
+
+> :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
 ### Example Usage
 
@@ -474,7 +474,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.connectors.list_tools(connector_id_or_name="<value>", page=1, page_size=100, refresh=False, pretty=False)
+    res = mistral.beta.connectors.list_tools(connector_id_or_name="<value>", page_size=100, refresh=False, pretty=False)
 
     # Handle response
     print(res)
@@ -486,7 +486,6 @@ with Mistral(
 | Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
 | `connector_id_or_name`                                                                           | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
-| `page`                                                                                           | *Optional[int]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
 | `page_size`                                                                                      | *Optional[int]*                                                                                  | :heavy_minus_sign:                                                                               | N/A                                                                                              |
 | `refresh`                                                                                        | *Optional[bool]*                                                                                 | :heavy_minus_sign:                                                                               | N/A                                                                                              |
 | `pretty`                                                                                         | *Optional[bool]*                                                                                 | :heavy_minus_sign:                                                                               | Return a simplified payload with only name, description, annotations, and a compact inputSchema. |
@@ -807,13 +806,13 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
-## delete_organization_credentials
+## delete_credentials
 
-Delete credentials at the organization level for a given connector.
+Delete connector credentials for a given consumer.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="connector_delete_organization_credentials_v1" method="delete" path="/v1/connectors/{connector_id_or_name}/organization/credentials/{credentials_name}" -->
+<!-- UsageSnippet language="python" operationID="connector_delete_credentials" method="delete" path="/v1/connectors/{connector_id_or_name}/{consumer_scope}/credentials/{credentials_name}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -823,7 +822,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.connectors.delete_organization_credentials(credentials_name="<value>", connector_id_or_name="<value>")
+    res = mistral.beta.connectors.delete_credentials(credentials_name="<value>", connector_id_or_name="<value>", consumer_scope="user")
 
     # Handle response
     print(res)
@@ -832,95 +831,12 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `credentials_name`                                                  | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `connector_id_or_name`                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.MessageResponse](../../models/messageresponse.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
-
-## delete_workspace_credentials
-
-Delete credentials at the workspace level for a given connector.
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="connector_delete_workspace_credentials_v1" method="delete" path="/v1/connectors/{connector_id_or_name}/workspace/credentials/{credentials_name}" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.connectors.delete_workspace_credentials(credentials_name="<value>", connector_id_or_name="<value>")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `credentials_name`                                                  | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `connector_id_or_name`                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.MessageResponse](../../models/messageresponse.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
-
-## delete_user_credentials
-
-Delete credentials at the user level for a given connector.
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="connector_delete_user_credentials_v1" method="delete" path="/v1/connectors/{connector_id_or_name}/user/credentials/{credentials_name}" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
-) as mistral:
-
-    res = mistral.beta.connectors.delete_user_credentials(credentials_name="<value>", connector_id_or_name="<value>")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `credentials_name`                                                  | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `connector_id_or_name`                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `credentials_name`                                                                                        | *str*                                                                                                     | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `connector_id_or_name`                                                                                    | *str*                                                                                                     | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `consumer_scope`                                                                                          | [models.ConnectorDeleteCredentialsConsumerScope](../../models/connectordeletecredentialsconsumerscope.md) | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `retries`                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                          | :heavy_minus_sign:                                                                                        | Configuration to override the default retry behavior of the client.                                       |
 
 ### Response
 
@@ -949,7 +865,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.connectors.get(connector_id_or_name="<value>", fetch_user_data=False, fetch_customer_data=False)
+    res = mistral.beta.connectors.get(connector_id_or_name="<value>", fetch_user_data=False)
 
     # Handle response
     print(res)
@@ -958,12 +874,11 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `connector_id_or_name`                                                                  | *str*                                                                                   | :heavy_check_mark:                                                                      | N/A                                                                                     |
-| `fetch_user_data`                                                                       | *Optional[bool]*                                                                        | :heavy_minus_sign:                                                                      | Fetch the user-level data associated with the connector (e.g. connection credentials).  |
-| `fetch_customer_data`                                                                   | *Optional[bool]*                                                                        | :heavy_minus_sign:                                                                      | Fetch the customer data associated with the connector (e.g. customer secrets / config). |
-| `retries`                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                        | :heavy_minus_sign:                                                                      | Configuration to override the default retry behavior of the client.                     |
+| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `connector_id_or_name`                                                                 | *str*                                                                                  | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `fetch_user_data`                                                                      | *Optional[bool]*                                                                       | :heavy_minus_sign:                                                                     | Fetch the user-level data associated with the connector (e.g. connection credentials). |
+| `retries`                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                       | :heavy_minus_sign:                                                                     | Configuration to override the default retry behavior of the client.                    |
 
 ### Response
 

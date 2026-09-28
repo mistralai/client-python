@@ -400,7 +400,7 @@ with Mistral(
 
 ### Response
 
-**str**
+**[str](../../models/responselibrariesdocumentsgetsignedurlv1.md)**
 
 ### Errors
 
@@ -442,7 +442,7 @@ with Mistral(
 
 ### Response
 
-**str**
+**[str](../../models/responselibrariesdocumentsgetextractedtextsignedurlv1.md)**
 
 ### Errors
 

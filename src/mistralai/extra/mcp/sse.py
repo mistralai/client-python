@@ -4,11 +4,10 @@ from contextlib import AsyncExitStack
 from functools import cached_property
 from typing import Any
 
-import httpx
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
+import httpx2 as httpx
+from mcp.client._transport import TransportStreams  # pyright: ignore[reportMissingImports]
 from authlib.oauth2.rfc6749 import OAuth2Token
 from mcp.client.sse import sse_client  # pyright: ignore[reportMissingImports]
-from mcp.shared.message import SessionMessage  # pyright: ignore[reportMissingImports]
 
 from mistralai.extra.exceptions import MCPAuthException
 from mistralai.extra.mcp.base import (
@@ -139,10 +138,7 @@ class MCPClientSSE(MCPClientBase):
 
     async def _get_transport(
         self, exit_stack: AsyncExitStack
-    ) -> tuple[
-        MemoryObjectReceiveStream[SessionMessage | Exception],
-        MemoryObjectSendStream[SessionMessage],
-    ]:
+    ) -> TransportStreams:
         try:
             return await exit_stack.enter_async_context(
                 sse_client(

@@ -19,6 +19,17 @@ $ echo 'export MISTRAL_API_KEY=[your_key_here]' >> ~/.zshenv
 $ source ~/.zshenv
 ```
 
+### Service-account token
+
+Workloads with a mounted service-account token can set `MISTRAL_SA_TOKEN_PATH` instead. The file is re-read on every request, so rotation is picked up. Credentials resolve in this order:
+
+1. an `Authorization` header passed per request via `http_headers`
+2. `Mistral(api_key=...)`, which also accepts a callable
+3. the token at `MISTRAL_SA_TOKEN_PATH`
+4. `MISTRAL_API_KEY`
+
+An unreadable or empty token file raises `ServiceAccountTokenError`.
+
 <!-- Start Summary [summary] -->
 ## Summary
 
@@ -480,12 +491,13 @@ print(res.choices[0].message.content)
 
 ### [Audio.Voices](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md)
 
-* [~~list~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#list) - List all voices :warning: **Deprecated**
+* [~~list~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#list) - List all voices :warning: **Deprecated** Use [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#search) instead.
 * [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#create) - Create a new voice
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#delete) - Delete a custom voice
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#update) - Update voice metadata
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#get) - Get voice details
 * [get_sample_audio](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#get_sample_audio) - Get voice sample audio
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/voices/README.md#search) - List voices, cursor-paginated
 
 ### [Batch.Jobs](https://github.com/mistralai/client-python/blob/main/docs/sdks/jobs/README.md)
 
@@ -521,7 +533,7 @@ print(res.choices[0].message.content)
 * [unshare_from_organization](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#unshare_from_organization) - Unshare a connector from the current organization.
 * [activate_for_consumer](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#activate_for_consumer) - Activate a connector for the given consumer (organization, workspace, user).
 * [deactivate_for_consumer](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#deactivate_for_consumer) - Deactivate a connector for the current consumer (at organization, workspace or user level).
-* [call_tool](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#call_tool) - Call Connector Tool
+* [~~call_tool~~](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#call_tool) - Call Connector Tool :warning: **Deprecated**
 * [list_tools](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#list_tools) - List tools for a connector.
 * [get_authentication_methods](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#get_authentication_methods) - Get authentication methods for a connector.
 * [list_organization_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#list_organization_credentials) - List organization credentials for a connector.
@@ -530,9 +542,7 @@ print(res.choices[0].message.content)
 * [delete_all_user_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete_all_user_credentials) - Delete all user credentials for a connector.
 * [create_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#create_credentials) - Create consumer credentials for a connector.
 * [update_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#update_credentials) - Create or update consumer credentials for a connector.
-* [delete_organization_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete_organization_credentials) - Delete organization credentials for a connector.
-* [delete_workspace_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete_workspace_credentials) - Delete workspace credentials for a connector.
-* [delete_user_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete_user_credentials) - Delete user credentials for a connector.
+* [delete_credentials](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete_credentials) - Delete credentials for a consumer.
 * [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#get) - Get a connector.
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#update) - Update a connector.
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete) - Delete a connector.
@@ -591,6 +601,7 @@ print(res.choices[0].message.content)
 * [create_record](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#create_record) - Add a record to the dataset
 * [import_from_file](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_file) - Populate the dataset with records from an uploaded file
 * [import_from_playground](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_playground) - Populate the dataset with records from playground conversations
+* [import_from_spans](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_spans) - Populate the dataset with records mapped from telemetry spans
 * [import_from_dataset_records](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 * [fetch_task](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
@@ -612,6 +623,11 @@ print(res.choices[0].message.content)
 * [get_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get_pipeline_config) - Get a worker pipeline configuration
 * [update_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#update_pipeline_config) - Replace a worker pipeline configuration
 * [delete_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#delete_pipeline_config) - Delete a worker pipeline configuration
+* [create_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#create_pipeline) - Create a pipeline
+* [list_pipelines](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#list_pipelines) - List pipelines
+* [get_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get_pipeline) - Get a pipeline
+* [update_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#update_pipeline) - Update a pipeline
+* [delete_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#delete_pipeline) - Delete a pipeline
 
 ### [Beta.Observability.Judges](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md)
 
@@ -632,6 +648,7 @@ print(res.choices[0].message.content)
 
 * [search_spans](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_spans) - Search spans
 * [aggregate](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#aggregate) - Aggregate spans
+* [aggregate_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#aggregate_span_evaluations) - Aggregate span evaluations
 * [search_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
 * [list_span_fields](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
@@ -677,6 +694,10 @@ print(res.choices[0].message.content)
 * [ingest_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#ingest_documents) - Ingest documents into a managed index
 * [delete_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#delete_documents) - Delete documents from a managed index
 * [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#search) - Search a managed index
+* [navigate](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#navigate) - Navigate to adjacent chunks
+* [read](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#read) - Read chunks within a span
+* [grep](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#grep) - Grep for a pattern within a source
+* [get_chunk](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get_chunk) - Get a single chunk by id
 
 ### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md)
 
@@ -782,6 +803,7 @@ print(res.choices[0].message.content)
 
 #### [Workflows.Deployments](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md)
 
+* [unharden_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#unharden_deployment) - Unharden Deployment
 * [list_deployments](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#list_deployments) - List Deployments
 * [create_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#create_deployment) - Create Deployment
 * [update_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#update_deployment) - Update Deployment
@@ -1054,8 +1076,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 162 of 253 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 48 of 253 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 264 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 55 of 264 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1123,14 +1145,14 @@ with Mistral(
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+The Python SDK makes API calls using the [httpx2](https://httpx2.pydantic.dev/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
 Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
 This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
 from mistralai.client import Mistral
-import httpx
+import httpx2 as httpx
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
 s = Mistral(client=http_client)
@@ -1140,7 +1162,7 @@ or you could wrap the client with your own custom logic:
 ```python
 from mistralai.client import Mistral
 from mistralai.client.httpclient import AsyncHttpClient
-import httpx
+import httpx2 as httpx
 
 class CustomClient(AsyncHttpClient):
     client: AsyncHttpClient
@@ -1199,20 +1221,9 @@ class CustomClient(AsyncHttpClient):
 
 s = Mistral(async_client=CustomClient(httpx.AsyncClient()))
 ```
-### httpx2 (Pydantic's httpx fork)
+### httpx2
 
-[httpx2](https://httpx2.pydantic.dev/) is Pydantic's maintained fork of `httpx`. To run this SDK on httpx2, call `alias_httpx()` at your program's entry point, before importing the SDK, so every `import httpx` — including the ones inside the SDK — resolves to `httpx2`:
-```python
-import httpx2
-
-httpx2.alias_httpx()
-
-from mistralai.client import Mistral
-
-s = Mistral()
-```
-
-An SDK can also be generated against httpx2 directly, so it depends on the fork instead of `httpx`, by setting `python.httpClientLibrary: httpx2` in `gen.yaml`.
+This SDK is generated against [httpx2](https://httpx2.pydantic.dev/), Pydantic's maintained fork of `httpx`. The fork keeps the same public API, so everything above applies unchanged - `httpx2.Client` and `httpx2.AsyncClient` are what the SDK expects.
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Authentication [security] -->
@@ -1250,13 +1261,12 @@ with Mistral(
 Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```python
 from mistralai.client import Mistral, models
-import os
 
 
 with Mistral() as mistral:
 
     res = mistral.beta.users.get_identity(security=models.UsersAPIGetIdentitySecurity(
-        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+
     ))
 
     # Handle response

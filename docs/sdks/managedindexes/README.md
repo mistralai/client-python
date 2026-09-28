@@ -12,6 +12,10 @@
 * [ingest_documents](#ingest_documents) - Ingest documents into a managed index
 * [delete_documents](#delete_documents) - Delete documents from a managed index
 * [search](#search) - Search a managed index
+* [navigate](#navigate) - Navigate to adjacent chunks
+* [read](#read) - Read chunks within a span
+* [grep](#grep) - Grep for a pattern within a source
+* [get_chunk](#get_chunk) - Get a single chunk by id
 
 ## create
 
@@ -88,11 +92,14 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Maximum number of indexes to return                                 |
-| `page_token`                                                        | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Cursor returned as next_page_token by the previous page             |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `page_size`                                                                       | *Optional[int]*                                                                   | :heavy_minus_sign:                                                                | Maximum number of indexes to return                                               |
+| `page_token`                                                                      | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | Cursor returned as next_page_token by the previous page                           |
+| `name`                                                                            | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | Case-insensitive substring to match against index names                           |
+| `status`                                                                          | [OptionalNullable[models.ManagedIndexStatus]](../../models/managedindexstatus.md) | :heavy_minus_sign:                                                                | Status to match                                                                   |
+| `creator_id`                                                                      | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | Creator ID to match                                                               |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 ### Response
 
@@ -348,15 +355,196 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retriever`                                                         | [models.Retriever](../../models/retriever.md)                       | :heavy_check_mark:                                                  | N/A                                                                 |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `index_name`                                                            | *str*                                                                   | :heavy_check_mark:                                                      | N/A                                                                     |
+| `retriever`                                                             | [models.SearchRequestRetriever](../../models/searchrequestretriever.md) | :heavy_check_mark:                                                      | N/A                                                                     |
+| `retries`                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)        | :heavy_minus_sign:                                                      | Configuration to override the default retry behavior of the client.     |
 
 ### Response
 
 **[models.SearchResponse](../../models/searchresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## navigate
+
+Returns the chunks adjacent to a position within a source, in reading order. NEXT fetches chunks at or after the end offset; PREVIOUS fetches chunks before the start offset. A 200 with an empty list means the source exists but no chunk falls in the requested direction; a 404 means the source has no chunks at all.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="navigate_index_v1_rag_managed_indexes__index_name__navigate_post" method="post" path="/v1/rag/managed_indexes/{index_name}/navigate" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.navigate(index_name="<value>", source_id="<id>", start_offset=506558, end_offset=410700, direction="previous", top_k=1, content_type="content")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `source_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `start_offset`                                                      | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `end_offset`                                                        | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `direction`                                                         | [models.NavigationDirection](../../models/navigationdirection.md)   | :heavy_check_mark:                                                  | N/A                                                                 |
+| `top_k`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `content_type`                                                      | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.NavigationResponse](../../models/navigationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## read
+
+Returns the chunks of a source whose span falls within [start_offset, end_offset). Either bound may be omitted to leave that side open. A 200 with an empty list means the source exists but no chunk falls in the range; a 404 means the source has no chunks at all.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="read_index_v1_rag_managed_indexes__index_name__read_post" method="post" path="/v1/rag/managed_indexes/{index_name}/read" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.read(index_name="<value>", source_id="<id>", top_k=20, content_type="content")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `source_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `start_offset`                                                      | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `end_offset`                                                        | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `top_k`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `content_type`                                                      | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.NavigationResponse](../../models/navigationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## grep
+
+Lexical substring match within a single source, in reading order. PHRASE mode matches the pattern literally (whitespace-sensitive, case-insensitive); TERM mode requires every whitespace-split token present in any order. A 200 with an empty list means the source exists but no chunk matched; a 404 means the source has no chunks at all.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="grep_index_v1_rag_managed_indexes__index_name__grep_post" method="post" path="/v1/rag/managed_indexes/{index_name}/grep" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.grep(index_name="<value>", source_id="<id>", pattern="<value>", top_k=5, content_type="content")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `source_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `pattern`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `mode`                                                              | [Optional[models.GrepMode]](../../models/grepmode.md)               | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `top_k`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `content_type`                                                      | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.NavigationResponse](../../models/navigationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_chunk
+
+Returns a single chunk by its canonical id. A 404 means no chunk with that id exists in the index.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get" method="get" path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.get_chunk(index_name="<value>", chunk_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `chunk_id`                                                          | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.NavigationResponse](../../models/navigationresponse.md)**
 
 ### Errors
 

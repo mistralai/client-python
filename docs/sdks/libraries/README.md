@@ -9,7 +9,7 @@
 * [list](#list) - List all libraries you have access to.
 * [create](#create) - Create a new Library.
 * [get](#get) - Detailed information about a specific Library.
-* [delete](#delete) - Delete a library and all of its documents.
+* [delete](#delete) - Delete a library and all of it's document.
 * [update](#update) - Update a library.
 * [~~libraries_update_v1~~](#libraries_update_v1) - Update a library. :warning: **Deprecated**
 

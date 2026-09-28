@@ -65,6 +65,9 @@ Scoped to a workspace, this requires the Workspace admin (`workspace_admin`) rol
 it. Omitting the workspace lists the whole organization and requires the Organization
 admin (`organization_admin`) role instead.
 
+``q`` narrows the list to accounts whose name or description contains it. ``order``
+sorts by creation time (ascending by default).
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="list_service_accounts_v1_service_accounts_get" method="get" path="/v1/service-accounts" -->
@@ -94,6 +97,8 @@ with Mistral(
 | `limit`                                                             | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `workspace_id`                                                      | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `include_deleted`                                                   | *Optional[bool]*                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `q`                                                                 | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `order`                                                             | [Optional[models.SortOrder]](../../models/sortorder.md)             | :heavy_minus_sign:                                                  | Direction to sort a service-account listing by creation time.       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response

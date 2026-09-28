@@ -109,7 +109,7 @@ with Mistral(
 
 ### Response
 
-**List[models.AgentsAPIV1ConversationsListResponse]**
+**[List[models.AgentsAPIV1ConversationsListResponse]](../../models/.md)**
 
 ### Errors
 
@@ -437,7 +437,7 @@ with Mistral(
 
 ### Response
 
-**Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]**
+**[Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]](../../models/.md)**
 
 ### Errors
 
@@ -489,7 +489,7 @@ with Mistral(
 
 ### Response
 
-**Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]**
+**[Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]](../../models/.md)**
 
 ### Errors
 
@@ -544,7 +544,7 @@ with Mistral(
 
 ### Response
 
-**Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]**
+**[Union[eventstreaming.EventStream[models.ConversationEvents], eventstreaming.EventStreamAsync[models.ConversationEvents]]](../../models/.md)**
 
 ### Errors
 

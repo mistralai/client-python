@@ -3,7 +3,7 @@ import re
 import unittest
 from unittest.mock import MagicMock
 
-import httpx
+import httpx2 as httpx
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter

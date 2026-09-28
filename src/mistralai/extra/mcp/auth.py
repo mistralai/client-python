@@ -1,6 +1,6 @@
 import logging
 
-import httpx
+import httpx2 as httpx
 from authlib.integrations.httpx_client import AsyncOAuth2Client as AsyncOAuth2ClientBase
 from authlib.oauth2.rfc8414 import AuthorizationServerMetadata
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-import httpx
+import httpx2 as httpx
 from mistralai.gcp.client.errors import MistralGCPError
 from mistralai.gcp.client.models import validationerror as models_validationerror
 from mistralai.gcp.client.types import BaseModel

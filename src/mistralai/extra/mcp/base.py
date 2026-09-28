@@ -87,7 +87,7 @@ class MCPClientBase(MCPClientProtocol):
                     function=Function(
                         name=mcp_tool.name,
                         description=mcp_tool.description,
-                        parameters=mcp_tool.inputSchema,
+                        parameters=mcp_tool.input_schema,
                         strict=True,
                     ),
                 )

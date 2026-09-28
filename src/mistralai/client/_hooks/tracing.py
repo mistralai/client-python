@@ -4,7 +4,7 @@ import weakref
 from functools import wraps
 from typing import Any, Optional, Tuple, Union
 
-import httpx
+import httpx2 as httpx
 from opentelemetry import context as context_api
 from opentelemetry import trace
 from opentelemetry.trace import Span, Status, StatusCode, set_span_in_context

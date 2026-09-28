@@ -76,6 +76,7 @@ def test_payload_encoder_cleanup_on_client_gc(
     encryption_config: WorkflowEncodingConfig,
 ):
     """Test that PayloadEncoder is cleaned up when client is garbage collected."""
+    gc.collect()
     initial_config_count = len(_workflow_configs)
 
     # Create client and configure encoding
@@ -694,7 +695,7 @@ async def test_workflow_encoding_hook_handles_gzipped_response():
     causing a zlib error. The fix strips Content-Encoding when creating new Responses.
     """
     import gzip
-    import httpx
+    import httpx2 as httpx
     from pydantic import SecretStr
     from mistralai.client import Mistral
     from mistralai.client._hooks.workflow_encoding_hook import (

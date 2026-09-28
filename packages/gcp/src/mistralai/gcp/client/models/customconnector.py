@@ -13,7 +13,7 @@ from mistralai.gcp.client.types import (
 )
 from mistralai.gcp.client.utils import validate_const
 import pydantic
-from pydantic import Field, model_serializer
+from pydantic import Field, SerializeAsAny, model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import Literal, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -44,7 +44,7 @@ class CustomConnector(BaseModel):
         pydantic.Field(alias="type"),
     ] = "connector"
 
-    authorization: OptionalNullable[Authorization] = UNSET
+    authorization: SerializeAsAny[OptionalNullable[Authorization]] = UNSET
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 

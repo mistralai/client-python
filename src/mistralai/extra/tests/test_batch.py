@@ -1,6 +1,7 @@
 import asyncio
 import json
 from typing import Any, Optional, Sequence, cast
+from uuid import UUID
 
 import pytest
 
@@ -27,17 +28,33 @@ from mistralai.extra.batch import (
 )
 
 
+FILE_IN_ID = UUID("00000000-0000-0000-0000-000000000001")
+FILE_OUT_ID = UUID("00000000-0000-0000-0000-000000000002")
+FILE_ERROR_ID = UUID("00000000-0000-0000-0000-000000000003")
+FILE_UPLOADED_ID = UUID("00000000-0000-0000-0000-000000000004")
+FILE_XYZ_ID = UUID("00000000-0000-0000-0000-000000000005")
+FILE_PREEXISTING_ID = UUID("00000000-0000-0000-0000-000000000006")
+JOB_ID = UUID("00000000-0000-0000-0000-000000000101")
+JOB_NINE_ID = UUID("00000000-0000-0000-0000-000000000109")
+JOB_X_ID = UUID("00000000-0000-0000-0000-000000000110")
+JOB_Z_ID = UUID("00000000-0000-0000-0000-000000000120")
+
+
 # ---------------------------------------------------------------------------
 # Fakes for the Mistral client surface the wrapper touches
 # ---------------------------------------------------------------------------
 
 
 def _make_job(
-    status: BatchJobStatus = "SUCCESS", *, failed=0, succeeded=1, job_id="job-1"
+    status: BatchJobStatus = "SUCCESS",
+    *,
+    failed=0,
+    succeeded=1,
+    job_id: str | UUID = JOB_ID,
 ):
     return BatchJob(
-        id=job_id,
-        input_files=["file-in"],
+        id=str(job_id),
+        input_files=cast(Any, [str(FILE_IN_ID)]),
         endpoint="/v1/embeddings",
         errors=[],
         status=status,
@@ -46,8 +63,8 @@ def _make_job(
         completed_requests=succeeded + failed,
         succeeded_requests=succeeded,
         failed_requests=failed,
-        output_file="file-out",
-        error_file="file-err" if failed else None,
+        output_file=cast(Any, str(FILE_OUT_ID)),
+        error_file=cast(Any, str(FILE_ERROR_ID) if failed else None),
     )
 
 
@@ -76,7 +93,7 @@ class _FakeFiles:
 
     async def upload_async(self, **kwargs):
         self.calls.append(("upload", kwargs))
-        return type("Resp", (), {"id": "file-uploaded"})()
+        return type("Resp", (), {"id": FILE_UPLOADED_ID})()
 
     async def download_async(self, **kwargs):
         self.calls.append(("download", kwargs))
@@ -396,7 +413,7 @@ async def test_upload_returns_handle_and_sets_purpose():
     client = _embed_client(files, _FakeJobs([_make_job()]))
     handle = await client.upload(BatchInput.from_payload({"a": _embed_req()}))
     assert isinstance(handle, BatchInputFile)
-    assert handle.file_id == "file-uploaded"
+    assert handle.file_id == FILE_UPLOADED_ID
     _, kwargs = files.calls[0]
     assert kwargs["purpose"] == "batch"
     assert kwargs["file"].file_name == "batch_input.jsonl"
@@ -426,18 +443,20 @@ async def test_upload_forwards_optional_knobs():
 
 @pytest.mark.asyncio
 async def test_download_concatenates_stream():
-    files = _FakeFiles(downloads={"file-out": [b"foo", b"bar"]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [b"foo", b"bar"]})
     client = _embed_client(files, _FakeJobs([]))
-    assert await client.download("file-out") == b"foobar"
+    assert await client.download(FILE_OUT_ID) == b"foobar"
+    assert files.calls[0][1]["file_id"] == str(FILE_OUT_ID)
 
 
 @pytest.mark.asyncio
 async def test_signed_url_returns_url_and_forwards_expiry():
     files = _FakeFiles()
     client = _embed_client(files, _FakeJobs([]))
-    url = await client.signed_url("file-out", expiry_hours=12)
+    url = await client.signed_url(FILE_OUT_ID, expiry_hours=12)
     assert url == "https://signed/x"
     _, kwargs = files.calls[0]
+    assert kwargs["file_id"] == str(FILE_OUT_ID)
     assert kwargs["expiry"] == 12
 
 
@@ -445,9 +464,9 @@ async def test_signed_url_returns_url_and_forwards_expiry():
 async def test_delete_calls_delete_async():
     files = _FakeFiles()
     client = _embed_client(files, _FakeJobs([]))
-    await client.delete("file-out")
+    await client.delete(FILE_OUT_ID)
     assert files.calls[0][0] == "delete"
-    assert files.calls[0][1]["file_id"] == "file-out"
+    assert files.calls[0][1]["file_id"] == str(FILE_OUT_ID)
 
 
 # ---------------------------------------------------------------------------
@@ -457,7 +476,7 @@ async def test_delete_calls_delete_async():
 
 @pytest.mark.asyncio
 async def test_create_from_input_returns_handle_and_sends_inline_requests():
-    jobs = _FakeJobs([_make_job(job_id="j9")])
+    jobs = _FakeJobs([_make_job(job_id=JOB_NINE_ID)])
     client = _embed_client(_FakeFiles(), jobs)
     handle = await client.create(
         BatchInput.from_payload({"a": _embed_req()}),
@@ -465,7 +484,7 @@ async def test_create_from_input_returns_handle_and_sends_inline_requests():
         metadata={"k": "v"},
     )
     assert isinstance(handle, BatchJobHandle)
-    assert handle.id == "j9"
+    assert handle.id == str(JOB_NINE_ID)
     assert handle.status == "SUCCESS"
     _, kwargs = jobs.calls[0]
     assert "requests" in kwargs
@@ -480,9 +499,9 @@ async def test_create_from_input_returns_handle_and_sends_inline_requests():
 async def test_create_from_file_sends_input_files():
     jobs = _FakeJobs([_make_job()])
     client = _embed_client(_FakeFiles(), jobs)
-    await client.create(BatchInputFile("file-xyz"))
+    await client.create(BatchInputFile(FILE_XYZ_ID))
     _, kwargs = jobs.calls[0]
-    assert kwargs["input_files"] == ["file-xyz"]
+    assert kwargs["input_files"] == [str(FILE_XYZ_ID)]
     assert "requests" not in kwargs
 
 
@@ -490,18 +509,18 @@ async def test_create_from_file_sends_input_files():
 async def test_get_returns_handle():
     jobs = _FakeJobs([], poll_statuses=["RUNNING"])
     client = _embed_client(_FakeFiles(), jobs)
-    handle = await client.get("job-1", http_headers={"a": "b"})
+    handle = await client.get(JOB_ID, http_headers={"a": "b"})
     assert isinstance(handle, BatchJobHandle)
     assert handle.status == "RUNNING"
     _, kwargs = jobs.calls[0]
-    assert kwargs["job_id"] == "job-1"
+    assert kwargs["job_id"] == str(JOB_ID)
     assert kwargs["http_headers"] == {"a": "b"}
 
 
 @pytest.mark.asyncio
 async def test_refresh_refetches_state():
     jobs = _FakeJobs(
-        [_make_job(status="QUEUED", job_id="jx")], poll_statuses=["RUNNING"]
+        [_make_job(status="QUEUED", job_id=JOB_X_ID)], poll_statuses=["RUNNING"]
     )
     client = _embed_client(_FakeFiles(), jobs)
     handle = await client.create(BatchInput.from_payload({"a": _embed_req()}))
@@ -514,12 +533,12 @@ async def test_refresh_refetches_state():
 async def test_cancel_accepts_id_and_returns_handle():
     jobs = _FakeJobs([])
     client = _embed_client(_FakeFiles(), jobs)
-    handle = await client.cancel("job-1", http_headers={"a": "b"})
+    handle = await client.cancel(JOB_ID, http_headers={"a": "b"})
     assert isinstance(handle, BatchJobHandle)
     assert handle.status == "CANCELLATION_REQUESTED"
     _, kwargs = jobs.calls[0]
     assert jobs.calls[0][0] == "cancel"
-    assert kwargs["job_id"] == "job-1"
+    assert kwargs["job_id"] == str(JOB_ID)
     assert kwargs["http_headers"] == {"a": "b"}
 
 
@@ -527,9 +546,21 @@ async def test_cancel_accepts_id_and_returns_handle():
 async def test_cancel_accepts_handle():
     jobs = _FakeJobs([])
     client = _embed_client(_FakeFiles(), jobs)
-    handle = BatchJobHandle(_make_job(status="RUNNING", job_id="jz"))
+    handle = BatchJobHandle(_make_job(status="RUNNING", job_id=JOB_Z_ID))
     await client.cancel(handle)
-    assert jobs.calls[0][1]["job_id"] == "jz"
+    assert jobs.calls[0][1]["job_id"] == str(JOB_Z_ID)
+
+
+@pytest.mark.asyncio
+async def test_cancel_stringifies_uuid_id_from_handle():
+    jobs = _FakeJobs([])
+    client = _embed_client(_FakeFiles(), jobs)
+    job = _make_job(status="RUNNING").model_copy(update={"id": JOB_Z_ID})
+    handle = BatchJobHandle(job)
+
+    assert handle.id == str(JOB_Z_ID)
+    await client.cancel(handle)
+    assert jobs.calls[0][1]["job_id"] == str(JOB_Z_ID)
 
 
 @pytest.mark.asyncio
@@ -562,8 +593,8 @@ async def test_wait_raises_timeout():
 async def test_stream_yields_ok_and_errors():
     files = _FakeFiles(
         downloads={
-            "file-out": [_ok_line("a").encode()],
-            "file-err": [_err_line("b").encode()],
+            str(FILE_OUT_ID): [_ok_line("a").encode()],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
         }
     )
     jobs = _FakeJobs([_make_job(failed=1, succeeded=1)])
@@ -577,8 +608,28 @@ async def test_stream_yields_ok_and_errors():
 
 
 @pytest.mark.asyncio
+async def test_stream_stringifies_uuid_output_and_error_file_ids():
+    files = _FakeFiles(
+        downloads={
+            str(FILE_OUT_ID): [_ok_line("a").encode()],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
+        }
+    )
+    job = _make_job(failed=1).model_copy(
+        update={"output_file": FILE_OUT_ID, "error_file": FILE_ERROR_ID}
+    )
+    client = _embed_client(files, _FakeJobs([]))
+
+    items = dict([item async for item in client.stream_results(BatchJobHandle(job))])
+    downloaded = {c[1]["file_id"] for c in files.calls if c[0] == "download"}
+    assert downloaded == {str(FILE_OUT_ID), str(FILE_ERROR_ID)}
+    assert isinstance(items["a"], EmbeddingResponse)
+    assert isinstance(items["b"], BatchRequestError)
+
+
+@pytest.mark.asyncio
 async def test_stream_yields_response_error_for_unparseable_body():
-    files = _FakeFiles(downloads={"file-out": [_bad_body_line("c").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_bad_body_line("c").encode()]})
     jobs = _FakeJobs([_make_job()])
     client = _embed_client(files, jobs)
     handle = await client.create(BatchInput.from_payload({"c": _embed_req()}))
@@ -593,8 +644,8 @@ async def test_stream_is_read_only_and_never_deletes():
     # creating, or deleting -- cleanup of the job and its files stays the caller's.
     files = _FakeFiles(
         downloads={
-            "file-out": [_ok_line("a").encode()],
-            "file-err": [_err_line("b").encode()],
+            str(FILE_OUT_ID): [_ok_line("a").encode()],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
         }
     )
     jobs = _FakeJobs([_make_job(failed=1, succeeded=1)])
@@ -607,7 +658,7 @@ async def test_stream_is_read_only_and_never_deletes():
 
 @pytest.mark.asyncio
 async def test_stream_waits_when_not_terminal():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job(status="QUEUED")], poll_statuses=["QUEUED", "SUCCESS"])
     client = _embed_client(files, jobs)
     handle = await client.create(BatchInput.from_payload({"a": _embed_req()}))
@@ -620,7 +671,7 @@ async def test_stream_waits_when_not_terminal():
 
 @pytest.mark.asyncio
 async def test_stream_forwards_http_headers_to_download():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()])
     client = _embed_client(files, jobs)
     handle = await client.create(BatchInput.from_payload({"a": _embed_req()}))
@@ -636,7 +687,7 @@ async def test_stream_forwards_http_headers_to_download():
 
 @pytest.mark.asyncio
 async def test_run_small_input_inline_no_upload():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["QUEUED", "SUCCESS"])
     client = _embed_client(files, jobs)
     result = await client.run(
@@ -663,7 +714,7 @@ async def test_run_uploads_when_over_inline_threshold():
     )
     assert files.calls[0][0] == "upload"
     _, create_kwargs = jobs.calls[0]
-    assert create_kwargs["input_files"] == ["file-uploaded"]
+    assert create_kwargs["input_files"] == [str(FILE_UPLOADED_ID)]
 
 
 @pytest.mark.asyncio
@@ -671,9 +722,9 @@ async def test_run_input_file_passthrough_no_upload():
     files = _FakeFiles()
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
-    await client.run(BatchInputFile("file-pre"), poll_interval_seconds=0)
+    await client.run(BatchInputFile(FILE_PREEXISTING_ID), poll_interval_seconds=0)
     assert not any(c[0] == "upload" for c in files.calls)
-    assert jobs.calls[0][1]["input_files"] == ["file-pre"]
+    assert jobs.calls[0][1]["input_files"] == [str(FILE_PREEXISTING_ID)]
 
 
 @pytest.mark.asyncio
@@ -757,7 +808,7 @@ async def test_run_raises_timeout_when_deadline_passed():
 
 @pytest.mark.asyncio
 async def test_run_materializes_output_downloaded_once():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     result = await client.run(
@@ -773,7 +824,7 @@ async def test_run_materializes_output_downloaded_once():
 
 @pytest.mark.asyncio
 async def test_run_error_output_none_when_no_error_file():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job(failed=0)], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     result = await client.run(
@@ -785,7 +836,10 @@ async def test_run_error_output_none_when_no_error_file():
 @pytest.mark.asyncio
 async def test_run_error_output_parsed_and_merged():
     files = _FakeFiles(
-        downloads={"file-out": [b""], "file-err": [_err_line("b").encode()]}
+        downloads={
+            str(FILE_OUT_ID): [b""],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
+        }
     )
     jobs = _FakeJobs([_make_job(failed=1, succeeded=0)], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
@@ -805,8 +859,8 @@ async def test_run_response_errors_merged_across_files():
     # response_errors(), merged across both.
     files = _FakeFiles(
         downloads={
-            "file-out": [_bad_body_line("c").encode()],
-            "file-err": [_bad_body_line("d").encode()],
+            str(FILE_OUT_ID): [_bad_body_line("c").encode()],
+            str(FILE_ERROR_ID): [_bad_body_line("d").encode()],
         }
     )
     jobs = _FakeJobs([_make_job(failed=1, succeeded=1)], poll_statuses=["SUCCESS"])
@@ -848,7 +902,7 @@ def test_by_id_same_custom_id_across_files_raises():
 
 @pytest.mark.asyncio
 async def test_run_download_uses_http_headers():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     await client.run(
@@ -867,7 +921,7 @@ async def test_run_download_uses_http_headers():
 
 @pytest.mark.asyncio
 async def test_run_deletes_input_it_uploaded_and_result_files():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     await client.run(
@@ -877,13 +931,16 @@ async def test_run_deletes_input_it_uploaded_and_result_files():
     )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
     # the input file run() uploaded + the job's output file are all cleaned up
-    assert deleted == {"file-uploaded", "file-out"}
+    assert deleted == {str(FILE_UPLOADED_ID), str(FILE_OUT_ID)}
 
 
 @pytest.mark.asyncio
 async def test_run_deletes_output_and_error_files():
     files = _FakeFiles(
-        downloads={"file-out": [b""], "file-err": [_err_line("b").encode()]}
+        downloads={
+            str(FILE_OUT_ID): [b""],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
+        }
     )
     jobs = _FakeJobs([_make_job(failed=1, succeeded=0)], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
@@ -892,23 +949,23 @@ async def test_run_deletes_output_and_error_files():
     )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
     # inline input (nothing uploaded); both result files cleaned up
-    assert deleted == {"file-out", "file-err"}
+    assert deleted == {str(FILE_OUT_ID), str(FILE_ERROR_ID)}
 
 
 @pytest.mark.asyncio
 async def test_run_does_not_delete_caller_supplied_input_file():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
-    await client.run(BatchInputFile("file-pre"), poll_interval_seconds=0)
+    await client.run(BatchInputFile(FILE_PREEXISTING_ID), poll_interval_seconds=0)
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    assert "file-pre" not in deleted  # the caller owns their input file
-    assert "file-out" in deleted
+    assert str(FILE_PREEXISTING_ID) not in deleted  # the caller owns their input file
+    assert str(FILE_OUT_ID) in deleted
 
 
 @pytest.mark.asyncio
 async def test_run_delete_uses_http_headers():
-    files = _FakeFiles(downloads={"file-out": [_ok_line("a").encode()]})
+    files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     await client.run(
@@ -988,8 +1045,8 @@ async def test_run_keeps_result_files_when_download_fails():
             BatchInput.from_payload({"a": _embed_req()}), poll_interval_seconds=0
         )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    assert "file-out" not in deleted
-    assert "file-err" not in deleted
+    assert str(FILE_OUT_ID) not in deleted
+    assert str(FILE_ERROR_ID) not in deleted
 
 
 @pytest.mark.asyncio
@@ -998,7 +1055,10 @@ async def test_run_keeps_prior_result_files_when_retry_fails():
     # retry: if the next create/wait then fails, the abort path must still leave
     # them recoverable rather than having destroyed them eagerly.
     files = _FakeFiles(
-        downloads={"file-out": [b""], "file-err": [_err_line("b").encode()]}
+        downloads={
+            str(FILE_OUT_ID): [b""],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
+        }
     )
     # one failing attempt; run() wants a retry, but the 2nd create has no job to pop
     jobs = _FakeJobs([_make_job(failed=1, succeeded=0)], poll_statuses=["SUCCESS"])
@@ -1010,8 +1070,8 @@ async def test_run_keeps_prior_result_files_when_retry_fails():
             poll_interval_seconds=0,
         )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    assert "file-out" not in deleted  # prior attempt's files stay recoverable
-    assert "file-err" not in deleted
+    assert str(FILE_OUT_ID) not in deleted  # prior attempt's files stay recoverable
+    assert str(FILE_ERROR_ID) not in deleted
 
 
 @pytest.mark.asyncio
@@ -1034,4 +1094,4 @@ async def test_run_cancels_and_deletes_input_on_unexpected_error(monkeypatch):
         )
     assert any(c[0] == "cancel" for c in jobs.calls)
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    assert "file-uploaded" in deleted
+    assert str(FILE_UPLOADED_ID) in deleted

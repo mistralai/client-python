@@ -6,7 +6,7 @@
 
 ### Available Operations
 
-* [create](#create) - Create an agent that can be used within a conversation.
+* [create](#create) - Create a agent that can be used within a conversation.
 * [~~list~~](#list) - List agent entities. :warning: **Deprecated** Use [list_pages](docs/sdks/betaagents/README.md#list_pages) instead.
 * [list_pages](#list_pages) - List agent entities, cursor-paginated.
 * [get](#get) - Retrieve an agent entity.
@@ -114,7 +114,7 @@ with Mistral(
 
 ### Response
 
-**List[models.Agent]**
+**[List[models.Agent]](../../models/.md)**
 
 ### Errors
 
@@ -383,7 +383,7 @@ with Mistral(
 
 ### Response
 
-**List[models.Agent]**
+**[List[models.Agent]](../../models/.md)**
 
 ### Errors
 
@@ -509,7 +509,7 @@ with Mistral(
 
 ### Response
 
-**List[models.AgentAliasResponse]**
+**[List[models.AgentAliasResponse]](../../models/.md)**
 
 ### Errors
 

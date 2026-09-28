@@ -26,6 +26,10 @@ from mistralai.client.models import (
 )
 from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.client.utils import generate_url, get_security, get_security_from_env
+from mistralai.client._hooks.service_account_auth import (
+    bearer_header,
+    read_service_account_token,
+)
 
 from ..exceptions import RealtimeTranscriptionException, RealtimeTranscriptionWSError
 from .connection import (
@@ -90,6 +94,16 @@ class RealtimeTranscription:
             for key, values in security_query.items():
                 if values:
                     query_params[key] = values[-1]
+
+        # The websocket handshake bypasses the SDK's before-request hooks, so service-account
+        # auth has to be applied here too, with the same precedence.
+        caller_authorization = any(
+            name.lower() == "authorization" for name in (http_headers or {})
+        )
+        if self._sdk_config.security is None and not caller_authorization:
+            token = read_service_account_token()
+            if token is not None:
+                headers["Authorization"] = bearer_header(token)
 
         if http_headers is not None:
             headers |= dict(http_headers)

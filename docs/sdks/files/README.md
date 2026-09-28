@@ -222,7 +222,7 @@ with Mistral(
 
 ### Response
 
-**httpx.Response**
+**[httpx.Response](../../models/.md)**
 
 ### Errors
 
