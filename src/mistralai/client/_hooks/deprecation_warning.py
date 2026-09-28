@@ -1,7 +1,7 @@
 import logging
 from typing import Union
 
-import httpx
+import httpx2 as httpx
 
 from .types import AfterSuccessContext, AfterSuccessHook
 

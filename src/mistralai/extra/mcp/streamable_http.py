@@ -2,10 +2,9 @@ import logging
 from contextlib import AsyncExitStack
 from typing import Any
 
-import httpx
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
+import httpx2 as httpx
+from mcp.client._transport import TransportStreams  # pyright: ignore[reportMissingImports]
 from mcp.client.streamable_http import streamable_http_client  # pyright: ignore[reportMissingImports]
-from mcp.shared.message import SessionMessage  # pyright: ignore[reportMissingImports]
 
 from mistralai.extra.mcp.base import (
     MCPClientBase,
@@ -22,6 +21,9 @@ class StreamableHTTPServerParams(BaseModel):
     url: str
     headers: dict[str, Any] | None = None
     timeout: float = 30
+    # MCP 2.2 no longer applies its own SSE read timeout when a custom HTTP
+    # client is passed, so preserve the transport's five-minute default here.
+    sse_read_timeout: float = 60 * 5
     # Whether the httpx client trusts the ambient environment (HTTP(S)_PROXY,
     # SSL_CERT_FILE/DIR, .netrc). Defaults to httpx's default (True). Set False to
     # reach the endpoint directly without an ambient egress proxy, e.g. for an
@@ -58,10 +60,7 @@ class MCPClientStreamableHTTP(MCPClientBase):
 
     async def _get_transport(
         self, exit_stack: AsyncExitStack
-    ) -> tuple[
-        MemoryObjectReceiveStream[SessionMessage | Exception],
-        MemoryObjectSendStream[SessionMessage],
-    ]:
+    ) -> TransportStreams:
         # trust_env controls whether the client inherits the ambient
         # HTTP(S)_PROXY / cert / netrc env. Set it False (see params) to reach an
         # in-cluster endpoint directly, bypassing a proxy meant for external
@@ -72,12 +71,15 @@ class MCPClientStreamableHTTP(MCPClientBase):
         http_client = await exit_stack.enter_async_context(
             httpx.AsyncClient(
                 headers=self._params.headers,
-                timeout=self._params.timeout,
+                timeout=httpx.Timeout(
+                    self._params.timeout,
+                    read=self._params.sse_read_timeout,
+                ),
                 follow_redirects=self._params.follow_redirects,
                 trust_env=self._params.trust_env,
             )
         )
-        read_stream, write_stream, _ = await exit_stack.enter_async_context(
+        read_stream, write_stream = await exit_stack.enter_async_context(
             streamable_http_client(url=self._params.url, http_client=http_client)
         )
         return read_stream, write_stream

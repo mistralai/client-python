@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-import httpx
+import httpx2 as httpx
 from mistralai.azure.client.errors import MistralAzureError
 from mistralai.azure.client.models import validationerror as models_validationerror
 from mistralai.azure.client.types import BaseModel

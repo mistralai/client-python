@@ -6,7 +6,7 @@ from .utils.retries import RetryConfig
 import google.auth
 import google.auth.credentials
 import google.auth.transport.requests
-import httpx
+import httpx2 as httpx
 import importlib
 from mistralai.gcp.client import models, utils
 from mistralai.gcp.client._hooks import SDKHooks

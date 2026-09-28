@@ -3,7 +3,7 @@ from .httpclient import AsyncHttpClient, ClientOwner, HttpClient, close_clients
 from .sdkconfiguration import SDKConfiguration
 from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
-import httpx
+import httpx2 as httpx
 import importlib
 import logging
 from mistralai.azure.client import models, utils
@@ -70,7 +70,7 @@ class MistralAzure(BaseSDK):
         elif api_version != "2024-05-01-preview":
             warnings.warn(
                 "api_version is ignored when a custom client is provided. "
-                "Set the api-version query parameter on your httpx.Client directly.",
+                "Set the api-version query parameter on your httpx2.Client directly.",
                 stacklevel=2,
             )
 
@@ -88,7 +88,7 @@ class MistralAzure(BaseSDK):
         elif api_version != "2024-05-01-preview":
             warnings.warn(
                 "api_version is ignored when a custom async_client is provided. "
-                "Set the api-version query parameter on your httpx.AsyncClient directly.",
+                "Set the api-version query parameter on your httpx2.AsyncClient directly.",
                 stacklevel=2,
             )
 

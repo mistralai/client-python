@@ -2,7 +2,7 @@
 
 from typing import Any, Optional, Type, TypeVar, overload
 
-import httpx
+import httpx2 as httpx
 
 from .serializers import unmarshal_json
 from mistralai.gcp.client import errors

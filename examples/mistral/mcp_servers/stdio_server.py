@@ -1,11 +1,11 @@
 import random
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 import logging
 
 logging.basicConfig(level=logging.ERROR)
 
-# Initialize FastMCP server
-mcp = FastMCP("weather")
+# Initialize MCP server
+mcp = MCPServer("weather")
 
 
 @mcp.tool()

@@ -2,7 +2,7 @@ import json
 import random
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import httpx2 as httpx
 from opentelemetry.propagate import inject
 
 from .types import BeforeRequestContext, BeforeRequestHook

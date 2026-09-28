@@ -1,7 +1,7 @@
 import json
 import logging
 from .types import BeforeRequestHook, BeforeRequestContext, Hooks
-import httpx
+import httpx2 as httpx
 
 logger = logging.getLogger(__name__)
 

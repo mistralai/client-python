@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any
 
-import httpx
+import httpx2 as httpx
 import opentelemetry.semconv._incubating.attributes.gen_ai_attributes as gen_ai_attributes
 import opentelemetry.semconv._incubating.attributes.http_attributes as http_attributes
 import opentelemetry.semconv.attributes.error_attributes as error_attributes

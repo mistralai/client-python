@@ -48,7 +48,7 @@ from typing import (
     Sequence,
 )
 
-import httpx
+import httpx2 as httpx
 from pydantic import BaseModel
 
 from mistralai.client.models import (

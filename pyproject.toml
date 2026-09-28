@@ -1,13 +1,13 @@
 [project]
 name = "mistralai"
-version = "2.10.1"
+version = "3.0.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
 readme = "README-PYPI.md"
 dependencies = [
     "eval-type-backport >=0.2.0",
-    "httpx >=0.28.1",
+    "httpx2 >=2.13.0",
     "pydantic >=2.11.2",
     "python-dateutil >=2.8.2",
     "typing-inspection >=0.4.0",
@@ -21,10 +21,13 @@ gcp = [
     "google-auth >=2.27.0",
     "requests >=2.32.3",
 ]
+mcp = [
+    "mcp >=2.2.0,<3.0",
+]
 agents = [
-    "mcp >=1.0,<2.0",
+    "mcp >=2.2.0,<3.0",
     "griffe >=1.7.3,<2.0",
-    "authlib >=1.5.2,<2.0",
+    "authlib >=1.8.0,<2.0",
 ]
 realtime = [
     "websockets >=13.0",
@@ -51,7 +54,7 @@ workflow_payload_offloading = [
     "mistralai[workflow_payload_offloading_s3]",
 ]
 workflow_payload_encryption = [
-    "cryptography>=41.0.0,<47.0.0",
+    "cryptography>=50.0.0,<51.0.0",
 ]
 workflow_payload_compression = [
     "msgpack>=1.1.0,<2.0.0",
@@ -68,7 +71,7 @@ dev = [
     "pyyaml>=6.0.2,<7",
     "mypy==1.15.0",
     "msgpack>=1.1.0,<2.0.0",
-    "opentelemetry-instrumentation-httpx (>=0.60b1)",
+    "opentelemetry-instrumentation-httpx (>=0.65b0)",
     "opentelemetry-sdk (>=1.33.1,<2.0.0)",
     "opentelemetry-exporter-otlp-proto-http (>=1.33.1,<2.0.0)",
     "pylint==3.2.3",
@@ -77,9 +80,9 @@ dev = [
     "types-python-dateutil>=2.9.0.20240316,<3",
     "types-authlib>=1.5.0.20250516,<2",
     "types-pyyaml>=6.0.12.20250516,<7",
-    "mcp>=1.0,<2",
+    "mcp>=2.2.0,<3",
     "griffe>=1.7.3,<2",
-    "authlib>=1.5.2,<2",
+    "authlib>=1.8.0,<2",
     "websockets >=13.0",
     "zstandard>=0.25.0,<0.26",
 ]

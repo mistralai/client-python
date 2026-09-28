@@ -10,6 +10,8 @@ from mistralai.client.models import (
     UsageInfo,
     ChatCompletionChoice,
     AssistantMessage,
+    ThinkChunk,
+    TextChunk,
 )
 from pydantic import BaseModel
 
@@ -97,6 +99,71 @@ class TestConvertToParsedChatCompletionResponse(unittest.TestCase):
             mock_cc_response, MathDemonstration
         )
         self.assertEqual(output, expected_response)
+
+    def test_convert_to_parsed_chat_completion_response_with_reasoning_chunks(self):
+        reasoning_response = ChatCompletionResponse(
+            id="chunked-response",
+            object="chat.completion",
+            model="mistral-medium-3-5",
+            usage=UsageInfo(prompt_tokens=10, completion_tokens=20, total_tokens=30),
+            created=1737727558,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(
+                        content=[
+                            ThinkChunk(
+                                thinking=[
+                                    TextChunk(text="Compute 8x + 7 = -23 step by step.")
+                                ]
+                            ),
+                            TextChunk(
+                                text='{"steps": [], "final_answer": "x = -4"}'
+                            ),
+                        ],
+                        role="assistant",
+                    ),
+                    finish_reason="stop",
+                )
+            ],
+        )
+        output = convert_to_parsed_chat_completion_response(
+            reasoning_response, MathDemonstration
+        )
+        assert output.choices is not None
+        assert output.choices[0].message is not None
+        self.assertEqual(output.choices[0].message.parsed, MathDemonstration(steps=[], final_answer="x = -4"))
+
+    def test_convert_to_parsed_chat_completion_response_with_only_reasoning_chunks(self):
+        reasoning_only_response = ChatCompletionResponse(
+            id="reasoning-only-response",
+            object="chat.completion",
+            model="mistral-medium-3-5",
+            usage=UsageInfo(prompt_tokens=10, completion_tokens=20, total_tokens=30),
+            created=1737727558,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(
+                        content=[
+                            ThinkChunk(
+                                thinking=[
+                                    TextChunk(text="Still reasoning about the answer.")
+                                ]
+                            ),
+                        ],
+                        role="assistant",
+                    ),
+                    finish_reason="stop",
+                )
+            ],
+        )
+        output = convert_to_parsed_chat_completion_response(
+            reasoning_only_response, MathDemonstration
+        )
+        assert output.choices is not None
+        assert output.choices[0].message is not None
+        self.assertIsNone(output.choices[0].message.parsed)
 
 
 if __name__ == "__main__":

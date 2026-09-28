@@ -1,6 +1,6 @@
 # KeywordRetriever
 
-Retrieve document chunks with similar keywrods to the given query.
+Retrieve document chunks with similar keywords to the given query.
 
 
 ## Fields

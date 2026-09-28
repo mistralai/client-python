@@ -22,11 +22,11 @@ from datetime import datetime, timezone
 from typing import cast
 from unittest.mock import MagicMock, patch
 
-import httpx
+import httpx2 as httpx
 from opentelemetry import context as context_api
 from opentelemetry import trace
 from opentelemetry.baggage import set_baggage
-from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
+from opentelemetry.instrumentation.httpx import HTTPX2ClientInstrumentor
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -1922,7 +1922,7 @@ class TestOtelTracing(unittest.TestCase):
     # -- HTTPX auto-instrumentation parenting ---------------------------------
 
     def test_app_otel_does_not_enable_mistral_span_without_mistral_telemetry(self):
-        instrumentor = HTTPXClientInstrumentor()
+        instrumentor = HTTPX2ClientInstrumentor()
         instrumentor.instrument()
         tracer = trace.get_tracer("test-workflow-parenting")
 
@@ -1964,7 +1964,7 @@ class TestOtelTracing(unittest.TestCase):
         self.assertEqual(post_spans[0].parent.span_id, activity.context.span_id)
 
     def test_httpx_auto_instrumented_span_is_child_of_genai_span(self):
-        instrumentor = HTTPXClientInstrumentor()
+        instrumentor = HTTPX2ClientInstrumentor()
         instrumentor.instrument()
         tracer = trace.get_tracer("test-workflow-parenting")
 
@@ -2002,7 +2002,7 @@ class TestOtelTracing(unittest.TestCase):
         self.assertEqual(post.parent.span_id, genai.context.span_id)
 
     def test_httpx_send_error_ends_genai_span_and_restores_parent_context(self):
-        instrumentor = HTTPXClientInstrumentor()
+        instrumentor = HTTPX2ClientInstrumentor()
         instrumentor.instrument()
         tracer = trace.get_tracer("test-workflow-parenting")
 
@@ -2051,7 +2051,7 @@ class TestOtelTracing(unittest.TestCase):
     def test_concurrent_async_httpx_auto_instrumented_spans_are_genai_children(
         self,
     ):
-        instrumentor = HTTPXClientInstrumentor()
+        instrumentor = HTTPX2ClientInstrumentor()
         instrumentor.instrument()
         tracer = trace.get_tracer("test-workflow-parenting")
 

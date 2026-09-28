@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from pydantic import BaseModel, TypeAdapter
+from pydantic import BaseModel, TypeAdapter, ValidationError
 
 
 def parse_open_union(
@@ -16,8 +16,14 @@ def parse_open_union(
     """Parse an open discriminated union value with forward-compatibility.
 
     Known discriminator values are dispatched to their variant types.
-    Unknown discriminator values produce an instance of the fallback class,
-    preserving the raw payload for inspection.
+    Unknown discriminator values — or known discriminator values whose
+    payload fails variant validation (e.g. a partial variant emitted by a
+    newer server) — produce an instance of the fallback class, preserving
+    the raw payload for inspection.
+
+    Non-dict values and dicts missing the discriminator deliberately raise
+    instead of falling back, so pydantic can try sibling branches of an
+    enclosing union (e.g. None in Optional[...]).
     """
     if isinstance(v, BaseModel):
         return v
@@ -26,7 +32,10 @@ def parse_open_union(
     disc = v[disc_key]
     variant_cls = variants.get(disc)
     if variant_cls is not None:
-        if isinstance(variant_cls, type) and issubclass(variant_cls, BaseModel):
-            return variant_cls.model_validate(v)
-        return TypeAdapter(variant_cls).validate_python(v)
+        try:
+            if isinstance(variant_cls, type) and issubclass(variant_cls, BaseModel):
+                return variant_cls.model_validate(v)
+            return TypeAdapter(variant_cls).validate_python(v)
+        except ValidationError:
+            return unknown_cls(raw=v)
     return unknown_cls(raw=v)

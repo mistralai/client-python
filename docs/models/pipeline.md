@@ -1,0 +1,20 @@
+# Pipeline
+
+Pipeline response schema. Pipelines are hard-deleted — no deleted_at field.
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `id`                                                                       | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `created_at`                                                               | [date](https://docs.python.org/3/library/datetime.html#date-objects)       | :heavy_check_mark:                                                         | N/A                                                                        |
+| `updated_at`                                                               | [date](https://docs.python.org/3/library/datetime.html#date-objects)       | :heavy_check_mark:                                                         | N/A                                                                        |
+| `workspace_id`                                                             | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `slug`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `description`                                                              | *Nullable[str]*                                                            | :heavy_check_mark:                                                         | N/A                                                                        |
+| `selectors`                                                                | List[[models.PipelineConfigSelector](../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                         | N/A                                                                        |
+| `enabled`                                                                  | *bool*                                                                     | :heavy_check_mark:                                                         | N/A                                                                        |
+| `creator_id`                                                               | *Nullable[str]*                                                            | :heavy_check_mark:                                                         | N/A                                                                        |
+| `pipeline_configs`                                                         | List[[models.PipelineConfig](../models/pipelineconfig.md)]                 | :heavy_check_mark:                                                         | N/A                                                                        |

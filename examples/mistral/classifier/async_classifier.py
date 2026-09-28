@@ -22,7 +22,7 @@ async def upload_files(client: Mistral, file_names: list[str]) -> list[str]:
                 },
                 purpose="fine-tune",
             )
-        file_ids.append(f.id)
+        file_ids.append(str(f.id))
     print("Files uploaded...")
     return file_ids
 

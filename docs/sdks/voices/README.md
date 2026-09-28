@@ -4,18 +4,19 @@
 
 ### Available Operations
 
-* [~~list~~](#list) - List all voices :warning: **Deprecated**
+* [~~list~~](#list) - List all voices :warning: **Deprecated** Use [search](docs/sdks/voices/README.md#search) instead.
 * [create](#create) - Create a new voice
 * [delete](#delete) - Delete a custom voice
 * [update](#update) - Update voice metadata
 * [get](#get) - Get voice details
 * [get_sample_audio](#get_sample_audio) - Get voice sample audio
+* [search](#search) - List voices, cursor-paginated
 
 ## ~~list~~
 
 Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.
 
-> :warning: **DEPRECATED**: Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead..
+> :warning: **DEPRECATED**: Offset pagination will not be supported anymore. Use GET /v2/audio/voices instead.. Use `search` instead.
 
 ### Example Usage
 
@@ -269,6 +270,54 @@ with Mistral(
 ### Response
 
 **[httpx.Response](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## search
+
+List voices, cursor-paginated
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="audio_v2_voices_list" method="get" path="/v2/audio/voices" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.audio.voices.search(page_size=10, type_="all")
+
+    while res is not None:
+        # Handle items
+
+        res = res.next()
+
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `page_size`                                                                     | *Optional[int]*                                                                 | :heavy_minus_sign:                                                              | Maximum number of voices to return                                              |
+| `page_token`                                                                    | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | Cursor returned as next_page_token by the previous page                         |
+| `type`                                                                          | [Optional[models.AudioV2VoicesListType]](../../models/audiov2voiceslisttype.md) | :heavy_minus_sign:                                                              | Filter the voices between customs and presets                                   |
+| `gender`                                                                        | List[[models.VoiceGender](../../models/voicegender.md)]                         | :heavy_minus_sign:                                                              | Keep voices matching any of these genders                                       |
+| `language`                                                                      | List[*str*]                                                                     | :heavy_minus_sign:                                                              | Keep voices supporting any of these languages                                   |
+| `query`                                                                         | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | Case-insensitive match on voice name                                            |
+| `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |
+
+### Response
+
+**[models.AudioV2VoicesListResponse](../../models/audiov2voiceslistresponse.md)**
 
 ### Errors
 

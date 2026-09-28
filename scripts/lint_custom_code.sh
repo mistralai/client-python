@@ -83,6 +83,12 @@ uv run ruff check packages/gcp/src/mistralai/gcp/client/sdk.py || ERRORS=1
 echo "-> running on scripts"
 uv run ruff check scripts/ || ERRORS=1
 
+# Speakeasy runs this in Compile SDK, nothing runs it on a PR, and custom
+# regions put hand-written code inside generated files. #54764 added one and
+# only build 103 found out, four days later.
+echo "Running pylint..."
+uv run python -m pylint -j=0 --rcfile=pylintrc src/mistralai/client || ERRORS=1
+
 if [ "$ERRORS" -ne 0 ]; then
   echo "❌ One or more linters failed"
   exit 1

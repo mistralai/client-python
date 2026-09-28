@@ -1,0 +1,12 @@
+# CreatePipelineRequest
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `name`                                                                     | *str*                                                                      | :heavy_check_mark:                                                         | N/A                                                                        |
+| `description`                                                              | *OptionalNullable[str]*                                                    | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `selectors`                                                                | List[[models.PipelineConfigSelector](../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                         | N/A                                                                        |
+| `definitions`                                                              | List[[models.JudgeDefinition](../models/judgedefinition.md)]               | :heavy_check_mark:                                                         | N/A                                                                        |
+| `enabled`                                                                  | *Optional[bool]*                                                           | :heavy_minus_sign:                                                         | N/A                                                                        |

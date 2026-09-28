@@ -1,0 +1,13 @@
+# AudioV2VoicesListRequest
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `page_size`                                                                  | *Optional[int]*                                                              | :heavy_minus_sign:                                                           | Maximum number of voices to return                                           |
+| `page_token`                                                                 | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Cursor returned as next_page_token by the previous page                      |
+| `type`                                                                       | [Optional[models.AudioV2VoicesListType]](../models/audiov2voiceslisttype.md) | :heavy_minus_sign:                                                           | Filter the voices between customs and presets                                |
+| `gender`                                                                     | List[[models.VoiceGender](../models/voicegender.md)]                         | :heavy_minus_sign:                                                           | Keep voices matching any of these genders                                    |
+| `language`                                                                   | List[*str*]                                                                  | :heavy_minus_sign:                                                           | Keep voices supporting any of these languages                                |
+| `query`                                                                      | *OptionalNullable[str]*                                                      | :heavy_minus_sign:                                                           | Case-insensitive match on voice name                                         |

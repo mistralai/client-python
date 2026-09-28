@@ -22,7 +22,7 @@ class TestMCPClientStreamableHTTP(unittest.IsolatedAsyncioTestCase):
         async def fake_streamable_http_client(url: str, http_client: Any) -> AsyncIterator[Any]:
             captured["url"] = url
             captured["headers"] = dict(http_client.headers)
-            yield object(), object(), lambda: None
+            yield object(), object()
 
         client = MCPClientStreamableHTTP(
             params=StreamableHTTPServerParams(
@@ -54,7 +54,7 @@ class TestMCPClientStreamableHTTP(unittest.IsolatedAsyncioTestCase):
         @asynccontextmanager
         async def fake_streamable_http_client(url: str, http_client: Any) -> AsyncIterator[Any]:
             captured["follow_redirects"] = http_client.follow_redirects
-            yield object(), object(), lambda: None
+            yield object(), object()
 
         with mock.patch(
             "mistralai.extra.mcp.streamable_http.streamable_http_client",
@@ -75,6 +75,48 @@ class TestMCPClientStreamableHTTP(unittest.IsolatedAsyncioTestCase):
             async with AsyncExitStack() as stack:
                 await opted_in_client._get_transport(stack)
             self.assertTrue(captured["follow_redirects"])
+
+    async def test_sse_read_timeout_defaults_to_five_minutes_and_is_configurable(self) -> None:
+        captured: dict[str, Any] = {}
+
+        @asynccontextmanager
+        async def fake_streamable_http_client(url: str, http_client: Any) -> AsyncIterator[Any]:
+            captured["timeout"] = http_client.timeout
+            yield object(), object()
+
+        with mock.patch(
+            "mistralai.extra.mcp.streamable_http.streamable_http_client",
+            fake_streamable_http_client,
+        ):
+            default_client = MCPClientStreamableHTTP(
+                params=StreamableHTTPServerParams(url="http://mcp.example/mcp"),
+                name="test",
+            )
+            async with AsyncExitStack() as stack:
+                await default_client._get_transport(stack)
+
+            timeout = captured["timeout"]
+            self.assertEqual(timeout.connect, 30)
+            self.assertEqual(timeout.read, 300)
+            self.assertEqual(timeout.write, 30)
+            self.assertEqual(timeout.pool, 30)
+
+            opted_in_client = MCPClientStreamableHTTP(
+                params=StreamableHTTPServerParams(
+                    url="http://mcp.example/mcp",
+                    timeout=10,
+                    sse_read_timeout=600,
+                ),
+                name="test",
+            )
+            async with AsyncExitStack() as stack:
+                await opted_in_client._get_transport(stack)
+
+            timeout = captured["timeout"]
+            self.assertEqual(timeout.connect, 10)
+            self.assertEqual(timeout.read, 600)
+            self.assertEqual(timeout.write, 10)
+            self.assertEqual(timeout.pool, 10)
 
 
 if __name__ == "__main__":

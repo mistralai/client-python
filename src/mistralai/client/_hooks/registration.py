@@ -5,6 +5,7 @@ from .tracing import TracingHook
 from .types import Hooks
 from .stream_error_hook import WorkflowStreamErrorHook
 from .workflow_encoding_hook import WorkflowEncodingHook
+from .service_account_auth import ServiceAccountAuthHook
 
 # This file is only ever generated once on the first generation and then is free to be modified.
 # Any hooks you wish to add should be registered in the init_hooks function. Feel free to define them
@@ -19,6 +20,7 @@ def init_hooks(hooks: Hooks):
     """
     tracing_hook = TracingHook()
     workflow_encoding_hook = WorkflowEncodingHook()
+    hooks.register_before_request_hook(ServiceAccountAuthHook())
     hooks.register_before_request_hook(CustomUserAgentHook())
     hooks.register_before_request_hook(TraceparentInjectionHook())
     hooks.register_after_success_hook(DeprecationWarningHook())

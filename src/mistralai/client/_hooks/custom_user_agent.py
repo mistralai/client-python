@@ -1,7 +1,7 @@
 # MAKE SURE YOU UPDATE THE COPIES OF THIS FILES IN THE PROVIDERS'S PACKAGES WHEN YOU MAKE CHANGES HERE
 from typing import Union
 
-import httpx
+import httpx2 as httpx
 
 from .types import BeforeRequestContext, BeforeRequestHook
 

@@ -9,24 +9,6 @@
 value: models.Tool = /* values here */
 ```
 
-### `models.WebSearchTool`
-
-```python
-value: models.WebSearchTool = /* values here */
-```
-
-### `models.WebSearchPremiumTool`
-
-```python
-value: models.WebSearchPremiumTool = /* values here */
-```
-
-### `models.CodeInterpreterTool`
-
-```python
-value: models.CodeInterpreterTool = /* values here */
-```
-
 ### `models.ImageGenerationTool`
 
 ```python
