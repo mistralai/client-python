@@ -1,0 +1,9 @@
+# ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `run_id`                                                                                               | *str*                                                                                                  | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `evaluation_run_record_filter_input`                                                                   | [OptionalNullable[models.EvaluationRunRecordFilterInput]](../models/evaluationrunrecordfilterinput.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

@@ -6,7 +6,17 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Literal, Mapping, Optional, Union, overload
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    Union,
+    overload,
+)
 
 
 class Speech(BaseSDK):
@@ -21,6 +31,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -37,6 +50,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -56,6 +70,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -72,6 +89,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -91,6 +109,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -109,6 +130,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -127,6 +149,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -145,6 +170,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -173,6 +199,9 @@ class Speech(BaseSDK):
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,
+            phoneme_hints=utils.unmarshal(
+                phoneme_hints, OptionalNullable[Dict[str, List[models.IPAPhoneme]]]
+            ),
             response_format=response_format,
             **(utils.unmarshal(additional_properties, Optional[Dict[str, Any]]) or {}),
         )
@@ -266,6 +295,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -282,6 +314,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -301,6 +334,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -317,6 +353,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -336,6 +373,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -355,6 +395,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -373,6 +414,9 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        phoneme_hints: OptionalNullable[
+            Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -392,6 +436,7 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -420,6 +465,9 @@ class Speech(BaseSDK):
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,
+            phoneme_hints=utils.unmarshal(
+                phoneme_hints, OptionalNullable[Dict[str, List[models.IPAPhoneme]]]
+            ),
             response_format=response_format,
             **(utils.unmarshal(additional_properties, Optional[Dict[str, Any]]) or {}),
         )

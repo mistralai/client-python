@@ -67,7 +67,6 @@ class HTTPConnectorTypedDict(TypedDict):
     mistral: NotRequired[bool]
     is_authenticated: NotRequired[Nullable[bool]]
     tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
-    system_prompt_route: NotRequired[Nullable[str]]
     connection_config: NotRequired[Nullable[PublicConnectionConfigTypedDict]]
     execution_env: NotRequired[Nullable[PublicExecutionEnvTypedDict]]
     protocol: Literal["http"]
@@ -125,8 +124,6 @@ class HTTPConnector(BaseModel):
 
     tools: OptionalNullable[List[ConnectorTool]] = UNSET
 
-    system_prompt_route: OptionalNullable[str] = UNSET
-
     connection_config: OptionalNullable[PublicConnectionConfig] = UNSET
 
     execution_env: OptionalNullable[PublicExecutionEnv] = UNSET
@@ -156,7 +153,6 @@ class HTTPConnector(BaseModel):
                 "mistral",
                 "is_authenticated",
                 "tools",
-                "system_prompt_route",
                 "connection_config",
                 "execution_env",
             ]
@@ -177,7 +173,6 @@ class HTTPConnector(BaseModel):
                 "active",
                 "is_authenticated",
                 "tools",
-                "system_prompt_route",
                 "connection_config",
                 "execution_env",
             ]

@@ -114,7 +114,7 @@ with Mistral(
 
 ### Response
 
-**List[models.Agent]**
+**[List[models.Agent]](../../models/.md)**
 
 ### Errors
 
@@ -383,7 +383,7 @@ with Mistral(
 
 ### Response
 
-**List[models.Agent]**
+**[List[models.Agent]](../../models/.md)**
 
 ### Errors
 
@@ -509,7 +509,7 @@ with Mistral(
 
 ### Response
 
-**List[models.AgentAliasResponse]**
+**[List[models.AgentAliasResponse]](../../models/.md)**
 
 ### Errors
 

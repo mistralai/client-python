@@ -34,6 +34,22 @@ class Connectors(BaseSDK):
 
         Requires the optional ``mcp`` dependencies. Use the returned context
         manager with ``async with``.
+
+        Failures authored by Connectors Gateway itself (unknown connector, missing
+        credentials, upstream unreachable, ...) raise
+        ``mistralai.extra.connectors_gateway.ConnectorsGatewayError``, from the
+        ``async with`` statement or from any session call. Errors returned by the
+        upstream MCP server raise ``mcp.MCPError``, as with any MCP server::
+
+            try:
+                async with mistral.beta.connectors.mcp_client(
+                    connector_id_or_name="github",
+                ) as mcp:
+                    ...
+            except ConnectorsGatewayError as error:
+                ...  # error.proxy_error, error.proxy_status_code, error.details
+            except MCPError as error:
+                ...  # error.code, error.message
         """
         return create_mcp_client(
             self.sdk_configuration,
@@ -51,6 +67,12 @@ class Connectors(BaseSDK):
 
         Use the returned client with ``async with`` and make requests with paths
         relative to the connector's configured upstream URL.
+
+        Failures authored by Connectors Gateway itself raise
+        ``mistralai.extra.connectors_gateway.ConnectorsGatewayError`` from the
+        request. It subclasses ``httpx2.HTTPStatusError``, so catch it before any
+        ``httpx2.HTTPStatusError`` handler. Error responses from the upstream API
+        are returned unchanged.
         """
         return create_http_client(
             self.sdk_configuration,
@@ -475,7 +497,7 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         app_return_url: OptionalNullable[str] = UNSET,
-        method_type: Optional[models.OutboundAuthenticationType] = None,
+        method_type: Optional[models.AuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
         credentials_title: OptionalNullable[str] = UNSET,
         github_installation_link: Optional[bool] = False,
@@ -585,7 +607,7 @@ class Connectors(BaseSDK):
         *,
         connector_id_or_name: str,
         app_return_url: OptionalNullable[str] = UNSET,
-        method_type: Optional[models.OutboundAuthenticationType] = None,
+        method_type: Optional[models.AuthenticationType] = None,
         credentials_name: OptionalNullable[str] = UNSET,
         credentials_title: OptionalNullable[str] = UNSET,
         github_installation_link: Optional[bool] = False,
@@ -2490,7 +2512,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2591,7 +2613,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2692,7 +2714,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2793,7 +2815,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2894,7 +2916,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -2995,7 +3017,7 @@ class Connectors(BaseSDK):
         self,
         *,
         connector_id_or_name: str,
-        auth_type: OptionalNullable[models.OutboundAuthenticationType] = UNSET,
+        auth_type: OptionalNullable[models.AuthenticationType] = UNSET,
         fetch_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

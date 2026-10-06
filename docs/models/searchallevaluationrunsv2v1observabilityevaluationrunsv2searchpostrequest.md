@@ -1,0 +1,10 @@
+# SearchAllEvaluationRunsV2V1ObservabilityEvaluationRunsV2SearchPostRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `page_size`                                                                                | *Optional[int]*                                                                            | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `page`                                                                                     | *Optional[int]*                                                                            | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `evaluation_run_filter_input`                                                              | [OptionalNullable[models.EvaluationRunFilterInput]](../models/evaluationrunfilterinput.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |

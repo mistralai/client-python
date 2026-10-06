@@ -594,7 +594,7 @@ print(res.choices[0].message.content)
 
 * [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#create) - Create a new empty dataset
 * [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list) - List existing datasets
-* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch) - Get dataset by id
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch) - Get dataset by ID or slug
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#delete) - Delete a dataset
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#update) - Patch dataset
 * [list_records](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list_records) - List existing records in the dataset
@@ -607,14 +607,14 @@ print(res.choices[0].message.content)
 * [fetch_task](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#fetch_task) - Get status of a dataset import task
 * [list_tasks](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasets/README.md#list_tasks) - List import tasks for the given dataset
 
-#### [Beta.Observability.Datasets.Records](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md)
+#### [Beta.Observability.Datasets.Records](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md)
 
-* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#fetch) - Get the content of a given dataset record
-* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#delete) - Delete a record from a dataset
-* [bulk_delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#bulk_delete) - Delete multiple records from datasets
-* [judge](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#judge) - Run Judge on a dataset record based on the given options
-* [update_payload](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#update_payload) - Update a dataset record payload
-* [update_properties](https://github.com/mistralai/client-python/blob/main/docs/sdks/records/README.md#update_properties) - Update dataset record properties
+* [fetch](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#fetch) - Get the content of a given dataset record
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#delete) - Delete a record from a dataset
+* [bulk_delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#bulk_delete) - Delete multiple records from datasets
+* [judge](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#judge) - Run Judge on a dataset record based on the given options
+* [update_payload](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#update_payload) - Update a dataset record payload
+* [update_properties](https://github.com/mistralai/client-python/blob/main/docs/sdks/datasetsrecords/README.md#update_properties) - Update dataset record properties
 
 ### [Beta.Observability.Evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md)
 
@@ -628,6 +628,32 @@ print(res.choices[0].message.content)
 * [get_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get_pipeline) - Get a pipeline
 * [update_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#update_pipeline) - Update a pipeline
 * [delete_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#delete_pipeline) - Delete a pipeline
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#list) - List evaluations for a project
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get) - Get evaluation by slug
+
+#### [Beta.Observability.Evaluations.Optimizations](https://github.com/mistralai/client-python/blob/main/docs/sdks/optimizations/README.md)
+
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/optimizations/README.md#list) - List optimizations with optional filters
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/optimizations/README.md#get) - Get an optimization by id (with its anchored evaluation + project)
+* [list_trials](https://github.com/mistralai/client-python/blob/main/docs/sdks/optimizations/README.md#list_trials) - List an optimization's trials with their observation runs (paginated)
+
+#### [Beta.Observability.Evaluations.Projects](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsprojects/README.md)
+
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsprojects/README.md#list) - List projects
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsprojects/README.md#get) - Get project by slug
+
+#### [Beta.Observability.Evaluations.Records](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsrecords/README.md)
+
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsrecords/README.md#get) - Get a specific record from an evaluation run
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsrecords/README.md#search) - Search records for an evaluation run with content filters
+
+#### [Beta.Observability.Evaluations.Runs](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md)
+
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md#search) - Search evaluation runs with filters
+* [search_all](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md#search_all) - Search evaluation runs across all evaluations
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md#get) - Get a specific evaluation run by ID
+* [get_statistics](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md#get_statistics) - Get statistics for a specific evaluation run
+* [compute_statistics](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluationsruns/README.md#compute_statistics) - Compute statistics for a specific evaluation run with optional filters
 
 ### [Beta.Observability.Judges](https://github.com/mistralai/client-python/blob/main/docs/sdks/judges/README.md)
 
@@ -845,11 +871,11 @@ print(res.choices[0].message.content)
 
 * [get_workflow_metrics](https://github.com/mistralai/client-python/blob/main/docs/sdks/metrics/README.md#get_workflow_metrics) - Get Workflow Metrics
 
-#### [Workflows.Runs](https://github.com/mistralai/client-python/blob/main/docs/sdks/runs/README.md)
+#### [Workflows.Runs](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsruns/README.md)
 
-* [list_runs](https://github.com/mistralai/client-python/blob/main/docs/sdks/runs/README.md#list_runs) - List Runs
-* [get_run](https://github.com/mistralai/client-python/blob/main/docs/sdks/runs/README.md#get_run) - Get Run
-* [get_run_history](https://github.com/mistralai/client-python/blob/main/docs/sdks/runs/README.md#get_run_history) - Get Run History
+* [list_runs](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsruns/README.md#list_runs) - List Runs
+* [get_run](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsruns/README.md#get_run) - Get Run
+* [get_run_history](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflowsruns/README.md#get_run_history) - Get Run History
 
 #### [Workflows.Schedules](https://github.com/mistralai/client-python/blob/main/docs/sdks/schedules/README.md)
 
@@ -1076,8 +1102,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 264 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 55 of 264 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 278 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 69 of 278 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

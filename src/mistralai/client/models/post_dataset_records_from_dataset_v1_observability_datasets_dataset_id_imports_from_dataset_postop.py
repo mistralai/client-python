@@ -14,6 +14,7 @@ class PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDa
     TypedDict
 ):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
     import_dataset_from_dataset_request: ImportDatasetFromDatasetRequestTypedDict
 
 
@@ -23,6 +24,7 @@ class PostDatasetRecordsFromDatasetV1ObservabilityDatasetsDatasetIDImportsFromDa
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
     import_dataset_from_dataset_request: Annotated[
         ImportDatasetFromDatasetRequest,

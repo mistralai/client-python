@@ -203,7 +203,13 @@ async def _stream_and_handle_auth(
                     last_seq = payload.broker_sequence + 1
                     event = payload.data
 
-                    if isinstance(event, _TERMINAL_EVENT_TYPES):
+                    # The stream includes child workflows, which emit their
+                    # own terminal events. Only the root's ends the run;
+                    # later children may still request auth.
+                    if (
+                        isinstance(event, _TERMINAL_EVENT_TYPES)
+                        and event.workflow_exec_id == exec_id
+                    ):
                         return
 
                     if not isinstance(event, CustomTaskStartedResponse):

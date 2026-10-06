@@ -6,7 +6,7 @@ from typing import Any
 import anyio
 import httpx2 as httpx
 import pytest
-from mcp import ClientSession
+from mcp import ClientSession, MCPError
 from mcp.types import TextContent
 
 from mistralai.client import Mistral
@@ -255,6 +255,70 @@ async def test_mcp_client_raises_connectors_gateway_error_for_tool_call(
     assert error.proxy_error == "destination_unavailable"
     assert error.proxy_status_code is None
     assert error.details == "upstream_unavailable"
+    assert error.__suppress_context__
+
+
+async def _upstream_mcp_handler(request: httpx.Request) -> httpx.Response:
+    """Serve MCP initialization and reject every tool call with a JSON-RPC error."""
+    payload = json.loads(request.content)
+    method = payload["method"]
+    if method == "notifications/initialized":
+        return httpx.Response(202)
+    if method == "initialize":
+        body: dict[str, Any] = {
+            "result": {
+                "protocolVersion": payload["params"]["protocolVersion"],
+                "capabilities": {},
+                "serverInfo": {"name": "upstream", "version": "test"},
+            }
+        }
+    elif method == "tools/call":
+        body = {"error": {"code": -32602, "message": "Invalid params"}}
+    else:
+        raise AssertionError(f"Unexpected MCP method: {method}")
+    return httpx.Response(
+        200,
+        headers={"content-type": "application/json"},
+        json={"jsonrpc": "2.0", "id": payload["id"], **body},
+    )
+
+
+@pytest.mark.asyncio
+async def test_mcp_client_raises_upstream_mcp_error_unwrapped(
+    use_connector_transport: ConnectorClientTransport,
+) -> None:
+    use_connector_transport(_upstream_mcp_handler)
+
+    async with _mistral_client(_upstream_mcp_handler) as mistral:
+        with pytest.raises(MCPError) as exc_info:
+            with anyio.fail_after(1):
+                async with mistral.beta.connectors.mcp_client(
+                    connector_id_or_name="github",
+                ) as client:
+                    await client.call_tool("search", {"query": "mistral"})
+
+    assert exc_info.value.code == -32602
+    assert exc_info.value.message == "Invalid params"
+
+
+@pytest.mark.asyncio
+async def test_mcp_client_reraises_caller_error_unchanged(
+    use_connector_transport: ConnectorClientTransport,
+) -> None:
+    use_connector_transport(_upstream_mcp_handler)
+    cause = KeyError("result")
+    caller_error = ValueError("caller failure")
+
+    async with _mistral_client(_upstream_mcp_handler) as mistral:
+        with pytest.raises(ValueError) as exc_info:
+            with anyio.fail_after(1):
+                async with mistral.beta.connectors.mcp_client(
+                    connector_id_or_name="github",
+                ):
+                    raise caller_error from cause
+
+    assert exc_info.value is caller_error
+    assert exc_info.value.__cause__ is cause
 
 
 @pytest.mark.asyncio

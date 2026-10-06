@@ -1161,3 +1161,131 @@ Based on:
 - [python v3.0.0] .
 ### Releases
 - [PyPI v3.0.0] https://pypi.org/project/mistralai/3.0.0 - .
+
+## 2026-10-06 15:20:33
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Removed from the stable API surface (7):
+- `Runs`
+- `Runs.get_run`
+- `Runs.get_run_async`
+- `Runs.get_run_history`
+- `Runs.get_run_history_async`
+- `Runs.list_runs`
+- `Runs.list_runs_async`
+#### Stable type changes
+Changed types or signatures on the stable surface (1):
+- `Workflows.runs: Runs -> WorkflowsRuns`
+#### Beta surface changes
+Removed from the beta surface (16):
+- `Records`
+- `AuthenticationMethodCreateOrUpdateRequest.auth_direction`
+- `HTTPConnector.system_prompt_route`
+- `MCPConnector.system_prompt_route`
+- `Records.bulk_delete`
+- `Records.bulk_delete_async`
+- `Records.delete`
+- `Records.delete_async`
+- `Records.fetch`
+- `Records.fetch_async`
+- `Records.judge`
+- `Records.judge_async`
+- `Records.update_payload`
+- `Records.update_payload_async`
+- `Records.update_properties`
+- `Records.update_properties_async`
+
+Changed types or signatures in beta (27):
+- `AuthenticationConfiguration.authentication_type: OutboundAuthenticationType -> AuthenticationType`
+- `AuthenticationMethodCreateOrUpdateRequest.method_type: MethodType -> AuthenticationType`
+- `AuthenticationMethodCreateOrUpdateRequestTypedDict.method_type: MethodTypeTypedDict -> AuthenticationType`
+- `ConnectorGetAuthURLV1Request.method_type: Annotated[Optional[OutboundAuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))] -> Annotated[Optional[AuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))]`
+- `ConnectorGetAuthURLV1RequestTypedDict.method_type: NotRequired[OutboundAuthenticationType] -> NotRequired[AuthenticationType]`
+- `ConnectorListOrganizationCredentialsV1Request.auth_type: Annotated[OptionalNullable[OutboundAuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))] -> Annotated[OptionalNullable[AuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))]`
+- `ConnectorListOrganizationCredentialsV1RequestTypedDict.auth_type: NotRequired[Nullable[OutboundAuthenticationType]] -> NotRequired[Nullable[AuthenticationType]]`
+- `ConnectorListUserCredentialsV1Request.auth_type: Annotated[OptionalNullable[OutboundAuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))] -> Annotated[OptionalNullable[AuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))]`
+- `ConnectorListUserCredentialsV1RequestTypedDict.auth_type: NotRequired[Nullable[OutboundAuthenticationType]] -> NotRequired[Nullable[AuthenticationType]]`
+- `ConnectorListWorkspaceCredentialsV1Request.auth_type: Annotated[OptionalNullable[OutboundAuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))] -> Annotated[OptionalNullable[AuthenticationType], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))]`
+- `ConnectorListWorkspaceCredentialsV1RequestTypedDict.auth_type: NotRequired[Nullable[OutboundAuthenticationType]] -> NotRequired[Nullable[AuthenticationType]]`
+- `CredentialsResponse.connector_preset_credentials_for_auth: Optional[List[OutboundAuthenticationType]] -> Optional[List[AuthenticationType]]`
+- `CredentialsResponseTypedDict.connector_preset_credentials_for_auth: NotRequired[List[OutboundAuthenticationType]] -> NotRequired[List[AuthenticationType]]`
+- `Datasets.records: Records -> DatasetsRecords`
+- `OAuth2AuthorizationCodeAuthMethod.oauth2_server_metadata: ExtendedOAuthServerMetadata -> OptionalNullable[ExtendedOAuthServerMetadata]`
+- `OAuth2AuthorizationCodeAuthMethodTypedDict.oauth2_server_metadata: ExtendedOAuthServerMetadataTypedDict -> NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]`
+- `OrderByClause.direction: Optional[Direction] -> Optional[OrderByClauseDirection]`
+- `OrderByClauseTypedDict.direction: NotRequired[Direction] -> NotRequired[OrderByClauseDirection]`
+- `PublicAuthenticationMethod.method_type: OutboundAuthenticationType -> AuthenticationType`
+- `UpdatePipelineRequest.definitions: List[JudgeDefinition] -> Optional[List[JudgeDefinition]]`
+- `UpdatePipelineRequest.enabled: bool -> Optional[bool]`
+- `UpdatePipelineRequest.name: str -> Optional[str]`
+- `UpdatePipelineRequest.selectors: List[PipelineConfigSelector] -> Optional[List[PipelineConfigSelector]]`
+- `UpdatePipelineRequestTypedDict.definitions: List[JudgeDefinitionTypedDict] -> NotRequired[List[JudgeDefinitionTypedDict]]`
+- `UpdatePipelineRequestTypedDict.enabled: bool -> NotRequired[bool]`
+- ...and 2 more
+
+Now required on an existing beta model (6):
+- `Dataset.slug`
+- `DatasetPreview.slug`
+- `Evaluations.optimizations`
+- `Evaluations.projects`
+- `Evaluations.records`
+- `Evaluations.runs`
+</details>
+
+### API changes
+#### Beta API changes
+
+- Removed field `system_prompt_route` from response `items[].union(http)` in `sdk.beta.connectors.list()`.
+- Removed field `system_prompt_route` from response `items[].union(mcp)` in `sdk.beta.connectors.list()`.
+- Removed field `system_prompt_route` from response `union(http)` in `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+- Removed field `system_prompt_route` from response `union(mcp)` in `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+- Removed field `auth_direction` from request `body.union(http).auth_methods[].union(AuthenticationMethodCreateOrUpdateRequest)` in `sdk.beta.connectors.update()`.
+- Changed field `method_type` in `sdk.beta.connectors.update()`.
+- Changed field `auth_methods[]` in `sdk.beta.connectors.update()`.
+
+#### Added operations
+
+Beta:
+
+- `sdk.beta.observability.evaluations.list()`
+- `sdk.beta.observability.evaluations.get()`
+- `sdk.beta.observability.evaluations.projects.list()`
+- `sdk.beta.observability.evaluations.projects.get()`
+- `sdk.beta.observability.evaluations.runs.search()`
+- `sdk.beta.observability.evaluations.runs.search_all()`
+- `sdk.beta.observability.evaluations.runs.get()`
+- `sdk.beta.observability.evaluations.runs.get_statistics()`
+- `sdk.beta.observability.evaluations.runs.compute_statistics()`
+- `sdk.beta.observability.evaluations.records.get()`
+- `sdk.beta.observability.evaluations.records.search()`
+- `sdk.beta.observability.evaluations.optimizations.list()`
+- `sdk.beta.observability.evaluations.optimizations.get()`
+- `sdk.beta.observability.evaluations.optimizations.list_trials()`
+
+#### Schema changes
+
+- Changed request field `oauth2_server_metadata` in `sdk.beta.connectors.create()` and `sdk.beta.connectors.update()`.
+- Added enum values `optimization_not_found` and `project_not_found` across beta observability judges, beta observability datasets, beta observability datasets records, beta observability evaluations, beta observability logs, beta observability traces, beta observability spans (55 operations).
+- Added response field `slug` in `sdk.beta.observability.datasets.list()`, `sdk.beta.observability.datasets.create()`, `sdk.beta.observability.datasets.fetch()`, and `sdk.beta.observability.datasets.update()`.
+- Changed request fields `definitions`, `enabled`, `name`, and `selectors` in `sdk.beta.observability.evaluations.update_pipeline()`.
+- Added request enum value `agentic_safety` in `sdk.files.list()` and `sdk.files.upload()`.
+- Added response enum value `agentic_safety` in `sdk.files.list()`, `sdk.files.upload()`, and `sdk.files.retrieve()`.
+- Added request variants `resource` and `resource_link` in `sdk.chat.complete()`, `sdk.agents.complete()`, `sdk.classifiers.moderate_chat()`, and `sdk.classifiers.classify_chat()`.
+- Added response variants `resource` and `resource_link` in `sdk.chat.complete()`, `sdk.fim.complete()`, and `sdk.agents.complete()`.
+- Changed request field `union(Array<ContentChunk>)[]` in `sdk.chat.complete()`, `sdk.agents.complete()`, `sdk.classifiers.moderate_chat()`, and `sdk.classifiers.classify_chat()`.
+- Added response field `kind` across audio voices (6 operations).
+- Added request field `workflow_name` in `sdk.workflows.get_workflow_registrations()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.1.0] .
+### Releases
+- [PyPI v3.1.0] https://pypi.org/project/mistralai/3.1.0 - .

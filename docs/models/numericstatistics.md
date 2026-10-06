@@ -1,0 +1,15 @@
+# NumericStatistics
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `type`                                                                 | *Optional[Literal["numeric"]]*                                         | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `values`                                                               | List[[models.ScalarStatisticValue](../models/scalarstatisticvalue.md)] | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `sample_count`                                                         | *Optional[int]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `avg`                                                                  | *OptionalNullable[float]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `min`                                                                  | *OptionalNullable[float]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `max`                                                                  | *OptionalNullable[float]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `std`                                                                  | *OptionalNullable[float]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    |
+| `count`                                                                | *Optional[int]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    |

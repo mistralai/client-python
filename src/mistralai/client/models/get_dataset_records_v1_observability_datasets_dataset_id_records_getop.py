@@ -12,6 +12,7 @@ class GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequestTypedDic
     TypedDict
 ):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
     page_size: NotRequired[int]
     page: NotRequired[int]
 
@@ -20,6 +21,7 @@ class GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequest(BaseMod
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
     page_size: Annotated[
         Optional[int],

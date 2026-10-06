@@ -10,6 +10,7 @@ class GetDatasetImportTaskV1ObservabilityDatasetsDatasetIDTasksTaskIDGetRequestT
     TypedDict
 ):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
     task_id: str
 
 
@@ -19,6 +20,7 @@ class GetDatasetImportTaskV1ObservabilityDatasetsDatasetIDTasksTaskIDGetRequest(
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
     task_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))

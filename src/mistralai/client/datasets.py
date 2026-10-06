@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
-from mistralai.client.records import Records
+from mistralai.client.datasets_records import DatasetsRecords
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -12,7 +12,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Datasets(BaseSDK):
-    records: Records
+    records: DatasetsRecords
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -22,7 +22,9 @@ class Datasets(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.records = Records(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.records = DatasetsRecords(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
 
     def create(
         self,
@@ -437,9 +439,9 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetPreview:
-        r"""Get dataset by id
+        r"""Get dataset by ID or slug
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -532,9 +534,9 @@ class Datasets(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DatasetPreview:
-        r"""Get dataset by id
+        r"""Get dataset by ID or slug
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -629,7 +631,7 @@ class Datasets(BaseSDK):
     ):
         r"""Delete a dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -724,7 +726,7 @@ class Datasets(BaseSDK):
     ):
         r"""Delete a dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -821,7 +823,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetPreview:
         r"""Patch dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param name:
         :param description:
         :param retries: Override the default retry configuration for this method
@@ -931,7 +933,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetPreview:
         r"""Patch dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param name:
         :param description:
         :param retries: Override the default retry configuration for this method
@@ -1041,7 +1043,7 @@ class Datasets(BaseSDK):
     ) -> models.ListDatasetRecordsResponse:
         r"""List existing records in the dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param page_size:
         :param page:
         :param retries: Override the default retry configuration for this method
@@ -1144,7 +1146,7 @@ class Datasets(BaseSDK):
     ) -> models.ListDatasetRecordsResponse:
         r"""List existing records in the dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param page_size:
         :param page:
         :param retries: Override the default retry configuration for this method
@@ -1248,7 +1250,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetRecord:
         r"""Add a record to the dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param source: Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source.
@@ -1361,7 +1363,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetRecord:
         r"""Add a record to the dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param payload: Caller-authored input object stored on a dataset record.
         :param properties:
         :param source: Caller-declared channel that initiated record creation. This value does not certify that the payload is an unmodified copy of its source.
@@ -1472,7 +1474,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from an uploaded file
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param file_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1579,7 +1581,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from an uploaded file
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param file_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1686,7 +1688,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from playground conversations
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param conversation_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1793,7 +1795,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from playground conversations
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param conversation_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1909,7 +1911,7 @@ class Datasets(BaseSDK):
 
         Starts an asynchronous import of the requested telemetry spans. References not returned by the tenant-scoped telemetry query are skipped without distinguishing absence from access restrictions.
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param span_references: Spans to attempt to import; unavailable references are skipped, and trace and span IDs are attached as record properties automatically.
         :param mapping_contract: Mapping rules applied independently to every requested telemetry span.
 
@@ -2035,7 +2037,7 @@ class Datasets(BaseSDK):
 
         Starts an asynchronous import of the requested telemetry spans. References not returned by the tenant-scoped telemetry query are skipped without distinguishing absence from access restrictions.
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param span_references: Spans to attempt to import; unavailable references are skipped, and trace and span IDs are attached as record properties automatically.
         :param mapping_contract: Mapping rules applied independently to every requested telemetry span.
 
@@ -2152,7 +2154,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from another dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param dataset_record_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2259,7 +2261,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Populate the dataset with records from another dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param dataset_record_ids:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2365,7 +2367,7 @@ class Datasets(BaseSDK):
     ) -> models.ExportDatasetResponse:
         r"""Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2460,7 +2462,7 @@ class Datasets(BaseSDK):
     ) -> models.ExportDatasetResponse:
         r"""Export to the Files API and retrieve presigned URL to download the resulting JSONL file
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2556,7 +2558,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Get status of a dataset import task
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param task_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2654,7 +2656,7 @@ class Datasets(BaseSDK):
     ) -> models.DatasetImportTask:
         r"""Get status of a dataset import task
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param task_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -2753,7 +2755,7 @@ class Datasets(BaseSDK):
     ) -> models.ListDatasetImportTasksResponse:
         r"""List import tasks for the given dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param page_size:
         :param page:
         :param retries: Override the default retry configuration for this method
@@ -2858,7 +2860,7 @@ class Datasets(BaseSDK):
     ) -> models.ListDatasetImportTasksResponse:
         r"""List import tasks for the given dataset
 
-        :param dataset_id:
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param page_size:
         :param page:
         :param retries: Override the default retry configuration for this method
