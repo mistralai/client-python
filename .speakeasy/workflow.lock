@@ -56,8 +56,6 @@ workflow:
         mistral-openapi:
             inputs:
                 - location: ../openapi/specs/v2/main-sdk.yaml
-            overlays:
-                - location: .speakeasy/connector-id-or-name-overlay.yaml
             registry:
                 location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
     targets:
