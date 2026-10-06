@@ -45,3 +45,15 @@ value: models.ThinkChunk = /* values here */
 value: models.AudioChunk = /* values here */
 ```
 
+### `models.ResourceChunk`
+
+```python
+value: models.ResourceChunk = /* values here */
+```
+
+### `models.ResourceLinkChunk`
+
+```python
+value: models.ResourceLinkChunk = /* values here */
+```
+

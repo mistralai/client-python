@@ -6,6 +6,8 @@ from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
 from .filechunk import FileChunk, FileChunkTypedDict
 from .imageurlchunk import ImageURLChunk, ImageURLChunkTypedDict
 from .referencechunk import ReferenceChunk, ReferenceChunkTypedDict
+from .resourcechunk import ResourceChunk, ResourceChunkTypedDict
+from .resourcelinkchunk import ResourceLinkChunk, ResourceLinkChunkTypedDict
 from .textchunk import TextChunk, TextChunkTypedDict
 from .thinkchunk import ThinkChunk, ThinkChunkTypedDict
 from functools import partial
@@ -26,6 +28,8 @@ ContentChunkTypedDict = TypeAliasType(
         FileChunkTypedDict,
         AudioChunkTypedDict,
         DocumentURLChunkTypedDict,
+        ResourceChunkTypedDict,
+        ResourceLinkChunkTypedDict,
         ThinkChunkTypedDict,
     ],
 )
@@ -49,6 +53,8 @@ _CONTENT_CHUNK_VARIANTS: dict[str, Any] = {
     "file": FileChunk,
     "thinking": ThinkChunk,
     "input_audio": AudioChunk,
+    "resource": ResourceChunk,
+    "resource_link": ResourceLinkChunk,
 }
 
 
@@ -61,6 +67,8 @@ ContentChunk = Annotated[
         FileChunk,
         ThinkChunk,
         AudioChunk,
+        ResourceChunk,
+        ResourceLinkChunk,
         UnknownContentChunk,
     ],
     BeforeValidator(

@@ -17,3 +17,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"fine-tune"`
 - `"batch"`
 - `"ocr"`
+- `"agentic_safety"`

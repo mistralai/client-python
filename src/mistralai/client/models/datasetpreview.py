@@ -13,6 +13,7 @@ class DatasetPreviewTypedDict(TypedDict):
     updated_at: datetime
     deleted_at: Nullable[datetime]
     name: str
+    slug: str
     description: str
     owner_id: str
     workspace_id: str
@@ -28,6 +29,8 @@ class DatasetPreview(BaseModel):
     deleted_at: Nullable[datetime]
 
     name: str
+
+    slug: str
 
     description: str
 

@@ -26,27 +26,16 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class OAuth2AuthorizationCodeAuthMethodTypedDict(TypedDict):
-    oauth2_server_metadata: ExtendedOAuthServerMetadataTypedDict
-    r"""Custom superset of RFC 8414 OAuth 2.0 Authorization Server Metadata.
-
-    Stored at connector creation time (provided for HTTP connectors, discovered via .well-known for MCP).
-    Mirrors the shape of .well-known/oauth-authorization-server responses.
-    """
     auth_data: AuthDataTypedDict
     method_type: Literal["oauth2"]
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
     r"""Optional headers sent with requests for this auth method."""
     grant_type: Literal["authorization_code"]
+    oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
+    r"""OAuth2 authorization server metadata (endpoints, scopes_supported, ...)."""
 
 
 class OAuth2AuthorizationCodeAuthMethod(BaseModel):
-    oauth2_server_metadata: ExtendedOAuthServerMetadata
-    r"""Custom superset of RFC 8414 OAuth 2.0 Authorization Server Metadata.
-
-    Stored at connector creation time (provided for HTTP connectors, discovered via .well-known for MCP).
-    Mirrors the shape of .well-known/oauth-authorization-server responses.
-    """
-
     auth_data: AuthData
 
     method_type: Annotated[
@@ -67,10 +56,13 @@ class OAuth2AuthorizationCodeAuthMethod(BaseModel):
         pydantic.Field(alias="grant_type"),
     ] = "authorization_code"
 
+    oauth2_server_metadata: OptionalNullable[ExtendedOAuthServerMetadata] = UNSET
+    r"""OAuth2 authorization server metadata (endpoints, scopes_supported, ...)."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["method_type", "headers"])
-        nullable_fields = set(["headers"])
+        optional_fields = set(["method_type", "headers", "oauth2_server_metadata"])
+        nullable_fields = set(["headers", "oauth2_server_metadata"])
         serialized = handler(self)
         m = {}
 

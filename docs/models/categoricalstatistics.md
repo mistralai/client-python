@@ -1,0 +1,14 @@
+# CategoricalStatistics
+
+
+## Fields
+
+| Field                                                                    | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `type`                                                                   | *Optional[Literal["categorical"]]*                                       | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `frequencies`                                                            | Dict[str, *int*]                                                         | :heavy_check_mark:                                                       | N/A                                                                      |
+| `mode`                                                                   | List[*str*]                                                              | :heavy_check_mark:                                                       | N/A                                                                      |
+| `count`                                                                  | *int*                                                                    | :heavy_check_mark:                                                       | N/A                                                                      |
+| `values`                                                                 | List[[models.ScalarStatisticValue](../models/scalarstatisticvalue.md)]   | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `excluded_count`                                                         | *Optional[int]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `confusion_matrix`                                                       | [OptionalNullable[models.ConfusionMatrix]](../models/confusionmatrix.md) | :heavy_minus_sign:                                                       | N/A                                                                      |

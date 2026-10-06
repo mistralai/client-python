@@ -23,6 +23,8 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequestTypedDict(TypedD
     r"""Whether to only return active workflows versions"""
     include_shared: NotRequired[bool]
     r"""Whether to include shared workflow versions"""
+    workflow_name: NotRequired[Nullable[str]]
+    r"""Exact workflow name to filter by"""
     workflow_search: NotRequired[Nullable[str]]
     r"""The workflow name to filter by"""
     archived: NotRequired[Nullable[bool]]
@@ -61,6 +63,12 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = True
     r"""Whether to include shared workflow versions"""
+
+    workflow_name: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Exact workflow name to filter by"""
 
     workflow_search: Annotated[
         OptionalNullable[str],
@@ -106,6 +114,7 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequest(BaseModel):
                 "task_queue",
                 "active_only",
                 "include_shared",
+                "workflow_name",
                 "workflow_search",
                 "archived",
                 "with_workflow",
@@ -118,6 +127,7 @@ class GetWorkflowRegistrationsV1WorkflowsRegistrationsGetRequest(BaseModel):
             [
                 "workflow_id",
                 "task_queue",
+                "workflow_name",
                 "workflow_search",
                 "archived",
                 "available_in_chat_assistant",

@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-Direction = Literal[
+OrderByClauseDirection = Literal[
     "asc",
     "desc",
 ]
@@ -15,13 +15,13 @@ Direction = Literal[
 
 class OrderByClauseTypedDict(TypedDict):
     field: str
-    direction: NotRequired[Direction]
+    direction: NotRequired[OrderByClauseDirection]
 
 
 class OrderByClause(BaseModel):
     field: str
 
-    direction: Optional[Direction] = "asc"
+    direction: Optional[OrderByClauseDirection] = "asc"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

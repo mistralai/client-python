@@ -10,6 +10,7 @@ FilePurpose = Union[
         "fine-tune",
         "batch",
         "ocr",
+        "agentic_safety",
     ],
     UnrecognizedStr,
 ]

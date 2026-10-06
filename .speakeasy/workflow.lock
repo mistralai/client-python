@@ -16,8 +16,8 @@ sources:
             - speakeasy-mistralai-gcp-sdk-26292830187-1
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:5c136a8e459fca0edf36b519df7d0656c349368e5d8d7783bf0fa9fed34f38b3
-        sourceBlobDigest: sha256:cd1f89be90a7f5c6d27326308ce3d905f47830c99abe7f1fea69dc6647e1a320
+        sourceRevisionDigest: sha256:0f0cd5f8c49b7aef4ce394319ea6d3d528b13db1687fd74758e95aa24ccf0080
+        sourceBlobDigest: sha256:042ce5a3793fde34859bd5dc853ba71d866a369949d8555207cccf50e07432b3
         tags:
             - latest
             - 1.0.0
@@ -39,10 +39,10 @@ targets:
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:5c136a8e459fca0edf36b519df7d0656c349368e5d8d7783bf0fa9fed34f38b3
-        sourceBlobDigest: sha256:cd1f89be90a7f5c6d27326308ce3d905f47830c99abe7f1fea69dc6647e1a320
+        sourceRevisionDigest: sha256:0f0cd5f8c49b7aef4ce394319ea6d3d528b13db1687fd74758e95aa24ccf0080
+        sourceBlobDigest: sha256:042ce5a3793fde34859bd5dc853ba71d866a369949d8555207cccf50e07432b3
         codeSamplesNamespace: mistral-openapi-python-code-samples
-        codeSamplesRevisionDigest: sha256:3c3e420f5d5c47961f3273528d7f7d733d5a994f148e7f7fe4536fa712be4232
+        codeSamplesRevisionDigest: sha256:5648198ba0c5b8fdee77c5502e11b89b7d5307291bc72f134c38cbb622b1eacc
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.796.4
@@ -56,6 +56,8 @@ workflow:
         mistral-openapi:
             inputs:
                 - location: ../openapi/specs/v2/main-sdk.yaml
+            overlays:
+                - location: .speakeasy/connector-id-or-name-overlay.yaml
             registry:
                 location: registry.speakeasyapi.dev/mistral-dev/mistral-dev/mistral-openapi
     targets:

@@ -14,6 +14,8 @@
 * [get_pipeline](#get_pipeline) - Get a pipeline
 * [update_pipeline](#update_pipeline) - Update a pipeline
 * [delete_pipeline](#delete_pipeline) - Delete a pipeline
+* [list](#list) - List evaluations for a project
+* [get](#get) - Get evaluation by slug
 
 ## create_pipeline_config
 
@@ -394,11 +396,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.observability.evaluations.update_pipeline(pipeline_id="2c18966b-8d2d-41fb-a02c-9a9bf9df2919", name="<value>", selectors=[
-        {
-            "source_kind": "log",
-        },
-    ], definitions=[], enabled=True)
+    res = mistral.beta.observability.evaluations.update_pipeline(pipeline_id="2c18966b-8d2d-41fb-a02c-9a9bf9df2919")
 
     # Handle response
     print(res)
@@ -410,11 +408,11 @@ with Mistral(
 | Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `pipeline_id`                                                                 | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
-| `name`                                                                        | *str*                                                                         | :heavy_check_mark:                                                            | N/A                                                                           |
-| `selectors`                                                                   | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)] | :heavy_check_mark:                                                            | N/A                                                                           |
-| `definitions`                                                                 | List[[models.JudgeDefinition](../../models/judgedefinition.md)]               | :heavy_check_mark:                                                            | N/A                                                                           |
-| `enabled`                                                                     | *bool*                                                                        | :heavy_check_mark:                                                            | N/A                                                                           |
+| `name`                                                                        | *Optional[str]*                                                               | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `description`                                                                 | *OptionalNullable[str]*                                                       | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `selectors`                                                                   | List[[models.PipelineConfigSelector](../../models/pipelineconfigselector.md)] | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `definitions`                                                                 | List[[models.JudgeDefinition](../../models/judgedefinition.md)]               | :heavy_minus_sign:                                                            | N/A                                                                           |
+| `enabled`                                                                     | *Optional[bool]*                                                              | :heavy_minus_sign:                                                            | N/A                                                                           |
 | `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |
 
 ### Response
@@ -456,6 +454,90 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `pipeline_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## list
+
+List evaluations for a project
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_project_evaluations_v2_v1_observability_projects__project_slug__evaluations_v2_get" method="get" path="/v1/observability/projects/{project_slug}/evaluations_v2" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.evaluations.list(project_slug="<value>", page_size=50, page=1)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `project_slug`                                                      | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `page_size`                                                         | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.EvaluationsV2](../../models/evaluationsv2.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
+## get
+
+Get evaluation by slug
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_evaluation_v2_v1_observability_evaluations_v2__evaluation_slug__get" method="get" path="/v1/observability/evaluations_v2/{evaluation_slug}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.observability.evaluations.get(evaluation_slug="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `evaluation_slug`                                                   | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.EvaluationV2](../../models/evaluationv2.md)**
 
 ### Errors
 

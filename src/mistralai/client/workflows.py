@@ -8,12 +8,12 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.deployments import Deployments
 from mistralai.client.executions import Executions
 from mistralai.client.metrics import Metrics
-from mistralai.client.runs import Runs
 from mistralai.client.schedules import Schedules
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from mistralai.client.workflows_events import WorkflowsEvents
+from mistralai.client.workflows_runs import WorkflowsRuns
 from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
@@ -27,7 +27,7 @@ import time
 class Workflows(BaseSDK):
     executions: Executions
     metrics: Metrics
-    runs: Runs
+    runs: WorkflowsRuns
     schedules: Schedules
     events: WorkflowsEvents
     deployments: Deployments
@@ -42,7 +42,7 @@ class Workflows(BaseSDK):
     def _init_sdks(self):
         self.executions = Executions(self.sdk_configuration, parent_ref=self.parent_ref)
         self.metrics = Metrics(self.sdk_configuration, parent_ref=self.parent_ref)
-        self.runs = Runs(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.runs = WorkflowsRuns(self.sdk_configuration, parent_ref=self.parent_ref)
         self.schedules = Schedules(self.sdk_configuration, parent_ref=self.parent_ref)
         self.events = WorkflowsEvents(
             self.sdk_configuration, parent_ref=self.parent_ref
@@ -653,6 +653,7 @@ class Workflows(BaseSDK):
         task_queue: OptionalNullable[str] = UNSET,
         active_only: Optional[bool] = False,
         include_shared: Optional[bool] = True,
+        workflow_name: OptionalNullable[str] = UNSET,
         workflow_search: OptionalNullable[str] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         with_workflow: Optional[bool] = False,
@@ -670,6 +671,7 @@ class Workflows(BaseSDK):
         :param task_queue: The task queue to filter by
         :param active_only: Whether to only return active workflows versions
         :param include_shared: Whether to include shared workflow versions
+        :param workflow_name: Exact workflow name to filter by
         :param workflow_search: The workflow name to filter by
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
@@ -699,6 +701,7 @@ class Workflows(BaseSDK):
             task_queue=task_queue,
             active_only=active_only,
             include_shared=include_shared,
+            workflow_name=workflow_name,
             workflow_search=workflow_search,
             archived=archived,
             with_workflow=with_workflow,
@@ -775,6 +778,7 @@ class Workflows(BaseSDK):
         task_queue: OptionalNullable[str] = UNSET,
         active_only: Optional[bool] = False,
         include_shared: Optional[bool] = True,
+        workflow_name: OptionalNullable[str] = UNSET,
         workflow_search: OptionalNullable[str] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         with_workflow: Optional[bool] = False,
@@ -792,6 +796,7 @@ class Workflows(BaseSDK):
         :param task_queue: The task queue to filter by
         :param active_only: Whether to only return active workflows versions
         :param include_shared: Whether to include shared workflow versions
+        :param workflow_name: Exact workflow name to filter by
         :param workflow_search: The workflow name to filter by
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
@@ -821,6 +826,7 @@ class Workflows(BaseSDK):
             task_queue=task_queue,
             active_only=active_only,
             include_shared=include_shared,
+            workflow_name=workflow_name,
             workflow_search=workflow_search,
             archived=archived,
             with_workflow=with_workflow,

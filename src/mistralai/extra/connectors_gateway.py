@@ -140,6 +140,7 @@ async def mcp_client(
         "mcp",
     )
 
+    caller_error: Exception | None = None
     try:
         async with http_client:
             async with streamable_http_client(
@@ -148,12 +149,19 @@ async def mcp_client(
             ) as (read_stream, write_stream):
                 async with ClientSession(read_stream, write_stream) as session:
                     await session.initialize()
-                    yield session
+                    try:
+                        yield session
+                    except Exception as exc:
+                        # Close the session normally and re-raise below, so MCP's
+                        # task groups do not wrap the caller's error in an ExceptionGroup.
+                        caller_error = exc
     except Exception as exc:
         gateway_error = single_connectors_gateway_error(exc)
         if gateway_error is not None:
             raise gateway_error from None
         raise
+    if caller_error is not None:
+        raise caller_error
 
 
 def http_client(

@@ -26,13 +26,13 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class OAuth2ClientCredentialsAuthMethodTypedDict(TypedDict):
+    token_endpoint_auth_method: OAuth2TokenEndpointAuthMethod
     oauth2_server_metadata: ExtendedOAuthServerMetadataTypedDict
     r"""Custom superset of RFC 8414 OAuth 2.0 Authorization Server Metadata.
 
     Stored at connector creation time (provided for HTTP connectors, discovered via .well-known for MCP).
     Mirrors the shape of .well-known/oauth-authorization-server responses.
     """
-    token_endpoint_auth_method: OAuth2TokenEndpointAuthMethod
     method_type: Literal["oauth2"]
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
     r"""Optional headers sent with requests for this auth method."""
@@ -40,14 +40,14 @@ class OAuth2ClientCredentialsAuthMethodTypedDict(TypedDict):
 
 
 class OAuth2ClientCredentialsAuthMethod(BaseModel):
+    token_endpoint_auth_method: OAuth2TokenEndpointAuthMethod
+
     oauth2_server_metadata: ExtendedOAuthServerMetadata
     r"""Custom superset of RFC 8414 OAuth 2.0 Authorization Server Metadata.
 
     Stored at connector creation time (provided for HTTP connectors, discovered via .well-known for MCP).
     Mirrors the shape of .well-known/oauth-authorization-server responses.
     """
-
-    token_endpoint_auth_method: OAuth2TokenEndpointAuthMethod
 
     method_type: Annotated[
         Annotated[

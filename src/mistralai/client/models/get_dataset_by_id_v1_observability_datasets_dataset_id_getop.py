@@ -8,9 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequestTypedDict(TypedDict):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
 
 class GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequest(BaseModel):
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""

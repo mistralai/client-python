@@ -14,6 +14,7 @@ class CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequestTyped
     TypedDict
 ):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
     create_dataset_record_request: CreateDatasetRecordRequestTypedDict
 
 
@@ -21,6 +22,7 @@ class CreateDatasetRecordV1ObservabilityDatasetsDatasetIDRecordsPostRequest(Base
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
     create_dataset_record_request: Annotated[
         CreateDatasetRecordRequest,

@@ -9,6 +9,7 @@ from typing_extensions import Annotated, TypedDict
 
 class UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequestTypedDict(TypedDict):
     dataset_id: str
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
     update_dataset_request: UpdateDatasetRequestTypedDict
 
 
@@ -16,6 +17,7 @@ class UpdateDatasetV1ObservabilityDatasetsDatasetIDPatchRequest(BaseModel):
     dataset_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
+    r"""Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs."""
 
     update_dataset_request: Annotated[
         UpdateDatasetRequest,
