@@ -618,11 +618,6 @@ print(res.choices[0].message.content)
 
 ### [Beta.Observability.Evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md)
 
-* [create_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#create_pipeline_config) - Create a worker pipeline configuration
-* [list_pipeline_configs](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#list_pipeline_configs) - List worker pipeline configurations
-* [get_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get_pipeline_config) - Get a worker pipeline configuration
-* [update_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#update_pipeline_config) - Replace a worker pipeline configuration
-* [delete_pipeline_config](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#delete_pipeline_config) - Delete a worker pipeline configuration
 * [create_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#create_pipeline) - Create a pipeline
 * [list_pipelines](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#list_pipelines) - List pipelines
 * [get_pipeline](https://github.com/mistralai/client-python/blob/main/docs/sdks/evaluations/README.md#get_pipeline) - Get a pipeline
@@ -677,6 +672,7 @@ print(res.choices[0].message.content)
 * [aggregate_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#aggregate_span_evaluations) - Aggregate span evaluations
 * [search_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
+* [search_pipeline_results](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#search_pipeline_results) - Search pipeline results
 * [list_span_fields](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
 * [list_span_eval_fields](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#list_span_eval_fields) - Get span evaluation field definitions
 * [fetch_span_field_options](https://github.com/mistralai/client-python/blob/main/docs/sdks/spans/README.md#fetch_span_field_options) - Get options for a span field
@@ -760,6 +756,7 @@ print(res.choices[0].message.content)
 * [get_identity](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#get_identity) - Get Identity
 * [list_organizations](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#list_organizations) - List Organizations
 * [list_workspaces](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#list_workspaces) - List Workspaces
+* [whoami](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#whoami) - Whoami
 
 ### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
@@ -1102,8 +1099,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 278 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 69 of 278 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 275 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 275 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

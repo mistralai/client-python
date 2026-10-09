@@ -3,27 +3,27 @@
 
 ## Supported Types
 
-### `models.DetectionDefinition`
+### `models.DetectionDefinitionV1`
 
 ```python
-value: models.DetectionDefinition = /* values here */
+value: models.DetectionDefinitionV1 = /* values here */
 ```
 
-### `models.ModerationDefinition`
+### `models.ModerationDefinitionV1`
 
 ```python
-value: models.ModerationDefinition = /* values here */
+value: models.ModerationDefinitionV1 = /* values here */
 ```
 
-### `models.JudgeDefinition`
+### `models.JudgeDefinitionV1`
 
 ```python
-value: models.JudgeDefinition = /* values here */
+value: models.JudgeDefinitionV1 = /* values here */
 ```
 
-### `models.ExportDefinition`
+### `models.ExportDefinitionV1`
 
 ```python
-value: models.ExportDefinition = /* values here */
+value: models.ExportDefinitionV1 = /* values here */
 ```
 

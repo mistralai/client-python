@@ -1,0 +1,11 @@
+overlay: 1.0.0
+info:
+  title: Keep connector ID-or-name parameters as strings
+  version: 1.0.0
+actions:
+  - target: $.paths..[?(@.name == 'connector_id_or_name')].schema.anyOf
+    description: Connector names are not UUIDs, so this parameter cannot be UUID-only.
+    remove: true
+  - target: $.paths..[?(@.name == 'connector_id_or_name')].schema
+    update:
+      type: string

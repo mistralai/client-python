@@ -118,6 +118,13 @@ class AgentsCompletionStreamRequestTypedDict(TypedDict):
     r"""The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative."""
     frequency_penalty: NotRequired[Nullable[float]]
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
+    min_tokens: NotRequired[Nullable[int]]
+    repetition_penalty: NotRequired[Nullable[float]]
+    top_k: NotRequired[Nullable[int]]
+    logprobs: NotRequired[Nullable[bool]]
+    top_logprobs: NotRequired[Nullable[int]]
+    prompt_logprobs: NotRequired[Nullable[bool]]
+    top_prompt_logprobs: NotRequired[Nullable[int]]
     n: NotRequired[Nullable[int]]
     r"""Number of completions to return for each request, input tokens are only billed once."""
     prediction: NotRequired[PredictionTypedDict]
@@ -165,6 +172,20 @@ class AgentsCompletionStreamRequest(BaseModel):
     frequency_penalty: OptionalNullable[float] = UNSET
     r"""The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition."""
 
+    min_tokens: OptionalNullable[int] = UNSET
+
+    repetition_penalty: OptionalNullable[float] = UNSET
+
+    top_k: OptionalNullable[int] = UNSET
+
+    logprobs: OptionalNullable[bool] = UNSET
+
+    top_logprobs: OptionalNullable[int] = UNSET
+
+    prompt_logprobs: OptionalNullable[bool] = UNSET
+
+    top_prompt_logprobs: OptionalNullable[int] = UNSET
+
     n: OptionalNullable[int] = UNSET
     r"""Number of completions to return for each request, input tokens are only billed once."""
 
@@ -199,6 +220,13 @@ class AgentsCompletionStreamRequest(BaseModel):
                 "tool_choice",
                 "presence_penalty",
                 "frequency_penalty",
+                "min_tokens",
+                "repetition_penalty",
+                "top_k",
+                "logprobs",
+                "top_logprobs",
+                "prompt_logprobs",
+                "top_prompt_logprobs",
                 "n",
                 "prediction",
                 "parallel_tool_calls",
@@ -218,6 +246,13 @@ class AgentsCompletionStreamRequest(BaseModel):
                 "tools",
                 "presence_penalty",
                 "frequency_penalty",
+                "min_tokens",
+                "repetition_penalty",
+                "top_k",
+                "logprobs",
+                "top_logprobs",
+                "prompt_logprobs",
+                "top_prompt_logprobs",
                 "n",
                 "reasoning_effort",
                 "prompt_mode",

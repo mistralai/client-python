@@ -1,0 +1,15 @@
+# PipelineResult
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `trace_id`                                                           | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `span_id`                                                            | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `span_name`                                                          | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `duration_ns`                                                        | *int*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `evaluated_at`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `judge_scores`                                                       | Dict[str, *float*]                                                   | :heavy_check_mark:                                                   | N/A                                                                  |
+| `judge_labels`                                                       | Dict[str, *str*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |
+| `judge_explanations`                                                 | Dict[str, *str*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |

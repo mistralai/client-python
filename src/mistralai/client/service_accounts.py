@@ -30,7 +30,7 @@ class ServiceAccounts(BaseSDK):
         :param name:
         :param workspace_id:
         :param description:
-        :param role_ids:
+        :param role_ids: Workspace role UUIDs to assign. Omitted or empty lists default to member, which grants no role permissions. Workspace-wide sharing may still grant access.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -137,7 +137,7 @@ class ServiceAccounts(BaseSDK):
         :param name:
         :param workspace_id:
         :param description:
-        :param role_ids:
+        :param role_ids: Workspace role UUIDs to assign. Omitted or empty lists default to member, which grants no role permissions. Workspace-wide sharing may still grant access.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1348,7 +1348,7 @@ class ServiceAccounts(BaseSDK):
         self,
         *,
         service_account_id: str,
-        role_ids: Optional[Iterable[str]] = None,
+        role_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1361,7 +1361,7 @@ class ServiceAccounts(BaseSDK):
         Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
-        :param role_ids:
+        :param role_ids: Workspace role UUIDs to assign. Required and non-empty; omitted or empty lists return 422. Select member explicitly for no role-granted permissions; workspace-wide sharing may still grant access.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1383,7 +1383,7 @@ class ServiceAccounts(BaseSDK):
         request = models.SetServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesPutRequest(
             service_account_id=service_account_id,
             set_service_account_roles_request=models.SetServiceAccountRolesRequest(
-                role_ids=utils.unmarshal(role_ids, Optional[List[str]]),
+                role_ids=utils.unmarshal(role_ids, List[str]),
             ),
         )
 
@@ -1459,7 +1459,7 @@ class ServiceAccounts(BaseSDK):
         self,
         *,
         service_account_id: str,
-        role_ids: Optional[Iterable[str]] = None,
+        role_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1472,7 +1472,7 @@ class ServiceAccounts(BaseSDK):
         Requires the Workspace admin (`workspace_admin`) role.
 
         :param service_account_id:
-        :param role_ids:
+        :param role_ids: Workspace role UUIDs to assign. Required and non-empty; omitted or empty lists return 422. Select member explicitly for no role-granted permissions; workspace-wide sharing may still grant access.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1494,7 +1494,7 @@ class ServiceAccounts(BaseSDK):
         request = models.SetServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesPutRequest(
             service_account_id=service_account_id,
             set_service_account_roles_request=models.SetServiceAccountRolesRequest(
-                role_ids=utils.unmarshal(role_ids, Optional[List[str]]),
+                role_ids=utils.unmarshal(role_ids, List[str]),
             ),
         )
 

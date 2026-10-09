@@ -618,11 +618,6 @@ print(res.choices[0].message.content)
 
 ### [Beta.Observability.Evaluations](docs/sdks/evaluations/README.md)
 
-* [create_pipeline_config](docs/sdks/evaluations/README.md#create_pipeline_config) - Create a worker pipeline configuration
-* [list_pipeline_configs](docs/sdks/evaluations/README.md#list_pipeline_configs) - List worker pipeline configurations
-* [get_pipeline_config](docs/sdks/evaluations/README.md#get_pipeline_config) - Get a worker pipeline configuration
-* [update_pipeline_config](docs/sdks/evaluations/README.md#update_pipeline_config) - Replace a worker pipeline configuration
-* [delete_pipeline_config](docs/sdks/evaluations/README.md#delete_pipeline_config) - Delete a worker pipeline configuration
 * [create_pipeline](docs/sdks/evaluations/README.md#create_pipeline) - Create a pipeline
 * [list_pipelines](docs/sdks/evaluations/README.md#list_pipelines) - List pipelines
 * [get_pipeline](docs/sdks/evaluations/README.md#get_pipeline) - Get a pipeline
@@ -677,6 +672,7 @@ print(res.choices[0].message.content)
 * [aggregate_span_evaluations](docs/sdks/spans/README.md#aggregate_span_evaluations) - Aggregate span evaluations
 * [search_span_evaluations](docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
+* [search_pipeline_results](docs/sdks/spans/README.md#search_pipeline_results) - Search pipeline results
 * [list_span_fields](docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
 * [list_span_eval_fields](docs/sdks/spans/README.md#list_span_eval_fields) - Get span evaluation field definitions
 * [fetch_span_field_options](docs/sdks/spans/README.md#fetch_span_field_options) - Get options for a span field
@@ -760,6 +756,7 @@ print(res.choices[0].message.content)
 * [get_identity](docs/sdks/users/README.md#get_identity) - Get Identity
 * [list_organizations](docs/sdks/users/README.md#list_organizations) - List Organizations
 * [list_workspaces](docs/sdks/users/README.md#list_workspaces) - List Workspaces
+* [whoami](docs/sdks/users/README.md#whoami) - Whoami
 
 ### [Chat](docs/sdks/chat/README.md)
 
@@ -1102,8 +1099,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 278 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 69 of 278 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 275 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 275 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

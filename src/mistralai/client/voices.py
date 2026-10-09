@@ -233,7 +233,6 @@ class Voices(BaseSDK):
         self,
         *,
         name: str,
-        sample_audio: str,
         slug: OptionalNullable[str] = UNSET,
         languages: Optional[Iterable[str]] = None,
         gender: OptionalNullable[str] = UNSET,
@@ -242,6 +241,7 @@ class Voices(BaseSDK):
         color: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retention_notice: Optional[int] = 30,
+        sample_audio: OptionalNullable[str] = UNSET,
         sample_filename: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -253,7 +253,6 @@ class Voices(BaseSDK):
         Create a new voice with a base64-encoded audio sample
 
         :param name:
-        :param sample_audio: Base64-encoded audio file
         :param slug:
         :param languages:
         :param gender:
@@ -262,6 +261,7 @@ class Voices(BaseSDK):
         :param color:
         :param description:
         :param retention_notice:
+        :param sample_audio: Base64-encoded audio file
         :param sample_filename: Original filename for extension detection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -361,7 +361,6 @@ class Voices(BaseSDK):
         self,
         *,
         name: str,
-        sample_audio: str,
         slug: OptionalNullable[str] = UNSET,
         languages: Optional[Iterable[str]] = None,
         gender: OptionalNullable[str] = UNSET,
@@ -370,6 +369,7 @@ class Voices(BaseSDK):
         color: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         retention_notice: Optional[int] = 30,
+        sample_audio: OptionalNullable[str] = UNSET,
         sample_filename: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -381,7 +381,6 @@ class Voices(BaseSDK):
         Create a new voice with a base64-encoded audio sample
 
         :param name:
-        :param sample_audio: Base64-encoded audio file
         :param slug:
         :param languages:
         :param gender:
@@ -390,6 +389,7 @@ class Voices(BaseSDK):
         :param color:
         :param description:
         :param retention_notice:
+        :param sample_audio: Base64-encoded audio file
         :param sample_filename: Original filename for extension detection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

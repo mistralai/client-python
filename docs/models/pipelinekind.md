@@ -6,7 +6,7 @@
 from mistralai.client.models import PipelineKind
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: PipelineKind = "detection"
+value: PipelineKind = "detection-v1"
 ```
 
 
@@ -14,7 +14,7 @@ value: PipelineKind = "detection"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"detection"`
-- `"moderation"`
-- `"judge"`
-- `"export"`
+- `"detection-v1"`
+- `"moderation-v1"`
+- `"judge-v1"`
+- `"export-v1"`

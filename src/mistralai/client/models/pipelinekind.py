@@ -7,10 +7,10 @@ from typing import Literal, Union
 
 PipelineKind = Union[
     Literal[
-        "detection",
-        "moderation",
-        "judge",
-        "export",
+        "detection-v1",
+        "moderation-v1",
+        "judge-v1",
+        "export-v1",
     ],
     UnrecognizedStr,
 ]

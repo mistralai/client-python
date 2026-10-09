@@ -1289,3 +1289,92 @@ Based on:
 - [python v3.1.0] .
 ### Releases
 - [PyPI v3.1.0] https://pypi.org/project/mistralai/3.1.0 - .
+
+## 2026-10-09 08:29:55
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable type changes
+Changed types or signatures on the stable surface (2):
+- `VoiceCreateRequest.sample_audio: str -> OptionalNullable[str]`
+- `VoiceCreateRequestTypedDict.sample_audio: str -> NotRequired[Nullable[str]]`
+#### Beta surface changes
+Removed from the beta surface (64):
+- `CreatePipelineConfigRequest`
+- `DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequest`
+- `DetectionDefinition`
+- `ExportDefinition`
+- `GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequest`
+- `JudgeDefinition`
+- `ListPipelineConfigsV1ObservabilityPipelineConfigsGetRequest`
+- `ModerationDefinition`
+- `PaginatedResultPipelineConfig`
+- `PipelineConfigsResponse`
+- `UpdatePipelineConfigRequest`
+- `UpdatePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDPutRequest`
+- `CreatePipelineConfigRequest.definition`
+- `CreatePipelineConfigRequest.description`
+- `CreatePipelineConfigRequest.enabled`
+- `CreatePipelineConfigRequest.name`
+- `CreatePipelineConfigRequest.pipeline_kind`
+- `CreatePipelineConfigRequest.selectors`
+- `DeletePipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDDeleteRequest.pipeline_config_id`
+- `DetectionDefinition.patterns`
+- `DetectionDefinition.target_attributes`
+- `ExportDefinition.destination`
+- `GetPipelineConfigV1ObservabilityPipelineConfigsPipelineConfigIDGetRequest.pipeline_config_id`
+- `JudgeDefinition.mapping`
+- `JudgeDefinition.slug`
+- ...and 39 more
+
+Changed types or signatures in beta (6):
+- `CreatePipelineRequest.definitions: List[JudgeDefinition] -> List[LlmJudgeReference]`
+- `CreatePipelineRequestTypedDict.definitions: List[JudgeDefinitionTypedDict] -> List[LlmJudgeReferenceTypedDict]`
+- `SetServiceAccountRolesRequest.role_ids: Optional[List[str]] -> List[str]`
+- `SetServiceAccountRolesRequestTypedDict.role_ids: NotRequired[List[str]] -> List[str]`
+- `UpdatePipelineRequest.definitions: Optional[List[JudgeDefinition]] -> Optional[List[LlmJudgeReference]]`
+- `UpdatePipelineRequestTypedDict.definitions: NotRequired[List[JudgeDefinitionTypedDict]] -> NotRequired[List[LlmJudgeReferenceTypedDict]]`
+
+Now required on an existing beta model (2):
+- `PipelineConfig.slug`
+- `SetServiceAccountRolesRequest.role_ids`
+</details>
+
+### API changes
+#### Beta API changes
+
+- Removed beta operations: `sdk.beta.observability.evaluations.get_pipeline_config()`, `sdk.beta.observability.evaluations.delete_pipeline_config()`, `sdk.beta.observability.evaluations.update_pipeline_config()`, `sdk.beta.observability.evaluations.create_pipeline_config()`, and `sdk.beta.observability.evaluations.list_pipeline_configs()`.
+- Changed field `role_ids` in `sdk.beta.service_accounts.set_roles()`.
+- Removed variants `DetectionDefinition`, `ExportDefinition`, `JudgeDefinition`, and `ModerationDefinition` from response `definition` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, `sdk.beta.observability.evaluations.create_pipeline()`, and `sdk.beta.observability.evaluations.list_pipelines()`.
+- Added variants `DetectionDefinitionV1`, `ExportDefinitionV1`, `JudgeDefinitionV1`, and `ModerationDefinitionV1` to response `definition` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, `sdk.beta.observability.evaluations.create_pipeline()`, and `sdk.beta.observability.evaluations.list_pipelines()`.
+- Removed fields `definitions` and `description` from response `pipeline_configs[]` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, and `sdk.beta.observability.evaluations.create_pipeline()`.
+- Removed enum values `detection`, `export`, `judge`, and `moderation` from response `pipeline_kind` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, `sdk.beta.observability.evaluations.create_pipeline()`, and `sdk.beta.observability.evaluations.list_pipelines()`.
+- Removed fields `definitions` and `description` from response `pipelines.results[].pipeline_configs[]` in `sdk.beta.observability.evaluations.list_pipelines()`.
+
+#### Added operations
+
+Beta:
+
+- `sdk.beta.observability.spans.search_pipeline_results()`
+- `sdk.beta.users.whoami()`
+
+#### Schema changes
+
+- Added request field `sampling` in `sdk.beta.observability.evaluations.update_pipeline()` and `sdk.beta.observability.evaluations.create_pipeline()`.
+- Added response enum values `detection_v1`, `export_v1`, `judge_v1`, and `moderation_v1` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, `sdk.beta.observability.evaluations.create_pipeline()`, and `sdk.beta.observability.evaluations.list_pipelines()`.
+- Added response fields `sampling` and `slug` in `sdk.beta.observability.evaluations.update_pipeline()`, `sdk.beta.observability.evaluations.get_pipeline()`, `sdk.beta.observability.evaluations.create_pipeline()`, and `sdk.beta.observability.evaluations.list_pipelines()`.
+- Added request fields `logprobs`, `min_tokens`, `prompt_logprobs`, `repetition_penalty`, `top_k`, `top_logprobs`, and `top_prompt_logprobs` in `sdk.chat.complete()` and `sdk.agents.complete()`.
+- Added response fields `logprobs` and `prompt_logprobs` in `sdk.chat.complete()`, `sdk.fim.complete()`, and `sdk.agents.complete()`.
+- Changed request field `sample_audio` in `sdk.audio.voices.create()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.2.0] .
+### Releases
+- [PyPI v3.2.0] https://pypi.org/project/mistralai/3.2.0 - .

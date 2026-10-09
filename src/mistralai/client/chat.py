@@ -134,6 +134,13 @@ class Chat(BaseSDK):
         ] = None,
         presence_penalty: OptionalNullable[float] = UNSET,
         frequency_penalty: OptionalNullable[float] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
+        repetition_penalty: OptionalNullable[float] = UNSET,
+        top_k: OptionalNullable[int] = UNSET,
+        logprobs: OptionalNullable[bool] = UNSET,
+        top_logprobs: OptionalNullable[int] = UNSET,
+        prompt_logprobs: OptionalNullable[bool] = UNSET,
+        top_prompt_logprobs: OptionalNullable[int] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -171,6 +178,13 @@ class Chat(BaseSDK):
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
         :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param min_tokens:
+        :param repetition_penalty:
+        :param top_k:
+        :param logprobs:
+        :param top_logprobs:
+        :param prompt_logprobs:
+        :param top_prompt_logprobs:
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
@@ -223,6 +237,13 @@ class Chat(BaseSDK):
             ),
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
+            min_tokens=min_tokens,
+            repetition_penalty=repetition_penalty,
+            top_k=top_k,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            prompt_logprobs=prompt_logprobs,
+            top_prompt_logprobs=top_prompt_logprobs,
             n=n,
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
@@ -337,6 +358,13 @@ class Chat(BaseSDK):
         ] = None,
         presence_penalty: OptionalNullable[float] = UNSET,
         frequency_penalty: OptionalNullable[float] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
+        repetition_penalty: OptionalNullable[float] = UNSET,
+        top_k: OptionalNullable[int] = UNSET,
+        logprobs: OptionalNullable[bool] = UNSET,
+        top_logprobs: OptionalNullable[int] = UNSET,
+        prompt_logprobs: OptionalNullable[bool] = UNSET,
+        top_prompt_logprobs: OptionalNullable[int] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -374,6 +402,13 @@ class Chat(BaseSDK):
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
         :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param min_tokens:
+        :param repetition_penalty:
+        :param top_k:
+        :param logprobs:
+        :param top_logprobs:
+        :param prompt_logprobs:
+        :param top_prompt_logprobs:
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
@@ -426,6 +461,13 @@ class Chat(BaseSDK):
             ),
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
+            min_tokens=min_tokens,
+            repetition_penalty=repetition_penalty,
+            top_k=top_k,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            prompt_logprobs=prompt_logprobs,
+            top_prompt_logprobs=top_prompt_logprobs,
             n=n,
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
@@ -540,6 +582,13 @@ class Chat(BaseSDK):
         ] = None,
         presence_penalty: OptionalNullable[float] = UNSET,
         frequency_penalty: OptionalNullable[float] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
+        repetition_penalty: OptionalNullable[float] = UNSET,
+        top_k: OptionalNullable[int] = UNSET,
+        logprobs: OptionalNullable[bool] = UNSET,
+        top_logprobs: OptionalNullable[int] = UNSET,
+        prompt_logprobs: OptionalNullable[bool] = UNSET,
+        top_prompt_logprobs: OptionalNullable[int] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -579,6 +628,13 @@ class Chat(BaseSDK):
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
         :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param min_tokens:
+        :param repetition_penalty:
+        :param top_k:
+        :param logprobs:
+        :param top_logprobs:
+        :param prompt_logprobs:
+        :param top_prompt_logprobs:
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
@@ -631,6 +687,13 @@ class Chat(BaseSDK):
             ),
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
+            min_tokens=min_tokens,
+            repetition_penalty=repetition_penalty,
+            top_k=top_k,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            prompt_logprobs=prompt_logprobs,
+            top_prompt_logprobs=top_prompt_logprobs,
             n=n,
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]
@@ -755,6 +818,13 @@ class Chat(BaseSDK):
         ] = None,
         presence_penalty: OptionalNullable[float] = UNSET,
         frequency_penalty: OptionalNullable[float] = UNSET,
+        min_tokens: OptionalNullable[int] = UNSET,
+        repetition_penalty: OptionalNullable[float] = UNSET,
+        top_k: OptionalNullable[int] = UNSET,
+        logprobs: OptionalNullable[bool] = UNSET,
+        top_logprobs: OptionalNullable[int] = UNSET,
+        prompt_logprobs: OptionalNullable[bool] = UNSET,
+        top_prompt_logprobs: OptionalNullable[int] = UNSET,
         n: OptionalNullable[int] = UNSET,
         prediction: Optional[
             Union[models.Prediction, models.PredictionTypedDict]
@@ -794,6 +864,13 @@ class Chat(BaseSDK):
         :param tool_choice: Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `any` or `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.
         :param presence_penalty: The `presence_penalty` determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
         :param frequency_penalty: The `frequency_penalty` penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+        :param min_tokens:
+        :param repetition_penalty:
+        :param top_k:
+        :param logprobs:
+        :param top_logprobs:
+        :param prompt_logprobs:
+        :param top_prompt_logprobs:
         :param n: Number of completions to return for each request, input tokens are only billed once.
         :param prediction: Enable users to specify an expected completion, optimizing response times by leveraging known or predictable content.
         :param parallel_tool_calls: Whether to enable parallel function calling during tool use, when enabled the model can call multiple tools in parallel.
@@ -846,6 +923,13 @@ class Chat(BaseSDK):
             ),
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
+            min_tokens=min_tokens,
+            repetition_penalty=repetition_penalty,
+            top_k=top_k,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            prompt_logprobs=prompt_logprobs,
+            top_prompt_logprobs=top_prompt_logprobs,
             n=n,
             prediction=utils.get_pydantic_model(
                 prediction, Optional[models.Prediction]

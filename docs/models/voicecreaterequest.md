@@ -16,5 +16,5 @@ Request model for creating a new voice with base64 audio.
 | `color`                                   | *OptionalNullable[str]*                   | :heavy_minus_sign:                        | N/A                                       |
 | `description`                             | *OptionalNullable[str]*                   | :heavy_minus_sign:                        | N/A                                       |
 | `retention_notice`                        | *Optional[int]*                           | :heavy_minus_sign:                        | N/A                                       |
-| `sample_audio`                            | *str*                                     | :heavy_check_mark:                        | Base64-encoded audio file                 |
+| `sample_audio`                            | *OptionalNullable[str]*                   | :heavy_minus_sign:                        | Base64-encoded audio file                 |
 | `sample_filename`                         | *OptionalNullable[str]*                   | :heavy_minus_sign:                        | Original filename for extension detection |
