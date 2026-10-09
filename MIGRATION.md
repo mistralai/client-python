@@ -23,6 +23,21 @@ The SDK depends on `httpx2` instead of `httpx`, and the `agents` extra on `mcp>=
 - `mistral.beta.connectors.http_client()` returns an `httpx2.AsyncClient`.
 - MCP results use MCP 2.2 field names, e.g. `structured_content` instead of `structuredContent`.
 
+## Service-Account Authentication
+
+`Mistral()` reads a service-account token from the file at `MISTRAL_SA_TOKEN_PATH` when one is configured. Credentials resolve in this order:
+
+1. An `Authorization` header you set yourself, through `http_headers` or per request
+2. An explicit `api_key` or `security` passed to the client
+3. The token file at `MISTRAL_SA_TOKEN_PATH`
+4. `MISTRAL_API_KEY`
+
+Set both `MISTRAL_SA_TOKEN_PATH` and `MISTRAL_API_KEY` and the token file wins, so an environment carrying both authenticates as the service account where v2 used the API key.
+
+The file is re-read on every request so rotation is picked up without a restart. If `MISTRAL_SA_TOKEN_PATH` is set but the file is missing, unreadable or empty, every request that would otherwise use the token file or `MISTRAL_API_KEY` raises `ServiceAccountTokenError`, with no fallback; unset the variable rather than leaving it pointing at a path that does not exist. An explicit `api_key` or `security` short-circuits the lookup, so it is unaffected.
+
+The token is sent to whatever `server_url` the client is configured with. `MistralAzure` and `MistralGCP` do not read it.
+
 ## Chat and Agents Completions
 
 `chat.complete`, `chat.stream`, `agents.complete` and `agents.stream` no longer accept the `web_search`, `web_search_premium` and `code_interpreter` tools. Use them through the Conversations API (`beta.conversations`) or an agent created with `beta.agents.create`, where `WebSearchTool`, `WebSearchPremiumTool` and `CodeInterpreterTool` remain available.
