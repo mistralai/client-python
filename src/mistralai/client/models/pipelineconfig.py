@@ -5,6 +5,10 @@ from .pipelineconfigdefinition import (
     PipelineConfigDefinition,
     PipelineConfigDefinitionTypedDict,
 )
+from .pipelineconfigsampling import (
+    PipelineConfigSampling,
+    PipelineConfigSamplingTypedDict,
+)
 from .pipelineconfigscope import PipelineConfigScope
 from .pipelineconfigselector import (
     PipelineConfigSelector,
@@ -20,7 +24,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import List, Optional
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -32,12 +36,12 @@ class PipelineConfigTypedDict(TypedDict):
     scope: PipelineConfigScope
     workspace_id: str
     name: str
+    slug: str
     pipeline_kind: PipelineKind
     selectors: List[PipelineConfigSelectorTypedDict]
     enabled: bool
     definition: PipelineConfigDefinitionTypedDict
-    description: NotRequired[Nullable[str]]
-    definitions: NotRequired[List[PipelineConfigDefinitionTypedDict]]
+    sampling: NotRequired[Nullable[PipelineConfigSamplingTypedDict]]
 
 
 class PipelineConfig(BaseModel):
@@ -55,6 +59,8 @@ class PipelineConfig(BaseModel):
 
     name: str
 
+    slug: str
+
     pipeline_kind: PipelineKind
 
     selectors: List[PipelineConfigSelector]
@@ -63,14 +69,12 @@ class PipelineConfig(BaseModel):
 
     definition: PipelineConfigDefinition
 
-    description: OptionalNullable[str] = UNSET
-
-    definitions: Optional[List[PipelineConfigDefinition]] = None
+    sampling: OptionalNullable[PipelineConfigSampling] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "definitions"])
-        nullable_fields = set(["deleted_at", "description"])
+        optional_fields = set(["sampling"])
+        nullable_fields = set(["deleted_at", "sampling"])
         serialized = handler(self)
         m = {}
 

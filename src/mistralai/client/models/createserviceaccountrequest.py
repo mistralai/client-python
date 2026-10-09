@@ -18,6 +18,7 @@ class CreateServiceAccountRequestTypedDict(TypedDict):
     workspace_id: str
     description: NotRequired[Nullable[str]]
     role_ids: NotRequired[List[str]]
+    r"""Workspace role UUIDs to assign. Omitted or empty lists default to member, which grants no role permissions. Workspace-wide sharing may still grant access."""
 
 
 class CreateServiceAccountRequest(BaseModel):
@@ -28,6 +29,7 @@ class CreateServiceAccountRequest(BaseModel):
     description: OptionalNullable[str] = UNSET
 
     role_ids: Optional[List[str]] = None
+    r"""Workspace role UUIDs to assign. Omitted or empty lists default to member, which grants no role permissions. Workspace-wide sharing may still grant access."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

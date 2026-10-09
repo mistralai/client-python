@@ -17,8 +17,6 @@ class VoiceCreateRequestTypedDict(TypedDict):
     r"""Request model for creating a new voice with base64 audio."""
 
     name: str
-    sample_audio: str
-    r"""Base64-encoded audio file"""
     slug: NotRequired[Nullable[str]]
     languages: NotRequired[List[str]]
     gender: NotRequired[Nullable[str]]
@@ -27,6 +25,8 @@ class VoiceCreateRequestTypedDict(TypedDict):
     color: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     retention_notice: NotRequired[int]
+    sample_audio: NotRequired[Nullable[str]]
+    r"""Base64-encoded audio file"""
     sample_filename: NotRequired[Nullable[str]]
     r"""Original filename for extension detection"""
 
@@ -35,9 +35,6 @@ class VoiceCreateRequest(BaseModel):
     r"""Request model for creating a new voice with base64 audio."""
 
     name: str
-
-    sample_audio: str
-    r"""Base64-encoded audio file"""
 
     slug: OptionalNullable[str] = UNSET
 
@@ -55,6 +52,9 @@ class VoiceCreateRequest(BaseModel):
 
     retention_notice: Optional[int] = 30
 
+    sample_audio: OptionalNullable[str] = UNSET
+    r"""Base64-encoded audio file"""
+
     sample_filename: OptionalNullable[str] = UNSET
     r"""Original filename for extension detection"""
 
@@ -70,11 +70,21 @@ class VoiceCreateRequest(BaseModel):
                 "color",
                 "description",
                 "retention_notice",
+                "sample_audio",
                 "sample_filename",
             ]
         )
         nullable_fields = set(
-            ["slug", "gender", "age", "tags", "color", "description", "sample_filename"]
+            [
+                "slug",
+                "gender",
+                "age",
+                "tags",
+                "color",
+                "description",
+                "sample_audio",
+                "sample_filename",
+            ]
         )
         serialized = handler(self)
         m = {}

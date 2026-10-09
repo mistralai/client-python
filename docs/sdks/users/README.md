@@ -7,6 +7,7 @@
 * [get_identity](#get_identity) - Get Identity
 * [list_organizations](#list_organizations) - List Organizations
 * [list_workspaces](#list_workspaces) - List Workspaces
+* [whoami](#whoami) - Whoami
 
 ## get_identity
 
@@ -134,6 +135,48 @@ with Mistral() as mistral:
 ### Response
 
 **[models.UsersAPIListWorkspacesResponse](../../models/usersapilistworkspacesresponse.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
+
+## whoami
+
+Return the authenticated caller's identity.
+
+Principal-agnostic: resolves both users and service accounts.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="users_api_whoami" method="get" path="/v1/whoami" -->
+```python
+from mistralai.client import Mistral, models
+import os
+
+
+with Mistral() as mistral:
+
+    res = mistral.beta.users.whoami(security=models.UsersAPIWhoamiSecurity(
+        dashboard_user_or_service_account_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_OR_SERVICE_ACCOUNT_CONTEXT_AUTH", ""),
+    ))
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `security`                                                          | [models.UsersAPIWhoamiSecurity](../../usersapiwhoamisecurity.md)    | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.WhoamiResponse](../../models/whoamiresponse.md)**
 
 ### Errors
 

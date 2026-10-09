@@ -73,7 +73,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.audio.voices.create(name="<value>", sample_audio="<value>", retention_notice=30)
+    res = mistral.audio.voices.create(name="<value>", retention_notice=30)
 
     # Handle response
     print(res)
@@ -85,7 +85,6 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `sample_audio`                                                      | *str*                                                               | :heavy_check_mark:                                                  | Base64-encoded audio file                                           |
 | `slug`                                                              | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `languages`                                                         | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `gender`                                                            | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
@@ -94,6 +93,7 @@ with Mistral(
 | `color`                                                             | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retention_notice`                                                  | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `sample_audio`                                                      | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Base64-encoded audio file                                           |
 | `sample_filename`                                                   | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | Original filename for extension detection                           |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
