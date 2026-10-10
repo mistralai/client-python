@@ -13,6 +13,7 @@ class StorageProvider(str, Enum):
 class BlobStorageConfig(BaseModel):
     storage_provider: StorageProvider = StorageProvider.S3
     prefix: Optional[str] = None
+    reuse_client: bool = False
 
     # Azure settings
     container_name: Optional[str] = None
