@@ -44,6 +44,17 @@ class TestAttributeRedactionPolicy:
         )
         assert out["custom.prompt.text"] == DEFAULT_REDACTED_VALUE
 
+    def test_workflow_arguments_and_result_redacted(
+        self, attribute_policy: AttributeRedactionPolicy
+    ):
+        out = attribute_policy.redact_attributes(
+            {"wf.arguments": "x", "wf.result": "x"}
+        )
+        assert out == {
+            "wf.arguments": DEFAULT_REDACTED_VALUE,
+            "wf.result": DEFAULT_REDACTED_VALUE,
+        }
+
     def test_token_pattern_on_kept_string(
         self, attribute_policy: AttributeRedactionPolicy
     ):
