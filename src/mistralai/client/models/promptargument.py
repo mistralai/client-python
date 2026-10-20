@@ -8,53 +8,40 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict
+from pydantic import model_serializer
 from typing_extensions import NotRequired, TypedDict
 
 
 class PromptArgumentTypedDict(TypedDict):
-    r"""An argument for a prompt template."""
+    r"""Describes an argument that a prompt can accept."""
 
     name: str
+    title: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     required: NotRequired[Nullable[bool]]
 
 
 class PromptArgument(BaseModel):
-    r"""An argument for a prompt template."""
-
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+    r"""Describes an argument that a prompt can accept."""
 
     name: str
+
+    title: OptionalNullable[str] = UNSET
 
     description: OptionalNullable[str] = UNSET
 
     required: OptionalNullable[bool] = UNSET
 
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "required"])
-        nullable_fields = set(["description", "required"])
+        optional_fields = set(["title", "description", "required"])
+        nullable_fields = set(["title", "description", "required"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -67,7 +54,5 @@ class PromptArgument(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m

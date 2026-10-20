@@ -2,6 +2,8 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
+from mistralai.client.audio_agents import AudioAgents
+from mistralai.client.audio_sessions import AudioSessions
 from mistralai.client.speech import Speech
 from mistralai.client.transcriptions import Transcriptions
 from mistralai.client.voices import Voices
@@ -20,6 +22,8 @@ class Audio(BaseSDK):
     transcriptions: Transcriptions
     r"""API for audio transcription."""
     voices: Voices
+    sessions: AudioSessions
+    agents: AudioAgents
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -34,6 +38,10 @@ class Audio(BaseSDK):
             self.sdk_configuration, parent_ref=self.parent_ref
         )
         self.voices = Voices(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.sessions = AudioSessions(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )
+        self.agents = AudioAgents(self.sdk_configuration, parent_ref=self.parent_ref)
 
     # region sdk-class-body
     @property

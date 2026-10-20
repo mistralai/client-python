@@ -275,6 +275,10 @@ def _enrich_response_genai_attrs(
                 ),
             }
         )
+        prompt_tokens_details = usage.get("prompt_tokens_details") or {}
+        attributes[gen_ai_attributes.GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS] = (
+            prompt_tokens_details.get("cached_tokens")
+        )
 
     set_available_attributes(span, attributes)
 

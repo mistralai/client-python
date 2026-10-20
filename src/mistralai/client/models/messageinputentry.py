@@ -22,7 +22,7 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-Role = Union[
+MessageInputEntryRole = Union[
     Literal[
         "assistant",
         "user",
@@ -45,7 +45,7 @@ MessageInputEntryContent = TypeAliasType(
 class MessageInputEntryTypedDict(TypedDict):
     r"""Representation of an input message inside the conversation."""
 
-    role: Role
+    role: MessageInputEntryRole
     content: MessageInputEntryContentTypedDict
     object: Literal["entry"]
     type: Literal["message.input"]
@@ -58,7 +58,7 @@ class MessageInputEntryTypedDict(TypedDict):
 class MessageInputEntry(BaseModel):
     r"""Representation of an input message inside the conversation."""
 
-    role: Role
+    role: MessageInputEntryRole
 
     content: MessageInputEntryContent
 

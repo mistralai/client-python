@@ -151,7 +151,7 @@ with Mistral(
 
 ## update
 
-Update voice metadata (name, gender, languages, age, tags).
+Update voice metadata (name, gender, languages, age, tags, retention notice).
 
 ### Example Usage
 
@@ -183,6 +183,7 @@ with Mistral(
 | `age`                                                               | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `tags`                                                              | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `retention_notice`                                                  | *OptionalNullable[int]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -313,6 +314,7 @@ with Mistral(
 | `gender`                                                                        | List[[models.VoiceGender](../../models/voicegender.md)]                         | :heavy_minus_sign:                                                              | Keep voices matching any of these genders                                       |
 | `language`                                                                      | List[*str*]                                                                     | :heavy_minus_sign:                                                              | Keep voices supporting any of these languages                                   |
 | `query`                                                                         | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | Case-insensitive match on voice name                                            |
+| `kind`                                                                          | [OptionalNullable[models.VoiceKind]](../../models/voicekind.md)                 | :heavy_minus_sign:                                                              | Keep voices cloned with this technology                                         |
 | `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |
 
 ### Response

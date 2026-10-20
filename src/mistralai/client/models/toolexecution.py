@@ -10,8 +10,8 @@ from mistralai.client.types import (
     UnrecognizedStr,
 )
 import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, Literal, Union
+from pydantic import model_serializer
+from typing import Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -26,30 +26,17 @@ TaskSupport = Union[
 
 
 class ToolExecutionTypedDict(TypedDict):
-    r"""Execution-related properties for a tool."""
+    r"""Execution-related properties for a tool (2025-11-25 only)."""
 
     task_support: NotRequired[Nullable[TaskSupport]]
 
 
 class ToolExecution(BaseModel):
-    r"""Execution-related properties for a tool."""
-
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+    r"""Execution-related properties for a tool (2025-11-25 only)."""
 
     task_support: Annotated[
         OptionalNullable[TaskSupport], pydantic.Field(alias="taskSupport")
     ] = UNSET
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -61,7 +48,6 @@ class ToolExecution(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -74,8 +60,6 @@ class ToolExecution(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m
 

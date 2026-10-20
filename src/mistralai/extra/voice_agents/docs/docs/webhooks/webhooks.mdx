@@ -1,0 +1,319 @@
+---
+id: webhooks
+sidebar_label: Webhooks
+title: Webhooks
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Webhooks let you receive real-time notifications when call lifecycle events occur — a call starts, ends, or fails. Instead of polling the API, you register an endpoint URL and Mistral pushes a signed JSON payload to it as each event happens.
+
+Common use cases:
+
+- Update a CRM record when a call starts or ends
+- Log call transcripts to your data warehouse
+- Trigger alerts or retry logic on call failures
+- Track call duration and usage for billing
+
+## Setup
+
+Webhooks are configured per **agent** through the [Mistral console](https://console.mistral.ai) or the API. The flow is:
+
+1. **Create an endpoint** — register the URL that will receive events, along with a friendly name. The platform generates a signing secret for you.
+2. **Create a subscription** — attach the endpoint to an agent and choose which event types to listen to.
+
+You can subscribe the same endpoint to multiple agents, and each agent can have multiple subscriptions.
+
+:::info
+Store the endpoint **secret** securely — you'll need it to [verify signatures](#verifying-signatures).
+:::
+
+## Events
+
+Every webhook delivery is an HTTP `POST` with `content-type: application/json`. The payload follows a consistent envelope:
+
+```json
+{
+  "event": "<event_type>",
+  "created_at": "2026-09-08T14:32:10Z",
+  "data": { ... }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `event` | `string` | One of the [event types](#event-types) below. |
+| `created_at` | `string` | ISO 8601 UTC timestamp of when the event was emitted. |
+| `data` | `object` | Event-specific payload. |
+
+### Event types
+
+| Event | Fired when |
+|-------|------------|
+| `call_started` | A voice session is successfully created. |
+| `call_ended` | A voice session terminates normally. |
+| `call_failed` | A voice session fails to start or encounters a fatal error at runtime. |
+
+## Payload reference
+
+### `call_started`
+
+Sent as soon as the session is created and the voice pipeline is ready.
+
+```json
+{
+  "event": "call_started",
+  "created_at": "2026-09-08T14:32:10Z",
+  "data": {
+    "session_id": "RM_a1b2c3d4e5f6",
+    "agent_id": "ag_01234567-89ab-cdef-0123-456789abcdef",
+    "model": "mistral-small-latest",
+    "started_at": 1725802330
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `session_id` | `string` | Unique identifier for this voice session. |
+| `agent_id` | `string` | The agent that handled the call. |
+| `model` | `string` | LLM model used for the session. |
+| `started_at` | `integer` | Unix timestamp (seconds) when the session was created. |
+
+### `call_ended`
+
+Sent when a session terminates normally. Includes duration and, when available, the full conversation transcript.
+
+```json
+{
+  "event": "call_ended",
+  "created_at": "2026-09-08T14:35:42Z",
+  "data": {
+    "session_id": "RM_a1b2c3d4e5f6",
+    "agent_id": "ag_01234567-89ab-cdef-0123-456789abcdef",
+    "model": "mistral-small-latest",
+    "duration_seconds": 212,
+    "started_at": 1725802330,
+    "ended_at": 1725802542,
+    "transcript": [
+      { "role": "assistant", "content": "Hello! How can I help you today?" },
+      { "role": "user", "content": "I'd like to check my account balance." },
+      { "role": "assistant", "content": "Sure, let me look that up for you." }
+    ]
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `session_id` | `string` | Unique identifier for this voice session. |
+| `agent_id` | `string` | The agent that handled the call. |
+| `model` | `string` | LLM model used for the session. |
+| `duration_seconds` | `integer` | Total call duration in seconds. |
+| `started_at` | `integer` | Unix timestamp (seconds) when the session started. |
+| `ended_at` | `integer` | Unix timestamp (seconds) when the session ended. |
+| `transcript` | `array \| null` | Ordered list of transcript turns, or `null` if unavailable. Each turn has a `role` (`"user"` or `"assistant"`) and `content` (text, or `null` if empty). |
+
+:::note
+The transcript is fetched on a best-effort basis. If it is not available within the delivery window, `transcript` will be `null`. This does not affect the rest of the payload.
+:::
+
+### `call_failed`
+
+Sent when a session fails to initialize (e.g. infrastructure errors) or encounters a fatal error during the call.
+
+```json
+{
+  "event": "call_failed",
+  "created_at": "2026-09-08T14:32:11Z",
+  "data": {
+    "session_id": "RM_a1b2c3d4e5f6",
+    "agent_id": "ag_01234567-89ab-cdef-0123-456789abcdef",
+    "model": "mistral-small-latest",
+    "error": "livekit_error"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `session_id` | `string` | Unique identifier for this voice session. |
+| `agent_id` | `string` | The agent that handled the call. |
+| `model` | `string` | LLM model used for the session. |
+| `error` | `string` | Machine-readable error reason (e.g. `"token_error"`, `"db_error"`, `"livekit_error"`, or a disconnect reason for runtime failures). |
+
+## Verifying signatures
+
+Every delivery includes an `x-mistral-signature` header so you can confirm the payload was sent by Mistral and hasn't been tampered with. The signature is an HMAC-SHA256 digest of the raw request body, computed with your endpoint secret:
+
+```
+x-mistral-signature: hmac-sha256=<hex_digest>
+```
+
+To verify:
+
+1. Read the **raw** request body (before any JSON parsing).
+2. Compute `HMAC-SHA256(secret, raw_body)`.
+3. Compare your digest with the value after `hmac-sha256=`. Use a constant-time comparison to prevent timing attacks.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+import hashlib
+import hmac
+
+def verify_signature(raw_body: bytes, secret: str, header: str) -> bool:
+    expected = hmac.new(
+        secret.encode(), raw_body, hashlib.sha256
+    ).hexdigest()
+    received = header.removeprefix("hmac-sha256=")
+    return hmac.compare_digest(expected, received)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verifySignature(
+  rawBody: Buffer,
+  secret: string,
+  header: string,
+): boolean {
+  const expected = createHmac("sha256", secret).update(rawBody).digest("hex");
+  const received = header.replace("hmac-sha256=", "");
+  return timingSafeEqual(Buffer.from(expected), Buffer.from(received));
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::warning
+Always verify against the **raw bytes** of the request body, not a re-serialized JSON string. Re-serialization may alter whitespace or key ordering, which changes the digest.
+:::
+
+## Delivery and retries
+
+Mistral delivers each event with the following behavior:
+
+| Behavior | Detail |
+|----------|--------|
+| **Timeout** | Your endpoint must respond within **10 seconds**. |
+| **Success** | Any `2xx` status code is treated as successful delivery. |
+| **Retries** | On `5xx` or `429` responses, delivery is retried up to **3 total attempts** with exponential backoff (2 s, 4 s). |
+| **Non-retryable** | `4xx` responses (other than `429`) are not retried — check your endpoint logic. |
+| **Transport errors** | Network-level failures (DNS, TLS, connection reset) are retried on the same schedule. |
+
+### Best practices
+
+- **Return `200` immediately.** Acknowledge receipt first, then process asynchronously. Slow handlers risk timeouts and duplicate deliveries.
+- **Be idempotent.** Because retries can occur, your handler may receive the same event more than once. Use `session_id` + `event` to deduplicate.
+- **Use HTTPS.** While the API accepts plain HTTP URLs, HTTPS is strongly recommended to protect payload integrity and your signing secret in transit.
+- **Keep your secret safe.** The signing secret is generated once when the endpoint is created and cannot be rotated. If it is compromised, delete the endpoint and create a new one, then update your verification code.
+
+## Handling webhooks
+
+Below is a minimal server that receives webhook events, verifies the signature, and dispatches by event type. Acknowledge receipt with a `200` first, then process asynchronously.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+import hashlib
+import hmac
+import os
+
+from fastapi import FastAPI, Header, HTTPException, Request
+
+app = FastAPI()
+SECRET = os.environ["WEBHOOK_SECRET"]
+
+
+def verify_signature(raw_body: bytes, header: str) -> None:
+    expected = hmac.new(
+        SECRET.encode(), raw_body, hashlib.sha256
+    ).hexdigest()
+    received = header.removeprefix("hmac-sha256=")
+    if not hmac.compare_digest(expected, received):
+        raise HTTPException(status_code=401, detail="Invalid signature")
+
+
+@app.post("/webhooks")
+async def webhook_handler(
+    request: Request,
+    x_mistral_signature: str = Header(...),
+):
+    raw_body = await request.body()
+    verify_signature(raw_body, x_mistral_signature)
+
+    event = await request.json()
+
+    match event["event"]:
+        case "call_started":
+            print(f"Call started: {event['data']['session_id']}")
+        case "call_ended":
+            print(f"Call ended: {event['data']['session_id']}")
+        case "call_failed":
+            print(f"Call failed: {event['data']['session_id']}")
+
+    return {"status": "ok"}
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import { createHmac, timingSafeEqual } from "node:crypto";
+import express from "express";
+
+const app = express();
+const SECRET = process.env.WEBHOOK_SECRET!;
+
+app.post(
+  "/webhooks",
+  express.raw({ type: "application/json" }),
+  (req, res) => {
+    const signature = req.headers["x-mistral-signature"] as string;
+    const expected = createHmac("sha256", SECRET)
+      .update(req.body)
+      .digest("hex");
+    const received = signature.replace("hmac-sha256=", "");
+
+    if (
+      !timingSafeEqual(Buffer.from(expected), Buffer.from(received))
+    ) {
+      return res.status(401).send("Invalid signature");
+    }
+
+    const event = JSON.parse(req.body.toString());
+
+    switch (event.event) {
+      case "call_started":
+        console.log(`Call started: ${event.data.session_id}`);
+        break;
+      case "call_ended":
+        console.log(`Call ended: ${event.data.session_id}`);
+        break;
+      case "call_failed":
+        console.log(`Call failed: ${event.data.session_id}`);
+        break;
+    }
+
+    res.status(200).json({ status: "ok" });
+  },
+);
+
+app.listen(3000, () => console.log("Listening on port 3000"));
+```
+
+</TabItem>
+</Tabs>
+
+### Testing locally
+
+To receive webhooks on your local machine during development, use an HTTP tunneling tool to expose your local server, then register the generated URL as your endpoint.

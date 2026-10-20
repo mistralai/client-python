@@ -1,11 +1,10 @@
 # TasksElicitationCapability
 
-Capability for tasks elicitation operations.
+Capability for task-augmented elicitation operations (2025-11-25 only).
 
 
 ## Fields
 
-| Field                | Type                 | Required             | Description          |
-| -------------------- | -------------------- | -------------------- | -------------------- |
-| `create`             | Dict[str, *Any*]     | :heavy_minus_sign:   | N/A                  |
-| `__pydantic_extra__` | Dict[str, *Any*]     | :heavy_minus_sign:   | N/A                  |
+| Field                                                                                                      | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `create`                                                                                                   | [OptionalNullable[models.TasksCreateElicitationCapability]](../models/taskscreateelicitationcapability.md) | :heavy_minus_sign:                                                                                         | N/A                                                                                                        |

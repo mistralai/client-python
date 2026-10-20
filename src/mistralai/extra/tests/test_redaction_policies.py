@@ -215,6 +215,7 @@ class TestRegexRedactionPolicy:
             "sk_live_0123456789abcdefghij",
             "sk-ant-api03-abcdefghijklmnopqrstuvwxyz012345",
             "hf_abcdefghijklmnopqrstuvwxyz0123456789",
+            "mstrl_" + "a" * 32 + "_" + "a" * 6,
             "github_pat_abcdefghijklmnopqrstuvwxyz",
             "glpat-abcdefghij0123456789ab",
             "shpat_0123456789abcdef0123456789abcdef",

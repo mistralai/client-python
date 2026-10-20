@@ -1,0 +1,159 @@
+---
+id: browser
+sidebar_label: Browser
+title: Browser
+sidebar_position: 1
+---
+
+:::info TypeScript only
+The browser runtime is TypeScript-only. In the browser, session creation and
+deletion must happen server-side to keep your API key secret — the client then
+connects using the returned credentials. No audio interface is needed: the
+browser captures and plays audio via
+[`getUserMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia).
+:::
+
+## Basic usage
+
+The flow has two parts: a **server** endpoint that creates/deletes sessions with
+your API key, and the **client** that connects with the returned credentials.
+
+### Server
+
+`MistralVoiceAgent` exposes the session REST endpoints through `client.sessions`.
+Example below as a Next.js route handler.
+
+```ts
+import { MistralVoiceAgent } from "@mistralai/voice-agents";
+
+const client = new MistralVoiceAgent({ apiKey: process.env.MISTRAL_API_KEY! });
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const session = await client.sessions.create({
+    instructions: body.instructions,
+    llm: body.llm,
+    stt: body.stt,
+    tts: body.tts,
+    tools: body.tools,
+  });
+  return Response.json({
+    id: session.id,
+    participantToken: session.participantToken,
+    serverURL: session.serverURL,
+  });
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const sessionId = searchParams.get("sessionId")!;
+  await client.sessions.close(sessionId);
+  return new Response(null, { status: 204 });
+}
+```
+
+### Client
+
+`connectSession` handles connection logic outside of session creation/deletion.
+
+```ts
+import { connectSession } from "@mistralai/voice-agents/browser";
+import type { VoiceAgentTranscriptEvent } from "@mistralai/voice-agents/types";
+
+const session = await connectSession({
+  createSession: () =>
+    fetch("/api/voice-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        llm: { model: "mistral-small-latest" },
+        tts: { voiceId: "gb_oliver_excited" },
+      }),
+    }).then((res) => res.json()),
+  deleteSession: (sessionId) =>
+    fetch(`/api/voice-session?sessionId=${sessionId}`, {
+      method: "DELETE",
+    }).then(() => {}),
+});
+
+session.on("transcript", (e: VoiceAgentTranscriptEvent) => {
+  console.log(`${e.role}: ${e.content}`);
+});
+```
+
+The returned object is the same [`VoiceSession`](../core/session.mdx) used by the Node client, so lifecycle works identically:
+
+```ts
+await session.wait();  // resolves when the session disconnects
+await session.close(); // disconnect audio, then delete server-side
+```
+
+`close()` stops the microphone track and disconnects, then invokes the
+`deleteSession` callback you provided — that's how the session is torn down
+server-side (the browser never holds the API key).
+
+## Function tools
+
+[Function tools](../core/tools.mdx#function-tools) are authored in
+the browser: define each tool once with `functionTool`, and `connectSession`
+hands its declaration to your `createSession` callback so your server can forward
+it into the session request. The handler runs in the browser.
+
+```ts
+import { connectSession } from "@mistralai/voice-agents/browser";
+import { functionTool } from "@mistralai/voice-agents/tools";
+import { z } from "zod";
+
+const getWeather = functionTool({
+  name: "getWeather",
+  description: "Return the current weather for a city.",
+  parameters: z.object({ city: z.string() }),
+  handler: ({ city }) => ({ city, tempC: 21 }),
+});
+
+const session = await connectSession({
+  tools: [getWeather],
+  createSession: (tools) =>
+    fetch("/api/voice-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        llm: { model: "mistral-small-latest" },
+        tts: { voiceId: "gb_oliver_excited" },
+        tools,
+      }),
+    }).then((res) => res.json()),
+  deleteSession: (sessionId) =>
+    fetch(`/api/voice-session?sessionId=${sessionId}`, {
+      method: "DELETE",
+    }).then(() => {}),
+});
+```
+
+Your server endpoint forwards `tools` straight into `client.sessions.create` (see
+[Server](#server) above) — it's just a relay, so the API key stays server-side.
+
+## Audio tracks
+
+Both local and remote audio are exposed as standard
+[`MediaStreamTrack`](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack)
+objects — use them for visualization, recording, or custom processing.
+
+- The user's microphone track is available right after connecting, as
+  `session.localTrack`.
+- The agent's track arrives asynchronously, via an `audio_track` event with
+  `source: "remote"`.
+
+```ts
+import type { AudioTrackEvent } from "@mistralai/voice-agents/types";
+
+// Local mic track — available right away
+const micTrack = session.localTrack as MediaStreamTrack;
+
+// Remote agent track — arrives asynchronously
+session.on("audio_track", (event: AudioTrackEvent) => {
+  if (event.source === "remote") {
+    const agentTrack = event.track as MediaStreamTrack;
+  }
+});
+```

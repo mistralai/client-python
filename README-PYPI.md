@@ -47,6 +47,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Providers' SDKs Example Usage](#providers-sdks-example-usage)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Server-sent event streaming](#server-sent-event-streaming)
+  * [Json Streaming](#json-streaming)
   * [Pagination](#pagination)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
@@ -58,6 +59,7 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
   * [Debugging](#debugging)
   * [IDE Support](#ide-support)
   * [Telemetry & Observability](#telemetry-observability)
+  * [Voice Agents](#voice-agents)
 * [Development](#development)
   * [Contributions](#contributions)
 
@@ -139,6 +141,17 @@ pip install "mistralai[agents]"
 ```
 
 > Note: These features require Python 3.10+ (the SDK minimum).
+
+### Voice agents extra dependencies
+
+Holding a live voice conversation with an agent requires the `voice-agents` extra:
+
+```bash
+pip install "mistralai[voice-agents]"
+```
+
+See [Voice Agents](#voice-agents) below, and
+[voice-agent usage and migration](https://github.com/mistralai/client-python/blob/main/src/mistralai/extra/voice_agents/README.md).
 
 ### Additional packages
 
@@ -480,6 +493,22 @@ print(res.choices[0].message.content)
 * [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/agents/README.md#complete) - Agents Completion
 * [stream](https://github.com/mistralai/client-python/blob/main/docs/sdks/agents/README.md#stream) - Stream Agents completion
 
+### [Audio.Agents](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md)
+
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#list) - List audio agents
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#create) - Create an audio agent
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#get) - Get an audio agent
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#update) - Update an audio agent
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#delete) - Delete an audio agent
+* [list_versions](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#list_versions) - List audio agent versions
+* [list_sessions](https://github.com/mistralai/client-python/blob/main/docs/sdks/audioagents/README.md#list_sessions) - List audio agent sessions
+
+### [Audio.Sessions](https://github.com/mistralai/client-python/blob/main/docs/sdks/audiosessions/README.md)
+
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/audiosessions/README.md#create) - Create an agent session
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/audiosessions/README.md#get) - Get session status
+* [close](https://github.com/mistralai/client-python/blob/main/docs/sdks/audiosessions/README.md#close) - Stop an agent session
+
 ### [Audio.Speech](https://github.com/mistralai/client-python/blob/main/docs/sdks/speech/README.md)
 
 * [complete](https://github.com/mistralai/client-python/blob/main/docs/sdks/speech/README.md#complete) - Speech
@@ -720,6 +749,9 @@ print(res.choices[0].message.content)
 * [read](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#read) - Read chunks within a span
 * [grep](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#grep) - Grep for a pattern within a source
 * [get_chunk](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get_chunk) - Get a single chunk by id
+* [get_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get_index_summary) - Get Managed Index Summary
+* [generate_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#generate_index_summary) - Generate a summary field for a managed index
+* [set_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#set_index_summary) - Set Managed Index Summary
 
 ### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md)
 
@@ -806,9 +838,9 @@ print(res.choices[0].message.content)
 
 * [process](https://github.com/mistralai/client-python/blob/main/docs/sdks/ocr/README.md#process) - OCR
 
-### [Realtime.Sessions](https://github.com/mistralai/client-python/blob/main/docs/sdks/sessions/README.md)
+### [Realtime.Sessions](https://github.com/mistralai/client-python/blob/main/docs/sdks/realtimesessions/README.md)
 
-* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/sessions/README.md#create) - Create Client Session
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/realtimesessions/README.md#create) - Create Client Session
 
 ### [Workflows](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md)
 
@@ -933,6 +965,41 @@ with Mistral(
 [generator]: https://book.pythontips.com/en/latest/generators.html
 [context-manager]: https://book.pythontips.com/en/latest/context_managers.html
 <!-- End Server-sent event streaming [eventstream] -->
+
+<!-- Start Json Streaming [jsonl] -->
+## Json Streaming
+
+Json Streaming ([jsonl][jsonl-format] / [x-ndjson][x-ndjson]) content type can be used to stream content from certain operations. These operations will expose the stream as [Generator][generator] that
+can be consumed using a simple `for` loop. The loop will
+terminate when the server no longer has any events to send and closes the
+underlying connection.
+
+The stream is also a [Context Manager][context-manager] and can be used with the `with` statement and will close the
+underlying connection when the context is exited.
+
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
+
+    with res as jsonl_stream:
+        for event in jsonl_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+[jsonl-format]: https://jsonlines.org/
+[x-ndjson]: https://github.com/ndjson/ndjson-spec
+[generator]: https://book.pythontips.com/en/latest/generators.html
+[context-manager]: https://book.pythontips.com/en/latest/context_managers.html
+<!-- End Json Streaming [jsonl] -->
 
 <!-- Start Pagination [pagination] -->
 ## Pagination
@@ -1099,8 +1166,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 165 of 275 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 275 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 288 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 288 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1490,6 +1557,52 @@ configure_telemetry(
 | `MISTRAL_API_KEY` | Used as the bearer token for the dedicated-mode exporter. | — |
 
 Runnable examples live in [`examples/mistral/observability`](https://github.com/mistralai/client-python/blob/main/examples/mistral/observability).
+
+## Voice Agents
+
+`client.audio.sessions.init()` opens a live, bidirectional voice session on top of the generated `audio.sessions` REST methods, which stay available for plain session CRUD. Install the extra; system audio also needs PortAudio (`brew install portaudio` on macOS).
+
+```bash
+pip install "mistralai[voice-agents]"
+```
+
+```python
+import asyncio
+
+from mistralai.client import Mistral
+from mistralai.extra.voice_agents import DefaultAudioInterface, WebSearchTool, function_tool
+
+
+@function_tool(filler={"text": "Let me check the weather."}, timeout_ms=15000)
+async def get_weather(city: str) -> dict[str, object]:
+    """Return the current weather for a city."""
+    return {"city": city, "temp_c": 21, "conditions": "sunny"}
+
+
+async def main() -> None:
+    async with Mistral() as client:
+        session = await client.audio.sessions.init(
+            stt={"model": "voxtral-mini-transcribe-realtime-3"},
+            tts={"model": "voxtral-mini-tts-3"},
+            instructions="Be concise. Use get_weather for weather.",
+            welcome_message="Hey. Ask me about the weather somewhere.",
+            tools=[WebSearchTool(), get_weather],
+            audio_interface=DefaultAudioInterface(),
+        )
+        session.on("transcript", lambda event: print(event.role, event.content))
+        session.on("error", lambda event: print(event.model_dump_json()))
+        async with session:
+            await session.wait()
+
+
+asyncio.run(main())
+```
+
+`init()` creates the remote session and returns it ready to connect; it does not join the room or open audio. Register callbacks, then call `await session.connect()` or enter `async with session` within the session's join window. `await session.close()` gives the session up without connecting. A missing microphone or a missing extra fails `init()` before any session is created.
+
+Omit `audio_interface` to drive 48 kHz mono signed 16-bit PCM yourself: register an `audio` callback and call `session.send_audio()` after `connect()`.
+
+Tool declarations, saved agents and versions, event semantics and migration from the standalone `mistralai-voice-agents` package are covered in [the voice agents guide](https://github.com/mistralai/client-python/blob/main/src/mistralai/extra/voice_agents/README.md). The runnable examples live in [`examples/audio/voice_agents`](https://github.com/mistralai/client-python/blob/main/examples/audio/voice_agents).
 
 
 # Development

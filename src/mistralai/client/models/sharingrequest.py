@@ -18,7 +18,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class SharingRequestTypedDict(TypedDict):
     level: ShareEnum
     share_with_uuid: str
-    r"""The id of the entity (user, workspace or organization) to share with"""
+    r"""The id of the user or workspace to share with"""
     share_with_type: EntityType
     r"""The type of entity, used to share a library."""
     org_id: NotRequired[Nullable[str]]
@@ -28,7 +28,7 @@ class SharingRequest(BaseModel):
     level: ShareEnum
 
     share_with_uuid: str
-    r"""The id of the entity (user, workspace or organization) to share with"""
+    r"""The id of the user or workspace to share with"""
 
     share_with_type: EntityType
     r"""The type of entity, used to share a library."""

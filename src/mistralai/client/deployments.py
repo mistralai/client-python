@@ -208,6 +208,8 @@ class Deployments(BaseSDK):
         limit: OptionalNullable[int] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
+        repository_url: OptionalNullable[str] = UNSET,
+        dockerfile_path: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -227,6 +229,8 @@ class Deployments(BaseSDK):
         :param limit: Maximum number of deployments to return
         :param cursor: Cursor from a previous response for pagination
         :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
+        :param repository_url: Filter managed deployments by source repository URL (exact match)
+        :param dockerfile_path: Filter managed deployments by Dockerfile path (exact match)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -260,6 +264,8 @@ class Deployments(BaseSDK):
             limit=limit,
             cursor=cursor,
             workspace_id=workspace_id,
+            repository_url=repository_url,
+            dockerfile_path=dockerfile_path,
         )
 
         req = self._build_request(
@@ -338,6 +344,8 @@ class Deployments(BaseSDK):
         limit: OptionalNullable[int] = UNSET,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
+        repository_url: OptionalNullable[str] = UNSET,
+        dockerfile_path: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -357,6 +365,8 @@ class Deployments(BaseSDK):
         :param limit: Maximum number of deployments to return
         :param cursor: Cursor from a previous response for pagination
         :param workspace_id: Workspace ID to scope the request to. Defaults to the caller's context.
+        :param repository_url: Filter managed deployments by source repository URL (exact match)
+        :param dockerfile_path: Filter managed deployments by Dockerfile path (exact match)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -390,6 +400,8 @@ class Deployments(BaseSDK):
             limit=limit,
             cursor=cursor,
             workspace_id=workspace_id,
+            repository_url=repository_url,
+            dockerfile_path=dockerfile_path,
         )
 
         req = self._build_request_async(

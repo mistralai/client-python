@@ -1,6 +1,6 @@
 [project]
 name = "mistralai"
-version = "3.2.0"
+version = "3.3.0"
 description = "Python Client SDK for the Mistral AI API."
 authors = [{ name = "Mistral" }]
 requires-python = ">=3.10"
@@ -12,11 +12,16 @@ dependencies = [
     "python-dateutil >=2.8.2",
     "typing-inspection >=0.4.0",
     "opentelemetry-api (>=1.33.1,<2.0.0)",
-    "opentelemetry-semantic-conventions (>=0.60b1)",
+    "opentelemetry-semantic-conventions (>=0.61b0)",
     "jsonpath-python >=1.0.6", # required for speakeasy generated path with pagination
 ]
 
 [project.optional-dependencies]
+voice-agents = [
+    "livekit>=1.1,<2.0",
+    "numpy>=1.26,<3",
+    "pyaudio>=0.2.14,<0.3.0",
+]
 gcp = [
     "google-auth >=2.27.0",
     "requests >=2.32.3",

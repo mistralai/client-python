@@ -49,21 +49,21 @@ class UnknownConnectorToolCallResponseContent(BaseModel):
 
 
 _CONNECTOR_TOOL_CALL_RESPONSE_CONTENT_VARIANTS: dict[str, Any] = {
-    "text": TextContent,
-    "image": ImageContent,
     "audio": AudioContent,
-    "resource_link": ResourceLink,
+    "image": ImageContent,
     "resource": EmbeddedResource,
+    "resource_link": ResourceLink,
+    "text": TextContent,
 }
 
 
 ConnectorToolCallResponseContent = Annotated[
     Union[
-        TextContent,
-        ImageContent,
         AudioContent,
-        ResourceLink,
+        ImageContent,
         EmbeddedResource,
+        ResourceLink,
+        TextContent,
         UnknownConnectorToolCallResponseContent,
     ],
     BeforeValidator(

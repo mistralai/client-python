@@ -21,13 +21,14 @@ from typing import Any, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-AuthorizationTypedDict = TypeAliasType(
-    "AuthorizationTypedDict", Union[OAuth2TokenAuthTypedDict, APIKeyAuthTypedDict]
+CustomConnectorAuthorizationTypedDict = TypeAliasType(
+    "CustomConnectorAuthorizationTypedDict",
+    Union[OAuth2TokenAuthTypedDict, APIKeyAuthTypedDict],
 )
 
 
-class UnknownAuthorization(BaseModel):
-    r"""A Authorization variant the SDK doesn't recognize. Preserves the raw payload."""
+class UnknownCustomConnectorAuthorization(BaseModel):
+    r"""A CustomConnectorAuthorization variant the SDK doesn't recognize. Preserves the raw payload."""
 
     type: Literal["UNKNOWN"] = "UNKNOWN"
     raw: Any
@@ -36,21 +37,21 @@ class UnknownAuthorization(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
-_AUTHORIZATION_VARIANTS: dict[str, Any] = {
+_CUSTOM_CONNECTOR_AUTHORIZATION_VARIANTS: dict[str, Any] = {
     "api-key": APIKeyAuth,
     "oauth2-token": OAuth2TokenAuth,
 }
 
 
-Authorization = Annotated[
-    Union[APIKeyAuth, OAuth2TokenAuth, UnknownAuthorization],
+CustomConnectorAuthorization = Annotated[
+    Union[APIKeyAuth, OAuth2TokenAuth, UnknownCustomConnectorAuthorization],
     BeforeValidator(
         partial(
             parse_open_union,
             disc_key="type",
-            variants=_AUTHORIZATION_VARIANTS,
-            unknown_cls=UnknownAuthorization,
-            union_name="Authorization",
+            variants=_CUSTOM_CONNECTOR_AUTHORIZATION_VARIANTS,
+            unknown_cls=UnknownCustomConnectorAuthorization,
+            union_name="CustomConnectorAuthorization",
         )
     ),
 ]
@@ -59,7 +60,7 @@ Authorization = Annotated[
 class CustomConnectorTypedDict(TypedDict):
     connector_id: str
     type: Literal["connector"]
-    authorization: NotRequired[Nullable[AuthorizationTypedDict]]
+    authorization: NotRequired[Nullable[CustomConnectorAuthorizationTypedDict]]
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
 
 
@@ -71,7 +72,7 @@ class CustomConnector(BaseModel):
         pydantic.Field(alias="type"),
     ] = "connector"
 
-    authorization: OptionalNullable[Authorization] = UNSET
+    authorization: OptionalNullable[CustomConnectorAuthorization] = UNSET
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 

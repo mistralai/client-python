@@ -47,6 +47,8 @@ class ExtendedOAuthServerMetadataTypedDict(TypedDict):
     ]
     code_challenge_methods_supported: NotRequired[Nullable[List[str]]]
     client_id_metadata_document_supported: NotRequired[Nullable[bool]]
+    authorization_response_iss_parameter_supported: NotRequired[Nullable[bool]]
+    authorization_grant_profiles_supported: NotRequired[Nullable[List[str]]]
     x_source: NotRequired[Nullable[OAuthMetadataSource]]
     x_resource_url: NotRequired[Nullable[str]]
     x_scope: NotRequired[Nullable[str]]
@@ -109,6 +111,10 @@ class ExtendedOAuthServerMetadata(BaseModel):
 
     client_id_metadata_document_supported: OptionalNullable[bool] = UNSET
 
+    authorization_response_iss_parameter_supported: OptionalNullable[bool] = UNSET
+
+    authorization_grant_profiles_supported: OptionalNullable[List[str]] = UNSET
+
     x_source: OptionalNullable[OAuthMetadataSource] = UNSET
 
     x_resource_url: OptionalNullable[str] = UNSET
@@ -139,6 +145,8 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "introspection_endpoint_auth_signing_alg_values_supported",
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
+                "authorization_response_iss_parameter_supported",
+                "authorization_grant_profiles_supported",
                 "x_source",
                 "x_resource_url",
                 "x_scope",
@@ -165,6 +173,8 @@ class ExtendedOAuthServerMetadata(BaseModel):
                 "introspection_endpoint_auth_signing_alg_values_supported",
                 "code_challenge_methods_supported",
                 "client_id_metadata_document_supported",
+                "authorization_response_iss_parameter_supported",
+                "authorization_grant_profiles_supported",
                 "x_source",
                 "x_resource_url",
                 "x_scope",

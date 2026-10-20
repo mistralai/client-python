@@ -685,6 +685,7 @@ class Voices(BaseSDK):
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,
+        retention_notice: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -692,7 +693,7 @@ class Voices(BaseSDK):
     ) -> models.VoiceResponse:
         r"""Update voice metadata
 
-        Update voice metadata (name, gender, languages, age, tags).
+        Update voice metadata (name, gender, languages, age, tags, retention notice).
 
         :param voice_id:
         :param name:
@@ -701,6 +702,7 @@ class Voices(BaseSDK):
         :param age:
         :param tags:
         :param description:
+        :param retention_notice:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -728,6 +730,7 @@ class Voices(BaseSDK):
                 age=age,
                 tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
                 description=description,
+                retention_notice=retention_notice,
             ),
         )
 
@@ -807,6 +810,7 @@ class Voices(BaseSDK):
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,
+        retention_notice: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -814,7 +818,7 @@ class Voices(BaseSDK):
     ) -> models.VoiceResponse:
         r"""Update voice metadata
 
-        Update voice metadata (name, gender, languages, age, tags).
+        Update voice metadata (name, gender, languages, age, tags, retention notice).
 
         :param voice_id:
         :param name:
@@ -823,6 +827,7 @@ class Voices(BaseSDK):
         :param age:
         :param tags:
         :param description:
+        :param retention_notice:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -850,6 +855,7 @@ class Voices(BaseSDK):
                 age=age,
                 tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
                 description=description,
+                retention_notice=retention_notice,
             ),
         )
 
@@ -1314,6 +1320,7 @@ class Voices(BaseSDK):
         gender: OptionalNullable[Iterable[models.VoiceGender]] = UNSET,
         language: OptionalNullable[Iterable[str]] = UNSET,
         query: OptionalNullable[str] = UNSET,
+        kind: OptionalNullable[models.VoiceKind] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1327,6 +1334,7 @@ class Voices(BaseSDK):
         :param gender: Keep voices matching any of these genders
         :param language: Keep voices supporting any of these languages
         :param query: Case-insensitive match on voice name
+        :param kind: Keep voices cloned with this technology
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1352,6 +1360,7 @@ class Voices(BaseSDK):
             gender=utils.unmarshal(gender, OptionalNullable[List[models.VoiceGender]]),
             language=utils.unmarshal(language, OptionalNullable[List[str]]),
             query=query,
+            kind=kind,
         )
 
         req = self._build_request(
@@ -1421,6 +1430,7 @@ class Voices(BaseSDK):
                 gender=gender,
                 language=language,
                 query=query,
+                kind=kind,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,
@@ -1456,6 +1466,7 @@ class Voices(BaseSDK):
         gender: OptionalNullable[Iterable[models.VoiceGender]] = UNSET,
         language: OptionalNullable[Iterable[str]] = UNSET,
         query: OptionalNullable[str] = UNSET,
+        kind: OptionalNullable[models.VoiceKind] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1469,6 +1480,7 @@ class Voices(BaseSDK):
         :param gender: Keep voices matching any of these genders
         :param language: Keep voices supporting any of these languages
         :param query: Case-insensitive match on voice name
+        :param kind: Keep voices cloned with this technology
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1494,6 +1506,7 @@ class Voices(BaseSDK):
             gender=utils.unmarshal(gender, OptionalNullable[List[models.VoiceGender]]),
             language=utils.unmarshal(language, OptionalNullable[List[str]]),
             query=query,
+            kind=kind,
         )
 
         req = self._build_request_async(
@@ -1566,6 +1579,7 @@ class Voices(BaseSDK):
                 gender=gender,
                 language=language,
                 query=query,
+                kind=kind,
                 retries=retries,
                 server_url=server_url,
                 timeout_ms=timeout_ms,

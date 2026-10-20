@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.TextContent`
+### `models.AudioContent`
 
 ```python
-value: models.TextContent = /* values here */
+value: models.AudioContent = /* values here */
 ```
 
 ### `models.ImageContent`
@@ -15,10 +15,10 @@ value: models.TextContent = /* values here */
 value: models.ImageContent = /* values here */
 ```
 
-### `models.AudioContent`
+### `models.EmbeddedResource`
 
 ```python
-value: models.AudioContent = /* values here */
+value: models.EmbeddedResource = /* values here */
 ```
 
 ### `models.ResourceLink`
@@ -27,9 +27,9 @@ value: models.AudioContent = /* values here */
 value: models.ResourceLink = /* values here */
 ```
 
-### `models.EmbeddedResource`
+### `models.TextContent`
 
 ```python
-value: models.EmbeddedResource = /* values here */
+value: models.TextContent = /* values here */
 ```
 

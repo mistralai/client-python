@@ -16,6 +16,9 @@
 * [read](#read) - Read chunks within a span
 * [grep](#grep) - Grep for a pattern within a source
 * [get_chunk](#get_chunk) - Get a single chunk by id
+* [get_index_summary](#get_index_summary) - Get Managed Index Summary
+* [generate_index_summary](#generate_index_summary) - Generate a summary field for a managed index
+* [set_index_summary](#set_index_summary) - Set Managed Index Summary
 
 ## create
 
@@ -23,7 +26,7 @@ Reserves a managed search index and starts asynchronous backing-table provisioni
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="create_index_v1_rag_managed_indexes_post" method="post" path="/v1/rag/managed_indexes" -->
+<!-- UsageSnippet language="python" operationID="create_index_v1_context_search_indexes_post" method="post" path="/v1/context/search-indexes" -->
 ```python
 from mistralai.client import Mistral, models
 import os
@@ -36,7 +39,7 @@ with Mistral(
     res = mistral.beta.rag.managed_indexes.create(name="<value>", config=models.ManagedIndexConfig(
         embedding=models.CustomEmbeddingModel(
             name="<value>",
-            dimensions=543021,
+            dimensions=378243,
         ),
     ))
 
@@ -56,7 +59,7 @@ with Mistral(
 
 ### Response
 
-**[models.CreateIndexV1RagManagedIndexesPostResponse](../../models/createindexv1ragmanagedindexespostresponse.md)**
+**[models.CreateIndexV1ContextSearchIndexesPostResponse](../../models/createindexv1contextsearchindexespostresponse.md)**
 
 ### Errors
 
@@ -71,7 +74,7 @@ Lists all managed search indexes for the current workspace.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="list_indexes_v1_rag_managed_indexes_get" method="get" path="/v1/rag/managed_indexes" -->
+<!-- UsageSnippet language="python" operationID="list_indexes_v1_context_search_indexes_get" method="get" path="/v1/context/search-indexes" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -103,7 +106,7 @@ with Mistral(
 
 ### Response
 
-**[models.ListIndexesV1RagManagedIndexesGetResponse](../../models/listindexesv1ragmanagedindexesgetresponse.md)**
+**[models.ListIndexesV1ContextSearchIndexesGetResponse](../../models/listindexesv1contextsearchindexesgetresponse.md)**
 
 ### Errors
 
@@ -118,7 +121,7 @@ Returns the managed search index with the given name.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="get_index_v1_rag_managed_indexes__index_name__get" method="get" path="/v1/rag/managed_indexes/{index_name}" -->
+<!-- UsageSnippet language="python" operationID="get_index_v1_context_search_indexes__index_name__get" method="get" path="/v1/context/search-indexes/{index_name}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -159,7 +162,7 @@ Records a new schema for the managed search index and applies it asynchronously.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="update_index_v1_rag_managed_indexes__index_name__put" method="put" path="/v1/rag/managed_indexes/{index_name}" -->
+<!-- UsageSnippet language="python" operationID="update_index_v1_context_search_indexes__index_name__put" method="put" path="/v1/context/search-indexes/{index_name}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -200,7 +203,7 @@ Marks the managed search index for deletion and returns it with status deleting.
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="delete_index_v1_rag_managed_indexes__index_name__delete" method="delete" path="/v1/rag/managed_indexes/{index_name}" -->
+<!-- UsageSnippet language="python" operationID="delete_index_v1_context_search_indexes__index_name__delete" method="delete" path="/v1/context/search-indexes/{index_name}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -241,7 +244,7 @@ Validates and persists documents. Always returns 200; each document is reported 
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="ingest_documents_v1_rag_managed_indexes__index_name__documents_post" method="post" path="/v1/rag/managed_indexes/{index_name}/documents" -->
+<!-- UsageSnippet language="python" operationID="ingest_documents_v1_context_search_indexes__index_name__documents_post" method="post" path="/v1/context/search-indexes/{index_name}/documents" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -251,16 +254,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.managed_indexes.ingest_documents(index_name="<value>", documents=[
-        {
-            "key": "<value>",
-        },
-        {
-            "key": "<value>",
-            "key1": "<value>",
-            "key2": "<value>",
-        },
-    ])
+    res = mistral.beta.rag.managed_indexes.ingest_documents(index_name="<value>", documents=[])
 
     # Handle response
     print(res)
@@ -292,7 +286,7 @@ Deletes the given documents by id. Returns the ids actually removed and, in `mis
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="delete_documents_v1_rag_managed_indexes__index_name__documents_delete" method="delete" path="/v1/rag/managed_indexes/{index_name}/documents" -->
+<!-- UsageSnippet language="python" operationID="delete_documents_v1_context_search_indexes__index_name__documents_delete" method="delete" path="/v1/context/search-indexes/{index_name}/documents" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -302,7 +296,11 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.managed_indexes.delete_documents(index_name="<value>", document_ids=[])
+    res = mistral.beta.rag.managed_indexes.delete_documents(index_name="<value>", document_ids=[
+        "<value 1>",
+        "<value 2>",
+        "<value 3>",
+    ])
 
     # Handle response
     print(res)
@@ -334,7 +332,7 @@ Runs an approximate-nearest-neighbor vector search over the index and returns ma
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="search_index_v1_rag_managed_indexes__index_name__search_post" method="post" path="/v1/rag/managed_indexes/{index_name}/search" -->
+<!-- UsageSnippet language="python" operationID="search_index_v1_context_search_indexes__index_name__search_post" method="post" path="/v1/context/search-indexes/{index_name}/search" -->
 ```python
 from mistralai.client import Mistral, models
 import os
@@ -344,8 +342,15 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.managed_indexes.search(index_name="<value>", retriever=models.NearestNeighbourRetriever(
+    res = mistral.beta.rag.managed_indexes.search(index_name="<value>", retriever=models.RRFRetriever(
         top_k=20,
+        retrievers=[
+            models.KeywordRetriever(
+                top_k=20,
+                query="<value>",
+            ),
+        ],
+        rank_constant=60,
     ))
 
     # Handle response
@@ -378,7 +383,7 @@ Returns the chunks adjacent to a position within a source, in reading order. NEX
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="navigate_index_v1_rag_managed_indexes__index_name__navigate_post" method="post" path="/v1/rag/managed_indexes/{index_name}/navigate" -->
+<!-- UsageSnippet language="python" operationID="navigate_index_v1_context_search_indexes__index_name__navigate_post" method="post" path="/v1/context/search-indexes/{index_name}/navigate" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -388,7 +393,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.managed_indexes.navigate(index_name="<value>", source_id="<id>", start_offset=506558, end_offset=410700, direction="previous", top_k=1, content_type="content")
+    res = mistral.beta.rag.managed_indexes.navigate(index_name="<value>", source_id="<id>", start_offset=46390, end_offset=670471, direction="next", top_k=1, content_type="content")
 
     # Handle response
     print(res)
@@ -425,7 +430,7 @@ Returns the chunks of a source whose span falls within [start_offset, end_offset
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="read_index_v1_rag_managed_indexes__index_name__read_post" method="post" path="/v1/rag/managed_indexes/{index_name}/read" -->
+<!-- UsageSnippet language="python" operationID="read_index_v1_context_search_indexes__index_name__read_post" method="post" path="/v1/context/search-indexes/{index_name}/read" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -471,7 +476,7 @@ Lexical substring match within a single source, in reading order. PHRASE mode ma
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="grep_index_v1_rag_managed_indexes__index_name__grep_post" method="post" path="/v1/rag/managed_indexes/{index_name}/grep" -->
+<!-- UsageSnippet language="python" operationID="grep_index_v1_context_search_indexes__index_name__grep_post" method="post" path="/v1/context/search-indexes/{index_name}/grep" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -517,7 +522,7 @@ Returns a single chunk by its canonical id. A 404 means no chunk with that id ex
 
 ### Example Usage
 
-<!-- UsageSnippet language="python" operationID="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get" method="get" path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}" -->
+<!-- UsageSnippet language="python" operationID="get_chunk_index_v1_context_search_indexes__index_name__chunks__chunk_id__get" method="get" path="/v1/context/search-indexes/{index_name}/chunks/{chunk_id}" -->
 ```python
 from mistralai.client import Mistral
 import os
@@ -545,6 +550,144 @@ with Mistral(
 ### Response
 
 **[models.NavigationResponse](../../models/navigationresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_index_summary
+
+Retrieve the summary field for a managed index if it exists
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__get" method="get" path="/v1/context/search-indexes/{index_name}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.get_index_summary(language="de", index_name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                           | Type                                                                                                                                                                                                | Required                                                                                                                                                                                            | Description                                                                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`                                                                                                                                                                                          | [models.GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetLanguage](../../models/getmanagedindexsummaryv1contextsearchindexesindexnamesummaryfieldlanguagegetlanguage.md) | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `index_name`                                                                                                                                                                                        | *str*                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                 |
+
+### Response
+
+**[models.GetSummaryResponseSummary](../../models/getsummaryresponsesummary.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## generate_index_summary
+
+Streams a summary for the managed index in chunks of json.
+
+The first chunk contains metadata for the summary, the following contain
+chunks of 'content' that should be joined together to form a full summary.
+
+If force is true, regenerate the requested language even if a summary
+already exists.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="generate_managed_index_summary_post_v1_context_search_indexes__index_name__summary_field__language__post" method="post" path="/v1/context/search-indexes/{index_name}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
+
+    with res as jsonl_stream:
+        for event in jsonl_stream:
+            # handle event
+            print(event, flush=True)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                               | Type                                                                                                                                                                                                                    | Required                                                                                                                                                                                                                | Description                                                                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`                                                                                                                                                                                                              | [models.GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostLanguage](../../models/generatemanagedindexsummarypostv1contextsearchindexesindexnamesummaryfieldlanguagepostlanguage.md) | :heavy_check_mark:                                                                                                                                                                                                      | N/A                                                                                                                                                                                                                     |
+| `index_name`                                                                                                                                                                                                            | *str*                                                                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                                                                      | N/A                                                                                                                                                                                                                     |
+| `force`                                                                                                                                                                                                                 | *Optional[bool]*                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                      | Regenerate the summary even if one already exists for this language                                                                                                                                                     |
+| `retries`                                                                                                                                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                      | Configuration to override the default retry behavior of the client.                                                                                                                                                     |
+
+### Response
+
+**[Union[jsonl.JsonLStream[models.SummaryStreamTypes], jsonl.JsonLStreamAsync[models.SummaryStreamTypes]]](../../models/.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## set_index_summary
+
+Update the summary field for a managed index
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="set_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__put" method="put" path="/v1/context/search-indexes/{index_name}/summary_field/{language}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.beta.rag.managed_indexes.set_index_summary(language="nl", index_name="<value>", content="<value>", status="handwritten", translated=False)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                           | Type                                                                                                                                                                                                | Required                                                                                                                                                                                            | Description                                                                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`                                                                                                                                                                                          | [models.SetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguagePutLanguage](../../models/setmanagedindexsummaryv1contextsearchindexesindexnamesummaryfieldlanguageputlanguage.md) | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `index_name`                                                                                                                                                                                        | *str*                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `content`                                                                                                                                                                                           | *str*                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `status`                                                                                                                                                                                            | [models.UpdateSummaryRequestSummaryStatus](../../models/updatesummaryrequestsummarystatus.md)                                                                                                       | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `translated`                                                                                                                                                                                        | *bool*                                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                  | N/A                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                 |
+
+### Response
+
+**[Any](../../models/.md)**
 
 ### Errors
 

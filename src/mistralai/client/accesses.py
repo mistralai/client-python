@@ -221,7 +221,7 @@ class Accesses(BaseSDK):
 
         :param library_id:
         :param level:
-        :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
+        :param share_with_uuid: The id of the user or workspace to share with
         :param share_with_type: The type of entity, used to share a library.
         :param org_id:
         :param retries: Override the default retry configuration for this method
@@ -333,7 +333,7 @@ class Accesses(BaseSDK):
 
         :param library_id:
         :param level:
-        :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
+        :param share_with_uuid: The id of the user or workspace to share with
         :param share_with_type: The type of entity, used to share a library.
         :param org_id:
         :param retries: Override the default retry configuration for this method
@@ -443,7 +443,7 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete their own access. You have to be the owner of the library to delete an access other than yours. Warning: the response will change from 200 (returning the deleted sharing) to 204 No Content in a future version.
 
         :param library_id:
-        :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
+        :param share_with_uuid: The id of the entity to stop sharing with, as returned by the list endpoint
         :param share_with_type: The type of entity, used to share a library.
         :param org_id:
         :param retries: Override the default retry configuration for this method
@@ -554,7 +554,7 @@ class Accesses(BaseSDK):
         Given a library id, you can delete the access level of an entity. An owner cannot delete their own access. You have to be the owner of the library to delete an access other than yours. Warning: the response will change from 200 (returning the deleted sharing) to 204 No Content in a future version.
 
         :param library_id:
-        :param share_with_uuid: The id of the entity (user, workspace or organization) to share with
+        :param share_with_uuid: The id of the entity to stop sharing with, as returned by the list endpoint
         :param share_with_type: The type of entity, used to share a library.
         :param org_id:
         :param retries: Override the default retry configuration for this method

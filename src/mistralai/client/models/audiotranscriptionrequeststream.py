@@ -14,7 +14,7 @@ from mistralai.client.utils import FieldMetadata, MultipartFormMetadata, validat
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -31,6 +31,8 @@ class AudioTranscriptionRequestStreamTypedDict(TypedDict):
     stream: Literal[True]
     diarize: NotRequired[bool]
     context_bias: NotRequired[List[str]]
+    speaker_references: NotRequired[Dict[str, str]]
+    r"""Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary."""
     timestamp_granularities: NotRequired[List[TimestampGranularity]]
     r"""Granularities of timestamps to include in the response."""
 
@@ -65,6 +67,12 @@ class AudioTranscriptionRequestStream(BaseModel):
 
     context_bias: Annotated[Optional[List[str]], FieldMetadata(multipart=True)] = None
 
+    speaker_references: Annotated[
+        Optional[Dict[str, str]],
+        FieldMetadata(multipart=MultipartFormMetadata(json=True)),
+    ] = None
+    r"""Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary."""
+
     timestamp_granularities: Annotated[
         Optional[List[TimestampGranularity]], FieldMetadata(multipart=True)
     ] = None
@@ -82,6 +90,7 @@ class AudioTranscriptionRequestStream(BaseModel):
                 "stream",
                 "diarize",
                 "context_bias",
+                "speaker_references",
                 "timestamp_granularities",
             ]
         )

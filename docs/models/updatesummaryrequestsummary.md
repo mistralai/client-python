@@ -1,0 +1,10 @@
+# UpdateSummaryRequestSummary
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `content`                                                                                  | *str*                                                                                      | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `status`                                                                                   | [models.UpdateSummaryRequestSummaryStatus](../models/updatesummaryrequestsummarystatus.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `translated`                                                                               | *bool*                                                                                     | :heavy_check_mark:                                                                         | N/A                                                                                        |

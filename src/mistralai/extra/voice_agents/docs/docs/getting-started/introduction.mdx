@@ -1,0 +1,181 @@
+---
+id: introduction
+sidebar_label: Introduction
+title: Voice Agents SDK
+sidebar_position: 1
+slug: /
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::info Private Preview
+This product is currently in **Private Preview**. If you don't have access yet, please ensure you're part of Mistral or Solutions organization on AI Studio.
+:::
+
+:::warning Work in Progress
+The Voice Agents SDK is still under active construction. APIs, architecture and documentation may change.
+:::
+
+The Voice Agents SDK lets you build real-time, bidirectional voice conversations with Mistral AI models. It handles the full audio pipeline — microphone capture, speech-to-text, LLM reasoning, text-to-speech, and audio playback — so you can focus on building your application. Key features include interruptions support for natural turn-taking, as well as native integration with built-in tools (e.g. web search, document libraries) and any connector available in your workspace.
+
+It is available for **Python** and **TypeScript**, across two distinct paths:
+
+- **Server / local** (Python or Node) — the SDK manages the whole pipeline through Python `Mistral` or Node `MistralVoiceAgent`, using your machine's microphone and speaker. This is what the [Quickstart](#quickstart) below covers.
+- **Browser** (TypeScript) — the session is created server-side to keep your API key secret, and the client connects with the returned credentials. See the [Browser guide](../browser/browser.mdx).
+
+## Overview
+
+The SDK follows a simple mental model.
+
+```
+Microphone  -->  STT  -->  LLM  -->  TTS  -->  Speaker
+```
+
+In Python, create with `await client.audio.sessions.init()`, subscribe to events,
+then call `await session.connect()` or enter `async with session`. Node retains `connect()`. The default audio interface wires the session to your system microphone and speaker.
+
+## Quickstart
+
+:::note Running in the browser?
+This Quickstart sets up a local **Node** or **Python** agent using your system microphone and speaker. For the browser, follow the [Browser guide](../browser/browser.mdx) instead — it uses a different, server-assisted flow.
+:::
+
+### 1. Install
+
+The default audio interface records from your microphone and plays to your speaker using native tools, so install those alongside the package.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+Python uses [PyAudio](https://pypi.org/project/PyAudio/), which requires PortAudio:
+
+- **macOS:** `brew install portaudio`
+- **Linux:** `sudo apt install libportaudio2 libportaudiocpp0 portaudio19-dev libasound-dev libsndfile1-dev -y`
+- **Windows:** nothing to install, the PyAudio wheel already includes PortAudio.
+
+Install the main SDK with its single voice extra:
+
+```bash
+uv add "mistralai[voice-agents]"
+```
+
+On Windows you need 64-bit Python 3.10 to 3.13. There are no packages for Python 3.14 yet, and none for Windows on ARM.
+
+
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+Node uses [SoX](https://sox.sourceforge.net/) for recording and playback:
+
+- **macOS:** `brew install sox`
+- **Linux:** `sudo apt install sox`
+
+In the browser no system dependency is needed — audio is handled via `getUserMedia`.
+
+Then add the package, which resolves from Gemfury via the `@mistralai` scope:
+
+```bash
+pnpm add @mistralai/voice-agents
+```
+
+Node sessions also need `@livekit/rtc-node`, an optional peer dependency carrying a
+platform-specific native binary:
+
+```bash
+pnpm add @livekit/rtc-node
+```
+
+Browser-only apps should skip it — `@mistralai/voice-agents/browser` never loads it.
+
+</TabItem>
+</Tabs>
+
+### 2. Set your API key
+
+:::warning Access
+The Voice Agents API is only available for Mistral organizations at the moment, ensure your API key is compliant.
+:::
+
+```bash
+export MISTRAL_API_KEY=<your-api-key>
+```
+
+### 3. Run a voice agent
+
+This is a minimal running example, connecting to your computer's microphone and speakers.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+import asyncio
+import os
+
+from mistralai.client import Mistral
+from mistralai.extra.voice_agents.audio import DefaultAudioInterface
+from mistralai.client.models import (
+    AudioLLMConfig,
+    AudioTTSConfig,
+)
+from mistralai.extra.voice_agents.events import VoiceAgentTranscriptEvent
+
+
+async def main() -> None:
+    client = Mistral(api_key=os.environ["MISTRAL_API_KEY"])
+
+    session = await client.audio.sessions.init(
+        llm=AudioLLMConfig(model="mistral-small-latest"),
+        tts=AudioTTSConfig(voice_id="fr_marie_neutral"),
+        instructions="You are a helpful voice assistant.",
+        audio_interface=DefaultAudioInterface(),
+    )
+
+    def on_transcript(event: VoiceAgentTranscriptEvent) -> None:
+        print(f"{event.role}: {event.content}")
+
+    session.on("transcript", on_transcript)
+
+    print("Voice agent connected. Press Ctrl+C to stop.")
+    try:
+        await session.connect()
+        await session.wait()
+    finally:
+        await session.close()
+
+
+asyncio.run(main())
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import { MistralVoiceAgent } from "@mistralai/voice-agents";
+import { DefaultAudioInterface } from "@mistralai/voice-agents/audio/node";
+import type { VoiceAgentTranscriptEvent } from "@mistralai/voice-agents/types";
+
+const client = new MistralVoiceAgent({ apiKey: process.env.MISTRAL_API_KEY! });
+
+const session = await client.connect({
+  llm: { model: "mistral-small-latest" },
+  tts: { voiceId: "fr_marie_neutral" },
+  instructions: "You are a helpful voice assistant.",
+  audioInterface: new DefaultAudioInterface(),
+});
+
+session.on("transcript", (event: VoiceAgentTranscriptEvent) => {
+  console.log(`${event.role}: ${event.content}`);
+});
+
+console.log("Voice agent connected. Press Ctrl+C to stop.");
+try {
+  await session.wait();
+} finally {
+  await session.close();
+}
+```
+
+</TabItem>
+</Tabs>

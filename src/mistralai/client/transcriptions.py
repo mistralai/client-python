@@ -6,7 +6,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Iterable, List, Mapping, Optional, Union
+from typing import Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Transcriptions(BaseSDK):
@@ -23,6 +23,7 @@ class Transcriptions(BaseSDK):
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[Iterable[str]] = None,
+        speaker_references: Optional[Mapping[str, str]] = None,
         timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -39,6 +40,7 @@ class Transcriptions(BaseSDK):
         :param temperature:
         :param diarize:
         :param context_bias:
+        :param speaker_references: Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary.
         :param timestamp_granularities: Granularities of timestamps to include in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -67,6 +69,9 @@ class Transcriptions(BaseSDK):
             temperature=temperature,
             diarize=diarize,
             context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            speaker_references=utils.unmarshal(
+                speaker_references, Optional[Dict[str, str]]
+            ),
             timestamp_granularities=utils.unmarshal(
                 timestamp_granularities, Optional[List[models.TimestampGranularity]]
             ),
@@ -139,6 +144,7 @@ class Transcriptions(BaseSDK):
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[Iterable[str]] = None,
+        speaker_references: Optional[Mapping[str, str]] = None,
         timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -155,6 +161,7 @@ class Transcriptions(BaseSDK):
         :param temperature:
         :param diarize:
         :param context_bias:
+        :param speaker_references: Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary.
         :param timestamp_granularities: Granularities of timestamps to include in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -183,6 +190,9 @@ class Transcriptions(BaseSDK):
             temperature=temperature,
             diarize=diarize,
             context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            speaker_references=utils.unmarshal(
+                speaker_references, Optional[Dict[str, str]]
+            ),
             timestamp_granularities=utils.unmarshal(
                 timestamp_granularities, Optional[List[models.TimestampGranularity]]
             ),
@@ -255,6 +265,7 @@ class Transcriptions(BaseSDK):
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[Iterable[str]] = None,
+        speaker_references: Optional[Mapping[str, str]] = None,
         timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -271,6 +282,7 @@ class Transcriptions(BaseSDK):
         :param temperature:
         :param diarize:
         :param context_bias:
+        :param speaker_references: Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary.
         :param timestamp_granularities: Granularities of timestamps to include in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -299,6 +311,9 @@ class Transcriptions(BaseSDK):
             temperature=temperature,
             diarize=diarize,
             context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            speaker_references=utils.unmarshal(
+                speaker_references, Optional[Dict[str, str]]
+            ),
             timestamp_granularities=utils.unmarshal(
                 timestamp_granularities, Optional[List[models.TimestampGranularity]]
             ),
@@ -383,6 +398,7 @@ class Transcriptions(BaseSDK):
         temperature: OptionalNullable[float] = UNSET,
         diarize: Optional[bool] = False,
         context_bias: Optional[Iterable[str]] = None,
+        speaker_references: Optional[Mapping[str, str]] = None,
         timestamp_granularities: Optional[Iterable[models.TimestampGranularity]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -399,6 +415,7 @@ class Transcriptions(BaseSDK):
         :param temperature:
         :param diarize:
         :param context_bias:
+        :param speaker_references: Dictionary of speaker names and reference audios for speakers who are known to appear in the audio. When enabled, diarize must be true. Predicted speakers will be matched against reference speakers from this dictionary.
         :param timestamp_granularities: Granularities of timestamps to include in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -427,6 +444,9 @@ class Transcriptions(BaseSDK):
             temperature=temperature,
             diarize=diarize,
             context_bias=utils.unmarshal(context_bias, Optional[List[str]]),
+            speaker_references=utils.unmarshal(
+                speaker_references, Optional[Dict[str, str]]
+            ),
             timestamp_granularities=utils.unmarshal(
                 timestamp_granularities, Optional[List[models.TimestampGranularity]]
             ),

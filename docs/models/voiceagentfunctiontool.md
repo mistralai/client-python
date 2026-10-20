@@ -1,0 +1,11 @@
+# VoiceAgentFunctionTool
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `type`                                                                                 | [Optional[models.VoiceAgentFunctionToolType]](../models/voiceagentfunctiontooltype.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `function`                                                                             | [models.Function](../models/function.md)                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `filler`                                                                               | [OptionalNullable[models.StaticToolFiller]](../models/statictoolfiller.md)             | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `timeout_ms`                                                                           | *OptionalNullable[int]*                                                                | :heavy_minus_sign:                                                                     | N/A                                                                                    |

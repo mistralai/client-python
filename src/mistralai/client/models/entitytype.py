@@ -9,7 +9,6 @@ EntityType = Union[
     Literal[
         "User",
         "Workspace",
-        "Org",
     ],
     UnrecognizedStr,
 ]

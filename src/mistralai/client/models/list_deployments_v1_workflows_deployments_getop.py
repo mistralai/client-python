@@ -52,6 +52,10 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict(TypedDict):
     r"""Cursor from a previous response for pagination"""
     workspace_id: NotRequired[Nullable[str]]
     r"""Workspace ID to scope the request to. Defaults to the caller's context."""
+    repository_url: NotRequired[Nullable[str]]
+    r"""Filter managed deployments by source repository URL (exact match)"""
+    dockerfile_path: NotRequired[Nullable[str]]
+    r"""Filter managed deployments by Dockerfile path (exact match)"""
 
 
 class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
@@ -125,6 +129,18 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
     ] = UNSET
     r"""Workspace ID to scope the request to. Defaults to the caller's context."""
 
+    repository_url: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter managed deployments by source repository URL (exact match)"""
+
+    dockerfile_path: Annotated[
+        OptionalNullable[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Filter managed deployments by Dockerfile path (exact match)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -141,6 +157,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "limit",
                 "cursor",
                 "workspace_id",
+                "repository_url",
+                "dockerfile_path",
             ]
         )
         nullable_fields = set(
@@ -155,6 +173,8 @@ class ListDeploymentsV1WorkflowsDeploymentsGetRequest(BaseModel):
                 "limit",
                 "cursor",
                 "workspace_id",
+                "repository_url",
+                "dockerfile_path",
             ]
         )
         serialized = handler(self)

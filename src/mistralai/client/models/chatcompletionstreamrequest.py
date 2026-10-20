@@ -75,14 +75,8 @@ ChatCompletionStreamRequestToolTypedDict = TypeAliasType(
 )
 
 
-ChatCompletionStreamRequestTool = Annotated[
-    Union[
-        Annotated[Tool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[CustomConnector, Tag("connector")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+ChatCompletionStreamRequestTool = Union[
+    Tool, ImageGenerationTool, DocumentLibraryTool, CustomConnector
 ]
 
 

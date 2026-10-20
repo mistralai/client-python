@@ -23,11 +23,11 @@ class MCPServerCardToolTypedDict(TypedDict):
     input_schema: Dict[str, Any]
     title: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
+    execution: NotRequired[Nullable[ToolExecutionTypedDict]]
     output_schema: NotRequired[Nullable[Dict[str, Any]]]
     icons: NotRequired[Nullable[List[MCPServerIconTypedDict]]]
     annotations: NotRequired[Nullable[ToolAnnotationsTypedDict]]
     meta: NotRequired[Nullable[MCPToolMetaTypedDict]]
-    execution: NotRequired[Nullable[ToolExecutionTypedDict]]
 
 
 class MCPServerCardTool(BaseModel):
@@ -44,6 +44,8 @@ class MCPServerCardTool(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
+    execution: OptionalNullable[ToolExecution] = UNSET
+
     output_schema: Annotated[
         OptionalNullable[Dict[str, Any]], pydantic.Field(alias="outputSchema")
     ] = UNSET
@@ -55,8 +57,6 @@ class MCPServerCardTool(BaseModel):
     meta: Annotated[OptionalNullable[MCPToolMeta], pydantic.Field(alias="_meta")] = (
         UNSET
     )
-
-    execution: OptionalNullable[ToolExecution] = UNSET
 
     @property
     def additional_properties(self):
@@ -72,22 +72,22 @@ class MCPServerCardTool(BaseModel):
             [
                 "title",
                 "description",
+                "execution",
                 "outputSchema",
                 "icons",
                 "annotations",
                 "_meta",
-                "execution",
             ]
         )
         nullable_fields = set(
             [
                 "title",
                 "description",
+                "execution",
                 "outputSchema",
                 "icons",
                 "annotations",
                 "_meta",
-                "execution",
             ]
         )
         serialized = handler(self)

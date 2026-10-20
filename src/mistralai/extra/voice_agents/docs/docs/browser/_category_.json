@@ -1,0 +1,8 @@
+{
+  "label": "Browser",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Running a voice agent in the browser with a server-assisted session flow."
+  }
+}

@@ -1,0 +1,55 @@
+---
+id: manual-audio
+sidebar_label: Manual Audio Handling
+title: Manual Audio Handling
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+For even more control, if you don't pass an audio interface to `init()`, the session won't capture or play audio automatically. Instead, send and receive audio manually using `sendAudio()` and the `audio` event.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+from mistralai.client.models import AudioLLMConfig, AudioTTSConfig
+
+
+session = await client.audio.sessions.init(
+    llm=AudioLLMConfig(model="mistral-small-latest"),
+    tts=AudioTTSConfig(voice_id="fr_marie_neutral"),
+    instructions="You are a helpful voice assistant.",
+)
+
+await session.connect()
+
+# Send audio to the agent (16-bit PCM, mono, 48 kHz)
+await session.send_audio(audio_bytes)
+
+# Receive agent audio output
+session.on("audio", lambda audio: handle_audio(audio))
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+const session = await client.connect({
+  llm: { model: "mistral-small-latest" },
+  tts: { voiceId: "fr_marie_neutral" },
+  instructions: "You are a helpful voice assistant.",
+});
+
+// Send audio to the agent (16-bit PCM, mono, 48 kHz)
+await session.sendAudio(audioBytes);
+
+// Receive agent audio output
+session.on("audio", (audio) => handleAudio(audio));
+```
+
+</TabItem>
+</Tabs>
+
+This is useful when integrating with a non-default audio source — for example a web socket, a telephony bridge, or a test harness that feeds recorded audio.

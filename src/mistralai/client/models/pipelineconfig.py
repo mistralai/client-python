@@ -42,6 +42,8 @@ class PipelineConfigTypedDict(TypedDict):
     enabled: bool
     definition: PipelineConfigDefinitionTypedDict
     sampling: NotRequired[Nullable[PipelineConfigSamplingTypedDict]]
+    scorer_slug: NotRequired[Nullable[str]]
+    scorer_version: NotRequired[Nullable[int]]
 
 
 class PipelineConfig(BaseModel):
@@ -71,10 +73,16 @@ class PipelineConfig(BaseModel):
 
     sampling: OptionalNullable[PipelineConfigSampling] = UNSET
 
+    scorer_slug: OptionalNullable[str] = UNSET
+
+    scorer_version: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["sampling"])
-        nullable_fields = set(["deleted_at", "sampling"])
+        optional_fields = set(["sampling", "scorer_slug", "scorer_version"])
+        nullable_fields = set(
+            ["deleted_at", "sampling", "scorer_slug", "scorer_version"]
+        )
         serialized = handler(self)
         m = {}
 

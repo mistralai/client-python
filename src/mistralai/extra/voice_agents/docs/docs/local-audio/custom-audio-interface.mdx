@@ -1,0 +1,86 @@
+---
+id: custom-audio-interface
+sidebar_label: Custom Audio Interface
+title: Custom Audio Interface
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+For more control over the I/O audio streams (custom processing, visualisation), implement your own audio interface or subclass the default one. This abstraction gives you access to raw audio bytes for both input & output.
+
+:::info
+Audio format is 16-bit signed PCM, mono, 48 kHz for both input and output.
+:::
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+from collections.abc import AsyncIterator
+
+from mistralai.extra.voice_agents.audio import AudioInterface
+from mistralai.client.models import AudioLLMConfig, AudioTTSConfig
+
+
+class MyAudioInterface(AudioInterface):
+    async def start(self) -> None:
+        """Initialize audio resources."""
+        ...
+
+    def input_audio(self) -> AsyncIterator[bytes]:
+        """Yield audio chunks from your source."""
+        ...
+
+    async def output_audio(self, audio: bytes) -> None:
+        """Play or process agent audio output."""
+        ...
+
+    async def stop(self) -> None:
+        """Clean up resources."""
+        ...
+
+
+# Create the session; register handlers, then await session.connect().
+session = await client.audio.sessions.init(
+    llm=AudioLLMConfig(model="mistral-small-latest"),
+    tts=AudioTTSConfig(voice_id="fr_marie_neutral"),
+    audio_interface=MyAudioInterface(),
+)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import type { AudioInterface } from "@mistralai/voice-agents/audio";
+
+class MyAudioInterface implements AudioInterface {
+  async start(): Promise<void> {
+    // Initialize audio resources.
+  }
+
+  async *inputAudio(): AsyncIterable<Uint8Array> {
+    // Yield audio chunks from your source.
+  }
+
+  async outputAudio(audio: Uint8Array): Promise<void> {
+    // Play or process agent audio output.
+  }
+
+  async stop(): Promise<void> {
+    // Clean up resources.
+  }
+}
+
+// then pass it to connect()
+const session = await client.connect({
+  llm: { model: "mistral-small-latest" },
+  tts: { voiceId: "fr_marie_neutral" },
+  audioInterface: new MyAudioInterface(),
+});
+```
+
+</TabItem>
+</Tabs>

@@ -1,6 +1,6 @@
 # AudioContent
 
-Audio content for a message.
+Audio provided to or from an LLM.
 
 
 ## Fields
@@ -12,4 +12,3 @@ Audio content for a message.
 | `mime_type`                                                      | *str*                                                            | :heavy_check_mark:                                               | N/A                                                              |
 | `annotations`                                                    | [OptionalNullable[models.Annotations]](../models/annotations.md) | :heavy_minus_sign:                                               | N/A                                                              |
 | `meta`                                                           | Dict[str, *Any*]                                                 | :heavy_minus_sign:                                               | N/A                                                              |
-| `__pydantic_extra__`                                             | Dict[str, *Any*]                                                 | :heavy_minus_sign:                                               | N/A                                                              |

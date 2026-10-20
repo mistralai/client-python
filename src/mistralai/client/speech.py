@@ -31,8 +31,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -50,7 +57,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -70,8 +79,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -89,7 +105,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -109,8 +127,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -130,7 +155,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -149,8 +176,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -170,7 +204,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -199,8 +235,13 @@ class Speech(BaseSDK):
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,
+            expressiveness=expressiveness,
             phoneme_hints=utils.unmarshal(
                 phoneme_hints, OptionalNullable[Dict[str, List[models.IPAPhoneme]]]
+            ),
+            conversation_history=utils.get_pydantic_model(
+                conversation_history,
+                OptionalNullable[List[models.ConversationHistoryUnion]],
             ),
             response_format=response_format,
             **(utils.unmarshal(additional_properties, Optional[Dict[str, Any]]) or {}),
@@ -295,8 +336,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -314,7 +362,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -334,8 +384,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -353,7 +410,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -373,8 +432,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -395,7 +461,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -414,8 +482,15 @@ class Speech(BaseSDK):
         prompt_cache_key: OptionalNullable[str] = UNSET,
         voice_id: OptionalNullable[str] = UNSET,
         ref_audio: OptionalNullable[str] = UNSET,
+        expressiveness: OptionalNullable[float] = UNSET,
         phoneme_hints: OptionalNullable[
             Mapping[str, Iterable[models.IPAPhoneme]]
+        ] = UNSET,
+        conversation_history: OptionalNullable[
+            Union[
+                Iterable[models.ConversationHistoryUnion],
+                Iterable[models.ConversationHistoryUnionTypedDict],
+            ]
         ] = UNSET,
         response_format: Optional[models.SpeechOutputFormat] = None,
         additional_properties: Optional[Mapping[str, Any]] = None,
@@ -436,7 +511,9 @@ class Speech(BaseSDK):
         :param prompt_cache_key:
         :param voice_id: The preset or custom voice to use for generating the speech.
         :param ref_audio: The audio reference for generating the speech.
+        :param expressiveness: Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0.
         :param phoneme_hints: Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones.
+        :param conversation_history: Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`.
         :param response_format:
         :param additional_properties:
         :param retries: Override the default retry configuration for this method
@@ -465,8 +542,13 @@ class Speech(BaseSDK):
             voice_id=voice_id,
             ref_audio=ref_audio,
             input=input,
+            expressiveness=expressiveness,
             phoneme_hints=utils.unmarshal(
                 phoneme_hints, OptionalNullable[Dict[str, List[models.IPAPhoneme]]]
+            ),
+            conversation_history=utils.get_pydantic_model(
+                conversation_history,
+                OptionalNullable[List[models.ConversationHistoryUnion]],
             ),
             response_format=response_format,
             **(utils.unmarshal(additional_properties, Optional[Dict[str, Any]]) or {}),

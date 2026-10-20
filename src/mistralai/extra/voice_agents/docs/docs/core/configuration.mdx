@@ -1,0 +1,120 @@
+---
+id: configuration
+sidebar_label: Configuration
+title: Configuration
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::note
+The tables below use the Python parameter names. In TypeScript the same options are *camelCase* (`api_key` → `apiKey`, `server_url` → `serverUrl`, `turn.allow_interruptions` → `turn.allowInterruptions`, …).
+:::
+
+
+## Client configuration
+
+Python uses the general-purpose `Mistral` client and its standard authentication,
+HTTP clients, retry policy, and request options. Node still uses `MistralVoiceAgent`.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+from mistralai.client import Mistral
+
+client = Mistral(api_key="...", server_url="https://api.mistral.ai")
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+new MistralVoiceAgent({
+  apiKey: string,
+  serverURL?: string, // default "https://api.mistral.ai"
+  timeoutMs?: number, // default 60000
+});
+```
+
+</TabItem>
+</Tabs>
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `api_key` | `str` | Environment fallback in Python | Your Mistral API key. |
+| `server_url` | `str` | `"https://api.mistral.ai"` | API base URL. |
+| `timeout_ms` | `int` | Main SDK request default in Python | Request timeout for control-plane calls. |
+
+## Session construction and startup
+
+:::info Browser
+In the browser you don't call `connect()` — the session is created **server-side**. The same session options below apply there, passed to `client.sessions.create()`. See the [Browser guide](../browser/browser.mdx).
+:::
+
+Python creates the remote session with `init()` and joins it with
+`await session.connect()`. Register handlers between those two operations. Node
+retains its existing `connect()` method.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+await client.audio.sessions.init(...)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+await client.connect({ ... });
+```
+
+</TabItem>
+</Tabs>
+
+Each option is scoped either to the `agent` configuration (part of a [saved agent](./agents.mdx))
+or the `session` runtime. When `agent_id` is set, inline agent configuration fields override the
+saved configuration for that session only.
+
+| Parameter | Type | Default | Description | Scope |
+|-----------|------|---------|-------------|-------|
+| `llm` | `AudioLLMConfig \| Mapping` | `mistral-small-latest` | [LLM model](https://docs.mistral.ai/getting-started/models/models_overview/#generalist-models) configuration. | <span className="badge badge--info">agent</span> |
+| `stt` | `AudioSTTConfig \| Mapping` | `voxtral-mini-realtime-latest` | [STT model](https://docs.mistral.ai/getting-started/models/models_overview/#audio-models) with optional `language` (ISO 639-1 code such as `"fr"`), `context_bias` (terms to favor), `target_streaming_delay_ms` (80 to 1200, default 240) and `turn_detection` (end-of-turn detection by the STT model, see below). `language`, `context_bias` and `turn_detection` need a Voxtral 3 realtime model, other models return a 422. | <span className="badge badge--info">agent</span> |
+| `tts` | `AudioTTSConfig \| Mapping` | `voxtral-mini-tts-latest` | [TTS model](https://docs.mistral.ai/getting-started/models/models_overview/#audio-models) configuration. | <span className="badge badge--info">agent</span> |
+| `instructions` | `str` | `None` | System prompt for the agent. | <span className="badge badge--info">agent</span> |
+| `tools` | Provider and function declarations | `UNSET` | Inherit, clear, or replace the full remote tools list. | <span className="badge badge--info">agent</span> |
+| `welcome_message` | `str` | `None` | Message the agent speaks on connect. | <span className="badge badge--info">agent</span> |
+| `turn` | `AudioTurnConfig \| Mapping` | `allow_interruptions=True` | Turn-taking configuration, including whether the user can interrupt the agent. | <span className="badge badge--info">agent</span> |
+| `agent_id` | `str` | `None` | Start the session from a [saved agent](./agents.mdx). | <span className="badge badge--success">session</span> |
+| `agent_version` | `int` | `None` | Pin a specific version of `agent_id` (defaults to the latest). | <span className="badge badge--success">session</span> |
+| `audio_interface` | `AudioInterface` | `None` | Audio I/O implementation; omit for manual handling. | <span className="badge badge--success">session</span> |
+| `http_headers` | `Mapping[str, str]` | `None` | Extra headers for the session-create request. | <span className="badge badge--success">session</span> |
+
+For Python, `await client.audio.sessions.init()` creates the session without joining
+it; call `await session.connect()` after registering callbacks. `function_handlers` attaches
+local handlers only and never overrides remote declarations.
+
+### End-of-turn detection
+
+Set `stt.turn_detection` to let a Voxtral 3 realtime model decide when the user has finished speaking. When it is not set, the agent uses the default turn detection for the model. Pass `{}` to use the server defaults, or set any of these fields:
+
+| Field | Range | Server default |
+|-------|-------|----------------|
+| `start_threshold` | 0 to 1 | 0.5 |
+| `eager_end_threshold` | 0 to 1 | 0.5 |
+| `end_threshold` | 0 to 1 | 0.33 |
+| `min_silence_ms` | 0 or more | 500 |
+| `end_timeout_ms` | 0 or more | 3000 |
+
+```python
+from mistralai.client.models import AudioSTTConfig, AudioTurnDetectionConfig
+
+session = await client.audio.sessions.init(
+    stt=AudioSTTConfig(
+        model="voxtral-mini-transcribe-realtime-3",
+        turn_detection=AudioTurnDetectionConfig(min_silence_ms=300),
+    ),
+)
+```
